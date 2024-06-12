@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84A5BE422C19719700E32496 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE412C19719700E32496 /* AppDelegate.swift */; };
+		84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE432C19719700E32496 /* SceneDelegate.swift */; };
+		84A5BE462C19719700E32496 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE452C19719700E32496 /* ViewController.swift */; };
+		84A5BE492C19719700E32496 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE482C19719700E32496 /* Base */; };
+		84A5BE4B2C19719900E32496 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4A2C19719900E32496 /* Assets.xcassets */; };
+		84A5BE4E2C19719900E32496 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE4D2C19719900E32496 /* Base */; };
+		84A5BE592C19719A00E32496 /* VsSchoolChimesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE582C19719A00E32496 /* VsSchoolChimesTests.swift */; };
+		84A5BE632C19719A00E32496 /* VsSchoolChimesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE622C19719A00E32496 /* VsSchoolChimesUITests.swift */; };
+		84A5BE652C19719A00E32496 /* VsSchoolChimesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE642C19719A00E32496 /* VsSchoolChimesUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84A5BE552C19719A00E32496 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A5BE362C19719700E32496 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84A5BE3D2C19719700E32496;
+			remoteInfo = VsSchoolChimes;
+		};
+		84A5BE5F2C19719A00E32496 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A5BE362C19719700E32496 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84A5BE3D2C19719700E32496;
+			remoteInfo = VsSchoolChimes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		84A5BE3E2C19719700E32496 /* VsSchoolChimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VsSchoolChimes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84A5BE412C19719700E32496 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		84A5BE432C19719700E32496 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		84A5BE452C19719700E32496 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		84A5BE482C19719700E32496 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		84A5BE4A2C19719900E32496 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84A5BE4D2C19719900E32496 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		84A5BE4F2C19719900E32496 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84A5BE542C19719A00E32496 /* VsSchoolChimesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VsSchoolChimesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84A5BE582C19719A00E32496 /* VsSchoolChimesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VsSchoolChimesTests.swift; sourceTree = "<group>"; };
+		84A5BE5E2C19719A00E32496 /* VsSchoolChimesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VsSchoolChimesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84A5BE622C19719A00E32496 /* VsSchoolChimesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VsSchoolChimesUITests.swift; sourceTree = "<group>"; };
+		84A5BE642C19719A00E32496 /* VsSchoolChimesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VsSchoolChimesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		84A5BE3B2C19719700E32496 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A5BE512C19719A00E32496 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A5BE5B2C19719A00E32496 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		84A5BE352C19719700E32496 = {
+			isa = PBXGroup;
+			children = (
+				84A5BE402C19719700E32496 /* VsSchoolChimes */,
+				84A5BE572C19719A00E32496 /* VsSchoolChimesTests */,
+				84A5BE612C19719A00E32496 /* VsSchoolChimesUITests */,
+				84A5BE3F2C19719700E32496 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		84A5BE3F2C19719700E32496 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84A5BE3E2C19719700E32496 /* VsSchoolChimes.app */,
+				84A5BE542C19719A00E32496 /* VsSchoolChimesTests.xctest */,
+				84A5BE5E2C19719A00E32496 /* VsSchoolChimesUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84A5BE402C19719700E32496 /* VsSchoolChimes */ = {
+			isa = PBXGroup;
+			children = (
+				84A5BE412C19719700E32496 /* AppDelegate.swift */,
+				84A5BE432C19719700E32496 /* SceneDelegate.swift */,
+				84A5BE452C19719700E32496 /* ViewController.swift */,
+				84A5BE472C19719700E32496 /* Main.storyboard */,
+				84A5BE4A2C19719900E32496 /* Assets.xcassets */,
+				84A5BE4C2C19719900E32496 /* LaunchScreen.storyboard */,
+				84A5BE4F2C19719900E32496 /* Info.plist */,
+			);
+			path = VsSchoolChimes;
+			sourceTree = "<group>";
+		};
+		84A5BE572C19719A00E32496 /* VsSchoolChimesTests */ = {
+			isa = PBXGroup;
+			children = (
+				84A5BE582C19719A00E32496 /* VsSchoolChimesTests.swift */,
+			);
+			path = VsSchoolChimesTests;
+			sourceTree = "<group>";
+		};
+		84A5BE612C19719A00E32496 /* VsSchoolChimesUITests */ = {
+			isa = PBXGroup;
+			children = (
+				84A5BE622C19719A00E32496 /* VsSchoolChimesUITests.swift */,
+				84A5BE642C19719A00E32496 /* VsSchoolChimesUITestsLaunchTests.swift */,
+			);
+			path = VsSchoolChimesUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		84A5BE3D2C19719700E32496 /* VsSchoolChimes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84A5BE682C19719A00E32496 /* Build configuration list for PBXNativeTarget "VsSchoolChimes" */;
+			buildPhases = (
+				84A5BE3A2C19719700E32496 /* Sources */,
+				84A5BE3B2C19719700E32496 /* Frameworks */,
+				84A5BE3C2C19719700E32496 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VsSchoolChimes;
+			productName = VsSchoolChimes;
+			productReference = 84A5BE3E2C19719700E32496 /* VsSchoolChimes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		84A5BE532C19719A00E32496 /* VsSchoolChimesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84A5BE6B2C19719A00E32496 /* Build configuration list for PBXNativeTarget "VsSchoolChimesTests" */;
+			buildPhases = (
+				84A5BE502C19719A00E32496 /* Sources */,
+				84A5BE512C19719A00E32496 /* Frameworks */,
+				84A5BE522C19719A00E32496 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84A5BE562C19719A00E32496 /* PBXTargetDependency */,
+			);
+			name = VsSchoolChimesTests;
+			productName = VsSchoolChimesTests;
+			productReference = 84A5BE542C19719A00E32496 /* VsSchoolChimesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		84A5BE5D2C19719A00E32496 /* VsSchoolChimesUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84A5BE6E2C19719A00E32496 /* Build configuration list for PBXNativeTarget "VsSchoolChimesUITests" */;
+			buildPhases = (
+				84A5BE5A2C19719A00E32496 /* Sources */,
+				84A5BE5B2C19719A00E32496 /* Frameworks */,
+				84A5BE5C2C19719A00E32496 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84A5BE602C19719A00E32496 /* PBXTargetDependency */,
+			);
+			name = VsSchoolChimesUITests;
+			productName = VsSchoolChimesUITests;
+			productReference = 84A5BE5E2C19719A00E32496 /* VsSchoolChimesUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84A5BE362C19719700E32496 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					84A5BE3D2C19719700E32496 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					84A5BE532C19719A00E32496 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 84A5BE3D2C19719700E32496;
+					};
+					84A5BE5D2C19719A00E32496 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 84A5BE3D2C19719700E32496;
+					};
+				};
+			};
+			buildConfigurationList = 84A5BE392C19719700E32496 /* Build configuration list for PBXProject "VsSchoolChimes" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 84A5BE352C19719700E32496;
+			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84A5BE3D2C19719700E32496 /* VsSchoolChimes */,
+				84A5BE532C19719A00E32496 /* VsSchoolChimesTests */,
+				84A5BE5D2C19719A00E32496 /* VsSchoolChimesUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		84A5BE3C2C19719700E32496 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84A5BE4B2C19719900E32496 /* Assets.xcassets in Resources */,
+				84A5BE4E2C19719900E32496 /* Base in Resources */,
+				84A5BE492C19719700E32496 /* Base in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A5BE522C19719A00E32496 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A5BE5C2C19719A00E32496 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		84A5BE3A2C19719700E32496 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84A5BE462C19719700E32496 /* ViewController.swift in Sources */,
+				84A5BE422C19719700E32496 /* AppDelegate.swift in Sources */,
+				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A5BE502C19719A00E32496 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84A5BE592C19719A00E32496 /* VsSchoolChimesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84A5BE5A2C19719A00E32496 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84A5BE652C19719A00E32496 /* VsSchoolChimesUITestsLaunchTests.swift in Sources */,
+				84A5BE632C19719A00E32496 /* VsSchoolChimesUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84A5BE562C19719A00E32496 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84A5BE3D2C19719700E32496 /* VsSchoolChimes */;
+			targetProxy = 84A5BE552C19719A00E32496 /* PBXContainerItemProxy */;
+		};
+		84A5BE602C19719A00E32496 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84A5BE3D2C19719700E32496 /* VsSchoolChimes */;
+			targetProxy = 84A5BE5F2C19719A00E32496 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		84A5BE472C19719700E32496 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84A5BE482C19719700E32496 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		84A5BE4C2C19719900E32496 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				84A5BE4D2C19719900E32496 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		84A5BE662C19719A00E32496 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		84A5BE672C19719A00E32496 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		84A5BE692C19719A00E32496 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.-DemoClocket.VsSchoolChimes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84A5BE6A2C19719A00E32496 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.-DemoClocket.VsSchoolChimes";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		84A5BE6C2C19719A00E32496 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.-DemoClocket.VsSchoolChimesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VsSchoolChimes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VsSchoolChimes";
+			};
+			name = Debug;
+		};
+		84A5BE6D2C19719A00E32496 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.-DemoClocket.VsSchoolChimesTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VsSchoolChimes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VsSchoolChimes";
+			};
+			name = Release;
+		};
+		84A5BE6F2C19719A00E32496 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.-DemoClocket.VsSchoolChimesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VsSchoolChimes;
+			};
+			name = Debug;
+		};
+		84A5BE702C19719A00E32496 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.-DemoClocket.VsSchoolChimesUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = VsSchoolChimes;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84A5BE392C19719700E32496 /* Build configuration list for PBXProject "VsSchoolChimes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84A5BE662C19719A00E32496 /* Debug */,
+				84A5BE672C19719A00E32496 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84A5BE682C19719A00E32496 /* Build configuration list for PBXNativeTarget "VsSchoolChimes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84A5BE692C19719A00E32496 /* Debug */,
+				84A5BE6A2C19719A00E32496 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84A5BE6B2C19719A00E32496 /* Build configuration list for PBXNativeTarget "VsSchoolChimesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84A5BE6C2C19719A00E32496 /* Debug */,
+				84A5BE6D2C19719A00E32496 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84A5BE6E2C19719A00E32496 /* Build configuration list for PBXNativeTarget "VsSchoolChimesUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84A5BE6F2C19719A00E32496 /* Debug */,
+				84A5BE702C19719A00E32496 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84A5BE362C19719700E32496 /* Project object */;
+}
