@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     let Hello = "" // added by laks
     let HelloWorld = "" // added by laks
     var userName : String!
-    
+    var passwors = "hello"  //
     var saran = ""
     override func viewDidLoad() {
         super.viewDidLoad()
