@@ -11,6 +11,7 @@ class ViewController: UIViewController {
     
     
     let name = "" // added by laks
+    let Hello = "" // added by laks
 
     override func viewDidLoad() {
         super.viewDidLoad()
