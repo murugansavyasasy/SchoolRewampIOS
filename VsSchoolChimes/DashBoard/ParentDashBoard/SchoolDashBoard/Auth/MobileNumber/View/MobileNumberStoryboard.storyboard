@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Mobile Number View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="Y6W-OH-hqX" customClass="MobileNumberViewController" customModule="VsSchoolChimes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fEa-ea-roO">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rXM-K8-tDU">
+                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bw8-gd-0Pj" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="336" width="353" height="45"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile Number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dFE-3e-iaI">
+                                                <rect key="frame" x="10" y="0.0" width="343" height="45"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="C9u-kd-xMM"/>
+                                            <constraint firstAttribute="bottom" secondItem="dFE-3e-iaI" secondAttribute="bottom" id="HqX-4J-7Wg"/>
+                                            <constraint firstAttribute="trailing" secondItem="dFE-3e-iaI" secondAttribute="trailing" id="REu-z9-lSr"/>
+                                            <constraint firstItem="dFE-3e-iaI" firstAttribute="top" secondItem="Bw8-gd-0Pj" secondAttribute="top" id="fyy-2Y-fWe"/>
+                                            <constraint firstItem="dFE-3e-iaI" firstAttribute="leading" secondItem="Bw8-gd-0Pj" secondAttribute="leading" constant="10" id="hge-6e-Q3b"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="1"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ps-lY-wx0">
+                                        <rect key="frame" x="230" y="456" width="120" height="35"/>
+                                        <color key="backgroundColor" red="0.054901960780000002" green="0.25882352939999997" blue="0.45882352939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="bdL-up-3XF">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                                            </constraint>
+                                            <constraint firstAttribute="height" constant="35" id="xOv-Q6-Tyq">
+                                                <variation key="heightClass=regular-widthClass=regular" constant="45"/>
+                                            </constraint>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Charter-Bold" family="Charter" pointSize="18"/>
+                                        <state key="normal" title="Next">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        </variation>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splashlogo3" translatesAutoresizingMaskIntoConstraints="NO" id="Uoe-5n-K1h">
+                                        <rect key="frame" x="0.0" y="50" width="177" height="149"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="149" id="53g-lk-dcJ"/>
+                                            <constraint firstAttribute="width" constant="177" id="jrc-2y-Krs"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to SchoolChimes..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5SB-fU-Tgi">
+                                        <rect key="frame" x="20" y="220" width="225" height="19.666666666666657"/>
+                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSc-YL-qEw">
+                                        <rect key="frame" x="2" y="678" width="383" height="15"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="15" id="twk-Cq-fCE"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93333333330000001" green="0.90196078430000004" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Bw8-gd-0Pj" secondAttribute="trailing" constant="20" id="4iu-v0-uM2"/>
+                                    <constraint firstAttribute="bottom" secondItem="nSc-YL-qEw" secondAttribute="bottom" constant="100" id="6os-Yn-vt7"/>
+                                    <constraint firstItem="5SB-fU-Tgi" firstAttribute="leading" secondItem="rXM-K8-tDU" secondAttribute="leading" constant="20" id="CAo-cN-pud"/>
+                                    <constraint firstAttribute="trailing" secondItem="4ps-lY-wx0" secondAttribute="trailing" constant="43" id="ERm-s1-Ibe"/>
+                                    <constraint firstItem="Bw8-gd-0Pj" firstAttribute="top" secondItem="5SB-fU-Tgi" secondAttribute="bottom" constant="96.333333333333343" id="LrR-1x-bxG"/>
+                                    <constraint firstAttribute="trailing" secondItem="nSc-YL-qEw" secondAttribute="trailing" constant="8" id="Xno-y1-Cpl"/>
+                                    <constraint firstItem="Uoe-5n-K1h" firstAttribute="leading" secondItem="rXM-K8-tDU" secondAttribute="leading" id="gMt-6V-CkT"/>
+                                    <constraint firstItem="nSc-YL-qEw" firstAttribute="leading" secondItem="rXM-K8-tDU" secondAttribute="leading" constant="2" id="lIK-Zn-8OZ"/>
+                                    <constraint firstItem="Bw8-gd-0Pj" firstAttribute="leading" secondItem="rXM-K8-tDU" secondAttribute="leading" constant="20" id="tBN-oQ-kcq"/>
+                                    <constraint firstItem="5SB-fU-Tgi" firstAttribute="top" secondItem="Uoe-5n-K1h" secondAttribute="bottom" constant="21" id="u0q-jJ-BTg"/>
+                                    <constraint firstItem="4ps-lY-wx0" firstAttribute="top" secondItem="Bw8-gd-0Pj" secondAttribute="bottom" constant="75" id="uwc-Cb-QN9"/>
+                                    <constraint firstItem="Uoe-5n-K1h" firstAttribute="top" secondItem="rXM-K8-tDU" secondAttribute="top" constant="50" id="zdI-0f-jmR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fEa-ea-roO" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="5tG-IB-r9a"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="fEa-ea-roO" secondAttribute="bottom" id="Ep7-XH-6xD"/>
+                            <constraint firstItem="rXM-K8-tDU" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="FbA-h1-pfJ"/>
+                            <constraint firstItem="fEa-ea-roO" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="O7U-Vc-YWo"/>
+                            <constraint firstAttribute="trailing" secondItem="rXM-K8-tDU" secondAttribute="trailing" id="XYF-o0-YAl"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="fEa-ea-roO" secondAttribute="trailing" id="ZZM-bF-Isd"/>
+                            <constraint firstItem="rXM-K8-tDU" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="pB9-EJ-n0d"/>
+                            <constraint firstAttribute="bottom" secondItem="rXM-K8-tDU" secondAttribute="bottom" id="sq2-ca-Lmt"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="88" y="4"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Splashlogo3" width="512" height="512"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -11,8 +11,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
+            let viewController = storyboard.instantiateInitialViewController() as! SplashViewController
+            self.present(viewController, animated: true)
+        }
+        
+        
+        
+            }
 
 
 }

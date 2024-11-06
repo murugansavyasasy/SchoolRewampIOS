@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PriorityViewController1" customModule="VsSchoolChimes" customModuleProvider="target">
+            <connections>
+                <outlet property="NextButtonView" destination="GGr-hG-jio" id="ZjK-CW-cQT"/>
+                <outlet property="ParentButton" destination="gYa-cJ-qwB" id="cYt-kS-jB7"/>
+                <outlet property="containerViewHeightConstraint" destination="rIV-fk-mO0" id="aBM-Y2-7cH"/>
+                <outlet property="priorityview" destination="3Fd-Jo-Dka" id="NEs-CM-TpV"/>
+                <outlet property="tableview" destination="vDi-Yd-4hE" id="JDw-rA-SCz"/>
+                <outlet property="teacherButton" destination="IT3-Y1-4ZX" id="VUZ-cu-Cvh"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3K3-Dc-cua">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m8F-aZ-FCz">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="758"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="female-teacher-teaching-boy-in-school" translatesAutoresizingMaskIntoConstraints="NO" id="484-M4-0Y6">
+                                    <rect key="frame" x="8" y="8" width="377" height="170"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="170" id="OYL-u7-TfD"/>
+                                        <constraint firstAttribute="width" constant="377" id="kW3-a8-20S"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your role" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJI-52-t63">
+                                    <rect key="frame" x="20" y="186" width="353" height="20"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Fd-Jo-Dka">
+                                    <rect key="frame" x="42" y="266" width="308" height="40"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IT3-Y1-4ZX">
+                                            <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Group head"/>
+                                            <connections>
+                                                <action selector="teacherAct:" destination="-1" eventType="touchUpInside" id="hCk-On-qIX"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYa-cJ-qwB">
+                                            <rect key="frame" x="148" y="0.0" width="160" height="40"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="Parent"/>
+                                            <connections>
+                                                <action selector="ParentAct:" destination="-1" eventType="touchUpInside" id="0RB-lc-KCF"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.7803921568627451" green="0.91764705882352937" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="gYa-cJ-qwB" firstAttribute="leading" secondItem="3Fd-Jo-Dka" secondAttribute="leading" constant="148" id="4sR-s7-MKi"/>
+                                        <constraint firstAttribute="trailing" secondItem="gYa-cJ-qwB" secondAttribute="trailing" id="KWr-Eg-IWZ"/>
+                                        <constraint firstItem="IT3-Y1-4ZX" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="top" id="OHf-yW-esn"/>
+                                        <constraint firstAttribute="trailing" secondItem="IT3-Y1-4ZX" secondAttribute="trailing" constant="148" id="P8H-sK-zhd"/>
+                                        <constraint firstItem="gYa-cJ-qwB" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="top" id="XtW-4X-U0t"/>
+                                        <constraint firstAttribute="bottom" secondItem="IT3-Y1-4ZX" secondAttribute="bottom" id="YQw-OA-DXb"/>
+                                        <constraint firstItem="IT3-Y1-4ZX" firstAttribute="leading" secondItem="3Fd-Jo-Dka" secondAttribute="leading" id="cEu-7s-h12"/>
+                                        <constraint firstAttribute="height" constant="40" id="dUR-SO-gWW"/>
+                                        <constraint firstAttribute="bottom" secondItem="gYa-cJ-qwB" secondAttribute="bottom" id="xZi-ri-igw"/>
+                                    </constraints>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login as a teacher or parent" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3w-cO-gNT">
+                                    <rect key="frame" x="20" y="214" width="353" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vDi-Yd-4hE">
+                                    <rect key="frame" x="10" y="314" width="373" height="444"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                </tableView>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
+                                    <rect key="frame" x="305" y="707" width="57" height="35"/>
+                                    <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="57" id="tL0-H6-lBn"/>
+                                        <constraint firstAttribute="height" constant="35" id="ucc-ta-K5J"/>
+                                    </constraints>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Button"/>
+                                    <buttonConfiguration key="configuration" style="plain" image="arrow.right" catalog="system" title=" "/>
+                                    <connections>
+                                        <action selector="NextAction:" destination="-1" eventType="touchUpInside" id="y9u-oZ-LfX"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="484-M4-0Y6" secondAttribute="trailing" constant="8" id="18M-dV-blR"/>
+                                <constraint firstAttribute="trailing" secondItem="GGr-hG-jio" secondAttribute="trailing" constant="31" id="Bx5-21-nkE"/>
+                                <constraint firstAttribute="trailing" secondItem="bJI-52-t63" secondAttribute="trailing" constant="20" id="C0c-do-V4b"/>
+                                <constraint firstItem="bJI-52-t63" firstAttribute="top" secondItem="484-M4-0Y6" secondAttribute="bottom" constant="8" id="Dt1-xQ-kzs"/>
+                                <constraint firstItem="bJI-52-t63" firstAttribute="centerX" secondItem="m8F-aZ-FCz" secondAttribute="centerX" id="KHb-Yg-GqI"/>
+                                <constraint firstItem="vDi-Yd-4hE" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="10" id="Ki8-zl-bzl"/>
+                                <constraint firstAttribute="trailing" secondItem="u3w-cO-gNT" secondAttribute="trailing" constant="20" id="MrD-xn-tjP"/>
+                                <constraint firstItem="484-M4-0Y6" firstAttribute="top" secondItem="m8F-aZ-FCz" secondAttribute="top" constant="8" id="OV1-WS-aFd"/>
+                                <constraint firstItem="u3w-cO-gNT" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="20" id="Ovc-xG-VMz"/>
+                                <constraint firstItem="bJI-52-t63" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="20" id="QfP-KZ-MpR"/>
+                                <constraint firstAttribute="bottom" secondItem="vDi-Yd-4hE" secondAttribute="bottom" id="SX1-Em-DvX"/>
+                                <constraint firstItem="u3w-cO-gNT" firstAttribute="centerX" secondItem="m8F-aZ-FCz" secondAttribute="centerX" id="YrB-eY-j1g"/>
+                                <constraint firstItem="3Fd-Jo-Dka" firstAttribute="top" secondItem="u3w-cO-gNT" secondAttribute="bottom" constant="31" id="ZRK-dz-ggl"/>
+                                <constraint firstAttribute="trailing" secondItem="3Fd-Jo-Dka" secondAttribute="trailing" constant="43" id="cNw-Mn-41D"/>
+                                <constraint firstItem="u3w-cO-gNT" firstAttribute="top" secondItem="bJI-52-t63" secondAttribute="bottom" constant="8" id="gEL-3N-HZp"/>
+                                <constraint firstItem="484-M4-0Y6" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="8" id="hVR-jq-qA7"/>
+                                <constraint firstItem="vDi-Yd-4hE" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="bottom" constant="8" id="q9j-ia-eVH"/>
+                                <constraint firstAttribute="bottom" secondItem="GGr-hG-jio" secondAttribute="bottom" constant="16" id="r86-BI-5xI"/>
+                                <constraint firstAttribute="trailing" secondItem="vDi-Yd-4hE" secondAttribute="trailing" constant="10" id="sW9-Wl-9xY"/>
+                                <constraint firstItem="3Fd-Jo-Dka" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="42" id="swZ-an-7rB"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="m8F-aZ-FCz" firstAttribute="leading" secondItem="3K3-Dc-cua" secondAttribute="leading" id="19C-rr-dcZ"/>
+                        <constraint firstAttribute="trailing" secondItem="m8F-aZ-FCz" secondAttribute="trailing" id="28v-gT-GLV"/>
+                        <constraint firstAttribute="bottom" secondItem="m8F-aZ-FCz" secondAttribute="bottom" id="RAP-od-W9N"/>
+                        <constraint firstItem="m8F-aZ-FCz" firstAttribute="width" secondItem="3K3-Dc-cua" secondAttribute="width" id="Rec-un-MyP"/>
+                        <constraint firstItem="m8F-aZ-FCz" firstAttribute="height" secondItem="3K3-Dc-cua" secondAttribute="height" multiplier="0.998682" id="rIV-fk-mO0"/>
+                        <constraint firstItem="m8F-aZ-FCz" firstAttribute="top" secondItem="3K3-Dc-cua" secondAttribute="top" id="wiU-bO-YrM"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="3K3-Dc-cua" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Ijd-xa-h8g"/>
+                <constraint firstItem="3K3-Dc-cua" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="seJ-aq-QNW"/>
+                <constraint firstItem="3K3-Dc-cua" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ydT-HV-YYf"/>
+                <constraint firstItem="3K3-Dc-cua" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ynn-XP-Jdk"/>
+            </constraints>
+            <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow.right" catalog="system" width="128" height="95"/>
+        <image name="female-teacher-teaching-boy-in-school" width="1400" height="1400"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
