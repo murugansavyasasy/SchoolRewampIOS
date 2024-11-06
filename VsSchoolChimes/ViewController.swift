@@ -8,6 +8,9 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    
+    let name = "" // added by laks
 
     override func viewDidLoad() {
         super.viewDidLoad()
