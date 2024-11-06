@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     let name = "" // added by laks
     let Hello = "" // added by laks
     let HelloWorld = "" // added by laks
-
+    var userName : String!
     override func viewDidLoad() {
         super.viewDidLoad()
         
