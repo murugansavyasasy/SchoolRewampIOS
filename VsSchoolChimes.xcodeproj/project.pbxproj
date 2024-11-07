@@ -63,7 +63,6 @@
 		849E57392C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849E57332C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf */; };
 		849E573A2C1FF6BD006119DA /* RobotoSlab-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849E57342C1FF6BD006119DA /* RobotoSlab-Regular.ttf */; };
 		849E573B2C1FF6BD006119DA /* RobotoSlab-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849E57352C1FF6BD006119DA /* RobotoSlab-Thin.ttf */; };
-		849E573E2C205C58006119DA /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 849E573D2C205C58006119DA /* Lottie */; };
 		849E57402C2185F1006119DA /* ApiCallReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E573F2C2185F1006119DA /* ApiCallReference.swift */; };
 		84A5BE422C19719700E32496 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE412C19719700E32496 /* AppDelegate.swift */; };
 		84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BE432C19719700E32496 /* SceneDelegate.swift */; };
@@ -135,6 +134,8 @@
 		84EFFAED2CCFB32800C11C26 /* rectangelDash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAEC2CCFB32800C11C26 /* rectangelDash.swift */; };
 		84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAF32CCFB68A00C11C26 /* ImageCvCell.xib */; };
 		84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAF22CCFB68A00C11C26 /* ImageCvCell.swift */; };
+		F29035602CDC924900F3E67C /* MobileVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F290355F2CDC924900F3E67C /* MobileVc.xib */; };
+		F29035612CDC924900F3E67C /* MobileVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F290355E2CDC924900F3E67C /* MobileVc.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -291,6 +292,8 @@
 		B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
+		F290355E2CDC924900F3E67C /* MobileVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MobileVc.swift; path = VsSchoolChimes/MobileVc.swift; sourceTree = SOURCE_ROOT; };
+		F290355F2CDC924900F3E67C /* MobileVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MobileVc.xib; path = VsSchoolChimes/MobileVc.xib; sourceTree = SOURCE_ROOT; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
 		FA8A5D25D3E56CCD6CFE4A08 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -308,7 +311,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */,
-				849E573E2C205C58006119DA /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1178,6 +1180,8 @@
 		84A5BFBE2C1B024500E32496 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F290355E2CDC924900F3E67C /* MobileVc.swift */,
+				F290355F2CDC924900F3E67C /* MobileVc.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1364,7 +1368,6 @@
 			);
 			name = VsSchoolChimes;
 			packageProductDependencies = (
-				849E573D2C205C58006119DA /* Lottie */,
 			);
 			productName = VsSchoolChimes;
 			productReference = 84A5BE3E2C19719700E32496 /* VsSchoolChimes.app */;
@@ -1445,7 +1448,6 @@
 			);
 			mainGroup = 84A5BE352C19719700E32496;
 			packageReferences = (
-				849E573C2C205C58006119DA /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
 			projectDirPath = "";
@@ -1512,6 +1514,7 @@
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
+				F29035602CDC924900F3E67C /* MobileVc.xib in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
@@ -1681,6 +1684,7 @@
 				8442A8682CDB787A0006068E /* principalTVCell.swift in Sources */,
 				8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */,
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
+				F29035612CDC924900F3E67C /* MobileVc.swift in Sources */,
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */,
 				844188682CC8C85C006483C3 /* ViewModal.swift in Sources */,
@@ -2161,25 +2165,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		849E573C2C205C58006119DA /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.4.3;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		849E573D2C205C58006119DA /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 849E573C2C205C58006119DA /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 84A5BE362C19719700E32496 /* Project object */;
 }

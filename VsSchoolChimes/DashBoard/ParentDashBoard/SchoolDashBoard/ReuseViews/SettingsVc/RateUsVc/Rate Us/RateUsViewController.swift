@@ -24,7 +24,12 @@ class RateUsViewController: UIViewController{
         tableview.register(UINib(nibName: "RatingTableViewCell", bundle: nil), forCellReuseIdentifier: "RatingTableViewCell")
         tableview.register(UINib(nibName: "RatingTypeTableViewCell", bundle: nil), forCellReuseIdentifier: "RatingTypeTableViewCell")
     }
-   
+    
+    //MARK: BackButton Action
+    @IBAction func backBtn(_ sender: Any) {
+        
+    }
+    
 }
 
 extension RateUsViewController:UITableViewDelegate,UITableViewDataSource, RatingDelegate {
