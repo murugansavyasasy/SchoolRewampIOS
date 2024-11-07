@@ -10,14 +10,15 @@ import PhotosUI
 import DropDown
 
 @available(iOS 14.0, *)
-class ReportBugVcViewController: UIViewController {
+class ReportBugVcViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var selectModuleLbl: UILabel!
     @IBOutlet weak var ModuleDropDown: DropDown!
     @IBOutlet weak var textViewStack: UIStackView!
-   
     
    
+    @IBOutlet weak var BugsTextview: UITextView!
+    
     @IBOutlet weak var uploadView: RectangularDashedView!
     @IBOutlet weak var collectionView: UICollectionView!
         var selectedImages: [UIImage] = []
@@ -31,6 +32,9 @@ class ReportBugVcViewController: UIViewController {
         ModuleDropDown.layer.borderWidth = 0.5
         ModuleDropDown.layer.borderColor = UIColor.lightGray.cgColor
         
+        BugsTextview.delegate = self
+        BugsTextview.text = "Enter bugs"
+        BugsTextview.textColor = UIColor.lightGray
         
         textViewStack.layer.cornerRadius = 10
         textViewStack.layer.borderWidth = 0.5
@@ -88,6 +92,18 @@ class ReportBugVcViewController: UIViewController {
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        BugsTextview.text = nil
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if BugsTextview.text.isEmpty{
+            
+            BugsTextview.text = "Enter bugs"
+            BugsTextview.textColor = UIColor.lightGray
+        }
     }
     
 }

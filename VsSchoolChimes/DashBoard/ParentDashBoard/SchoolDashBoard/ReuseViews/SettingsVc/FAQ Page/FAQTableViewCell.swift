@@ -55,4 +55,15 @@ class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
             textField.textColor = UIColor.lightGray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+            // Notify the tableView to adjust the cell height
+            guard let tableView = self.superview as? UITableView else { return }
+            
+            // Disable animations for smoother resizing
+            UIView.setAnimationsEnabled(false)
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            UIView.setAnimationsEnabled(true)
+        }
 }

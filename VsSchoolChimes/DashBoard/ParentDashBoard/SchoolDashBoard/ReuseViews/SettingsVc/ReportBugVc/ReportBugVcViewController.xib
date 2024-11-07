@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportBugVcViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BugsTextview" destination="jM9-T9-Jfa" id="NXb-sI-ssP"/>
                 <outlet property="ModuleDropDown" destination="PKA-7M-iug" id="wbB-3Q-CAL"/>
                 <outlet property="collectionView" destination="7bI-aj-cEW" id="pJM-dE-ZQc"/>
                 <outlet property="selectModuleLbl" destination="gce-HM-DUe" id="kxV-bD-prq"/>

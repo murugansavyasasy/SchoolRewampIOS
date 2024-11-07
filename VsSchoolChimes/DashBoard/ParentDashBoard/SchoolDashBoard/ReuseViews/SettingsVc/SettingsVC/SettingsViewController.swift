@@ -109,13 +109,13 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         else if  sections[indexPath.section].items[indexPath.row] == "Logout"{
             
             let vc = LogoutViewController(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
             
         }
         
-        else if  sections[indexPath.section].items[indexPath.row] == "FEEDBACK"{
+        else if  sections[indexPath.section].items[indexPath.row] == "FAQ"{
             
             
             let vc = FAQViewController(nibName: nil, bundle: nil)

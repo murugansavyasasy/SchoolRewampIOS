@@ -30,13 +30,8 @@ class FAQViewController: UIViewController {
     }
 
 
-    @IBAction func buttonAct(_ sender: Any) {
+    @IBAction func SubmitBtnAction(_ sender: Any) {
         
-        let vc = LogoutViewController(nibName: nil, bundle: nil)
-        
-        vc.modalPresentationStyle = .overFullScreen//.popover
-        modalTransitionStyle = .crossDissolve
-        present(vc, animated: true, completion: nil)
     }
 
 }
