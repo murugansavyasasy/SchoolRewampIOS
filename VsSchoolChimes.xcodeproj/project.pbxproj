@@ -27,6 +27,26 @@
 		8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8642CDB787A0006068E /* PriorityViewController1.xib */; };
 		8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8662CDB787A0006068E /* StudentcardTvCell.xib */; };
 		8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8622CDB787A0006068E /* principalTVCell.xib */; };
+		8442A8F42CDC83860006068E /* BanerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8E52CDC83860006068E /* BanerTableViewCell.swift */; };
+		8442A8F52CDC83860006068E /* GifImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8E72CDC83860006068E /* GifImage.swift */; };
+		8442A8F62CDC83860006068E /* RateUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8E82CDC83860006068E /* RateUsViewController.swift */; };
+		8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EA2CDC83860006068E /* RatingTableViewCell.swift */; };
+		8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */; };
+		8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8EE2CDC83860006068E /* SubmitRatingViewController.swift */; };
+		8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */; };
+		8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8E62CDC83860006068E /* BanerTableViewCell.xib */; };
+		8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8E92CDC83860006068E /* RateUsViewController.xib */; };
+		8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8EB2CDC83860006068E /* RatingTableViewCell.xib */; };
+		8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8ED2CDC83860006068E /* RatingTypeTableViewCell.xib */; };
+		8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */; };
+		8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */; };
+		8442A9012CDC83860006068E /* Thumbs Up.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8F22CDC83860006068E /* Thumbs Up.gif */; };
+		8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9022CDC8A820006068E /* LogoutViewController.swift */; };
+		8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9032CDC8A820006068E /* LogoutViewController.xib */; };
+		8442A90C2CDC8B2D0006068E /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9092CDC8B2D0006068E /* FAQViewController.swift */; };
+		8442A90D2CDC8B2D0006068E /* FAQTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9072CDC8B2D0006068E /* FAQTableViewCell.swift */; };
+		8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9082CDC8B2D0006068E /* FAQTableViewCell.xib */; };
+		8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A90A2CDC8B2D0006068E /* FAQViewController.xib */; };
 		844EA95A2CD8CFE4009A0B5E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EA9572CD8CFE4009A0B5E /* ProfileViewController.swift */; };
 		844EA95B2CD8CFE4009A0B5E /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844EA9582CD8CFE4009A0B5E /* ProfileViewController.xib */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
@@ -115,8 +135,6 @@
 		84EFFAED2CCFB32800C11C26 /* rectangelDash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAEC2CCFB32800C11C26 /* rectangelDash.swift */; };
 		84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAF32CCFB68A00C11C26 /* ImageCvCell.xib */; };
 		84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAF22CCFB68A00C11C26 /* ImageCvCell.swift */; };
-		84EFFAF92CCFB9EE00C11C26 /* RateUsVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAF82CCFB9EE00C11C26 /* RateUsVc.xib */; };
-		84EFFAFA2CCFB9EE00C11C26 /* RateUsVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAF72CCFB9EE00C11C26 /* RateUsVc.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +176,26 @@
 		8442A8642CDB787A0006068E /* PriorityViewController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PriorityViewController1.xib; sourceTree = "<group>"; };
 		8442A8652CDB787A0006068E /* StudentcardTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentcardTvCell.swift; sourceTree = "<group>"; };
 		8442A8662CDB787A0006068E /* StudentcardTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentcardTvCell.xib; sourceTree = "<group>"; };
+		8442A8E52CDC83860006068E /* BanerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BanerTableViewCell.swift; sourceTree = "<group>"; };
+		8442A8E62CDC83860006068E /* BanerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BanerTableViewCell.xib; sourceTree = "<group>"; };
+		8442A8E72CDC83860006068E /* GifImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifImage.swift; sourceTree = "<group>"; };
+		8442A8E82CDC83860006068E /* RateUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateUsViewController.swift; sourceTree = "<group>"; };
+		8442A8E92CDC83860006068E /* RateUsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateUsViewController.xib; sourceTree = "<group>"; };
+		8442A8EA2CDC83860006068E /* RatingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingTableViewCell.swift; sourceTree = "<group>"; };
+		8442A8EB2CDC83860006068E /* RatingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingTableViewCell.xib; sourceTree = "<group>"; };
+		8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingTypeTableViewCell.swift; sourceTree = "<group>"; };
+		8442A8ED2CDC83860006068E /* RatingTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingTypeTableViewCell.xib; sourceTree = "<group>"; };
+		8442A8EE2CDC83860006068E /* SubmitRatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitRatingViewController.swift; sourceTree = "<group>"; };
+		8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitRatingViewController.xib; sourceTree = "<group>"; };
+		8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsCollectionViewCell.swift; sourceTree = "<group>"; };
+		8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionsCollectionViewCell.xib; sourceTree = "<group>"; };
+		8442A8F22CDC83860006068E /* Thumbs Up.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Thumbs Up.gif"; sourceTree = "<group>"; };
+		8442A9022CDC8A820006068E /* LogoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
+		8442A9032CDC8A820006068E /* LogoutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoutViewController.xib; sourceTree = "<group>"; };
+		8442A9072CDC8B2D0006068E /* FAQTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQTableViewCell.swift; sourceTree = "<group>"; };
+		8442A9082CDC8B2D0006068E /* FAQTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FAQTableViewCell.xib; sourceTree = "<group>"; };
+		8442A9092CDC8B2D0006068E /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
+		8442A90A2CDC8B2D0006068E /* FAQViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FAQViewController.xib; sourceTree = "<group>"; };
 		844EA9572CD8CFE4009A0B5E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		844EA9582CD8CFE4009A0B5E /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
@@ -249,8 +287,6 @@
 		84EFFAEC2CCFB32800C11C26 /* rectangelDash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rectangelDash.swift; sourceTree = "<group>"; };
 		84EFFAF22CCFB68A00C11C26 /* ImageCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCvCell.swift; sourceTree = "<group>"; };
 		84EFFAF32CCFB68A00C11C26 /* ImageCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCvCell.xib; sourceTree = "<group>"; };
-		84EFFAF72CCFB9EE00C11C26 /* RateUsVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateUsVc.swift; sourceTree = "<group>"; };
-		84EFFAF82CCFB9EE00C11C26 /* RateUsVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RateUsVc.xib; sourceTree = "<group>"; };
 		87307EB2684F6F92EC1CE272 /* Pods-VsSchoolChimes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.release.xcconfig"; sourceTree = "<group>"; };
 		B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -318,6 +354,47 @@
 				8442A8662CDB787A0006068E /* StudentcardTvCell.xib */,
 			);
 			path = PriorityScreen;
+			sourceTree = "<group>";
+		};
+		8442A8F32CDC83860006068E /* Rate Us */ = {
+			isa = PBXGroup;
+			children = (
+				8442A8E52CDC83860006068E /* BanerTableViewCell.swift */,
+				8442A8E62CDC83860006068E /* BanerTableViewCell.xib */,
+				8442A8E72CDC83860006068E /* GifImage.swift */,
+				8442A8E82CDC83860006068E /* RateUsViewController.swift */,
+				8442A8E92CDC83860006068E /* RateUsViewController.xib */,
+				8442A8EA2CDC83860006068E /* RatingTableViewCell.swift */,
+				8442A8EB2CDC83860006068E /* RatingTableViewCell.xib */,
+				8442A8EC2CDC83860006068E /* RatingTypeTableViewCell.swift */,
+				8442A8ED2CDC83860006068E /* RatingTypeTableViewCell.xib */,
+				8442A8EE2CDC83860006068E /* SubmitRatingViewController.swift */,
+				8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */,
+				8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */,
+				8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */,
+				8442A8F22CDC83860006068E /* Thumbs Up.gif */,
+			);
+			path = "Rate Us";
+			sourceTree = "<group>";
+		};
+		8442A9042CDC8A820006068E /* Logout page */ = {
+			isa = PBXGroup;
+			children = (
+				8442A9022CDC8A820006068E /* LogoutViewController.swift */,
+				8442A9032CDC8A820006068E /* LogoutViewController.xib */,
+			);
+			path = "Logout page";
+			sourceTree = "<group>";
+		};
+		8442A90B2CDC8B2D0006068E /* FAQ Page */ = {
+			isa = PBXGroup;
+			children = (
+				8442A9072CDC8B2D0006068E /* FAQTableViewCell.swift */,
+				8442A9082CDC8B2D0006068E /* FAQTableViewCell.xib */,
+				8442A9092CDC8B2D0006068E /* FAQViewController.swift */,
+				8442A90A2CDC8B2D0006068E /* FAQViewController.xib */,
+			);
+			path = "FAQ Page";
 			sourceTree = "<group>";
 		};
 		844EA93D2CD21E46009A0B5E /* View */ = {
@@ -1151,6 +1228,8 @@
 		84EFF9EA2CCCAF3000C11C26 /* SettingsVc */ = {
 			isa = PBXGroup;
 			children = (
+				8442A90B2CDC8B2D0006068E /* FAQ Page */,
+				8442A9042CDC8A820006068E /* Logout page */,
 				84EFFAF62CCFB9D000C11C26 /* RateUsVc */,
 				84EFFAE32CCFA45100C11C26 /* ReportBugVc */,
 				84EFFACA2CCF90DE00C11C26 /* SettingsVC */,
@@ -1218,8 +1297,7 @@
 		84EFFAF62CCFB9D000C11C26 /* RateUsVc */ = {
 			isa = PBXGroup;
 			children = (
-				84EFFAF72CCFB9EE00C11C26 /* RateUsVc.swift */,
-				84EFFAF82CCFB9EE00C11C26 /* RateUsVc.xib */,
+				8442A8F32CDC83860006068E /* Rate Us */,
 			);
 			path = RateUsVc;
 			sourceTree = "<group>";
@@ -1409,13 +1487,14 @@
 				84EFFA382CCCB44300C11C26 /* ContactUsVc.xib in Resources */,
 				849E573B2C1FF6BD006119DA /* RobotoSlab-Thin.ttf in Resources */,
 				84A5BE4B2C19719900E32496 /* Assets.xcassets in Resources */,
-				84EFFAF92CCFB9EE00C11C26 /* RateUsVc.xib in Resources */,
 				84A5BE4E2C19719900E32496 /* Base in Resources */,
 				849E57222C1FF44B006119DA /* MobileNumberStoryboard.storyboard in Resources */,
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
 				844EA95B2CD8CFE4009A0B5E /* ProfileViewController.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
+				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
+				8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */,
 				849E573A2C1FF6BD006119DA /* RobotoSlab-Regular.ttf in Resources */,
 				84EFF9D32CCC7CD000C11C26 /* HomePageVc.xib in Resources */,
 				84EFF9CE2CCC7A6000C11C26 /* PasswordVc.xib in Resources */,
@@ -1428,10 +1507,18 @@
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
 				84EFFACC2CCF90DE00C11C26 /* SettingsTableViewCell.xib in Resources */,
+				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
+				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
+				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
+				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
+				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
+				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
+				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
+				8442A9012CDC83860006068E /* Thumbs Up.gif in Resources */,
 				8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */,
 				84EFF9DC2CCC864800C11C26 /* BottomCVCell.xib in Resources */,
 			);
@@ -1578,6 +1665,7 @@
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
 				84A5BFA82C1AF8E000E32496 /* ValidateOtpModel.swift in Sources */,
 				84A5BF9A2C1AF19F00E32496 /* MethodName.swift in Sources */,
+				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
 				844EA95A2CD8CFE4009A0B5E /* ProfileViewController.swift in Sources */,
 				84EFF9D92CCC862F00C11C26 /* TopCVCell.swift in Sources */,
 				84A5BFA22C1AF73200E32496 /* MobileNumberModel.swift in Sources */,
@@ -1595,7 +1683,6 @@
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */,
-				84EFFAFA2CCFB9EE00C11C26 /* RateUsVc.swift in Sources */,
 				844188682CC8C85C006483C3 /* ViewModal.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
 				84A5BE902C197C6000E32496 /* CheckBox.swift in Sources */,
@@ -1607,6 +1694,8 @@
 				84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */,
 				84EFFAE22CCF9EEA00C11C26 /* NotificationViewController.swift in Sources */,
 				84A5BF9E2C1AF5EE00E32496 /* CountryListModel.swift in Sources */,
+				8442A90C2CDC8B2D0006068E /* FAQViewController.swift in Sources */,
+				8442A90D2CDC8B2D0006068E /* FAQTableViewCell.swift in Sources */,
 				84EFF9E82CCCA7F000C11C26 /* AppBottomView.swift in Sources */,
 				84A5BE922C197CE800E32496 /* UIImageViewX.swift in Sources */,
 				844188642CC8C839006483C3 /* ResponceModal.swift in Sources */,
@@ -1629,6 +1718,13 @@
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,
 				84A5BEBF2C198DE200E32496 /* SplashViewController.swift in Sources */,
 				844188842CC91179006483C3 /* LoginVc.swift in Sources */,
+				8442A8F42CDC83860006068E /* BanerTableViewCell.swift in Sources */,
+				8442A8F52CDC83860006068E /* GifImage.swift in Sources */,
+				8442A8F62CDC83860006068E /* RateUsViewController.swift in Sources */,
+				8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */,
+				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
+				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,
+				8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */,
 				84EFFAED2CCFB32800C11C26 /* rectangelDash.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

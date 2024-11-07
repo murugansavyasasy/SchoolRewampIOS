@@ -99,12 +99,30 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
         }else if  sections[indexPath.section].items[indexPath.row] == "Send Feedback"{
             
-            let ratingVC = RateUsVc(nibName: nil, bundle: nil)
-              ratingVC.modalPresentationStyle = .overCurrentContext
-              ratingVC.modalTransitionStyle = .crossDissolve
-              present(ratingVC, animated: true, completion: nil)
+            let vc = RateUsViewController(nibName: "RateUsViewController", bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
             
         }
+        
+        
+        else if  sections[indexPath.section].items[indexPath.row] == "Logout"{
+            
+            let vc = LogoutViewController(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+            
+            
+        }
+        
+        else if  sections[indexPath.section].items[indexPath.row] == "FEEDBACK"{
+            
+            
+            let vc = FAQViewController(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+        
         
     }
 

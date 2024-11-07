@@ -46,7 +46,7 @@ class SplashViewController: UIViewController {
                     self.present(vc, animated: true)
                 }else{
                     
-                    let vc = TapBarVC(nibName: nil, bundle: nil)
+                    let vc = PriorityViewController1(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true)
                 }

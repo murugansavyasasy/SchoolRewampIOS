@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="154" id="KGk-i7-Jjw" customClass="FAQTableViewCell" customModule="SchoolchimesDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="446" height="154"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="446" height="154"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uzi-F2-8vf">
+                        <rect key="frame" x="10" y="10" width="426" height="134"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Does the school offer transportation services?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ug0-CK-MLA">
+                                <rect key="frame" x="8" y="7.9999999999999982" width="373" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrowtriangle.down.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JXf-Ns-Zdi">
+                                <rect key="frame" x="401" y="12" width="16.666666666666686" height="12.333333333333332"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="16.670000000000002" id="Ccr-mr-0d6"/>
+                                    <constraint firstAttribute="height" constant="16.670000000000002" id="QTr-2L-1ky"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" keyboardDismissMode="onDrag" text="Lorem ipsum dolor sit er elit lamet, consectetaur" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="d4P-3a-wZi">
+                                <rect key="frame" x="8" y="36.333333333333336" width="410" height="89.666666666666657"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JXf-Ns-Zdi" firstAttribute="centerY" secondItem="Ug0-CK-MLA" secondAttribute="centerY" id="5lC-4e-3wr"/>
+                            <constraint firstItem="Ug0-CK-MLA" firstAttribute="top" secondItem="uzi-F2-8vf" secondAttribute="top" constant="8" id="DYK-4x-ajw"/>
+                            <constraint firstAttribute="trailing" secondItem="JXf-Ns-Zdi" secondAttribute="trailing" constant="8.3300000000000001" id="EM6-lr-rFr"/>
+                            <constraint firstAttribute="trailing" secondItem="d4P-3a-wZi" secondAttribute="trailing" constant="8" id="GJM-aC-F7S"/>
+                            <constraint firstItem="JXf-Ns-Zdi" firstAttribute="leading" secondItem="Ug0-CK-MLA" secondAttribute="trailing" constant="20" id="On1-UC-1Cw"/>
+                            <constraint firstItem="d4P-3a-wZi" firstAttribute="leading" secondItem="uzi-F2-8vf" secondAttribute="leading" constant="8" id="RKh-hk-eA9"/>
+                            <constraint firstItem="d4P-3a-wZi" firstAttribute="top" secondItem="Ug0-CK-MLA" secondAttribute="bottom" constant="8" id="eXl-Sc-xNh"/>
+                            <constraint firstItem="Ug0-CK-MLA" firstAttribute="leading" secondItem="uzi-F2-8vf" secondAttribute="leading" constant="8" id="upk-I6-rcT"/>
+                            <constraint firstAttribute="bottom" secondItem="d4P-3a-wZi" secondAttribute="bottom" constant="8" id="vUJ-lH-PxG"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="uzi-F2-8vf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="1Zr-2j-r41"/>
+                    <constraint firstAttribute="bottom" secondItem="uzi-F2-8vf" secondAttribute="bottom" constant="10" id="BKU-UU-Zva"/>
+                    <constraint firstItem="uzi-F2-8vf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="dKd-Uz-B4n"/>
+                    <constraint firstAttribute="trailing" secondItem="uzi-F2-8vf" secondAttribute="trailing" constant="10" id="l0Y-Rg-U0I"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cellView" destination="uzi-F2-8vf" id="SL0-rU-7ei"/>
+                <outlet property="textField" destination="d4P-3a-wZi" id="p7G-aS-jEq"/>
+            </connections>
+            <point key="canvasLocation" x="235.11450381679387" y="58.450704225352112"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="arrowtriangle.down.fill" catalog="system" width="128" height="120"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
