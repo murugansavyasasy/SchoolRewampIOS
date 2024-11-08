@@ -13,7 +13,7 @@ class FAQViewController: UIViewController {
     @IBOutlet weak var submitbutton: UIButton!
     @IBOutlet weak var tableview: UITableView!
     
-  
+  var raj = ""
     var expandedIndexPaths: Set<IndexPath> = []
     var index : Int? = nil
     override func viewDidLoad() {
