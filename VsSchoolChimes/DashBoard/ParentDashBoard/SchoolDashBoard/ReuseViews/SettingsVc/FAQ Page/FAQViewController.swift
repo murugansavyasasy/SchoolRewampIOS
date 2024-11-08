@@ -45,7 +45,7 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! FAQTableViewCell
         
-        cell.textField.isHidden = true
+        cell.textview.isHidden = true
         return cell
     }
     
@@ -54,7 +54,7 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FAQTableViewCell
         
-        cell.textField.isHidden = false
+        cell.textview.isHidden = false
         //cell.stackview.isHidden = false
         
         index = indexPath.row
@@ -68,7 +68,7 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FAQTableViewCell
-        cell.textField.isHidden = true
+        cell.textview.isHidden = true
         
     }
     

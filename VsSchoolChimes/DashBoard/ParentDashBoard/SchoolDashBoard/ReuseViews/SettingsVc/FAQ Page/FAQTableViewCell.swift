@@ -10,19 +10,19 @@ import UIKit
 class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var stackview: UIStackView!
-    @IBOutlet weak var textField: UITextView!
+    @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var cellView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
        
-        textField.isHidden = true
+        textview.isHidden = true
         //stackview.isHidden = true
         
-        textField.text = "Write here!"
-        textField.textColor = UIColor.lightGray
-        textField.isScrollEnabled = false
-        textField.delegate = self
+        textview.text = "Write here!"
+        textview.textColor = UIColor.lightGray
+        textview.isScrollEnabled = false
+        textview.delegate = self
         
         //cellView.layer.cornerRadius = 15
         cellView.layer.cornerRadius = 10
@@ -50,9 +50,9 @@ class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
     
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textField.text.isEmpty {
-            textField.text = "Write here!"
-            textField.textColor = UIColor.lightGray
+        if textview.text.isEmpty {
+            textview.text = "Write here!"
+            textview.textColor = UIColor.lightGray
         }
     }
     
