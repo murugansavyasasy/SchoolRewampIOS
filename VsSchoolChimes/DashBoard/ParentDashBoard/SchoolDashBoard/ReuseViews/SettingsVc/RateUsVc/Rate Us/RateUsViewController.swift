@@ -28,6 +28,8 @@ class RateUsViewController: UIViewController{
     //MARK: BackButton Action
     @IBAction func backBtn(_ sender: Any) {
         
+        dismiss(animated: true)
+        
     }
     
 }

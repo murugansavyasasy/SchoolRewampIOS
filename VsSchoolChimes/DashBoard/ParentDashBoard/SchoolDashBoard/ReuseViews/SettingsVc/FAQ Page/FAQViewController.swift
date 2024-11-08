@@ -13,14 +13,14 @@ class FAQViewController: UIViewController {
     @IBOutlet weak var submitbutton: UIButton!
     @IBOutlet weak var tableview: UITableView!
     
-    let identifier = "FAQTableViewCell"
+  
     var expandedIndexPaths: Set<IndexPath> = []
     var index : Int? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let nib = UINib(nibName: identifier, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: identifier)
+        let nib = UINib(nibName: CellConfingName.FAQTableViewCell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: CellConfingName.FAQTableViewCell)
         
         tableview.dataSource = self
         tableview.delegate = self
@@ -33,7 +33,14 @@ class FAQViewController: UIViewController {
     @IBAction func SubmitBtnAction(_ sender: Any) {
         
     }
-
+    
+    
+    
+    @IBAction func backBtn(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
+    
 }
 
 
@@ -43,7 +50,7 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! FAQTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.FAQTableViewCell, for: indexPath) as! FAQTableViewCell
         
         cell.textview.isHidden = true
         return cell
@@ -62,7 +69,7 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.beginUpdates()
         tableView.endUpdates()
         
-       // tableView.deselectRow(at: indexPath, animated: true)
+   
         
     }
     
@@ -79,7 +86,7 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return 100
-//        return expandedIndexPaths.contains(indexPath) ? UITableView.automaticDimension : 100
+
     }
     
 }

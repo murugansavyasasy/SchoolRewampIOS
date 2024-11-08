@@ -8,7 +8,7 @@
 import UIKit
 
 class LogoutViewController: UIViewController {
-    var demo = "git check"
+    var demo = "gitdfchgvhbjnkjjhrdtyfgyu"
     @IBOutlet var overallview: UIView!
     @IBOutlet weak var LogoutView: UIView!
     @IBOutlet weak var Cancellabel: UILabel!

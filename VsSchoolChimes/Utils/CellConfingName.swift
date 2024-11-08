@@ -17,6 +17,7 @@ class CellConfingName {
     static let SettingHeaderView = "SettingHeaderView"
     static let NotificationTableViewCell = "NotificationTableViewCell"
     static let ImageCvCell = "ImageCvCell"
+    static let FAQTableViewCell = "FAQTableViewCell"
     
    
    
