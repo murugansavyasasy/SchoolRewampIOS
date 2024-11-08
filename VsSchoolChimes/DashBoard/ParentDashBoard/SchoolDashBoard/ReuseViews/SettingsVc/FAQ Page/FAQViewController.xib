@@ -40,6 +40,9 @@
                                         <imageReference key="image" image="arrow.left" catalog="system" symbolScale="large" variableValue="1"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                     </buttonConfiguration>
+                                    <connections>
+                                        <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="Ihb-4G-Uwm"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FAQ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uV4-3v-ddw">
                                     <rect key="frame" x="78" y="25" width="295" height="30"/>
