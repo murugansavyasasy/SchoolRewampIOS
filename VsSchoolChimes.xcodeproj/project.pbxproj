@@ -98,6 +98,8 @@
 		84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFCE2C1B06D500E32496 /* CountryListViewModel.swift */; };
 		84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD02C1B079A00E32496 /* MobileNumberViewModel.swift */; };
 		84A5BFD32C1B084800E32496 /* OtpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD22C1B084800E32496 /* OtpViewModel.swift */; };
+		84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */; };
+		84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */; };
 		84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFF9952CCB5B0400C11C26 /* CountryVc.xib */; };
 		84EFF9972CCB5B0400C11C26 /* CountryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF9942CCB5B0400C11C26 /* CountryVc.swift */; };
 		84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF9982CCBA7E800C11C26 /* CustomAlert.swift */; };
@@ -252,6 +254,8 @@
 		84A5BFCE2C1B06D500E32496 /* CountryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListViewModel.swift; sourceTree = "<group>"; };
 		84A5BFD02C1B079A00E32496 /* MobileNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberViewModel.swift; sourceTree = "<group>"; };
 		84A5BFD22C1B084800E32496 /* OtpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpViewModel.swift; sourceTree = "<group>"; };
+		84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiechartCVCell.swift; sourceTree = "<group>"; };
+		84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PiechartCVCell.xib; sourceTree = "<group>"; };
 		84EFF9942CCB5B0400C11C26 /* CountryVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryVc.swift; sourceTree = "<group>"; };
 		84EFF9952CCB5B0400C11C26 /* CountryVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryVc.xib; sourceTree = "<group>"; };
 		84EFF9982CCBA7E800C11C26 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
@@ -1204,6 +1208,8 @@
 				84EFF9D72CCC862F00C11C26 /* TopCVCell.xib */,
 				84EFF9DA2CCC864800C11C26 /* BottomCVCell.swift */,
 				84EFF9DB2CCC864800C11C26 /* BottomCVCell.xib */,
+				84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */,
+				84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -1509,6 +1515,7 @@
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
 				84EFFACC2CCF90DE00C11C26 /* SettingsTableViewCell.xib in Resources */,
+				84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
@@ -1677,6 +1684,7 @@
 				84A5BFCD2C1B059100E32496 /* SplashViewModel.swift in Sources */,
 				84EFF9CF2CCC7A6000C11C26 /* PasswordVc.swift in Sources */,
 				844188882CC915FF006483C3 /* OTPVc.swift in Sources */,
+				84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */,
 				84EFFA392CCCB44300C11C26 /* ContactUsVc.swift in Sources */,
 				84A5BEAF2C1982BA00E32496 /* CustomFonts.swift in Sources */,
 				84A5BE8E2C197C3000E32496 /* Toast.swift in Sources */,
