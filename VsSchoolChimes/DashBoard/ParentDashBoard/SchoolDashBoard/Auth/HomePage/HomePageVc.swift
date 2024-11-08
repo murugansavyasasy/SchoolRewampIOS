@@ -31,7 +31,7 @@ class HomePageVc: UIViewController,UITabBarDelegate {
        private lazy var fourthVC = SettingsViewController()
     
     
-    let name = ""
+    let name = "saran"
     
     
   
