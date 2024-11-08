@@ -18,7 +18,7 @@ class HomePageVc: UIViewController,UITabBarDelegate {
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
      
-    var items : [String] = [ "discussion","SmallIcon","drawing-compass","knowledge","pencil","scale","schoolss","university","support","SmallIcon"]
+    var items : [String] = [ "discussion","SmallIcon","drawing-compass","knowledge","pencil","scale","schoolss","university","support","SmallIcon","Video"]
     let HomePageBottomCell = "BottomCVCell"
     var currentIndex = 0
     var autoScrollTimer: Timer?
@@ -29,6 +29,9 @@ class HomePageVc: UIViewController,UITabBarDelegate {
        private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
        private lazy var fourthVC = SettingsViewController()
+    
+    
+    let name = ""
     
     
   
