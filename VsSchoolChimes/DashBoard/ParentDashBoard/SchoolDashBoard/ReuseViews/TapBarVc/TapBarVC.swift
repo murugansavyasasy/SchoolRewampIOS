@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class TapBarVC: UIViewController,UITabBarDelegate {
     
     
@@ -31,11 +32,12 @@ class TapBarVC: UIViewController,UITabBarDelegate {
        private func setupTabBar() {
            // Configure the tab bar items
            let firstItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), tag: 0)
+           
            let secondItem = UITabBarItem(title: "Help", image: UIImage(systemName: "questionmark.circle.fill"), tag: 1)
            let thirdItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape.fill"), tag: 2)
            let fourthItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 3)
 
-          
+           tabBar.backgroundColor = Colornames.bottomClr
            
            
            

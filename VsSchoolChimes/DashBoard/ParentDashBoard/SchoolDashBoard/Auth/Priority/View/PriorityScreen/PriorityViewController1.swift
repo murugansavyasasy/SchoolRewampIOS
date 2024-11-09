@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class PriorityViewController1: UIViewController {
     
     
@@ -136,6 +137,7 @@ class PriorityViewController1: UIViewController {
 
 
 
+@available(iOS 14.0, *)
 extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
     
 

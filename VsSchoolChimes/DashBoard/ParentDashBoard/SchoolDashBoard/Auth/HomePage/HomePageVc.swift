@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate {
 
     
@@ -113,6 +114,7 @@ class HomePageVc: UIViewController,UITabBarDelegate {
 
 
 
+@available(iOS 14.0, *)
 extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
  
@@ -160,6 +162,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
  
 }
 
+@available(iOS 14.0, *)
 extension HomePageVc: UICollectionViewDelegateFlowLayout {
     
     // Set item size

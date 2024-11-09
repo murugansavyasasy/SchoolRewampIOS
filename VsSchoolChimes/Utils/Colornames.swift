@@ -23,6 +23,8 @@ class Colornames {
     static  var ClickClr =  UIColor(named: "ClickClr")
     static  var Priority =  UIColor(named: "Priority")
     static  var priortitClr1 =  UIColor(named: "priortitClr1")
+    static  var topBackgroundCLr =  UIColor(named: "topBackgroundCLr")
+    static  var bottomClr =  UIColor(named: "Clr")
 }
 
 

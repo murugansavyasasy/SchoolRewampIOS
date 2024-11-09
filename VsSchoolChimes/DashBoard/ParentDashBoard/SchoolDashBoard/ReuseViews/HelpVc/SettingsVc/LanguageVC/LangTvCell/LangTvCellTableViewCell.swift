@@ -1,16 +1,14 @@
 //
-//  SettingsTableViewCell.swift
-//  SchoolchimesDemo
+//  LangTvCellTableViewCell.swift
+//  VsSchoolChimes
 //
-//  Created by Admin on 26/10/24.
+//  Created by admin on 08/11/24.
 //
 
 import UIKit
 
-class SettingsTableViewCell: UITableViewCell {
+class LangTvCellTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var nameLbl: UILabel!
-    @IBOutlet weak var imgView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

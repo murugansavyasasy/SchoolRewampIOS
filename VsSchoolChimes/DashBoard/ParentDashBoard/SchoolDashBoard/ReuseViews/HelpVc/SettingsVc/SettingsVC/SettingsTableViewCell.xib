@@ -35,8 +35,8 @@
                                     <constraint firstAttribute="width" constant="15" id="SZN-L2-fWc"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bell" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="d5H-b3-lRv">
-                                <rect key="frame" x="8" y="26.666666666666668" width="22" height="24.999999999999982"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="character.bubble.ja" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="d5H-b3-lRv">
+                                <rect key="frame" x="8" y="27" width="22" height="25"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="0zJ-J9-6tb"/>
@@ -71,7 +71,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="bell" catalog="system" width="125" height="128"/>
+        <image name="character.bubble.ja" catalog="system" width="128" height="110"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

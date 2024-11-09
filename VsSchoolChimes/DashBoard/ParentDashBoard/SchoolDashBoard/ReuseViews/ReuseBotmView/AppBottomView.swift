@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class AppBottomView: UIView {
 
     @IBOutlet weak var settingsImageView: UIImageView!

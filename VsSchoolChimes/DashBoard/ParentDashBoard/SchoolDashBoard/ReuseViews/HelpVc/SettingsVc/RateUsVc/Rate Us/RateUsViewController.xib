@@ -22,14 +22,15 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Swq-u5-oa5">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="832"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBy-au-fC9">
-                            <rect key="frame" x="5" y="50" width="100" height="35"/>
+                            <rect key="frame" x="5" y="20" width="100" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="DqC-7d-RIe"/>
                                 <constraint firstAttribute="width" constant="100" id="GQJ-8M-04H"/>
                             </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="12" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal">
                                 <imageReference key="image" image="arrow.backward" catalog="system" symbolScale="large"/>
@@ -39,8 +40,16 @@
                                 <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="Kfs-ZB-bFR"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RateUs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dff-Fo-XsG">
-                            <rect key="frame" x="167.33333333333334" y="60" width="58.333333333333343" height="21"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="33x-KJ-bEt">
+                            <rect key="frame" x="0.0" y="70" width="393" height="689"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="nQg-bE-hry"/>
+                                <outlet property="delegate" destination="-1" id="0nJ-z6-ASI"/>
+                            </connections>
+                        </tableView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate us" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dff-Fo-XsG">
+                            <rect key="frame" x="166.66666666666666" y="27" width="60" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="bNB-CD-Jko"/>
                             </constraints>
@@ -48,46 +57,35 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="33x-KJ-bEt">
-                            <rect key="frame" x="0.0" y="90" width="393" height="742"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <connections>
-                                <outlet property="dataSource" destination="-1" id="nQg-bE-hry"/>
-                                <outlet property="delegate" destination="-1" id="0nJ-z6-ASI"/>
-                            </connections>
-                        </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="dff-Fo-XsG" firstAttribute="centerX" secondItem="Swq-u5-oa5" secondAttribute="centerX" id="BuR-Xp-Kp6"/>
                         <constraint firstItem="pBy-au-fC9" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" constant="5" id="Q1o-FW-twh"/>
-                        <constraint firstItem="dff-Fo-XsG" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" constant="60" id="VSN-Wz-t0u"/>
+                        <constraint firstItem="dff-Fo-XsG" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" constant="27" id="VSN-Wz-t0u"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" id="cJG-zF-iwT"/>
-                        <constraint firstItem="pBy-au-fC9" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" constant="50" id="eUv-y8-DnF"/>
+                        <constraint firstItem="pBy-au-fC9" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" constant="20" id="eUv-y8-DnF"/>
                         <constraint firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" id="k8y-QN-ga0"/>
                         <constraint firstAttribute="bottom" secondItem="33x-KJ-bEt" secondAttribute="bottom" id="rCR-op-BcY"/>
-                        <constraint firstItem="33x-KJ-bEt" firstAttribute="top" secondItem="pBy-au-fC9" secondAttribute="bottom" constant="5" id="zzM-RE-Lgf"/>
+                        <constraint firstItem="33x-KJ-bEt" firstAttribute="top" secondItem="pBy-au-fC9" secondAttribute="bottom" constant="15" id="zzM-RE-Lgf"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Fyk-GW-bCy"/>
-            <color key="backgroundColor" systemColor="systemGray3Color"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Fyk-GW-bCy" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" id="ZzY-vC-8vs"/>
-                <constraint firstAttribute="bottom" secondItem="Swq-u5-oa5" secondAttribute="bottom" constant="20" symbolic="YES" id="gan-4s-Hbg"/>
+                <constraint firstItem="Swq-u5-oa5" firstAttribute="top" secondItem="Fyk-GW-bCy" secondAttribute="top" id="pGm-TZ-tm2"/>
+                <constraint firstItem="Swq-u5-oa5" firstAttribute="bottom" secondItem="Fyk-GW-bCy" secondAttribute="bottom" id="rs4-gq-1sD"/>
                 <constraint firstItem="Fyk-GW-bCy" firstAttribute="trailing" secondItem="Swq-u5-oa5" secondAttribute="trailing" id="sGs-df-R6N"/>
-                <constraint firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" id="umO-dz-1lU"/>
             </constraints>
-            <point key="canvasLocation" x="-200" y="-156"/>
+            <point key="canvasLocation" x="-200.76335877862596" y="-156.33802816901408"/>
         </view>
     </objects>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray3Color">
-            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

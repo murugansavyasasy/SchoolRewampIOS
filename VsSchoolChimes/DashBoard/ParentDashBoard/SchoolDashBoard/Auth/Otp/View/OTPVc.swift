@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class OTPVc: UIViewController,UITextFieldDelegate {
 
     @IBOutlet weak var otpTextField1: UITextField!

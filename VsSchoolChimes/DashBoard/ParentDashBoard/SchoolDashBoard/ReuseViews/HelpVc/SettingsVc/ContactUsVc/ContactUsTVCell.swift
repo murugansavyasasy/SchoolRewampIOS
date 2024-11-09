@@ -13,10 +13,14 @@ class ContactUsTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        cellview.layer.shadowColor = UIColor.white.cgColor
+        cellview.layer.shadowOpacity =  10
+        cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
+        cellview.layer.shadowRadius = 3
+        cellview.layer.masksToBounds = true
+        cellview.layer.cornerRadius = 5
         
-        cellview.layer.cornerRadius = 15
-        cellview.layer.borderWidth = 0.35
-        cellview.layer.borderColor = UIColor.systemGray6.cgColor
+      
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -47,6 +47,11 @@
 		8442A90D2CDC8B2D0006068E /* FAQTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9072CDC8B2D0006068E /* FAQTableViewCell.swift */; };
 		8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9082CDC8B2D0006068E /* FAQTableViewCell.xib */; };
 		8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A90A2CDC8B2D0006068E /* FAQViewController.xib */; };
+		8442A9522CDE83C80006068E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9502CDE83C80006068E /* Localizable.strings */; };
+		8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9682CDE8AE80006068E /* LanguageVc.xib */; };
+		8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9672CDE8AE80006068E /* LanguageVc.swift */; };
+		8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */; };
+		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		844EA95A2CD8CFE4009A0B5E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EA9572CD8CFE4009A0B5E /* ProfileViewController.swift */; };
 		844EA95B2CD8CFE4009A0B5E /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844EA9582CD8CFE4009A0B5E /* ProfileViewController.xib */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
@@ -199,6 +204,17 @@
 		8442A9082CDC8B2D0006068E /* FAQTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FAQTableViewCell.xib; sourceTree = "<group>"; };
 		8442A9092CDC8B2D0006068E /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		8442A90A2CDC8B2D0006068E /* FAQViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FAQViewController.xib; sourceTree = "<group>"; };
+		8442A94D2CDE82DB0006068E /* ta-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ta-IN"; path = "ta-IN.lproj/Main.strings"; sourceTree = "<group>"; };
+		8442A94E2CDE82E70006068E /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Main.strings; sourceTree = "<group>"; };
+		8442A94F2CDE82F10006068E /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Main.strings; sourceTree = "<group>"; };
+		8442A9512CDE83C80006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8442A9532CDE84B00006068E /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8442A9542CDE84B10006068E /* ta-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "ta-IN"; path = "ta-IN.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8442A9552CDE84B30006068E /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8442A9672CDE8AE80006068E /* LanguageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageVc.swift; sourceTree = "<group>"; };
+		8442A9682CDE8AE80006068E /* LanguageVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageVc.xib; sourceTree = "<group>"; };
+		8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangTvCellTableViewCell.swift; sourceTree = "<group>"; };
+		8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangTvCellTableViewCell.xib; sourceTree = "<group>"; };
 		844EA9572CD8CFE4009A0B5E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		844EA9582CD8CFE4009A0B5E /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
@@ -401,6 +417,25 @@
 				8442A90A2CDC8B2D0006068E /* FAQViewController.xib */,
 			);
 			path = "FAQ Page";
+			sourceTree = "<group>";
+		};
+		8442A9692CDE8AE80006068E /* LanguageVC */ = {
+			isa = PBXGroup;
+			children = (
+				8442A96C2CDE8AED0006068E /* LangTvCell */,
+				8442A9672CDE8AE80006068E /* LanguageVc.swift */,
+				8442A9682CDE8AE80006068E /* LanguageVc.xib */,
+			);
+			path = LanguageVC;
+			sourceTree = "<group>";
+		};
+		8442A96C2CDE8AED0006068E /* LangTvCell */ = {
+			isa = PBXGroup;
+			children = (
+				8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */,
+				8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */,
+			);
+			path = LangTvCell;
 			sourceTree = "<group>";
 		};
 		844EA93D2CD21E46009A0B5E /* View */ = {
@@ -727,6 +762,7 @@
 				84EFF9DE2CCC89CF00C11C26 /* CellConfingName.swift */,
 				84EFFA3E2CCCC98100C11C26 /* Shimmer.swift */,
 				84EFFAEC2CCFB32800C11C26 /* rectangelDash.swift */,
+				8442A9502CDE83C80006068E /* Localizable.strings */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1229,7 +1265,6 @@
 				844EA9592CD8CFE4009A0B5E /* Profile pageVc */,
 				8494B6622CD1EC47004B0746 /* TapBarVc */,
 				84EFF9EF2CCCAFDD00C11C26 /* HelpVc */,
-				84EFF9EA2CCCAF3000C11C26 /* SettingsVc */,
 				84EFF9E02CCCA20900C11C26 /* ReuseBotmView */,
 			);
 			path = ReuseViews;
@@ -1238,6 +1273,7 @@
 		84EFF9EA2CCCAF3000C11C26 /* SettingsVc */ = {
 			isa = PBXGroup;
 			children = (
+				8442A9692CDE8AE80006068E /* LanguageVC */,
 				8442A90B2CDC8B2D0006068E /* FAQ Page */,
 				8442A9042CDC8A820006068E /* Logout page */,
 				84EFFAF62CCFB9D000C11C26 /* RateUsVc */,
@@ -1252,6 +1288,7 @@
 		84EFF9EF2CCCAFDD00C11C26 /* HelpVc */ = {
 			isa = PBXGroup;
 			children = (
+				84EFF9EA2CCCAF3000C11C26 /* SettingsVc */,
 				84EFF9F02CCCAFF800C11C26 /* HelpVc.swift */,
 				84EFF9F12CCCAFF800C11C26 /* HelpVc.xib */,
 			);
@@ -1451,6 +1488,9 @@
 			knownRegions = (
 				en,
 				Base,
+				"ta-IN",
+				hi,
+				th,
 			);
 			mainGroup = 84A5BE352C19719700E32496;
 			packageReferences = (
@@ -1496,8 +1536,10 @@
 				849E573B2C1FF6BD006119DA /* RobotoSlab-Thin.ttf in Resources */,
 				84A5BE4B2C19719900E32496 /* Assets.xcassets in Resources */,
 				84A5BE4E2C19719900E32496 /* Base in Resources */,
+				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				849E57222C1FF44B006119DA /* MobileNumberStoryboard.storyboard in Resources */,
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
+				8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */,
 				844EA95B2CD8CFE4009A0B5E /* ProfileViewController.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
@@ -1518,6 +1560,7 @@
 				84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
+				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
@@ -1727,9 +1770,11 @@
 				84A5BE9A2C197E0B00E32496 /* ResponseName.swift in Sources */,
 				84A5BE962C197D2C00E32496 /* UILabel.swift in Sources */,
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
+				8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */,
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,
 				84A5BEBF2C198DE200E32496 /* SplashViewController.swift in Sources */,
 				844188842CC91179006483C3 /* LoginVc.swift in Sources */,
+				8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */,
 				8442A8F42CDC83860006068E /* BanerTableViewCell.swift in Sources */,
 				8442A8F52CDC83860006068E /* GifImage.swift in Sources */,
 				8442A8F62CDC83860006068E /* RateUsViewController.swift in Sources */,
@@ -1774,10 +1819,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		8442A9502CDE83C80006068E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8442A9512CDE83C80006068E /* en */,
+				8442A9532CDE84B00006068E /* hi */,
+				8442A9542CDE84B10006068E /* ta-IN */,
+				8442A9552CDE84B30006068E /* th */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		84A5BE472C19719700E32496 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				84A5BE482C19719700E32496 /* Base */,
+				8442A94D2CDE82DB0006068E /* ta-IN */,
+				8442A94E2CDE82E70006068E /* hi */,
+				8442A94F2CDE82F10006068E /* th */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1870,6 +1929,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1933,6 +1993,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

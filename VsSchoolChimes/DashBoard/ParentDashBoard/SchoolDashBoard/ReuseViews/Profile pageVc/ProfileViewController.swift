@@ -9,6 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    @IBOutlet weak var bottomFullview: UIView!
     @IBOutlet weak var imgview: UIImageView!
     @IBOutlet weak var contactDetails: UIView!
     @IBOutlet weak var standardView: UIView!
@@ -20,10 +21,17 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var bloodimg: UIImageView!
     @IBOutlet weak var familyDetailsView: UIView!
     
+    @IBOutlet weak var fullview: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = Colornames.topBackgroundCLr
+        fullview.backgroundColor = Colornames.topBackgroundCLr
+        
+        bottomFullview.backgroundColor = Colornames.bottomClr
+        
+        
         imgview.layer.cornerRadius = 50//imgview.frame.width/2
         personalview.layer.cornerRadius = 15
         standardView.layer.cornerRadius = 15
@@ -34,6 +42,7 @@ class ProfileViewController: UIViewController {
         bloodimg.layer.cornerRadius = 10
         locationimg.layer.cornerRadius = 10
         hostelimg.layer.cornerRadius = 10
+        
     }
 
 

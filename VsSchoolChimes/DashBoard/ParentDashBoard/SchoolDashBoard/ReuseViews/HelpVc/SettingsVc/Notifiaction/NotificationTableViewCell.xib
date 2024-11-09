@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -52,7 +53,7 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="disscussion" translatesAutoresizingMaskIntoConstraints="NO" id="8rb-I7-MiP">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="support" translatesAutoresizingMaskIntoConstraints="NO" id="8rb-I7-MiP">
                                 <rect key="frame" x="306" y="35.666666666666664" width="30" height="34.999999999999993"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="1FM-Jy-0cy"/>
@@ -73,7 +74,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" name="BackGroundClr"/>
                 <constraints>
                     <constraint firstItem="HgE-c8-V2V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Kj2-cx-tb6"/>
                     <constraint firstAttribute="bottom" secondItem="HgE-c8-V2V" secondAttribute="bottom" constant="10" id="TW0-Ff-tfY"/>
@@ -90,7 +91,10 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="disscussion" width="128" height="128"/>
+        <image name="support" width="42.666667938232422" height="42.666667938232422"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.95686274509803915" green="0.96078431372549022" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

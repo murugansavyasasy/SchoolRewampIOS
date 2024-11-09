@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class SettingsViewController: UIViewController {
     
     
@@ -14,31 +15,50 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tableview: UITableView!
    
     let sections: [Section] = [
-           Section(title: "GENERAL", items: ["Notifications", "FAQ", "Contact Us", "Terms and Conditions"]),
+           Section(title: "GENERAL", items: ["Notifications", "FAQ", "Contact Us", "Terms and Conditions","Change App Language"]),
            Section(title: "FEEDBACK", items: ["Report a bug", "Send Feedback", "Logout"])
        ]
+ 
+ 
+    let Images: [Image] = [
+        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja"]),
+        Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
+    ]
+    
+    var imagesArray: [UIImage] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        for imageCategory in Images {
+           
+            for uiImage in imageCategory.uiImages {
+                if let image = uiImage {
+                    print("Loaded UIImage: \(image)")
+                    imagesArray.append(image)
+                } else {
+                    print("Failed to load UIImage for one of the symbols.")
+                }
+            }
+        }
         tableview.dataSource = self
         tableview.delegate = self
-     
+        view.backgroundColor = Colornames.topBackgroundCLr
+        tableview.backgroundColor = Colornames.bottomClr
         
+       
         let nib = UINib(nibName: CellConfingName.SettingsTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.SettingsTableViewCell)
         
         
         tableview.register(UINib(nibName:CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
-//        
-//        let rateButton = UIButton(type: .system)
-//        rateButton.setTitle("Rate Us", for: .normal)
-//        rateButton.addTarget(self, action: #selector(showRatingPopup), for: .touchUpInside)
-//        view.addSubview(rateButton)
+
 
     }
 
 }
+
 
 
 
@@ -70,6 +90,10 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SettingsTableViewCell, for: indexPath) as! SettingsTableViewCell
         cell.nameLbl.text = sections[indexPath.section].items[indexPath.row]
         
+        
+        cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
+        
+      
         cell.selectionStyle = .none
         
         return cell
@@ -141,6 +165,32 @@ struct Section {
 }
 
 let sections: [Section] = [
-    Section(title: "GENERAL", items: ["Notifications", "FAQ", "Contact Us", "Terms and Conditions"]),
+    Section(title: "GENERAL", items: ["Notifications", "FAQ", "Contact Us", "Terms and Conditions","Change App Language"]),
     Section(title: "FEEDBACK", items: ["Report a bug", "Send Feedback", "Logout"])
 ]
+
+
+struct Image {
+    let title: String
+    let uiImages: [UIImage?]
+    
+    // Custom initializer that takes an array of system image names (strings)
+    init(title: String, Imageitems: [String]) {
+        self.title = title
+        // Convert each string in Imageitems to a UIImage
+        self.uiImages = Imageitems.map { UIImage(systemName: $0) }
+    }
+}
+
+let Images: [Image] = [
+    Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja"]),
+    Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
+]
+
+
+
+// Example of accessing UIImages
+
+
+
+

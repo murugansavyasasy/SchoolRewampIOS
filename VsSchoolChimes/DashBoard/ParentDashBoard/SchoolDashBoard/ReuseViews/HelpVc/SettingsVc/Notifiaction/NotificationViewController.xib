@@ -47,7 +47,7 @@
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3W-XM-cgS">
                                     <rect key="frame" x="52" y="24" width="321" height="27"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -64,11 +64,13 @@
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pvA-xg-oDV">
-                            <rect key="frame" x="5" y="161" width="383" height="598"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <rect key="frame" x="0.0" y="141" width="393" height="618"/>
+                            <color key="backgroundColor" name="BackGroundClr"/>
                         </tableView>
-                        <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="9ed-UR-7vR">
+                        <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="9ed-UR-7vR">
                             <rect key="frame" x="0.0" y="85" width="393" height="56"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="barTintColor" name="BackGroundClr"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="oqS-Fr-MMD"/>
@@ -76,21 +78,21 @@
                         </searchBar>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="pvA-xg-oDV" secondAttribute="trailing" constant="5" id="8kz-P4-gp1"/>
+                        <constraint firstAttribute="trailing" secondItem="pvA-xg-oDV" secondAttribute="trailing" id="8kz-P4-gp1"/>
                         <constraint firstItem="GOa-gl-bqa" firstAttribute="top" secondItem="9od-LZ-gxA" secondAttribute="top" id="HRZ-HO-hg9"/>
                         <constraint firstAttribute="bottom" secondItem="pvA-xg-oDV" secondAttribute="bottom" id="TQQ-Ir-ejC"/>
                         <constraint firstItem="9ed-UR-7vR" firstAttribute="leading" secondItem="9od-LZ-gxA" secondAttribute="leading" id="XVk-xE-7lc"/>
                         <constraint firstItem="GOa-gl-bqa" firstAttribute="leading" secondItem="9od-LZ-gxA" secondAttribute="leading" id="eCE-3c-sqU"/>
                         <constraint firstItem="9ed-UR-7vR" firstAttribute="top" secondItem="GOa-gl-bqa" secondAttribute="bottom" constant="10" id="eDh-Zr-j2u"/>
                         <constraint firstAttribute="trailing" secondItem="GOa-gl-bqa" secondAttribute="trailing" id="nP8-KJ-WPm"/>
-                        <constraint firstItem="pvA-xg-oDV" firstAttribute="leading" secondItem="9od-LZ-gxA" secondAttribute="leading" constant="5" id="pAo-it-vID"/>
+                        <constraint firstItem="pvA-xg-oDV" firstAttribute="leading" secondItem="9od-LZ-gxA" secondAttribute="leading" id="pAo-it-vID"/>
                         <constraint firstAttribute="trailing" secondItem="9ed-UR-7vR" secondAttribute="trailing" id="qSR-Dn-ZLK"/>
-                        <constraint firstItem="pvA-xg-oDV" firstAttribute="top" secondItem="9ed-UR-7vR" secondAttribute="bottom" constant="20" id="voC-Pi-3Ck"/>
+                        <constraint firstItem="pvA-xg-oDV" firstAttribute="top" secondItem="9ed-UR-7vR" secondAttribute="bottom" id="voC-Pi-3Ck"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9od-LZ-gxA" secondAttribute="trailing" id="8r9-8O-5Pc"/>
                 <constraint firstItem="9od-LZ-gxA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Tzo-vu-2RT"/>
@@ -102,14 +104,17 @@
     </objects>
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <namedColor name="BackGroundClr">
+            <color red="0.95686274509803915" green="0.96078431372549022" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="countryClr">
             <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="topBackgroundCLr">
+            <color red="0.65098039215686276" green="0.81960784313725488" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

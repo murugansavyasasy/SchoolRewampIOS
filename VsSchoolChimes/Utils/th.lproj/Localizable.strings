@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  VsSchoolChimes
+
+  Created by admin on 08/11/24.
+  
+*/
+"welcome_message" = "ยินดีต้อนรับ";
+"change_language" = "เปลี่ยนภาษา";

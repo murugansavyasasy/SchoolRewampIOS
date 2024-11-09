@@ -18,8 +18,8 @@ class ContactUsVc: UIViewController {
         tv.dataSource = self
         tv.delegate = self
         
-        tv.rowHeight = UITableView.automaticDimension
-        tv.estimatedRowHeight = 60
+//        tv.rowHeight = UITableView.automaticDimension
+//        tv.estimatedRowHeight = 60
         
         let nib = UINib(nibName: CellConfingName.ContactUsTVCell, bundle: nil)
         
@@ -53,6 +53,10 @@ extension ContactUsVc : UITableViewDataSource,UITableViewDelegate{
     }
     
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     
+        return 100
+        
+    }
     
 }
