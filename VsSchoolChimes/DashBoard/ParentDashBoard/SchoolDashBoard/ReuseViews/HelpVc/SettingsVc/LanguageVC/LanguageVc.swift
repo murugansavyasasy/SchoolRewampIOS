@@ -7,15 +7,8 @@
 
 import UIKit
 
-class LanguageVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        <#code#>
-    }
-    
+class LanguageVc: UIViewController {
+   
 
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
@@ -74,7 +67,7 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         
         return cell
     }
->>>>>>> development
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -102,4 +95,4 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         return  60
     }
     
-//}
+}
