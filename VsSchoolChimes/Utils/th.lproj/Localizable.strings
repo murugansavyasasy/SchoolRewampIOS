@@ -7,3 +7,7 @@
 */
 "welcome_message" = "ยินดีต้อนรับ";
 "change_language" = "เปลี่ยนภาษา";
+"Home" = "หน้าหลัก";
+"Help" = "ช่วยเหลือ";
+"Settings" = "การตั้งค่า";
+"Profile" = "โปรไฟล์";

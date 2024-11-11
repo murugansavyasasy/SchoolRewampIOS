@@ -52,6 +52,8 @@
 		8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9672CDE8AE80006068E /* LanguageVc.swift */; };
 		8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */; };
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
+		8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F52CDF47C20006068E /* ChngLangFil.swift */; };
+		8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */; };
 		844EA95A2CD8CFE4009A0B5E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844EA9572CD8CFE4009A0B5E /* ProfileViewController.swift */; };
 		844EA95B2CD8CFE4009A0B5E /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844EA9582CD8CFE4009A0B5E /* ProfileViewController.xib */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
@@ -215,6 +217,9 @@
 		8442A9682CDE8AE80006068E /* LanguageVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageVc.xib; sourceTree = "<group>"; };
 		8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangTvCellTableViewCell.swift; sourceTree = "<group>"; };
 		8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangTvCellTableViewCell.xib; sourceTree = "<group>"; };
+		8442A9F52CDF47C20006068E /* ChngLangFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangFil.swift; sourceTree = "<group>"; };
+		8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangConsFil.swift; sourceTree = "<group>"; };
+		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		844EA9572CD8CFE4009A0B5E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		844EA9582CD8CFE4009A0B5E /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
@@ -763,6 +768,8 @@
 				84EFFA3E2CCCC98100C11C26 /* Shimmer.swift */,
 				84EFFAEC2CCFB32800C11C26 /* rectangelDash.swift */,
 				8442A9502CDE83C80006068E /* Localizable.strings */,
+				8442A9F52CDF47C20006068E /* ChngLangFil.swift */,
+				8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1737,6 +1744,7 @@
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
 				F29035612CDC924900F3E67C /* MobileVc.swift in Sources */,
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
+				8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */,
 				849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */,
 				844188682CC8C85C006483C3 /* ViewModal.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
@@ -1769,6 +1777,7 @@
 				84EFFAEB2CCFA4A100C11C26 /* ReportBugVcViewController.swift in Sources */,
 				84A5BE9A2C197E0B00E32496 /* ResponseName.swift in Sources */,
 				84A5BE962C197D2C00E32496 /* UILabel.swift in Sources */,
+				8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */,
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
 				8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */,
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,
@@ -1837,6 +1846,7 @@
 				8442A94D2CDE82DB0006068E /* ta-IN */,
 				8442A94E2CDE82E70006068E /* hi */,
 				8442A94F2CDE82F10006068E /* th */,
+				8442AA732CDF6B220006068E /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

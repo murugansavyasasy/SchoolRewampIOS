@@ -23,16 +23,32 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckCircle" translatesAutoresizingMaskIntoConstraints="NO" id="mj9-yO-KCp">
+                        <rect key="frame" x="20" y="15.666666666666664" width="24" height="26"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="fMA-fh-0oj"/>
+                            <constraint firstAttribute="height" constant="26" id="pC1-RP-3p2"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="H77-68-A86" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="CQ1-PB-bKL"/>
                     <constraint firstItem="H77-68-A86" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="58" id="CW6-XD-48O"/>
+                    <constraint firstItem="mj9-yO-KCp" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="EmF-7g-Nh3"/>
+                    <constraint firstItem="mj9-yO-KCp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Gqt-Ox-XIe"/>
                     <constraint firstAttribute="trailing" secondItem="H77-68-A86" secondAttribute="trailing" constant="10" id="kkf-FE-RwG"/>
                     <constraint firstAttribute="bottom" secondItem="H77-68-A86" secondAttribute="bottom" constant="5" id="oIW-Np-pu3"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="LangLbl" destination="H77-68-A86" id="2op-lS-AlC"/>
+                <outlet property="RadioImage" destination="mj9-yO-KCp" id="EDw-1K-esz"/>
+            </connections>
             <point key="canvasLocation" x="137.40458015267174" y="24.295774647887324"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="CheckCircle" width="42.666667938232422" height="42.666667938232422"/>
+    </resources>
 </document>

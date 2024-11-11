@@ -148,6 +148,14 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }
         
         
+        else if  sections[indexPath.section].items[indexPath.row] == "Change App Language"{
+            
+           
+            let vc = LanguageVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+        
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

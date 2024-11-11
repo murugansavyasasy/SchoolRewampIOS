@@ -7,3 +7,7 @@
 */
 "welcome_message" = "Welcome";
 "change_language" = "Change Language";
+ "Home" = "Home";
+ "Help" = "Help";
+ "Settings" = "Settings";
+ "Profile" = "Profile";

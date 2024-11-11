@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LanguageVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="backBtn" destination="m9c-Ss-ydT" id="dzY-Xj-O5l"/>
                 <outlet property="tv" destination="8td-JG-MjQ" id="m45-a8-aa0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,31 +22,45 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pk-HW-cgA">
-                    <rect key="frame" x="21.666666666666657" y="331" width="350" height="190"/>
+                    <rect key="frame" x="21.666666666666657" y="235" width="350" height="286"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8td-JG-MjQ">
-                            <rect key="frame" x="5" y="5" width="340" height="180"/>
+                            <rect key="frame" x="5" y="41" width="340" height="237"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m9c-Ss-ydT">
+                            <rect key="frame" x="5" y="8" width="81" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="81" id="0H6-fW-PWf"/>
+                                <constraint firstAttribute="height" constant="35" id="3Ez-vK-sj9"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            <connections>
+                                <action selector="backClick:" destination="-1" eventType="touchUpInside" id="KVU-F0-kaK"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="8td-JG-MjQ" firstAttribute="top" secondItem="8Pk-HW-cgA" secondAttribute="top" constant="5" id="731-l6-sPC"/>
+                        <constraint firstItem="m9c-Ss-ydT" firstAttribute="leading" secondItem="8Pk-HW-cgA" secondAttribute="leading" constant="5" id="2NP-vF-7dd"/>
+                        <constraint firstItem="8td-JG-MjQ" firstAttribute="top" secondItem="8Pk-HW-cgA" secondAttribute="top" constant="41" id="731-l6-sPC"/>
                         <constraint firstAttribute="trailing" secondItem="8td-JG-MjQ" secondAttribute="trailing" constant="5" id="7hj-dO-5CZ"/>
+                        <constraint firstItem="m9c-Ss-ydT" firstAttribute="top" secondItem="8Pk-HW-cgA" secondAttribute="top" constant="8" id="9Eg-Kt-b5A"/>
                         <constraint firstAttribute="width" constant="350" id="ByX-bS-l8W"/>
                         <constraint firstItem="8td-JG-MjQ" firstAttribute="leading" secondItem="8Pk-HW-cgA" secondAttribute="leading" constant="5" id="bIf-wL-UKC"/>
-                        <constraint firstAttribute="bottom" secondItem="8td-JG-MjQ" secondAttribute="bottom" constant="5" id="blP-7Q-nex"/>
+                        <constraint firstAttribute="bottom" secondItem="8td-JG-MjQ" secondAttribute="bottom" constant="8" id="blP-7Q-nex"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="8Pk-HW-cgA" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="272" id="PDp-cv-2ja"/>
+                <constraint firstItem="8Pk-HW-cgA" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="176" id="PDp-cv-2ja"/>
                 <constraint firstItem="8Pk-HW-cgA" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jWe-WQ-cl6"/>
-                <constraint firstItem="8Pk-HW-cgA" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="yyq-z0-BLA"/>
+                <constraint firstItem="8Pk-HW-cgA" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-48" id="yyq-z0-BLA"/>
             </constraints>
-            <point key="canvasLocation" x="140" y="20"/>
+            <point key="canvasLocation" x="139.69465648854961" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
