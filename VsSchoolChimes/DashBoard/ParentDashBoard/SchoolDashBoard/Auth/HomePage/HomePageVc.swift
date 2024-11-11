@@ -48,13 +48,14 @@ class HomePageVc: UIViewController,UITabBarDelegate {
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
         TopCv.register(UINib(nibName: CellConfingName.HomePageTopCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageTopCell)
         
-        bottomCv.delegate = self
-        bottomCv.dataSource = self
-        bottomCv.reloadData()
+        TopCv.register(UINib(nibName: "PiechartCVCell", bundle: nil), forCellWithReuseIdentifier: "PiechartCVCell")
+        
+      
         TopCv.delegate = self
         TopCv.dataSource = self
-        TopCv.reloadData()
         
+        bottomCv.delegate = self
+        bottomCv.dataSource = self
         
         startAutoScroll()
         
@@ -69,7 +70,75 @@ class HomePageVc: UIViewController,UITabBarDelegate {
         
     }
 
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            print("viewWillAppear - View is about to appear.")
+       
+        TopCv.reloadData()
+        
+          TopCv.delegate = self
+          TopCv.dataSource = self
+          
+          bottomCv.delegate = self
+          bottomCv.dataSource = self
+       
+        bottomCv.reloadData()
+        
+        restartAnimations()
+        }
+    
+    func restartAnimations() {
+            // Assuming you have shimmer animations or other animations that need to be reset
+      
+       
+        print("uwudyueduued")
+        
+        //currentIndex = -1
+       
+        if let cell = TopCv.cellForItem(at: IndexPath(row: 0, section: 0)) as? PiechartCVCell {
+            // Reset shimmer view or any other animations
+            cell.pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
+        }
+            for cell in bottomCv.visibleCells as! [BottomCVCell] {
+                   // Reset shimmer view or any other animations
+                   cell.shimmersViewss.animateView(enable: true)
+            
+               }
+        
+        }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//            super.viewWillAppear(animated)
+//            print("viewWillAppear - View is about to appear.")
+//           
+//        }
+        
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            print("viewDidAppear - View has appeared on the screen.")
+            
+               restartAnimations()
+           // startAutoScroll()
+                
+                }
+            
+            
+           
+        
+        
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            print("viewWillDisappear - View is about to disappear.")
+            currentIndex = -1
+        }
+        
+        override func viewDidDisappear(_ animated: Bool) {
+            super.viewDidDisappear(animated)
+            print("viewDidDisappear - View has disappeared from the screen.")
+            
+        }
+        
     
     @objc func SearchViewHidden() {
    
@@ -121,6 +190,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
+        print("numberOfItemsInSection")
         if collectionView == bottomCv{
             
             return items.count
@@ -151,9 +221,16 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         }else{
             
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell , for: indexPath) as! TopCVCell
+            if indexPath.row == 0 {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PiechartCVCell" , for: indexPath) as! PiechartCVCell
+                return cell
+            }
+            else{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell , for: indexPath) as! TopCVCell
+                
+                return cell
+            }
             
-            return cell
         }
        
  
@@ -177,7 +254,7 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
             
             
          
-            return CGSize(width: 250, height: 115)
+            return CGSize(width: 350, height: 140)
         }
      
     }

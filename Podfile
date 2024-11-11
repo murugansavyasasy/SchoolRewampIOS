@@ -20,6 +20,7 @@ pod 'FirebaseMessaging'
 pod 'AWSS3'
 pod 'AWSCognito'
 pod 'AWSCore'
+pod 'Charts'
 
   target 'VsSchoolChimesTests' do
     inherit! :search_paths

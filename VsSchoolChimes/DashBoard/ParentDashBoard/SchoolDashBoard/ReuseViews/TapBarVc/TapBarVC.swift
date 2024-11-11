@@ -74,13 +74,26 @@ class TapBarVC: UIViewController,UITabBarDelegate {
 
        private func selectViewController(_ viewController: UIViewController) {
            // Remove previous child view controller
-           children.forEach { $0.removeFromParent() }
-
-           // Add new child view controller
-           addChild(viewController)
-           viewController.view.frame = containerView.bounds
-           containerView.addSubview(viewController.view)
-           viewController.didMove(toParent: self)
+//           children.forEach { $0.removeFromParent() }
+//
+//           // Add new child view controller
+//           addChild(viewController)
+//           viewController.view.frame = containerView.bounds
+//           containerView.addSubview(viewController.view)
+//           viewController.didMove(toParent: self)
+           
+           
+           for child in children {
+                       child.willMove(toParent: nil)
+                       child.view.removeFromSuperview()
+                       child.removeFromParent()
+                   }
+                   
+                   // Add new child view controller
+                   addChild(viewController)
+                   viewController.view.frame = containerView.bounds
+                   containerView.addSubview(viewController.view)
+                   viewController.didMove(toParent: self)
        }
 
        // Handle tab bar item selection with animation

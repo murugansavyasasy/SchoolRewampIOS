@@ -73,6 +73,7 @@
                                         <constraint firstAttribute="trailing" secondItem="gYa-cJ-qwB" secondAttribute="trailing" id="KWr-Eg-IWZ"/>
                                         <constraint firstItem="IT3-Y1-4ZX" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="top" id="OHf-yW-esn"/>
                                         <constraint firstAttribute="trailing" secondItem="IT3-Y1-4ZX" secondAttribute="trailing" constant="148" id="P8H-sK-zhd"/>
+                                        <constraint firstItem="gYa-cJ-qwB" firstAttribute="leading" secondItem="IT3-Y1-4ZX" secondAttribute="trailing" constant="-12" id="PDm-mO-fEB"/>
                                         <constraint firstItem="gYa-cJ-qwB" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="top" id="XtW-4X-U0t"/>
                                         <constraint firstAttribute="bottom" secondItem="IT3-Y1-4ZX" secondAttribute="bottom" id="YQw-OA-DXb"/>
                                         <constraint firstItem="IT3-Y1-4ZX" firstAttribute="leading" secondItem="3Fd-Jo-Dka" secondAttribute="leading" id="cEu-7s-h12"/>
@@ -158,7 +159,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
