@@ -92,10 +92,6 @@ class HomePageVc: UIViewController,UITabBarDelegate {
             // Assuming you have shimmer animations or other animations that need to be reset
       
        
-        print("uwudyueduued")
-        
-        //currentIndex = -1
-       
         if let cell = TopCv.cellForItem(at: IndexPath(row: 0, section: 0)) as? PiechartCVCell {
             // Reset shimmer view or any other animations
             cell.pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
@@ -108,12 +104,6 @@ class HomePageVc: UIViewController,UITabBarDelegate {
         
         }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//            super.viewWillAppear(animated)
-//            print("viewWillAppear - View is about to appear.")
-//           
-//        }
-        
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
             print("viewDidAppear - View has appeared on the screen.")
