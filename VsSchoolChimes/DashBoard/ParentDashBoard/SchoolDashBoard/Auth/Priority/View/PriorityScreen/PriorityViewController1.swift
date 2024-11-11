@@ -169,11 +169,54 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
             cell.checkbox.addGestureRecognizer(tapGesture)
             cell.checkbox.tag = indexPath.row // Tag to identify cell in selector
             
+            
+//            let selectedGestures = CheckBoxGesturess(target: self, action: #selector(changeSelection))
+//            
+//            selectedGestures.checkBoxss = cell.checkbox
+//            
+//            selectedGestures.pos = indexPath.row
+//            cell.checkbox.addGestureRecognizer(selectedGestures)
+//            
+//            
+            
+            
+            
             return cell
         }
     }
     
     
+    
+    
+    
+    
+    
+//    @IBAction func changeSelection(gesture : CheckBoxGesturess){
+//        
+//        
+//        if priorityRes[gesture.pos].isSelected == true{
+//            
+//            priorityRes[gesture.pos].isSelected = false
+//            
+//           
+//            
+//            gesture.checkBoxss.setImage(UIImage.init(named: "checkbox"), for: .normal)
+//            
+//        }else{
+//            
+//            gesture.checkBoxss.setImage(UIImage.init(named: "radio"), for: .normal)
+//          
+//           
+//            priorityRes[gesture.pos].isSelected = true
+//           
+//            
+//        }
+//        
+//        tableview.reloadData()
+//
+//        
+//    }
+//    
     
     @objc func clickVC(_ sender: UITapGestureRecognizer) {
         // Get the checkbox's row and update the selected index path
@@ -184,7 +227,6 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
             
         }
     }
-    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -225,3 +267,19 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
 }
+
+class CheckBoxGesturess : UITapGestureRecognizer {
+
+var pos : Int!
+
+var memberName : String!
+
+var checkBoxss : CheckBox!
+
+
+}
+
+
+
+
+

@@ -21,7 +21,10 @@ class OTPVc: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var validationBtnNm: UIButton!
     
     @IBOutlet weak var ResendLbl: UILabel!
-    
+    var secondsRemaining = 30 //5 minutes
+    var myTimer : Timer?
+    var timer: Timer?
+       var timeRemaining = 30
     var forgetType  = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +32,19 @@ class OTPVc: UIViewController,UITextFieldDelegate {
        
 
         // Do any additional setup after loading the view.
-        
+        ResendLbl.isUserInteractionEnabled = true
         validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
         validationBtnNm.backgroundColor = Colornames.ButtonColor 
-        validationBtnNm.titleLabel?.textColor = .white
+//        validationBtnNm.titleLabel?.textColor = .white
         
         setupOTPTextFields()
         
+        
+        let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
+               
+             
+        ResendLbl.addGestureRecognizer(resendGesture)
+          
         
     }
 
@@ -43,16 +52,25 @@ class OTPVc: UIViewController,UITextFieldDelegate {
    
     @IBAction func validationBtn(_ sender: Any) {
         
-        let vc = PasswordVc(nibName: nil, bundle: nil)
-        vc.forgetType = forgetType
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
         
+        if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
+            
+            let vc = PasswordVc(nibName: nil, bundle: nil)
+            vc.forgetType = forgetType
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }else{
+//            validationBtnNm.titleLabel?.textColor = .white
+            view.makeToast("Enter the otp")
+        }
         
     }
     
     
     
+   
+        
+      
     func setupOTPTextFields() {
             let otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
 
@@ -107,5 +125,37 @@ class OTPVc: UIViewController,UITextFieldDelegate {
             let otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
             return otpFields.compactMap { $0?.text }.joined()
         }
+    
+    
+//    MARK: Resend Timer Set
+    @IBAction func controlTimer() {
+        myTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
+            if self?.secondsRemaining ?? 0 > 0 {
+                let minutes = Int(self?.secondsRemaining ?? 0) / 60
+                let seconds = Int(self?.secondsRemaining ?? 0) % 60
+                //VerificationTimeVal is a UI element to display the time
+                let timerResults = String(format: "%02d:%02d", minutes, seconds)
+                self?.ResendLbl.text = "\(timerResults)"
+                self?.secondsRemaining -= 1
+            } else {
+                timer.invalidate()
+                //VerificationTimeVal is a UI element to display the time
+                self?.ResendLbl.text = "Resend"
+                
+            
+                
+            }
+        }
+        
+        // Add the timer to the current RunLoop
+        RunLoop.current.add(myTimer!, forMode: .common)
+        
+        
+        
+        
+    }
+        
+    
+           
     
 }

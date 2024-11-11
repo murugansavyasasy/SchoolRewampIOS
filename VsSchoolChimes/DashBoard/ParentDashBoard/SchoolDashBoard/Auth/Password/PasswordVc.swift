@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class PasswordVc: UIViewController {
 
+    @IBOutlet weak var eyeImage: UIImageView!
     
     @IBOutlet weak var createPassDefaultLbl: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
@@ -23,6 +24,8 @@ class PasswordVc: UIViewController {
     var forgetType  = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         // Do any additional setup after loading the view.
         
@@ -30,14 +33,18 @@ class PasswordVc: UIViewController {
         if forgetType == true{
             
             
-            createPassDefaultLbl.text = "Reset your password."
+            createPassDefaultLbl.text = "Reset the new password"
             
         }
+        
+        
+        let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
+        eyeImage.addGestureRecognizer(eyeImageTap)
     }
 
     @IBAction func backBtn(_ sender: Any) {
         
-        dismiss(animated: true)
+//        dismiss(animated: true)
         
     }
     
@@ -45,20 +52,43 @@ class PasswordVc: UIViewController {
         
         
         
-        if createPassTextFLd.text == confirmPassTextFld.text{
+        
+        if createPassTextFLd.text != "" {
             
-           
-            alertModal.showAlert(title: "", message: "Enter valid password", on: self)
+            if  confirmPassTextFld.text != "" {
+                
+                
+                
+                if createPassTextFLd.text == confirmPassTextFld.text{
+                    
+                    view.makeToast("Successfully password created")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                    }
+                }else{
+                    view.makeToast("Password Missmatched")
+                }
+            }else{
+                view.makeToast("Enter the confirm password ")
+                }
             
         }else{
             
-            
-            let vc = HomePageVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+           
+            view.makeToast("Enter the new password ")
             
         }
         
     }
+    
+    @IBAction func togglePasswordVisibility() {
+        confirmPassTextFld.isSecureTextEntry.toggle()
+        let imageName = confirmPassTextFld.isSecureTextEntry ? "eye.fill" : "eye.slash.fill"
+        eyeImage.image = UIImage(named: imageName)
+       
+        }
+    
     
 }

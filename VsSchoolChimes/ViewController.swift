@@ -10,13 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class ViewController: UIViewController {
     
-    
-    let name = "" // added by laks
-    let Hello = "" // added by laks
-    let HelloWorld = "" // added by laks
-    var userName : String!
-    var passwors = "vanakam"  //
-    var saran = "raj" //development
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         

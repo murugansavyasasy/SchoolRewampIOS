@@ -93,6 +93,15 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
         
+        
+        
+       if  sections[indexPath.section].items[indexPath.row] == "Logout"{
+            
+           cell.nameLbl.textColor = .red
+            
+       }else{
+           cell.nameLbl.textColor = .black
+       }
       
         cell.selectionStyle = .none
         

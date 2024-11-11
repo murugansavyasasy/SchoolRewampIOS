@@ -45,7 +45,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         let forget = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forget)
-        let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
+        let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
         eyeImage.addGestureRecognizer(eyeImageTap)
         
     }
@@ -59,14 +59,23 @@ class LoginVc: UIViewController, UITextFieldDelegate {
 
     @IBAction  func forgetClick(){
         
-        
-        let vc = OTPVc(nibName: nil, bundle: nil)
-        vc.forgetType = true
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-        
+        if MobilTextFld.text != "" && MobilTextFld.text?.count == 10 {
+            let vc = OTPVc(nibName: nil, bundle: nil)
+            vc.forgetType = true
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }else{
+            view.makeToast("Enter the 10 digit mobile number")
+        }
     }
     
+    
+    @IBAction func togglePasswordVisibility() {
+        passTextFld.isSecureTextEntry.toggle()
+        let imageName = passTextFld.isSecureTextEntry ? "eye.fill" : "eye.slash.fill"
+        eyeImage.image = UIImage(named: imageName)
+       
+        }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
            activeTextField = passTextFld

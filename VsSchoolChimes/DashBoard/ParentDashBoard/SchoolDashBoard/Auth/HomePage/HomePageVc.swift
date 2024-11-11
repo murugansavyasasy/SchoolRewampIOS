@@ -11,6 +11,7 @@ import UIKit
 class HomePageVc: UIViewController,UITabBarDelegate {
 
     
+    @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
@@ -71,22 +72,22 @@ class HomePageVc: UIViewController,UITabBarDelegate {
     }
 
     
-    override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            print("viewWillAppear - View is about to appear.")
-       
-        TopCv.reloadData()
-        
-          TopCv.delegate = self
-          TopCv.dataSource = self
-          
-          bottomCv.delegate = self
-          bottomCv.dataSource = self
-       
-        bottomCv.reloadData()
-        
-        restartAnimations()
-        }
+//    override func viewWillAppear(_ animated: Bool) {
+//            super.viewWillAppear(animated)
+//            print("viewWillAppear - View is about to appear.")
+//       
+//        TopCv.reloadData()
+//        
+//          TopCv.delegate = self
+//          TopCv.dataSource = self
+//          
+//          bottomCv.delegate = self
+//          bottomCv.dataSource = self
+//       
+//        bottomCv.reloadData()
+//        
+//        restartAnimations()
+//        }
     
     func restartAnimations() {
             // Assuming you have shimmer animations or other animations that need to be reset
