@@ -14,7 +14,7 @@ import Foundation
 struct DefaultsKeys {
     static let countryId = "countryId"
     static let LoginId = "LoginId"
-    static let Language = "Language"
+    static let Language = "en"
    
     
 }
