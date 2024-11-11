@@ -10,7 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class TapBarVC: UIViewController,UITabBarDelegate {
     
-    
+   
     private let tabBar = UITabBar()
        private var containerView = UIView()
 
@@ -22,6 +22,9 @@ class TapBarVC: UIViewController,UITabBarDelegate {
 
        override func viewDidLoad() {
            super.viewDidLoad()
+           LocalizeDefaultLanguage = UserDefaults.standard.string(forKey: LocalizeUserDefaultKey) ?? DefaultsKeys.Language
+           
+           //
            setupTabBar()
            setupContainerView()
 
@@ -30,13 +33,14 @@ class TapBarVC: UIViewController,UITabBarDelegate {
        }
 
        private func setupTabBar() {
-           // Configure the tab bar items
-           let firstItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), tag: 0)
            
-           let secondItem = UITabBarItem(title: "Help", image: UIImage(systemName: "questionmark.circle.fill"), tag: 1)
-           let thirdItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape.fill"), tag: 2)
-           let fourthItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.crop.circle"), tag: 3)
-
+           // Configure the tab bar items
+           let firstItem = UITabBarItem(title: "Home".translated(), image: UIImage(systemName: "house.fill"), tag: 0)
+           let secondItem = UITabBarItem(title: "Help".translated(), image: UIImage(systemName: "questionmark.circle.fill"), tag: 1)
+           let thirdItem = UITabBarItem(title : "Settings".translated(), image: UIImage(systemName: "gearshape.fill"), tag: 2)
+           let fourthItem = UITabBarItem(title: "Profile".translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
+           
+           
            tabBar.backgroundColor = Colornames.bottomClr
            
            
@@ -99,7 +103,7 @@ class TapBarVC: UIViewController,UITabBarDelegate {
        // Handle tab bar item selection with animation
        func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
           
-           styleTabItem(at: item.tag)
+         
            
            
            switch item.tag {
@@ -117,33 +121,9 @@ class TapBarVC: UIViewController,UITabBarDelegate {
        }
   
 
-    private func styleTabItem(at selectedIndex: Int) {
-            // Reset all tab bar item image views first
-        
-        print("styleTabItem1")
-            for (index, item) in (tabBar.items ?? []).enumerated() {
-                print("styleTabItem2")
-                if let imageView = tabBar.subviews.compactMap({ $0 as? UIControl }).first(where: { $0.tag == item.tag })?.subviews.first(where: { $0 is UIImageView }) as? UIImageView {
-                    // Reset unselected tabs
-                    
-                    print("styleTabItem44")
-//                    imageView.layer.cornerRadius = 0
-//                    imageView.clipsToBounds = false
-//                    imageView.tintColor = .green
-                    
-                    imageView.layer.cornerRadius = 10
-                    imageView.clipsToBounds = true
-                    imageView.tintColor = .yellow
-                }
-            }
-
-            // Apply corner radius and tint color to the selected tab's image
-            if let selectedImageView = tabBar.subviews.compactMap({ $0 as? UIControl }).first(where: { $0.tag == selectedIndex })?.subviews.first(where: { $0 is UIImageView }) as? UIImageView {
-                selectedImageView.layer.cornerRadius = 10
-                selectedImageView.clipsToBounds = true
-                selectedImageView.tintColor = .yellow
-                print("styleTabItem3")
-            }
-        }
+   
+    
+    
                
                }
+

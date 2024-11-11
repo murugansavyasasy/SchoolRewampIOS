@@ -18,6 +18,7 @@ class CellConfingName {
     static let NotificationTableViewCell = "NotificationTableViewCell"
     static let ImageCvCell = "ImageCvCell"
     static let FAQTableViewCell = "FAQTableViewCell"
+    static let LangTvCellTableViewCell = "LangTvCellTableViewCell"
     
    
    
