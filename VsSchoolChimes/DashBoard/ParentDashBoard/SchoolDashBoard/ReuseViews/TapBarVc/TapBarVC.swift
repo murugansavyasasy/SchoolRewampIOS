@@ -19,10 +19,18 @@ class TapBarVC: UIViewController,UITabBarDelegate {
        private lazy var secondVC = HelpVc()
        private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = ProfileViewController()
-
+    var languages : String!
        override func viewDidLoad() {
            super.viewDidLoad()
-           LocalizeDefaultLanguage = UserDefaults.standard.string(forKey: LocalizeUserDefaultKey) ?? DefaultsKeys.Language
+           
+          
+           print( "DefaultsKeys.LanguageDefaultsKeys.Language",DefaultsKeys.Language
+           )
+           
+           
+        
+         
+        
            
            //
            setupTabBar()
@@ -75,7 +83,6 @@ class TapBarVC: UIViewController,UITabBarDelegate {
                containerView.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
            ])
        }
-
        private func selectViewController(_ viewController: UIViewController) {
            // Remove previous child view controller
 //           children.forEach { $0.removeFromParent() }

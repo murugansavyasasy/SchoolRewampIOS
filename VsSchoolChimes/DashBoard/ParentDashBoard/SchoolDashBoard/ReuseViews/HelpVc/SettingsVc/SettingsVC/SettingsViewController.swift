@@ -15,8 +15,8 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tableview: UITableView!
    
     let sections: [Section] = [
-           Section(title: "GENERAL", items: ["Notifications", "FAQ", "Contact Us", "Terms and Conditions","Change App Language"]),
-           Section(title: "FEEDBACK", items: ["Report a bug", "Send Feedback", "Logout"])
+        Section(title: "GENERAL".translated(), items: ["Notifications".translated(), "FAQ".translated(), "Contact Us".translated(), "Terms and Conditions".translated(),"Change App Language".translated()]),
+        Section(title: "FEEDBACK".translated(), items: ["Report a bug".translated(), "Send Feedback".translated(), "Logout".translated()])
        ]
  
  
@@ -93,15 +93,6 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
         
-        
-        
-       if  sections[indexPath.section].items[indexPath.row] == "Logout"{
-            
-           cell.nameLbl.textColor = .red
-            
-       }else{
-           cell.nameLbl.textColor = .black
-       }
       
         cell.selectionStyle = .none
         
@@ -112,25 +103,25 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        if  sections[indexPath.section].items[indexPath.row] == "Contact Us"{
+        if  sections[indexPath.section].items[indexPath.row] == "Contact Us".translated(){
             
             let vc = ContactUsVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
-        }else if  sections[indexPath.section].items[indexPath.row] == "Notifications"{
+        }else if  sections[indexPath.section].items[indexPath.row] == "Notifications".translated(){
             
             let vc = NotificationViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
         }
-        else if  sections[indexPath.section].items[indexPath.row] == "Report a bug"{
+        else if  sections[indexPath.section].items[indexPath.row] == "Report a bug".translated(){
             
             let vc = ReportBugVcViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
-        }else if  sections[indexPath.section].items[indexPath.row] == "Send Feedback"{
+        }else if  sections[indexPath.section].items[indexPath.row] == "Send Feedback".translated(){
             
             let vc = RateUsViewController(nibName: "RateUsViewController", bundle: nil)
             vc.modalPresentationStyle = .fullScreen
@@ -139,7 +130,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }
         
         
-        else if  sections[indexPath.section].items[indexPath.row] == "Logout"{
+        else if  sections[indexPath.section].items[indexPath.row] == "Logout".translated(){
             
             let vc = LogoutViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen
@@ -148,7 +139,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
         }
         
-        else if  sections[indexPath.section].items[indexPath.row] == "FAQ"{
+        else if  sections[indexPath.section].items[indexPath.row] == "FAQ".translated(){
             
             
             let vc = FAQViewController(nibName: nil, bundle: nil)
@@ -157,11 +148,11 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }
         
         
-        else if  sections[indexPath.section].items[indexPath.row] == "Change App Language"{
+        else if  sections[indexPath.section].items[indexPath.row] == "Change App Language".translated(){
             
            
             let vc = LanguageVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
         }
         
@@ -207,6 +198,7 @@ let Images: [Image] = [
 
 
 // Example of accessing UIImages
+
 
 
 

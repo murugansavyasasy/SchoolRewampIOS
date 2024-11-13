@@ -8,8 +8,6 @@
 import Foundation
 
 
-let LocalizeUserDefaultKey = "LocalizeUserDefaultKey"
-var LocalizeDefaultLanguage = "en"
 
 struct StringsName {
    
@@ -25,12 +23,21 @@ struct StringsName {
 }
 
 
+
 extension String {
+    /// Translates the string using the language bundle defined in `UserDefaults`.
     func translated() -> String {
-        if let path = Bundle.main.path(forResource: LocalizeDefaultLanguage, ofType: "lproj"), let bundle = Bundle(path: path) {
+        let defaults = UserDefaults.standard
+        
+        // Retrieve the language code saved in UserDefaults
+        if let languageCode = defaults.string(forKey: DefaultsKeys.Language),
+           let path = Bundle.main.path(forResource: languageCode, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            // Translate using the specific language bundle
             return NSLocalizedString(self, bundle: bundle, comment: "")
         }
         
-        return ""
+        // Return the key itself if no translation is available
+        return self
     }
 }

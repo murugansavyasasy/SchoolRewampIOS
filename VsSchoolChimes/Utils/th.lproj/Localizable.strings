@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   VsSchoolChimes
 
@@ -11,3 +11,41 @@
 "Help" = "ช่วยเหลือ";
 "Settings" = "การตั้งค่า";
 "Profile" = "โปรไฟล์";
+
+"Notifications" = "การแจ้งเตือน";
+"FAQ" = "คำถามที่พบบ่อย";
+"Contact Us" = "ติดต่อเรา";
+"Terms and Conditions" = "ข้อกำหนดและเงื่อนไข";
+"Change App Language" = "เปลี่ยนภาษาของแอป";
+
+"Feedback" = "คำติชม";
+"Report a bug" = "รายงานข้อบกพร่อง";
+"Send Feedback" = "ส่งคำติชม";
+"Logout" = "ออกจากระบบ";
+
+"discussion" = "การอภิปราย";
+"SmallIcon" = "ไอคอนขนาดเล็ก";
+"drawing-compass" = "เครื่องมือวาดวงกลม";
+"knowledge" = "ความรู้";
+"pencil" = "ดินสอ";
+"scale" = "ไม้บรรทัด";
+"schoolss" = "โรงเรียน";
+"university" = "มหาวิทยาลัย";
+"support" = "สนับสนุน";
+"Video" = "วิดีโอ";
+
+"Family Details" = "รายละเอียดครอบครัว";
+"Fathername" = "ชื่อบิดา";
+"Mothername" = "ชื่อมารดา";
+"Father occupation" = "อาชีพบิดา";
+"Mother occupation" = "อาชีพมารดา";
+"Secondary Phone no" = "หมายเลขโทรศัพท์รอง";
+"About Student" = "เกี่ยวกับนักเรียน";
+"Profile" = "ประวัติ";
+"Register number" = "หมายเลขทะเบียน";
+"Standard" = "ระดับ";
+"Section" = "หมวด";
+"Contact details" = "รายละเอียดการติดต่อ";
+"General" = "ทั่วไป";
+"Feedback" = "คำติชม";
+"Settings" = "การตั้งค่า";

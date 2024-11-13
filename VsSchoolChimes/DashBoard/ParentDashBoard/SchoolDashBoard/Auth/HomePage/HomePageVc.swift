@@ -205,8 +205,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
                 cell.shimmersViewss.animateView(enable: false)
-                cell.MenuLbl.text = items[indexPath.row]
-                cell.MenuImgView.image  = UIImage(named: items[indexPath.row])
+                cell.MenuLbl.text = items[indexPath.row].translated()
+                cell.MenuImgView.image  = UIImage(named: items[indexPath.row] )
                 
             }
             return cell

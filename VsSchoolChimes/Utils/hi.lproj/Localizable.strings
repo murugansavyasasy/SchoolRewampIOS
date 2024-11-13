@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   VsSchoolChimes
 
@@ -11,3 +11,41 @@
 "Help" = "मदद";
 "Settings" = "सेटिंग्स";
 "Profile" = "प्रोफाइल";
+
+"Notifications" = "सूचनाएं";
+"FAQ" = "सामान्य प्रश्न";
+"Contact Us" = "हमसे संपर्क करें";
+"Terms and Conditions" = "नियम और शर्तें";
+"Change App Language" = "ऐप की भाषा बदलें";
+
+"Feedback" = "प्रतिक्रिया";
+"Report a bug" = "त्रुटि की रिपोर्ट करें";
+"Send Feedback" = "प्रतिक्रिया भेजें";
+"Logout" = "लॉगआउट करें";
+
+"discussion" = "चर्चा";
+"SmallIcon" = "छोटा आइकन";
+"drawing-compass" = "चित्रकला यंत्र";
+"knowledge" = "ज्ञान";
+"pencil" = "पेंसिल";
+"scale" = "स्केल";
+"schoolss" = "स्कूल";
+"university" = "विश्वविद्यालय";
+"support" = "समर्थन";
+"Video" = "वीडियो";
+
+"Family Details" = "परिवार का विवरण";
+"Fathername" = "पिता का नाम";
+"Mothername" = "माता का नाम";
+"Father occupation" = "पिता का व्यवसाय";
+"Mother occupation" = "माता का व्यवसाय";
+"Secondary Phone no" = "द्वितीयक फोन नंबर";
+"About Student" = "छात्र के बारे में";
+"Profile" = "प्रोफ़ाइल";
+"Register number" = "पंजीकरण संख्या";
+"Standard" = "कक्षा";
+"Section" = "अनुभाग";
+"Contact details" = "संपर्क विवरण";
+"General" = "सामान्य";
+"Feedback" = "प्रतिक्रिया";
+"Settings" = "सेटिंग्स";

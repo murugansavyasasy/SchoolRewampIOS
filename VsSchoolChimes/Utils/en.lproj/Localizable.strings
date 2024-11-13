@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   VsSchoolChimes
 
@@ -11,3 +11,43 @@
  "Help" = "Help";
  "Settings" = "Settings";
  "Profile" = "Profile";
+
+"Notifications" = "Notifications";
+"FAQ" = "FAQ";
+"Contact Us" = "Contact Us";
+"Terms and Conditions" = "Terms and Conditions";
+"Change App Language" = "Change App Language";
+
+"Feedback" = "Feedback";
+"Report a bug" = "Report a bug";
+"Send Feedback" = "Send Feedback";
+"Logout" = "Logout";
+
+"discussion" = "discussion";
+"SmallIcon" = "SmallIcon";
+"drawing-compass" = "drawing-compass";
+"knowledge" = "knowledge";
+"pencil" = "pencil";
+"scale" = "scale";
+"schoolss" = "schoolss";
+"university" = "university";
+"support" = "support";
+"SmallIcon" = "SmallIcon";
+"Video" = "Video";
+
+"Family Details" = "Family Details";
+"Fathername" = "Fathername";
+"Mothername" = "Mothername";
+"Father occupation" = "Father occupation";
+"Mother occupation" = "Mother occupation";
+"Secondary Phone no" = "Secondary Phone no";
+"Profile" = "Profile";
+"About Student" = "About Student";
+
+"Register number" = "Register number";
+"Standard" = "Standard";
+"Section" = "Section";
+"Contact details" = "Contact details";
+"General" = "General";
+"Feedback" = "Feedback";
+"Settings" = "Settings";

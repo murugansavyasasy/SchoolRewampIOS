@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LanguageVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="backBtn" destination="m9c-Ss-ydT" id="dzY-Xj-O5l"/>
+                <outlet property="baseview" destination="8Pk-HW-cgA" id="fY1-MD-Upk"/>
                 <outlet property="tv" destination="8td-JG-MjQ" id="m45-a8-aa0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
