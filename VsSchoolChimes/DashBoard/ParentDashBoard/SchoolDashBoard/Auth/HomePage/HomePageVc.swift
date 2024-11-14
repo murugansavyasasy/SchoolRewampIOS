@@ -118,6 +118,9 @@ class HomePageVc: UIViewController,UITabBarDelegate {
                bottomCv.dataSource = self
               // bottomCv.reloadData()
                restartAnimations()
+            
+//            bottomCv.reloadData()
+            
            // startAutoScroll()
                 
                 }
@@ -234,6 +237,21 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
        
  
        
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == bottomCv{
+            let name = "Video".translated()
+            let comunication = "discussion".translated()
+            if name == items[indexPath.row].translated(){
+                let vc = VideoVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }else if comunication == items[indexPath.row].translated(){
+                let vc = ComunicationVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+        }
     }
  
 }

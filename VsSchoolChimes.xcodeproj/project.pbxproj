@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -43,7 +43,6 @@
 		8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8ED2CDC83860006068E /* RatingTypeTableViewCell.xib */; };
 		8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */; };
 		8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */; };
-		8442A9012CDC83860006068E /* Thumbs Up.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8F22CDC83860006068E /* Thumbs Up.gif */; };
 		8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9022CDC8A820006068E /* LogoutViewController.swift */; };
 		8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A9032CDC8A820006068E /* LogoutViewController.xib */; };
 		8442A90C2CDC8B2D0006068E /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9092CDC8B2D0006068E /* FAQViewController.swift */; };
@@ -228,7 +227,6 @@
 		8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubmitRatingViewController.xib; sourceTree = "<group>"; };
 		8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsCollectionViewCell.swift; sourceTree = "<group>"; };
 		8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestionsCollectionViewCell.xib; sourceTree = "<group>"; };
-		8442A8F22CDC83860006068E /* Thumbs Up.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Thumbs Up.gif"; sourceTree = "<group>"; };
 		8442A9022CDC8A820006068E /* LogoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
 		8442A9032CDC8A820006068E /* LogoutViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoutViewController.xib; sourceTree = "<group>"; };
 		8442A9072CDC8B2D0006068E /* FAQTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQTableViewCell.swift; sourceTree = "<group>"; };
@@ -352,6 +350,12 @@
 		FA8A5D25D3E56CCD6CFE4A08 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		84D2D5642CE463CD00606CE8 /* Video */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Video; sourceTree = "<group>"; };
+		84D2D56D2CE488F400606CE8 /* Comunication */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Comunication; sourceTree = "<group>"; };
+		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		189E995F2CE35F6C00FE98A5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -458,7 +462,6 @@
 				8442A8EF2CDC83860006068E /* SubmitRatingViewController.xib */,
 				8442A8F02CDC83860006068E /* SuggestionsCollectionViewCell.swift */,
 				8442A8F12CDC83860006068E /* SuggestionsCollectionViewCell.xib */,
-				8442A8F22CDC83860006068E /* Thumbs Up.gif */,
 			);
 			path = "Rate Us";
 			sourceTree = "<group>";
@@ -646,6 +649,8 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				84D2D56D2CE488F400606CE8 /* Comunication */,
+				84D2D5642CE463CD00606CE8 /* Video */,
 				84EFF9CB2CCBBC8B00C11C26 /* Password */,
 				849E57232C1FF4C3006119DA /* Priority */,
 				849E57162C1FF2E9006119DA /* Login */,
@@ -806,6 +811,7 @@
 		84A5BE7E2C1973F400E32496 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				8442A85D2CDB726A0006068E /* GoogleService-Info.plist */,
 				84A5BE892C197B9F00E32496 /* Preferences.swift */,
 				84A5BE8D2C197C3000E32496 /* Toast.swift */,
@@ -1502,6 +1508,11 @@
 			dependencies = (
 				189E99682CE35F6C00FE98A5 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				84D2D5642CE463CD00606CE8 /* Video */,
+				84D2D56D2CE488F400606CE8 /* Comunication */,
+				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
+			);
 			name = VsSchoolChimes;
 			packageProductDependencies = (
 			);
@@ -1675,7 +1686,6 @@
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
-				8442A9012CDC83860006068E /* Thumbs Up.gif in Resources */,
 				8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */,
 				84EFF9DC2CCC864800C11C26 /* BottomCVCell.xib in Resources */,
 			);

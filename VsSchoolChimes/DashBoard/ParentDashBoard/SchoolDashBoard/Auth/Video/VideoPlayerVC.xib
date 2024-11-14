@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoPlayerVC" customModule="VoiceSnap" customModuleProvider="target">
+            <connections>
+                <outlet property="paybtn" destination="mgK-7G-Ycb" id="fQc-LQ-Qsk"/>
+                <outlet property="playerview" destination="HdY-s3-tU2" id="h15-cj-Ba5"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HdY-s3-tU2">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mgK-7G-Ycb">
+                            <rect key="frame" x="159" y="362" width="75" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="75" id="FwV-HR-kNn"/>
+                                <constraint firstAttribute="height" constant="35" id="Y70-7o-iFJ"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <connections>
+                                <action selector="playPauseButtonTapped:" destination="-1" eventType="touchUpInside" id="IWF-VT-hmu"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSf-H6-ySd">
+                            <rect key="frame" x="8" y="16" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="5dI-BZ-OK9"/>
+                                <constraint firstAttribute="height" constant="40" id="cfA-8E-03z"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="multiply.circle.fill" catalog="system"/>
+                            <connections>
+                                <action selector="back:" destination="-1" eventType="touchUpInside" id="hZk-8a-wAo"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="xSf-H6-ySd" firstAttribute="leading" secondItem="HdY-s3-tU2" secondAttribute="leading" constant="8" id="8Ey-ZV-M1G"/>
+                        <constraint firstItem="mgK-7G-Ycb" firstAttribute="centerY" secondItem="HdY-s3-tU2" secondAttribute="centerY" id="Ypo-HZ-pfh"/>
+                        <constraint firstItem="xSf-H6-ySd" firstAttribute="top" secondItem="HdY-s3-tU2" secondAttribute="top" constant="16" id="kx7-zf-j4v"/>
+                        <constraint firstItem="mgK-7G-Ycb" firstAttribute="centerX" secondItem="HdY-s3-tU2" secondAttribute="centerX" id="wJs-En-ECe"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="HdY-s3-tU2" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="A0e-Ls-LTY"/>
+                <constraint firstItem="HdY-s3-tU2" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="CoA-CF-vQR"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="HdY-s3-tU2" secondAttribute="trailing" id="JgW-Bv-mDa"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="HdY-s3-tU2" secondAttribute="bottom" id="U1N-ul-j8J"/>
+            </constraints>
+            <point key="canvasLocation" x="36" y="20"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
