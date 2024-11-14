@@ -90,10 +90,6 @@ class ComunicationVC: UIViewController {
 //        sendbtn.isHidden = true
 //    }
     func uiUUpdate(){
-//        let waveview = WaveView(frame: CGRect(x: 0, y: 200, width: view.bounds.width, height: 100))
-//        waveview.backgroundColor = .clear
-//        waveView.addSubview(waveview) // Use `waveview` instead of `waveView` to avoid adding `self`
-        
         playerheight.constant = 0
         playadiuoslider.value = 0
         setupAudioSession()
@@ -152,6 +148,9 @@ class ComunicationVC: UIViewController {
         textmessageview.isHidden = true
     }
     
+    @IBAction func back(_ sender: Any) {
+        dismiss(animated: true)
+    }
     @IBAction func voiceviewmsg(_ sender: Any) {
         voiceview.isHidden = false
         textmessageview.isHidden = true
@@ -356,7 +355,7 @@ class ComunicationVC: UIViewController {
         let averagePower = audioPlayer.averagePower(forChannel: 0) // Get power level for channel 0
         let normalizedPower = max(0, (averagePower + 160) / 160) // Normalize the power value between 0 and 1
 
-        // Update wave view with the normalized power value
+        // Update wave view with the normalized power level
         waveView.updateWithLevel(CGFloat(normalizedPower))
     }
     
@@ -377,9 +376,7 @@ class ComunicationVC: UIViewController {
 extension ComunicationVC: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         btnplay.setImage(UIImage(named: "play-button"), for: .normal)
-//        updateTimer?.invalidate()
-//        updateTimer = nil
-//        playadiuoslider.value = 0 // Reset the slider
+
     }
 }
 extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
@@ -456,7 +453,7 @@ class WaveView: UIView {
     private var displayLink: CADisplayLink?
     
     // Wave configuration
-    private var baseAmplitude: CGFloat = 20.0 // Base height of the wave bars
+    private var baseAmplitude: CGFloat = 50.0 // Base height of the wave bars
     private var waveFrequency: CGFloat = 0.5 // Frequency of the wave variation
     private var waveSpeed: CGFloat = 0.1 // Speed of the wave phase shift
     private var wavePhase: CGFloat = 0.0 // Initial phase shift
@@ -511,7 +508,7 @@ class WaveView: UIView {
     @objc private func updateWaveBars() {
         wavePhase += waveSpeed
         
-        // Update each bar's height to simulate a waveform
+        // Update each bar's height and color based on audio level
         for (index, barLayer) in waveLayers.enumerated() {
             let path = UIBezierPath()
             
@@ -525,7 +522,13 @@ class WaveView: UIView {
             path.move(to: CGPoint(x: 0, y: centerY - adjustedHeight / 2))
             path.addLine(to: CGPoint(x: 0, y: centerY + adjustedHeight / 2))
             
+            // Update bar height
             barLayer.path = path.cgPath
+            
+            // Animate color change based on height (higher bars become lighter)
+            let colorLevel = CGFloat(abs(barHeight) / baseAmplitude)
+            barLayer.fillColor = UIColor(red: 0.0, green: colorLevel, blue: 1.0, alpha: 1.0).cgColor
+            barLayer.strokeColor = UIColor(red: 0.0, green: colorLevel, blue: 1.0, alpha: 1.0).cgColor
         }
     }
     
@@ -533,3 +536,4 @@ class WaveView: UIView {
         displayLink?.invalidate()
     }
 }
+

@@ -250,21 +250,13 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let vc = ComunicationVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
+            }else if items[indexPath.row] == "support".translated() {
+                
+                imagePdfNavigate()
             }
         }
     }
  
-    
-    
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        
-        if items[indexPath.row] == "discussion".translated() {
-          
-            imagePdfNavigate()
-        }
-    }
     
     func imagePdfNavigate() {
         let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
