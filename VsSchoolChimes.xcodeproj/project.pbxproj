@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99052CE3195D00FE98A5 /* VimeoUpload.swift */; };
+		189E99692CE35F6C00FE98A5 /* ImageNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99802CE3794A00FE98A5 /* NotificationService.swift */; };
 		365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */; };
 		64FD9BAC7760816722588E40 /* Pods_VsSchoolChimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */; };
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
@@ -148,6 +151,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		189E99672CE35F6C00FE98A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84A5BE362C19719700E32496 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 189E99612CE35F6C00FE98A5;
+			remoteInfo = ImageNotificationService;
+		};
 		84A5BE552C19719A00E32496 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84A5BE362C19719700E32496 /* Project object */;
@@ -164,7 +174,26 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		189E991C2CE31FCF00FE98A5 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				189E99692CE35F6C00FE98A5 /* ImageNotificationService.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		189E99052CE3195D00FE98A5 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
+		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
+		189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		189E997F2CE3794A00FE98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -324,6 +353,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		189E995F2CE35F6C00FE98A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8441886B2CC8E18B006483C3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -358,6 +394,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		189E99472CE3539F00FE98A5 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		189E99492CE353FE00FE98A5 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
+		189E99812CE3794A00FE98A5 /* ImageNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				189E997F2CE3794A00FE98A5 /* Info.plist */,
+				189E99802CE3794A00FE98A5 /* NotificationService.swift */,
+			);
+			path = ImageNotificationService;
+			sourceTree = "<group>";
+		};
 		3CDBD330E75F67CE1AED6022 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,6 +583,7 @@
 				84A5BE402C19719700E32496 /* VsSchoolChimes */,
 				84A5BE572C19719A00E32496 /* VsSchoolChimesTests */,
 				84A5BE612C19719A00E32496 /* VsSchoolChimesUITests */,
+				189E99812CE3794A00FE98A5 /* ImageNotificationService */,
 				84A5BE3F2C19719700E32496 /* Products */,
 				8980BC883D8F9004DC92B0FB /* Pods */,
 				3CDBD330E75F67CE1AED6022 /* Frameworks */,
@@ -537,6 +597,7 @@
 				84A5BE542C19719A00E32496 /* VsSchoolChimesTests.xctest */,
 				84A5BE5E2C19719A00E32496 /* VsSchoolChimesUITests.xctest */,
 				8441886E2CC8E18B006483C3 /* Models.framework */,
+				189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -544,6 +605,7 @@
 		84A5BE402C19719700E32496 /* VsSchoolChimes */ = {
 			isa = PBXGroup;
 			children = (
+				189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */,
 				849E57302C1FF6A9006119DA /* Fonts */,
 				849E572D2C1FF656006119DA /* Gif */,
 				84A5BE7E2C1973F400E32496 /* Utils */,
@@ -600,6 +662,7 @@
 		84A5BE722C1972C600E32496 /* DashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				189E99472CE3539F00FE98A5 /* New Group */,
 				84A5BE822C19777500E32496 /* ParentDashBoard */,
 			);
 			path = DashBoard;
@@ -676,6 +739,7 @@
 		84A5BE762C1972F900E32496 /* FCM */ = {
 			isa = PBXGroup;
 			children = (
+				189E99492CE353FE00FE98A5 /* Notification */,
 			);
 			path = FCM;
 			sourceTree = "<group>";
@@ -761,6 +825,7 @@
 				8442A9502CDE83C80006068E /* Localizable.strings */,
 				8442A9F52CDF47C20006068E /* ChngLangFil.swift */,
 				8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */,
+				189E99052CE3195D00FE98A5 /* VimeoUpload.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1382,6 +1447,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		189E99612CE35F6C00FE98A5 /* ImageNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 189E996B2CE35F6C00FE98A5 /* Build configuration list for PBXNativeTarget "ImageNotificationService" */;
+			buildPhases = (
+				189E995E2CE35F6C00FE98A5 /* Sources */,
+				189E995F2CE35F6C00FE98A5 /* Frameworks */,
+				189E99602CE35F6C00FE98A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ImageNotificationService;
+			packageProductDependencies = (
+			);
+			productName = ImageNotificationService;
+			productReference = 189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		8441886D2CC8E18B006483C3 /* Models */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 844188752CC8E18B006483C3 /* Build configuration list for PBXNativeTarget "Models" */;
@@ -1411,10 +1495,12 @@
 				84A5BE3B2C19719700E32496 /* Frameworks */,
 				84A5BE3C2C19719700E32496 /* Resources */,
 				60BB3ECAEF5EECF40FA42376 /* [CP] Embed Pods Frameworks */,
+				189E991C2CE31FCF00FE98A5 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				189E99682CE35F6C00FE98A5 /* PBXTargetDependency */,
 			);
 			name = VsSchoolChimes;
 			packageProductDependencies = (
@@ -1469,9 +1555,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1540;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
+					189E99612CE35F6C00FE98A5 = {
+						CreatedOnToolsVersion = 16.1;
+					};
 					8441886D2CC8E18B006483C3 = {
 						CreatedOnToolsVersion = 16.0;
 					};
@@ -1510,11 +1599,19 @@
 				84A5BE532C19719A00E32496 /* VsSchoolChimesTests */,
 				84A5BE5D2C19719A00E32496 /* VsSchoolChimesUITests */,
 				8441886D2CC8E18B006483C3 /* Models */,
+				189E99612CE35F6C00FE98A5 /* ImageNotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		189E99602CE35F6C00FE98A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8441886C2CC8E18B006483C3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1704,6 +1801,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		189E995E2CE35F6C00FE98A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8441886A2CC8E18B006483C3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1745,6 +1850,7 @@
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */,
 				849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */,
+				189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */,
 				844188682CC8C85C006483C3 /* ViewModal.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
 				84A5BE902C197C6000E32496 /* CheckBox.swift in Sources */,
@@ -1815,6 +1921,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		189E99682CE35F6C00FE98A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 189E99612CE35F6C00FE98A5 /* ImageNotificationService */;
+			targetProxy = 189E99672CE35F6C00FE98A5 /* PBXContainerItemProxy */;
+		};
 		84A5BE562C19719A00E32496 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84A5BE3D2C19719700E32496 /* VsSchoolChimes */;
@@ -1862,6 +1973,60 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		189E996C2CE35F6C00FE98A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ImageNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ImageNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.voicesnap.schoolmessenger.ImageNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		189E996D2CE35F6C00FE98A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6Z355RG34N;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ImageNotificationService/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ImageNotificationService;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.voicesnap.schoolmessenger.ImageNotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		844188762CC8E18B006483C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2061,6 +2226,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6Z355RG34N;
@@ -2091,6 +2257,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VsSchoolChimes/VsSchoolChimes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6Z355RG34N;
@@ -2119,7 +2286,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2140,7 +2306,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -2161,7 +2326,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6Z355RG34N;
@@ -2180,7 +2344,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA8A5D25D3E56CCD6CFE4A08 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6Z355RG34N;
@@ -2198,6 +2361,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		189E996B2CE35F6C00FE98A5 /* Build configuration list for PBXNativeTarget "ImageNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				189E996C2CE35F6C00FE98A5 /* Debug */,
+				189E996D2CE35F6C00FE98A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		844188752CC8E18B006483C3 /* Build configuration list for PBXNativeTarget "Models" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
