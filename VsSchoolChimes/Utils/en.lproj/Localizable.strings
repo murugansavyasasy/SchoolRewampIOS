@@ -51,6 +51,25 @@
 "General" = "General";
 "Feedback" = "Feedback";
 "Settings" = "Settings";
+"Cancel"   = "Cancel";
+"Select" = "Select";
+"Choose an option" = "Choose an option";
+"Upload Image/Pdf" = "Upload Image/Pdf";
+"Standard or section" = "Standard or section";
+"Section or student" = "Section or student";
+"Description" = "Description";
+"Camera" = "Camera";
+"Gallery"= "Galleryร";
+"Pdf" = "PDF";
+"Upload Attachment" = "Upload Attachment";
+"Groups" = "Groups";
+
+
+
+"OK" = "OK";
+"Camera Not Available" = "Camera Not Available";
+"This device has no camera." = "This device has no camera.";
+
 "Rate Us" = "Rate Us";
 
 "School Strength" = "School Strength";

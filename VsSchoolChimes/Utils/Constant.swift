@@ -40,7 +40,7 @@ class AwsCredentials {
 
     static var uploadprofileBrowes = "schoolchimes-docs"
 
-    static var CognitoPoolID = "ap-south-1:5358f3d7-ec74-4bf5-8b69-df26a06ebd6a"
+    static var CognitoPoolID =     "ap-south-1:a8650d2e-79d6-4668-85db-110e9917583f"
 
    
 

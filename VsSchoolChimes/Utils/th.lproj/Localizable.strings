@@ -49,6 +49,23 @@
 "General" = "ทั่วไป";
 "Feedback" = "คำติชม";
 "Settings" = "การตั้งค่า";
+"Cancel"   = "ยกเลิก";
+"Select" = "เลือก";
+"Choose an option" = "เลือกตัวเลือก";
+"Upload Image/Pdf" = "อัปโหลดรูปภาพ/PDF";
+"Standard or section" = "มาตรฐานหรือส่วน";
+"Section or student" = "ส่วนหรือผู้เรียน";
+"Description" = "คำอธิบาย";
+"Camera" = "กล้อง";
+"Gallery"= "แกลเลอรี";
+"Pdf" = "PDF";
+"Upload Attachment" = "อัปโหลดไฟล์แนบ";
+"Groups" = "กลุ่ม";
+"OK" = "ตกลง";
+"Camera Not Available" = "ไม่พบกล้อง";
+"This device has no camera." = "อุปกรณ์นี้ไม่มีกล้อง";
+
+
 "Rate Us" = "ให้คะแนนเรา";
 
 "School Strength" = "จำนวนนักเรียนทั้งหมดในโรงเรียน";

@@ -214,7 +214,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             
 //            if items[indexPath.row]
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                 cell.shimmersViewss.animateView(enable: false)
                 cell.MenuLbl.text = items[indexPath.row].translated()
                 cell.MenuImgView.image  = UIImage(named: items[indexPath.row] )
@@ -254,6 +254,23 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
  
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+        if items[indexPath.row] == "discussion".translated() {
+          
+            imagePdfNavigate()
+        }
+    }
+    
+    func imagePdfNavigate() {
+        let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
 }
 
 @available(iOS 14.0, *)

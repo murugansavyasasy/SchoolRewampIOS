@@ -50,6 +50,25 @@
 "FEEDBACK" = "மறுமொழி";
 "Settings" = "அமைப்புகள்";
 
+"Cancel" = "ரத்து செய்யவும்";
+"Select" = "தேர்ந்தெடுக்கவும்";
+"Choose an option" = "ஒரு விருப்பத்தை தேர்ந்தெடுக்கவும்";
+"Upload Image/Pdf" = "படத்தை/PDF ஐ பதிவேற்றவும்";
+"Standard or section" = "தரம் அல்லது பிரிவு";
+"Section or student" = "பிரிவு அல்லது மாணவர்";
+"Description" = "விளக்கம்";
+"Camera" = "கேமரா";
+"Gallery" = "காட்சிப்படப்புத்தகம்";
+"Pdf" = "PDF";
+"Upload Attachment" = "இணைப்பு பதிவேற்றவும்";
+"Groups" = "குழுக்கள்";
+
+
+"OK" = "சரி";
+"Camera Not Available" = "கேமரா கிடைக்கவில்லை";
+"This device has no camera." = "இந்த சாதனத்தில் கேமரா இல்லை.";
+
+
 "School Strength" = "பள்ளியின் மொத்த மாணவர் எண்ணிக்கை";
 "Total Strength" = "மொத்த எண்ணிக்கை";
 "Staff's count" = "பணியாளர் எண்ணிக்கை";

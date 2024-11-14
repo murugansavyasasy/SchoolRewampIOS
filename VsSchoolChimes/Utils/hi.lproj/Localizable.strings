@@ -59,6 +59,24 @@
 "Contact Support" = "सहायता संपर्क करें";
 "Are you sure you want to logout?" = "क्या आप वाकई लॉगआउट करना चाहते हैं?";
 "Cancel" = "रद्द करें";
-"Logout" = "लॉगआउट";
-"Hindi" = "हिंदी";
-"Thai" = "ไทย";
+"Select" = "चयन करें";
+"Choose an option" = "एक विकल्प चुनें";
+"Upload Image/Pdf" = "छवि/PDF अपलोड करें";
+"Standard or section" = "मानक या खंड";
+"Section or student" = " खंड या छात्र";
+"Description" = "विवरण";
+"Camera" = "कैमरा";
+"Gallery" = "गैलरी";
+"Pdf" = "पीडीएफ";
+"Upload Attachment" = "संलग्नक अपलोड करें";
+"Groups" = "समूह";
+
+
+"OK" = "ठीक है";
+"Camera Not Available" = "कैमरा उपलब्ध नहीं है";
+"This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
+
+"OK" = "ठीक है";
+"Camera Not Available" = "कैमरा उपलब्ध नहीं है";
+"This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
+
