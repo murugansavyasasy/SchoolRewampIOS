@@ -10,6 +10,8 @@
 		189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99052CE3195D00FE98A5 /* VimeoUpload.swift */; };
 		189E99692CE35F6C00FE98A5 /* ImageNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99802CE3794A00FE98A5 /* NotificationService.swift */; };
+		189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */; };
+		189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189E99DF2CE492B400FE98A5 /* SenderSideImagePdfViewController.xib */; };
 		365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */; };
 		64FD9BAC7760816722588E40 /* Pods_VsSchoolChimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */; };
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
@@ -194,6 +196,8 @@
 		189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		189E997F2CE3794A00FE98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideImagePdfViewController.swift; sourceTree = "<group>"; };
+		189E99DF2CE492B400FE98A5 /* SenderSideImagePdfViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideImagePdfViewController.xib; sourceTree = "<group>"; };
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -417,6 +421,23 @@
 			path = ImageNotificationService;
 			sourceTree = "<group>";
 		};
+		189E99DC2CE4925F00FE98A5 /* SchoolSide */ = {
+			isa = PBXGroup;
+			children = (
+				189E99DD2CE4927000FE98A5 /* ImagePdf */,
+			);
+			path = SchoolSide;
+			sourceTree = "<group>";
+		};
+		189E99DD2CE4927000FE98A5 /* ImagePdf */ = {
+			isa = PBXGroup;
+			children = (
+				189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */,
+				189E99DF2CE492B400FE98A5 /* SenderSideImagePdfViewController.xib */,
+			);
+			path = ImagePdf;
+			sourceTree = "<group>";
+		};
 		3CDBD330E75F67CE1AED6022 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -613,7 +634,7 @@
 				84A5BE762C1972F900E32496 /* FCM */,
 				84A5BE752C1972ED00E32496 /* Repository */,
 				84A5BE742C1972DE00E32496 /* Parent */,
-				84A5BE732C1972D400E32496 /* School */,
+				189E99DC2CE4925F00FE98A5 /* SchoolSide */,
 				84A5BE722C1972C600E32496 /* DashBoard */,
 				84A5BE412C19719700E32496 /* AppDelegate.swift */,
 				84A5BE432C19719700E32496 /* SceneDelegate.swift */,
@@ -666,35 +687,6 @@
 				84A5BE822C19777500E32496 /* ParentDashBoard */,
 			);
 			path = DashBoard;
-			sourceTree = "<group>";
-		};
-		84A5BE732C1972D400E32496 /* School */ = {
-			isa = PBXGroup;
-			children = (
-				84A5BED52C199EA800E32496 /* FeePendingReport */,
-				84A5BED42C199E9B00E32496 /* VeryImportInfo */,
-				84A5BED32C199E9100E32496 /* FeedBack */,
-				84A5BED22C199E8300E32496 /* LessonPlan */,
-				84A5BED12C199E7600E32496 /* StudentsReport */,
-				84A5BED02C199E6800E32496 /* DailyCollection */,
-				84A5BECF2C199E5B00E32496 /* OnlineMeeting */,
-				84A5BECE2C199E4F00E32496 /* ConferernceCall */,
-				84A5BECD2C199E3E00E32496 /* MessageFromManagement */,
-				84A5BECC2C199E2F00E32496 /* ScheduleExamTest */,
-				84A5BECB2C199E1D00E32496 /* SchoolClassEvents */,
-				84A5BECA2C199E1000E32496 /* NoticeBoard */,
-				84A5BEC92C199DFF00E32496 /* SchoolStrength */,
-				84A5BEC82C199DE400E32496 /* AbsenteesimReport */,
-				84A5BEC72C199DD700E32496 /* AttendanceMarking */,
-				84A5BEC62C199D9500E32496 /* HomeWork */,
-				84A5BEC52C199D8700E32496 /* Assignment */,
-				84A5BEC42C199D8000E32496 /* Video */,
-				84A5BEC32C199D7800E32496 /* ImagePdf */,
-				84A5BEC22C199D6500E32496 /* TextMessage */,
-				84A5BE842C1977BD00E32496 /* NonEmergencyVoice */,
-				84A5BE832C1977A900E32496 /* EmergencyVoice */,
-			);
-			path = School;
 			sourceTree = "<group>";
 		};
 		84A5BE742C1972DE00E32496 /* Parent */ = {
@@ -847,20 +839,6 @@
 			path = ParentDashBoard;
 			sourceTree = "<group>";
 		};
-		84A5BE832C1977A900E32496 /* EmergencyVoice */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = EmergencyVoice;
-			sourceTree = "<group>";
-		};
-		84A5BE842C1977BD00E32496 /* NonEmergencyVoice */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NonEmergencyVoice;
-			sourceTree = "<group>";
-		};
 		84A5BE852C197A9500E32496 /* EmergencyVoice */ = {
 			isa = PBXGroup;
 			children = (
@@ -890,146 +868,6 @@
 				84A5BF9D2C1AF5EE00E32496 /* CountryListModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		84A5BEC22C199D6500E32496 /* TextMessage */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TextMessage;
-			sourceTree = "<group>";
-		};
-		84A5BEC32C199D7800E32496 /* ImagePdf */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ImagePdf;
-			sourceTree = "<group>";
-		};
-		84A5BEC42C199D8000E32496 /* Video */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Video;
-			sourceTree = "<group>";
-		};
-		84A5BEC52C199D8700E32496 /* Assignment */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Assignment;
-			sourceTree = "<group>";
-		};
-		84A5BEC62C199D9500E32496 /* HomeWork */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = HomeWork;
-			sourceTree = "<group>";
-		};
-		84A5BEC72C199DD700E32496 /* AttendanceMarking */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AttendanceMarking;
-			sourceTree = "<group>";
-		};
-		84A5BEC82C199DE400E32496 /* AbsenteesimReport */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AbsenteesimReport;
-			sourceTree = "<group>";
-		};
-		84A5BEC92C199DFF00E32496 /* SchoolStrength */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SchoolStrength;
-			sourceTree = "<group>";
-		};
-		84A5BECA2C199E1000E32496 /* NoticeBoard */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NoticeBoard;
-			sourceTree = "<group>";
-		};
-		84A5BECB2C199E1D00E32496 /* SchoolClassEvents */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SchoolClassEvents;
-			sourceTree = "<group>";
-		};
-		84A5BECC2C199E2F00E32496 /* ScheduleExamTest */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ScheduleExamTest;
-			sourceTree = "<group>";
-		};
-		84A5BECD2C199E3E00E32496 /* MessageFromManagement */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MessageFromManagement;
-			sourceTree = "<group>";
-		};
-		84A5BECE2C199E4F00E32496 /* ConferernceCall */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ConferernceCall;
-			sourceTree = "<group>";
-		};
-		84A5BECF2C199E5B00E32496 /* OnlineMeeting */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = OnlineMeeting;
-			sourceTree = "<group>";
-		};
-		84A5BED02C199E6800E32496 /* DailyCollection */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DailyCollection;
-			sourceTree = "<group>";
-		};
-		84A5BED12C199E7600E32496 /* StudentsReport */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = StudentsReport;
-			sourceTree = "<group>";
-		};
-		84A5BED22C199E8300E32496 /* LessonPlan */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LessonPlan;
-			sourceTree = "<group>";
-		};
-		84A5BED32C199E9100E32496 /* FeedBack */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FeedBack;
-			sourceTree = "<group>";
-		};
-		84A5BED42C199E9B00E32496 /* VeryImportInfo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = VeryImportInfo;
-			sourceTree = "<group>";
-		};
-		84A5BED52C199EA800E32496 /* FeePendingReport */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FeePendingReport;
 			sourceTree = "<group>";
 		};
 		84A5BED62C199EE000E32496 /* TextMessages */ = {
@@ -1670,6 +1508,7 @@
 				84A5BE492C19719700E32496 /* Base in Resources */,
 				F29035602CDC924900F3E67C /* MobileVc.xib in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
+				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
@@ -1854,6 +1693,7 @@
 				844188682CC8C85C006483C3 /* ViewModal.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
 				84A5BE902C197C6000E32496 /* CheckBox.swift in Sources */,
+				189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */,
 				84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */,
 				84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */,
 				849E57252C1FF4E8006119DA /* PriorityViewController.swift in Sources */,
