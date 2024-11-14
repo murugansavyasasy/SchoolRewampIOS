@@ -10,6 +10,11 @@ import Charts
 
 class PiechartCVCell: UICollectionViewCell {
 
+    @IBOutlet weak var Girlscount: UILabel!
+    @IBOutlet weak var Boyscount: UILabel!
+    @IBOutlet weak var Staffscount: UILabel!
+    @IBOutlet weak var Totalstrength: UILabel!
+    @IBOutlet weak var schoolstrength: UILabel!
     @IBOutlet weak var Cellview: UIView!
     @IBOutlet weak var pieChartView: PieChartView!
 
@@ -25,6 +30,13 @@ class PiechartCVCell: UICollectionViewCell {
         Cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         Cellview.layer.shadowRadius = 3
         Cellview.layer.masksToBounds = false
+        
+        schoolstrength.text = "School Strength".translated()
+        Totalstrength.text = "Total Strength".translated()
+        Staffscount.text = "Staff's count".translated()
+        Boyscount.text = "Boy's count".translated()
+        Girlscount.text = "Girl's count".translated()
+        
         
         pieChartView.frame = CGRect(x: 0, y: 0, width: 180, height: 165)
              setupPieChart()

@@ -23,6 +23,21 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var fullview: UIView!
     
+    @IBOutlet weak var Profile: UILabel!
+    
+    @IBOutlet weak var RegisterNo: UILabel!
+    @IBOutlet weak var aboutstudent: UILabel!
+    @IBOutlet weak var contactdetails: UILabel!
+    @IBOutlet weak var section: UILabel!
+    @IBOutlet weak var standard: UILabel!
+    @IBOutlet weak var Familydetails: UILabel!
+    @IBOutlet weak var Fathername: UILabel!
+    @IBOutlet weak var Mothername: UILabel!
+    @IBOutlet weak var FatherOccupation: UILabel!
+    @IBOutlet weak var Motheroccupation: UILabel!
+    @IBOutlet weak var SeconadaryphoneNo: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,6 +58,18 @@ class ProfileViewController: UIViewController {
         locationimg.layer.cornerRadius = 10
         hostelimg.layer.cornerRadius = 10
         
+        Profile.text = "Profile".translated()
+        aboutstudent.text = "About Student".translated()
+        contactdetails.text = "Contact details".translated()
+        section.text = "Section".translated() + ": A"
+        standard.text = "Standard".translated() + ": XI"
+        RegisterNo.text = "Register number".translated() + ": 476543"
+        Familydetails.text = "Family Details".translated()
+        Fathername.text = "Fathername".translated()
+        FatherOccupation.text = "Father occupation".translated()
+        Mothername.text = "Mothername".translated()
+        Motheroccupation.text = "Mother occupation".translated()
+        SeconadaryphoneNo.text = "Secondary Phone no".translated()
     }
 
 

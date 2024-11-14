@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LogoutViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="Cancellabel" destination="JpR-4w-rVo" id="saG-E1-Yx4"/>
+                <outlet property="DescribeLabel" destination="vQP-8F-uxE" id="zF2-mz-FJz"/>
                 <outlet property="LogoutButtonView" destination="ih8-gw-hCk" id="02l-wn-aTD"/>
                 <outlet property="LogoutView" destination="lWC-9N-h4x" id="8Af-9E-yJx"/>
                 <outlet property="overallview" destination="i5M-Pr-FkT" id="z7S-rc-i8U"/>

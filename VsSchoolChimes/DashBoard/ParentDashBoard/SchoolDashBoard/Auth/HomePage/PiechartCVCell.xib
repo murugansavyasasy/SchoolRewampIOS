@@ -127,8 +127,13 @@
             </constraints>
             <size key="customSize" width="395" height="141"/>
             <connections>
+                <outlet property="Boyscount" destination="10U-gm-M3O" id="FY3-2Y-AKy"/>
                 <outlet property="Cellview" destination="6Fz-KE-YT0" id="mmC-cI-Gyh"/>
+                <outlet property="Girlscount" destination="Qet-sB-ULj" id="8bN-kf-QLp"/>
+                <outlet property="Staffscount" destination="A1R-uh-1Gi" id="JLA-Wl-Pbo"/>
+                <outlet property="Totalstrength" destination="vSf-T6-2T2" id="UFG-xg-Uvw"/>
                 <outlet property="pieChartView" destination="LJN-jf-2R1" id="3A9-Q3-9Oy"/>
+                <outlet property="schoolstrength" destination="dNL-6h-Gef" id="Ivn-ml-tWc"/>
             </connections>
             <point key="canvasLocation" x="425.19083969465646" y="19.366197183098592"/>
         </collectionViewCell>
@@ -138,13 +143,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

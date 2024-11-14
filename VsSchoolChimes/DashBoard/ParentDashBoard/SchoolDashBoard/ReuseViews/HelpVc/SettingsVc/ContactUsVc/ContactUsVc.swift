@@ -10,11 +10,13 @@ import UIKit
 class ContactUsVc: UIViewController {
 
    
+    @IBOutlet weak var ContactusHeader: UILabel!
     @IBOutlet weak var tv: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ContactusHeader.text = "Contact Support".translated()
         tv.dataSource = self
         tv.delegate = self
         

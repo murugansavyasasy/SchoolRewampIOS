@@ -7,9 +7,12 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class LanguageVc: UIViewController {
    
 
+    @IBOutlet weak var ConfirmBtn: UIButton!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     var languageCode = "en"
@@ -22,35 +25,58 @@ class LanguageVc: UIViewController {
                  language(language: "Hindi", selected: false),
                  language(language: "Thai", selected: false)]
     
+    var Language = ["English","தமிழ்","हिंदी","ไทย"]
+    var index = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        let index = UserDefaults.standard.integer(forKey: "index")
+         index = UserDefaults.standard.integer(forKey: "index")
         Items[index].selected = true
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         baseview.layer.cornerRadius = 15
-        if #available(iOS 14.0, *) {
+     
             tv.dataSource = self
             tv.delegate = self
-        } else {
-            // Fallback on earlier versions
-        }
+            tv.reloadData()
+        
        
-        tv.reloadData()
-//        let defaults = UserDefaults.standard
-//        languageCode = defaults.string(forKey: DefaultsKeys.Language)!
-//        print("languageCodelanguageCode",languageCode)
+        tv.isScrollEnabled = false
+               
+               // Reload data and adjust the table height
+               
+              
+       
+
         let nib = UINib(nibName: CellConfingName.LangTvCellTableViewCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:  CellConfingName.LangTvCellTableViewCell)
+        
+        adjustTableViewHeight()
+        
     }
 
 
     @IBAction func backClick(_ sender: Any) {
-        
+       
         dismiss(animated: true)
     }
     
-
+    @IBAction func ConfirmClick(_ sender: Any) {
+        UserDefaults.standard.set(index, forKey: "index")
+        let userDefault = UserDefaults.standard
+        userDefault.set(languageCode, forKey: DefaultsKeys.Language)
+        
+        print("languageCode",DefaultsKeys.Language)
+        // Apply the language immediately
+        userDefault.synchronize()
+        
+        // Reload table view to update checkbox images
+        //tv.reloadData()
+        // Present the next view controller
+        let vc = TapBarVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
 }
 
     
@@ -64,12 +90,32 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LangTvCellTableViewCell , for: indexPath) as! LangTvCellTableViewCell
+        
+        if index == indexPath.row{
+            
+            cell.RadioImage.image = UIImage(named: "checked_Tick")
+           
+                   
+                   // Set initial tint color
+            cell.LangIconImg.tintColor = .link
+        }else{
+            
+            cell.RadioImage.image = UIImage(named: "CheckCircle")
+            cell.LangIconImg.tintColor = .lightGray
+        }
+        
+        
         if Items[indexPath.row].selected == true{
             selectedLanguage = Items[indexPath.row].language
         }
         
         cell.LangLbl.text = Items[indexPath.row].language
-        cell.RadioImage.image = Items[indexPath.row].selected == true ? UIImage(named: "checked_Tick"): UIImage(named: "CheckCircle")
+        cell.OriginalLangLbl.text = Language[indexPath.row]
+        cell.LangIconImg.image = UIImage(named: Items[indexPath.row].language)
+        
+//        cell.RadioImage.image = Items[indexPath.row].selected == true ? UIImage(named: "checked_Tick"): UIImage(named: "CheckCircle")
+//        
+        
         return cell
     }
 
@@ -78,10 +124,11 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
             
             
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        UserDefaults.standard.set(indexPath.row, forKey: "index")
+        
 
         selectedLanguage = Items[indexPath.row].language
-        
+        Items[indexPath.row].selected = true
+        index = indexPath.row
                 let userDefault = UserDefaults.standard
                 // Default language is English
                 
@@ -96,19 +143,19 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
                     languageCode = "en"
                 }
 //        UserDefaults.standard.set(indexPath.row, forKey: "index")
-                // Save the selected language code to UserDefaults
-                userDefault.set(languageCode, forKey: DefaultsKeys.Language)
-                
-                print("languageCode",DefaultsKeys.Language)
-                // Apply the language immediately
-                userDefault.synchronize()
-                
-                // Reload table view to update checkbox images
+//                // Save the selected language code to UserDefaults
+//                userDefault.set(languageCode, forKey: DefaultsKeys.Language)
+//                
+//                print("languageCode",DefaultsKeys.Language)
+//                // Apply the language immediately
+//                userDefault.synchronize()
+//                
+//                // Reload table view to update checkbox images
                 tv.reloadData()
-                // Present the next view controller
-                let vc = TapBarVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
+//                // Present the next view controller
+//                let vc = TapBarVC(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                present(vc, animated: true)
     }
             
             func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -116,7 +163,19 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
                 return  60
             }
             
+    func adjustTableViewHeight() {
+            // Calculate the total height based on rows and row height
+        let totalHeight = CGFloat(Items.count) * 60.0 // 60.0 is example row height; replace with your own
+            
+            // Set the height constraint to the calculated height
+            tableViewHeightConstraint.constant = totalHeight
+
+            // Update the layout with the new constraint value
+        self.baseview.layoutIfNeeded()
         }
+        }
+
+
         
     
 struct language{

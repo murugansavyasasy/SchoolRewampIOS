@@ -9,7 +9,8 @@ import UIKit
 
 class FAQViewController: UIViewController {
    
-
+    @IBOutlet weak var FaqPageHeading: UILabel!
+    
     @IBOutlet weak var submitbutton: UIButton!
     @IBOutlet weak var tableview: UITableView!
     
@@ -18,6 +19,8 @@ class FAQViewController: UIViewController {
     var index : Int? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        FaqPageHeading.text = "FAQ".translated()
 
         let nib = UINib(nibName: CellConfingName.FAQTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.FAQTableViewCell)

@@ -27,7 +27,7 @@ class PriorityViewController1: UIViewController {
 //    var identifier = "studCardTVcell"
     var identifier = "DemoTVCell"
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]
-    
+    let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,15 +51,13 @@ class PriorityViewController1: UIViewController {
         let nib1 = UINib(nibName: "principalTVCell", bundle: nil)
         tableview.register(nib1, forCellReuseIdentifier: "principalTVCell")
       
-        tableview.frame.height
+        
         print("tableview.frame2", tableview.contentSize.height)
         
 //        updateScrollViewContentSize()
        
         tableview.delegate = self
         tableview.dataSource = self
-        tableview.rowHeight = UITableView.automaticDimension
-        tableview.estimatedRowHeight = 100
         tableview.reloadData()
     }
     
@@ -76,7 +74,7 @@ class PriorityViewController1: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
-        tableview.rowHeight = UITableView.automaticDimension
+       
     }
     
     
@@ -148,25 +146,36 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let colorName = assetColors[indexPath.row % assetColors.count]
+        let colour1 = UIColor(named: colorName)
+        let gradient = gradientcolour[indexPath.row % gradientcolour.count]
+        let colour2 =  UIColor(named: gradient)
+        
         if ParentButton.tintColor == .white {
             let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! DemoTVCell
+            
+           
+            //cell.applyGradient(colors: [colour2!.cgColor,colour1!.cgColor])
+            cell.setGradientColors([colour2!.cgColor,colour1!.cgColor])
+            cell.SchoolInfoView.backgroundColor = colour1
             
             return cell
             
         } else {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "principalTVCell", for: indexPath) as! principalTVCell
-            
-            
-            let colorName = assetColors[indexPath.row % assetColors.count]
-            cell.cellview.backgroundColor = UIColor(named: colorName)
+           
+            //cell.applyGradient(colors: [colour2!.cgColor,colour1!.cgColor])
+            cell.setGradientColors([colour2!.cgColor,colour1!.cgColor])
+            //cell.cellview.backgroundColor = UIColor(named: colorName)
             
            
             cell.checkbox.isChecked = (indexPath == selectedIndexPath)
             
            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickVC(_:)))
-            cell.checkbox.addGestureRecognizer(tapGesture)
+//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickVC(_:)))
+//            cell.checkbox.addGestureRecognizer(tapGesture)
             cell.checkbox.tag = indexPath.row // Tag to identify cell in selector
             
             
@@ -177,9 +186,7 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
 //            selectedGestures.pos = indexPath.row
 //            cell.checkbox.addGestureRecognizer(selectedGestures)
 //            
-//            
-            
-            
+//
             
             return cell
         }
@@ -218,15 +225,15 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
 //    }
 //    
     
-    @objc func clickVC(_ sender: UITapGestureRecognizer) {
-        // Get the checkbox's row and update the selected index path
-        if let checkbox = sender.view as? UIImageView, let tableView = checkbox.superview?.superview as? UITableView {
-            
-            let indexPath = IndexPath(row: checkbox.tag, section: 0)
-            updateSelection(for: indexPath, in: tableView)
-            
-        }
-    }
+//    @objc func clickVC(_ sender: UITapGestureRecognizer) {
+//        // Get the checkbox's row and update the selected index path
+//        if let checkbox = sender.view as? UIImageView, let tableView = checkbox.superview?.superview as? UITableView {
+//            
+//            let indexPath = IndexPath(row: checkbox.tag, section: 0)
+//            updateSelection(for: indexPath, in: tableView)
+//            
+//        }
+//    }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -266,6 +273,25 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+//    func gradientview(view : UIView,colours : [CGColor]){
+//        
+//        
+//        view.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+//               
+//               // Create and configure the gradient layer
+//               let gradientLayer = CAGradientLayer()
+//              gradientLayer.colors = colours
+//               gradientLayer.startPoint = CGPoint(x: 0.2, y: 0.5)
+//      //  gradientLayer.endPoint = CGPoint(x: 0.7, y: 0.5)
+//        gradientLayer.frame = view.bounds
+//        gradientLayer.cornerRadius = view.layer.cornerRadius
+//               
+//               // Insert the gradient layer into the button's layer
+//        view.layer.insertSublayer(gradientLayer, at: 0)
+//        
+//        
+//    }
 }
 
 class CheckBoxGesturess : UITapGestureRecognizer {

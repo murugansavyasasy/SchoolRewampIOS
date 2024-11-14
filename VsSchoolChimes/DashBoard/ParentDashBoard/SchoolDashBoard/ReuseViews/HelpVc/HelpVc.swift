@@ -9,9 +9,11 @@ import UIKit
 
 class HelpVc: UIViewController {
 
+    @IBOutlet weak var HelppageHeader: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        HelppageHeader.text = "Contact Support".translated()
         // Do any additional setup after loading the view.
     }
 

@@ -12,6 +12,7 @@ import DropDown
 @available(iOS 14.0, *)
 class ReportBugVcViewController: UIViewController, UITextViewDelegate {
 
+    @IBOutlet weak var ReportHeading: UILabel!
     @IBOutlet weak var selectModuleLbl: UILabel!
     @IBOutlet weak var ModuleDropDown: DropDown!
     @IBOutlet weak var textViewStack: UIStackView!
@@ -27,6 +28,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ReportHeading.text = "Report a bug".translated()
         
         ModuleDropDown.layer.cornerRadius = 10
         ModuleDropDown.layer.borderWidth = 0.5

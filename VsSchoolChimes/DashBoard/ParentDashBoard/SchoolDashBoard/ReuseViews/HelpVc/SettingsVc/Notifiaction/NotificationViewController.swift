@@ -12,11 +12,14 @@ class NotificationViewController: UIViewController {
     @IBOutlet weak var tableview: UITableView!
     
  
-   
+    @IBOutlet weak var NotificationpageHeader: UILabel!
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationpageHeader.text = "Notifications".translated()
         
         tableview.dataSource = self
         tableview.delegate = self

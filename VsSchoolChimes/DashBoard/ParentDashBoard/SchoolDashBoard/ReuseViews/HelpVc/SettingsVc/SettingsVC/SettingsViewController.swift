@@ -11,7 +11,8 @@ import UIKit
 class SettingsViewController: UIViewController {
     
     
-
+    @IBOutlet weak var SettingspageHeading: UILabel!
+    
     @IBOutlet weak var tableview: UITableView!
    
     let sections: [Section] = [
@@ -29,6 +30,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        SettingspageHeading.text = "Settings".translated()
         // Do any additional setup after loading the view.
         
         for imageCategory in Images {

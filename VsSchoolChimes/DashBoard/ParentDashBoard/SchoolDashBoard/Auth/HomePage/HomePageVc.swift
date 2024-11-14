@@ -55,8 +55,9 @@ class HomePageVc: UIViewController,UITabBarDelegate {
         TopCv.delegate = self
         TopCv.dataSource = self
         
-        bottomCv.delegate = self
-        bottomCv.dataSource = self
+//        bottomCv.delegate = self
+//        bottomCv.dataSource = self
+//        bottomCv.reloadData()
         
         startAutoScroll()
         
@@ -100,6 +101,10 @@ class HomePageVc: UIViewController,UITabBarDelegate {
             for cell in bottomCv.visibleCells as! [BottomCVCell] {
                    // Reset shimmer view or any other animations
                    cell.shimmersViewss.animateView(enable: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+                    cell.shimmersViewss.animateView(enable: false)
+                }
             
                }
         
@@ -109,6 +114,9 @@ class HomePageVc: UIViewController,UITabBarDelegate {
             super.viewDidAppear(animated)
             print("viewDidAppear - View has appeared on the screen.")
             
+               bottomCv.delegate = self
+               bottomCv.dataSource = self
+              // bottomCv.reloadData()
                restartAnimations()
            // startAutoScroll()
                 

@@ -13,6 +13,9 @@ class principalTVCell: UITableViewCell {
 //    @IBOutlet weak var checkbox: UIImageView!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var imgview: UIImageView!
+    
+    private var gradientColors: [CGColor] = []
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,4 +39,35 @@ class principalTVCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    // This method is called each time the cell is displayed or resized
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        applyGradientIfNeeded()
+    }
+
+    func setGradientColors(_ colors: [CGColor]) {
+        // Store the colors so we can use them in layoutSubviews
+        gradientColors = colors
+        applyGradientIfNeeded() // Ensure the gradient is applied immediately as well
+    }
+
+    private func applyGradientIfNeeded() {
+        // Check if we already have the same gradient applied
+        guard gradientColors.isEmpty == false else { return }
+        
+        // Remove existing gradient layers if any
+        cellview.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+        
+        // Create and configure the gradient layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = gradientColors
+        gradientLayer.startPoint = CGPoint(x: 0.2, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
+        gradientLayer.frame = cellview.bounds
+        gradientLayer.cornerRadius = cellview.layer.cornerRadius
+
+        // Insert the gradient layer into the cell's view hierarchy
+        cellview.layer.insertSublayer(gradientLayer, at: 0)
+    }
+ 
 }

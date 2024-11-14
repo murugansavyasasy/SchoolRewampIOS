@@ -11,12 +11,17 @@ class LogoutViewController: UIViewController {
     var demo = "gitdfchgvhbjnkjjhrdtyfgyu"
     var heloo = "laksh"
     
+    @IBOutlet weak var DescribeLabel: UILabel!
     @IBOutlet var overallview: UIView!
     @IBOutlet weak var LogoutView: UIView!
     @IBOutlet weak var Cancellabel: UILabel!
     @IBOutlet weak var LogoutButtonView: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DescribeLabel.text = "Are you sure you want to logout?".translated()
+        Cancellabel.text = "Cancel".translated()
+        LogoutButtonView.titleLabel?.text = "Logout".translated()
 
         overallview.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         LogoutView.layer.cornerRadius = 10

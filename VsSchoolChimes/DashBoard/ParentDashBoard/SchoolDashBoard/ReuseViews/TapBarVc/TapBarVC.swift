@@ -116,6 +116,7 @@ class TapBarVC: UIViewController,UITabBarDelegate {
            switch item.tag {
            case 0:
                selectViewController(firstVC)
+               firstVC.bottomCv.reloadData()
            case 1:
                selectViewController(secondVC)
            case 2:

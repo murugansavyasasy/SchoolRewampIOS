@@ -12,10 +12,14 @@ protocol RatingDelegate{
 }
 class RateUsViewController: UIViewController{
 
+    @IBOutlet weak var ReteusHeading: UILabel!
     @IBOutlet weak var tableview: UITableView!
     var isSelected:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ReteusHeading.text = "Rate Us".translated()
+        
         UiUpdate()
         
     }

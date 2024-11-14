@@ -49,3 +49,14 @@
 "General" = "ทั่วไป";
 "Feedback" = "คำติชม";
 "Settings" = "การตั้งค่า";
+"Rate Us" = "ให้คะแนนเรา";
+
+"School Strength" = "จำนวนนักเรียนทั้งหมดในโรงเรียน";
+"Total Strength" = "จำนวนรวม";
+"Staff's count" = "จำนวนพนักงาน";
+"Boy's count" = "จำนวนนักเรียนชาย";
+"Girl's count" = "จำนวนนักเรียนหญิง";
+"Contact Support" = "ติดต่อฝ่ายสนับสนุน";
+"Are you sure you want to logout?" = "คุณแน่ใจหรือว่าต้องการออกจากระบบ?";
+"Cancel" = "ยกเลิก";
+"Logout" = "ออกจากระบบ";
