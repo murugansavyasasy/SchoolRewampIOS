@@ -77,3 +77,12 @@
 "Are you sure you want to logout?" = "คุณแน่ใจหรือว่าต้องการออกจากระบบ?";
 "Cancel" = "ยกเลิก";
 "Logout" = "ออกจากระบบ";
+"Enter Video Title" = "ป้อนชื่อวิดีโอ";
+"Video Description" = "คำอธิบายวิดีโอ";
+"Choose Video From Gallery" = "เลือกวิดีโอจากแกลเลอรี";
+"Change Video" = "เปลี่ยนวิดีโอ";
+
+"Upload Video" = "อัปโหลดวิดีโอ";
+"Send" = "ส่ง";
+
+
