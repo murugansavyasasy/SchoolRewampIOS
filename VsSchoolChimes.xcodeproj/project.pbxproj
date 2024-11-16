@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */; };
+		1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */; };
 		189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99052CE3195D00FE98A5 /* VimeoUpload.swift */; };
 		189E99692CE35F6C00FE98A5 /* ImageNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99802CE3794A00FE98A5 /* NotificationService.swift */; };
@@ -190,6 +192,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideVideoViewController.swift; sourceTree = "<group>"; };
+		1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideVideoViewController.xib; sourceTree = "<group>"; };
 		189E99052CE3195D00FE98A5 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
 		189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -402,6 +406,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1861BEE92CE61DC70095BF28 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */,
+				1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
 		189E99472CE3539F00FE98A5 /* New Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +441,7 @@
 		189E99DC2CE4925F00FE98A5 /* SchoolSide */ = {
 			isa = PBXGroup;
 			children = (
+				1861BEE92CE61DC70095BF28 /* Video */,
 				189E99DD2CE4927000FE98A5 /* ImagePdf */,
 			);
 			path = SchoolSide;
@@ -1504,6 +1518,7 @@
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
 				844188872CC915FF006483C3 /* OTPVc.xib in Resources */,
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
+				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
 				8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
@@ -1675,6 +1690,7 @@
 				84A5BEB12C19830500E32496 /* Constant.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
+				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
 				84A5BFA82C1AF8E000E32496 /* ValidateOtpModel.swift in Sources */,

@@ -263,6 +263,10 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
                 imagePdfNavigate()
             }
+            else if items[indexPath.row] == "university".translated() {
+                
+                videoNavigate()
+            }
         }
         
     }
@@ -273,6 +277,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func imagePdfNavigate() {
         let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    func videoNavigate() {
+        let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

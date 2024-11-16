@@ -104,6 +104,14 @@
 "OK" = "ठीक है";
 "Camera Not Available" = "कैमरा उपलब्ध नहीं है";
 "This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
+"Enter Video Title" = "वीडियो शीर्षक दर्ज करें";
+"Video Description" = "वीडियो विवरण";
+"Choose Video From Gallery" = "गैलरी से वीडियो चुनें";
+"Change Video" = "वीडियो बदलें";
+
+"Upload Video" = "वीडियो अपलोड करें";
+"Send" = "भेजें";
+
 
 // MARK: Feedback page
 "How satisfied are you with the School Chimes?" = "आप School Chimes से कितने संतुष्ट हैं?";
