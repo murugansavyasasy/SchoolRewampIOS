@@ -60,6 +60,10 @@
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F52CDF47C20006068E /* ChngLangFil.swift */; };
 		8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */; };
+		84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */; };
+		84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */; };
+		84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */; };
+		84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE32CE866E30010DA24 /* NoticeBoardVc.xib */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
 		8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8494B6642CD1EC8D004B0746 /* TapBarVC.xib */; };
 		849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E571F2C1FF439006119DA /* MobileNumberViewController.swift */; };
@@ -255,6 +259,16 @@
 		8442A9F52CDF47C20006068E /* ChngLangFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangFil.swift; sourceTree = "<group>"; };
 		8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangConsFil.swift; sourceTree = "<group>"; };
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		84666AD52CE8668C0010DA24 /* ImagePdfCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePdfCvCell.swift; sourceTree = "<group>"; };
+		84666AD62CE8668C0010DA24 /* ImagePdfCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfCvCell.xib; sourceTree = "<group>"; };
+		84666AD82CE8668C0010DA24 /* ImagePdfTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePdfTv.swift; sourceTree = "<group>"; };
+		84666AD92CE8668C0010DA24 /* ImagePdfTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfTv.xib; sourceTree = "<group>"; };
+		84666ADB2CE8668C0010DA24 /* ImagePdfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePdfVC.swift; sourceTree = "<group>"; };
+		84666ADC2CE8668C0010DA24 /* ImagePdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfVC.xib; sourceTree = "<group>"; };
+		84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardTvcellTableViewCell.swift; sourceTree = "<group>"; };
+		84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardTvcellTableViewCell.xib; sourceTree = "<group>"; };
+		84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardVc.swift; sourceTree = "<group>"; };
+		84666AE32CE866E30010DA24 /* NoticeBoardVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardVc.xib; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
 		8494B6642CD1EC8D004B0746 /* TapBarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapBarVC.xib; sourceTree = "<group>"; };
 		849E571F2C1FF439006119DA /* MobileNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberViewController.swift; sourceTree = "<group>"; };
@@ -548,6 +562,62 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		84666AD72CE8668C0010DA24 /* ImageCVCell */ = {
+			isa = PBXGroup;
+			children = (
+				84666AD52CE8668C0010DA24 /* ImagePdfCvCell.swift */,
+				84666AD62CE8668C0010DA24 /* ImagePdfCvCell.xib */,
+			);
+			path = ImageCVCell;
+			sourceTree = "<group>";
+		};
+		84666ADA2CE8668C0010DA24 /* ImageTvCell */ = {
+			isa = PBXGroup;
+			children = (
+				84666AD72CE8668C0010DA24 /* ImageCVCell */,
+				84666AD82CE8668C0010DA24 /* ImagePdfTv.swift */,
+				84666AD92CE8668C0010DA24 /* ImagePdfTv.xib */,
+			);
+			path = ImageTvCell;
+			sourceTree = "<group>";
+		};
+		84666ADD2CE8668C0010DA24 /* Image_PdfVC */ = {
+			isa = PBXGroup;
+			children = (
+				84666ADA2CE8668C0010DA24 /* ImageTvCell */,
+				84666ADB2CE8668C0010DA24 /* ImagePdfVC.swift */,
+				84666ADC2CE8668C0010DA24 /* ImagePdfVC.xib */,
+			);
+			path = Image_PdfVC;
+			sourceTree = "<group>";
+		};
+		84666ADE2CE8668C0010DA24 /* ParentVC's */ = {
+			isa = PBXGroup;
+			children = (
+				84666ADD2CE8668C0010DA24 /* Image_PdfVC */,
+			);
+			path = "ParentVC's";
+			sourceTree = "<group>";
+		};
+		84666AE12CE866E30010DA24 /* NoticeBoardTv */ = {
+			isa = PBXGroup;
+			children = (
+				84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */,
+				84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */,
+			);
+			path = NoticeBoardTv;
+			sourceTree = "<group>";
+		};
+		84666AE42CE866E30010DA24 /* NoticeBoardVC */ = {
+			isa = PBXGroup;
+			children = (
+				84666AE12CE866E30010DA24 /* NoticeBoardTv */,
+				84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */,
+				84666AE32CE866E30010DA24 /* NoticeBoardVc.xib */,
+			);
+			path = NoticeBoardVC;
+			sourceTree = "<group>";
+		};
 		8494B6622CD1EC47004B0746 /* TapBarVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -618,6 +688,7 @@
 		84A5BE352C19719700E32496 = {
 			isa = PBXGroup;
 			children = (
+				84666ADE2CE8668C0010DA24 /* ParentVC's */,
 				84A5BE402C19719700E32496 /* VsSchoolChimes */,
 				84A5BE572C19719A00E32496 /* VsSchoolChimesTests */,
 				84A5BE612C19719A00E32496 /* VsSchoolChimesUITests */,
@@ -845,6 +916,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84666AE42CE866E30010DA24 /* NoticeBoardVC */,
 				84EFF9E92CCCAE5900C11C26 /* ReuseViews */,
 				84A5BE712C19728F00E32496 /* Auth */,
 			);
@@ -1534,6 +1606,8 @@
 				84A5BE492C19719700E32496 /* Base in Resources */,
 				F29035602CDC924900F3E67C /* MobileVc.xib in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
+				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
+				84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */,
 				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
@@ -1737,6 +1811,8 @@
 				84A5BEAD2C19824E00E32496 /* LocalizableStrings.swift in Sources */,
 				84A5BE8A2C197B9F00E32496 /* Preferences.swift in Sources */,
 				84A5BE462C19719700E32496 /* ViewController.swift in Sources */,
+				84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */,
+				84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */,
 				84EFF9972CCB5B0400C11C26 /* CountryVc.swift in Sources */,
 				84EFFACE2CCF90DE00C11C26 /* SettingHeaderView.swift in Sources */,
 				84EFFACF2CCF90DE00C11C26 /* SettingsTableViewCell.swift in Sources */,
