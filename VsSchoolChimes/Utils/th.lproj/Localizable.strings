@@ -12,17 +12,21 @@
 "Settings" = "การตั้งค่า";
 "Profile" = "โปรไฟล์";
 
+// MARK: settings page
 "Notifications" = "การแจ้งเตือน";
 "FAQ" = "คำถามที่พบบ่อย";
 "Contact Us" = "ติดต่อเรา";
 "Terms and Conditions" = "ข้อกำหนดและเงื่อนไข";
 "Change App Language" = "เปลี่ยนภาษาของแอป";
-
 "Feedback" = "คำติชม";
 "Report a bug" = "รายงานข้อบกพร่อง";
 "Send Feedback" = "ส่งคำติชม";
 "Logout" = "ออกจากระบบ";
+"General" = "ทั่วไป";
+"Feedback" = "คำติชม";
+"Settings" = "การตั้งค่า";
 
+// MARK: Dashboard
 "discussion" = "การอภิปราย";
 "SmallIcon" = "ไอคอนขนาดเล็ก";
 "drawing-compass" = "เครื่องมือวาดวงกลม";
@@ -33,7 +37,25 @@
 "university" = "มหาวิทยาลัย";
 "support" = "สนับสนุน";
 "Video" = "วิดีโอ";
+"Communication" = "การสื่อสาร";
+"Image/Pdf" = "รูปภาพ/PDF";
+"Video Upload" = "อัปโหลดวิดีโอ";
+"Circulars" = "หนังสือเวียน";
+"Homework" = "การบ้าน";
+"Schedule Exam/Test" = "ตารางสอบ/การทดสอบ";
+"Notice Board" = "กระดานประกาศ";
+"Attendance marking" = "การบันทึกการเข้าเรียน";
+"Messages from management" = "ข้อความจากผู้บริหาร";
+"Leave Requests" = "คำขอลา";
+"Assignment" = "งานที่มอบหมาย";
+"Interaction with student" = "การโต้ตอบกับนักเรียน";
+"Online Meeting" = "การประชุมออนไลน์";
+"Lesson Plan" = "แผนการสอน";
+"PTM" = "การประชุมผู้ปกครองและครู";
+"Mark your attendance" = "บันทึกการเข้าเรียนของคุณ";
 
+
+// MARK: profile page
 "Family Details" = "รายละเอียดครอบครัว";
 "Fathername" = "ชื่อบิดา";
 "Mothername" = "ชื่อมารดา";
@@ -46,9 +68,9 @@
 "Standard" = "ระดับ";
 "Section" = "หมวด";
 "Contact details" = "รายละเอียดการติดต่อ";
-"General" = "ทั่วไป";
-"Feedback" = "คำติชม";
-"Settings" = "การตั้งค่า";
+
+
+
 "Cancel"   = "ยกเลิก";
 "Select" = "เลือก";
 "Choose an option" = "เลือกตัวเลือก";
@@ -68,12 +90,29 @@
 
 "Rate Us" = "ให้คะแนนเรา";
 
+// MARK: piechart page
 "School Strength" = "จำนวนนักเรียนทั้งหมดในโรงเรียน";
 "Total Strength" = "จำนวนรวม";
 "Staff's count" = "จำนวนพนักงาน";
 "Boy's count" = "จำนวนนักเรียนชาย";
 "Girl's count" = "จำนวนนักเรียนหญิง";
 "Contact Support" = "ติดต่อฝ่ายสนับสนุน";
+
+// MARK: Logout page
 "Are you sure you want to logout?" = "คุณแน่ใจหรือว่าต้องการออกจากระบบ?";
 "Cancel" = "ยกเลิก";
 "Logout" = "ออกจากระบบ";
+
+// MARK: feedback page
+"How satisfied are you with the School Chimes?" = "คุณพอใจกับ School Chimes มากน้อยเพียงใด?";
+"Maybe later" = "อาจจะภายหลัง";
+"Any other suggestions? (optional)" = "มีข้อเสนอแนะอื่น ๆ ไหม? (ไม่บังคับ)";
+"SUBMIT" = "ส่ง";
+"Thank You" = "ขอบคุณ";
+"We appreciate your feedback! Your rating helps us improve." = "เราขอขอบคุณสำหรับคำติชมของคุณ! การให้คะแนนของคุณช่วยให้เราปรับปรุง";
+"Back to Home <<" = "กลับไปหน้าหลัก <<";
+
+// MARK: Report bug page
+"Select Module*" = "เลือกโมดูล*";
+"Enter Bugs *" = "ใส่ข้อบกพร่อง *";
+"Upload Attachment" = "อัปโหลดไฟล์แนบ";

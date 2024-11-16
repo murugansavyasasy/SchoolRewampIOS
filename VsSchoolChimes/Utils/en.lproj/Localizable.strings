@@ -12,17 +12,22 @@
  "Settings" = "Settings";
  "Profile" = "Profile";
 
+// MARK: Settings page
 "Notifications" = "Notifications";
 "FAQ" = "FAQ";
 "Contact Us" = "Contact Us";
 "Terms and Conditions" = "Terms and Conditions";
 "Change App Language" = "Change App Language";
-
 "Feedback" = "Feedback";
 "Report a bug" = "Report a bug";
 "Send Feedback" = "Send Feedback";
 "Logout" = "Logout";
+"General" = "General";
+"Feedback" = "Feedback";
+"Settings" = "Settings";
+"Rate Us" = "Rate Us";
 
+// MARK: Dashboard
 "discussion" = "discussion";
 "SmallIcon" = "SmallIcon";
 "drawing-compass" = "drawing-compass";
@@ -35,6 +40,25 @@
 "SmallIcon" = "SmallIcon";
 "Video" = "Video";
 
+"Communication" = "Communication";
+"Image/Pdf" = "Image/Pdf";
+"Video Upload" = "Video Upload";
+"Circulars" = "Circulars";
+"Homework" = "Homework";
+"Schedule Exam/Test" = "Schedule Exam/Test";
+"Notice Board" = "Notice Board";
+"Attendance marking" = "Attendance marking";
+"Messages from management" = "Messages from management";
+"Leave Requests" = "Leave Requests";
+"Assignment" = "Assignment";
+"Interaction with student" = "Interaction with student";
+"Online Meeting" = "Online Meeting";
+"Lesson Plan" = "Lesson Plan";
+"PTM" = "PTM";
+"Mark your attendance" = "Mark your attendance";
+
+
+// MARK: profile page
 "Family Details" = "Family Details";
 "Fathername" = "Fathername";
 "Mothername" = "Mothername";
@@ -43,14 +67,11 @@
 "Secondary Phone no" = "Secondary Phone no";
 "Profile" = "Profile";
 "About Student" = "About Student";
-
 "Register number" = "Register number";
 "Standard" = "Standard";
 "Section" = "Section";
 "Contact details" = "Contact details";
-"General" = "General";
-"Feedback" = "Feedback";
-"Settings" = "Settings";
+
 "Cancel"   = "Cancel";
 "Select" = "Select";
 "Choose an option" = "Choose an option";
@@ -70,14 +91,15 @@
 "Camera Not Available" = "Camera Not Available";
 "This device has no camera." = "This device has no camera.";
 
-"Rate Us" = "Rate Us";
 
+// MARK: piechart
 "School Strength" = "School Strength";
 "Total Strength" = "Total Strength";
 "Staff's count" = "Staff's count";
 "Boy's count" = "Boy's count";
 "Girl's count" = "Girl's count";
 
+// MARK: Logout page
 "Are you sure you want to logout?" = "Are you sure you want to logout?";
 "Cancel" = "Cancel";
 "Logout" = "Logout";

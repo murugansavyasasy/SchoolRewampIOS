@@ -12,17 +12,23 @@
 "Settings" = "सेटिंग्स";
 "Profile" = "प्रोफाइल";
 
+// MARK: Settings page
 "Notifications" = "सूचनाएं";
 "FAQ" = "सामान्य प्रश्न";
 "Contact Us" = "हमसे संपर्क करें";
 "Terms and Conditions" = "नियम और शर्तें";
 "Change App Language" = "ऐप की भाषा बदलें";
-
 "Feedback" = "प्रतिक्रिया";
 "Report a bug" = "त्रुटि की रिपोर्ट करें";
 "Send Feedback" = "प्रतिक्रिया भेजें";
 "Logout" = "लॉगआउट करें";
+"General" = "सामान्य";
+"Feedback" = "प्रतिक्रिया";
+"Settings" = "सेटिंग्स";
+"Rate Us" = "हमें रेट करें";
+"Contact Support" = "सहायता संपर्क करें";
 
+// MARK: Dashboard
 "discussion" = "चर्चा";
 "SmallIcon" = "छोटा आइकन";
 "drawing-compass" = "चित्रकला यंत्र";
@@ -34,6 +40,25 @@
 "support" = "समर्थन";
 "Video" = "वीडियो";
 
+"Communication" = "संचार";
+"Image/Pdf" = "छवि/पीडीएफ";
+"Video Upload" = "वीडियो अपलोड";
+"Circulars" = "परिपत्र";
+"Homework" = "गृहकार्य";
+"Schedule Exam/Test" = "परीक्षा/परीक्षण अनुसूची";
+"Notice Board" = "सूचना पट्ट";
+"Attendance marking" = "उपस्थिति अंकित करना";
+"Messages from management" = "प्रबंधन से संदेश";
+"Leave Requests" = "अवकाश अनुरोध";
+"Assignment" = "कार्य";
+"Interaction with student" = "छात्र के साथ बातचीत";
+"Online Meeting" = "ऑनलाइन बैठक";
+"Lesson Plan" = "पाठ योजना";
+"PTM" = "अभिभावक-शिक्षक बैठक";
+"Mark your attendance" = "अपनी उपस्थिति दर्ज करें";
+
+
+// MARK: profile page
 "Family Details" = "परिवार का विवरण";
 "Fathername" = "पिता का नाम";
 "Mothername" = "माता का नाम";
@@ -46,19 +71,19 @@
 "Standard" = "कक्षा";
 "Section" = "अनुभाग";
 "Contact details" = "संपर्क विवरण";
-"General" = "सामान्य";
-"Feedback" = "प्रतिक्रिया";
-"Settings" = "सेटिंग्स";
-"Rate Us" = "हमें रेट करें";
 
+// MARK: piechart
 "School Strength" = "विद्यालय की कुल संख्या";
 "Total Strength" = "कुल संख्या";
 "Staff's count" = "कर्मचारियों की संख्या";
 "Boy's count" = "लड़कों की संख्या";
 "Girl's count" = "लड़कियों की संख्या";
-"Contact Support" = "सहायता संपर्क करें";
+
+// MARK: Logout page
 "Are you sure you want to logout?" = "क्या आप वाकई लॉगआउट करना चाहते हैं?";
 "Cancel" = "रद्द करें";
+
+
 "Select" = "चयन करें";
 "Choose an option" = "एक विकल्प चुनें";
 "Upload Image/Pdf" = "छवि/PDF अपलोड करें";
@@ -80,3 +105,16 @@
 "Camera Not Available" = "कैमरा उपलब्ध नहीं है";
 "This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
 
+// MARK: Feedback page
+"How satisfied are you with the School Chimes?" = "आप School Chimes से कितने संतुष्ट हैं?";
+"Maybe later" = "शायद बाद में";
+"Any other suggestions? (optional)" = "कोई अन्य सुझाव? (वैकल्पिक)";
+"SUBMIT" = "प्रस्तुत करें";
+"Thank You" = "धन्यवाद";
+"We appreciate your feedback! Your rating helps us improve." = "हम आपके फीडबैक की सराहना करते हैं! आपकी रेटिंग से हमें सुधार में मदद मिलती है।";
+"Back to Home <<" = "मुखपृष्ठ पर वापस जाएं <<";
+
+// MARK: Report bugs page
+"Select Module*" = "मॉड्यूल का चयन करें*";
+"Enter Bugs *" = "त्रुटियां दर्ज करें *";
+"Upload Attachment" = "संलग्नक अपलोड करें";

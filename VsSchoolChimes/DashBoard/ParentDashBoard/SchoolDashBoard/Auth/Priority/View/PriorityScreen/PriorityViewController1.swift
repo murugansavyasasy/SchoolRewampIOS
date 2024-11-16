@@ -157,7 +157,9 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
             
            
             //cell.applyGradient(colors: [colour2!.cgColor,colour1!.cgColor])
-            cell.setGradientColors([colour2!.cgColor,colour1!.cgColor])
+            if let color1 = colour1, let color2 = colour2 {
+                        cell.setGradientColors([color2.cgColor, color1.cgColor])
+                    }
             cell.SchoolInfoView.backgroundColor = colour1
             
             return cell
@@ -167,7 +169,9 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "principalTVCell", for: indexPath) as! principalTVCell
            
             //cell.applyGradient(colors: [colour2!.cgColor,colour1!.cgColor])
-            cell.setGradientColors([colour2!.cgColor,colour1!.cgColor])
+            if let color1 = colour1, let color2 = colour2 {
+                        cell.setGradientColors([color2.cgColor, color1.cgColor])
+                    }
             //cell.cellview.backgroundColor = UIColor(named: colorName)
             
            
@@ -189,6 +193,7 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
 //
             
             return cell
+            
         }
     }
     

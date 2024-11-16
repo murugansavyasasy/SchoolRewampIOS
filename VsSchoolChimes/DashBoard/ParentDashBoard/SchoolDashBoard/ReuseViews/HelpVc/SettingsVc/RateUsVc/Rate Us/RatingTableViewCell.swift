@@ -33,15 +33,15 @@ class RatingTableViewCell: UITableViewCell {
         if filledStars != 0 || sender.isSelected {
             switch filledStars {
             case 1:
-                ratingText = "Nice"
+                ratingText = "Bad"
             case 2:
-                ratingText = "Nice"
+                ratingText = "Not bad"
             case 3:
                 ratingText = "Better"
             case 4:
-                ratingText = "Well done"
+                ratingText = "Nice"
             case 5:
-                ratingText = "Not bad"
+                ratingText = "Well done"
             default:
                 RatingValue.layer.borderColor = UIColor.red.cgColor
                 return // Exit if out of expected range

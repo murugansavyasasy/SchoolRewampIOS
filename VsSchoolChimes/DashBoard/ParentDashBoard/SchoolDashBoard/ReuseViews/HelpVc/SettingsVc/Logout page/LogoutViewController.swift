@@ -21,7 +21,11 @@ class LogoutViewController: UIViewController {
         
         DescribeLabel.text = "Are you sure you want to logout?".translated()
         Cancellabel.text = "Cancel".translated()
-        LogoutButtonView.titleLabel?.text = "Logout".translated()
+//        LogoutButtonView.titleLabel?.text = "Logout".translated()
+//        LogoutButtonView.titleLabel?.adjustsFontSizeToFitWidth = true
+        LogoutButtonView.setTitle("Logout".translated(), for: .normal)
+        LogoutButtonView.titleLabel?.adjustsFontSizeToFitWidth = true
+
 
         overallview.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         LogoutView.layer.cornerRadius = 10

@@ -39,32 +39,31 @@
                                     </constraints>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ih8-gw-hCk">
-                                    <rect key="frame" x="230" y="169" width="100" height="34.333333333333343"/>
+                                    <rect key="frame" x="243" y="169" width="87" height="40"/>
                                     <color key="backgroundColor" systemColor="systemRedColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="233-8W-6u0"/>
-                                        <constraint firstAttribute="height" constant="34.329999999999998" id="nHk-t5-Tak"/>
-                                    </constraints>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Logout" imagePadding="3">
+                                    <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Logout" imagePadding="3" titleAlignment="center">
                                         <imageReference key="image" image="arrow.right" catalog="system" symbolScale="small"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small" weight="heavy"/>
-                                        <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="13"/>
+                                        <fontDescription key="titleFontDescription" type="system" weight="heavy" pointSize="12"/>
                                     </buttonConfiguration>
                                     <connections>
                                         <action selector="LogoutAct:" destination="-1" eventType="touchUpInside" id="DOi-Pq-Ql1"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpR-4w-rVo">
-                                    <rect key="frame" x="107" y="183" width="95" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure want to logout?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQP-8F-uxE">
                                     <rect key="frame" x="15" y="130" width="279" height="21"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JpR-4w-rVo">
+                                    <rect key="frame" x="128" y="178" width="53" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="8eW-mO-nfB"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -72,19 +71,17 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="ih8-gw-hCk" secondAttribute="trailing" constant="-21" id="0Ak-ox-PcG"/>
-                                <constraint firstItem="JpR-4w-rVo" firstAttribute="top" secondItem="vQP-8F-uxE" secondAttribute="bottom" constant="32" id="1Zz-bQ-gBu"/>
-                                <constraint firstAttribute="bottom" secondItem="JpR-4w-rVo" secondAttribute="bottom" constant="17" id="GFA-JL-kmh"/>
-                                <constraint firstItem="ih8-gw-hCk" firstAttribute="leading" secondItem="JpR-4w-rVo" secondAttribute="trailing" constant="28" id="WZ7-IC-79c"/>
+                                <constraint firstItem="JpR-4w-rVo" firstAttribute="centerY" secondItem="lWC-9N-h4x" secondAttribute="centerY" constant="78" id="Dgu-2F-qPx"/>
                                 <constraint firstItem="ih8-gw-hCk" firstAttribute="top" secondItem="vQP-8F-uxE" secondAttribute="bottom" constant="18" id="YFi-n1-Nd5"/>
                                 <constraint firstAttribute="trailing" secondItem="vQP-8F-uxE" secondAttribute="trailing" constant="15" id="ckk-a9-HKG"/>
-                                <constraint firstAttribute="bottom" secondItem="ih8-gw-hCk" secondAttribute="bottom" constant="17.666666666666686" id="gXR-yu-Skh"/>
+                                <constraint firstAttribute="bottom" secondItem="ih8-gw-hCk" secondAttribute="bottom" constant="12" id="gXR-yu-Skh"/>
                                 <constraint firstItem="vQP-8F-uxE" firstAttribute="leading" secondItem="lWC-9N-h4x" secondAttribute="leading" constant="15" id="gdP-5e-fE3"/>
                                 <constraint firstAttribute="trailing" secondItem="GuO-Nk-BFW" secondAttribute="trailing" constant="105" id="hCo-sc-qZD"/>
                                 <constraint firstItem="GuO-Nk-BFW" firstAttribute="leading" secondItem="lWC-9N-h4x" secondAttribute="leading" constant="104" id="mZw-QO-96W"/>
-                                <constraint firstItem="JpR-4w-rVo" firstAttribute="centerX" secondItem="lWC-9N-h4x" secondAttribute="centerX" id="nti-V0-QA9"/>
                                 <constraint firstAttribute="height" constant="221" id="pdO-Br-Mtj"/>
                                 <constraint firstAttribute="width" constant="309" id="r6B-ta-3GN"/>
                                 <constraint firstItem="GuO-Nk-BFW" firstAttribute="top" secondItem="lWC-9N-h4x" secondAttribute="top" constant="8" id="sXk-7N-h5B"/>
+                                <constraint firstItem="JpR-4w-rVo" firstAttribute="centerX" secondItem="lWC-9N-h4x" secondAttribute="centerX" id="yTW-Oo-idM"/>
                                 <constraint firstItem="vQP-8F-uxE" firstAttribute="top" secondItem="GuO-Nk-BFW" secondAttribute="bottom" constant="31" id="yc9-RD-9me"/>
                             </constraints>
                         </view>
@@ -111,7 +108,7 @@
         <image name="LogoutImage" width="512" height="512"/>
         <image name="arrow.right" catalog="system" width="128" height="95"/>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
