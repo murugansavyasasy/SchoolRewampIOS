@@ -25,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pk-HW-cgA">
-                    <rect key="frame" x="21.666666666666657" y="258" width="350" height="336"/>
+                    <rect key="frame" x="21.666666666666657" y="257" width="350" height="338"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8td-JG-MjQ">
                             <rect key="frame" x="5" y="45" width="340" height="240"/>
@@ -53,11 +53,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lEy-qr-DHi">
-                            <rect key="frame" x="257" y="293" width="85" height="35"/>
-                            <color key="backgroundColor" systemColor="linkColor"/>
+                            <rect key="frame" x="94" y="293" width="162" height="37"/>
+                            <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="162" id="9tM-6E-3UD"/>
+                            </constraints>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Confirm"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Confirm">
+                                <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="19"/>
+                            </buttonConfiguration>
                             <connections>
                                 <action selector="ConfirmClick:" destination="-1" eventType="touchUpInside" id="TcF-au-dec"/>
                             </connections>
@@ -72,7 +77,8 @@
                         <constraint firstAttribute="trailing" secondItem="8br-8g-MOR" secondAttribute="trailing" constant="43" id="AaQ-EO-eyq"/>
                         <constraint firstAttribute="width" constant="350" id="ByX-bS-l8W"/>
                         <constraint firstItem="8br-8g-MOR" firstAttribute="centerY" secondItem="m9c-Ss-ydT" secondAttribute="centerY" id="Cwo-Pn-yma"/>
-                        <constraint firstAttribute="trailing" secondItem="lEy-qr-DHi" secondAttribute="trailing" constant="8" id="E1K-Ne-6aO"/>
+                        <constraint firstAttribute="trailing" secondItem="lEy-qr-DHi" secondAttribute="trailing" constant="94" id="E1K-Ne-6aO"/>
+                        <constraint firstItem="lEy-qr-DHi" firstAttribute="centerX" secondItem="8Pk-HW-cgA" secondAttribute="centerX" id="IeH-Zi-L9k"/>
                         <constraint firstAttribute="bottom" secondItem="lEy-qr-DHi" secondAttribute="bottom" constant="8" id="KzX-vJ-Oir"/>
                         <constraint firstItem="8td-JG-MjQ" firstAttribute="leading" secondItem="8Pk-HW-cgA" secondAttribute="leading" constant="5" id="bIf-wL-UKC"/>
                         <constraint firstItem="8br-8g-MOR" firstAttribute="leading" secondItem="8Pk-HW-cgA" secondAttribute="leading" constant="42" id="kai-Od-9tg"/>
@@ -91,11 +97,11 @@
     </objects>
     <resources>
         <image name="xmark" catalog="system" width="128" height="113"/>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

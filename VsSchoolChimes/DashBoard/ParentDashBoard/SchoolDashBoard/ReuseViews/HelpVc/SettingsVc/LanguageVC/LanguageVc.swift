@@ -26,15 +26,29 @@ class LanguageVc: UIViewController {
                  language(language: "Thai", selected: false)]
     
     var Language = ["English","தமிழ்","हिंदी","ไทย"]
+  var  Buttontext = ["Confirm","உறுதிப்படுத்தவும்","पुष्टि करें","ยืนยัน"]
     var index = 0
     override func viewDidLoad() {
         super.viewDidLoad()
          index = UserDefaults.standard.integer(forKey: "index")
         Items[index].selected = true
+        
+        let defaults = UserDefaults.standard
+        
+        languageCode = defaults.string(forKey:DefaultsKeys.Language)!
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         baseview.layer.cornerRadius = 15
-     
+        
+        ConfirmBtn.layer.cornerRadius = 10
+        
+
+        
+           ConfirmBtn.setTitle(Buttontext[index], for: .normal) // Use setTitle(_:for:) here
+           ConfirmBtn.titleLabel?.textAlignment = .center
+           ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        
             tv.dataSource = self
             tv.delegate = self
             tv.reloadData()
@@ -66,6 +80,8 @@ class LanguageVc: UIViewController {
         userDefault.set(languageCode, forKey: DefaultsKeys.Language)
         
         print("languageCode",DefaultsKeys.Language)
+        
+       
         // Apply the language immediately
         userDefault.synchronize()
         
@@ -92,14 +108,15 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LangTvCellTableViewCell , for: indexPath) as! LangTvCellTableViewCell
         
         if index == indexPath.row{
-            
+         
+               ConfirmBtn.setTitle(Buttontext[index], for: .normal)
+               ConfirmBtn.titleLabel?.textAlignment = .center
+               ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
             cell.RadioImage.image = UIImage(named: "checked_Tick")
+            cell.LangIconImg.tintColor = .systemOrange
            
-                   
-                   // Set initial tint color
-            cell.LangIconImg.tintColor = .link
         }else{
-            
+
             cell.RadioImage.image = UIImage(named: "CheckCircle")
             cell.LangIconImg.tintColor = .lightGray
         }
@@ -108,6 +125,7 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         if Items[indexPath.row].selected == true{
             selectedLanguage = Items[indexPath.row].language
         }
+        
         
         cell.LangLbl.text = Items[indexPath.row].language
         cell.OriginalLangLbl.text = Language[indexPath.row]
@@ -129,6 +147,7 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         selectedLanguage = Items[indexPath.row].language
         Items[indexPath.row].selected = true
         index = indexPath.row
+        
                 let userDefault = UserDefaults.standard
                 // Default language is English
                 
@@ -160,12 +179,12 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
             
             func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
                 
-                return  60
+                return  75
             }
             
     func adjustTableViewHeight() {
             // Calculate the total height based on rows and row height
-        let totalHeight = CGFloat(Items.count) * 60.0 // 60.0 is example row height; replace with your own
+        let totalHeight = CGFloat(Items.count) * 75.0 // 60.0 is example row height; replace with your own
             
             // Set the height constraint to the calculated height
             tableViewHeightConstraint.constant = totalHeight

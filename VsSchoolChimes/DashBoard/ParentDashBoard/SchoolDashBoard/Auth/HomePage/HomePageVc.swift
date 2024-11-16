@@ -20,7 +20,10 @@ class HomePageVc: UIViewController,UITabBarDelegate {
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
      
-    var items : [String] = [ "discussion","SmallIcon","drawing-compass","knowledge","pencil","scale","schoolss","university","support","SmallIcon","Video"]
+    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Homework","Schedule Exam/Test","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
+    
+    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Homework","Schedule ExamTest","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
+    
     let HomePageBottomCell = "BottomCVCell"
     var currentIndex = 0
     var autoScrollTimer: Timer?
@@ -58,6 +61,7 @@ class HomePageVc: UIViewController,UITabBarDelegate {
 //        bottomCv.delegate = self
 //        bottomCv.dataSource = self
 //        bottomCv.reloadData()
+        bottomCv.isPrefetchingEnabled = true
         
         startAutoScroll()
         
@@ -211,14 +215,19 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == bottomCv{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
             
-            
+            cell.MenuLbl.text = nil
+            cell.MenuImgView.image  = nil
 //            if items[indexPath.row]
+            let label = items[indexPath.row].translated()
+            let img = UIImage(named: Imgitems[indexPath.row])
+            
+            cell.MenuLbl.text = label
+            cell.MenuImgView.image  = img
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                 cell.shimmersViewss.animateView(enable: false)
-                cell.MenuLbl.text = items[indexPath.row].translated()
-                cell.MenuImgView.image  = UIImage(named: items[indexPath.row] )
-                
+                //cell.image = UIImage(named: Imgitems[indexPath.row] )!
+                //cell.setImg(img: UIImage(named: Imgitems[indexPath.row] )!)
             }
             return cell
         }else{
@@ -240,8 +249,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == bottomCv{
-            let name = "Video".translated()
-            let comunication = "discussion".translated()
+            let name = "Video Upload".translated()
+            let comunication = "Communication".translated()
             if name == items[indexPath.row].translated(){
                 let vc = VideoVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
@@ -250,16 +259,30 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let vc = ComunicationVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
-            }else if items[indexPath.row] == "support".translated() {
+            }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
                 
                 imagePdfNavigate()
             }
+            else if items[indexPath.row] == "university".translated() {
+                
+                videoNavigate()
+            }
         }
+        
     }
  
     
+    
+   
+    
     func imagePdfNavigate() {
         let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    func videoNavigate() {
+        let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

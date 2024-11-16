@@ -11,7 +11,7 @@
 "Help" = "உதவி";
 "Settings" = "அமைப்புகள்";
 "Profile" = "சுயவிவரம";
-
+// MARK: Settings page
 "Notifications" = "அறிவிப்புகள்";
 "FAQ" = "கேள்வி பதில்கள்";
 "Contact Us" = "எங்களை தொடர்பு கொள்ளவும்";
@@ -22,7 +22,11 @@
 "Send Feedback" = "மறுமொழி அனுப்பவும்";
 "Rate Us" = "எங்களை மதிப்பீடு செய்யவும்";
 "Logout" = "வெளியேறு";
+"GENERAL" = "பொது";
+"FEEDBACK" = "மறுமொழி";
+"Settings" = "அமைப்புகள்";
 
+// MARK: Dashboard
 "discussion" = "சர்ச்சை";
 "SmallIcon" = "சிறிய ஐகான்";
 "drawing-compass" = "வரைவிடு கோணம்";
@@ -34,6 +38,26 @@
 "support" = "ஆதரவு";
 "Video" = "வீடியோ";
 
+// MARK: Dashboard
+"Communication" = "தொடர்பு";
+"Image/Pdf" = "படம்/பி.டி.எப்";
+"Video Upload" = "வீடியோ பதிவேற்றம்";
+"Circulars" = "சுற்றறிக்கைகள்";
+"Homework" = "வீட்டுப்பாடம்";
+"Schedule Exam/Test" = "தேர்வு/சோதனை திட்டமிடல்";
+"Notice Board" = "அறிவிப்புப் பலகை";
+"Attendance marking" = "வருகையை குறிக்க";
+"Messages from management" = "மேலாண்மையிலிருந்து செய்திகள்";
+"Leave Requests" = "அனுமதி கோரிக்கைகள்";
+"Assignment" = "கடமைகள்";
+"Interaction with student" = "மாணவர்களுடன் தொடர்பு";
+"Online Meeting" = "ஆன்லைன் கூட்டம்";
+"Lesson Plan" = "பாடத் திட்டம்";
+"PTM" = "பெற்றோர்-ஆசிரியர் கூட்டம்";
+"Mark your attendence" = "உங்கள் வருகையை குறிக்கவும்";
+
+
+// MARK: profile page
 "Family Details" = "குடும்ப விவரங்கள்";
 "Fathername" = "தந்தையின் பெயர்";
 "Mothername" = "தாயின் பெயர்";
@@ -46,9 +70,7 @@
 "Standard" = "வகுப்பு";
 "Section" = "பிரிவு";
 "Contact details" = "தொடர்பு விவரங்கள்";
-"GENERAL" = "பொது";
-"FEEDBACK" = "மறுமொழி";
-"Settings" = "அமைப்புகள்";
+
 
 "Cancel" = "ரத்து செய்யவும்";
 "Select" = "தேர்ந்தெடுக்கவும்";
@@ -68,7 +90,7 @@
 "Camera Not Available" = "கேமரா கிடைக்கவில்லை";
 "This device has no camera." = "இந்த சாதனத்தில் கேமரா இல்லை.";
 
-
+// MARK: Piechart
 "School Strength" = "பள்ளியின் மொத்த மாணவர் எண்ணிக்கை";
 "Total Strength" = "மொத்த எண்ணிக்கை";
 "Staff's count" = "பணியாளர் எண்ணிக்கை";
@@ -76,8 +98,24 @@
 "Girl's count" = "பெண் குழந்தைகளின் எண்ணிக்கை";
 "Contact Support" = "ஆதரவை தொடர்பு கொள்ளவும்";
 
+// MARK: Logout page
 "Are you sure you want to logout?" = "நீங்கள் வெளியேற விரும்புகிறீர்களா?";
 "Cancel" = "ரத்து செய்";
 "Logout" = "வெளியேறு";
 
 "Tamil" = "தமிழ்";
+"Confirm" = "வெளியேறு";
+
+// MARK: Feedback page
+"How satisfied are you with the School Chimes?" = "School Chimes-ல் நீங்கள் எவ்வளவு திருப்தியடைகிறீர்கள்?";
+"Maybe later" = "பிறகு பார்த்துக் கொள்வேன்";
+"Any other suggestions? (optional)" = "மேலும் ஏதேனும் பரிந்துரைகள் உள்ளதா? (விருப்பத்தேர்வு)";
+"SUBMIT" = "சமர்ப்பிக்கவும்";
+"Thank You" = "நன்றி";
+"We appreciate your feedback! Your rating helps us improve." = "உங்கள் கருத்தை நாங்கள் மதிக்கிறோம்! உங்கள் மதிப்பீடு எங்களை மேம்படுத்த உதவும்.";
+"Back to Home <<" = "முகப்புக்கு திரும்பவும் <<";
+
+// MARK: Reportbugs page
+"Select Module*" = "மொழிபெயர்ப்பு தேர்வு செய்யவும்*";
+"Enter Bugs *" = "பிழைகள் உள்ளிடவும் *";
+"Upload Attachment" = "இணைப்பை பதிவேற்றவும்";

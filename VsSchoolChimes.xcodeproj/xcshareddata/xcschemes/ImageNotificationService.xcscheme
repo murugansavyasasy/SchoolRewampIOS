@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
+<<<<<<< HEAD
    LastUpgradeVersion = "1610"
+=======
+   LastUpgradeVersion = "1600"
+>>>>>>> development
    wasCreatedForAppExtension = "YES"
    version = "2.0">
    <BuildAction
@@ -57,12 +61,17 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
+<<<<<<< HEAD
       <RemoteRunnable
          runnableDebuggingMode = "1"
          BundleIdentifier = "com.voicesnap.schoolmessenger"
          RemotePath = "/Users/admin/Library/Developer/CoreSimulator/Devices/0E669490-2201-4BFB-8000-3BA2D48E935C/data/Containers/Bundle/Application/FE6E8FF5-E8D3-49BC-90F9-63BEC8B19355/VsSchoolChimes.app">
       </RemoteRunnable>
       <MacroExpansion>
+=======
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+>>>>>>> development
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84A5BE3D2C19719700E32496"
@@ -70,7 +79,11 @@
             BlueprintName = "VsSchoolChimes"
             ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
          </BuildableReference>
+<<<<<<< HEAD
       </MacroExpansion>
+=======
+      </BuildableProductRunnable>
+>>>>>>> development
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
