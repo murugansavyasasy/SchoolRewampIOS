@@ -19,6 +19,7 @@ class CellConfingName {
     static let ImageCvCell = "ImageCvCell"
     static let FAQTableViewCell = "FAQTableViewCell"
     static let LangTvCellTableViewCell = "LangTvCellTableViewCell"
+    static let HistoryTC = "HistoryTC"
     
    
    
