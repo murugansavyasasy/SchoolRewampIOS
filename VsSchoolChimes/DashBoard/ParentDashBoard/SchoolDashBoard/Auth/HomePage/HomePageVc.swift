@@ -266,6 +266,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             else if items[indexPath.row] == "university".translated() {
                 
                 videoNavigate()
+            }else if items[indexPath.row].translated() == "Notice Board".translated() {
+                
+                let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
             }
         }
         
