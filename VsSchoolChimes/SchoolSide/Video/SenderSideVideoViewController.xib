@@ -40,8 +40,20 @@
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YUZ-tF-UEz">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yhv-dM-7Yc">
+                                            <rect key="frame" x="15" y="18" width="20" height="14.333333333333329"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="20" id="9vC-pL-zcD"/>
+                                                <constraint firstAttribute="height" constant="20" id="bRy-nk-FZi"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="yhv-dM-7Yc" firstAttribute="centerX" secondItem="YUZ-tF-UEz" secondAttribute="centerX" id="DeX-WU-3Wg"/>
+                                        <constraint firstItem="yhv-dM-7Yc" firstAttribute="centerY" secondItem="YUZ-tF-UEz" secondAttribute="centerY" id="NJ4-dB-pEv"/>
                                         <constraint firstAttribute="width" constant="50" id="QTX-wy-z13"/>
                                     </constraints>
                                 </view>
@@ -98,7 +110,7 @@
                                 <constraint firstItem="t7J-CD-JY2" firstAttribute="top" secondItem="bhc-8S-bn0" secondAttribute="top" constant="5" id="rQM-CN-kI0"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn9-Z5-yBx" customClass="RectangularDashedView" customModule="Gradit" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn9-Z5-yBx" customClass="RectangularDashedView" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="20" y="290" width="353" height="50"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload_icon" translatesAutoresizingMaskIntoConstraints="NO" id="873-2f-Dfy">
@@ -247,6 +259,7 @@
         </view>
     </objects>
     <resources>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="upload_icon" width="512" height="512"/>
         <namedColor name="lineView">
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>

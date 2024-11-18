@@ -266,11 +266,17 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             else if items[indexPath.row] == "university".translated() {
                 
                 videoNavigate()
+<<<<<<< HEAD
             }else if items[indexPath.row].translated() == "Notice Board".translated() {
                 
                 let vc = NoticeBoardVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
+=======
+            }  else if items[indexPath.row] == "schoolss".translated() {
+                
+                homeWorkNavigate()
+>>>>>>> development
             }
         }
         
@@ -288,6 +294,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func videoNavigate() {
         let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
+    
+    func homeWorkNavigate() {
+        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
