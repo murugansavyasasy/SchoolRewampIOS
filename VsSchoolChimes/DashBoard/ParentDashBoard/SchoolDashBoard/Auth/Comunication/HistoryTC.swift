@@ -58,10 +58,15 @@ class HistoryTC: UITableViewCell {
         playerView.updateWithLevel(CGFloat(normalizedPower))
     }
     
-    func updatePlayState(isPlaying: Bool, url: String) {
+    func updatePlayState(isPlaying: Bool, url: String?) {
         if isPlaying {
             if player == nil {
-                setupPlayer(with: URL(string: url)!)
+                if let urlString = url,
+                   let url = URL(string: urlString) {
+                    setupPlayer(with: url)
+                } else if let fallbackURL = URL(string: "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav") {
+                    setupPlayer(with: fallbackURL)
+                }
             }
             player?.volume = 1
             player?.play()
