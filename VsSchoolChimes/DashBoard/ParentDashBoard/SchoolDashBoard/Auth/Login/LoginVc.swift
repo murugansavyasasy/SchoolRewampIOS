@@ -73,7 +73,10 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBAction func togglePasswordVisibility() {
         passTextFld.isSecureTextEntry.toggle()
         let imageName = passTextFld.isSecureTextEntry ? "eye.fill" : "eye.slash.fill"
-        eyeImage.image = UIImage(named: imageName)
+       // eyeImage.image = UIImage(named: imageName)
+        
+        eyeImage.image = UIImage(systemName: imageName)
+
        
         }
     

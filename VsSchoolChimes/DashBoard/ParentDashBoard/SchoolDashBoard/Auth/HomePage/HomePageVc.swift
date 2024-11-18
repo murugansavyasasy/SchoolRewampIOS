@@ -261,22 +261,22 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 present(vc, animated: true)
             }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
                 
-                imagePdfNavigate()
+                //imagePdfNavigate()
             }
             else if items[indexPath.row] == "university".translated() {
                 
                 videoNavigate()
-<<<<<<< HEAD
+
             }else if items[indexPath.row].translated() == "Notice Board".translated() {
                 
                 let vc = NoticeBoardVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
-=======
+
             }  else if items[indexPath.row] == "schoolss".translated() {
                 
                 homeWorkNavigate()
->>>>>>> development
+
             }
         }
         
@@ -286,11 +286,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
    
     
-    func imagePdfNavigate() {
-        let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
+//    func imagePdfNavigate() {
+//        let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+//    }
     
     func videoNavigate() {
         let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
