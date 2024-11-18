@@ -127,6 +127,7 @@ extension ReportBugVcViewController : UICollectionViewDelegate,UICollectionViewD
        
        // MARK: - PHPickerViewControllerDelegate
        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+           print("bbbbPHPickerViewController")
            picker.dismiss(animated: true, completion: nil)
            
            for result in results {

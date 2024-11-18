@@ -257,6 +257,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             else if items[indexPath.row] == "university".translated() {
                 
                 videoNavigate()
+            }  else if items[indexPath.row] == "schoolss".translated() {
+                
+                homeWorkNavigate()
             }
         }
     }
@@ -270,6 +273,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func videoNavigate() {
         let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
+    
+    func homeWorkNavigate() {
+        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

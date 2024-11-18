@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180C6E522CE72A860071CD04 /* SenderSideHomeWorkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 180C6E512CE72A860071CD04 /* SenderSideHomeWorkViewController.xib */; };
+		180C6E532CE72A860071CD04 /* SenderSideHomeWorkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180C6E502CE72A860071CD04 /* SenderSideHomeWorkViewController.swift */; };
+		180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180C6E942CE748980071CD04 /* AttachmentsReuseView.swift */; };
 		1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */; };
 		1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */; };
 		189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99052CE3195D00FE98A5 /* VimeoUpload.swift */; };
@@ -14,6 +17,8 @@
 		189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99802CE3794A00FE98A5 /* NotificationService.swift */; };
 		189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */; };
 		189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 189E99DF2CE492B400FE98A5 /* SenderSideImagePdfViewController.xib */; };
+		18BAF3E52CE8A27800517441 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 18BAF3E42CE8A27800517441 /* FSCalendar */; };
+		18BAF3E72CE8BF0900517441 /* PhotoPickManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BAF3E62CE8BF0900517441 /* PhotoPickManager.swift */; };
 		365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */; };
 		64FD9BAC7760816722588E40 /* Pods_VsSchoolChimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */; };
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
@@ -192,6 +197,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		180C6E502CE72A860071CD04 /* SenderSideHomeWorkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideHomeWorkViewController.swift; sourceTree = "<group>"; };
+		180C6E512CE72A860071CD04 /* SenderSideHomeWorkViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideHomeWorkViewController.xib; sourceTree = "<group>"; };
+		180C6E942CE748980071CD04 /* AttachmentsReuseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsReuseView.swift; sourceTree = "<group>"; };
 		1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideVideoViewController.swift; sourceTree = "<group>"; };
 		1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideVideoViewController.xib; sourceTree = "<group>"; };
 		189E99052CE3195D00FE98A5 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
@@ -201,6 +209,7 @@
 		189E99802CE3794A00FE98A5 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideImagePdfViewController.swift; sourceTree = "<group>"; };
 		189E99DF2CE492B400FE98A5 /* SenderSideImagePdfViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideImagePdfViewController.xib; sourceTree = "<group>"; };
+		18BAF3E62CE8BF0900517441 /* PhotoPickManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickManager.swift; sourceTree = "<group>"; };
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -384,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */,
+				18BAF3E52CE8A27800517441 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +416,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180C6E4F2CE72A1D0071CD04 /* HomeWork */ = {
+			isa = PBXGroup;
+			children = (
+				180C6E502CE72A860071CD04 /* SenderSideHomeWorkViewController.swift */,
+				180C6E512CE72A860071CD04 /* SenderSideHomeWorkViewController.xib */,
+			);
+			path = HomeWork;
+			sourceTree = "<group>";
+		};
 		1861BEE92CE61DC70095BF28 /* Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,8 +460,10 @@
 		189E99DC2CE4925F00FE98A5 /* SchoolSide */ = {
 			isa = PBXGroup;
 			children = (
+				180C6E4F2CE72A1D0071CD04 /* HomeWork */,
 				1861BEE92CE61DC70095BF28 /* Video */,
 				189E99DD2CE4927000FE98A5 /* ImagePdf */,
+				180C6E942CE748980071CD04 /* AttachmentsReuseView.swift */,
 			);
 			path = SchoolSide;
 			sourceTree = "<group>";
@@ -452,6 +473,7 @@
 			children = (
 				189E99DE2CE492B400FE98A5 /* SenderSideImagePdfViewController.swift */,
 				189E99DF2CE492B400FE98A5 /* SenderSideImagePdfViewController.xib */,
+				18BAF3E62CE8BF0900517441 /* PhotoPickManager.swift */,
 			);
 			path = ImagePdf;
 			sourceTree = "<group>";
@@ -1367,6 +1389,7 @@
 			);
 			name = VsSchoolChimes;
 			packageProductDependencies = (
+				18BAF3E42CE8A27800517441 /* FSCalendar */,
 			);
 			productName = VsSchoolChimes;
 			productReference = 84A5BE3E2C19719700E32496 /* VsSchoolChimes.app */;
@@ -1453,6 +1476,7 @@
 			);
 			mainGroup = 84A5BE352C19719700E32496;
 			packageReferences = (
+				18BAF3E32CE8A27800517441 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
 			projectDirPath = "";
@@ -1492,6 +1516,7 @@
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				849E572C2C1FF633006119DA /* PirorityTableViewCell.xib in Resources */,
+				180C6E522CE72A860071CD04 /* SenderSideHomeWorkViewController.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
 				849E57392C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf in Resources */,
 				849E57272C1FF4F9006119DA /* PriorityStoryboard.storyboard in Resources */,
@@ -1690,6 +1715,7 @@
 				84A5BEB12C19830500E32496 /* Constant.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
+				180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */,
 				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
@@ -1730,8 +1756,10 @@
 				84EFFAE22CCF9EEA00C11C26 /* NotificationViewController.swift in Sources */,
 				84A5BF9E2C1AF5EE00E32496 /* CountryListModel.swift in Sources */,
 				8442A90C2CDC8B2D0006068E /* FAQViewController.swift in Sources */,
+				180C6E532CE72A860071CD04 /* SenderSideHomeWorkViewController.swift in Sources */,
 				8442A90D2CDC8B2D0006068E /* FAQTableViewCell.swift in Sources */,
 				84EFF9E82CCCA7F000C11C26 /* AppBottomView.swift in Sources */,
+				18BAF3E72CE8BF0900517441 /* PhotoPickManager.swift in Sources */,
 				84A5BE922C197CE800E32496 /* UIImageViewX.swift in Sources */,
 				844188642CC8C839006483C3 /* ResponceModal.swift in Sources */,
 				84A5BEAD2C19824E00E32496 /* LocalizableStrings.swift in Sources */,
@@ -2282,6 +2310,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		18BAF3E32CE8A27800517441 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		18BAF3E42CE8A27800517441 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 18BAF3E32CE8A27800517441 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 84A5BE362C19719700E32496 /* Project object */;
 }

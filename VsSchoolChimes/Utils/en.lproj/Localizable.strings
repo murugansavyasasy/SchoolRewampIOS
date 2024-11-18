@@ -54,40 +54,39 @@
 "Cancel"   = "Cancel";
 "Select" = "Select";
 "Choose an option" = "Choose an option";
+//MARK: Image Sender Side
 "Upload Image/Pdf" = "Upload Image/Pdf";
-"Standard or section" = "Standard or section";
-"Section or student" = "Section or student";
 "Description" = "Description";
 "Camera" = "Camera";
-"Gallery"= "Galleryร";
+"Gallery"= "Gallery";
 "Pdf" = "PDF";
 "Upload Attachment" = "Upload Attachment";
-"Groups" = "Groups";
-
-
-
-"OK" = "OK";
 "Camera Not Available" = "Camera Not Available";
 "This device has no camera." = "This device has no camera.";
-
+"OK" = "OK";
 "Rate Us" = "Rate Us";
-
 "School Strength" = "School Strength";
 "Total Strength" = "Total Strength";
 "Staff's count" = "Staff's count";
 "Boy's count" = "Boy's count";
 "Girl's count" = "Girl's count";
-
 "Are you sure you want to logout?" = "Are you sure you want to logout?";
 "Cancel" = "Cancel";
 "Logout" = "Logout";
 "English" = "English";
-
+//MARK: Common Staff Side
+"Groups" = "Groups";
+"Standard or section" = "Standard or section";
+"Section or student" = "Section or student";
+//MARK: Video Sender Side
 "Enter Video Title" = "Enter Video Title";
 "Video Description" = "Video Description";
 "Choose Video From Gallery" = "Choose Video From Gallery";
 "Change Video" = "Change Video";
-
 "Upload Video" = "Upload Video";
 "Send" = "Send";
-
+//MARK: Home Work Sender Side
+"Home Work" = "Home Work";
+"Content" = "Content";
+"Home Work Reports" = "Home Work Reports";
+"Compose Home work Message" = "Compose Home work Message";

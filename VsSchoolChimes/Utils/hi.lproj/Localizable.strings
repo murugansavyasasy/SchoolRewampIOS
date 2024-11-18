@@ -61,30 +61,32 @@
 "Cancel" = "रद्द करें";
 "Select" = "चयन करें";
 "Choose an option" = "एक विकल्प चुनें";
+//MARK: Image Sender Side
 "Upload Image/Pdf" = "छवि/PDF अपलोड करें";
-"Standard or section" = "मानक या खंड";
-"Section or student" = " खंड या छात्र";
 "Description" = "विवरण";
 "Camera" = "कैमरा";
 "Gallery" = "गैलरी";
 "Pdf" = "पीडीएफ";
 "Upload Attachment" = "संलग्नक अपलोड करें";
+"Camera Not Available" = "कैमरा उपलब्ध नहीं है";
+"This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
+"OK" = "ठीक है";
+"Camera Not Available" = "कैमरा उपलब्ध नहीं है";
+"This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
+//MARK: Common Staff Side
 "Groups" = "समूह";
-
-
-"OK" = "ठीक है";
-"Camera Not Available" = "कैमरा उपलब्ध नहीं है";
-"This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
-
-"OK" = "ठीक है";
-"Camera Not Available" = "कैमरा उपलब्ध नहीं है";
-"This device has no camera." = "इस डिवाइस में कैमरा नहीं है";
+"Standard or section" = "मानक या खंड";
+"Section or student" = " खंड या छात्र";
+//MARK: Video Sender Side
 "Enter Video Title" = "वीडियो शीर्षक दर्ज करें";
 "Video Description" = "वीडियो विवरण";
 "Choose Video From Gallery" = "गैलरी से वीडियो चुनें";
 "Change Video" = "वीडियो बदलें";
-
 "Upload Video" = "वीडियो अपलोड करें";
 "Send" = "भेजें";
-
+//MARK: Home Work Sender Side
+"Home Work" = "होमवर्क";
+"Content" = "सामग्री";
+"Home Work Reports" = "होमवर्क रिपोर्ट्स";
+"Compose Home work Message" = "สहोमवर्क संदेश तैयार करें।";
 
