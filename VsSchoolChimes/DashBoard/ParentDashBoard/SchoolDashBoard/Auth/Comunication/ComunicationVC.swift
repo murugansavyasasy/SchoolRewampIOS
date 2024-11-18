@@ -9,10 +9,13 @@ protocol reloadDelegate{
 }
 class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate {
     
+    
+  
+    
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     var player : AVPlayer?
-    var AudioPlayUrl = "file:///var/mobile/Containers/Data/Application/9D69D934-AC7F-4D0B-B91B-055C9719182D/Documents/myRecording.mp4"
+    var AudioPlayUrl = ""
     var isRecording = false
     var updateTimer: Timer?
     var recordingTimer: Timer?
@@ -23,7 +26,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
     var playVoicce = false
     var timeObserver: Any?
     var isAudioRecordingGranted : Bool?
+    var timePicker: UIDatePicker!
+      var doneButton: UIButton!
+      var activeButton: UIButton?
+    var scheduleClick = false
     
+    
+    @IBOutlet weak var timePickerHeight: NSLayoutConstraint!
+    @IBOutlet weak var fromTime: UIButton!
+    @IBOutlet weak var toTime: UIButton!
     @IBOutlet weak var waveView: WaveView!
     
     @IBOutlet weak var tittlemessage: UILabel!
@@ -53,6 +64,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
     @IBOutlet weak var moveVoiceMessage: UIButton!
     @IBOutlet weak var sendbtn: UIButton!
     
+    @IBOutlet weak var schedulCallView: UIView!
+    
+    @IBOutlet weak var voiceBtn: UIButton!
+    
+    @IBOutlet weak var scheduleBtn: UIButton!
+    @IBOutlet weak var textBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         check_record_permission()
@@ -60,16 +77,56 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
         setupAudioSession()
         CellRegistre()
         setupWaveBars()
+        setupTimePicker()
+        setInitialButtonTitles()
         historytable.delegate = self
         historytable.dataSource = self
-        var bounds = UIScreen.main.bounds
-        var width = bounds.size.width
-        var height = view.frame.size.height
-        print(height)
+//        timePickerHeight.constant = 0
     }
     
     func uiUUpdate(){
-//        playerheight.constant = 0
+        //MARK: VOICE BUTTON BACKGROUND
+        voiceBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+        voiceBtn.layer.cornerRadius = 20
+        voiceBtn.layer.shadowColor = UIColor.black.cgColor
+        voiceBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
+        voiceBtn.layer.shadowRadius = 5
+        voiceBtn.layer.shadowOpacity = 0.3
+        
+        //MARK: TEXT BUTTON BACKGROUND
+        textBtn.layer.cornerRadius = 20
+        textBtn.layer.shadowColor = UIColor.black.cgColor
+        textBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
+        textBtn.layer.shadowRadius = 5
+        textBtn.layer.shadowOpacity = 0.3
+        
+        //MARK: SCHEDULE BUTTON BACKGROUND
+        scheduleBtn.layer.cornerRadius = 20
+        scheduleBtn.layer.shadowColor = UIColor.black.cgColor
+        scheduleBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
+        scheduleBtn.layer.shadowRadius = 5
+        scheduleBtn.layer.shadowOpacity = 0.3
+        schedulCallView.isHidden = true
+        timePickerHeight.constant = 0
+        
+        //MARK: FROM TIME BUTTON BACKGROUND
+        fromTime.layer.cornerRadius = 4
+        fromTime.layer.shadowColor = UIColor.black.cgColor
+        fromTime.layer.shadowOffset = CGSize(width: 0, height: 2)
+        fromTime.layer.shadowRadius = 5
+        fromTime.layer.shadowOpacity = 0.3
+        fromTime.layer.cornerRadius = 8
+        
+        //MARK: TO TIME BUTTON BACKGROUND
+        toTime.layer.cornerRadius = 4
+        toTime.layer.shadowColor = UIColor.black.cgColor
+        toTime.layer.shadowOffset = CGSize(width: 0, height: 2)
+        toTime.layer.shadowRadius = 5
+        toTime.layer.shadowOpacity = 0.3
+        toTime.layer.cornerRadius = 8
+        
+        //MARK: AUDIO PLAY VIEW BACKGROUND
+        playerheight.constant = 0
         playadiuoslider.value = 0
         playerview.layer.shadowColor = UIColor.black.cgColor
         playerview.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -83,18 +140,27 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
         informationcontent.layer.borderColor = UIColor.black.cgColor
         emengencyCall.isOn = false
         addfile.layer.cornerRadius = 4
-        let title = "Do you want send Text Message?"
-        let title2 = "Do you want  send Voice Message?"
+        let title = "Do you want History"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
-        let attributedTitle2 = NSAttributedString(string: title2, attributes: [
-            .underlineStyle: NSUnderlineStyle.single.rawValue
-        ])
+ 
         
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
-        moveVoiceMessage.setAttributedTitle(attributedTitle2, for: .normal)
+        moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
         sendbtn.isEnabled = false
+    }
+    
+    private func setInitialButtonTitles() {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+
+        // Set initial times
+        let initialFromTime = Date() // Current time for example
+        let initialToTime = Calendar.current.date(byAdding: .hour, value: 1, to: initialFromTime) ?? Date()
+
+        fromTime.setTitle(formatter.string(from: initialFromTime), for: .normal)
+        toTime.setTitle(formatter.string(from: initialToTime), for: .normal)
     }
     
     func check_record_permission()
@@ -123,6 +189,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
     
     func CellRegistre(){
         historytable.register(UINib(nibName: "HistoryTC", bundle: nil), forCellReuseIdentifier: "HistoryTC")
+        historytable.register(UINib(nibName: "TextHistoryTVCell", bundle: nil), forCellReuseIdentifier: "TextHistoryTVCell")
+        
     }
     
     func setupRecorder()
@@ -164,14 +232,27 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
     }
     
     func showTextMessageView() {
+        textBtn.backgroundColor = UIColor(named:"topBackgroundCLr")
+        voiceBtn.backgroundColor = UIColor.white
+        
         textmessageview.isHidden = false
         voiceview.isHidden = true
         tittlemessage.text = "Text Message"
+        historytable.reloadData()
+//        schedulCallView.isHidden = true
+//        timePickerHeight.constant = 0
     }
     
     func showHistoryView() {
         historyview.isHidden = false
         voiceview.isHidden = true
+        recrdimg.image = UIImage(named: "mic")
+        audioRecorder?.stop()
+        isRecording = false
+        recordingTimer?.invalidate()
+        recordingTimer = nil
+        deletRecoding()
+        playerheight.constant = 0
         textmessageview.isHidden = true
         radio1.setImage(UIImage(systemName: "circle"), for: .normal)
         radio2.setImage(UIImage(systemName: "button.programmable"), for: .normal)
@@ -183,7 +264,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
         addfile.isHidden = false
         player?.pause()
         AudioPlayUrl = ""
+        playerheight.constant = 0
         Timinglbl.text = "0.00/3.00"
+        moveTextmessage.isHidden = false
     }
     func startRecording() {
         recrdimg.image = UIImage.gifImageWithName("Mic")
@@ -220,7 +303,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
             dltbtn.isHidden = false
             sendbtn.isEnabled = true
             addfile.isHidden = true
-            
+            moveTextmessage.isHidden = true
             
             playerItem = AVPlayerItem(url: urls)
             player = AVPlayer(playerItem: playerItem!)
@@ -228,16 +311,51 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
         
     }
     
+    @IBAction func timeChanged(_ sender: UIButton) {
+        showTimePicker(for: sender)
+        
+    }
+    @IBAction func fromTime(_ sender: UIButton) {
+        showTimePicker(for: sender)
+    }
+    
+    func showTimePicker(for button: UIButton) {
+        activeButton = button // Track which button is being updated
+        timePicker.isHidden = false
+        doneButton.isHidden = false
+        
+        // Position the time picker below the button
+        let buttonFrame = button.convert(button.bounds, to: self.view)
+        timePicker.frame = CGRect(x: (self.view.frame.width - 200) / 2, y: buttonFrame.maxY + 10, width: 250, height: 200)
+        
+        // Set background color to pink
+        timePicker.backgroundColor = .white
+        timePicker.layer.shadowColor = UIColor.black.cgColor
+        timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+        timePicker.layer.shadowRadius = 5
+        timePicker.layer.shadowOpacity = 0.3
+        timePicker.layer.cornerRadius = 20
+        // Position the Done button at the bottom-right of the time picker
+        doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: timePicker.frame.maxY - 40, width: 70, height: 30)
+    }
+
+
+    
     @IBAction func voiceview(_ sender: Any) {
+        voiceBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+        textBtn.backgroundColor = UIColor.white
         voiceview.isHidden = false
         textmessageview.isHidden = true
         historyview.isHidden = true
         addfile.isHidden = false
         tittlemessage.text = "Voice Message"
+        historytable.reloadData()
+//        schedulCallView.isHidden = true
+//        timePickerHeight.constant = 0
     }
     
     @IBAction func sendEmergencycall(_ sender: UISwitch) {
-//        sender.isOn.toggle()
+        //        sender.isOn.toggle()
     }
     
     @IBAction func history(_ sender: UIButton) {
@@ -257,9 +375,25 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
         deletRecoding()
     }
     
+    @IBAction func scheduleCall(_ sender: UIButton) {
+        
+        if scheduleClick == false{
+            scheduleBtn.backgroundColor = UIColor.white
+            scheduleClick = true
+            schedulCallView.isHidden = true
+            timePickerHeight.constant = 0
+        }else{
+            scheduleBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+            scheduleClick = false
+            schedulCallView.isHidden = false
+            timePickerHeight.constant = 141
+        }
+        
+    }
     
     // Record Button Action
     @IBAction func recordButtonTapped(_ sender: UIButton) {
+        
         if isRecording {
             stopRecording()
         } else {
@@ -267,11 +401,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
                 startRecording()
             }else{
                 let alert = UIAlertController(title: "Error", message: "Please allow microphone usage from settings", preferredStyle: .alert)
-                                alert.addAction(UIAlertAction(title: "Open settings", style: .default, handler: { action in
-                                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                                }))
-                                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                                present(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "Open settings", style: .default, handler: { action in
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
             }
             
             
@@ -291,20 +425,20 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate 
     }
     
     
-
+    
     @IBAction func deleteVoicemsg(_ sender: UIButton) {
         deletRecoding()
     }
     
-
+    
     
     // Play Button Action
     @IBAction func playButtonTapped(_ sender: UIButton) {
-   
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)),
                                                name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                object: player!.currentItem)
-
+        
         
         if playVoicce == true{
             player?.pause()
@@ -431,23 +565,33 @@ extension ComunicationVC: AVAudioPlayerDelegate {
 
 
 extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2 // Replace with the actual number of sections
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return section == 0 ? 5:5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
-        
-        cell.playBtn.tag = indexPath.row
-        
-        let image = playIndex == indexPath.row ? UIImage(named: "pause-button"): UIImage(named: "play-button")
-        // Update play state
-        let isPlaying = (playIndex == indexPath.row)
-//        var urls = URL(string: AudioPlayUrl)
-        cell.updatePlayState(isPlaying: isPlaying, url: AudioPlayUrl)
-        cell.delegate = self
-        cell.playBtn.setImage(image, for: .normal)
-        return cell
+        if tittlemessage.text == "Text Message"{
+          
+            let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
+            return cell
+            
+        }else{
+            let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+            
+            cell.playBtn.tag = indexPath.row
+            
+            let image = playIndex == indexPath.row ? UIImage(named: "pause-button"): UIImage(named: "play-button")
+            // Update play state
+            let isPlaying = (playIndex == indexPath.row)
+            //        var urls = URL(string: AudioPlayUrl)
+            cell.updatePlayState(isPlaying: isPlaying, url: AudioPlayUrl)
+            cell.delegate = self
+            cell.playBtn.setImage(image, for: .normal)
+            return cell
+        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -494,10 +638,50 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         }
     }
     
+
     // Handle cancellation
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         print("Document picker was cancelled.")
     }
+   
+    func setupTimePicker() {
+        // Initialize the picker
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            timePicker.preferredDatePickerStyle = .wheels
+        }
+        timePicker.backgroundColor = .white
+        timePicker.isHidden = true // Initially hidden
+        self.view.addSubview(timePicker)
+        
+        // Add Done Button
+        doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.isHidden = true
+        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.layer.cornerRadius = 8
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        self.view.addSubview(doneButton)
+    }
+    @objc func doneButtonTapped() {
+        // Format the time
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        
+        if let activeButton = activeButton {
+            // Update the respective button's title
+            let selectedTime = formatter.string(from: timePicker.date)
+            activeButton.setTitle(selectedTime, for: .normal)
+        }
+        
+        // Hide the picker and Done button
+        timePicker.isHidden = true
+        doneButton.isHidden = true
+        activeButton = nil
+    }
+    
 }
 
 

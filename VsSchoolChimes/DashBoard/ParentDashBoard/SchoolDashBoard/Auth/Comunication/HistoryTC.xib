@@ -21,32 +21,32 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlg-O2-bJ6">
                         <rect key="frame" x="16" y="10" width="325" height="118"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="11 sep 24" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GX6-rc-Pdd">
-                                <rect key="frame" x="16" y="9.9999999999999982" width="293" height="20.333333333333329"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="11 sep 24" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GX6-rc-Pdd">
+                                <rect key="frame" x="16" y="10" width="293" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gcgcgxsfx fdzxfdffszxfczxdscz" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsE-j7-zhi">
-                                <rect key="frame" x="16" y="90.333333333333329" width="236" height="17.666666666666671"/>
+                                <rect key="frame" x="16" y="87" width="228" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCZ-4k-Zif">
-                                <rect key="frame" x="16" y="35.333333333333336" width="293" height="35.000000000000007"/>
+                                <rect key="frame" x="16" y="32" width="293" height="35"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAx-6D-yhf" customClass="WaveView" customModule="VsSchoolChimes" customModuleProvider="target">
                                         <rect key="frame" x="45" y="0.0" width="243" height="35"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.30 am" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2vZ-30-QJN">
-                                                <rect key="frame" x="185.33333333333331" y="26.666666666666661" width="47.666666666666657" height="13.333333333333332"/>
+                                                <rect key="frame" x="185.33333333333331" y="26.666666666666668" width="47.666666666666657" height="13.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9DJ-hg-2W6">
-                                                <rect key="frame" x="0.0" y="26.666666666666661" width="23.666666666666668" height="13.333333333333332"/>
+                                                <rect key="frame" x="0.0" y="26.666666666666668" width="23.666666666666668" height="13.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -88,7 +88,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QJu-7a-u55">
-                                <rect key="frame" x="257" y="88" width="60" height="25"/>
+                                <rect key="frame" x="249" y="83" width="60" height="25"/>
                                 <color key="backgroundColor" systemColor="systemMintColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="2Ge-zu-Cuh"/>
@@ -104,14 +104,15 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="GX6-rc-Pdd" firstAttribute="top" secondItem="hlg-O2-bJ6" secondAttribute="top" constant="10" id="6YV-6b-qPc"/>
-                            <constraint firstAttribute="trailing" secondItem="QJu-7a-u55" secondAttribute="trailing" constant="8" id="HDf-ee-XRo"/>
+                            <constraint firstAttribute="trailing" secondItem="QJu-7a-u55" secondAttribute="trailing" constant="16" id="HDf-ee-XRo"/>
                             <constraint firstItem="RsE-j7-zhi" firstAttribute="top" secondItem="NCZ-4k-Zif" secondAttribute="bottom" constant="20" id="JLk-j4-UX2"/>
                             <constraint firstAttribute="trailing" secondItem="NCZ-4k-Zif" secondAttribute="trailing" constant="16" id="LYK-2e-dCj"/>
                             <constraint firstAttribute="bottom" secondItem="RsE-j7-zhi" secondAttribute="bottom" constant="10" id="MUy-B2-gLr"/>
                             <constraint firstItem="NCZ-4k-Zif" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="16" id="YHc-QA-Ck9"/>
                             <constraint firstAttribute="trailing" secondItem="GX6-rc-Pdd" secondAttribute="trailing" constant="16" id="Yqi-Mw-hv4"/>
+                            <constraint firstItem="QJu-7a-u55" firstAttribute="top" secondItem="NCZ-4k-Zif" secondAttribute="bottom" constant="16" id="ZOo-EV-4gS"/>
                             <constraint firstItem="RsE-j7-zhi" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="16" id="nXW-J2-Ff5"/>
-                            <constraint firstAttribute="bottom" secondItem="QJu-7a-u55" secondAttribute="bottom" constant="5" id="r35-sf-y0A"/>
+                            <constraint firstAttribute="bottom" secondItem="QJu-7a-u55" secondAttribute="bottom" constant="10" id="r35-sf-y0A"/>
                             <constraint firstItem="QJu-7a-u55" firstAttribute="leading" secondItem="RsE-j7-zhi" secondAttribute="trailing" constant="5" id="rtx-KB-gaL"/>
                             <constraint firstItem="NCZ-4k-Zif" firstAttribute="top" secondItem="GX6-rc-Pdd" secondAttribute="bottom" constant="5" id="uFx-dN-j9O"/>
                             <constraint firstItem="GX6-rc-Pdd" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="16" id="vLY-zM-8gA"/>
@@ -146,7 +147,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
