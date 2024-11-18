@@ -1,163 +1,158 @@
 //
-//  SenderSideImagePdfViewController.swift
+//  SenderSideHomeWorkViewController.swift
 //  VsSchoolChimes
 //
-//  Created by Apple on 11/13/24.
+//  Created by Apple on 11/15/24.
 //
 
 import UIKit
 import PhotosUI
-
 import AWSS3
+import FSCalendar
+
 @available(iOS 14.0, *)
-class SenderSideImagePdfViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate {
-//, UITableViewDataSource, UITableViewDelegate  {
+class SenderSideHomeWorkViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate, FSCalendarDelegate, FSCalendarDataSource {
     
-    @IBOutlet weak var stdSecBtn: UIButton!
     
-    @IBOutlet weak var groupBtn: UIButton!
     
-    @IBOutlet weak var descTextField: UITextField!
-    @IBOutlet weak var uploadAttacLbl: UILabel!
     
-    @IBOutlet weak var titleLbl: UILabel!
     
-    @IBOutlet weak var staffSideOverAllView: UIView!
-    @IBOutlet weak var staffSideView: UIView!
     
-    @IBOutlet weak var schoolListTv: UITableView!
+    @IBOutlet weak var homeWorkCollectionView: UICollectionView!
     
-    @IBOutlet weak var sendingView: UIView!
+    @IBOutlet weak var calanderHoleView: UIView!
     
+    
+    
+    @IBOutlet weak var dateSelectView: FSCalendar!
+    
+    
+    
+    @IBOutlet weak var secLbl: UILabel!
+    
+    
+    @IBOutlet weak var secView: UIView!
+    
+    @IBOutlet weak var stdLbl: UILabel!
+    @IBOutlet weak var stdView: UIView!
+    
+    
+    @IBOutlet weak var dateLbl: UILabel!
+    
+    @IBOutlet weak var overAllHomeWorkReportListView: UIView!
+    
+    @IBOutlet weak var overAllHomeWorkListView: UIView!
     
     @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var imgPdCollectionView: UICollectionView!
     
-    @IBOutlet weak var secStudBtn: UIButton!
+    @IBOutlet weak var homeWorkReportsLbl: UILabel!
     
-    @IBOutlet weak var imgPdfSelectView: RectangularDashedView!
+    @IBOutlet weak var homeworkLbl: UILabel!
     
-    var selectedImages: [UIImage] = []
-    var getType = "Principal"
+    
+    
+    @IBOutlet weak var composeHwMsgLbl: UILabel!
+    
+    @IBOutlet weak var ContentTxtView: UITextView!
+    @IBOutlet weak var hwTopicTxtFld: UITextField!
+    
+    @IBOutlet weak var homeWorkReportsSegView: UIView!
+    @IBOutlet weak var homeWorkSegView: UIView!
+    
+    @IBOutlet weak var addAttachBtn: UIButton!
+    
     var imageStr : [String] = []
     var currentImageCount = 0
-    var schoolListArr = ["Sales","Vss","SSS","SSS2020"]
+    
+    var selectedImages: [UIImage] = []
     var totalImageCount = 0
     var originalImagesArray = [UIImage]()
     var imageUrlArray = NSMutableArray()
     var  getImagePdfType : String!
     var convertedImagesUrlArray = NSMutableArray()
     var pdfData : Data? = nil
-    let imagePickerHelper = CameraUtility()
-    let photoPickerManager = PhotoPickerManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        
-//        "Standard or section" = "தரம் அல்லது பிரிவு";
-//        "Section or student" = "பிரிவு அல்லது மாணவர்";
-//        
+        overAllHomeWorkReportListView.isHidden = true
         
-        stdSecBtn.setTitle("Standard or section".translated(), for: .normal)
-        secStudBtn.setTitle("Section or student".translated(), for: .normal)
-        groupBtn.setTitle("Groups".translated(), for: .normal)
+        composeHwMsgLbl.text = "Upload Attachment".translated()
         
         
-        uploadAttacLbl.text = "Upload Attachment".translated()
-        titleLbl.text = "Upload Image/Pdf".translated()
-        descTextField.placeholder = "Description".translated()
-        imgPdCollectionView.delegate = self
-        imgPdCollectionView.dataSource = self
+        homeWorkCollectionView.delegate = self
+        homeWorkCollectionView.dataSource = self
         
-//        schoolListTv.dataSource = self
-//        schoolListTv.delegate = self
+        homeWorkCollectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
-        imgPdCollectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
+      
         
-        
-        
-        let selectedAlertGesture = UITapGestureRecognizer(target: self, action: #selector(presentSelectionAlert))
-        imgPdfSelectView.addGestureRecognizer(selectedAlertGesture)
-        
-        
+        dateSelectView.isHidden = false
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backAction))
         backView.addGestureRecognizer(backGesture)
         
-        staffSideView.isHidden = true
-        schoolListTv.isHidden = true
-        staffSideOverAllView.isHidden = true
-        sendingView.isHidden = true
+        let homeWorkGesture = UITapGestureRecognizer(target: self, action: #selector(selectHomeWork))
+        homeWorkSegView.addGestureRecognizer(homeWorkGesture)
         
-        if getType == "Principal" || getType == "Group" {
-            schoolListTv.isHidden = false
-            sendingView.isHidden = false
-            staffSideView.isHidden = true
-            staffSideOverAllView.isHidden = true
-        }else {
-            schoolListTv.isHidden = true
-            sendingView.isHidden = false
-            staffSideOverAllView.isHidden = false
-            staffSideView.isHidden = false
-            
-        }
         
-        photoPickerManager.onImagePicked = { [weak self] images in
-                   guard let self = self else { return }
-                   // Handle selected images here
-            
-           
-                   for image in images {
-                       print("Selected image: \(image)")
-                       photoPickerManager.uploadAWS(image: image)
-                   }
-               }
+        let homeworkReportGesture = UITapGestureRecognizer(target: self, action: #selector(selectHomeWorkReports))
+        homeWorkReportsSegView.addGestureRecognizer(homeworkReportGesture)
+        
+        //        let dateClick = UITapGestureRecognizer(target: self, action: #selector(calanderClikcVC))
+        //        calanderView.addGestureRecognizer(dateClick)
         
         
         
-      
-        imagePickerHelper.onImagesPicked = { images in
-            // Handle the selected images here
-            print("Selected images: \(images)")
-        }
+        //        dateSelectView.delegate = self
+        //        dateSelectView.dataSource = self
+        //
+        // Optionally, customize the calendar appearance
+        //        dateFs.appearance.todayColor = .blue
+        //        dateFs.appearance.selectionColor = .systemBlue
         
+        //
+        //        dateSelectView.appearance.todayColor = .clear          // Change background color of today's date
+        ////        dateFs.appearance.todaySelectionColor = .blue // Change border color of today's date
+        //        dateSelectView.appearance.titleTodayColor = .blue   // Change the title color of today's date
         
-        
-        
-        
-        
-        
-        
+        // Do any additional setup after loading the view.
     }
+    
     
     @IBAction func backAction() {
         dismiss(animated: true)
     }
     
     
-    @IBAction func presentSelectionAlert() {
+    @IBAction func calanderClikcVC(){
+        
+        calanderHoleView.isHidden = false
+    }
+    @IBAction func addAttachBtnAction(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
         //
         // Camera option
-        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-//            CameraUtility.openCamera(from: self)
-            openCamera()
+        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { _ in
+            self.openCamera()
         }
         alertController.addAction(cameraAction)
         
         // Gallery option
         let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-//            let cameraUtility = CameraUtility()
             selectImages()
-//            cameraUtility.selectImages(from: self)
-                   }
+        }
         alertController.addAction(galleryAction)
         
         // PDF option
-        let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-//            CameraUtility.selectPDF(from: self)
-            selectPDF()
+        let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { _ in
+            self.selectPDF()
         }
         alertController.addAction(pdfAction)
+        
+        // Voice option
+        let voiceAction = UIAlertAction(title: "Voice".translated(), style: .default) { _ in
+            //            self.selectPDF()
+        }
+        alertController.addAction(voiceAction)
         
         // Cancel action
         let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
@@ -167,11 +162,98 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         self.present(alertController, animated: true, completion: nil)
     }
     
-   
-
-
-      
     
+    
+    
+    @IBAction func selectHomeWork() {
+        homeWorkSegView.backgroundColor = UIColor(named: "gradient3")
+        homeWorkReportsSegView.backgroundColor = .white
+        homeWorkReportsLbl.textColor = .black
+        homeworkLbl.textColor = .white
+        overAllHomeWorkListView.isHidden = false
+        overAllHomeWorkReportListView.isHidden = true
+        //        homeWorkSegView.isHidden = false
+        //        homeWorkReportsSegView.isHidden = true
+        
+    }
+    
+    
+    
+    @IBAction func selectHomeWorkReports() {
+        overAllHomeWorkListView.isHidden = true
+        overAllHomeWorkReportListView.isHidden = false
+        homeWorkReportsSegView.backgroundColor = UIColor(named: "gradient3")
+        homeWorkSegView.backgroundColor = .white
+        //        homeWorkReportsSegView.isHidden = false
+        //        homeWorkSegView.isHidden = true
+        homeWorkReportsLbl.textColor = .white
+        homeworkLbl.textColor = .black
+        
+    }
+    
+    
+    
+    
+    
+    
+    @objc private func dateChanged(_ sender: UIDatePicker) {
+        let selectedDate = sender.date
+        // Handle the selected date
+        print("Selected date: \(selectedDate)")
+        
+        
+    }
+    @objc func datePicked(_ sender: UIDatePicker) {
+        let selectedDate = sender.date
+        //           print("Selected Date: \(selectedDate)")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy" // Set the desired date format
+        
+        // Format the selected date
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        
+        // Print or use the formatted date
+        print("Selected Date: \(formattedDate)")
+        
+        
+        self.dismiss(animated: true, completion: nil)
+        
+        
+    }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        // Set minimum date to 30 days ago
+        let currentDate = Date()
+        return Calendar.current.date(byAdding: .day, value: -30, to: currentDate) ?? currentDate
+    }
+    
+    func maximumDate(for calendar: FSCalendar) -> Date {
+        // Set maximum date to today
+        return Date()
+    }
+    
+    // MARK: - FSCalendarDelegate
+    
+    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
+        // Allow selection only if the date is within the last 30 days
+        let currentDate = Date()
+        let minDate = Calendar.current.date(byAdding: .day, value: -30, to: currentDate)!
+        return date >= minDate && date <= currentDate
+    }
+    
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        let result = formatter.string(from: date)
+        
+        
+        
+        
+        
+    }
     
     //    MARK: Handle Select Camera,Pdf,Image
     @IBAction func openCamera() {
@@ -191,18 +273,9 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     }
     
     func selectPDF() {
-        photoPickerManager.shared.documentPicker(controller, didPickDocumentAt: selectedURL) { (pdfData, filename, fileExtension) in
-            if let data = pdfData {
-                print("PDF Data: \(data)")
-                let pdfData = Data() // Your PDF Data here
-                photoPickerManager.shared.uploadPDFFileToAWS(pdfData: pdfData) { (url) in
-                    if let uploadedURL = url {
-                        print("File uploaded to: \(uploadedURL)")
-                    }
-                }
-                print("Filename: \(filename ?? "Unknown")")
-            }
-        }
+        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
+        documentPicker.delegate = self
+        self.present(documentPicker, animated: true, completion: nil)
     }
     // Handle the image once it has been captured
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -226,7 +299,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
-
+        
         
         
         
@@ -235,7 +308,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         let fileextension = urls.pathExtension
         print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
         
- 
+        
         let imageData = NSData(contentsOf: urls)
         
         
@@ -249,7 +322,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
             print("set PDF filer error : ", error)
             
         }
-           
+        
         
     }
     
@@ -262,15 +335,15 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     
     
-//    MARK: Aws Upload
+    //    MARK: Aws Upload
     func uploadAWS(image : UIImage){
-    
+        
         let S3BucketName = AwsCredentials.bucketNameIndia
         let CognitoPoolID = AwsCredentials.CognitoPoolID
         let Region = AWSRegionType.APSouth1
         
         
-      
+        
         let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
         let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
         let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".png")
@@ -307,7 +380,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         } else{
             uploadRequest?.contentType = "image/png"
         }
-      
+        
         
         let transferManager = AWSS3TransferManager.default()
         transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
@@ -322,11 +395,11 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
                 if let absoluteString = publicURL?.absoluteString {
                     print("Uploaded to:\(absoluteString)")
                     
-                  
+                    
                     
                     
                     imageStr.append(absoluteString)
-                  
+                    
                     
                     let imageDicthome = NSMutableDictionary()
                     imageDicthome["path"] = absoluteString
@@ -338,7 +411,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
                     
                     
                     
-                
+                    
                     
                     self.currentImageCount = self.currentImageCount + 1
                     if self.currentImageCount < self.totalImageCount{
@@ -355,7 +428,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
             
             return nil
         }
-       
+        
     }
     
     
@@ -401,7 +474,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
             if let error = task.error {
                 print("Upload failed : (\(error))")
                 
-              
+                
             }
             
             if task.result != nil {
@@ -409,7 +482,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
                 let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
                 if let absoluteString = publicURL?.absoluteString {
                     print("Uploaded to:\(absoluteString)")
-                  
+                    
                     let imageDict = NSMutableDictionary()
                     imageDict["FileName"] = absoluteString
                     self.imageUrlArray.add(imageDict)
@@ -418,12 +491,12 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
                     
                     
                     
-                 
+                    
                 }
             }
             else {
                 
-              
+                
                 print("Unexpected empty result.")
             }
             return nil
@@ -433,13 +506,13 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     
     
-  
-        
+    
+    
     
     func getImageURL(images : [UIImage]){
         
-       
-       
+        
+        
         self.originalImagesArray = images
         self.totalImageCount = images.count
         if currentImageCount < images.count{
@@ -447,46 +520,23 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         }
     }
     
+}
     
     
          
-           
-    
-            
-            
-    
-    
-//    MARK: Button Action
-    
-    
-    @IBAction func toStaffBtnAction(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func toStdSecBtnAction(_ sender: UIButton) {
-    }
-    
-    
-    @IBAction func toSecStudBtnAction(_ sender: UIButton) {
-    }
-    
-}
-
 @available(iOS 14.0, *)
-extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollectionViewDataSource,PHPickerViewControllerDelegate{
+extension SenderSideHomeWorkViewController : UICollectionViewDelegate,UICollectionViewDataSource,PHPickerViewControllerDelegate{
     
     
     
     func selectImages() {
-        photoPickerManager.presentPhotoPicker(from: self, selectionLimit: 3)
-
-//           var config = PHPickerConfiguration()
-//           config.selectionLimit = 5  // Limit selection to 5 images
-//           config.filter = .images    // Only allow images
-//           
-//           let picker = PHPickerViewController(configuration: config)
-//           picker.delegate = self
-//           present(picker, animated: true, completion: nil)
+           var config = PHPickerConfiguration()
+           config.selectionLimit = 5  // Limit selection to 5 images
+           config.filter = .images    // Only allow images
+           
+           let picker = PHPickerViewController(configuration: config)
+           picker.delegate = self
+           present(picker, animated: true, completion: nil)
        }
        
        // MARK: - PHPickerViewControllerDelegate
@@ -502,7 +552,7 @@ extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollecti
                            self.getImagePdfType = "Image"
                            self.uploadAWS(image: image)
 //                           self.convertAssetToImages()
-                           self.imgPdCollectionView.reloadData()
+                           self.homeWorkCollectionView.reloadData()
                        }
                    }
                }
@@ -538,7 +588,7 @@ extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollecti
 }
 
 @available(iOS 14.0, *)
-extension SenderSideImagePdfViewController: UICollectionViewDelegateFlowLayout {
+extension SenderSideHomeWorkViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
         return CGSize(width: width, height: width)
@@ -549,22 +599,4 @@ extension SenderSideImagePdfViewController: UICollectionViewDelegateFlowLayout {
     
 }
     
-    
-//@available(iOS 14.0, *)
-
-// MARK: School List Tv Cell
-//extension SenderSideImagePdfViewController: UITableViewDelegate,UITableViewDataSource {
-//        
-//        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//            schoolListArr.count
-//        }
-//        
-//        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "", for: indexPath)
-//            return cell
-//        }
-//  
-//}
-
-
-
+ 

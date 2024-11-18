@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
 <<<<<<< HEAD
+<<<<<<< HEAD
    LastUpgradeVersion = "1610"
 =======
    LastUpgradeVersion = "1600"
+>>>>>>> development
+=======
+   LastUpgradeVersion = "1610"
 >>>>>>> development
    version = "1.7">
    <BuildAction

@@ -74,23 +74,26 @@
 "Cancel"   = "ยกเลิก";
 "Select" = "เลือก";
 "Choose an option" = "เลือกตัวเลือก";
+//MARK: Image Sender Side
 "Upload Image/Pdf" = "อัปโหลดรูปภาพ/PDF";
-"Standard or section" = "มาตรฐานหรือส่วน";
-"Section or student" = "ส่วนหรือผู้เรียน";
 "Description" = "คำอธิบาย";
 "Camera" = "กล้อง";
 "Gallery"= "แกลเลอรี";
 "Pdf" = "PDF";
 "Upload Attachment" = "อัปโหลดไฟล์แนบ";
+//MARK: Common Staff Side
+"Standard or section" = "มาตรฐานหรือส่วน";
+"Section or student" = "ส่วนหรือผู้เรียน";
 "Groups" = "กลุ่ม";
 "OK" = "ตกลง";
 "Camera Not Available" = "ไม่พบกล้อง";
 "This device has no camera." = "อุปกรณ์นี้ไม่มีกล้อง";
-
-
 "Rate Us" = "ให้คะแนนเรา";
+<<<<<<< HEAD
 
 // MARK: piechart page
+=======
+>>>>>>> development
 "School Strength" = "จำนวนนักเรียนทั้งหมดในโรงเรียน";
 "Total Strength" = "จำนวนรวม";
 "Staff's count" = "จำนวนพนักงาน";
@@ -102,6 +105,7 @@
 "Are you sure you want to logout?" = "คุณแน่ใจหรือว่าต้องการออกจากระบบ?";
 "Cancel" = "ยกเลิก";
 "Logout" = "ออกจากระบบ";
+<<<<<<< HEAD
 
 // MARK: feedback page
 "How satisfied are you with the School Chimes?" = "คุณพอใจกับ School Chimes มากน้อยเพียงใด?";
@@ -111,6 +115,20 @@
 "Thank You" = "ขอบคุณ";
 "We appreciate your feedback! Your rating helps us improve." = "เราขอขอบคุณสำหรับคำติชมของคุณ! การให้คะแนนของคุณช่วยให้เราปรับปรุง";
 "Back to Home <<" = "กลับไปหน้าหลัก <<";
+=======
+//MARK: Video Sender Side
+"Enter Video Title" = "ป้อนชื่อวิดีโอ";
+"Video Description" = "คำอธิบายวิดีโอ";
+"Choose Video From Gallery" = "เลือกวิดีโอจากแกลเลอรี";
+"Change Video" = "เปลี่ยนวิดีโอ";
+"Upload Video" = "อัปโหลดวิดีโอ";
+"Send" = "ส่ง";
+//MARK: Home Work Sender Side
+"Home Work" = "การบ้าน";
+"Content" = "เนื้อหา";
+"Home Work Reports" = "รายงานการบ้าน";
+"Compose Home work Message" = "เขียนข้อความการบ้าน";
+>>>>>>> development
 
 // MARK: Report bug page
 "Select Module*" = "เลือกโมดูล*";
