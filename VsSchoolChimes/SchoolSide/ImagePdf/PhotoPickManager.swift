@@ -11,7 +11,7 @@ import PhotosUI
 import AWSS3
 
 @available(iOS 14.0, *)
-class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate {
+class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPickerDelegate {
     // Completion handler to return selected images
     
     var selectedImages: [UIImage] = []
@@ -25,10 +25,20 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate {
     var originalImagesArray = [UIImage]()
     var onImagesPicked: (([UIImage]) -> Void)?
 
-    var onPdfPicked: (([Data]) -> Void)?
+    static let shared = PhotoPickerManager()
+    var onPdfPicked: ((Data) -> Void)?
     var onImagePicked: (([UIImage]) -> Void)?
    
 
+    private override init() {
+           // Private initializer
+       }
+    
+    
+    static func createInstance() -> PhotoPickerManager {
+            return PhotoPickerManager()
+        }
+    
     // Function to present the photo picker
     func presentPhotoPicker(from viewController: UIViewController, selectionLimit: Int = 1) {
         var configuration = PHPickerConfiguration()
@@ -172,37 +182,80 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate {
         }
     }
     
-    static let shared = PhotoPickerManager()
+   
        
-       private override init() {
-           // Private initialization to ensure just one instance is created
-       }
+     
 
        // Function to handle document picking (for example, selecting PDFs)
-       func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL, completion: @escaping (Data?, String?, String?) -> Void) {
+//       func documentPicker(didPickDocumentAt urls: URL, completion: @escaping (Data?, String?, String?) -> Void) {
+//           
+//           let fileurl: URL = urls
+//           let filename = urls.lastPathComponent
+//           let fileextension = urls.pathExtension
+//           print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
+//           
+//           do {
+//               let pdfData = try Data(contentsOf: urls)
+//               completion(pdfData, filename, fileextension)
+//           } catch {
+//               print("Error while loading the document: \(error)")
+//               completion(nil, nil, nil)
+//           }
+//       }
+//
+//       // Function to handle the cancel event of the document picker
+//       func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+//           controller.dismiss(animated: true, completion: nil)
+//       }
+
+    
+    func pickPDF(from viewController: UIViewController) {
+           let types = [UTType.pdf] // Specify PDF file type
+           let picker = UIDocumentPickerViewController(forOpeningContentTypes: types, asCopy: true)
+           picker.delegate = self
+           picker.allowsMultipleSelection = false // Change to true if you need multiple files
+           viewController.present(picker, animated: true, completion: nil)
+       }
+
+       // UIDocumentPickerDelegate methods
+       func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+           guard let selectedURL = urls.first else { return }
+           print("Picked PDF: \(selectedURL)")
            
-           let fileurl: URL = urls
-           let filename = urls.lastPathComponent
-           let fileextension = urls.pathExtension
-           print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
-           
-           do {
-               let pdfData = try Data(contentsOf: urls)
-               completion(pdfData, filename, fileextension)
-           } catch {
-               print("Error while loading the document: \(error)")
-               completion(nil, nil, nil)
+           if let url = URL(string: "https://example.com/image.jpg") {
+               do {
+                   let data = try Data(contentsOf: url)
+                   self.onPdfPicked?(data)
+                  
+                   print("Data downloaded successfully, size: \(data.count) bytes")
+               } catch {
+                   print("Error downloading data: \(error)")
+               }
+           } else {
+               print("Invalid URL")
            }
+          
+           // Handle the selected PDF file (e.g., read data, copy it, etc.)
        }
 
-       // Function to handle the cancel event of the document picker
        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-           controller.dismiss(animated: true, completion: nil)
+           print("Picker was cancelled")
        }
-
+    
+    
+    func convertURLToData(from url: URL) -> Data? {
+        do {
+            let data = try Data(contentsOf: url)
+//            uploadPDFFileToAWS(pdfData: da, completion: <#T##(String?) -> Void#>)
+            return data
+        } catch {
+            print("Error converting URL to Data: \(error)")
+            return nil
+        }
+    }
        // Function to upload PDF to AWS S3
        func uploadPDFFileToAWS(pdfData: Data, completion: @escaping (String?) -> Void) {
-           let S3BucketName = "your-bucket-name"
+           let S3BucketName = AwsCredentials.bucketNameIndia
            let Region = AWSRegionType.APSouth1
            let currentTimeStamp = NSString(format: "%ld", Date().timeIntervalSince1970)
            let imageName = "vc_\(currentTimeStamp).pdf"

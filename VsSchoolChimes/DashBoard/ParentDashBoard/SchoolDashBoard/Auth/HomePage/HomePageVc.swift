@@ -262,8 +262,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
                 
                 //imagePdfNavigate()
+            }else if items[indexPath.row].translated() == "Lesson Plan".translated() {
+               
+                imagePdfNavigate()
             }
-            else if items[indexPath.row] == "university".translated() {
+            else if items[indexPath.row] == "PTM".translated() {
                 
                 videoNavigate()
 
