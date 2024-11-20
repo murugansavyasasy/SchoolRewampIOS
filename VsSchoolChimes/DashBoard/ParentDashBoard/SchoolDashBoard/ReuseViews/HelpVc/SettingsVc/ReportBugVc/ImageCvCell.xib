@@ -42,6 +42,7 @@
             </constraints>
             <size key="customSize" width="135" height="149"/>
             <connections>
+                <outlet property="TrashIcon" destination="amK-p2-KzG" id="LVs-dT-38d"/>
                 <outlet property="imageViews" destination="p43-r7-nQ5" id="hJk-zK-BF2"/>
             </connections>
             <point key="canvasLocation" x="192.36641221374046" y="21.83098591549296"/>

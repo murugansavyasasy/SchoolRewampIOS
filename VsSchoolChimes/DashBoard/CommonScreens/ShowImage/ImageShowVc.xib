@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageShowVc" customModule="VsSchoolChimes" customModuleProvider="target">
+            <connections>
+                <outlet property="cv" destination="2nI-Xu-ypg" id="bdC-fH-JvR"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3Y-cI-Ree">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2nI-Xu-ypg">
+                            <rect key="frame" x="0.0" y="50" width="393" height="709"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Twp-p8-VjQ">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TE9-Ng-rGr">
+                            <rect key="frame" x="8" y="5" width="75" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="Ko4-U4-LtL"/>
+                                <constraint firstAttribute="width" constant="75" id="zPp-tK-oLi"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Back"/>
+                            <connections>
+                                <action selector="back:" destination="-1" eventType="touchUpInside" id="hIx-vR-9sB"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="2nI-Xu-ypg" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" id="HOm-IM-im4"/>
+                        <constraint firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="WzM-Ex-QG6"/>
+                        <constraint firstItem="2nI-Xu-ypg" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="50" id="a4Y-Am-9yz"/>
+                        <constraint firstItem="TE9-Ng-rGr" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="5" id="e3h-za-H20"/>
+                        <constraint firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" id="rZ1-9N-zlh"/>
+                        <constraint firstItem="TE9-Ng-rGr" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" constant="8" id="s1x-E1-ZZ1"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="b3Y-cI-Ree" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0wO-Xl-qPd"/>
+                <constraint firstItem="b3Y-cI-Ree" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="DY1-Bz-Se3"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="b3Y-cI-Ree" secondAttribute="bottom" id="Dm2-eN-upo"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="b3Y-cI-Ree" secondAttribute="trailing" id="LB4-ka-Gln"/>
+            </constraints>
+            <point key="canvasLocation" x="132" y="-11"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

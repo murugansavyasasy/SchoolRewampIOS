@@ -27,7 +27,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dHb-EU-pjT">
                             <rect key="frame" x="0.0" y="65" width="393" height="694"/>
                             <subviews>
-                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="OZ7-nr-L1Y">
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="OZ7-nr-L1Y">
                                     <rect key="frame" x="15" y="10" width="363" height="56"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="56" id="iyI-KR-aHq"/>

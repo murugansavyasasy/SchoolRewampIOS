@@ -7,16 +7,11 @@
 
 import UIKit
 
-@available(iOS 14.0, *)
 class NoticeBoardVc: UIViewController {
     
     @IBOutlet weak var plusImgview: UIImageView!
     
     @IBOutlet weak var tableview: UITableView!
-    
-    var images : [UIImage] = []
-    
-    var previousOffset: CGFloat = 0.0
     
     
     override func viewDidLoad() {
@@ -35,10 +30,6 @@ class NoticeBoardVc: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-//        ApiCallFunc
-    }
-    
     @IBAction func Plusclick(_ sender : Any){
         let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -46,13 +37,11 @@ class NoticeBoardVc: UIViewController {
     }
     
     
-    
     @IBAction func BackBtnAct(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
 }
 
-@available(iOS 14.0, *)
 extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
@@ -66,28 +55,8 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return UITableView.automaticDimension
     }
     
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        
-        // Check for scroll direction
-        if contentOffsetY > previousOffset && contentOffsetY > 0 {
-            // Scrolling Down
-            print("Scrolling Down")
-            plusImgview.isHidden = true
-        } else if contentOffsetY < previousOffset {
-            // Scrolling Up
-            print("Scrolling Up")
-            plusImgview.isHidden = false
-        }
-        
-        // Update the previous offset for the next scroll event
-        previousOffset = contentOffsetY
-    }
-    
-    //scrol
 }

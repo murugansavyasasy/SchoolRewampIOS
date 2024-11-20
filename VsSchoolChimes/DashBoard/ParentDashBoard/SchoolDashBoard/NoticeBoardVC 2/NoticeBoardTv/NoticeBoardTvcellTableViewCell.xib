@@ -74,11 +74,6 @@
                                     <constraint firstAttribute="width" constant="58" id="LQ0-K2-Mv1"/>
                                 </constraints>
                             </imageView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="3fk-V0-e47">
-                                <rect key="frame" x="142.66666666666666" y="143" width="73" height="26"/>
-                                <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="currentPageIndicatorTintColor" systemColor="systemBlueColor"/>
-                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -87,10 +82,8 @@
                             <constraint firstItem="dRZ-ZP-W8D" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="8sb-FD-fmm"/>
                             <constraint firstAttribute="trailing" secondItem="3lM-Ge-F8d" secondAttribute="trailing" constant="20" id="BPr-Rj-qMp"/>
                             <constraint firstItem="ZlO-yr-9O1" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="8" id="JGp-wX-TdN"/>
-                            <constraint firstItem="3fk-V0-e47" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="Jc2-QS-qX3"/>
                             <constraint firstItem="0ta-Ym-h3a" firstAttribute="leading" secondItem="dRZ-ZP-W8D" secondAttribute="leading" constant="3" id="NcJ-AQ-uuW"/>
                             <constraint firstItem="kwf-UY-KqC" firstAttribute="top" secondItem="ZlO-yr-9O1" secondAttribute="bottom" constant="20" id="S3g-O4-3t0"/>
-                            <constraint firstItem="3fk-V0-e47" firstAttribute="bottom" secondItem="kwf-UY-KqC" secondAttribute="bottom" id="XIP-6g-gUH"/>
                             <constraint firstAttribute="trailing" secondItem="ZlO-yr-9O1" secondAttribute="trailing" constant="8" id="bH7-tW-QXV"/>
                             <constraint firstAttribute="trailing" secondItem="Kz9-cN-IxL" secondAttribute="trailing" constant="20" id="eKx-4Z-jxJ"/>
                             <constraint firstItem="0ta-Ym-h3a" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="-30" id="gmH-j7-GUP"/>
@@ -113,11 +106,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="CVHeight" destination="pyv-Ob-4eX" id="c7Z-8C-XF9"/>
                 <outlet property="Pinview" destination="dRZ-ZP-W8D" id="lf7-Qu-BPQ"/>
                 <outlet property="cellview" destination="iLP-ce-oCO" id="XJL-Qq-aKB"/>
-                <outlet property="collectionview" destination="kwf-UY-KqC" id="NPj-aA-lIp"/>
-                <outlet property="pagecontroller" destination="3fk-V0-e47" id="8Ui-Eb-NEa"/>
             </connections>
             <point key="canvasLocation" x="174.04580152671755" y="77.816901408450704"/>
         </tableViewCell>
@@ -127,9 +117,6 @@
         <namedColor name="dashBoardClr">
             <color red="0.9570000171661377" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

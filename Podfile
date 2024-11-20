@@ -21,6 +21,7 @@ pod 'AWSS3'
 pod 'AWSCognito'
 pod 'AWSCore'
 pod 'Charts'
+pod 'SDWebImage'
 
   target 'VsSchoolChimesTests' do
     inherit! :search_paths

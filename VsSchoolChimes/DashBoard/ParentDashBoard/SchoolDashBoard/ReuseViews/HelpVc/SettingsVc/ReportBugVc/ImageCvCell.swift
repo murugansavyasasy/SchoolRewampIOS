@@ -11,6 +11,7 @@ class ImageCvCell: UICollectionViewCell {
 
     @IBOutlet weak var imageViews: UIImageView!
     
+    @IBOutlet weak var TrashIcon: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

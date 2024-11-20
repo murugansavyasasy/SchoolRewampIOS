@@ -1,5 +1,5 @@
 {
-  "originHash" : "78f76a23b5bbe8a579a83eeb8c5e7a9c858af24cd72bc2cde9fb108802509531",
+  "originHash" : "6fc75f78c2b29cf4236d3dd1b125ff18bab903f9d693e47f72a4a303b5a85fd3",
   "pins" : [
     {
       "identity" : "fscalendar",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "0fbdec5172fccb90f707472eeaea4ffe095278f6",
         "version" : "2.8.4"
+      }
+    },
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "10d06f6a33bafae8c164fbfd1f03391f6d4692b3",
+        "version" : "5.20.0"
       }
     }
   ],
