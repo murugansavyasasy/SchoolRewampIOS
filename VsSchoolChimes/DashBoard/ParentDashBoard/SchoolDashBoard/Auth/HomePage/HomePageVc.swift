@@ -259,24 +259,24 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let vc = ComunicationVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
-            }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
-                
+            }else if items[indexPath.row].translated() == "Lesson Plan".translated() {
+               
                 imagePdfNavigate()
             }
-            else if items[indexPath.row] == "university".translated() {
+            else if items[indexPath.row] == "PTM".translated() {
                 
                 videoNavigate()
-<<<<<<< HEAD
+
             }else if items[indexPath.row].translated() == "Notice Board".translated() {
                 
                 let vc = NoticeBoardVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
-=======
-            }  else if items[indexPath.row] == "schoolss".translated() {
+
+            }  else if items[indexPath.row] == "Mark your attendence".translated() {
                 
                 homeWorkNavigate()
->>>>>>> development
+
             }
         }
         

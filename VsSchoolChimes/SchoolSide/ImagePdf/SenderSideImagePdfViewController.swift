@@ -40,16 +40,18 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     var selectedImages: [UIImage] = []
     var getType = "Principal"
     var imageStr : [String] = []
-    var currentImageCount = 0
+  
     var schoolListArr = ["Sales","Vss","SSS","SSS2020"]
     var totalImageCount = 0
+    var currentImageCount = 0
     var originalImagesArray = [UIImage]()
     var imageUrlArray = NSMutableArray()
     var  getImagePdfType : String!
     var convertedImagesUrlArray = NSMutableArray()
     var pdfData : Data? = nil
-    let imagePickerHelper = CameraUtility()
-    let photoPickerManager = PhotoPickerManager()
+//    let imagePickerHelper = CameraUtility()
+    let photoPickManager = PhotoPickerManager.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,8 +68,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         uploadAttacLbl.text = "Upload Attachment".translated()
         titleLbl.text = "Upload Image/Pdf".translated()
         descTextField.placeholder = "Description".translated()
-        imgPdCollectionView.delegate = self
-        imgPdCollectionView.dataSource = self
+      
         
 //        schoolListTv.dataSource = self
 //        schoolListTv.delegate = self
@@ -101,26 +102,22 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
             
         }
         
-        photoPickerManager.onImagePicked = { [weak self] images in
+        photoPickManager.onImagePicked = { [weak self] images in
                    guard let self = self else { return }
                    // Handle selected images here
             
+            selectedImages.append(contentsOf: images)
+            imgPdCollectionView.delegate = self
+            imgPdCollectionView.dataSource = self
            
                    for image in images {
                        print("Selected image: \(image)")
-                       photoPickerManager.uploadAWS(image: image)
+                       photoPickManager.uploadAWS(image: image)
                    }
                }
         
         
-        
-      
-        imagePickerHelper.onImagesPicked = { images in
-            // Handle the selected images here
-            print("Selected images: \(images)")
-        }
-        
-        
+       
         
         
         
@@ -136,25 +133,25 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     @IBAction func presentSelectionAlert() {
         let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-        //
+       
         // Camera option
         let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-//            CameraUtility.openCamera(from: self)
+
             openCamera()
         }
         alertController.addAction(cameraAction)
         
         // Gallery option
         let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-//            let cameraUtility = CameraUtility()
+
             selectImages()
-//            cameraUtility.selectImages(from: self)
+
                    }
         alertController.addAction(galleryAction)
         
         // PDF option
         let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-//            CameraUtility.selectPDF(from: self)
+           
             selectPDF()
         }
         alertController.addAction(pdfAction)
@@ -190,20 +187,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         }
     }
     
-    func selectPDF() {
-        photoPickerManager.shared.documentPicker(controller, didPickDocumentAt: selectedURL) { (pdfData, filename, fileExtension) in
-            if let data = pdfData {
-                print("PDF Data: \(data)")
-                let pdfData = Data() // Your PDF Data here
-                photoPickerManager.shared.uploadPDFFileToAWS(pdfData: pdfData) { (url) in
-                    if let uploadedURL = url {
-                        print("File uploaded to: \(uploadedURL)")
-                    }
-                }
-                print("Filename: \(filename ?? "Unknown")")
-            }
-        }
-    }
+   
     // Handle the image once it has been captured
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {
@@ -223,7 +207,17 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         dismiss(animated: true, completion: nil)
     }
     
-    
+    func selectPDF() {
+
+        print("SELECT PDF")
+        
+
+        
+        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
+        documentPicker.delegate = self
+        self.present(documentPicker, animated: true, completion: nil)
+        
+    }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
 
@@ -261,102 +255,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     
     
-    
-//    MARK: Aws Upload
-    func uploadAWS(image : UIImage){
-    
-        let S3BucketName = AwsCredentials.bucketNameIndia
-        let CognitoPoolID = AwsCredentials.CognitoPoolID
-        let Region = AWSRegionType.APSouth1
-        
-        
-      
-        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".png")
-        
-        
-        
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let  currentDate =   dateFormatter.string(from: Date())
-        
-        let ext = imageName as String
-        
-        let fileName = imageNameWithoutExtension
-        let fileType = ".jpg"
-        
-        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-        let data = image.jpegData(compressionQuality: 0.9)
-        do {
-            try data?.write(to: imageURL)
-        }
-        catch {}
-        
-        print(imageURL)
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest?.body = imageURL
-        uploadRequest?.key =   currentDate +  "/" + "File_" + ext
-        uploadRequest?.bucket = S3BucketName
-        
-        if getImagePdfType == "Image" {
-            uploadRequest?.contentType = "image/png"
-        } else{
-            uploadRequest?.contentType = "image/png"
-        }
-      
-        
-        let transferManager = AWSS3TransferManager.default()
-        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-            
-            if let error = task.error {
-                print("Upload failed : (\(error))")
-            }
-            var imageFilePath = NSMutableArray()
-            if task.result != nil {
-                let url = AWSS3.default().configuration.endpoint.url
-                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-                if let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                    
-                  
-                    
-                    
-                    imageStr.append(absoluteString)
-                  
-                    
-                    let imageDicthome = NSMutableDictionary()
-                    imageDicthome["path"] = absoluteString
-                    imageDicthome["type"] = "IMAGE"
-                    let imageDict = NSMutableDictionary()
-                    var emptyDictionary = [String: String]()
-                    
-                    imageFilePath.add(imageDicthome)
-                    
-                    
-                    
-                
-                    
-                    self.currentImageCount = self.currentImageCount + 1
-                    if self.currentImageCount < self.totalImageCount{
-                        DispatchQueue.main.async {
-                            self.getImageURL(images: self.originalImagesArray)
-                        }
-                    }else{
-                        self.convertedImagesUrlArray = self.imageUrlArray
-                        
-                        
-                    }
-                }
-            }
-            
-            return nil
-        }
-       
-    }
+ 
     
     
     func uploadPDFFileToAWS(pdfData : Data){
@@ -434,21 +333,6 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     
   
-        
-    
-    func getImageURL(images : [UIImage]){
-        
-       
-       
-        self.originalImagesArray = images
-        self.totalImageCount = images.count
-        if currentImageCount < images.count{
-            self.uploadAWS(image: images[currentImageCount])
-        }
-    }
-    
-    
-    
          
            
     
@@ -473,43 +357,17 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
 }
 
 @available(iOS 14.0, *)
-extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollectionViewDataSource,PHPickerViewControllerDelegate{
+extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollectionViewDataSource{
     
     
     
     func selectImages() {
-        photoPickerManager.presentPhotoPicker(from: self, selectionLimit: 3)
+        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
 
-//           var config = PHPickerConfiguration()
-//           config.selectionLimit = 5  // Limit selection to 5 images
-//           config.filter = .images    // Only allow images
-//           
-//           let picker = PHPickerViewController(configuration: config)
-//           picker.delegate = self
-//           present(picker, animated: true, completion: nil)
+
        }
        
-       // MARK: - PHPickerViewControllerDelegate
-       func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-           picker.dismiss(animated: true, completion: nil)
-           
-           for result in results {
-               if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                   result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
-                       guard let self = self, let image = image as? UIImage, error == nil else { return }
-                       DispatchQueue.main.async { [self] in
-                           self.selectedImages.append(image)
-                           self.getImagePdfType = "Image"
-                           self.uploadAWS(image: image)
-//                           self.convertAssetToImages()
-                           self.imgPdCollectionView.reloadData()
-                       }
-                   }
-               }
-           }
-       }
-    
-    
+     
  
     
     
@@ -517,6 +375,7 @@ extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollecti
        
        // MARK: - UICollectionView DataSource
        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+           print("selectedImagescount",selectedImages.count)
            return selectedImages.count
        }
        
