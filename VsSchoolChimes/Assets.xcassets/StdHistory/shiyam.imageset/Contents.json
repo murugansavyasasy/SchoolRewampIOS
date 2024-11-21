@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "Download_premium_png_of_PNG_Student_standing_portrait_reading__about_student_png__boy_reading_book__pre_kids_png__school_student__and_school_children_12811067-removebg-preview.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

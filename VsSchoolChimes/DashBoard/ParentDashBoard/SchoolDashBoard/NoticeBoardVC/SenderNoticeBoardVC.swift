@@ -88,33 +88,35 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
      
     @IBAction func SubmitAction(_ sender: Any) {
         
+        let vc = SelectRecipientVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
         
-        
-        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-        //
-        // Camera option
-      
-        
-//             PDF option
-        let pdfAction = UIAlertAction(title: "submit".translated(), style: .default) { [self] _ in
-            
-            let vc = NoticeBoardVc(nibName: nil, bundle: nil)
-            vc.images = selectedImages
-            
-            
-          
-            
-            dismiss(animated: true)
-          
-        }
-        alertController.addAction(pdfAction)
-        
-        // Cancel action
-        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        // Present the alert
-        self.present(alertController, animated: true, completion: nil)
+//        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+//        //
+//        // Camera option
+//      
+//        
+////             PDF option
+//        let pdfAction = UIAlertAction(title: "submit".translated(), style: .default) { [self] _ in
+//            
+//            let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+//            vc.images = selectedImages
+//            
+//            
+//          
+//            
+//            dismiss(animated: true)
+//          
+//        }
+//        alertController.addAction(pdfAction)
+//        
+//        // Cancel action
+//        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+//        alertController.addAction(cancelAction)
+//        
+//        // Present the alert
+//        self.present(alertController, animated: true, completion: nil)
     }
 
     

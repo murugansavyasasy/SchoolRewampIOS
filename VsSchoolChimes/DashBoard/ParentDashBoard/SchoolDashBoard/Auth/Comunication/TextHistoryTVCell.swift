@@ -8,6 +8,7 @@
 import UIKit
 
 class TextHistoryTVCell: UITableViewCell {
+    @IBOutlet weak var descriptContent: UILabel!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: UIView!
     override func awakeFromNib() {
