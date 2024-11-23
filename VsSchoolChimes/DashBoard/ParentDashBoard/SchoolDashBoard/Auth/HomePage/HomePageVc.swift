@@ -291,6 +291,10 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let vc = AssignmentListVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
+            }else if items[indexPath.row] == "Circulars".translated(){
+                let vc = SenderEventsVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
             }
         }
         
