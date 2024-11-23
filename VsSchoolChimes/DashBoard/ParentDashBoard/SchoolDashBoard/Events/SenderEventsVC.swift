@@ -14,7 +14,7 @@ class SenderEventsVC: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     
     @IBOutlet weak var Dateview: UIView!
     
-    @IBOutlet weak var selectTimeLabel: UILabel!
+    @IBOutlet weak var selectTime: UIDatePicker!
     @IBOutlet weak var DayLabel: UILabel!
     
     @IBOutlet weak var selectDateLabel: UILabel!
@@ -42,13 +42,12 @@ class SenderEventsVC: UIViewController, FSCalendarDelegate, FSCalendarDataSource
         let dateTap = UITapGestureRecognizer(target: self, action: #selector(Selectdate))
         selectDateview.addGestureRecognizer(dateTap)
         
-        let timeTap = UITapGestureRecognizer(target: self, action: #selector(SelectTime))
-        selectTimeView.addGestureRecognizer(timeTap)
         
         Dateview.isHidden = true
         calenderview.delegate = self
         calenderview.dataSource = self
         calenderview.scrollDirection = .vertical
+        selectTime.layer.backgroundColor = UIColor.button.cgColor
        
         
         if #available(iOS 15.0, *) {
@@ -112,9 +111,16 @@ class SenderEventsVC: UIViewController, FSCalendarDelegate, FSCalendarDataSource
         
     }
     
-    @IBAction func SelectTime(_ sender: Any) {
+    @IBAction func SelectTime(_ sender: UIDatePicker) {
         
+               let selectedTime = sender.date
+               let formatter = DateFormatter()
+               formatter.timeStyle = .short
+               let timeString = formatter.string(from: selectedTime)
+               print("Selected time: \(timeString)")
         
+               //self.dismiss(animated: true, completion: nil)
+      
     }
     
     

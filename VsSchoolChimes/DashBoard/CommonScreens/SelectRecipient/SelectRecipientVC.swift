@@ -68,8 +68,8 @@ class SelectRecipientVC: UIViewController {
         let tap4 = UITapGestureRecognizer(target: self, action: #selector(SendEntireSchool))
         sendAllview.addGestureRecognizer(tap4)
         
-        let nib = UINib(nibName: "RecipientTvCell", bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier:"RecipientTvCell")
+        let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
         
 
         tableview.register(UINib(nibName:"Std_Grp_header", bundle: nil), forHeaderFooterViewReuseIdentifier: "Std_Grp_header")
@@ -292,9 +292,18 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "RecipientTvCell") as! RecipientTvCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell , for: indexPath) as! RecipientTvCell
+        
+        
+        
         if flag == 1{
+            cell.checkboxImg.isUserInteractionEnabled = true
             cell.cellLabel.text = Group[indexPath.section].items[indexPath.row]
+            let checkClick = checkClick(target: self, action: #selector(CheckBoxclick))
+            checkClick.index = indexPath.row
+            checkClick.indexs = indexPath
+            cell.checkboxImg.addGestureRecognizer(checkClick)
+            
         }
         else{
             cell.cellLabel.text = sections[indexPath.section].items[indexPath.row]
@@ -302,25 +311,27 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+    @IBAction func CheckBoxclick(ges : checkClick){
         
-        let cell = tableView.cellForRow(at: indexPath) as! RecipientTvCell
+        let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell , for: ges.indexs) as! RecipientTvCell
         
-        print("selected",cell.cellLabel.text)
-        cell.checkboxImg.image = UIImage(named: "checkedSquare")
-      
+        cell.checkboxImg.image = UIImage(named: "checkedsquare")
     }
     
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! RecipientTvCell
-        
-        print("Deselected",cell.cellLabel.text)
-        cell.checkboxImg.image = UIImage(named: "uncheckedSquare")
-        
-    }
+ 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
     
+}
+
+
+class  checkClick : UITapGestureRecognizer{
+    
+    
+    var index : Int!
+    var click : Bool!
+    var indexs : IndexPath!
 }

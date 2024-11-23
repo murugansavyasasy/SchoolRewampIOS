@@ -11,10 +11,8 @@
 "Help" = "உதவி";
 "Settings" = "அமைப்புகள்";
 "Profile" = "சுயவிவரம";
-<<<<<<< HEAD
+
 // MARK: Settings page
-=======
->>>>>>> development
 "Notifications" = "அறிவிப்புகள்";
 "FAQ" = "கேள்வி பதில்கள்";
 "Contact Us" = "எங்களை தொடர்பு கொள்ளவும்";
@@ -25,14 +23,11 @@
 "Send Feedback" = "மறுமொழி அனுப்பவும்";
 "Rate Us" = "எங்களை மதிப்பீடு செய்யவும்";
 "Logout" = "வெளியேறு";
-<<<<<<< HEAD
 "GENERAL" = "பொது";
 "FEEDBACK" = "மறுமொழி";
 "Settings" = "அமைப்புகள்";
 
 // MARK: Dashboard
-=======
->>>>>>> development
 "discussion" = "சர்ச்சை";
 "SmallIcon" = "சிறிய ஐகான்";
 "drawing-compass" = "வரைவிடு கோணம்";
@@ -43,7 +38,6 @@
 "university" = "பல்கலைக்கழகம்";
 "support" = "ஆதரவு";
 "Video" = "வீடியோ";
-<<<<<<< HEAD
 
 // MARK: Dashboard
 "Communication" = "தொடர்பு";
@@ -65,8 +59,7 @@
 
 
 // MARK: profile page
-=======
->>>>>>> development
+
 "Family Details" = "குடும்ப விவரங்கள்";
 "Fathername" = "தந்தையின் பெயர்";
 "Mothername" = "தாயின் பெயர்";
@@ -79,14 +72,14 @@
 "Standard" = "வகுப்பு";
 "Section" = "பிரிவு";
 "Contact details" = "தொடர்பு விவரங்கள்";
-<<<<<<< HEAD
 
 
-=======
+
+
 "GENERAL" = "பொது";
 "FEEDBACK" = "மறுமொழி";
 "Settings" = "அமைப்புகள்";
->>>>>>> development
+
 "Cancel" = "ரத்து செய்யவும்";
 "Select" = "தேர்ந்தெடுக்கவும்";
 "Choose an option" = "ஒரு விருப்பத்தை தேர்ந்தெடுக்கவும்";
@@ -104,29 +97,26 @@
 "Standard or section" = "தரம் அல்லது பிரிவு";
 "Section or student" = "பிரிவு அல்லது மாணவர்";
 "OK" = "சரி";
-<<<<<<< HEAD
 "Camera Not Available" = "கேமரா கிடைக்கவில்லை";
 "This device has no camera." = "இந்த சாதனத்தில் கேமரா இல்லை.";
 
 // MARK: Piechart
-=======
->>>>>>> development
+
 "School Strength" = "பள்ளியின் மொத்த மாணவர் எண்ணிக்கை";
 "Total Strength" = "மொத்த எண்ணிக்கை";
 "Staff's count" = "பணியாளர் எண்ணிக்கை";
 "Boy's count" = "ஆண் குழந்தைகளின் எண்ணிக்கை";
 "Girl's count" = "பெண் குழந்தைகளின் எண்ணிக்கை";
 "Contact Support" = "ஆதரவை தொடர்பு கொள்ளவும்";
-<<<<<<< HEAD
+
 
 // MARK: Logout page
-=======
->>>>>>> development
+
 "Are you sure you want to logout?" = "நீங்கள் வெளியேற விரும்புகிறீர்களா?";
 "Cancel" = "ரத்து செய்";
 "Logout" = "வெளியேறு";
 "Tamil" = "தமிழ்";
-<<<<<<< HEAD
+
 "Confirm" = "வெளியேறு";
 
 // MARK: Feedback page
@@ -137,8 +127,7 @@
 "Thank You" = "நன்றி";
 "We appreciate your feedback! Your rating helps us improve." = "உங்கள் கருத்தை நாங்கள் மதிக்கிறோம்! உங்கள் மதிப்பீடு எங்களை மேம்படுத்த உதவும்.";
 "Back to Home <<" = "முகப்புக்கு திரும்பவும் <<";
-=======
-//MARK: Video Sender Side
+
 "Enter Video Title" = "வீடியோ தலைப்பு உள்ளிடவும்";
 "Video Description" = "வீடியோ விளக்கம்";
 "Choose Video From Gallery" = "கேலரியிலிருந்து வீடியோ தேர்வு செய்யவும்";
@@ -153,7 +142,6 @@
 
 
 
->>>>>>> development
 
 // MARK: Reportbugs page
 "Select Module*" = "மொழிபெயர்ப்பு தேர்வு செய்யவும்*";
