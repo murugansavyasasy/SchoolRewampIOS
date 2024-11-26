@@ -35,7 +35,9 @@ class LanguageVc: UIViewController {
         
         let defaults = UserDefaults.standard
         
-        languageCode = defaults.string(forKey:DefaultsKeys.Language)!
+        languageCode = defaults.string(forKey:DefaultsKeys.Language) ?? "en"
+        
+        print("languageCodelanguageCode",languageCode)
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         baseview.layer.cornerRadius = 15
@@ -54,7 +56,7 @@ class LanguageVc: UIViewController {
             tv.reloadData()
         
        
-        tv.isScrollEnabled = false
+            tv.isScrollEnabled = false
                
                // Reload data and adjust the table height
                
@@ -72,6 +74,7 @@ class LanguageVc: UIViewController {
     @IBAction func backClick(_ sender: Any) {
        
         dismiss(animated: true)
+        
     }
     
     @IBAction func ConfirmClick(_ sender: Any) {

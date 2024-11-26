@@ -89,11 +89,10 @@
 "Camera Not Available" = "ไม่พบกล้อง";
 "This device has no camera." = "อุปกรณ์นี้ไม่มีกล้อง";
 "Rate Us" = "ให้คะแนนเรา";
-<<<<<<< HEAD
+
 
 // MARK: piechart page
-=======
->>>>>>> development
+
 "School Strength" = "จำนวนนักเรียนทั้งหมดในโรงเรียน";
 "Total Strength" = "จำนวนรวม";
 "Staff's count" = "จำนวนพนักงาน";
@@ -105,7 +104,7 @@
 "Are you sure you want to logout?" = "คุณแน่ใจหรือว่าต้องการออกจากระบบ?";
 "Cancel" = "ยกเลิก";
 "Logout" = "ออกจากระบบ";
-<<<<<<< HEAD
+
 
 // MARK: feedback page
 "How satisfied are you with the School Chimes?" = "คุณพอใจกับ School Chimes มากน้อยเพียงใด?";
@@ -115,7 +114,7 @@
 "Thank You" = "ขอบคุณ";
 "We appreciate your feedback! Your rating helps us improve." = "เราขอขอบคุณสำหรับคำติชมของคุณ! การให้คะแนนของคุณช่วยให้เราปรับปรุง";
 "Back to Home <<" = "กลับไปหน้าหลัก <<";
-=======
+
 //MARK: Video Sender Side
 "Enter Video Title" = "ป้อนชื่อวิดีโอ";
 "Video Description" = "คำอธิบายวิดีโอ";
@@ -128,7 +127,7 @@
 "Content" = "เนื้อหา";
 "Home Work Reports" = "รายงานการบ้าน";
 "Compose Home work Message" = "เขียนข้อความการบ้าน";
->>>>>>> development
+
 
 // MARK: Report bug page
 "Select Module*" = "เลือกโมดูล*";

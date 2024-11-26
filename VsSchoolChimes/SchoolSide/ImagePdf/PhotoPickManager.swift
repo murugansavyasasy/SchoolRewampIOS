@@ -40,7 +40,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
         }
     
     // Function to present the photo picker
-    func presentPhotoPicker(from viewController: UIViewController, selectionLimit: Int = 1) {
+    func presentPhotoPicker(from viewController: UIViewController, selectionLimit: Int) {
         var configuration = PHPickerConfiguration()
         configuration.selectionLimit = selectionLimit
         configuration.filter = .images // Only images
@@ -177,6 +177,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
         
         self.originalImagesArray = images
         self.totalImageCount = images.count
+        print("currentImageCount",currentImageCount,images.count)
         if currentImageCount < images.count{
             self.uploadAWS(image: images[currentImageCount])
         }

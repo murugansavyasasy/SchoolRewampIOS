@@ -92,6 +92,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
+       
 //        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
 //        //
 //        // Camera option

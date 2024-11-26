@@ -24,6 +24,7 @@ class CellConfingName {
     static let ImageShowCVCell = "ImageShowCVCell"
     static let ImagePdfCvCell = "ImagePdfCvCell"
     static let ImagePdfTv = "ImagePdfTv"
+    static let RecipientTvCell = "RecipientTvCell"
     
    
    
