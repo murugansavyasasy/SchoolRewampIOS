@@ -8,12 +8,14 @@
 import UIKit
 
 protocol DidSelectDelegate: AnyObject { // Use `AnyObject` for class-only conformance
-    func select(index: Int, value: String?)
+    func select(index: Int, value: String?,Img:[String],Pdf:String?,text:String?,type:String)
 }
 
 class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, DidSelectDelegate {
 
     var pages: [UIViewController] = []
+    
+    let imgs: [String] = [ "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388508860765.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388492478013.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388509938245.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388496770445.png"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,15 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
         if let firstPage = pages.first {
             setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
         }
+        for view in self.view.subviews {
+               if let scrollView = view as? UIScrollView {
+                   scrollView.isUserInteractionEnabled = false
+               }
+           }
+        
+        for gesture in self.gestureRecognizers {
+            gesture.isEnabled = false
+        }
     }
 
     func loadPages() {
@@ -36,7 +47,7 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
         let page1 = AssignmentListVC(nibName: "AssignmentListVC", bundle: nil)
         page1.didSelectDelegate = self // Assign delegate
 
-        let page2 = AssigmentViewVC(nibName: "AssigmentViewVC", bundle: nil)
+        let page2 = ImageShowVc(nibName: nil, bundle: nil)
         page2.delegate = self
 
         // Add pages to the array
@@ -44,20 +55,8 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
     }
 
     // MARK: - DidSelectDelegate Method
-
-//    func select(index: Int, value: String?) {
-//        guard index >= 0 && index < pages.count else { return }
-//
-//        if let value = value, let targetVC = pages[index] as? BookopenViewController {
-//            
-//            targetVC.indexno = Int(value) ?? 0 // Pass the value dynamically
-//        }
-//
-//        let direction: UIPageViewController.NavigationDirection = index > (viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0) ? .forward : .reverse
-//        setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
-//    }
     
-    func select(index: Int, value: String?) {
+    func select(index: Int, value: String?,Img:[String],Pdf:String?,text:String?,type:String) {
         // Ensure the index is within bounds
         guard index >= 0 && index < pages.count else {
             print("Index out of bounds")
@@ -66,8 +65,10 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
 
         // Check if the target view controller can accept the value
         if let value = value,
-           let targetVC = pages[index] as? AssigmentViewVC {
-            targetVC.indexno = Int(value) ?? 0 // Safely convert and assign the value
+           let targetVC = pages[index] as? ImageShowVc {
+            targetVC.pageName = "Assigment"
+            targetVC.imageURL = imgs
+            targetVC.type = Int(value) ?? 0
         }
 
         // Determine navigation direction based on current index
@@ -110,14 +111,4 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
         }
         return currentIndex
     }
-//    func setViewControllersWithCustomDuration(
-//         _ viewControllers: [UIViewController],
-//         direction: NavigationDirection,
-//         duration: TimeInterval,
-//         completion: ((Bool) -> Void)? = nil
-//     ) {
-//         UIView.animate(withDuration: duration, animations: {
-//             self.setViewControllers(viewControllers, direction: direction, animated: true, completion: completion)
-//         })
-//     }
 }

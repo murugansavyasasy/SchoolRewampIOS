@@ -33,6 +33,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var scheduleClick = false
     
     
+    @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var timePickerHeight: NSLayoutConstraint!
     @IBOutlet weak var fromTime: UIButton!
     @IBOutlet weak var toTime: UIButton!
@@ -72,31 +73,39 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var calanderOuter: UIView!
     @IBOutlet weak var DateSelection: FSCalendar!
     @IBOutlet weak var voiceTitleeTxt: UITextField!
+    @IBOutlet weak var nextMontBtn: UIButton!
     
+    @IBOutlet weak var monthLbl: UILabel!
     @IBOutlet weak var TxtTitle: UITextField!
     
+    @IBOutlet weak var voiceClickView: UIView!
+    @IBOutlet weak var textClickView: UIView!
+    @IBOutlet weak var seduleClickView: UIView!
+    
+    
+    @IBOutlet weak var clickVoiceLbl: UILabel!
+    @IBOutlet weak var clickSchedule: UILabel!
+    @IBOutlet weak var clickTextView: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         check_record_permission()
+        printCurrentMonth()
+        hideCalendarHeader()
         uiUUpdate()
         setupAudioSession()
         CellRegistre()
         setupWaveBars()
         setupTimePicker()
         setInitialButtonTitles()
-        keyboardDionebtn()
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
         DateSelection.dataSource = self
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCliboard(_:)))
         
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(tapGesture)
-        
+
     }
-    
+  
     func uiUUpdate(){
         //MARK: FSCalander View
         calanderOuter.isHidden = true
@@ -106,19 +115,30 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         calanderOuter.layer.shadowRadius = 5
         calanderOuter.layer.shadowOpacity = 0.3
         DateSelection.appearance.weekdayTextColor = .red
-        DateSelection.appearance.headerTitleColor = .blue
+        voiceClickView.layer.cornerRadius = 8
+        voiceClickView.backgroundColor = UIColor(named: "topBackgroundCLr 1")
+        TitleLbl.text = "Communication".translated()
+//        DateSelection.appearance.headerTitleColor = .blue
         //        DateSelection.appearance.selectionColor = .green
         DateSelection.appearance.todayColor = .orange
         DateSelection.appearance.eventDefaultColor = .purple
         DateSelection.allowsMultipleSelection = true
         
+      
         //MARK: VOICE BUTTON BACKGROUND
-        voiceBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+        voiceBtn.backgroundColor = .white
+        voiceClickView.layer.cornerRadius = 8
+        textClickView.layer.cornerRadius = 8
+        seduleClickView.layer.cornerRadius = 8
+        
         voiceBtn.layer.cornerRadius = 20
         voiceBtn.layer.shadowColor = UIColor.black.cgColor
         voiceBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
         voiceBtn.layer.shadowRadius = 5
         voiceBtn.layer.shadowOpacity = 0.3
+        voiceBtn.tintColor = .white
+        clickVoiceLbl.textColor = .white
+        voiceBtn.backgroundColor = UIColor(named:"topBackgroundCLr")
         
         //MARK: TEXT BUTTON BACKGROUND
         textBtn.layer.cornerRadius = 20
@@ -177,7 +197,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         dateSelectedViewHeight.constant = 0
         doneBtn.layer.cornerRadius = 8
         
-        let title = "Do you want History"
+        let title = "Do you want send from History?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -185,13 +205,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
-        sendbtn.isEnabled = false
+//        sendbtn.isEnabled = false
     }
-    
-    @objc func handleCliboard(_ sender: UITapGestureRecognizer){
-        self.view.endEditing(true)
+    func printCurrentMonth() {
+        let currentPage = DateSelection.currentPage
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM yyyy" // Format as Month Year (e.g., "November 2024")
+        let formattedMonth = dateFormatter.string(from: currentPage)
+        monthLbl.text = formattedMonth
     }
-    
+    func hideCalendarHeader() {
+        DateSelection.headerHeight = 0
+    }
     
     //MARK: CELL REGISTRATION
     func CellRegistre(){
@@ -313,8 +338,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
                 dltbtn.isHidden = false
-                sendbtn.isEnabled = true
-                moveTextmessage.isHidden = true
+//                sendbtn.isEnabled = true
+//                moveTextmessage.isHidden = true
                 recoderbtn.isEnabled = false
                 //                // Play audio
                 if let audioUrl = URL(string: AudioPlayUrl ?? "") {
@@ -361,6 +386,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         doneButton.isHidden = true
         activeButton = nil
         textBtn.backgroundColor = UIColor(named:"topBackgroundCLr")
+        textBtn.tintColor = .white
+        scheduleBtn.tintColor = .black
+        textClickView.backgroundColor = UIColor(named:"topBackgroundCLr 1")
+        voiceClickView.backgroundColor = .white
+        seduleClickView.backgroundColor = .white
+        clickTextView.textColor = .white
+        clickSchedule.textColor = .black
+        clickVoiceLbl.textColor = .black
+        voiceBtn.tintColor = .black
         voiceBtn.backgroundColor = UIColor.white
         historyview.isHidden = true
         textmessageview.isHidden = false
@@ -378,7 +412,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func showHistoryView() {
         historyview.isHidden = false
         voiceview.isHidden = true
-        recrdimg.image = UIImage(named: "mic")
+        recrdimg.image = UIImage(named: "mic 1")
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
@@ -409,14 +443,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     //MARK: DELETE RECORDING
     func deletRecoding(){
         recoderbtn.isEnabled = true
-        sendbtn.isEnabled = false
+//        sendbtn.isEnabled = false
         dltbtn.isHidden = true
         voiceStackview.isHidden = true
         addfile.isHidden = false
         player?.pause()
         AudioPlayUrl = ""
         playerheight.constant = 0
-        Timinglbl.text = "0.00/3.00"
+        Timinglbl.text = "00.00/3.00"
         moveTextmessage.isHidden = false
     }
     
@@ -431,7 +465,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     func stopRecording() {
-        recrdimg.image = UIImage(named: "mic")
+        recrdimg.image = UIImage(named: "mic 1")
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
@@ -455,7 +489,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             dltbtn.isHidden = false
             sendbtn.isEnabled = true
             addfile.isHidden = true
-            moveTextmessage.isHidden = true
+//            moveTextmessage.isHidden = true
             
             playerItem = AVPlayerItem(url: urls)
             player = AVPlayer(playerItem: playerItem!)
@@ -589,7 +623,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     let currentFormatted = String(format: "%d:%02d", elapsedMinutes, elapsedSeconds)
                     
                     // Update the label with current and total duration
-                    voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
+                    voiceTiming.text = "0\(currentFormatted) / \(totalDurationFormatted)"
                 }
             }
         } else {
@@ -604,6 +638,23 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
         
     }
+    @IBAction func previousMont(_ sender: UIButton) {
+        let currentPage = DateSelection.currentPage
+        if let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentPage) {
+            DateSelection.setCurrentPage(previousMonth, animated: true)
+        }
+    }
+    
+    @IBAction func nextMont(_ sender: UIButton) {
+        let currentPage = DateSelection.currentPage
+        
+        // Calculate the next month
+        if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentPage) {
+            // Set the calendar to the next month
+            DateSelection.setCurrentPage(nextMonth, animated: true)
+        }
+    }
+    
     
     @IBAction func backToHome(_ sender: UIButton) {
         if tittlemessage.text == "Text Message"{
@@ -627,12 +678,21 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func voiceview(_ sender: Any) {
         voiceBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+        textClickView.backgroundColor = .white
+        voiceClickView.backgroundColor = UIColor(named: "topBackgroundCLr 1")
+        seduleClickView.backgroundColor = .white
         textBtn.backgroundColor = UIColor.white
         voiceview.isHidden = false
         textmessageview.isHidden = true
         historyview.isHidden = true
         addfile.isHidden = false
         tittlemessage.text = "Voice Message"
+        clickVoiceLbl.textColor = .white
+        clickTextView.textColor = .black
+        clickSchedule.textColor = .black
+        scheduleBtn.tintColor = .black
+        voiceBtn.tintColor = .white
+        textBtn.tintColor = .black
         historytable.reloadData()
         scheduleBtn.backgroundColor = UIColor.white
         scheduleClick = true
@@ -644,6 +704,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         doneButton.isHidden = true
         activeButton = nil
         calanderOuter.isHidden = true
+        
     }
     
     @IBAction func doneSelection(_ sender: Any) {
@@ -685,6 +746,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func scheduleCall(_ sender: UIButton) {
         scheduleBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+        textClickView.backgroundColor = .white
+        voiceClickView.backgroundColor = .white
+        seduleClickView.backgroundColor = UIColor(named: "topBackgroundCLr 1")
         scheduleClick = false
         showVoiceMessageView()
         schedulCallView.isHidden = false
@@ -694,6 +758,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textBtn.backgroundColor = UIColor.white
         voiceBtn.backgroundColor = UIColor.white
         tittlemessage.text = "Schedule Call"
+        clickVoiceLbl.textColor = .black
+        clickTextView.textColor = .black
+        clickSchedule.textColor = .white
+        voiceBtn.tintColor = .white
+        textBtn.tintColor = .black
+        scheduleBtn.tintColor = .white
+        voiceBtn.tintColor = .black
     }
     
     // Record Button Action
@@ -990,13 +1061,13 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        printCurrentMonth()
         print("Current page changed to: \(calendar.currentPage)")
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
         return selectedDates.contains(date) ? UIColor.green : nil
     }
-    
     func deleteDelegate(index: Int) {
         selectedDates.remove(at: index)
         if selectedDates.count == 0{

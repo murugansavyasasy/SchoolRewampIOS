@@ -34,7 +34,7 @@ class AssigmentViewVC: UIViewController {
 
 
     @IBAction func back(_ sender: UIButton) {
-        delegate?.select(index: 0, value: "")
+        delegate?.select(index: 0, value: "",Img:[""],Pdf:"",text:"",type:"")
     }
 }
 extension AssigmentViewVC:UITableViewDataSource,UITableViewDelegate {
@@ -48,6 +48,6 @@ extension AssigmentViewVC:UITableViewDataSource,UITableViewDelegate {
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 450
+        return UITableView.automaticDimension
     }
 }

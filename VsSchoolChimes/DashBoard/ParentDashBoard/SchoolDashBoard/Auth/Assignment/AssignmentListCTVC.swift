@@ -19,6 +19,8 @@ class AssignmentListCTVC: UITableViewCell {
     @IBOutlet weak var sumissionLbl: UILabel!
     @IBOutlet weak var dueDateLbl: UILabel!
     var stackView: UIStackView!
+    @IBOutlet weak var submitBtn: UIButton!
+    @IBOutlet weak var viewBtn: UIButton!
     var didSelectDelegate : DidSelectDelegate?
     
        override func awakeFromNib() {
@@ -109,7 +111,8 @@ class AssignmentListCTVC: UITableViewCell {
     
     @IBAction func viewAssignment(_ sender: UIButton) {
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.didSelectDelegate?.select(index: 1, value: "")
+//            self.didSelectDelegate?.select(index: 1, value: "")
+        didSelectDelegate?.select(index: 1, value:"\(sender.tag)",Img:[""],Pdf:"https://icseindia.org/document/sample.pdf",text:"sjedgwvfefjd xuvu dvs dhv sshgdvsg",type:"")
 //            }
     }
     @IBAction func submitBtn(_ sender: UIButton) {

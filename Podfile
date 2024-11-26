@@ -22,6 +22,7 @@ pod 'AWSCognito'
 pod 'AWSCore'
 pod 'Charts'
 pod 'SDWebImage'
+pod 'FSCalendar'
 
   target 'VsSchoolChimesTests' do
     inherit! :search_paths

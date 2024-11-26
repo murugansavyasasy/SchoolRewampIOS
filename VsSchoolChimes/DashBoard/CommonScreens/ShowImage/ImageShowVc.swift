@@ -7,35 +7,85 @@
 
 import UIKit
 import SDWebImage
+import WebKit
 
 class ImageShowVc: UIViewController {
-
+    
+    @IBOutlet weak var pdfView: WKWebView!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var cv: UICollectionView!
     
     
     var imageIterms : [String] = []
     var imageURL : [String] = []
-    
+    var delegate:DidSelectDelegate?
+    var pageName = ""
+    var pdfUrl = ""
+    var type = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
+        // Do any additional setup after loading the view.
+
         cv.delegate = self
         cv.dataSource = self
         
         cv.register(UINib(nibName: CellConfingName.ImageShowCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageShowCVCell)
-        
-       
     }
+    override func viewWillAppear(_ animated: Bool) {
+        uiUpdate(type: type)
+    }
+    func uiUpdate(type:Int){
+        DispatchQueue.main.async { [self] in
+            switch type{
+            case 0:
+                if let pdfURL = URL(string: "https://icseindia.org/document/sample.pdf") {
+                      let request = URLRequest(url: pdfURL)
+                    pdfView.load(request)
+                    
+                  } else {
+                      print("Invalid URL")
+                  }
+                cv.isHidden = true
+                textView.isHidden = true
+            case 1:
+                cv.isHidden = true
+                pdfView.isHidden = true
+                textView.isHidden = false
+            case 2:
+                cv.isHidden = false
+                pdfView.isHidden = true
+                textView.isHidden = true
+            default:
+                if let pdfURL = URL(string: "https://icseindia.org/document/sample.pdf") {
+                      let request = URLRequest(url: pdfURL)
+                    pdfView.load(request)
+                    
+                  } else {
+                      print("Invalid URL")
+                  }
+                cv.isHidden = true
+                textView.isHidden = true
+                pdfView.isHidden = false
+            }
 
-
-    @IBAction func back(_ sender: Any) {
+        }
+       
         
-        dismiss(animated: true)
     }
     
-
+    
+    @IBAction func back(_ sender: Any) {
+        if pageName == "Assigment"{
+            delegate?.select(index: 0, value: "",Img:[""],Pdf:"",text:"",type:"")
+            
+        }else{
+            dismiss(animated: true)
+        }
+        
+    }
+    
+    
 }
 
 extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
@@ -48,7 +98,7 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
         
         cell.imageView.sd_setImage(with: URL(string: imageURL[indexPath.row]), placeholderImage: UIImage(named: "placeholder"))
-//        cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
+        //        cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
         
         return cell
         
@@ -59,7 +109,7 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         
         return CGSize(width: 350, height: 600)
-    
+        
     }
     
     

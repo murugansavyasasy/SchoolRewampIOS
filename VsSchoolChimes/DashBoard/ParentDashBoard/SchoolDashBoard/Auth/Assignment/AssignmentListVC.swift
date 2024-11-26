@@ -1,6 +1,8 @@
 import UIKit
 
 class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
+ 
+    
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
     var didSelectDelegate : DidSelectDelegate?
@@ -13,7 +15,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
         searchview.delegate = self
         searchview.layer.borderWidth = 0
         searchview.backgroundImage = UIImage()
-        
+        keyboardDionebtn()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCliboard(_:)))
         
         view.isUserInteractionEnabled = true
@@ -45,6 +47,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        
         searchview.inputAccessoryView = toolbar
     }
     @objc func doneButtonTapped() {
@@ -79,6 +82,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
                    cell.dueDateLbl.textColor = .red
                }
         cell.dueDateLbl.text = filteredData?[indexPath.row].dueDate
+        cell.viewBtn.tag = indexPath.row
         cell.didSelectDelegate = self
         return cell
     }
@@ -86,11 +90,10 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    func select(index: Int, value: String?) {
-        
-        didSelectDelegate?.select(index: 1, value: "")
+
+    func select(index: Int, value: String?, Img: [String], Pdf: String?, text: String?, type: String) {
+        didSelectDelegate?.select(index: index, value: value,Img:Img,Pdf:Pdf,text:text,type:type)
     }
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         // Filter the data
         if searchText.isEmpty {

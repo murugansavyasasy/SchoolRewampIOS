@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" id="mic">
+  <g fill="#fff" transform="translate(5 -1031.361)">
+    <circle cx="8" cy="1044.361" r="13" fill="#3a6c87" fill-rule="evenodd"></circle>
+    <path d="M8 0C6.347 0 5 1.347 5 3v5c0 1.653 1.347 3 3 3s3-1.347 3-3V3c0-1.653-1.347-3-3-3Zm0 1c1.117 0 2 .883 2 2v5c0 1.117-.883 2-2 2s-2-.883-2-2V3c0-1.117.883-2 2-2ZM3 8.152c0 2.513 1.985 4.538 4.5 4.784V15h-2v1h5v-1h-2v-2.064c2.515-.246 4.5-2.271 4.5-4.784h-1c0 2.122-1.765 3.832-4 3.832-2.235 0-4-1.71-4-3.832H3z" color="#000" font-family="sans-serif" font-weight="400" overflow="visible" style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;block-progression:tb;isolation:auto;mix-blend-mode:normal" transform="translate(0 1036.361)"></path>
+  </g>
+</svg>

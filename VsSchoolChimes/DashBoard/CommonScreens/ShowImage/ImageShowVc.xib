@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,6 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageShowVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="cv" destination="2nI-Xu-ypg" id="bdC-fH-JvR"/>
+                <outlet property="pdfView" destination="Mij-9M-Z3u" id="wct-1Y-xlK"/>
+                <outlet property="textView" destination="kPN-2u-D3K" id="PPk-Cy-uf5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,6 +25,22 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b3Y-cI-Ree">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kPN-2u-D3K">
+                            <rect key="frame" x="16" y="50" width="361" height="709"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mij-9M-Z3u">
+                            <rect key="frame" x="0.0" y="50" width="393" height="709"/>
+                            <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <wkWebViewConfiguration key="configuration">
+                                <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                <wkPreferences key="preferences"/>
+                            </wkWebViewConfiguration>
+                        </wkWebView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2nI-Xu-ypg">
                             <rect key="frame" x="0.0" y="50" width="393" height="709"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -37,10 +55,14 @@
                             <rect key="frame" x="8" y="5" width="75" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="Ko4-U4-LtL"/>
-                                <constraint firstAttribute="width" constant="75" id="zPp-tK-oLi"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="zPp-tK-oLi"/>
                             </constraints>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Back"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="titleEdgeInsets" minX="6" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="-18" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="arrow.left" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="heavy"/>
+                            </state>
                             <connections>
                                 <action selector="back:" destination="-1" eventType="touchUpInside" id="hIx-vR-9sB"/>
                             </connections>
@@ -48,12 +70,20 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="Mij-9M-Z3u" firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="7ah-sp-JJR"/>
+                        <constraint firstItem="kPN-2u-D3K" firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" constant="-16" id="CKE-5S-zFj"/>
+                        <constraint firstItem="kPN-2u-D3K" firstAttribute="top" secondItem="2nI-Xu-ypg" secondAttribute="top" id="CoF-eE-dUv"/>
+                        <constraint firstItem="kPN-2u-D3K" firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="DKw-Tk-ZNM"/>
+                        <constraint firstItem="Mij-9M-Z3u" firstAttribute="leading" secondItem="2nI-Xu-ypg" secondAttribute="leading" id="GCp-36-QSQ"/>
                         <constraint firstItem="2nI-Xu-ypg" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" id="HOm-IM-im4"/>
+                        <constraint firstItem="Mij-9M-Z3u" firstAttribute="top" secondItem="2nI-Xu-ypg" secondAttribute="top" id="S6l-mc-3Y9"/>
                         <constraint firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="WzM-Ex-QG6"/>
                         <constraint firstItem="2nI-Xu-ypg" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="50" id="a4Y-Am-9yz"/>
                         <constraint firstItem="TE9-Ng-rGr" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="5" id="e3h-za-H20"/>
+                        <constraint firstItem="Mij-9M-Z3u" firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" id="lnF-R8-J9q"/>
                         <constraint firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" id="rZ1-9N-zlh"/>
                         <constraint firstItem="TE9-Ng-rGr" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" constant="8" id="s1x-E1-ZZ1"/>
+                        <constraint firstItem="kPN-2u-D3K" firstAttribute="leading" secondItem="2nI-Xu-ypg" secondAttribute="leading" constant="16" id="v3O-G0-0Pf"/>
                     </constraints>
                 </view>
             </subviews>
@@ -69,6 +99,10 @@
         </view>
     </objects>
     <resources>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -239,8 +239,10 @@
                 <outlet property="sendByLbl" destination="lSn-yo-bar" id="FDb-Va-UgI"/>
                 <outlet property="spirelview" destination="cl7-2w-xgU" id="uCO-nt-GQj"/>
                 <outlet property="subjectLbl" destination="45w-aV-th9" id="B8d-9J-JOK"/>
+                <outlet property="submitBtn" destination="yrq-yg-4ku" id="ztu-oW-Ilh"/>
                 <outlet property="sumissionLbl" destination="a93-la-mzd" id="x99-Bx-ipb"/>
                 <outlet property="tittleLbl" destination="8nE-Xg-0v3" id="tX8-VY-ylr"/>
+                <outlet property="viewBtn" destination="aOp-L8-ie9" id="xHc-BQ-UA6"/>
             </connections>
             <point key="canvasLocation" x="254.96183206106869" y="86.619718309859152"/>
         </tableViewCell>

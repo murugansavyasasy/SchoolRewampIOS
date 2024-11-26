@@ -12,6 +12,7 @@ class StudentHistryVC: UIViewController {
     @IBOutlet weak var selectAllBtn: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     var studentData:[Student] = [Student(name: "viswah", isAbsent: true, rollnumber: "1234", phoneNo: "9087654321"),Student(name: "chandhru", isAbsent: true, rollnumber: "89848", phoneNo: "9597296160"),Student(name: "kothai", isAbsent: true, rollnumber: "898929", phoneNo: "9360183031"),Student(name: "shiyam", isAbsent: true, rollnumber: "90836", phoneNo: "98762356335"),Student(name: "Navin", isAbsent: true, rollnumber: "746747", phoneNo: "7456792347"),Student(name: "Nicolash", isAbsent: true, rollnumber: "76235", phoneNo: "9835546472"),Student(name: "sharmila", isAbsent: true, rollnumber: "873536", phoneNo: "89873456543")]
+    var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +56,22 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         cell.outerView.layer.borderColor = student.isAbsent ? UIColor.clear.cgColor : UIColor.red.cgColor
         cell.outerView.layer.borderWidth = student.isAbsent ? 0 : 1
         let statusImage = student.isAbsent ? UIImage(named: "p") : UIImage(named: "a")
+        if indexPath.row % 2 == 0 {
+            cell.stdImage.image = UIImage(named: img[0])
+        } else {
+            cell.stdImage.image = UIImage(named: img[1])
+        }
         cell.statusBtn.setImage(statusImage, for: .normal)
         cell.nameLbl.text = studentData[indexPath.row].name
         cell.rollNomber.text = studentData[indexPath.row].rollnumber
-        cell.phnBtn.setTitle(studentData[indexPath.row].phoneNo, for: .normal)
+        let title = studentData[indexPath.row].phoneNo
+        let attributedTitle = NSAttributedString(string: title, attributes: [
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ])
+
+        // Use `setAttributedTitle` to set the attributed text on the button
+        cell.phnBtn.setAttributedTitle(attributedTitle, for: .normal)
+
         return cell
     }
 
