@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "attendance 1.png",
+      "filename" : "shoolad.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "attendance 2.png",
+      "filename" : "shoolad 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "attendance 3.png",
+      "filename" : "shoolad 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }

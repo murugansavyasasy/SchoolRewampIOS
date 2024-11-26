@@ -55,8 +55,9 @@ class OTPVc: UIViewController,UITextFieldDelegate {
         
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
             
-            let vc = PasswordVc(nibName: nil, bundle: nil)
-            vc.forgetType = forgetType
+           // let vc = PasswordVc(nibName: nil, bundle: nil)
+            let vc = PriorityViewController1(nibName: nil, bundle: nil)
+           // vc.forgetType = forgetType
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }else{

@@ -12,6 +12,7 @@ import AWSS3
 @available(iOS 14.0, *)
 class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate {
     
+    @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var attachmentView: RectangularDashedView!
     @IBOutlet weak var textfield: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -36,6 +37,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        HeadingLabel.text =  "Compose NoticeBoard".translated()
               FromDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
                FromDatePicker.datePickerMode = .date
                FromDatePicker.minimumDate = Date()

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderNoticeBoardVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="FromDatePicker" destination="IcO-IT-Pk0" id="359-q1-qkw"/>
+                <outlet property="HeadingLabel" destination="GYJ-Oh-oRG" id="V8C-Pb-rI1"/>
                 <outlet property="SubmitBtn" destination="O00-2T-GBQ" id="hTh-P0-Ykc"/>
                 <outlet property="ToDatePicker" destination="bVz-ZI-Vg8" id="HuI-KY-b60"/>
                 <outlet property="UploadView" destination="gEN-jH-iPY" id="Bnz-fd-YTR"/>

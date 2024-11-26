@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate {
     
+    @IBOutlet weak var BellImage: UIImageView!
     
     @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
@@ -21,6 +22,8 @@ class HomePageVc: UIViewController,UITabBarDelegate {
     @IBOutlet weak var bottomCv: UICollectionView!
     
     var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Homework","Schedule Exam/Test","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
+    
+   // var Imgitems : [String] = ["Messages from management","Video Upload","Circulars"]
     
     var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Homework","Schedule ExamTest","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
     
@@ -47,7 +50,7 @@ class HomePageVc: UIViewController,UITabBarDelegate {
         // Do any additional setup after loading the view.
         
         
-        searchHeightCon.constant = 0
+        searchHeightCon.constant = 56
         
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
         TopCv.register(UINib(nibName: CellConfingName.HomePageTopCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageTopCell)
@@ -73,6 +76,10 @@ class HomePageVc: UIViewController,UITabBarDelegate {
         searchImgView.addGestureRecognizer(searchImage)
         
         searchImgView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openNotification))
+        BellImage.addGestureRecognizer(tap)
+        BellImage.isUserInteractionEnabled = true
         
     }
     
@@ -183,7 +190,11 @@ class HomePageVc: UIViewController,UITabBarDelegate {
         autoScrollTimer = nil
     }
     
-    
+    @IBAction func openNotification(){
+        let vc = NotificationViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
 }
 
@@ -220,9 +231,15 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             //            if items[indexPath.row]
             let label = items[indexPath.row].translated()
             let img = UIImage(named: Imgitems[indexPath.row])
+//           let sum = indexPath.row % Imgitems.count
+//            let img = UIImage(named: Imgitems[sum] )
             
             cell.MenuLbl.text = label
             cell.MenuImgView.image  = img
+//            cell.MenuImgView.image = img!.withRenderingMode(.alwaysTemplate)
+//            cell.MenuImgView.tintColor = .white
+//
+            cell.applyGradient()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
                 cell.shimmersViewss.animateView(enable: false)
@@ -260,8 +277,10 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
-                
-                //imagePdfNavigate()
+                let vc = ImagePdfVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+              
             }else if items[indexPath.row].translated() == "Lesson Plan".translated() {
                 
                 // imagePdfNavigate()
@@ -334,10 +353,9 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
         if collectionView == bottomCv{
             
             
-            return CGSize(width: collectionView.frame.width/3, height: 140)
+            return CGSize(width: collectionView.frame.width/4, height: 130)
         }
         else{
-            
             
             
             return CGSize(width: 350, height: 140)

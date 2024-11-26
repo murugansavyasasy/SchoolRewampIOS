@@ -133,3 +133,13 @@
 "Select Module*" = "เลือกโมดูล*";
 "Enter Bugs *" = "ใส่ข้อบกพร่อง *";
 "Upload Attachment" = "อัปโหลดไฟล์แนบ";
+
+
+"NoticeBoard" = "กระดานประกาศ";
+"Search" = "ค้นหา";
+"Compose NoticeBoard" = "สร้างกระดานประกาศ";
+"From" = "จาก";
+"To" = "ถึง";
+"Upload Attachment" = "อัปโหลดไฟล์แนบ";
+"Submit" = "ส่ง";
+"Image/Pdf" = "รูปภาพ/PDF";

@@ -45,7 +45,14 @@ class LogoutViewController: UIViewController {
 
     @IBAction func LogoutAct(_ sender: Any) {
         
-        dismiss(animated: true)
+        if #available(iOS 14.0, *) {
+            let vc = LoginVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        } else {
+            // Fallback on earlier versions
+        }
+       // dismiss(animated: true)
     }
     
     @objc func CancelAct(_ sender: Any){

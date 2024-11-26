@@ -10,6 +10,7 @@ import UIKit
 class ImagePdfVC: UIViewController {
 
     
+    @IBOutlet weak var headinglabel: UILabel!
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var tv: UITableView!
     
@@ -25,6 +26,7 @@ class ImagePdfVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        headinglabel.text = "Image/Pdf".translated()
         // Do any additional setup after loading the view.
         
         CellRegistre()

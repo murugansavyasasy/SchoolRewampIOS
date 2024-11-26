@@ -174,13 +174,13 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
                     }
             //cell.cellview.backgroundColor = UIColor(named: colorName)
             
-           
+            cell.checkbox.isUserInteractionEnabled = false
             cell.checkbox.isChecked = (indexPath == selectedIndexPath)
             
            
 //            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(clickVC(_:)))
 //            cell.checkbox.addGestureRecognizer(tapGesture)
-            cell.checkbox.tag = indexPath.row // Tag to identify cell in selector
+          //  cell.checkbox.tag = indexPath.row // Tag to identify cell in selector
             
             
 //            let selectedGestures = CheckBoxGesturess(target: self, action: #selector(changeSelection))
@@ -279,36 +279,18 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
-//    func gradientview(view : UIView,colours : [CGColor]){
-//        
-//        
-//        view.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-//               
-//               // Create and configure the gradient layer
-//               let gradientLayer = CAGradientLayer()
-//              gradientLayer.colors = colours
-//               gradientLayer.startPoint = CGPoint(x: 0.2, y: 0.5)
-//      //  gradientLayer.endPoint = CGPoint(x: 0.7, y: 0.5)
-//        gradientLayer.frame = view.bounds
-//        gradientLayer.cornerRadius = view.layer.cornerRadius
-//               
-//               // Insert the gradient layer into the button's layer
-//        view.layer.insertSublayer(gradientLayer, at: 0)
-//        
-//        
-//    }
 }
 
-class CheckBoxGesturess : UITapGestureRecognizer {
-
-var pos : Int!
-
-var memberName : String!
-
-var checkBoxss : CheckBox!
-
-
-}
+//class CheckBoxGesturess : UITapGestureRecognizer {
+//
+//var pos : Int!
+//
+//var memberName : String!
+//
+//var checkBoxss : CheckBox!
+//
+//
+//}
 
 
 
