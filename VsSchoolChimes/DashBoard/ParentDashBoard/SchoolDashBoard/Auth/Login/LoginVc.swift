@@ -137,7 +137,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             let userDefault = UserDefaults.standard
             userDefault.set(term, forKey: DefaultsKeys.LoginId)
            
-            let vc = PriorityViewController1(nibName: nil, bundle: nil)
+            let vc = OTPVc(nibName: nil, bundle: nil)
                   vc.modalPresentationStyle = .fullScreen
                   present(vc, animated: true)
         }

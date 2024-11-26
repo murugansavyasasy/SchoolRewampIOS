@@ -8,115 +8,50 @@
 import UIKit
 import FSCalendar
 
-class SenderEventsVC: UIViewController, FSCalendarDelegate, FSCalendarDataSource {
+class SenderEventsVC: UIViewController{
     
-    @IBOutlet weak var calenderview: FSCalendar!
+  
     
-    @IBOutlet weak var Dateview: UIView!
     
+    @IBOutlet weak var selectDate: UIDatePicker!
     @IBOutlet weak var selectTime: UIDatePicker!
-    @IBOutlet weak var DayLabel: UILabel!
-    
-    @IBOutlet weak var selectDateLabel: UILabel!
-    
-    @IBOutlet weak var Yearlabel: UILabel!
-    @IBOutlet weak var Datelabel: UILabel!
-    @IBOutlet weak var Monthlabel: UILabel!
     @IBOutlet weak var TopicTextfield: UITextField!
-    @IBOutlet weak var ContentTextfield: UITextField!
+    @IBOutlet weak var ContentTextview: UITextView!
     
-    @IBOutlet weak var selectDateview: UIView!
+    @IBOutlet weak var SubmitBtn: UIButton!
     
-    @IBOutlet weak var selectTimeView: UIView!
-    
-    var selecteddate : Date = Date()
     let dateFormatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let yeartap = UITapGestureRecognizer(target: self, action: #selector(selectyear))
-        Yearlabel.addGestureRecognizer(yeartap)
-        Yearlabel.isUserInteractionEnabled = true
-        
-        let dateTap = UITapGestureRecognizer(target: self, action: #selector(Selectdate))
-        selectDateview.addGestureRecognizer(dateTap)
-        
-        
-        Dateview.isHidden = true
-        calenderview.delegate = self
-        calenderview.dataSource = self
-        calenderview.scrollDirection = .vertical
-        selectTime.layer.backgroundColor = UIColor.button.cgColor
+        selectDate.minimumDate = Date()
+       // selectTime.layer.backgroundColor = UIColor.button.cgColor
        
+        ContentTextview.text = "Type content"
+        ContentTextview.textColor = UIColor.lightGray
         
-        if #available(iOS 15.0, *) {
-            calenderview.appearance.weekdayTextColor = .systemMint
-            calenderview.appearance.selectionColor = .systemMint
-            calenderview.appearance.headerTitleColor = .gray
-           // calenderview.appearance.
-        }
+        TopicTextfield.delegate = self
+        ContentTextview.delegate = self
         
-        
+        SubmitBtn.backgroundColor = UIColor.systemGray4
+        SubmitBtn.layer.cornerRadius = 10
     }
     
-    @objc func selectyear(){
-        
-        print("fgfgfghfgff")
-        calenderview.scope = .month
-        calenderview.appearance.weekdayFont = UIFont.systemFont(ofSize: 0)
-        calenderview.appearance.titleFont = UIFont.systemFont(ofSize: 0)
-        calenderview.appearance.headerDateFormat = "yyyy"
-        calenderview.appearance.headerTitleFont = UIFont.systemFont(ofSize: 16)
-    }
-
-    func calendar(_ calendar: FSCalendar, willDisplay cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
-           if position != .current {
-               cell.isHidden = true // Hide dates from the previous or next month
-           } else {
-               cell.isHidden = false
-           }
-       }
-    
-    func minimumDate(for calendar: FSCalendar) -> Date {
-        return Date() // Set the minimum date to today
-    }
-    
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        
+   
+   
+    @IBAction func SelectDate(_ sender: Any) {
        
-
-               // Set formats for each label
-               dateFormatter.dateFormat = "EEEE" // Day of the week
-             DayLabel.text = dateFormatter.string(from: date)
-
-               dateFormatter.dateFormat = "MMM" //  month name
-        Monthlabel.text = dateFormatter.string(from: date)
-
-               dateFormatter.dateFormat = "yyyy" // Year
-               Yearlabel.text = dateFormatter.string(from: date)
-
-               dateFormatter.dateFormat = "d" // Date of the month
-               Datelabel.text = dateFormatter.string(from: date)
-        
-              dateFormatter.dateFormat = "d MMM yyyy"
-              selecteddate = date
-    }
-
-    
-    @IBAction func Selectdate(_ sender: Any) {
-        
-        Dateview.isHidden = false
-        
-        
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func SelectTime(_ sender: UIDatePicker) {
         
                let selectedTime = sender.date
-               let formatter = DateFormatter()
-               formatter.timeStyle = .short
-               let timeString = formatter.string(from: selectedTime)
+              
+        dateFormatter.timeStyle = .short
+               let timeString = dateFormatter.string(from: selectedTime)
                print("Selected time: \(timeString)")
         
                //self.dismiss(animated: true, completion: nil)
@@ -124,16 +59,14 @@ class SenderEventsVC: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     }
     
     
-    @IBAction func CancelAct(_ sender: Any) {
+    @IBAction func SubmitBtnAct(_ sender: Any) {
         
-        Dateview.isHidden = true
-    }
-    
-    
-    @IBAction func OkAct(_ sender: Any) {
-        
-        Dateview.isHidden = true
-        selectDateLabel.text = dateFormatter.string(from: selecteddate)
+        if SubmitBtn.backgroundColor == UIColor.button{
+            print("submited successfully")
+        }
+        else{
+            print("Not submited")
+        }
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -142,3 +75,47 @@ class SenderEventsVC: UIViewController, FSCalendarDelegate, FSCalendarDataSource
     }
     
 }
+
+extension SenderEventsVC : UITextFieldDelegate,UITextViewDelegate{
+    
+    func updateButtonColor() {
+        let textFieldIsNotEmpty = !(TopicTextfield.text?.isEmpty ?? true)
+        let textViewIsNotEmpty = !(ContentTextview.text?.isEmpty ?? true)
+            let textViewHasPlaceholder = ContentTextview.text == "Type content"
+            
+            if textFieldIsNotEmpty && textViewIsNotEmpty && !textViewHasPlaceholder {
+                SubmitBtn.backgroundColor = .button
+            } else {
+                SubmitBtn.backgroundColor = .systemGray4
+            }
+        }
+        
+        // UITextField Delegate method to detect changes
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            updateButtonColor()
+            return true
+        }
+        
+        // UITextView Delegate method to detect changes
+        func textViewDidChange(_ textView: UITextView) {
+            updateButtonColor()
+        }
+        
+        // Optional: UITextView Delegate to handle editing did begin (e.g., clear placeholder if needed)
+        func textViewDidBeginEditing(_ textView: UITextView) {
+            if ContentTextview.text == "Type content" {
+                ContentTextview.text = ""
+                ContentTextview.textColor = .black
+            }
+            updateButtonColor()
+        }
+        
+        // Optional: UITextView Delegate to handle editing did end (e.g., restore placeholder if needed)
+        func textViewDidEndEditing(_ textView: UITextView) {
+            if ContentTextview.text.isEmpty {
+                ContentTextview.text = "Type content" // Restore placeholder
+                ContentTextview.textColor = .lightGray // Placeholder color
+            }
+            updateButtonColor()
+        }
+    }

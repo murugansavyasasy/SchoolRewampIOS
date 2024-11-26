@@ -9,6 +9,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 class NoticeBoardVc: UIViewController {
+    @IBOutlet weak var HeadingLabel: UILabel!
     
     @IBOutlet weak var plusImgview: UIImageView!
     
@@ -22,7 +23,7 @@ class NoticeBoardVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        HeadingLabel.text = "NoticeBoard".translated()
         tableview.delegate = self
         tableview.dataSource = self
         
