@@ -71,7 +71,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var calanderOuter: UIView!
     @IBOutlet weak var DateSelection: FSCalendar!
+    @IBOutlet weak var voiceTitleeTxt: UITextField!
     
+    @IBOutlet weak var TxtTitle: UITextField!
     
     
     override func viewDidLoad() {
@@ -83,11 +85,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         setupWaveBars()
         setupTimePicker()
         setInitialButtonTitles()
+        keyboardDionebtn()
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
         DateSelection.dataSource = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCliboard(_:)))
         
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapGesture)
         
     }
     
@@ -181,6 +187,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
         sendbtn.isEnabled = false
     }
+    
+    @objc func handleCliboard(_ sender: UITapGestureRecognizer){
+        self.view.endEditing(true)
+    }
+    
+    
     //MARK: CELL REGISTRATION
     func CellRegistre(){
         historytable.register(UINib(nibName: "HistoryTC", bundle: nil), forCellReuseIdentifier: "HistoryTC")
@@ -505,7 +517,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         playerItem?.seek(to: CMTime.zero)
     }
     
-    
+    func keyboardDionebtn(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        TxtTitle.inputAccessoryView = toolbar
+        voiceTitleeTxt.inputAccessoryView = toolbar
+        informationcontent.inputAccessoryView = toolbar
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)  // Dismiss the keyboard
+    }
     
     
     func setupWaveBars() {
@@ -578,49 +602,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             // Update wave view with the normalized power level
             waveView.updateWithLevel(CGFloat(normalizedPower))
         }
-//    }
-
-        
-        
-//        
-//        guard let player = player, let currentItem = player.currentItem else { return }
-//        
-//        // Check if the player is playing
-//        if playVoicce {
-//            audioRecorder?.updateMeters()
-//            let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160 // Default to -160 if no data
-//            let normalizedPower = max(1, (averagePower + 160) / 160)
-//            waveView.updateWithLevel(CGFloat(normalizedPower))
-//            
-//            // Get the total duration of the audio
-//            let totalDuration = CMTimeGetSeconds(currentItem.duration)
-//            if totalDuration.isFinite {
-//                let totalMinutes = Int(totalDuration) / 60
-//                let totalSeconds = Int(totalDuration) % 60
-//                let totalDurationFormatted = String(format: "%d:%02d", totalMinutes, totalSeconds)
-//                
-//                // Get the current playback time
-//                let elapsedTime = CMTimeGetSeconds(player.currentTime())
-//                let elapsedMinutes = Int(elapsedTime) / 60
-//                let elapsedSeconds = Int(elapsedTime) % 60
-//                let currentFormatted = String(format: "%d:%02d", elapsedMinutes, elapsedSeconds)
-//                
-//                // Update the label with current and total duration
-//                voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
-//            }else{
-//                let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160 // Get power level for channel 0
-//                let normalizedPower = max(0, (averagePower + 160) / 160) // Normalize the power value between 0 and 1
-//                
-//                // Update wave view with the normalized power level
-//                waveView.updateWithLevel(CGFloat(normalizedPower))
-//            }
-//        } else {
-//            let averagePower = audioRecorder?.averagePower(forChannel: 10) ?? -160 // Get power level for channel 0
-//            let normalizedPower = max(0, (averagePower + 160) / 160) // Normalize the power value between 0 and 1
-//            
-//            // Update wave view with the normalized power level
-//            waveView.updateWithLevel(CGFloat(normalizedPower))
-//            }
         
     }
     
@@ -666,7 +647,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func doneSelection(_ sender: Any) {
-        if selectedDates.count <= 3{
+        if selectedDates.count == 0{
+            dateSelectedViewHeight.constant = 0
+        }else if selectedDates.count <= 3{
             dateSelectedViewHeight.constant = 64
         }else{
             dateSelectedViewHeight.constant = 128
@@ -1016,7 +999,9 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     func deleteDelegate(index: Int) {
         selectedDates.remove(at: index)
-        if selectedDates.count <= 3{
+        if selectedDates.count == 0{
+            dateSelectedViewHeight.constant = 0
+        }else if selectedDates.count <= 3{
             dateSelectedViewHeight.constant = 64
         }else{
             dateSelectedViewHeight.constant = 128

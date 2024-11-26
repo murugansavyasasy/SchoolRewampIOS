@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="DateSelection" destination="6Vr-4A-iyx" id="Ee6-fw-TPf"/>
                 <outlet property="Timinglbl" destination="io5-Kc-dta" id="iA3-mI-tAd"/>
+                <outlet property="TxtTitle" destination="hdb-AK-WZb" id="gTE-bh-1ae"/>
                 <outlet property="addfile" destination="lED-Bm-Jet" id="n9C-JZ-zKn"/>
                 <outlet property="btnplay" destination="eHO-9k-z4B" id="6ci-qQ-D3P"/>
                 <outlet property="calanderOuter" destination="Cdr-6F-LLo" id="8ed-bt-4QW"/>
@@ -49,6 +50,7 @@
                 <outlet property="voiceBtn" destination="DEa-re-PnB" id="NnG-RM-Ote"/>
                 <outlet property="voiceStackview" destination="sn6-zQ-zLX" id="PHp-Ow-PsN"/>
                 <outlet property="voiceTiming" destination="czM-7g-5yj" id="xPz-ea-3b4"/>
+                <outlet property="voiceTitleeTxt" destination="UGQ-sg-Cyw" id="JGO-7K-4rn"/>
                 <outlet property="voiceview" destination="KYU-l9-vSP" id="s8j-y7-72p"/>
                 <outlet property="waveView" destination="ury-c2-oc1" id="WjM-9P-hc0"/>
             </connections>
@@ -781,7 +783,7 @@
                     </constraints>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdr-6F-LLo">
-                    <rect key="frame" x="20" y="150.66666666666663" width="353" height="280"/>
+                    <rect key="frame" x="20" y="340.33333333333331" width="353" height="279.99999999999994"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-4A-iyx" customClass="FSCalendar">
                             <rect key="frame" x="0.0" y="45" width="353" height="225"/>

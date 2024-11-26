@@ -8,7 +8,7 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class HomePageVc: UIViewController,UITabBarDelegate {
+class HomePageVc: UIViewController,UITabBarDelegate{
     
     
     @IBOutlet weak var schoolLogoImg: UIImageView!
@@ -19,7 +19,6 @@ class HomePageVc: UIViewController,UITabBarDelegate {
     
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
-    
     var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Homework","Schedule Exam/Test","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
     
     var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Homework","Schedule ExamTest","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
@@ -111,7 +110,7 @@ class HomePageVc: UIViewController,UITabBarDelegate {
             }
             
         }
-        
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -288,7 +287,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
             }else if items[indexPath.row] == "Assignment".translated(){
                 
-                let vc = AssignmentListVC(nibName: nil, bundle: nil)
+                let vc = PageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
@@ -340,10 +339,6 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
         }
         
     }
-    
-    
-    
-    
-    
+  
     
 }

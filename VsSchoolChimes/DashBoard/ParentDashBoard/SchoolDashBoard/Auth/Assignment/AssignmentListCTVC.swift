@@ -9,104 +9,110 @@ import UIKit
 
 class AssignmentListCTVC: UITableViewCell {
     
-    @IBOutlet weak var spirelview: SpiralView!
+    @IBOutlet weak var imgHeght: NSLayoutConstraint!
+    @IBOutlet weak var spirelview: UIView!
+    @IBOutlet weak var outImg: UIImageView!
+    @IBOutlet weak var tittleLbl: UILabel!
+    @IBOutlet weak var categoryLbl: UILabel!
+    @IBOutlet weak var subjectLbl: UILabel!
+    @IBOutlet weak var sendByLbl: UILabel!
+    @IBOutlet weak var sumissionLbl: UILabel!
+    @IBOutlet weak var dueDateLbl: UILabel!
+    var stackView: UIStackView!
+    var didSelectDelegate : DidSelectDelegate?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Ensure the SpiralView fills the full cell view
-        spirelview.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            spirelview.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            spirelview.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            spirelview.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-            spirelview.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
-        ])
-    }
-}
-
-class SpiralView: UIView {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupNotebook()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupNotebook()
-    }
-    
-    private func setupNotebook() {
-        // Clear previous subviews (if any, for safety)
-        self.subviews.forEach { $0.removeFromSuperview() }
-        
-        // Create notebook background view
-        let notebookView = UIView()
-        notebookView.backgroundColor = .clear
-        notebookView.layer.cornerRadius = 8
-        notebookView.layer.borderWidth = 1
-        notebookView.layer.borderColor = UIColor.black.cgColor
-        notebookView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(notebookView)
-        
-        // Add constraints to `notebookView` to provide 20 points of padding from all sides
-        NSLayoutConstraint.activate([
-            notebookView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            notebookView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            notebookView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            notebookView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
-        ])
-        
-        // Add galaxy background image
-        let backgroundImage = UIImageView()
-        backgroundImage.image = UIImage(named: "galaxy_background") // Replace with your image
-        backgroundImage.contentMode = .scaleAspectFill
-        backgroundImage.clipsToBounds = true
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        notebookView.addSubview(backgroundImage)
-        
-        // Add constraints to `backgroundImage` to fill `notebookView`
-        NSLayoutConstraint.activate([
-            backgroundImage.leadingAnchor.constraint(equalTo: notebookView.leadingAnchor),
-            backgroundImage.trailingAnchor.constraint(equalTo: notebookView.trailingAnchor),
-            backgroundImage.topAnchor.constraint(equalTo: notebookView.topAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: notebookView.bottomAnchor)
-        ])
-        
-        // Add spiral binding
-        let spiralWidth: CGFloat = 15
-        let spiralHeight: CGFloat = 15
-        let numberOfSpirals = 8
-        let spiralSpacing: CGFloat = 40
-        
-        for i in 0..<numberOfSpirals {
-            let spiral = UIView()
-            spiral.backgroundColor = .black
-            spiral.layer.cornerRadius = spiralWidth / 2
-            spiral.translatesAutoresizingMaskIntoConstraints = false
-            notebookView.addSubview(spiral)
-            
-            NSLayoutConstraint.activate([
-                spiral.leadingAnchor.constraint(equalTo: notebookView.leadingAnchor, constant: 10), // Left margin for spirals
-                spiral.widthAnchor.constraint(equalToConstant: spiralWidth),
-                spiral.heightAnchor.constraint(equalToConstant: spiralHeight),
-                spiral.topAnchor.constraint(equalTo: notebookView.topAnchor, constant: CGFloat(i) * spiralSpacing)
-            ])
+       override func awakeFromNib() {
+           super.awakeFromNib()
+           
+           spirelview.layer.cornerRadius = 10
+           spirelview.layer.shadowColor = UIColor.black.cgColor
+           spirelview.layer.shadowOffset = CGSize(width: 0, height: 2)
+           spirelview.layer.shadowRadius = 5
+           spirelview.layer.shadowOpacity = 0.3
+           outImg.translatesAutoresizingMaskIntoConstraints = false
+           
+//           // Create a vertical stack view
+//           stackView = UIStackView()
+//           stackView.axis = .vertical
+//           stackView.spacing = 20
+//           stackView.alignment = .center
+//           stackView.distribution = .fillProportionally
+//           
+//           // Add the stack view to spirelview
+//           spirelview.addSubview(stackView)
+//           
+//           // Set stack view constraints
+//           stackView.translatesAutoresizingMaskIntoConstraints = false
+//           NSLayoutConstraint.activate([
+//               stackView.centerYAnchor.constraint(equalTo: spirelview.centerYAnchor), // Center vertically in spirelview
+//               stackView.leadingAnchor.constraint(equalTo: spirelview.leadingAnchor, constant: -5), // Optional leading constraint if needed
+//               stackView.widthAnchor.constraint(equalToConstant: 20) // Fixed width for the stack view
+//           ])
+//           
+//           layoutViewHoles()
+       }
+       
+    func layoutViewHoles() {
+        // Remove existing arranged subviews (if any)
+        for view in stackView.arrangedSubviews {
+            stackView.removeArrangedSubview(view)
+            view.removeFromSuperview()
         }
         
-        // Add deer illustration
-        let deerImage = UIImageView()
-        deerImage.image = UIImage(named: "deer") // Replace with your deer image
-        deerImage.contentMode = .scaleAspectFit
-        deerImage.translatesAutoresizingMaskIntoConstraints = false
-        notebookView.addSubview(deerImage)
+        // Calculate the number of viewHole views that fit
+        let viewHoleHeight: CGFloat = 15 // Fixed height for each viewHole
+        let spacing: CGFloat = 20
+        let totalHeight = spirelview.bounds.height
+        let maxViews = Int((totalHeight + spacing) / (viewHoleHeight + spacing))
         
-        // Add constraints to `deerImage` to fill `notebookView`
-        NSLayoutConstraint.activate([
-            deerImage.leadingAnchor.constraint(equalTo: notebookView.leadingAnchor),
-            deerImage.trailingAnchor.constraint(equalTo: notebookView.trailingAnchor),
-            deerImage.topAnchor.constraint(equalTo: notebookView.topAnchor),
-            deerImage.bottomAnchor.constraint(equalTo: notebookView.bottomAnchor)
-        ])
+        // Create and add viewHole views
+        for _ in 0..<maxViews {
+            let viewHole = UIView()
+            viewHole.translatesAutoresizingMaskIntoConstraints = false
+            viewHole.backgroundColor = .clear // Make background clear to show the custom shape
+            
+            // Create the outer circle with 75% radius
+            let outerCirclePath = UIBezierPath(arcCenter: CGPoint(x: viewHoleHeight / 2, y: viewHoleHeight / 2), radius: viewHoleHeight * 0.75 / 2, startAngle: 0, endAngle: .pi * 2, clockwise: true)
+            
+            // Create the inner circle with 25% radius (for cut-out effect)
+            let innerCirclePath = UIBezierPath(arcCenter: CGPoint(x: viewHoleHeight / 2, y: viewHoleHeight / 2), radius: viewHoleHeight * 0.25 / 2, startAngle: 0, endAngle: .pi * 2, clockwise: true)
+            
+            // Create a path with the outer circle minus the inner circle (cut-out effect)
+            outerCirclePath.append(innerCirclePath.reversing())
+            
+            // Create a shape layer and apply the path
+            let shapeLayer = CAShapeLayer()
+            shapeLayer.path = outerCirclePath.cgPath
+            shapeLayer.fillColor = UIColor.black.cgColor // Set the color of the shape
+            
+            // Add the shape layer to the viewHole
+            viewHole.layer.addSublayer(shapeLayer)
+            
+            // Set size constraints
+            NSLayoutConstraint.activate([
+                viewHole.widthAnchor.constraint(equalToConstant: viewHoleHeight),
+                viewHole.heightAnchor.constraint(equalToConstant: viewHoleHeight)
+            ])
+            
+            stackView.addArrangedSubview(viewHole)
+        }
     }
+
+       
+       override func layoutSubviews() {
+           super.layoutSubviews()
+           // Re-layout the stack view if spirelview's size changes
+//           layoutViewHoles()
+           let contentViewHeight = contentView.frame.height - 30
+           imgHeght.constant = contentViewHeight
+       }
+    
+    @IBAction func viewAssignment(_ sender: UIButton) {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            self.didSelectDelegate?.select(index: 1, value: "")
+//            }
+    }
+    @IBAction func submitBtn(_ sender: UIButton) {
+    }
+    
 }

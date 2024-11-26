@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssignmentListVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="listTable" destination="scd-Dh-Szc" id="8QY-5s-arb"/>
+                <outlet property="searchview" destination="lyN-ZO-pt8" id="q1B-jy-IZw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -51,19 +52,34 @@
                     </connections>
                 </searchBar>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJh-VC-jfC">
-                    <rect key="frame" x="16" y="79" width="75" height="35"/>
+                    <rect key="frame" x="16" y="79" width="70" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="8Kz-6z-sXw"/>
+                        <constraint firstAttribute="width" constant="70" id="CBz-Ph-XX7"/>
                     </constraints>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="arrow.left" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="back:" destination="-1" eventType="touchUpInside" id="e7x-v2-WwP"/>
+                    </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Assignment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fc7-L8-Mio">
+                    <rect key="frame" x="137" y="79" width="119.33333333333331" height="26.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lyN-ZO-pt8" secondAttribute="trailing" id="3fq-kP-evq"/>
+                <constraint firstItem="fc7-L8-Mio" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Gx4-ak-Gmo"/>
                 <constraint firstItem="KJh-VC-jfC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Npc-zu-vhZ"/>
+                <constraint firstItem="fc7-L8-Mio" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="TP2-qJ-IOp"/>
                 <constraint firstItem="lyN-ZO-pt8" firstAttribute="top" secondItem="KJh-VC-jfC" secondAttribute="bottom" constant="10" id="eHV-Af-zbN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Yzj-4c-uEi" secondAttribute="trailing" id="fbs-eq-cQP"/>
                 <constraint firstItem="Yzj-4c-uEi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kQb-J6-c0A"/>
@@ -76,6 +92,7 @@
         </view>
     </objects>
     <resources>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
