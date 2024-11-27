@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,13 +22,16 @@
                         <rect key="frame" x="16" y="10" width="325" height="118"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="11 sep 24" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GX6-rc-Pdd">
-                                <rect key="frame" x="16" y="10" width="293" height="17"/>
+                                <rect key="frame" x="234" y="10" width="75" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="q55-ek-ZSl"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="gcgcgxsfx fdzxfdffszxfczxdscz" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsE-j7-zhi">
-                                <rect key="frame" x="16" y="87" width="228" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activate the voice message feature" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsE-j7-zhi">
+                                <rect key="frame" x="16" y="10" width="208" height="14.333333333333336"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -46,8 +48,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00.00/03.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9DJ-hg-2W6">
-                                                <rect key="frame" x="0.0" y="26.666666666666668" width="64.333333333333329" height="13.333333333333332"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00/03:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9DJ-hg-2W6">
+                                                <rect key="frame" x="0.0" y="26.666666666666668" width="66" height="13.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -90,7 +92,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QJu-7a-u55">
                                 <rect key="frame" x="249" y="83" width="60" height="25"/>
-                                <color key="backgroundColor" name="ButtonColor"/>
+                                <color key="backgroundColor" systemColor="systemMintColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="2Ge-zu-Cuh"/>
                                     <constraint firstAttribute="width" constant="60" id="ha8-IY-uH3"/>
@@ -106,17 +108,16 @@
                         <constraints>
                             <constraint firstItem="GX6-rc-Pdd" firstAttribute="top" secondItem="hlg-O2-bJ6" secondAttribute="top" constant="10" id="6YV-6b-qPc"/>
                             <constraint firstAttribute="trailing" secondItem="QJu-7a-u55" secondAttribute="trailing" constant="16" id="HDf-ee-XRo"/>
-                            <constraint firstItem="RsE-j7-zhi" firstAttribute="top" secondItem="NCZ-4k-Zif" secondAttribute="bottom" constant="20" id="JLk-j4-UX2"/>
                             <constraint firstAttribute="trailing" secondItem="NCZ-4k-Zif" secondAttribute="trailing" constant="16" id="LYK-2e-dCj"/>
-                            <constraint firstAttribute="bottom" secondItem="RsE-j7-zhi" secondAttribute="bottom" constant="10" id="MUy-B2-gLr"/>
+                            <constraint firstItem="RsE-j7-zhi" firstAttribute="top" secondItem="hlg-O2-bJ6" secondAttribute="top" constant="10" id="Oiw-62-F5B"/>
+                            <constraint firstItem="NCZ-4k-Zif" firstAttribute="top" secondItem="RsE-j7-zhi" secondAttribute="bottom" constant="7.6666666666666643" id="WcS-Ix-XpH"/>
                             <constraint firstItem="NCZ-4k-Zif" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="16" id="YHc-QA-Ck9"/>
                             <constraint firstAttribute="trailing" secondItem="GX6-rc-Pdd" secondAttribute="trailing" constant="16" id="Yqi-Mw-hv4"/>
+                            <constraint firstItem="GX6-rc-Pdd" firstAttribute="leading" secondItem="RsE-j7-zhi" secondAttribute="trailing" constant="10" id="Yww-iu-WRO"/>
                             <constraint firstItem="QJu-7a-u55" firstAttribute="top" secondItem="NCZ-4k-Zif" secondAttribute="bottom" constant="16" id="ZOo-EV-4gS"/>
                             <constraint firstItem="RsE-j7-zhi" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="16" id="nXW-J2-Ff5"/>
                             <constraint firstAttribute="bottom" secondItem="QJu-7a-u55" secondAttribute="bottom" constant="10" id="r35-sf-y0A"/>
-                            <constraint firstItem="QJu-7a-u55" firstAttribute="leading" secondItem="RsE-j7-zhi" secondAttribute="trailing" constant="5" id="rtx-KB-gaL"/>
                             <constraint firstItem="NCZ-4k-Zif" firstAttribute="top" secondItem="GX6-rc-Pdd" secondAttribute="bottom" constant="5" id="uFx-dN-j9O"/>
-                            <constraint firstItem="GX6-rc-Pdd" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="16" id="vLY-zM-8gA"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -144,11 +145,11 @@
     <resources>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="play-button" width="75" height="75"/>
-        <namedColor name="ButtonColor">
-            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
