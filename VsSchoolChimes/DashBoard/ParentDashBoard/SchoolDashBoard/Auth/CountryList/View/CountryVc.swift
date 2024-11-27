@@ -11,6 +11,7 @@ import UIKit
 class CountryVc: UIViewController {
 
     
+    @IBOutlet weak var TermsLabel: UILabel!
     @IBOutlet weak var ClickArrowImg: UIImageView!
     @IBOutlet weak var fullview: UIView!
     
@@ -64,11 +65,19 @@ class CountryVc: UIViewController {
         
     
         
-        
+        let tap1 = UITapGestureRecognizer(target: self, action: #selector(GotoTermsVc))
+        TermsLabel.addGestureRecognizer(tap1)
+        TermsLabel.isUserInteractionEnabled = true
         
     }
 
-
+    @IBAction  func GotoTermsVc(){
+        
+        let vc = TermsAndCondVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    
+    }
     
     @IBAction  func GotToNextVc(){
         

@@ -155,12 +155,29 @@
                                         <action selector="validationBtn:" destination="-1" eventType="touchUpInside" id="vfZ-bD-gVs"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpF-TO-5BY">
+                                    <rect key="frame" x="0.0" y="0.0" width="75" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="FQ9-DG-VrW"/>
+                                        <constraint firstAttribute="width" constant="75" id="lmY-P5-Uw6"/>
+                                    </constraints>
+                                    <color key="tintColor" systemColor="darkTextColor"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="arrow.left" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="uzs-u6-1vN"/>
+                                        <action selector="controlTimer" destination="-1" eventType="touchUpInside" id="iz1-23-P7n"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="ZqE-or-ZXz" firstAttribute="top" secondItem="4E6-SK-XNE" secondAttribute="bottom" constant="50" id="1gi-ai-nks"/>
                                 <constraint firstItem="c9R-h6-mfD" firstAttribute="leading" secondItem="ebP-lk-wbm" secondAttribute="leading" id="687-aJ-ddH"/>
                                 <constraint firstAttribute="trailing" secondItem="SV4-FW-XJ9" secondAttribute="trailing" constant="128" id="6Z7-RK-9uT"/>
+                                <constraint firstItem="VpF-TO-5BY" firstAttribute="leading" secondItem="ebP-lk-wbm" secondAttribute="leading" id="CQC-BA-SoQ"/>
                                 <constraint firstItem="ZqE-or-ZXz" firstAttribute="leading" secondItem="SV4-FW-XJ9" secondAttribute="trailing" constant="8" id="Fjz-ph-eRj"/>
                                 <constraint firstAttribute="trailing" secondItem="OBE-wd-EDo" secondAttribute="trailing" constant="10" id="OBK-hb-YHh"/>
                                 <constraint firstAttribute="trailing" secondItem="c9R-h6-mfD" secondAttribute="trailing" id="RYs-CE-fex"/>
@@ -176,6 +193,7 @@
                                 <constraint firstItem="4E6-SK-XNE" firstAttribute="top" secondItem="QwD-6k-6RW" secondAttribute="bottom" constant="1" id="siu-On-f1t"/>
                                 <constraint firstItem="SV4-FW-XJ9" firstAttribute="top" secondItem="4E6-SK-XNE" secondAttribute="bottom" constant="50" id="soI-O5-jwl"/>
                                 <constraint firstAttribute="bottom" secondItem="tVR-hS-xEn" secondAttribute="bottom" constant="30" id="tKc-pz-T80"/>
+                                <constraint firstItem="VpF-TO-5BY" firstAttribute="top" secondItem="ebP-lk-wbm" secondAttribute="top" id="uBu-Bu-hzl"/>
                                 <constraint firstItem="QwD-6k-6RW" firstAttribute="leading" secondItem="ebP-lk-wbm" secondAttribute="leading" constant="25" id="wVX-QN-csh"/>
                                 <constraint firstItem="QwD-6k-6RW" firstAttribute="top" secondItem="OBE-wd-EDo" secondAttribute="bottom" constant="25" id="xyT-WQ-kBw"/>
                                 <constraint firstAttribute="trailing" secondItem="ZqE-or-ZXz" secondAttribute="trailing" constant="13" id="ySr-xW-E1Z"/>
@@ -205,9 +223,13 @@
     </objects>
     <resources>
         <image name="Otp" width="166.66667175292969" height="166.66667175292969"/>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

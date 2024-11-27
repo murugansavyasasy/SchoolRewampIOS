@@ -21,7 +21,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var pagecontroller: UIPageControl!
     
 //    let imgs: [String] = [ "ImagePdf", "Circulars", "Homework","ImagePdf"]
-    let imgs: [String] = [ "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388508860765.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388492478013.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388509938245.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388496770445.png"]
+  // let imgs: [String] = [ "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388508860765.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388492478013.png", "https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388509938245.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/20-11-2024/File_vc_-7402800388496770445.png"]
+    let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795387749.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391797604035.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391799793266.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png"]
 
     
    
@@ -111,6 +112,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
        // vcc.imageIterms = imgs
         vcc.imageURL = imgs
+        vcc.type = 2
         vcc.modalPresentationStyle = .fullScreen
 
         vc?.present(vcc, animated: true)

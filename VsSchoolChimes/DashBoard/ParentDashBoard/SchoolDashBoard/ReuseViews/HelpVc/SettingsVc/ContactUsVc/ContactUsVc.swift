@@ -13,10 +13,14 @@ class ContactUsVc: UIViewController {
     @IBOutlet weak var ContactusHeader: UILabel!
     @IBOutlet weak var tv: UITableView!
     
+    var content = ["Our 24*7 Customer Service.","Write us at."]
+    var contact = ["9786543210","support@savyasasy.com"]
+    var icon  = [UIImage(named: "Phone"),UIImage(named: "Phone")]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ContactusHeader.text = "Contact Support".translated()
+        ContactusHeader.text = "Contact Us".translated()
         tv.dataSource = self
         tv.delegate = self
         
@@ -51,6 +55,9 @@ extension ContactUsVc : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ContactUsTVCell, for: indexPath) as! ContactUsTVCell
         
+        cell.contentLabel.text = content[indexPath.row]
+        cell.mailOrPhoneLabel.text = contact[indexPath.row]
+        cell.iconImg.image = icon[indexPath.row]
         return cell
     }
     

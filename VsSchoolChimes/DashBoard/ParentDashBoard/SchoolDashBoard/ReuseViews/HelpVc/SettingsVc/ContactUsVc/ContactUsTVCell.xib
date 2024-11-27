@@ -28,18 +28,18 @@
                                     <constraint firstAttribute="width" constant="28" id="tRk-7y-c9V"/>
                                 </constraints>
                             </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Rtn-dk-mrD">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rtn-dk-mrD">
                                 <rect key="frame" x="43" y="10" width="247" height="38"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Our 24*7 Customer Service" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNi-Ql-dDK">
-                                        <rect key="frame" x="0.0" y="0.0" width="247" height="15.666666666666666"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="247" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="schoolchimes@voicesnap.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8H-BD-aQv">
-                                        <rect key="frame" x="0.0" y="22.333333333333336" width="247" height="15.666666666666664"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="0.0" y="21" width="247" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <color key="textColor" systemColor="tableCellBlueTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -76,6 +76,9 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="cellview" destination="VWA-Fr-tvQ" id="N5c-1Y-HEM"/>
+                <outlet property="contentLabel" destination="oNi-Ql-dDK" id="oQD-Fo-0dk"/>
+                <outlet property="iconImg" destination="ut0-5F-IHI" id="EpJ-Mo-XgN"/>
+                <outlet property="mailOrPhoneLabel" destination="J8H-BD-aQv" id="h0z-Qn-sHQ"/>
             </connections>
             <point key="canvasLocation" x="131" y="-12"/>
         </tableViewCell>

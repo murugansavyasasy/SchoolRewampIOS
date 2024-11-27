@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HgE-c8-V2V">
-                        <rect key="frame" x="10" y="10" width="341" height="106"/>
+                        <rect key="frame" x="10" y="10" width="321" height="106"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5r3-D0-cdd">
                                 <rect key="frame" x="0.0" y="-7" width="15" height="15"/>
@@ -30,33 +30,34 @@
                                     <constraint firstAttribute="height" constant="15" id="2AQ-Uz-qgM"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Wxs-CD-C6c">
-                                <rect key="frame" x="10" y="10" width="291" height="86"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Wxs-CD-C6c">
+                                <rect key="frame" x="10" y="10" width="271" height="86"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saranraj" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WhF-kz-6Rl">
-                                        <rect key="frame" x="0.0" y="0.0" width="291" height="20.333333333333332"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="271" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.17952845440000001" green="0.78169587620000003" blue="0.98392794829999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2v-Ao-tgj">
-                                        <rect key="frame" x="0.0" y="27.333333333333336" width="291" height="20.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="35.333333333333336" width="271" height="20.333333333333336"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Probably at least one of the constraints in the following list is one you don't want." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9n-45-lmZ">
-                                        <rect key="frame" x="0.0" y="54.666666666666679" width="291" height="31.333333333333336"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <rect key="frame" x="0.0" y="70.666666666666671" width="271" height="15.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="support" translatesAutoresizingMaskIntoConstraints="NO" id="8rb-I7-MiP">
-                                <rect key="frame" x="306" y="35.666666666666664" width="30" height="34.999999999999993"/>
+                                <rect key="frame" x="293.33333333333331" y="35.666666666666664" width="42.666666666666686" height="34.999999999999993"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="1FM-Jy-0cy"/>
+                                    <constraint firstAttribute="width" constant="42.670000000000002" id="ccD-dW-psk"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -68,8 +69,7 @@
                             <constraint firstItem="5r3-D0-cdd" firstAttribute="top" secondItem="HgE-c8-V2V" secondAttribute="top" constant="-7" id="UG2-7W-wGi"/>
                             <constraint firstItem="8rb-I7-MiP" firstAttribute="centerY" secondItem="HgE-c8-V2V" secondAttribute="centerY" id="WZ5-AQ-j24"/>
                             <constraint firstItem="Wxs-CD-C6c" firstAttribute="top" secondItem="HgE-c8-V2V" secondAttribute="top" constant="10" id="a0A-kY-30g"/>
-                            <constraint firstAttribute="trailing" secondItem="8rb-I7-MiP" secondAttribute="trailing" constant="5" id="hUc-me-4gk"/>
-                            <constraint firstItem="8rb-I7-MiP" firstAttribute="leading" secondItem="Wxs-CD-C6c" secondAttribute="trailing" constant="5" id="nAz-2K-f6a"/>
+                            <constraint firstAttribute="trailing" secondItem="8rb-I7-MiP" secondAttribute="trailing" constant="-15" id="hUc-me-4gk"/>
                             <constraint firstItem="5r3-D0-cdd" firstAttribute="leading" secondItem="HgE-c8-V2V" secondAttribute="leading" id="pA9-te-Srt"/>
                         </constraints>
                     </view>
@@ -79,12 +79,16 @@
                     <constraint firstItem="HgE-c8-V2V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Kj2-cx-tb6"/>
                     <constraint firstAttribute="bottom" secondItem="HgE-c8-V2V" secondAttribute="bottom" constant="10" id="TW0-Ff-tfY"/>
                     <constraint firstItem="HgE-c8-V2V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="oVy-sJ-uWp"/>
-                    <constraint firstAttribute="trailing" secondItem="HgE-c8-V2V" secondAttribute="trailing" constant="10" id="uo3-ea-FyS"/>
+                    <constraint firstAttribute="trailing" secondItem="HgE-c8-V2V" secondAttribute="trailing" constant="30" id="uo3-ea-FyS"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="NameLabel" destination="WhF-kz-6Rl" id="QuO-KR-cSk"/>
                 <outlet property="cellview" destination="HgE-c8-V2V" id="D3S-ou-44V"/>
+                <outlet property="contentLabel" destination="Q9n-45-lmZ" id="HjN-Gs-Zbc"/>
+                <outlet property="imgview" destination="8rb-I7-MiP" id="d41-cP-R53"/>
+                <outlet property="messageTypeLabel" destination="l2v-Ao-tgj" id="RDI-im-44J"/>
                 <outlet property="roundview" destination="5r3-D0-cdd" id="LOS-0E-YOh"/>
             </connections>
             <point key="canvasLocation" x="130.53435114503816" y="47.183098591549296"/>

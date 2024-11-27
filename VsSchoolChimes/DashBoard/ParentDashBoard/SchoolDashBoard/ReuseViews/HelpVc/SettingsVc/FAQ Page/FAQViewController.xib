@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -47,7 +47,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FAQ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uV4-3v-ddw">
-                                    <rect key="frame" x="54" y="17.333333333333329" width="319" height="26.333333333333329"/>
+                                    <rect key="frame" x="176.66666666666666" y="17.333333333333329" width="39.666666666666657" height="26.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -58,9 +58,8 @@
                                 <constraint firstAttribute="bottom" secondItem="0hU-CL-pSR" secondAttribute="bottom" constant="16" id="44d-p0-gXb"/>
                                 <constraint firstItem="0hU-CL-pSR" firstAttribute="top" secondItem="SrV-0t-SSK" secondAttribute="top" constant="15" id="4GD-6I-i32"/>
                                 <constraint firstItem="0hU-CL-pSR" firstAttribute="leading" secondItem="SrV-0t-SSK" secondAttribute="leading" constant="8" id="Skf-Qo-X3V"/>
+                                <constraint firstItem="uV4-3v-ddw" firstAttribute="centerX" secondItem="SrV-0t-SSK" secondAttribute="centerX" id="ehu-aB-YIN"/>
                                 <constraint firstItem="uV4-3v-ddw" firstAttribute="centerY" secondItem="SrV-0t-SSK" secondAttribute="centerY" id="u9L-6r-tmc"/>
-                                <constraint firstItem="uV4-3v-ddw" firstAttribute="leading" secondItem="0hU-CL-pSR" secondAttribute="trailing" constant="2" id="uGw-h4-77e"/>
-                                <constraint firstAttribute="trailing" secondItem="uV4-3v-ddw" secondAttribute="trailing" constant="20" id="wfn-3J-ZBL"/>
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0q4-N6-E91">
@@ -112,7 +111,7 @@
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

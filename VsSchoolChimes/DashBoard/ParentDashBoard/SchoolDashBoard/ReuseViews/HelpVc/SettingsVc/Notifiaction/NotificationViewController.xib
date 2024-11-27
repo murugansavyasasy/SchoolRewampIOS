@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -46,20 +46,19 @@
                                         <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="kUp-be-2rn"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3W-XM-cgS">
-                                    <rect key="frame" x="52" y="10.333333333333327" width="321" height="25.333333333333329"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3W-XM-cgS">
+                                    <rect key="frame" x="137" y="10.333333333333327" width="119.33333333333331" height="25.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" name="countryClr"/>
+                            <color key="backgroundColor" name="topBackgroundCLr"/>
                             <constraints>
                                 <constraint firstItem="H3W-XM-cgS" firstAttribute="centerY" secondItem="GOa-gl-bqa" secondAttribute="centerY" id="LBf-Av-FXg"/>
-                                <constraint firstItem="H3W-XM-cgS" firstAttribute="leading" secondItem="ZUH-7j-Gnk" secondAttribute="trailing" id="PD0-Cd-9AZ"/>
+                                <constraint firstItem="H3W-XM-cgS" firstAttribute="centerX" secondItem="GOa-gl-bqa" secondAttribute="centerX" id="QFS-vj-J4a"/>
                                 <constraint firstItem="ZUH-7j-Gnk" firstAttribute="leading" secondItem="GOa-gl-bqa" secondAttribute="leading" constant="8" id="TSx-Ux-Pag"/>
                                 <constraint firstAttribute="bottom" secondItem="ZUH-7j-Gnk" secondAttribute="bottom" constant="8" id="bNR-QJ-qdr"/>
-                                <constraint firstAttribute="trailing" secondItem="H3W-XM-cgS" secondAttribute="trailing" constant="20" id="e9n-9o-rDF"/>
                                 <constraint firstItem="ZUH-7j-Gnk" firstAttribute="top" secondItem="GOa-gl-bqa" secondAttribute="top" constant="8" id="uhN-GC-oUo"/>
                             </constraints>
                         </view>
@@ -107,11 +106,8 @@
         <namedColor name="BackGroundClr">
             <color red="0.9570000171661377" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="countryClr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

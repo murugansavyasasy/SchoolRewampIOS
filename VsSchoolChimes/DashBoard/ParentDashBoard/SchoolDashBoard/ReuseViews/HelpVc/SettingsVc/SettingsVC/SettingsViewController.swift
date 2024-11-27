@@ -156,6 +156,11 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             let vc = LanguageVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
+        }else if sections[indexPath.section].items[indexPath.row] == "Terms and Conditions".translated(){
+            
+            let vc = TermsAndCondVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: true)
         }
         
     }

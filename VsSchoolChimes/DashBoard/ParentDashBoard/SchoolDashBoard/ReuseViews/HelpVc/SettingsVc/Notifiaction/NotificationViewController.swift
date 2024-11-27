@@ -14,7 +14,11 @@ class NotificationViewController: UIViewController {
  
     @IBOutlet weak var NotificationpageHeader: UILabel!
     
+    var name = ["Saranraj","Murugan","Gayathri","Sathish","Lakshmanan","Chandru","Reventh"]
     
+    var type = ["Voice Message","Assignment Message","Image Message","Notice Board Message","Homework Message","Attendence Message","Exam Message"]
+    var icon = [UIImage(named: "voice"),UIImage(named:"Phone"),UIImage(named: "message"),UIImage(named: "mail")]
+    var content = ["Come to school","complete the Asssignment","Draw the Image","Follow the Noticeboard","Complete the Homework","You are absent Today","Chemistry Exam"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +53,7 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return name.count
         //array.count
     }
     
@@ -58,7 +62,10 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NotificationTableViewCell, for: indexPath) as! NotificationTableViewCell
         
-        
+        cell.NameLabel.text = name[indexPath.row]
+        cell.messageTypeLabel.text = type[indexPath.row % type.count]
+        cell.imgview.image = icon[indexPath.row % icon.count]
+        cell.contentLabel.text = content[indexPath.row % content.count]
         
         return cell
     }

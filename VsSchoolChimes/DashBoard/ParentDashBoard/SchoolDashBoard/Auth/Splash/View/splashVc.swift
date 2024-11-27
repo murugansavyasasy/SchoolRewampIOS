@@ -1,18 +1,15 @@
 //
-//  SplashViewController.swift
+//  splashVc.swift
 //  VsSchoolChimes
 //
-//  Created by admin on 12/06/24.
+//  Created by Admin on 27/11/24.
 //
 
 import UIKit
 
-
-
 @available(iOS 14.0, *)
-class SplashViewController: UIViewController {
-    
-    
+class splashVc: UIViewController {
+
     let loginAPI = Login()
     var logindata : [LoginResponseData] = []
    
@@ -30,7 +27,7 @@ class SplashViewController: UIViewController {
         loginId = defaults.string(forKey:DefaultsKeys.LoginId)
         
         print("countryIdcountryId",countryId)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
           
             if countryId == nil{
                 
@@ -77,3 +74,4 @@ class SplashViewController: UIViewController {
     }
   
 }
+

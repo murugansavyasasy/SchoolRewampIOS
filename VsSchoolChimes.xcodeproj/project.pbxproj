@@ -167,6 +167,10 @@
 		84A5BFD32C1B084800E32496 /* OtpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD22C1B084800E32496 /* OtpViewModel.swift */; };
 		84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */; };
 		84B2E0622CEB412900561E4F /* SenderNoticeBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */; };
+		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
+		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
+		84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E702CF6DF9600E34A83 /* splashVc.xib */; };
+		84C00E722CF6DF9600E34A83 /* splashVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6F2CF6DF9600E34A83 /* splashVc.swift */; };
 		84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */; };
 		84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */; };
 		84EFF4962CE388B800E39BEA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */; };
@@ -423,6 +427,10 @@
 		84A5BFD22C1B084800E32496 /* OtpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpViewModel.swift; sourceTree = "<group>"; };
 		84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardVC.swift; sourceTree = "<group>"; };
 		84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderNoticeBoardVC.xib; sourceTree = "<group>"; };
+		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
+		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
+		84C00E6F2CF6DF9600E34A83 /* splashVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splashVc.swift; sourceTree = "<group>"; };
+		84C00E702CF6DF9600E34A83 /* splashVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = splashVc.xib; sourceTree = "<group>"; };
 		84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiechartCVCell.swift; sourceTree = "<group>"; };
 		84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PiechartCVCell.xib; sourceTree = "<group>"; };
 		84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -727,10 +735,6 @@
 			children = (
 				847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */,
 				847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */,
-				840343652CF18F8F00F86125 /* SelectSubjectVc.swift */,
-				840343662CF18F8F00F86125 /* SelectSubjectVc.xib */,
-				840343692CF1916F00F86125 /* SelectSubjectTv.swift */,
-				8403436A2CF1916F00F86125 /* SelectSubjectTv.xib */,
 			);
 			path = SheduleExam;
 			sourceTree = "<group>";
@@ -987,6 +991,7 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				84C00E6A2CF6D79000E34A83 /* TermsandCondVc */,
 				849978502CEF1FF2007D45BA /* Comunication */,
 				849978422CEF1FE5007D45BA /* Attendence */,
 				849978392CEF1FDD007D45BA /* Assignment */,
@@ -1377,6 +1382,8 @@
 				844188632CC8C839006483C3 /* ResponceModal.swift */,
 				84A5BEBE2C198DE200E32496 /* SplashViewController.swift */,
 				84A5BEC02C198DF600E32496 /* SplashStoryboard.storyboard */,
+				84C00E6F2CF6DF9600E34A83 /* splashVc.swift */,
+				84C00E702CF6DF9600E34A83 /* splashVc.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1453,6 +1460,15 @@
 				F290355F2CDC924900F3E67C /* MobileVc.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		84C00E6A2CF6D79000E34A83 /* TermsandCondVc */ = {
+			isa = PBXGroup;
+			children = (
+				84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */,
+				84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */,
+			);
+			path = TermsandCondVc;
 			sourceTree = "<group>";
 		};
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
@@ -1844,7 +1860,6 @@
 				847AB6F02CF09A6800952AC1 /* Std_Grp_header.xib in Resources */,
 				847AB6F12CF09A6800952AC1 /* SelectRecipientVC.xib in Resources */,
 				84A271822CEDAB9F0033EB02 /* ImagePdfCvCell.xib in Resources */,
-				840343672CF18F8F00F86125 /* SelectSubjectVc.xib in Resources */,
 				84A271832CEDAB9F0033EB02 /* ImagePdfTv.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
@@ -1863,7 +1878,6 @@
 				8494D0952CEF971600FF6C4D /* PageVC.xib in Resources */,
 				84FCB0262CEF464D0082814A /* AssigmentViewVC.xib in Resources */,
 				18BAF4DD2CEB3CB200517441 /* SenderAssignmentViewController.xib in Resources */,
-				8403436B2CF1916F00F86125 /* SelectSubjectTv.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
 				849978512CEF1FF2007D45BA /* DateCVC.xib in Resources */,
@@ -1879,12 +1893,14 @@
 				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
+				84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
 				F29035602CDC924900F3E67C /* MobileVc.xib in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
 				84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */,
+				84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */,
 				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
 				841367722CF067A00085D16C /* ImageTVC.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
@@ -2085,6 +2101,7 @@
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
 				84A5BE902C197C6000E32496 /* CheckBox.swift in Sources */,
 				189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */,
+				84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */,
 				84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */,
 				847AB6E62CF09A6300952AC1 /* SenderEventsVC.swift in Sources */,
 				84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */,
@@ -2105,6 +2122,7 @@
 				844188642CC8C839006483C3 /* ResponceModal.swift in Sources */,
 				84A5BEAD2C19824E00E32496 /* LocalizableStrings.swift in Sources */,
 				84A5BE8A2C197B9F00E32496 /* Preferences.swift in Sources */,
+				84C00E722CF6DF9600E34A83 /* splashVc.swift in Sources */,
 				84A5BE462C19719700E32496 /* ViewController.swift in Sources */,
 				84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */,
 				84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */,
@@ -2129,7 +2147,6 @@
 				84A5BE962C197D2C00E32496 /* UILabel.swift in Sources */,
 				8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */,
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
-				840343682CF18F8F00F86125 /* SelectSubjectVc.swift in Sources */,
 				8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */,
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,
 				84A5BEBF2C198DE200E32496 /* SplashViewController.swift in Sources */,
@@ -2141,7 +2158,6 @@
 				8442A8F62CDC83860006068E /* RateUsViewController.swift in Sources */,
 				8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */,
 				849978452CEF1FE5007D45BA /* StudentHistryTVC.swift in Sources */,
-				8403436C2CF1916F00F86125 /* SelectSubjectTv.swift in Sources */,
 				849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
 				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,
@@ -2481,6 +2497,9 @@
 				DEVELOPMENT_TEAM = 6Z355RG34N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashStoryboard.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -2512,6 +2531,9 @@
 				DEVELOPMENT_TEAM = 6Z355RG34N;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VsSchoolChimes/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashStoryboard.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

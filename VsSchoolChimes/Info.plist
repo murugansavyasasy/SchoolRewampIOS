@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to select images.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to capture photos</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -50,7 +46,5 @@
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow to microphone access</string>
 </dict>
 </plist>

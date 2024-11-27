@@ -127,6 +127,9 @@ class OTPVc: UIViewController,UITextFieldDelegate {
             return otpFields.compactMap { $0?.text }.joined()
         }
     
+    @IBAction func BackAct(_ sender: Any) {
+        dismiss(animated: true)
+    }
     
 //    MARK: Resend Timer Set
     @IBAction func controlTimer() {
@@ -146,6 +149,7 @@ class OTPVc: UIViewController,UITextFieldDelegate {
             
                 
             }
+            
         }
         
         // Add the timer to the current RunLoop

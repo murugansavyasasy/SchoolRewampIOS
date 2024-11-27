@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -44,20 +44,27 @@
                             <rect key="frame" x="0.0" y="43" width="393" height="716"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7kc-bm-Mjt">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="716"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="216"/>
                                     <color key="backgroundColor" name="BackGroundClr"/>
                                 </tableView>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contactusBanner" translatesAutoresizingMaskIntoConstraints="NO" id="J7b-Cf-fJm">
+                                    <rect key="frame" x="0.0" y="216" width="393" height="500"/>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                             <constraints>
+                                <constraint firstItem="J7b-Cf-fJm" firstAttribute="top" secondItem="7kc-bm-Mjt" secondAttribute="bottom" id="E5v-su-an1"/>
+                                <constraint firstAttribute="bottom" secondItem="J7b-Cf-fJm" secondAttribute="bottom" id="Jjh-Sl-uWY"/>
                                 <constraint firstItem="7kc-bm-Mjt" firstAttribute="leading" secondItem="UJm-2A-EbX" secondAttribute="leading" id="La1-LD-axe"/>
-                                <constraint firstAttribute="bottom" secondItem="7kc-bm-Mjt" secondAttribute="bottom" id="MfE-kj-iM2"/>
+                                <constraint firstAttribute="bottom" secondItem="7kc-bm-Mjt" secondAttribute="bottom" constant="500" id="MfE-kj-iM2"/>
+                                <constraint firstItem="J7b-Cf-fJm" firstAttribute="leading" secondItem="UJm-2A-EbX" secondAttribute="leading" id="ZkA-y2-4pR"/>
                                 <constraint firstItem="7kc-bm-Mjt" firstAttribute="top" secondItem="UJm-2A-EbX" secondAttribute="top" id="eGS-qH-lsM"/>
+                                <constraint firstAttribute="trailing" secondItem="J7b-Cf-fJm" secondAttribute="trailing" id="gOZ-00-Qzi"/>
                                 <constraint firstAttribute="trailing" secondItem="7kc-bm-Mjt" secondAttribute="trailing" id="hiF-Zf-YQN"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Support" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yl-d3-L7t">
-                            <rect key="frame" x="49" y="4.9999999999999982" width="339" height="26.333333333333329"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Us" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yl-d3-L7t">
+                            <rect key="frame" x="143" y="5" width="107" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -66,13 +73,13 @@
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
                         <constraint firstItem="UJm-2A-EbX" firstAttribute="top" secondItem="ekg-kT-j4Y" secondAttribute="bottom" constant="8" id="7Tl-9z-WAb"/>
+                        <constraint firstItem="9yl-d3-L7t" firstAttribute="centerX" secondItem="NsT-mS-rkx" secondAttribute="centerX" id="B1L-sb-DGu"/>
                         <constraint firstItem="UJm-2A-EbX" firstAttribute="leading" secondItem="NsT-mS-rkx" secondAttribute="leading" id="ES5-lc-8G8"/>
-                        <constraint firstAttribute="trailing" secondItem="9yl-d3-L7t" secondAttribute="trailing" constant="5" id="F8L-KQ-I6R"/>
+                        <constraint firstItem="9yl-d3-L7t" firstAttribute="centerY" secondItem="ekg-kT-j4Y" secondAttribute="centerY" id="Vh9-dp-Z2f"/>
                         <constraint firstItem="ekg-kT-j4Y" firstAttribute="leading" secondItem="NsT-mS-rkx" secondAttribute="leading" id="ee8-yZ-YHD"/>
                         <constraint firstItem="9yl-d3-L7t" firstAttribute="top" secondItem="NsT-mS-rkx" secondAttribute="top" constant="5" id="faI-Tk-MbM"/>
                         <constraint firstItem="ekg-kT-j4Y" firstAttribute="top" secondItem="NsT-mS-rkx" secondAttribute="top" constant="5" id="gHR-iH-DYH"/>
                         <constraint firstAttribute="trailing" secondItem="UJm-2A-EbX" secondAttribute="trailing" id="o88-1F-gUE"/>
-                        <constraint firstItem="9yl-d3-L7t" firstAttribute="leading" secondItem="ekg-kT-j4Y" secondAttribute="trailing" constant="5" id="qDq-UE-GXs"/>
                         <constraint firstAttribute="bottom" secondItem="UJm-2A-EbX" secondAttribute="bottom" id="rjq-jt-dyW"/>
                     </constraints>
                 </view>
@@ -90,11 +97,12 @@
     </objects>
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="contactusBanner" width="2000" height="2000"/>
         <namedColor name="BackGroundClr">
             <color red="0.9570000171661377" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
