@@ -42,7 +42,7 @@
                     </constraints>
                 </view>
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="lyN-ZO-pt8">
-                    <rect key="frame" x="0.0" y="124" width="393" height="44"/>
+                    <rect key="frame" x="16" y="124" width="361" height="44"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="Yqt-zV-CSm"/>
                     </constraints>
@@ -76,14 +76,14 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lyN-ZO-pt8" secondAttribute="trailing" id="3fq-kP-evq"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lyN-ZO-pt8" secondAttribute="trailing" constant="16" id="3fq-kP-evq"/>
                 <constraint firstItem="fc7-L8-Mio" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Gx4-ak-Gmo"/>
                 <constraint firstItem="KJh-VC-jfC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Npc-zu-vhZ"/>
                 <constraint firstItem="fc7-L8-Mio" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="TP2-qJ-IOp"/>
                 <constraint firstItem="lyN-ZO-pt8" firstAttribute="top" secondItem="KJh-VC-jfC" secondAttribute="bottom" constant="10" id="eHV-Af-zbN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Yzj-4c-uEi" secondAttribute="trailing" id="fbs-eq-cQP"/>
                 <constraint firstItem="Yzj-4c-uEi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kQb-J6-c0A"/>
-                <constraint firstItem="lyN-ZO-pt8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="mnt-7X-YSx"/>
+                <constraint firstItem="lyN-ZO-pt8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="mnt-7X-YSx"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Yzj-4c-uEi" secondAttribute="bottom" id="uzF-5E-mjI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="KJh-VC-jfC" secondAttribute="top" constant="-20" id="wMX-F0-wul"/>
                 <constraint firstItem="Yzj-4c-uEi" firstAttribute="top" secondItem="lyN-ZO-pt8" secondAttribute="bottom" id="zYE-IE-b2x"/>

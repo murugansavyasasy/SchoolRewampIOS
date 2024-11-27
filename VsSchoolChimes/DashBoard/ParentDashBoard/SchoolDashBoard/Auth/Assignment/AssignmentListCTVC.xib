@@ -18,12 +18,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="472" height="294"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spirel2" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GzQ-EE-vto">
-                        <rect key="frame" x="22" y="22" width="432" height="290"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="290" id="lee-tW-TJ4"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cl7-2w-xgU">
                         <rect key="frame" x="20" y="20" width="432" height="264"/>
                         <subviews>
@@ -204,7 +198,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="8nE-Xg-0v3" secondAttribute="trailing" constant="16" id="Gjn-8Z-bPh"/>
                             <constraint firstItem="8nE-Xg-0v3" firstAttribute="top" secondItem="lDQ-a2-ZFi" secondAttribute="bottom" constant="10" id="H8Y-Pb-NW3"/>
@@ -219,14 +213,20 @@
                             <constraint firstItem="6Ii-ou-wrh" firstAttribute="top" secondItem="let-86-nD6" secondAttribute="bottom" constant="10" id="xiv-uY-FrE"/>
                         </constraints>
                     </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="assigmentbg" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GzQ-EE-vto">
+                        <rect key="frame" x="18" y="22" width="20" height="290"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="Sxy-L1-uKp"/>
+                            <constraint firstAttribute="height" constant="290" id="lee-tW-TJ4"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="GzQ-EE-vto" firstAttribute="trailing" secondItem="cl7-2w-xgU" secondAttribute="trailing" constant="2" id="BnL-qZ-MIy"/>
                     <constraint firstItem="cl7-2w-xgU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="OVP-eu-O6j"/>
                     <constraint firstAttribute="bottom" secondItem="cl7-2w-xgU" secondAttribute="bottom" constant="10" id="PmO-QQ-L2e"/>
                     <constraint firstItem="cl7-2w-xgU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Qg4-Zf-189"/>
                     <constraint firstItem="GzQ-EE-vto" firstAttribute="top" secondItem="cl7-2w-xgU" secondAttribute="top" constant="2" id="bZU-nE-L1l"/>
-                    <constraint firstItem="GzQ-EE-vto" firstAttribute="leading" secondItem="cl7-2w-xgU" secondAttribute="leading" constant="2" id="kOb-gH-che"/>
+                    <constraint firstItem="GzQ-EE-vto" firstAttribute="leading" secondItem="cl7-2w-xgU" secondAttribute="leading" constant="-2" id="kOb-gH-che"/>
                     <constraint firstAttribute="trailing" secondItem="cl7-2w-xgU" secondAttribute="trailing" constant="20" id="x2u-EM-OwD"/>
                 </constraints>
             </tableViewCellContentView>
@@ -248,15 +248,18 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="spirel2" width="587" height="425"/>
+        <image name="assigmentbg" width="153" height="1628"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

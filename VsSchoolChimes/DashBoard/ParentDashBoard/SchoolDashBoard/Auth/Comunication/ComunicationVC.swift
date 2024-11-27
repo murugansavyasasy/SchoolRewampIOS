@@ -31,6 +31,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var doneButton: UIButton!
     var activeButton: UIButton?
     var scheduleClick = false
+    let backgroundcolor = UIColor(named:"topBackgroundCLr")
+    let tapColor = UIColor(named:"topBackgroundCLr 1")
     
     
     @IBOutlet weak var TitleLbl: UILabel!
@@ -87,27 +89,45 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var clickSchedule: UILabel!
     @IBOutlet weak var clickTextView: UILabel!
     
+    @IBOutlet weak var fromDateLbl: UILabel!
+    @IBOutlet weak var ScheduleLbl: UILabel!
+    @IBOutlet weak var ToDateLbl: UILabel!
+    
+    @IBOutlet weak var noteCallLbl: UILabel!
+    @IBOutlet weak var EnableCallLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
         check_record_permission()
         printCurrentMonth()
         hideCalendarHeader()
         uiUUpdate()
+        sringTranslate()
         setupAudioSession()
         CellRegistre()
         setupWaveBars()
         setupTimePicker()
+        keyboardDionebtn()
         setInitialButtonTitles()
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
         DateSelection.dataSource = self
         
-
+        
     }
-  
+    func sringTranslate(){
+        fromDateLbl.text = "From Time".translated()
+        ScheduleLbl.text = "Schedule".translated()
+        ToDateLbl.text = "To Time".translated()
+        noteCallLbl.text = "Please note that this message will be delivered to App".translated()
+        EnableCallLbl.text = "Emergency voice messages".translated()
+        clickVoiceLbl.text = "Voice Message".translated()
+        clickTextView.text = "Text Message".translated()
+        clickSchedule.text = "Schedule Call".translated()
+    }
     func uiUUpdate(){
         //MARK: FSCalander View
+        Timinglbl.text = "00:00/03:00"
         calanderOuter.isHidden = true
         calanderOuter.layer.cornerRadius = 20
         calanderOuter.layer.shadowColor = UIColor.black.cgColor
@@ -115,22 +135,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         calanderOuter.layer.shadowRadius = 5
         calanderOuter.layer.shadowOpacity = 0.3
         DateSelection.appearance.weekdayTextColor = .red
-        voiceClickView.layer.cornerRadius = 8
-        voiceClickView.backgroundColor = UIColor(named: "topBackgroundCLr 1")
         TitleLbl.text = "Communication".translated()
-//        DateSelection.appearance.headerTitleColor = .blue
-        //        DateSelection.appearance.selectionColor = .green
         DateSelection.appearance.todayColor = .orange
         DateSelection.appearance.eventDefaultColor = .purple
         DateSelection.allowsMultipleSelection = true
         
-      
+        
         //MARK: VOICE BUTTON BACKGROUND
         voiceBtn.backgroundColor = .white
         voiceClickView.layer.cornerRadius = 8
         textClickView.layer.cornerRadius = 8
         seduleClickView.layer.cornerRadius = 8
-        
+        voiceClickView.layer.cornerRadius = 8
+        voiceClickView.backgroundColor = tapColor
         voiceBtn.layer.cornerRadius = 20
         voiceBtn.layer.shadowColor = UIColor.black.cgColor
         voiceBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -138,7 +155,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.layer.shadowOpacity = 0.3
         voiceBtn.tintColor = .white
         clickVoiceLbl.textColor = .white
-        voiceBtn.backgroundColor = UIColor(named:"topBackgroundCLr")
+        voiceBtn.backgroundColor = backgroundcolor
+        
         
         //MARK: TEXT BUTTON BACKGROUND
         textBtn.layer.cornerRadius = 20
@@ -201,18 +219,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
-        
-        
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
-//        sendbtn.isEnabled = false
+        //        sendbtn.isEnabled = false
     }
     func printCurrentMonth() {
         let currentPage = DateSelection.currentPage
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM yyyy" // Format as Month Year (e.g., "November 2024")
         let formattedMonth = dateFormatter.string(from: currentPage)
-        monthLbl.text = formattedMonth
+        monthLbl.text = formattedMonth.translated()
     }
     func hideCalendarHeader() {
         DateSelection.headerHeight = 0
@@ -338,8 +354,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
                 dltbtn.isHidden = false
-//                sendbtn.isEnabled = true
-//                moveTextmessage.isHidden = true
+                //                sendbtn.isEnabled = true
+                //                moveTextmessage.isHidden = true
                 recoderbtn.isEnabled = false
                 //                // Play audio
                 if let audioUrl = URL(string: AudioPlayUrl ?? "") {
@@ -385,10 +401,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         timePicker.isHidden = true
         doneButton.isHidden = true
         activeButton = nil
-        textBtn.backgroundColor = UIColor(named:"topBackgroundCLr")
+        textBtn.backgroundColor = backgroundcolor
         textBtn.tintColor = .white
         scheduleBtn.tintColor = .black
-        textClickView.backgroundColor = UIColor(named:"topBackgroundCLr 1")
+        textClickView.backgroundColor = tapColor
         voiceClickView.backgroundColor = .white
         seduleClickView.backgroundColor = .white
         clickTextView.textColor = .white
@@ -443,14 +459,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     //MARK: DELETE RECORDING
     func deletRecoding(){
         recoderbtn.isEnabled = true
-//        sendbtn.isEnabled = false
+        //        sendbtn.isEnabled = false
         dltbtn.isHidden = true
         voiceStackview.isHidden = true
         addfile.isHidden = false
         player?.pause()
         AudioPlayUrl = ""
         playerheight.constant = 0
-        Timinglbl.text = "00.00/3.00"
+        Timinglbl.text = "00:00/03:00"
         moveTextmessage.isHidden = false
     }
     
@@ -476,8 +492,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 let duration = Date().timeIntervalSince(startTime)
                 let minutes = Int(duration) / 60
                 let seconds = Int(duration) % 60
-                voiceTiming.text = String(format: "%d:%02d", minutes, seconds)
-            }
+                voiceTiming.text = String(format: "%02d:%02d", minutes, seconds)            }
             
             // Set message send time
             let formatter = DateFormatter()
@@ -489,7 +504,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             dltbtn.isHidden = false
             sendbtn.isEnabled = true
             addfile.isHidden = true
-//            moveTextmessage.isHidden = true
+            //            moveTextmessage.isHidden = true
             
             playerItem = AVPlayerItem(url: urls)
             player = AVPlayer(playerItem: playerItem!)
@@ -522,18 +537,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if let startTime = recordingStartTime {
             let elapsed = Date().timeIntervalSince(startTime)
             
-            // Limit recording time to a maximum of 1 minute (60 seconds)
+            // Limit recording time to a maximum of 3 minutes (180 seconds)
             if elapsed >= 180 {
                 stopRecording()
-                Timinglbl.text = "3:00"  // Display 1:00 when maximum time is reached
+                Timinglbl.text = "03:00" // Display 03:00 when maximum time is reached
             } else {
-                // Display elapsed time in "m:ss" format, with two digits for seconds
+                // Display elapsed time in "mm:ss" format
                 let minutes = Int(elapsed) / 60
                 let seconds = Int(elapsed) % 60
-                Timinglbl.text = String(format: "%d:%02d", minutes, seconds)
+                Timinglbl.text = String(format: "%02d:%02d", minutes, seconds)
             }
         }
     }
+    
     
     @objc func playerDidFinishPlaying(sender: Notification) {
         btnplay.setImage(UIImage(named: "play-button"), for: .normal)
@@ -614,16 +630,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 if totalDuration.isFinite {
                     let totalMinutes = Int(totalDuration) / 60
                     let totalSeconds = Int(totalDuration) % 60
-                    let totalDurationFormatted = String(format: "%d:%02d", totalMinutes, totalSeconds)
-                    
+                    let totalDurationFormatted = String(format: "%02d:%02d", totalMinutes, totalSeconds)
                     // Get the current playback time
                     let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
                     let elapsedMinutes = Int(elapsedTime) / 60
                     let elapsedSeconds = Int(elapsedTime) % 60
-                    let currentFormatted = String(format: "%d:%02d", elapsedMinutes, elapsedSeconds)
+                    let currentFormatted = String(format: "%02d:%02d", elapsedMinutes, elapsedSeconds)
                     
                     // Update the label with current and total duration
-                    voiceTiming.text = "0\(currentFormatted) / \(totalDurationFormatted)"
+                    voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
                 }
             }
         } else {
@@ -677,9 +692,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func voiceview(_ sender: Any) {
-        voiceBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+        voiceBtn.backgroundColor = backgroundcolor
         textClickView.backgroundColor = .white
-        voiceClickView.backgroundColor = UIColor(named: "topBackgroundCLr 1")
+        voiceClickView.backgroundColor = tapColor
         seduleClickView.backgroundColor = .white
         textBtn.backgroundColor = UIColor.white
         voiceview.isHidden = false
@@ -713,7 +728,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }else if selectedDates.count <= 3{
             dateSelectedViewHeight.constant = 64
         }else{
-            dateSelectedViewHeight.constant = 128
+            dateSelectedViewHeight.constant = 120
         }
         
         calanderOuter.isHidden = true
@@ -745,10 +760,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
-        scheduleBtn.backgroundColor = UIColor(named: "topBackgroundCLr")
+        scheduleBtn.backgroundColor = backgroundcolor
         textClickView.backgroundColor = .white
         voiceClickView.backgroundColor = .white
-        seduleClickView.backgroundColor = UIColor(named: "topBackgroundCLr 1")
+        seduleClickView.backgroundColor = tapColor
         scheduleClick = false
         showVoiceMessageView()
         schedulCallView.isHidden = false
@@ -1069,7 +1084,14 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         return selectedDates.contains(date) ? UIColor.green : nil
     }
     func deleteDelegate(index: Int) {
+        //        selectedDates.remove(at: index)
+        let dateToRemove = selectedDates[index]
+        
+        // Then remove it from the array
         selectedDates.remove(at: index)
+        
+        // Deselect the date on the calendar
+        DateSelection.deselect(dateToRemove)
         if selectedDates.count == 0{
             dateSelectedViewHeight.constant = 0
         }else if selectedDates.count <= 3{
@@ -1104,7 +1126,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let with = dateCV.frame.size.width - 40
+        let with = dateCV.frame.size.width - 20
         let cwidth = with/3
         return CGSize(width: cwidth, height: 50)
     }
