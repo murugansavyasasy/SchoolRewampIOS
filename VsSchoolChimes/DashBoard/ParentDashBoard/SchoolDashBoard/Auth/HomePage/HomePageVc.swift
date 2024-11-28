@@ -110,10 +110,14 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         }
         for cell in bottomCv.visibleCells as! [BottomCVCell] {
             // Reset shimmer view or any other animations
-            cell.shimmersViewss.animateView(enable: true)
+            cell.GradientView.animateView(enable: true)
+//            cell.MenuLabelview.animateView(enable: true)
+            cell.MenuLbl.isHidden = true
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
-                cell.shimmersViewss.animateView(enable: false)
+                cell.GradientView.animateView(enable: false)
+//                cell.MenuLabelview.animateView(enable: true)
+                cell.MenuLbl.isHidden = false
             }
             
         }
@@ -241,7 +245,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.applyGradient()
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-                cell.shimmersViewss.animateView(enable: false)
+                cell.GradientView.animateView(enable: false)
+//                cell.MenuLabelview.animateView(enable: false)
                 //cell.image = UIImage(named: Imgitems[indexPath.row] )!
                 //cell.setImg(img: UIImage(named: Imgitems[indexPath.row] )!)
             }

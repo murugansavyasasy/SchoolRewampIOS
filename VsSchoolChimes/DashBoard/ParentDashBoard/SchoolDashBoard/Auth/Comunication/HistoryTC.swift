@@ -74,7 +74,7 @@ class HistoryTC: UITableViewCell {
             playBtn.setImage(UIImage(named: "pause-button"), for: .normal)
             updateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
             // Update player view
-            updateAudioLevels()
+            updateAudioLevels(int: 1)
             
             // Update time
             if let currentItem = player?.currentItem, let currentTime = player?.currentTime() {
@@ -96,7 +96,7 @@ class HistoryTC: UITableViewCell {
             playBtn.setImage(UIImage(named: "play-button"), for: .normal)
             
             // Update player view
-            updateAudioLevels()
+            updateAudioLevels(int: 0)
         }
         self.isPlaying = isPlaying
     }
@@ -109,10 +109,10 @@ class HistoryTC: UITableViewCell {
     }
 
     // Helper to update audio levels
-    private func updateAudioLevels() {
+    private func updateAudioLevels(int:Float) {
         audioRecorder?.updateMeters()
         let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160 // Default to -160 if no data
-        let normalizedPower = max(0, (averagePower + 160) / 160)
+        let normalizedPower = max(int, (averagePower + 160) / 160)
         playerView.updateWithLevel(CGFloat(normalizedPower))
     }
 

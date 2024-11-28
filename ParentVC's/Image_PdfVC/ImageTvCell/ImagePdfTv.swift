@@ -72,9 +72,9 @@ extension ImagePdfTv : UICollectionViewDelegate,UICollectionViewDataSource,UICol
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         
-        cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
+       // cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
         
-        
+        cell.imageView.sd_setImage(with: URL(string: imgs[indexPath.row]), placeholderImage: UIImage(named: "placeholder"))
         return cell
         
     }

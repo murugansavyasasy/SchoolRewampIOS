@@ -9,6 +9,10 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    @IBOutlet weak var ScrollviewBottom: NSLayoutConstraint!
+    @IBOutlet weak var SaveBtnHeight: NSLayoutConstraint!
+    @IBOutlet weak var EditBtn: UIButton!
+    @IBOutlet weak var saveBtn: UIButton!
     @IBOutlet weak var bottomFullview: UIView!
     @IBOutlet weak var imgview: UIImageView!
     @IBOutlet weak var contactDetails: UIView!
@@ -46,6 +50,9 @@ class ProfileViewController: UIViewController {
         
         bottomFullview.backgroundColor = Colornames.bottomClr
         
+        EditBtn.layer.cornerRadius = 10
+        saveBtn.isHidden = true
+        saveBtn.layer.cornerRadius = 10
         
         imgview.layer.cornerRadius = 50//imgview.frame.width/2
         personalview.layer.cornerRadius = 15
@@ -70,9 +77,39 @@ class ProfileViewController: UIViewController {
         Mothername.text = "Mothername".translated()
         Motheroccupation.text = "Mother occupation".translated()
         SeconadaryphoneNo.text = "Secondary Phone no".translated()
+        
+        SaveBtnHeight.constant = 0
+        //ScrollviewBottom.constant = 0
     }
 
-
+    @IBAction func SaveAct(_ sender: Any) {
+        
+        let alert = CustomAlert()
+        
+        alert.showAlert(title:"" , message: "Save changes", on: self)
+    }
+    
+    @IBAction func EditBtnAct(_ sender: Any) {
+        
+       // ScrollviewBottom.constant = 70
+        if EditBtn.titleLabel!.text == "Edit" {
+            SaveBtnHeight.constant = 40
+            
+            saveBtn.isHidden = false
+            EditBtn.setTitle("Cancel", for: .normal)
+            EditBtn.imageView?.isHidden = true
+            
+        }else {
+            SaveBtnHeight.constant = 0
+            
+            saveBtn.isHidden = true
+            EditBtn.setTitle("Edit", for: .normal)
+            EditBtn.imageView?.isHidden = false
+        }
+        
+        
+       
+    }
     /*
     // MARK: - Navigation
 

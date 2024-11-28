@@ -47,7 +47,7 @@
                                     </constraints>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" name="dashBoardClr"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="OZ7-nr-L1Y" firstAttribute="top" secondItem="dHb-EU-pjT" secondAttribute="top" constant="10" id="9c8-Ar-2lR"/>
                                 <constraint firstAttribute="trailing" secondItem="OZ7-nr-L1Y" secondAttribute="trailing" constant="15" id="AtW-je-ioR"/>
@@ -114,7 +114,7 @@
             <color red="0.9570000171661377" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -1,16 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "telephone.svg",
+      "filename" : "mail.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "telephone 1.svg",
+      "filename" : "mail 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "mail 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

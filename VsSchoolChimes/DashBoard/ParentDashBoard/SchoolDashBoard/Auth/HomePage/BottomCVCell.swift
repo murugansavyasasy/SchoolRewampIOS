@@ -9,7 +9,9 @@ import UIKit
 
 class BottomCVCell: UICollectionViewCell {
 
-    @IBOutlet weak var GradientView: UIView!
+    @IBOutlet weak var MenuLabelview: ShimmerView!
+    @IBOutlet weak var GradientView: ShimmerView!
+    
     @IBOutlet weak var shimmersViewss: ShimmerView!
     
     
@@ -23,9 +25,10 @@ class BottomCVCell: UICollectionViewCell {
         
       
         
-        shimmersViewss.layer.cornerRadius = 12
+        GradientView.layer.cornerRadius = 12
     
-        self.shimmersViewss.animateView(enable: true)
+        self.GradientView.animateView(enable: true)
+//        self.MenuLabelview.animateView(enable: true)
        
       
 //        contentView.layer.shadowColor = UIColor.black.cgColor
@@ -41,7 +44,8 @@ class BottomCVCell: UICollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-       shimmersViewss.animateView(enable: false)
+        GradientView.animateView(enable: false)
+//        MenuLabelview.animateView(enable: false)
         // Reset image and label to default values
         MenuImgView.image = nil // Or a placeholder image
         MenuLbl.text = "" // Or any default text

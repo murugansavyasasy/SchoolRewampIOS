@@ -14,8 +14,8 @@ class ContactUsVc: UIViewController {
     @IBOutlet weak var tv: UITableView!
     
     var content = ["Our 24*7 Customer Service.","Write us at."]
-    var contact = ["9786543210","support@savyasasy.com"]
-    var icon  = [UIImage(named: "Phone"),UIImage(named: "Phone")]
+    var contact = ["9786543210","saranraj@savyasasy.com"]
+    var icon  = [UIImage(named: "Phone"),UIImage(named: "mail")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,9 +58,12 @@ extension ContactUsVc : UITableViewDataSource,UITableViewDelegate{
         cell.contentLabel.text = content[indexPath.row]
         cell.mailOrPhoneLabel.text = contact[indexPath.row]
         cell.iconImg.image = icon[indexPath.row]
+        
+       
         return cell
     }
     
+   
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     
