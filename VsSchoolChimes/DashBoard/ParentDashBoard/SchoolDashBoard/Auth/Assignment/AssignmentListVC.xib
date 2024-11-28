@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,11 +22,33 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yzj-4c-uEi">
-                    <rect key="frame" x="0.0" y="168" width="393" height="650"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yry-9i-hNr">
+                    <rect key="frame" x="0.0" y="115.33333333333333" width="393" height="57.666666666666671"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="scd-Dh-Szc">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="650"/>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="lyN-ZO-pt8">
+                            <rect key="frame" x="16" y="3.6666666666666714" width="361" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="Yqt-zV-CSm"/>
+                            </constraints>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="PUT-dD-8yN"/>
+                            </connections>
+                        </searchBar>
+                    </subviews>
+                    <color key="backgroundColor" red="0.94117647058823528" green="0.95686274509803915" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstItem="lyN-ZO-pt8" firstAttribute="leading" secondItem="Yry-9i-hNr" secondAttribute="leading" constant="16" id="Vmq-D4-1px"/>
+                        <constraint firstItem="lyN-ZO-pt8" firstAttribute="top" secondItem="Yry-9i-hNr" secondAttribute="top" constant="3.6666666666666288" id="f5O-oT-beT"/>
+                        <constraint firstAttribute="bottom" secondItem="lyN-ZO-pt8" secondAttribute="bottom" constant="10" id="jzM-Zt-bI0"/>
+                        <constraint firstAttribute="trailing" secondItem="lyN-ZO-pt8" secondAttribute="trailing" constant="16" id="rjc-Vb-Rgb"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yzj-4c-uEi">
+                    <rect key="frame" x="0.0" y="173" width="393" height="645"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="scd-Dh-Szc">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="645"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="B6z-of-GNJ"/>
@@ -41,16 +64,6 @@
                         <constraint firstAttribute="trailing" secondItem="scd-Dh-Szc" secondAttribute="trailing" id="ul1-8I-6XT"/>
                     </constraints>
                 </view>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="lyN-ZO-pt8">
-                    <rect key="frame" x="16" y="124" width="361" height="44"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="Yqt-zV-CSm"/>
-                    </constraints>
-                    <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="PUT-dD-8yN"/>
-                    </connections>
-                </searchBar>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KJh-VC-jfC">
                     <rect key="frame" x="16" y="79" width="70" height="35"/>
                     <constraints>
@@ -74,25 +87,28 @@
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="lyN-ZO-pt8" secondAttribute="trailing" constant="16" id="3fq-kP-evq"/>
+                <constraint firstItem="Yry-9i-hNr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="08q-WU-C83"/>
                 <constraint firstItem="fc7-L8-Mio" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Gx4-ak-Gmo"/>
                 <constraint firstItem="KJh-VC-jfC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Npc-zu-vhZ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Yry-9i-hNr" secondAttribute="trailing" id="OPq-Pq-97J"/>
                 <constraint firstItem="fc7-L8-Mio" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="TP2-qJ-IOp"/>
-                <constraint firstItem="lyN-ZO-pt8" firstAttribute="top" secondItem="KJh-VC-jfC" secondAttribute="bottom" constant="10" id="eHV-Af-zbN"/>
+                <constraint firstItem="Yzj-4c-uEi" firstAttribute="top" secondItem="Yry-9i-hNr" secondAttribute="bottom" id="ctr-kg-8iP"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Yzj-4c-uEi" secondAttribute="trailing" id="fbs-eq-cQP"/>
                 <constraint firstItem="Yzj-4c-uEi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kQb-J6-c0A"/>
-                <constraint firstItem="lyN-ZO-pt8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="mnt-7X-YSx"/>
+                <constraint firstItem="Yry-9i-hNr" firstAttribute="top" secondItem="fc7-L8-Mio" secondAttribute="bottom" constant="10" id="nkX-Qy-3rt"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Yzj-4c-uEi" secondAttribute="bottom" id="uzF-5E-mjI"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="KJh-VC-jfC" secondAttribute="top" constant="-20" id="wMX-F0-wul"/>
-                <constraint firstItem="Yzj-4c-uEi" firstAttribute="top" secondItem="lyN-ZO-pt8" secondAttribute="bottom" id="zYE-IE-b2x"/>
             </constraints>
             <point key="canvasLocation" x="138" y="-1"/>
         </view>
     </objects>
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <namedColor name="topBackgroundCLr">
+            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

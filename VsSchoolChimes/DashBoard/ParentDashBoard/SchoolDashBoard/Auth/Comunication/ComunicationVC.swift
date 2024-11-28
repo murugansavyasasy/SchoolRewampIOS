@@ -6,10 +6,12 @@ import AVFAudio
 
 
 protocol reloadDelegate{
-    func reload(index:Int)
+    func reload(index: Int,playToggle:Bool)
     func deleteDelegate(index:Int)
 }
-class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource{
+class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate{
+    
+    
     
     
     var selectedDates: [Date] = [] // Store selected dates
@@ -93,7 +95,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var ScheduleLbl: UILabel!
     @IBOutlet weak var ToDateLbl: UILabel!
     
-    @IBOutlet weak var noteCallLbl: UILabel!
+    @IBOutlet weak var TextMsgTittle: UITextField!
+    @IBOutlet weak var TextMsgContent: UILabel!
     @IBOutlet weak var EnableCallLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,12 +122,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         fromDateLbl.text = "From Time".translated()
         ScheduleLbl.text = "Schedule".translated()
         ToDateLbl.text = "To Time".translated()
-        noteCallLbl.text = "Please note that this message will be delivered to App".translated()
         EnableCallLbl.text = "Emergency voice messages".translated()
         clickVoiceLbl.text = "Voice Message".translated()
         clickTextView.text = "Text Message".translated()
         clickSchedule.text = "Schedule Call".translated()
     }
+    
     func uiUUpdate(){
         //MARK: FSCalander View
         Timinglbl.text = "00:00/03:00"
@@ -236,8 +239,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     //MARK: CELL REGISTRATION
     func CellRegistre(){
-        historytable.register(UINib(nibName: "HistoryTC", bundle: nil), forCellReuseIdentifier: "HistoryTC")
-        historytable.register(UINib(nibName: "TextHistoryTVCell", bundle: nil), forCellReuseIdentifier: "TextHistoryTVCell")
+        historytable.register(UINib(nibName: CellConfingName.HistoryTC, bundle: nil), forCellReuseIdentifier: CellConfingName.HistoryTC)
+        historytable.register(UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
         dateCV.register(UINib(nibName: "DateCVC", bundle: nil), forCellWithReuseIdentifier: "DateCVC")
         
     }
@@ -296,6 +299,17 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let filePath = getDocumentsDirectory().appendingPathComponent(filename)
         AudioPlayUrl = filePath.absoluteString // Store the file path for later use
         return filePath
+    }
+    
+    // Setup Audio Session
+    func setupAudioSession() {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(.playAndRecord, mode: .default, options: .allowBluetooth)
+            try audioSession.setActive(true)
+        } catch {
+            print("Error setting up audio session: \(error)")
+        }
     }
     
     //MARK: SETUP RECORDER
@@ -392,6 +406,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         tittlemessage.text = "Voice Message"
         radio1.setImage(UIImage(systemName: "button.programmable"), for: .normal)
         radio2.setImage(UIImage(systemName: "circle"), for: .normal)
+        //        emengencyCall.isHidden = false
     }
     
     //MARK: TEXT MESSAGE VIEW
@@ -553,7 +568,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @objc func playerDidFinishPlaying(sender: Notification) {
         btnplay.setImage(UIImage(named: "play-button"), for: .normal)
-        resetWaveBars()
         player?.pause()
         updateTimer?.invalidate()
         audioRecorder?.updateMeters()
@@ -599,15 +613,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             bar.backgroundColor = .blue
             waveView.addSubview(bar)
             bars.append(bar)
-        }
-    }
-    
-    
-    func resetWaveBars() {
-        for bar in bars {
-            UIView.animate(withDuration: 0.1) {
-                bar.frame.size.height = 0
-            }
         }
     }
     
@@ -689,8 +694,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     
-    
-    
     @IBAction func voiceview(_ sender: Any) {
         voiceBtn.backgroundColor = backgroundcolor
         textClickView.backgroundColor = .white
@@ -719,7 +722,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         doneButton.isHidden = true
         activeButton = nil
         calanderOuter.isHidden = true
-        
+        emengencyCall.isHidden = false
+        EnableCallLbl.isHidden = false
     }
     
     @IBAction func doneSelection(_ sender: Any) {
@@ -743,10 +747,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true)
-    }
-    @IBAction func voiceviewmsg(_ sender: Any) {
-        showVoiceMessageView()
-        deletRecoding()
     }
     
     @IBAction func calander(_ sender: UIButton) {
@@ -780,6 +780,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textBtn.tintColor = .black
         scheduleBtn.tintColor = .white
         voiceBtn.tintColor = .black
+        emengencyCall.isHidden = true
+        EnableCallLbl.isHidden = true
     }
     
     // Record Button Action
@@ -841,20 +843,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             player?.play()
             playVoicce = true
             btnplay.setImage(UIImage(named: "pause-button"), for: .normal)
-            //                         playadiuoslider.maximumValue = Float(audioPlayer?.duration ?? 0)
             updateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
         }
         
     }
     
 }
-extension ComunicationVC: AVAudioPlayerDelegate {
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        btnplay.setImage(UIImage(named: "play-button"), for: .normal)
-        resetWaveBars()
-    }
-}
-
 
 extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
     
@@ -873,7 +867,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             
             
             cell.descriptContent.attributedText = descript(for:"Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.", expanded: false)
-            
+            cell.delegate = self
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
@@ -945,26 +939,13 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             // Set "See more" text to blue and underline it
             let seeMoreRange = (fullString as NSString).range(of: "See more")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-            //            attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: seeMoreRange)
-            
             return attributedText
         }
     }
     
     
     
-    // Setup Audio Session
-    func setupAudioSession() {
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setCategory(.playAndRecord, mode: .default, options: .allowBluetooth)
-            try audioSession.setActive(true)
-        } catch {
-            print("Error setting up audio session: \(error)")
-        }
-    }
-    
-    func reload(index: Int) {
+    func reload(index: Int,playToggle:Bool) {
         // Stop playback in the currently playing cell (if any)
         if let currentIndex = playIndex, currentIndex != index {
             let previousIndexPath = IndexPath(row: currentIndex, section: 0)
@@ -977,8 +958,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         playIndex = (playIndex == index) ? nil : index
         historytable.reloadData()
     }
-    
-    
     
     func setupTimePicker() {
         // Initialize the picker
@@ -1113,8 +1092,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCVC", for: indexPath as IndexPath) as! DateCVC
         
         let selectedDate = selectedDates[indexPath.item]
-        
-        // Create a DateFormatter to convert Date to String
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium // You can change this style to your preference
         let formattedDate = dateFormatter.string(from: selectedDate)
@@ -1129,6 +1106,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         let with = dateCV.frame.size.width - 20
         let cwidth = with/3
         return CGSize(width: cwidth, height: 50)
+    }
+    func select(Tittle: String, descriptContent: String) {
+        TextMsgTittle.text = Tittle
+        informationcontent.text = descriptContent
+        showTextMessageView()
     }
     
 }

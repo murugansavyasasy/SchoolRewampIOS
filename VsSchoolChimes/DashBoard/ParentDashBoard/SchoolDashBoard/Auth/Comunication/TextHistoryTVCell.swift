@@ -6,11 +6,14 @@
 //
 
 import UIKit
-
+protocol SelectedTextDelegate{
+    func select(Tittle:String,descriptContent:String)
+}
 class TextHistoryTVCell: UITableViewCell {
     @IBOutlet weak var descriptContent: UILabel!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: UIView!
+    var delegate : SelectedTextDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,6 +26,9 @@ class TextHistoryTVCell: UITableViewCell {
         sendBtn.layer.cornerRadius = 4
     }
 
+    @IBAction func Select(_ sender: UIButton) {
+        delegate?.select(Tittle: "selectedText", descriptContent: descriptContent.text ?? "hgdsxgvbdusf")
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

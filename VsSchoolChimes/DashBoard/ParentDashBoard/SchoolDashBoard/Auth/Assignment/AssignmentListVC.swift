@@ -1,12 +1,12 @@
 import UIKit
 
 class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
- 
+    
     
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
     var didSelectDelegate : DidSelectDelegate?
-    let data = [Assigment(tittle: "Assigment1", subject: "English", dueDate: "19-11-2024", sendeBy: "vs2020", sumissionCount: "1"),Assigment(tittle: "Assigment2", subject: "Tamil", dueDate: "21-11-2024", sendeBy: "vs2020", sumissionCount: "1"),Assigment(tittle: "Assigment3", subject: "Science", dueDate: "22-11-2024", sendeBy: "vs2020", sumissionCount: "1"),Assigment(tittle: "Assigment4", subject: "Maths", dueDate: "24-11-2024", sendeBy: "vs2020", sumissionCount: "1"),Assigment(tittle: "Assigment5", subject: "Physics", dueDate: "26-11-2024", sendeBy: "vs2020", sumissionCount: "1"),Assigment(tittle: "Assigment6", subject: "Computer Science", dueDate: "28-11-2024", sendeBy: "vs2020", sumissionCount: "1")]
+    let data = [Assigment(tittle: "Assigment1", subject: "English", dueDate: "19-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment2", subject: "Tamil nsdvhs dhs hgsdhsgv dchgv cgvdh hdgc sdvhd gcg", dueDate: "21-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment3", subject: "Science", dueDate: "22-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment4", subject: "Maths", dueDate: "24-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment5", subject: "Physics", dueDate: "26-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment6", subject: "Computer Science", dueDate: "28-11-2024", sendeBy: "vs2020sdfsdfghfhftvhdwxcvydywdscv vdy", sumissionCount: "1", date: "Nov 19 2025")]
     var filteredData :[Assigment]?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +22,12 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
         view.addGestureRecognizer(tapGesture)
         register()
     }
-
+    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
     func register(){
-        listTable.register(UINib(nibName: "AssignmentListCTVC", bundle: nil), forCellReuseIdentifier: "AssignmentListCTVC")
+        listTable.register(UINib(nibName: CellConfingName.AssignmentListCTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AssignmentListCTVC)
     }
     func isDueDatePassed(dueDate: String) -> Bool {
         let dateFormatter = DateFormatter()
@@ -72,16 +72,17 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = listTable.dequeueReusableCell(withIdentifier: "AssignmentListCTVC", for: indexPath) as! AssignmentListCTVC
+        let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.AssignmentListCTVC, for: indexPath) as! AssignmentListCTVC
         cell.tittleLbl.text = filteredData?[indexPath.row].tittle
         cell.subjectLbl.text = filteredData?[indexPath.row].subject
         // Compare dueDate with current date
-               if !isDueDatePassed(dueDate: filteredData?[indexPath.row].dueDate ?? "") {
-                   cell.dueDateLbl.textColor = .black
-               } else {
-                   cell.dueDateLbl.textColor = .red
-               }
+        if !isDueDatePassed(dueDate: filteredData?[indexPath.row].dueDate ?? "") {
+            cell.dueDateLbl.textColor = .black
+        } else {
+            cell.dueDateLbl.textColor = .red
+        }
         cell.dueDateLbl.text = filteredData?[indexPath.row].dueDate
+        cell.CreaterdDate.text = filteredData?[indexPath.row].date
         cell.viewBtn.tag = indexPath.row
         cell.didSelectDelegate = self
         return cell
@@ -90,7 +91,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
     func select(index: Int, value: String?, Img: [String], Pdf: String?, text: String?, type: String) {
         didSelectDelegate?.select(index: index, value: value,Img:Img,Pdf:Pdf,text:text,type:type)
     }
@@ -99,7 +100,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         if searchText.isEmpty {
             filteredData = data
         } else {
-             filteredData = data.filter {
+            filteredData = data.filter {
                 $0.tittle.lowercased().contains(searchText.lowercased()) ||
                 $0.subject.lowercased().contains(searchText.lowercased()) ||
                 $0.dueDate.lowercased().contains(searchText.lowercased()) ||
@@ -126,4 +127,5 @@ struct Assigment{
     let dueDate:String
     let sendeBy:String
     let sumissionCount:String
+    let date:String
 }

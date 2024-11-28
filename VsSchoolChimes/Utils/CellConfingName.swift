@@ -27,7 +27,8 @@ class CellConfingName {
     static let RecipientTvCell = "RecipientTvCell"
     static let SideTvcell = "SideTvcell"
     static let Tvcell = "Tvcell"
-    
-   
+    static let AssignmentListCTVC = "AssignmentListCTVC"
+    static let StudentHistryTVC = "StudentHistryTVC"
+
    
 }
