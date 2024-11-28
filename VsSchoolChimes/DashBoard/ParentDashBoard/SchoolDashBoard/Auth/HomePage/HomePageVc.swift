@@ -41,13 +41,15 @@ class HomePageVc: UIViewController,UITabBarDelegate{
     let name = "saran"
     
     
-    
+    let alert = CustomAlert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         
+        
+     
         
         searchHeightCon.constant = 56
         
@@ -233,9 +235,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.MenuImgView.image  = nil
             //            if items[indexPath.row]
             let label = items[indexPath.row].translated()
+            
             let img = UIImage(named: Imgitems[indexPath.row])
 //           let sum = indexPath.row % Imgitems.count
 //            let img = UIImage(named: Imgitems[sum] )
+            
+            cell.MenuLbl.setFont(style: .body, size: 10)
             
             cell.MenuLbl.text = label
             cell.MenuImgView.image  = img
@@ -288,6 +293,21 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             }else if items[indexPath.row].translated() == "Lesson Plan".translated() {
                 
                 // imagePdfNavigate()
+                
+                
+                alert.showAlertCancel (
+                    title: "Confirm Action",
+                    message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
+                    on: self,
+                    onOk: {
+                        print("OK button tapped")
+                        // Perform OK action
+                    },
+                    onNo: {
+                        print("No button tapped")
+                        // Perform No action
+                    }
+                )
             }
             else if items[indexPath.row] == "PTM".translated() {
                 

@@ -21,5 +21,26 @@ class CustomAlert{
         
     }
     
+    func showAlertCancel(title: String, message: String, actionLbl1: String, actionLbl2: String, on viewController: UIViewController, onOk: @escaping () -> Void, onNo: @escaping () -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        // OK button
+        let okAction = UIAlertAction(title: actionLbl1, style: .default) { _ in
+            onOk()
+        }
+        alert.addAction(okAction)
+
+        // No button
+        let noAction = UIAlertAction(title: actionLbl2, style: .cancel) { _ in
+            onNo()
+        }
+        alert.addAction(noAction)
+
+        // Present the alert
+        viewController.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
     
 }
