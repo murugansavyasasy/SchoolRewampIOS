@@ -12,6 +12,7 @@
 		<key>Models.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< Updated upstream
 			<integer>39</integer>
 		</dict>
 		<key>VsSchoolChimes 1.xcscheme_^#shared#^_</key>
@@ -23,10 +24,14 @@
 		<dict>
 			<key>orderHint</key>
 			<integer>15</integer>
+=======
+			<integer>33</integer>
+>>>>>>> Stashed changes
 		</dict>
 		<key>VsSchoolChimes.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< Updated upstream
 			<integer>4</integer>
 		</dict>
 		<key>VsSchoolChimesTests.xcscheme_^#shared#^_</key>
@@ -56,6 +61,9 @@
 		<dict>
 			<key>primary</key>
 			<true/>
+=======
+			<integer>32</integer>
+>>>>>>> Stashed changes
 		</dict>
 	</dict>
 </dict>
