@@ -48,7 +48,7 @@ class SelectRecipientVC: UIViewController {
         sendAllview.isHidden = true
         tableview.isHidden = true
         
-        SendButton.layer.cornerRadius = 10
+        SendButton.layer.cornerRadius = Colornames.CORadius10
         SendButton.isHidden = true
 
         dropDowViewSetup()
@@ -85,10 +85,10 @@ class SelectRecipientVC: UIViewController {
     func dropDowViewSetup(){
         
         
-        SelectSchool.layer.cornerRadius = 10
-        StdorSec.layer.cornerRadius = 10
-        stdorgrp.layer.cornerRadius = 10
-        sendAllview.layer.cornerRadius = 10
+        SelectSchool.layer.cornerRadius = Colornames.CORadius10
+        StdorSec.layer.cornerRadius = Colornames.CORadius10
+        stdorgrp.layer.cornerRadius = Colornames.CORadius10
+        sendAllview.layer.cornerRadius = Colornames.CORadius10
        
         
         SelectSchool.layer.shadowColor = UIColor.black.cgColor

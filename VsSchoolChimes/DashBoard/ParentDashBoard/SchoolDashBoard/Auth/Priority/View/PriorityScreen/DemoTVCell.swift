@@ -9,6 +9,12 @@ import UIKit
 
 class DemoTVCell: UITableViewCell {
     @IBOutlet weak var namelabel: UILabel!
+    
+    @IBOutlet weak var REgisterNoLbl: UILabel!
+    
+    @IBOutlet weak var AddressLbl: UILabel!
+    @IBOutlet weak var SchoolnameLbl: UILabel!
+    @IBOutlet weak var StdSecLbl: UILabel!
     @IBOutlet weak var imgview: UIImageView!
     @IBOutlet weak var cellview: UIView!
     
@@ -20,7 +26,7 @@ class DemoTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        cellview.layer.cornerRadius = 10
+        cellview.layer.cornerRadius = Colornames.CORadius10
         cellview.layer.masksToBounds = true
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOpacity = 0.5
@@ -32,6 +38,12 @@ class DemoTVCell: UITableViewCell {
         imgview.layer.cornerRadius =  imgview.frame.width/2
         imgview.layer.masksToBounds = true
         
+        namelabel.setFont(style: .title, size: FontSize.TitleSize)
+        REgisterNoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        AddressLbl.setFont(style: .body, size: FontSize.BodySize)
+        SchoolnameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        StdSecLbl.setFont(style: .body, size: FontSize.BodySize)
+
         //namelabel.text?.append("Saranraj Shanmugammmmmmmmmm")
 
     }

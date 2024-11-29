@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AssignmentListVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="HeaderLabel" destination="fc7-L8-Mio" id="O99-2y-neG"/>
                 <outlet property="listTable" destination="scd-Dh-Szc" id="8QY-5s-arb"/>
                 <outlet property="searchview" destination="lyN-ZO-pt8" id="q1B-jy-IZw"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

@@ -29,8 +29,11 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
 
         ReportHeading.text = "Report a bug".translated()
+        ReportHeading.setFont(style: .header, size: 20)
         
-        ModuleDropDown.layer.cornerRadius = 10
+        selectModuleLbl.setFont(style: .body, size: 14)
+        
+        ModuleDropDown.layer.cornerRadius = Colornames.CORadius10
         ModuleDropDown.layer.borderWidth = 0.5
         ModuleDropDown.layer.borderColor = UIColor.lightGray.cgColor
         
@@ -38,7 +41,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
         BugsTextview.text = "Enter bugs"
         BugsTextview.textColor = UIColor.lightGray
         
-        textViewStack.layer.cornerRadius = 10
+        textViewStack.layer.cornerRadius = Colornames.CORadius10
         textViewStack.layer.borderWidth = 0.5
         textViewStack.layer.borderColor = UIColor.lightGray.cgColor
         collectionView.delegate = self

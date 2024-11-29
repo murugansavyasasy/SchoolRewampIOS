@@ -21,6 +21,10 @@ class FAQViewController: UIViewController {
         super.viewDidLoad()
         
         FaqPageHeading.text = "FAQ".translated()
+        FaqPageHeading.setFont(style: .header, size: 20)
+        
+        submitbutton.layer.cornerRadius = Colornames.CORadius10
+        submitbutton.setTitleFont(style: .body, size: 14)
 
         let nib = UINib(nibName: CellConfingName.FAQTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.FAQTableViewCell)

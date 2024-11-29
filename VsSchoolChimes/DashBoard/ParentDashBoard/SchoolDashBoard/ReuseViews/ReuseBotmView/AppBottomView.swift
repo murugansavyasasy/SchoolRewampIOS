@@ -58,7 +58,7 @@ class AppBottomView: UIView {
     }
     
     @IBAction func settings(){
-        settingsImageView.layer.cornerRadius = 10
+        settingsImageView.layer.cornerRadius = Colornames.CORadius10
         settingsImageView.layer.masksToBounds = true
         settingsImageView.backgroundColor = Colornames.ClickClr
         

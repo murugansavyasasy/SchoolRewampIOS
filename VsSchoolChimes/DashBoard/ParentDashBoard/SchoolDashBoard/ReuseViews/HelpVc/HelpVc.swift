@@ -14,6 +14,7 @@ class HelpVc: UIViewController {
         super.viewDidLoad()
 
         HelppageHeader.text = "Contact Support".translated()
+        HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize)
         // Do any additional setup after loading the view.
     }
 

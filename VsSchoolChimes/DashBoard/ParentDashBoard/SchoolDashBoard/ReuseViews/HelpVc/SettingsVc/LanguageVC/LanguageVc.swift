@@ -10,7 +10,8 @@ import UIKit
 @available(iOS 14.0, *)
 class LanguageVc: UIViewController {
    
-
+    @IBOutlet weak var SelectLangLabel: UILabel!
+    
     @IBOutlet weak var ConfirmBtn: UIButton!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var backBtn: UIButton!
@@ -30,6 +31,8 @@ class LanguageVc: UIViewController {
     var index = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SelectLangLabel.setFont(style: .title, size: FontSize.TitleSize)
          index = UserDefaults.standard.integer(forKey: "index")
         Items[index].selected = true
         
@@ -40,15 +43,17 @@ class LanguageVc: UIViewController {
         print("languageCodelanguageCode",languageCode)
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        baseview.layer.cornerRadius = 15
+        baseview.layer.cornerRadius = Colornames.CORadius15
         
-        ConfirmBtn.layer.cornerRadius = 10
+        ConfirmBtn.layer.cornerRadius = Colornames.CORadius10
         
 
         
            ConfirmBtn.setTitle(Buttontext[index], for: .normal) // Use setTitle(_:for:) here
            ConfirmBtn.titleLabel?.textAlignment = .center
            ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+           ConfirmBtn.setTitleFont(style: .body, size: 14)
+        
         
         
             tv.dataSource = self

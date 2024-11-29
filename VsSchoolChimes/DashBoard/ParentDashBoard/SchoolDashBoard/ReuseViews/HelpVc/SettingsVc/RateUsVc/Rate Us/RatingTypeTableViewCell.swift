@@ -36,7 +36,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         collectionview.delegate = self
         collectionview.dataSource = self
         // Initialization code
-        textview.layer.cornerRadius = 10
+        textview.layer.cornerRadius = Colornames.CORadius10
         textview.layer.borderWidth = 1
         textview.layer.borderColor = UIColor.lightGray.cgColor
         

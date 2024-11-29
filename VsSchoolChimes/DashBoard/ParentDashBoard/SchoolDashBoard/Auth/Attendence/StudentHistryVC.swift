@@ -9,6 +9,7 @@ import UIKit
 
 class StudentHistryVC: UIViewController {
 
+    @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var selectAllBtn: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     var studentData:[Student] = [Student(name: "viswah", isAbsent: true, rollnumber: "1234", phoneNo: "9087654321"),Student(name: "chandhru", isAbsent: true, rollnumber: "89848", phoneNo: "9597296160"),Student(name: "kothai", isAbsent: true, rollnumber: "898929", phoneNo: "9360183031"),Student(name: "shiyam", isAbsent: true, rollnumber: "90836", phoneNo: "98762356335"),Student(name: "Navin", isAbsent: true, rollnumber: "746747", phoneNo: "7456792347"),Student(name: "Nicolash", isAbsent: true, rollnumber: "76235", phoneNo: "9835546472"),Student(name: "sharmila", isAbsent: true, rollnumber: "873536", phoneNo: "89873456543")]
@@ -16,6 +17,10 @@ class StudentHistryVC: UIViewController {
     var totalcount = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
         registerCell()
         // Do any additional setup after loading the view.
     }

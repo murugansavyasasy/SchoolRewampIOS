@@ -11,6 +11,8 @@ import UIKit
 class LoginVc: UIViewController, UITextFieldDelegate {
 
     
+    @IBOutlet weak var PasswordLabel: UILabel!
+    @IBOutlet weak var MobilenumLabel: UILabel!
     @IBOutlet weak var forgetLbl: UILabel!
     @IBOutlet weak var passTextFld: UITextField!
     @IBOutlet weak var MobilTextFld: UITextField!
@@ -23,7 +25,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        StyleAndTranslater()
         
         loginBtnNm.backgroundColor = Colornames.ButtonColor
         loginBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
@@ -55,6 +57,17 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         // Remove observers when the view controller is deallocated
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func StyleAndTranslater(){
+        //MARK: Label font
+        PasswordLabel.setFont(style: .title, size: FontSize.TitleSize)
+        MobilenumLabel.setFont(style: .title, size: FontSize.TitleSize)
+        forgetLbl.setFont(style: .body, size: FontSize.BodySize)
+
+        //MARK: Button font
+        loginBtnNm.setTitleFont(style: .body, size: FontSize.BodySize)
+
     }
 
     @IBAction  func forgetClick(){

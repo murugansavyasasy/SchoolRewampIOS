@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="MobilTextFld" destination="owI-ft-yU8" id="MwK-qY-DhF"/>
+                <outlet property="MobilenumLabel" destination="rHh-ud-kjR" id="m3x-bL-mly"/>
+                <outlet property="PasswordLabel" destination="B98-VS-j8f" id="xMs-zC-hZB"/>
                 <outlet property="eyeImage" destination="9Il-4r-rDD" id="eNJ-Il-DIc"/>
                 <outlet property="forgetLbl" destination="rNg-67-5YJ" id="fAj-9q-fh6"/>
                 <outlet property="loginBtnNm" destination="VTA-af-yQq" id="6D7-FV-Y4A"/>

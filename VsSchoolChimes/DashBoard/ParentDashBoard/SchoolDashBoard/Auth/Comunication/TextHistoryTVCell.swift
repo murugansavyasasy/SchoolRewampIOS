@@ -10,6 +10,9 @@ protocol SelectedTextDelegate{
     func select(Tittle:String,descriptContent:String)
 }
 class TextHistoryTVCell: UITableViewCell {
+    
+    @IBOutlet weak var DateLabel: UILabel!
+    @IBOutlet weak var MessageTitle: UILabel!
     @IBOutlet weak var descriptContent: UILabel!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: UIView!
@@ -24,8 +27,11 @@ class TextHistoryTVCell: UITableViewCell {
         outerview.layer.shadowOpacity = 0.3
         outerview.layer.cornerRadius = 20
         sendBtn.layer.cornerRadius = 4
+        
+        DateLabel.setFont(style: .title, size: FontSize.TitleSize)
+        MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
+        descriptContent.setFont(style: .body, size: FontSize.BodySize)
     }
-
     @IBAction func Select(_ sender: UIButton) {
         delegate?.select(Tittle: "selectedText", descriptContent: descriptContent.text ?? "hgdsxgvbdusf")
     }

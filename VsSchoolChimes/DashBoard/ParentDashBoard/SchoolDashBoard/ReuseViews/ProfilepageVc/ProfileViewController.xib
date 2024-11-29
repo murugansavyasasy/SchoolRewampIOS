@@ -61,13 +61,18 @@
                             <rect key="frame" x="0.0" y="232" width="393" height="527"/>
                             <color key="backgroundColor" systemColor="systemGray3Color"/>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OI2-13-VBd">
-                            <rect key="frame" x="317.66666666666669" y="8" width="67.333333333333314" height="34.333333333333336"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="pencil" catalog="system" imagePlacement="trailing" title="Edit" imagePadding="7">
-                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small" weight="semibold"/>
-                                <fontDescription key="titleFontDescription" type="system" pointSize="0.0"/>
-                            </buttonConfiguration>
+                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OI2-13-VBd">
+                            <rect key="frame" x="285" y="8" width="100" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="v33-Fc-o3j"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="19" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="7" maxY="0.0"/>
+                            <state key="normal" title="Edit" image="pencil" catalog="system">
+                                <color key="titleColor" name="AccentColor"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small" weight="semibold"/>
+                            </state>
                             <connections>
                                 <action selector="EditBtnAct:" destination="-1" eventType="touchUpInside" id="sYt-0s-gss"/>
                             </connections>
@@ -448,9 +453,6 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" title="Save"/>
-                            <connections>
-                                <action selector="SaveAct:" destination="-1" eventType="touchUpInside" id="k98-Jk-gYT"/>
-                            </connections>
                         </button>
                     </subviews>
                     <constraints>
@@ -499,6 +501,9 @@
         <image name="mail" width="26" height="26"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
         <image name="stuentimg 1" width="1062" height="1600"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

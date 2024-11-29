@@ -16,7 +16,7 @@ class SettingsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
+        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
         // Initialization code
     }
 

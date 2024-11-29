@@ -12,7 +12,10 @@ class Colornames {
     
     static  var ButtonColor = UIColor(named: "ButtonColor")
     static  var countryClr = UIColor(named: "countryClr")
-    static  var ButtoncornerRadius = 10
+    static  var ButtoncornerRadius : CGFloat = 10
+    static  var CORadius5 : CGFloat = 5
+    static  var CORadius10 : CGFloat = 10
+    static  var CORadius15 : CGFloat = 15
    
     
    

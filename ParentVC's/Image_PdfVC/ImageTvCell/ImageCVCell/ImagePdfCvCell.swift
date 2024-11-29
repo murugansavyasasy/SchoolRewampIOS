@@ -22,7 +22,7 @@ class ImagePdfCvCell: UICollectionViewCell {
 //        fullView.layer.cornerRadius = 15
         webView.isHidden = true
         
-        fullView.layer.cornerRadius = 16
+        fullView.layer.cornerRadius = Colornames.CORadius15
         fullView.backgroundColor = .white // Ensure it's white if not set in the storyboard
                
                // Apply shadow properties

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TermsAndCondVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="HeadingLabel" destination="bOW-oI-tYT" id="uXv-zY-4E6"/>
                 <outlet property="Pdfview" destination="bYm-At-cav" id="Tqw-Ln-88r"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

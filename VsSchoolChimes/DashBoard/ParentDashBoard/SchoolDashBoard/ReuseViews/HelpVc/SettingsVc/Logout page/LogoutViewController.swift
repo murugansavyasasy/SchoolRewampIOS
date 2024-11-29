@@ -21,14 +21,19 @@ class LogoutViewController: UIViewController {
         
         DescribeLabel.text = "Are you sure you want to logout?".translated()
         Cancellabel.text = "Cancel".translated()
+        
+        DescribeLabel.setFont(style: .title, size: FontSize.TitleSize)
+        Cancellabel.setFont(style: .body, size: FontSize.BodySize)
 //        LogoutButtonView.titleLabel?.text = "Logout".translated()
 //        LogoutButtonView.titleLabel?.adjustsFontSizeToFitWidth = true
         LogoutButtonView.setTitle("Logout".translated(), for: .normal)
         LogoutButtonView.titleLabel?.adjustsFontSizeToFitWidth = true
+        
+        LogoutButtonView.setTitleFont(style: .body, size: 13)
 
 
         overallview.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        LogoutView.layer.cornerRadius = 10
+        LogoutView.layer.cornerRadius = Colornames.CORadius10
         //cellview.layer.masksToBounds = true
         LogoutView.layer.shadowColor = UIColor.black.cgColor
         LogoutView.layer.shadowOpacity = 0.5
@@ -36,7 +41,7 @@ class LogoutViewController: UIViewController {
         LogoutView.layer.shadowRadius = 3
         LogoutView.layer.masksToBounds = false
         
-        LogoutButtonView.layer.cornerRadius = 15
+        LogoutButtonView.layer.cornerRadius = Colornames.CORadius15
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(CancelAct))
         Cancellabel.addGestureRecognizer(tap)

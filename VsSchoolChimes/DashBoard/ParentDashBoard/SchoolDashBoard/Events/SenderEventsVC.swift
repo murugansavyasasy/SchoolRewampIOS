@@ -35,7 +35,7 @@ class SenderEventsVC: UIViewController{
         ContentTextview.delegate = self
         
         SubmitBtn.backgroundColor = UIColor.systemGray4
-        SubmitBtn.layer.cornerRadius = 10
+        SubmitBtn.layer.cornerRadius = Colornames.CORadius10
     }
     
    

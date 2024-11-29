@@ -3,6 +3,7 @@ import UIKit
 class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
     
     
+    @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
     var didSelectDelegate : DidSelectDelegate?
@@ -10,6 +11,8 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
     var filteredData :[Assigment]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
         searchview.placeholder = "Search..."
         searchview.delegate = self

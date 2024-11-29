@@ -24,7 +24,7 @@ class PiechartCVCell: UICollectionViewCell {
         // Configure the chart with the cell’s own data on load
         
         //cellview.layer.masksToBounds = true
-        Cellview.layer.cornerRadius = 10
+        Cellview.layer.cornerRadius = Colornames.CORadius10
         Cellview.layer.shadowColor = UIColor.black.cgColor
         Cellview.layer.shadowOpacity = 0.5
         Cellview.layer.shadowOffset = CGSize(width: 4, height: 4)

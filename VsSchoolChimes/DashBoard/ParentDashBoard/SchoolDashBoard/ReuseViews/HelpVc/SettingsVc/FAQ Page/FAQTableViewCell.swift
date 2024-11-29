@@ -9,6 +9,7 @@ import UIKit
 
 class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
 
+    @IBOutlet weak var QuestionLabel: UILabel!
     @IBOutlet weak var stackview: UIStackView!
     @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var cellView: UIView!
@@ -25,13 +26,15 @@ class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
         textview.delegate = self
         
         //cellView.layer.cornerRadius = 15
-        cellView.layer.cornerRadius = 10
+        cellView.layer.cornerRadius = Colornames.CORadius10
         //cellview.layer.masksToBounds = true
         cellView.layer.shadowColor = UIColor.black.cgColor
         cellView.layer.shadowOpacity = 0.5
         cellView.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellView.layer.shadowRadius = 3
         cellView.layer.masksToBounds = false
+        
+        QuestionLabel.setFont(style: .title, size: FontSize.TitleSize)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

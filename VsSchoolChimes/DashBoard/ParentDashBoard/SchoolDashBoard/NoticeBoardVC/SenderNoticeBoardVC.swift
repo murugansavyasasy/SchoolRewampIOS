@@ -46,7 +46,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
                ToDatePicker.datePickerMode = .date
                ToDatePicker.minimumDate = Date()
 
-        SubmitBtn.layer.cornerRadius = 10
+        SubmitBtn.layer.cornerRadius = Colornames.CORadius10
         textview.text = "Type content here"
         textview.textColor = .lightGray
         textview.delegate = self

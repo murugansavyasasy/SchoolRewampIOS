@@ -31,6 +31,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         SettingspageHeading.text = "Settings".translated()
+        SettingspageHeading.setFont(style: .header, size: 20)
         // Do any additional setup after loading the view.
         
         for imageCategory in Images {
@@ -76,6 +77,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier:CellConfingName.SettingHeaderView) as! SettingHeaderView
         cell.headerLabel.text = sections[section].title
+        cell.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
         
         return cell
     }

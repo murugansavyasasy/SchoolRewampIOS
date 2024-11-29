@@ -20,6 +20,12 @@ class StudentHistryTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        statusBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        phnBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
+        rollNomber.setFont(style: .body, size: FontSize.BodySize)
+        nameLbl.setFont(style: .body, size: FontSize.BodySize)
+
         outerView.layer.cornerRadius = 20
         outerView.layer.shadowColor = UIColor.black.cgColor
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)

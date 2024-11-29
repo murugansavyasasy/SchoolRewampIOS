@@ -13,6 +13,9 @@ class PasswordVc: UIViewController {
     @IBOutlet weak var eyeImage: UIImageView!
     
     @IBOutlet weak var createPassDefaultLbl: UILabel!
+    
+    
+    @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
     @IBOutlet weak var confirmPass: UITextField!
     
@@ -25,7 +28,10 @@ class PasswordVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
+        ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
         
+        confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
 
         // Do any additional setup after loading the view.
         

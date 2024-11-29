@@ -9,6 +9,14 @@ import UIKit
 
 class AssignmentListCTVC: UITableViewCell {
     
+    
+    @IBOutlet weak var SendBySecLbl: UILabel!
+    @IBOutlet weak var SubCountSec: UILabel!
+    @IBOutlet weak var DueSecLbl: UILabel!
+    @IBOutlet weak var CategorySecLbl: UILabel!
+    @IBOutlet weak var subjectSecLbl: UILabel!
+    
+    @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var imgHeght: NSLayoutConstraint!
     @IBOutlet weak var spirelview: UIView!
     @IBOutlet weak var outImg: UIImageView!
@@ -35,6 +43,28 @@ class AssignmentListCTVC: UITableViewCell {
            spirelview.layer.shadowRadius = 10
            spirelview.layer.shadowOpacity = 0.3
            outImg.translatesAutoresizingMaskIntoConstraints = false
+           
+           //MARK: Label Font
+           SendBySecLbl.setFont(style: .body, size: FontSize.BodySize)
+           SubCountSec.setFont(style: .body, size: FontSize.BodySize)
+           DueSecLbl.setFont(style: .body, size: FontSize.BodySize)
+           CategorySecLbl.setFont(style: .body, size: FontSize.BodySize)
+           subjectSecLbl.setFont(style: .body, size: FontSize.BodySize)
+
+           imageLabel.setFont(style: .body, size: FontSize.BodySize)
+           tittleLbl.setFont(style: .title, size: FontSize.TitleSize)
+           categoryLbl.setFont(style: .body, size: FontSize.BodySize)
+           subjectLbl.setFont(style: .body, size: FontSize.BodySize)
+           sendByLbl.setFont(style: .body, size: FontSize.BodySize)
+           sumissionLbl.setFont(style: .body, size: FontSize.BodySize)
+           dueDateLbl.setFont(style: .body, size: FontSize.BodySize)
+           CreaterdDate.setFont(style: .body, size: FontSize.BodySize)
+           CreatedTime.setFont(style: .body, size: FontSize.BodySize)
+
+           //MARK: Button Font
+           submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+           viewBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
        }
 
        override func layoutSubviews() {

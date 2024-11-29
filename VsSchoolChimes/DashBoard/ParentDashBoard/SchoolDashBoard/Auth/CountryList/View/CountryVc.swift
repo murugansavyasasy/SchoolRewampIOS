@@ -11,6 +11,12 @@ import UIKit
 class CountryVc: UIViewController {
 
     
+    @IBOutlet weak var canadaLabel: UILabel!
+    @IBOutlet weak var IndonasiaLabel: UILabel!
+    @IBOutlet weak var ThaiLabel: UILabel!
+    @IBOutlet weak var CountrynameLbl: UILabel!
+    @IBOutlet weak var DescriptionLbl: UILabel!
+    @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var TermsLabel: UILabel!
     @IBOutlet weak var ClickArrowImg: UIImageView!
     @IBOutlet weak var fullview: UIView!
@@ -27,6 +33,8 @@ class CountryVc: UIViewController {
     var CountryCheck = 0
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        StyleAndTranslater()
 
         // Do any additional setup after loading the view.
         
@@ -69,6 +77,27 @@ class CountryVc: UIViewController {
         TermsLabel.addGestureRecognizer(tap1)
         TermsLabel.isUserInteractionEnabled = true
         
+    }
+    
+    func StyleAndTranslater(){
+        
+        //MARK: Label font
+        canadaLabel.setFont(style: .body, size: FontSize.BodySize)
+        IndonasiaLabel.setFont(style: .body, size: FontSize.BodySize)
+        ThaiLabel.setFont(style: .body, size: FontSize.BodySize)
+        CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
+        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        TermsLabel.setFont(style: .title, size: FontSize.TitleSize)
+
+        //MARK: Button font
+        Canada.setTitleFont(style: .body, size: FontSize.BodySize)
+        Singapore.setTitleFont(style: .body, size: FontSize.BodySize)
+        China.setTitleFont(style: .body, size: FontSize.BodySize)
+        Usa.setTitleFont(style: .body, size: FontSize.BodySize)
+        thailand.setTitleFont(style: .body, size: FontSize.BodySize)
+        indiabutton.setTitleFont(style: .body, size: FontSize.BodySize)
+
     }
 
     @IBAction  func GotoTermsVc(){

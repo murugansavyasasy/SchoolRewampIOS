@@ -37,6 +37,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     let tapColor = UIColor(named:"topBackgroundCLr 1")
     
     
+    @IBOutlet weak var TxtMsgSendBtn: UIButton!
+    @IBOutlet weak var TextMsgTitle: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var timePickerHeight: NSLayoutConstraint!
     @IBOutlet weak var fromTime: UIButton!
@@ -104,13 +106,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         printCurrentMonth()
         hideCalendarHeader()
         uiUUpdate()
-        sringTranslate()
         setupAudioSession()
         CellRegistre()
         setupWaveBars()
         setupTimePicker()
         keyboardDionebtn()
         setInitialButtonTitles()
+        StyleAndTranslater()
+        
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
@@ -118,7 +121,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         
     }
-    func sringTranslate(){
+   
+    
+    func StyleAndTranslater() {
+        
+        //MARK: Translate
         fromDateLbl.text = "From Time".translated()
         ScheduleLbl.text = "Schedule".translated()
         ToDateLbl.text = "To Time".translated()
@@ -126,6 +133,47 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         clickVoiceLbl.text = "Voice Message".translated()
         clickTextView.text = "Text Message".translated()
         clickSchedule.text = "Schedule Call".translated()
+        
+        
+        //MARK: Label font style
+        TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
+        messageSendTime.setFont(style: .body, size: FontSize.BodySize)
+        voiceTiming.setFont(style: .body, size: FontSize.BodySize)
+        Timinglbl.setFont(style: .body, size: FontSize.BodySize)
+        clickVoiceLbl.setFont(style: .title, size: FontSize.TitleSize)
+        clickSchedule.setFont(style: .title, size: FontSize.TitleSize)
+        clickTextView.setFont(style: .title, size: FontSize.TitleSize)
+        ScheduleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        fromDateLbl.setFont(style: .title, size: FontSize.TitleSize)
+        ToDateLbl.setFont(style: .title, size: FontSize.TitleSize)
+        EnableCallLbl.setFont(style: .title, size: FontSize.TitleSize)
+        TextMsgTitle.setFont(style: .title, size: FontSize.TitleSize)
+        TextMsgContent.setFont(style: .title, size: FontSize.TitleSize)
+        
+        //MARK: Button Title font style
+        fromTime.setTitleFont(style: .body, size: FontSize.BodySize)
+        toTime.setTitleFont(style: .body, size: FontSize.BodySize)
+        recoderbtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        btnplay.setTitleFont(style: .body, size: FontSize.BodySize)
+        dltbtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        addfile.setTitleFont(style: .body, size: FontSize.BodySize)
+        sendbtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        scheduleBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        textBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        doneBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        historyBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        nextMontBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        radio1.setTitleFont(style: .body, size: FontSize.BodySize)
+        radio2.setTitleFont(style: .body, size: FontSize.BodySize)
+        moveTextmessage.setTitleFont(style: .body, size: FontSize.BodySize)
+        moveVoiceMessage.setTitleFont(style: .body, size: FontSize.BodySize)
+        voiceBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        scheduleBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        TxtMsgSendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
+
+       
     }
     
     func uiUUpdate(){

@@ -21,6 +21,7 @@ class ContactUsVc: UIViewController {
         super.viewDidLoad()
 
         ContactusHeader.text = "Contact Us".translated()
+        ContactusHeader.setFont(style: .header, size: 20)
         tv.dataSource = self
         tv.delegate = self
         

@@ -17,7 +17,7 @@ class ImageCvCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        imageViews.layer.cornerRadius = 10
+        imageViews.layer.cornerRadius = Colornames.CORadius10
         
     }
 

@@ -10,6 +10,8 @@ import UIKit
 @available(iOS 14.0, *)
 class PriorityViewController1: UIViewController {
     
+    @IBOutlet weak var TeacherParentlbl: UILabel!
+    @IBOutlet weak var ChooseRoleLabel: UILabel!
     
     @IBOutlet weak var NextButtonView: UIButton!
     
@@ -39,10 +41,32 @@ class PriorityViewController1: UIViewController {
         teacherButton.layer.cornerRadius = 20
         ParentButton.layer.cornerRadius = 20
         
+        TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
+        ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
+
+        NextButtonView.setTitleFont(style: .body, size: FontSize.BodySize)
+
+        print("TeacherButton: \(teacherButton)")
+            print("ParentButton: \(ParentButton)")
+
+            // Apply font styles
+            TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
+            ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
+
+            ParentButton.setTitle("Parent", for: .normal)
+            teacherButton.setTitle("Principal", for: .normal)
+
+            DispatchQueue.main.async {
+                self.teacherButton.setTitleFont(style: .body, size: FontSize.BodySize)
+                self.ParentButton.setTitleFont(style: .body, size: FontSize.BodySize)
+            }
+        
         gradientcolours(button: NextButtonView, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         teacherButton.tintColor = .white
+        
+       
         
         print("tableview.frame1", tableview.contentSize.height)
         let nib = UINib(nibName: identifier, bundle: nil)
@@ -70,6 +94,7 @@ class PriorityViewController1: UIViewController {
 //        ParentButton.backgroundColor = .clear
         gradientcolours(button: ParentButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ParentButton.tintColor = .black
+      
         
         tableview.delegate = self
         tableview.dataSource = self
@@ -89,6 +114,7 @@ class PriorityViewController1: UIViewController {
         gradientcolours(button: teacherButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         
         teacherButton.tintColor = .black
+       
         
         tableview.delegate = self
         tableview.dataSource = self

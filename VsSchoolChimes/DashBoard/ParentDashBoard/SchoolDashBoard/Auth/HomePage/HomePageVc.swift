@@ -10,6 +10,8 @@ import UIKit
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate{
     
+    @IBOutlet weak var AddressLabel: UILabel!
+    @IBOutlet weak var SchoolNameLabel: UILabel!
     @IBOutlet weak var BellImage: UIImageView!
     
     @IBOutlet weak var schoolLogoImg: UIImageView!
@@ -81,6 +83,9 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         let tap = UITapGestureRecognizer(target: self, action: #selector(openNotification))
         BellImage.addGestureRecognizer(tap)
         BellImage.isUserInteractionEnabled = true
+        
+        SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
+        AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         
     }
     

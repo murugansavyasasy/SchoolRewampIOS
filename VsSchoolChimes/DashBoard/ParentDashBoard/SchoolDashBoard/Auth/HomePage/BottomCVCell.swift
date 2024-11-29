@@ -38,7 +38,7 @@ class BottomCVCell: UICollectionViewCell {
 //        contentView.layer.masksToBounds = false
         
         //MenuImgView.image = image
-        GradientView.layer.cornerRadius = 10
+        GradientView.layer.cornerRadius = Colornames.CORadius10
         //applyGradient()
         
     }

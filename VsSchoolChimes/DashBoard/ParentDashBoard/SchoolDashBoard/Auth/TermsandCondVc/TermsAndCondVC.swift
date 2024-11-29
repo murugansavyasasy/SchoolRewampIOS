@@ -11,9 +11,13 @@ import WebKit
 //"https://schoolchimes.com/vs_web/terms_conditions/"
 class TermsAndCondVC: UIViewController {
 
+    @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var Pdfview: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        HeadingLabel.text = "Terms and Conditions".translated()
+        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
 
         if let pdfURL = URL(string: "https://schoolchimes.com/vs_web/terms_conditions/") {
               let request = URLRequest(url: pdfURL)

@@ -23,13 +23,16 @@ class ContactUsTVCell: UITableViewCell {
 //        cellview.layer.masksToBounds = true
 //        cellview.layer.cornerRadius = 5
         
-        cellview.layer.cornerRadius = 10
+        cellview.layer.cornerRadius = Colornames.CORadius10
         //cellview.layer.masksToBounds = true
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOpacity = 0.5
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellview.layer.shadowRadius = 3
         cellview.layer.masksToBounds = false
+        
+        contentLabel.setFont(style: .body, size: 13)
+        mailOrPhoneLabel.setFont(style: .body, size: 13)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(openGmail))
         mailOrPhoneLabel.addGestureRecognizer(tap)

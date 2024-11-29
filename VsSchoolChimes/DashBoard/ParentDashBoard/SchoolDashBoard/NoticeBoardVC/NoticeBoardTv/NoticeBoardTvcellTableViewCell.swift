@@ -29,7 +29,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        cellview.layer.cornerRadius = 10
+        cellview.layer.cornerRadius = Colornames.CORadius10
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOpacity = 0.5
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)

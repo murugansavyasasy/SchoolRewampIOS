@@ -11,7 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomePageVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="AddressLabel" destination="i8g-gF-Fug" id="ih3-KL-Ffi"/>
                 <outlet property="BellImage" destination="KX3-w0-nId" id="OtC-2K-yR6"/>
+                <outlet property="SchoolNameLabel" destination="g0x-bn-dgu" id="FtQ-V3-YSh"/>
                 <outlet property="TopCv" destination="Lsi-XR-Teu" id="Xuc-JJ-caO"/>
                 <outlet property="bottomCv" destination="E3y-MD-bUI" id="dpr-iv-T0s"/>
                 <outlet property="pageContorler" destination="sco-PE-HIn" id="Zfn-iq-e3v"/>

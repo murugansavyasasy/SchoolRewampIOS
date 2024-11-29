@@ -19,7 +19,7 @@ class Tvcell: UITableViewCell {
         fullView.layer.shadowOffset = CGSize(width: 4, height: 4)
         fullView.layer.shadowRadius = 3
         fullView.layer.masksToBounds = false
-        fullView.layer.cornerRadius = 10
+        fullView.layer.cornerRadius = Colornames.CORadius10
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

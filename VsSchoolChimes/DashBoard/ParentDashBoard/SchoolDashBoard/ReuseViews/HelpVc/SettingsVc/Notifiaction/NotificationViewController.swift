@@ -24,6 +24,7 @@ class NotificationViewController: UIViewController {
         super.viewDidLoad()
         
         NotificationpageHeader.text = "Notifications".translated()
+        NotificationpageHeader.setFont(style: .header, size: 20)
         
         tableview.dataSource = self
         tableview.delegate = self

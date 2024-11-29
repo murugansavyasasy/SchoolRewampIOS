@@ -18,10 +18,13 @@ class NotificationTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        cellview.layer.cornerRadius = 15
+        cellview.layer.cornerRadius = Colornames.CORadius15
         roundview.layer.cornerRadius = roundview.frame.width/2
         
-        
+        NameLabel.setFont(style: .title, size: FontSize.TitleSize)
+        messageTypeLabel.setFont(style: .title, size: FontSize.TitleSize)
+        contentLabel.setFont(style: .body, size: FontSize.BodySize)
+    
         
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOpacity = 0.5
