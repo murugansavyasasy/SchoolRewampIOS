@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -20,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="488" height="393"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x7e-qG-QRb" customClass="ShimmerView" customModule="VsSchoolChimes" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x7e-qG-QRb" customClass="AnimatView" customModule="VsSchoolChimes" customModuleProvider="target">
                         <rect key="frame" x="10" y="20" width="468" height="363"/>
                         <subviews>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOk-Js-9bu">
@@ -124,11 +124,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="DateLbl" destination="RSl-c0-RgN" id="dwI-HF-IBU"/>
                 <outlet property="DescriptionLbl" destination="nWw-Eq-5zX" id="oW5-w4-4T1"/>
                 <outlet property="GifImage" destination="ICy-LG-eIA" id="Vq6-Wh-rPf"/>
                 <outlet property="TitleLbl" destination="KaZ-Lk-8cI" id="nsA-l9-Azv"/>
                 <outlet property="cv" destination="wNa-pM-QYm" id="hd8-a7-Jul"/>
-                <outlet property="fullView" destination="x7e-qG-QRb" id="gAD-FP-y6y"/>
+                <outlet property="fullView" destination="x7e-qG-QRb" id="N6M-Ch-SyR"/>
+                <outlet property="pageControll" destination="Ef2-i7-IYK" id="sIW-IV-hND"/>
             </connections>
             <point key="canvasLocation" x="131.29770992366412" y="-6.6901408450704229"/>
         </tableViewCell>
