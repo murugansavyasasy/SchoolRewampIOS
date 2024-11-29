@@ -46,7 +46,7 @@ class VideoVC: UIViewController {
                         self.filteredData[i].img = image
                      
                         if i == data.count-1{
-                            self.hideLoading()
+//                            self.hideLoading()
                             tableview.reloadData()
                         }
 //                        OuterView.animateView(enable: false)
@@ -74,7 +74,7 @@ class VideoVC: UIViewController {
         activityIndicator.center = view.center  // Position it at the center of the view
         activityIndicator.hidesWhenStopped = true // Hide it when stopped
         view.addSubview(activityIndicator)
-        self.showLoading()
+//        self.showLoading()
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
 //            self.hideLoading()  // Hide the loader after 2 seconds
 //        }
@@ -90,13 +90,13 @@ class VideoVC: UIViewController {
     @objc func doneButtonTapped() {
         view.endEditing(true)  // Dismiss the keyboard
     }
-    func showLoading() {
-        activityIndicator.startAnimating() // Start the loading animation
-    }
-    
-    func hideLoading() {
-        activityIndicator.stopAnimating() // Stop the loading animation
-    }
+//    func showLoading() {
+//        activityIndicator.startAnimating() // Start the loading animation
+//    }
+//    
+//    func hideLoading() {
+//        activityIndicator.stopAnimating() // Stop the loading animation
+//    }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         // Automatically show the keyboard when search bar is clicked
         searchBar.becomeFirstResponder()
@@ -128,15 +128,15 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoTVCell", for: indexPath) as! VideoTVCell
         cell.videoName.text = filteredData[indexPath.row].name
         cell.playbtl.tag = indexPath.row
-        cell.Unreadview.isHidden = true
-        // Set the initial description text with "See more" if truncated
         cell.descriptContent.attributedText = descript(for: filteredData[indexPath.row].description ?? "", expanded: false)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
         cell.descriptContent.tag = indexPath.row // Tag the label with the row index
         cell.descriptContent.isUserInteractionEnabled = true
         cell.descriptContent.addGestureRecognizer(tapGesture)
-        cell.Unreadview.isHidden = self.data[indexPath.row].readed
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+            cell.Unreadview.isHidden = self.data[indexPath.row].readed
+        }
         cell.thumimg.image = filteredData[indexPath.row].img
         cell.sharedelegate = self
         return cell

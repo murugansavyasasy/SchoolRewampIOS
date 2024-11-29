@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="378" height="273"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLP-ce-oCO">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLP-ce-oCO" customClass="AnimatView" customModule="VsSchoolChimes" customModuleProvider="target">
                         <rect key="frame" x="10" y="30" width="358" height="233"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-UY-KqC">
@@ -113,9 +113,13 @@
             <connections>
                 <outlet property="CVHeight" destination="pyv-Ob-4eX" id="c7Z-8C-XF9"/>
                 <outlet property="Pinview" destination="dRZ-ZP-W8D" id="lf7-Qu-BPQ"/>
-                <outlet property="cellview" destination="iLP-ce-oCO" id="XJL-Qq-aKB"/>
+                <outlet property="TitleLbl" destination="3lM-Ge-F8d" id="Jay-oC-Tch"/>
+                <outlet property="cellview" destination="iLP-ce-oCO" id="fHG-Ug-O8M"/>
                 <outlet property="collectionview" destination="kwf-UY-KqC" id="NPj-aA-lIp"/>
+                <outlet property="datelbl" destination="ZlO-yr-9O1" id="tge-7U-oWz"/>
+                <outlet property="dicriptContent" destination="Kz9-cN-IxL" id="z1j-N4-cdC"/>
                 <outlet property="pagecontroller" destination="3fk-V0-e47" id="8Ui-Eb-NEa"/>
+                <outlet property="pinImage" destination="0ta-Ym-h3a" id="Pic-M1-3qO"/>
             </connections>
             <point key="canvasLocation" x="174.04580152671755" y="77.816901408450704"/>
         </tableViewCell>
@@ -123,7 +127,7 @@
     <resources>
         <image name="NoticePin" width="128" height="128"/>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

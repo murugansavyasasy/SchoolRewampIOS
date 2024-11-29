@@ -14,7 +14,7 @@ class VideoTVCell: UITableViewCell {
     @IBOutlet weak var descriptContent: UILabel!
     @IBOutlet weak var Sentbtn: UIButton!
     @IBOutlet weak var Unreadview: UIView!
-    @IBOutlet weak var OuterView: ShimmerView!
+    @IBOutlet weak var OuterView: AnimatView!
     @IBOutlet weak var datelbl: UILabel!
     @IBOutlet weak var videoName: UILabel!
 
@@ -28,6 +28,9 @@ class VideoTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Set up shadowView for shadow
+        hiddenui(true)
+        animationview()
+        Unreadview.isHidden = true
         OuterView.layer.shadowColor = UIColor.black.cgColor
         OuterView.layer.shadowOffset = CGSize(width: 0, height: 2)
         OuterView.layer.shadowRadius = 5
@@ -35,18 +38,34 @@ class VideoTVCell: UITableViewCell {
         OuterView.layer.cornerRadius = 20  // Optional for rounded shadow
         Sentbtn.transform = CGAffineTransform(rotationAngle: .pi / 2)
         Unreadview.layer.cornerRadius = Unreadview.frame.size.height/2
-        OuterView.animateView(enable:true)
-        Unreadview.isHidden = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-            // Code to execute after delay
-            self.OuterView.animateView(enable:false)
-        }
+        
+
         playbtl.layer.cornerRadius = playbtl.frame.height/2
-//        thumimg.image = nil
-//        playbtl.addTarget(self, action: #selector(play), for: .touchUpInside)
 
     }
- 
+    func hiddenui(_ hide:Bool){
+        OuterView.changeHeightAndAnimate(40, 110, 21, 30)
+        descriptContent.isHidden = hide
+//        Sentbtn.isHidden = hide
+        Unreadview.isHidden = hide
+        datelbl.isHidden = hide
+        videoName.isHidden = hide
+        thumimg.isHidden = hide
+        videoloadview.isHidden = hide
+//        playbtl.isHidden = hide
+        let color = hide == true ? UIColor.dashBoardClr : UIColor.white
+        OuterView.backgroundColor = color
+    }
+    func animationview(){
+        OuterView.animateView(enable:true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+            // Code to execute after delay
+            self.OuterView.animateView(enable:false)
+            OuterView.parentview.isHidden = true
+            hiddenui(false)
+        }
+        
+    }
     @IBAction func play(_ sender: UIButton) {
         sharedelegate?.playvideo(index: sender.tag)
         

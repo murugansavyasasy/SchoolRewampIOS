@@ -10,18 +10,23 @@ import UIKit
 class ImagePdfTv: UITableViewCell {
 
     @IBOutlet weak var GifImage: UIImageView!
-    @IBOutlet weak var fullView: ShimmerView!
+    @IBOutlet weak var fullView: AnimatView!
     @IBOutlet weak var DescriptionLbl: UILabel!
   
+    @IBOutlet weak var pageControll: UIPageControl!
+    @IBOutlet weak var DateLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var cv: UICollectionView!
     
+    var countShimmer = 0
     var imageIterms = ["DemoImage","maths","RealHomeWorkimage","RealImage"]
     let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795387749.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391797604035.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391799793266.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png"]
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        animationview()
+        hiddenui(true)
+        GifImage.isHidden = true
         let gifImage = UIImage.gifImageWithName("New")
                 //
         GifImage.image = gifImage
@@ -36,10 +41,43 @@ class ImagePdfTv: UITableViewCell {
         
         cv.register(UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
      
-        
+        countShimmer = 1
         
         
     }
+    func hiddenui(_ hide:Bool){
+        
+        fullView.changeHeightAndAnimate(40, 150, 21, 30)
+        DescriptionLbl.isHidden = hide
+//        Sentbtn.isHidden = hide
+        GifImage.isHidden = hide
+        TitleLbl.isHidden = hide
+        cv.isHidden = hide
+        DateLbl.isHidden = hide
+        pageControll.isHidden = hide
+    }
+    func animationview(){
+        fullView.animateView(enable:true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+            // Code to execute after delay
+            self.fullView.animateView(enable:false)
+            fullView.parentview.isHidden = true
+            hiddenui(false)
+        }
+        
+    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        if countShimmer == 1{
+//            fullView.animateView(enable:true)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) { [self] in
+//                // Code to execute after delay
+//                fullView.animateView(enable:false)
+//                countShimmer = 2
+//                GifImage.isHidden = false
+//            }
+//        }
+//    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
