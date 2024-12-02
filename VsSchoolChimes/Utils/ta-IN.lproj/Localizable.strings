@@ -157,3 +157,26 @@
 "Submit" = "சமர்ப்பிக்கவும்";
 "Image/Pdf" = "படம்/பி.டி.எப்";
 
+
+
+// MARK: Sender Side Assignment
+
+"Select the type in which you want to create the assignment" = "Select the type in which you want to create the assignment";
+"CREATE" = "உருவாக்கு";
+"VIEW" = "பார்வையிடு";
+"Assignment" = "அசைன்மெண்ட்";
+"Compose Assignment" = "அசைன்மெண்ட் உருவாக்கம்";
+"Submission Date" = "சமர்ப்பிக்கும் தேதி";
+"Category" = "வகை";
+"Click here to choose Image" = "படத்தை தேர்வு செய்ய இங்கே கிளிக் செய்யவும்";
+"Subject" = "பாடம்";
+"Category" = "வகை";
+"Submission Due" = "சமர்ப்பிக்கும் கடைசி தேதி";
+"Submission Count" = "சமர்ப்பிப்பு எண்ணிக்கை";
+"Total Count" = "மொத்த எண்ணிக்கை";
+"Forward" = "முன்னோக்கி அனுப்பு";
+"Delete" = "அழிக்க";
+"Submission" = "சமர்ப்பிப்பு";
+"Total" = "மொத்தம்";
+"View" = "பார்வையிடு";
+

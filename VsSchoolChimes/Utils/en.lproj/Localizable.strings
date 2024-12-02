@@ -127,3 +127,56 @@
 "Upload Attachment" = "Upload Attachment";
 "Submit" = "Submit";
 "Image/Pdf" = "Image/Pdf";
+
+
+// MARK: Sender Side Assignment
+
+"Select the type in which you want to create the assignment" = "Select the type in which you want to create the assignment";
+"CREATE" = "CREATE";
+"VIEW" = "VIEW";
+"Assignment" = "Assignment";
+"Compose Assignment" = "Compose Assignment";
+"Submission Date" = "Submission Date";
+"Category" = "Category";
+"Click here to choose Image" = "Click here to choose Image";
+"Subject" = "Subject";
+"Category" = "Category";
+"Submission Due" = "Submission Due";
+"Submission Count" = "Submission Count";
+"Total Count" = "Total Count";
+"Forward" = "Forward";
+"Delete" = "Delete";
+"Submission" = "Submission";
+"Total" = "Total";
+"View" = "View";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
