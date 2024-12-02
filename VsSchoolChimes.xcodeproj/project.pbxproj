@@ -26,6 +26,8 @@
 		365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */; };
 		64FD9BAC7760816722588E40 /* Pods_VsSchoolChimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */; };
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
+		840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
+		840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
@@ -286,6 +288,8 @@
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
+		840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendenceTVC.xib; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
@@ -845,6 +849,8 @@
 		849978422CEF1FE5007D45BA /* Attendence */ = {
 			isa = PBXGroup;
 			children = (
+				840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */,
+				840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */,
 				8499783E2CEF1FE5007D45BA /* StudentHistryTVC.swift */,
 				8499783F2CEF1FE5007D45BA /* StudentHistryTVC.xib */,
 				849978402CEF1FE5007D45BA /* StudentHistryVC.swift */,
@@ -1893,6 +1899,7 @@
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				84B050AE2CF842E4002B63D4 /* SideTvcell.xib in Resources */,
 				84B050AF2CF842E4002B63D4 /* Tvcell.xib in Resources */,
+				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				84B050B02CF842E4002B63D4 /* ExamTmTblVCViewController.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
@@ -2231,6 +2238,7 @@
 				8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */,
 				849978452CEF1FE5007D45BA /* StudentHistryTVC.swift in Sources */,
 				849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */,
+				840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
 				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,
 				8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */,

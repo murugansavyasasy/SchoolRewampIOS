@@ -20,23 +20,24 @@ class StudentHistryTVC: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        outerView.layer.cornerRadius = 20
+        outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
+     
 //        stdImage.translatesAutoresizingMaskIntoConstraints = false
 //        stdImage.heightAnchor.constraint(equalToConstant: outerView.frame.height - 30).isActive = true
 //        stdImage.layer.cornerRadius = stdImage.frame.width/2
 //        outerView.addSubview(stdImage)
         // Configure stdImage
-         stdImage.layer.masksToBounds = true // To ensure the corner radius applies
-         stdImage.contentMode = .scaleAspectFill
+//         stdImage.layer.masksToBounds = true // To ensure the corner radius applies
+//         stdImage.contentMode = .scaleAspectFill
     }
-    override func layoutSubviews() {
-         super.layoutSubviews()
-         stdImage.layer.cornerRadius = stdImage.frame.width / 2
-     }
+//    override func layoutSubviews() {
+//         super.layoutSubviews()
+//         stdImage.layer.cornerRadius = stdImage.frame.width / 2
+//     }
     @IBAction func callAction(_ sender: UIButton) {
         let phoneNumber = "1234567890" // Replace with the phone number you want
         if let phoneURL = URL(string: "tel://\(phoneNumber)"),
