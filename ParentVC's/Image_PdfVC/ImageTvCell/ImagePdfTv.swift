@@ -51,7 +51,7 @@ class ImagePdfTv: UITableViewCell {
     }
     func hiddenui(_ hide:Bool){
         
-        fullView.changeHeightAndAnimate(40, 150, 21, 30)
+        fullView.changeHeightAndAnimate(40, 150, 21, 30, top: 5)
         DescriptionLbl.isHidden = hide
 //        Sentbtn.isHidden = hide
         GifImage.isHidden = hide

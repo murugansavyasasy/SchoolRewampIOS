@@ -19,7 +19,9 @@
                 <outlet property="view1" destination="f2b-QO-tWQ" id="ZmJ-nC-kO1"/>
                 <outlet property="view2" destination="uaO-VE-iob" id="69B-Lw-BGV"/>
                 <outlet property="view3" destination="YNT-IL-TyF" id="PcN-3x-pHf"/>
+                <outlet property="view3top" destination="ySo-P7-NVh" id="ggs-da-pOI"/>
                 <outlet property="view4" destination="X0J-hK-dbB" id="zkg-YP-rtX"/>
+                <outlet property="view4top" destination="t0p-jg-djE" id="Gkg-VH-kqh"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

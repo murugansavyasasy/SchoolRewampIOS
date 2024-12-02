@@ -112,14 +112,18 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         }
         for cell in bottomCv.visibleCells as! [BottomCVCell] {
             // Reset shimmer view or any other animations
-            cell.GradientView.animateView(enable: true)
+            cell.shimmersViewss.parentview.isHidden = false
+            cell.shimmersViewss.animateView(enable: true)
+            
 //            cell.MenuLabelview.animateView(enable: true)
             cell.MenuLbl.isHidden = true
-            
+            cell.GradientView.isHidden = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
-                cell.GradientView.animateView(enable: false)
+                cell.shimmersViewss.animateView(enable: false)
 //                cell.MenuLabelview.animateView(enable: true)
                 cell.MenuLbl.isHidden = false
+                cell.GradientView.isHidden = false
+                cell.shimmersViewss.parentview.isHidden = true
             }
             
         }
@@ -302,6 +306,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
                     on: self,
                     onOk: {
+                        
+                        
+                        let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
                         print("OK button tapped")
                         // Perform OK action
                     },

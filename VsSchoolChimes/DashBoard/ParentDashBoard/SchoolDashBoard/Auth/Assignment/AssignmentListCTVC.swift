@@ -39,9 +39,10 @@ class AssignmentListCTVC: UITableViewCell {
            
            spirelview.layer.cornerRadius = 10
            spirelview.layer.shadowColor = UIColor.black.cgColor
-           spirelview.layer.shadowOffset = CGSize(width: 0, height: 2)
-           spirelview.layer.shadowRadius = 10
-           spirelview.layer.shadowOpacity = 0.3
+           spirelview.layer.shadowOffset = CGSize(width: 4, height: 4)
+           spirelview.layer.shadowRadius = 3
+           spirelview.layer.shadowOpacity = 0.5
+           spirelview.layer.masksToBounds = false
            outImg.translatesAutoresizingMaskIntoConstraints = false
            
            //MARK: Label Font

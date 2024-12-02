@@ -12,7 +12,7 @@ class BottomCVCell: UICollectionViewCell {
     @IBOutlet weak var MenuLabelview: ShimmerView!
     @IBOutlet weak var GradientView: ShimmerView!
     
-    @IBOutlet weak var shimmersViewss: ShimmerView!
+    @IBOutlet weak var shimmersViewss: AnimatView!
     
     
     @IBOutlet weak var MenuLbl: UILabel!
@@ -22,12 +22,12 @@ class BottomCVCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-      
+        hiddenui(true)
+        animationview()
         
         GradientView.layer.cornerRadius = 12
     
-        self.GradientView.animateView(enable: true)
+//        self.GradientView.animateView(enable: true)
 //        self.MenuLabelview.animateView(enable: true)
        
       
@@ -44,17 +44,37 @@ class BottomCVCell: UICollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        GradientView.animateView(enable: false)
+//        GradientView.animateView(enable: false)
 //        MenuLabelview.animateView(enable: false)
         // Reset image and label to default values
         MenuImgView.image = nil // Or a placeholder image
         MenuLbl.text = "" // Or any default text
     }
     
+    func hiddenui(_ hide:Bool){
+        shimmersViewss.changeHeightAndAnimate(0, 50, 20, 0, top: 5)
+        GradientView.isHidden = hide
+        MenuLabelview.isHidden = hide
+    }
+    func animationview(){
+        shimmersViewss.parentview.isHidden = false
+        shimmersViewss.animateView(enable:true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+            // Code to execute after delay
+            self.shimmersViewss.animateView(enable:false)
+            shimmersViewss.parentview.isHidden = true
+            hiddenui(false)
+        }
+        
+    }
+    
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         // Ensure the gradient layer is resized when the bounds of MenuImgView change
+//        hiddenui(true)
+//        animationview()
         if let gradientLayer = GradientView.layer.sublayers?.first(where: { $0 is CAGradientLayer }) {
             gradientLayer.frame = GradientView.bounds
         }

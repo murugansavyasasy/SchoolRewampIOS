@@ -18,6 +18,8 @@ class AnimatView: UIView {
     
     @IBOutlet weak var parentview: UIView!
     
+    @IBOutlet weak var view3top: NSLayoutConstraint!
+    @IBOutlet weak var view4top: NSLayoutConstraint!
     @IBOutlet weak var Vheight1: NSLayoutConstraint!
     @IBOutlet weak var Vheight2: NSLayoutConstraint!
     @IBOutlet weak var Vheight3: NSLayoutConstraint!
@@ -98,21 +100,40 @@ class AnimatView: UIView {
     }
     
     // MARK: - Change Height Dynamically with Shimmer Animation
-    func changeHeightAndAnimate(_ vHeight1: CGFloat, _ vHeight2: CGFloat, _ vHeight3: CGFloat, _ vHeight4: CGFloat) {
+//    func changeHeightAndAnimate(_ vHeight1: CGFloat, _ vHeight2: CGFloat, _ vHeight3: CGFloat, _ vHeight4: CGFloat,top:CGFloat) {
+//        // Update the height constraints dynamically
+//        self.Vheight1.constant = vHeight1
+//        self.Vheight2.constant = vHeight2
+//        self.Vheight3.constant = vHeight3
+//        self.Vheight4.constant = vHeight4
+//        self.view3top.constant = top
+//        // Animate the height change
+//        UIView.animate(withDuration: 0.5, animations: {
+//            // Animate layout changes
+//            self.layoutIfNeeded()
+//        }) { _ in
+//            // After height change animation completes, start shimmer effect on the views
+//            self.startShimmer(for: self.view1)  // You can apply shimmer to any view here
+//            self.startShimmer(for: self.view2)  // You can apply shimmer to other views as well
+//            self.startShimmer(for: self.view3)
+//            self.startShimmer(for: self.view4)
+//        }
+//    }
+
+    func changeHeightAndAnimate(_ vHeight1: CGFloat, _ vHeight2: CGFloat, _ vHeight3: CGFloat, _ vHeight4: CGFloat, top: CGFloat) {
         // Update the height constraints dynamically
         self.Vheight1.constant = vHeight1
         self.Vheight2.constant = vHeight2
         self.Vheight3.constant = vHeight3
         self.Vheight4.constant = vHeight4
+        self.view3top.constant = top
         
-        // Animate the height change
-        UIView.animate(withDuration: 0.5, animations: {
-            // Animate layout changes
-            self.layoutIfNeeded()
-        }) { _ in
-            // After height change animation completes, start shimmer effect on the views
-            self.startShimmer(for: self.view1)  // You can apply shimmer to any view here
-            self.startShimmer(for: self.view2)  // You can apply shimmer to other views as well
+        // Apply the changes immediately
+        self.layoutIfNeeded()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [self] in
+            // Start shimmer effect on the views
+            self.startShimmer(for: self.view1)
+            self.startShimmer(for: self.view2)
             self.startShimmer(for: self.view3)
             self.startShimmer(for: self.view4)
         }

@@ -143,3 +143,27 @@
 "Upload Attachment" = "อัปโหลดไฟล์แนบ";
 "Submit" = "ส่ง";
 "Image/Pdf" = "รูปภาพ/PDF";
+
+
+// MARK: Sender Side Assignment
+
+"Select the type in which you want to create the assignment" = "เลือกประเภทที่คุณต้องการสร้างงาน";
+"CREATE" = "สร้าง";
+"VIEW" = "
+ดู";
+"Assignment" = "งาน";
+"Compose Assignment" = "หัวข้อของงาน";
+"Submission Date" = "วันที่ส่ง";
+"Category" = "หมวดหมู่";
+"Click here to choose Image" = "คลิกที่นี่เพื่อเลือกภาพ";
+"Subject" = "วิชา";
+"Category" = "หมวดหมู่";
+"Submission Due" = "กำหนดส่ง";
+"Submission Count" = "จำนวนที่ส่ง";
+"Total Count" = "จำนวนทั้งหมด";
+"Forward" = "ส่งต่อ";
+"Delete" = "ลบ";
+"Submission" = "การส่ง";
+"Total" = "รวมทั้งหมด";
+"View" = "ดู";
+

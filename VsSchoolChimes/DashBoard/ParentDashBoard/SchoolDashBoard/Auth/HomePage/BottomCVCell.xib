@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FNy-DY-QgV" customClass="ShimmerView" customModule="VsSchoolChimes" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FNy-DY-QgV" customClass="AnimatView" customModule="VsSchoolChimes" customModuleProvider="target">
                         <rect key="frame" x="10" y="10" width="120" height="115"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SM6-YI-4ac" customClass="ShimmerView" customModule="VsSchoolChimes" customModuleProvider="target">

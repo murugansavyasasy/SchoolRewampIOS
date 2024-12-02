@@ -137,3 +137,29 @@
 "Upload Attachment" = "संलग्नक अपलोड करें";
 "Submit" = "प्रस्तुत करें";
 "Image/Pdf" = "छवि/पीडीएफ";
+
+
+
+// MARK: Sender Side Assignment
+
+"Select the type in which you want to create the assignment" = "असाइनमेंट बनाने के प्रकार का चयन करें";
+"CREATE" = "बनाएं";
+"VIEW" = "देखें";
+"Assignment" = "असाइनमेंट तैयार करें";
+"Compose Assignment" = "असाइनमेंट का शीर्षक";
+"Submission Date" = "जमा करने की तारीख";
+"Category" = "श्रेणी";
+"Click here to choose Image" = "यहाँ छवि चुनने के लिए क्लिक करें";
+"Subject" = "विषय";
+"Category" = "श्रेणी";
+"Submission Due" = "जमा करने की समय-सीमा";
+"Submission Count" = "जमा की गई संख्या";
+"Total Count" = "कुल संख्या";
+"Forward" = "आगे बढ़ाएं";
+"Delete" = "हटाएं";
+"Submission" = "जमा करें";
+"Total" = "कुल";
+"View" = "देखें";
+
+
+

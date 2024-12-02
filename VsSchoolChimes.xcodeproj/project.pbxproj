@@ -23,9 +23,19 @@
 		18BAF4DE2CEB3CB200517441 /* SenderAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BAF4DB2CEB3CB200517441 /* SenderAssignmentViewController.swift */; };
 		18BAF4E22CEC555000517441 /* SenderAssignmentTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BAF4E12CEC555000517441 /* SenderAssignmentTextViewController.xib */; };
 		18BAF4E32CEC555000517441 /* SenderAssignmentTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18BAF4E02CEC555000517441 /* SenderAssignmentTextViewController.swift */; };
+		18CA855B2CF99ACD00984D7C /* AssignmentViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CA855A2CF99ACD00984D7C /* AssignmentViewTableViewCell.xib */; };
+		18CA855C2CF99ACD00984D7C /* AssignmentViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA85592CF99ACD00984D7C /* AssignmentViewTableViewCell.swift */; };
+		18CA85602CF99EFB00984D7C /* AssignmentViewTotalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CA855F2CF99EFB00984D7C /* AssignmentViewTotalViewController.xib */; };
+		18CA85612CF99EFB00984D7C /* AssignmentViewTotalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA855E2CF99EFB00984D7C /* AssignmentViewTotalViewController.swift */; };
+		18CA85652CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CA85642CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib */; };
+		18CA85662CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA85632CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift */; };
+		18CA885D2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CA885C2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.xib */; };
+		18CA885E2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA885B2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.swift */; };
 		365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */; };
 		64FD9BAC7760816722588E40 /* Pods_VsSchoolChimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */; };
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
+		840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
+		840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
@@ -285,9 +295,19 @@
 		18BAF4DC2CEB3CB200517441 /* SenderAssignmentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderAssignmentViewController.xib; sourceTree = "<group>"; };
 		18BAF4E02CEC555000517441 /* SenderAssignmentTextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderAssignmentTextViewController.swift; sourceTree = "<group>"; };
 		18BAF4E12CEC555000517441 /* SenderAssignmentTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderAssignmentTextViewController.xib; sourceTree = "<group>"; };
+		18CA85592CF99ACD00984D7C /* AssignmentViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentViewTableViewCell.swift; sourceTree = "<group>"; };
+		18CA855A2CF99ACD00984D7C /* AssignmentViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentViewTableViewCell.xib; sourceTree = "<group>"; };
+		18CA855E2CF99EFB00984D7C /* AssignmentViewTotalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentViewTotalViewController.swift; sourceTree = "<group>"; };
+		18CA855F2CF99EFB00984D7C /* AssignmentViewTotalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentViewTotalViewController.xib; sourceTree = "<group>"; };
+		18CA85632CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentViewTotalTableViewCell.swift; sourceTree = "<group>"; };
+		18CA85642CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentViewTotalTableViewCell.xib; sourceTree = "<group>"; };
+		18CA885B2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SenderSideOnlineMeetingViewController.swift; path = VsSchoolChimes/SchoolSide/SenderSideOnlineMeetingViewController.swift; sourceTree = SOURCE_ROOT; };
+		18CA885C2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SenderSideOnlineMeetingViewController.xib; path = VsSchoolChimes/SchoolSide/SenderSideOnlineMeetingViewController.xib; sourceTree = SOURCE_ROOT; };
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
+		840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendenceTVC.xib; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
@@ -618,7 +638,8 @@
 		18BAF4DA2CEB3AFA00517441 /* Assignment */ = {
 			isa = PBXGroup;
 			children = (
-				18BAF4DF2CEC552900517441 /* AssignmentText */,
+				18CA85582CF99AB000984D7C /* View */,
+				18CA85572CF99AA500984D7C /* Create */,
 				18BAF4DB2CEB3CB200517441 /* SenderAssignmentViewController.swift */,
 				18BAF4DC2CEB3CB200517441 /* SenderAssignmentViewController.xib */,
 			);
@@ -637,8 +658,47 @@
 		18BAF4E92CEC978A00517441 /* OnlineMeeting */ = {
 			isa = PBXGroup;
 			children = (
+				18CA885B2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.swift */,
+				18CA885C2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.xib */,
 			);
 			path = OnlineMeeting;
+			sourceTree = "<group>";
+		};
+		18CA85572CF99AA500984D7C /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				18BAF4DF2CEC552900517441 /* AssignmentText */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		18CA85582CF99AB000984D7C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				18CA855D2CF99ED900984D7C /* Total */,
+				18CA85592CF99ACD00984D7C /* AssignmentViewTableViewCell.swift */,
+				18CA855A2CF99ACD00984D7C /* AssignmentViewTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		18CA855D2CF99ED900984D7C /* Total */ = {
+			isa = PBXGroup;
+			children = (
+				18CA85622CF99FF400984D7C /* Tv */,
+				18CA855E2CF99EFB00984D7C /* AssignmentViewTotalViewController.swift */,
+				18CA855F2CF99EFB00984D7C /* AssignmentViewTotalViewController.xib */,
+			);
+			path = Total;
+			sourceTree = "<group>";
+		};
+		18CA85622CF99FF400984D7C /* Tv */ = {
+			isa = PBXGroup;
+			children = (
+				18CA85632CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift */,
+				18CA85642CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib */,
+			);
+			path = Tv;
 			sourceTree = "<group>";
 		};
 		3CDBD330E75F67CE1AED6022 /* Frameworks */ = {
@@ -858,6 +918,8 @@
 		849978422CEF1FE5007D45BA /* Attendence */ = {
 			isa = PBXGroup;
 			children = (
+				840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */,
+				840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */,
 				8499783E2CEF1FE5007D45BA /* StudentHistryTVC.swift */,
 				8499783F2CEF1FE5007D45BA /* StudentHistryTVC.xib */,
 				849978402CEF1FE5007D45BA /* StudentHistryVC.swift */,
@@ -1907,16 +1969,20 @@
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				84B050AE2CF842E4002B63D4 /* SideTvcell.xib in Resources */,
 				84B050AF2CF842E4002B63D4 /* Tvcell.xib in Resources */,
+				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				84B050B02CF842E4002B63D4 /* ExamTmTblVCViewController.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
 				849E572C2C1FF633006119DA /* PirorityTableViewCell.xib in Resources */,
 				180C6E522CE72A860071CD04 /* SenderSideHomeWorkViewController.xib in Resources */,
+				18CA85652CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib in Resources */,
+				18CA855B2CF99ACD00984D7C /* AssignmentViewTableViewCell.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
 				849E57392C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf in Resources */,
 				849E57272C1FF4F9006119DA /* PriorityStoryboard.storyboard in Resources */,
 				84EFF9D82CCC862F00C11C26 /* TopCVCell.xib in Resources */,
 				84EFFADF2CCF9EEA00C11C26 /* NotificationTableViewCell.xib in Resources */,
+				18CA85602CF99EFB00984D7C /* AssignmentViewTotalViewController.xib in Resources */,
 				84EFFAE02CCF9EEA00C11C26 /* NotificationViewController.xib in Resources */,
 				84EFF9F22CCCAFF800C11C26 /* HelpVc.xib in Resources */,
 				84EFFA382CCCB44300C11C26 /* ContactUsVc.xib in Resources */,
@@ -1947,6 +2013,7 @@
 				84EFF9CE2CCC7A6000C11C26 /* PasswordVc.xib in Resources */,
 				84A5BEBC2C19841600E32496 /* CountryListTableViewCell.xib in Resources */,
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
+				18CA885D2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.xib in Resources */,
 				844188872CC915FF006483C3 /* OTPVc.xib in Resources */,
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
@@ -2140,6 +2207,7 @@
 				84A5BEB12C19830500E32496 /* Constant.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
+				18CA85662CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift in Sources */,
 				180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */,
 				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
@@ -2187,6 +2255,7 @@
 				84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */,
 				847AB6E62CF09A6300952AC1 /* SenderEventsVC.swift in Sources */,
 				84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */,
+				18CA855C2CF99ACD00984D7C /* AssignmentViewTableViewCell.swift in Sources */,
 				849E57252C1FF4E8006119DA /* PriorityViewController.swift in Sources */,
 				849E572A2C1FF629006119DA /* PirorityTableViewCell.swift in Sources */,
 				84EFFAE12CCF9EEA00C11C26 /* NotificationTableViewCell.swift in Sources */,
@@ -2212,6 +2281,7 @@
 				84A5BE8A2C197B9F00E32496 /* Preferences.swift in Sources */,
 				84C00E722CF6DF9600E34A83 /* splashVc.swift in Sources */,
 				84A5BE462C19719700E32496 /* ViewController.swift in Sources */,
+				18CA885E2CFAC8DA00984D7C /* SenderSideOnlineMeetingViewController.swift in Sources */,
 				84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */,
 				84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */,
 				84EFF9972CCB5B0400C11C26 /* CountryVc.swift in Sources */,
@@ -2229,6 +2299,7 @@
 				849970D12CF8752400800B07 /* ComunicationVC.swift in Sources */,
 				847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */,
 				84A5BE422C19719700E32496 /* AppDelegate.swift in Sources */,
+				18CA85612CF99EFB00984D7C /* AssignmentViewTotalViewController.swift in Sources */,
 				84EFFAEB2CCFA4A100C11C26 /* ReportBugVcViewController.swift in Sources */,
 				84A5BE9A2C197E0B00E32496 /* ResponseName.swift in Sources */,
 				84A5BE962C197D2C00E32496 /* UILabel.swift in Sources */,
@@ -2247,6 +2318,7 @@
 				8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */,
 				849978452CEF1FE5007D45BA /* StudentHistryTVC.swift in Sources */,
 				849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */,
+				840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
 				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,
 				8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */,

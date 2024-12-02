@@ -49,7 +49,7 @@ class VideoTVCell: UITableViewCell {
 
     }
     func hiddenui(_ hide:Bool){
-        OuterView.changeHeightAndAnimate(40, 110, 21, 30)
+        OuterView.changeHeightAndAnimate(40, 110, 21, 30, top: 5)
         descriptContent.isHidden = hide
 //        Sentbtn.isHidden = hide
         Unreadview.isHidden = hide
