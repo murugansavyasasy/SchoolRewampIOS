@@ -13,9 +13,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderNoticeBoardVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="FromDatePicker" destination="IcO-IT-Pk0" id="359-q1-qkw"/>
+                <outlet property="FromLabel" destination="I1a-Kx-tAL" id="SCb-be-xyo"/>
                 <outlet property="HeadingLabel" destination="GYJ-Oh-oRG" id="V8C-Pb-rI1"/>
                 <outlet property="SubmitBtn" destination="O00-2T-GBQ" id="hTh-P0-Ykc"/>
                 <outlet property="ToDatePicker" destination="bVz-ZI-Vg8" id="HuI-KY-b60"/>
+                <outlet property="ToLabel" destination="r6j-tn-0Jb" id="dw8-RL-3JQ"/>
+                <outlet property="UploadAttachLbl" destination="vtR-aT-4dg" id="OGQ-OM-hOX"/>
                 <outlet property="UploadView" destination="gEN-jH-iPY" id="Bnz-fd-YTR"/>
                 <outlet property="attachmentView" destination="gEN-jH-iPY" id="mMU-TR-9oD"/>
                 <outlet property="collectionHeight" destination="pbl-f7-TwU" id="jsO-LN-Puy"/>
@@ -75,7 +78,6 @@
                                         </label>
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Type News Topic" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7t1-wz-71T">
                                             <rect key="frame" x="10" y="63" width="373" height="50"/>
-                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="BbL-nD-jDn"/>
                                             </constraints>
@@ -84,7 +86,6 @@
                                         </textField>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rdC-wy-0F0">
                                             <rect key="frame" x="10" y="123" width="373" height="200"/>
-                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="200" id="C5M-Zr-BhP"/>
                                             </constraints>
@@ -249,7 +250,7 @@
             <color red="0.32899999618530273" green="0.32400000095367432" blue="0.4779999852180481" alpha="0.33000001311302185" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -261,13 +262,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

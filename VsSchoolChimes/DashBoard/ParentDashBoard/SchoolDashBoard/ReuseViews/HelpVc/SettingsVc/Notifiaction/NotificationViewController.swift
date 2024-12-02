@@ -7,7 +7,10 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class NotificationViewController: UIViewController {
+    
+    @IBOutlet weak var searchbar: UISearchBar!
     
     @IBOutlet weak var tableview: UITableView!
     
@@ -25,6 +28,9 @@ class NotificationViewController: UIViewController {
         
         NotificationpageHeader.text = "Notifications".translated()
         NotificationpageHeader.setFont(style: .header, size: 20)
+        
+        searchbar.delegate = self
+        addDoneButton()
         
         tableview.dataSource = self
         tableview.delegate = self
@@ -50,6 +56,7 @@ class NotificationViewController: UIViewController {
 
 
 
+@available(iOS 14.0, *)
 extension NotificationViewController : UITableViewDelegate,UITableViewDataSource{
     
     
@@ -77,3 +84,34 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
     }
     
 }
+
+@available(iOS 14.0, *)
+extension NotificationViewController: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchbar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        searchbar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        searchbar.resignFirstResponder()
+    }
+
+}
+

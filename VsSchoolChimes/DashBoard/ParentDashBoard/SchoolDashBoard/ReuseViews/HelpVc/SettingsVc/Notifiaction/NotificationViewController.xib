@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="NotificationpageHeader" destination="H3W-XM-cgS" id="wTd-CA-Omk"/>
+                <outlet property="searchbar" destination="9ed-UR-7vR" id="efi-CM-BeT"/>
                 <outlet property="tableview" destination="pvA-xg-oDV" id="1l7-J9-Yqn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -69,6 +70,9 @@
                         <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="9ed-UR-7vR">
                             <rect key="frame" x="0.0" y="56" width="393" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="56" id="ZI0-i5-1Ai"/>
+                            </constraints>
                             <color key="barTintColor" name="BackGroundClr"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>

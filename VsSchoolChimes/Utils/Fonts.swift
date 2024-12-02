@@ -21,6 +21,9 @@ extension UILabel {
         case .header:
             self.font = UIFont(name: "Poppins-Bold", size: size ?? self.font.pointSize)
                 ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .bold)
+            if font == nil{
+                print("Poppins bold not available")
+            }
         case .title:
             self.font = UIFont(name: "Poppins-Bold", size: size ?? self.font.pointSize)
                 ?? UIFont.systemFont(ofSize: size ?? self.font.pointSize, weight: .bold)
@@ -75,6 +78,6 @@ extension UIButton {
 class FontSize {
     
     static var HeaderSize : CGFloat = 20
-    static var TitleSize : CGFloat = 14
+    static var TitleSize : CGFloat = 12
     static var BodySize : CGFloat = 13
 }

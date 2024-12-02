@@ -31,6 +31,7 @@ class TextHistoryTVCell: UITableViewCell {
         DateLabel.setFont(style: .title, size: FontSize.TitleSize)
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
+        
     }
     @IBAction func Select(_ sender: UIButton) {
         delegate?.select(Tittle: "selectedText", descriptContent: descriptContent.text ?? "hgdsxgvbdusf")

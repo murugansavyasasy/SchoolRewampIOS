@@ -14,6 +14,7 @@
                 <outlet property="AddressLabel" destination="i8g-gF-Fug" id="ih3-KL-Ffi"/>
                 <outlet property="BellImage" destination="KX3-w0-nId" id="OtC-2K-yR6"/>
                 <outlet property="SchoolNameLabel" destination="g0x-bn-dgu" id="FtQ-V3-YSh"/>
+                <outlet property="Searchbar" destination="QYB-jp-54h" id="H99-Ox-d9W"/>
                 <outlet property="TopCv" destination="Lsi-XR-Teu" id="Xuc-JJ-caO"/>
                 <outlet property="bottomCv" destination="E3y-MD-bUI" id="dpr-iv-T0s"/>
                 <outlet property="pageContorler" destination="sco-PE-HIn" id="Zfn-iq-e3v"/>
@@ -38,16 +39,16 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="70"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="gxV-QC-Nzk">
-                                            <rect key="frame" x="51.000000000000014" y="20" width="223.33333333333337" height="40"/>
+                                            <rect key="frame" x="51" y="20" width="255" height="40"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Savyasay schools" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0x-bn-dgu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="223.33333333333334" height="18"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="255" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Savyasasy school, chennai - 600002" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8g-gF-Fug">
-                                                    <rect key="frame" x="0.0" y="24.333333333333332" width="223.33333333333334" height="15.666666666666668"/>
+                                                    <rect key="frame" x="0.0" y="24.333333333333332" width="255" height="15.666666666666668"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -80,7 +81,7 @@
                                             </constraints>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="V29-JE-wYd">
-                                            <rect key="frame" x="295.33333333333331" y="21.000000000000007" width="30" height="28.33333333333335"/>
+                                            <rect key="frame" x="316" y="21.000000000000007" width="30" height="28.33333333333335"/>
                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="1Bf-uG-XmK"/>
@@ -89,19 +90,19 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="V29-JE-wYd" firstAttribute="leading" secondItem="gxV-QC-Nzk" secondAttribute="trailing" constant="21" id="7qG-er-Bo3"/>
+                                        <constraint firstItem="V29-JE-wYd" firstAttribute="leading" secondItem="gxV-QC-Nzk" secondAttribute="trailing" constant="10" id="7qG-er-Bo3"/>
                                         <constraint firstItem="tRe-Ow-MoT" firstAttribute="leading" secondItem="jac-fc-67P" secondAttribute="leading" constant="6" id="8XO-Rn-wfR"/>
                                         <constraint firstItem="V29-JE-wYd" firstAttribute="centerY" secondItem="jac-fc-67P" secondAttribute="centerY" id="Cf2-hb-nUd"/>
                                         <constraint firstItem="V29-JE-wYd" firstAttribute="top" secondItem="jac-fc-67P" secondAttribute="top" constant="20" id="En3-eO-j3s"/>
                                         <constraint firstItem="gxV-QC-Nzk" firstAttribute="top" secondItem="jac-fc-67P" secondAttribute="top" constant="20" id="KcH-BY-qT2"/>
                                         <constraint firstItem="tRe-Ow-MoT" firstAttribute="top" secondItem="jac-fc-67P" secondAttribute="top" constant="22" id="NHX-LY-bEo"/>
+                                        <constraint firstItem="KX3-w0-nId" firstAttribute="leading" secondItem="V29-JE-wYd" secondAttribute="trailing" constant="10" id="XIk-ta-Xss"/>
                                         <constraint firstItem="gxV-QC-Nzk" firstAttribute="leading" secondItem="tRe-Ow-MoT" secondAttribute="trailing" constant="8" id="ZHg-dr-LpA"/>
                                         <constraint firstAttribute="height" constant="70" id="jAh-oS-KeV"/>
                                         <constraint firstAttribute="bottom" secondItem="gxV-QC-Nzk" secondAttribute="bottom" constant="10" id="lRn-bp-ROF"/>
                                         <constraint firstItem="KX3-w0-nId" firstAttribute="top" secondItem="jac-fc-67P" secondAttribute="top" constant="22" id="mhw-nd-PM1"/>
                                         <constraint firstAttribute="trailing" secondItem="KX3-w0-nId" secondAttribute="trailing" constant="7" id="oE6-Eh-JxX"/>
                                         <constraint firstItem="KX3-w0-nId" firstAttribute="centerY" secondItem="jac-fc-67P" secondAttribute="centerY" constant="0.99999999999998579" id="vSL-Qn-FOP"/>
-                                        <constraint firstItem="V29-JE-wYd" firstAttribute="leading" secondItem="gxV-QC-Nzk" secondAttribute="trailing" constant="21" id="wvn-iG-OTT"/>
                                     </constraints>
                                 </view>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Lsi-XR-Teu">
@@ -123,7 +124,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="56" id="1CX-pc-74w"/>
                                     </constraints>
-                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                     <scopeButtonTitles>
                                         <string>Title</string>
                                         <string>Title</string>

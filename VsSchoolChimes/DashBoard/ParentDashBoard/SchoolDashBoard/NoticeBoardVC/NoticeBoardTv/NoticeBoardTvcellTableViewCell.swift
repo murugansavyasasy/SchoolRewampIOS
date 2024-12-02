@@ -34,6 +34,9 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         super.awakeFromNib()
         // Initialization code
         
+        datelbl.setFont(style: .title, size: FontSize.TitleSize)
+        dicriptContent.setFont(style: .body, size: FontSize.BodySize)
+        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
      
         hiddenui(true)
         animationview()
@@ -46,6 +49,13 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         cellview.layer.masksToBounds = false
         
         Pinview.layer.cornerRadius = Pinview.frame.width/2
+        
+        dicriptContent.numberOfLines = 0
+          dicriptContent.setNeedsLayout()
+          dicriptContent.layoutIfNeeded()
+        
+       
+
         
 //        let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
 //        collectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
@@ -91,6 +101,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     }
     
     
+    
+    
 //    override func layoutSubviews() {
 //        super.layoutSubviews()
 //        if countShimmer == 1{
@@ -128,12 +140,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier:"ImagePdfCvCell" , for: indexPath) as! ImagePdfCvCell
-//
-//        cell.imageView.image = UIImage(named: imgs[indexPath.row])
         cell.imageView.sd_setImage(with: URL(string: imgs[indexPath.row]), placeholderImage: UIImage(named: "placeholder"))
-        //cell.imageView.image =
-      //  cell.TrashIcon.isHidden = true
         
         return cell
     }

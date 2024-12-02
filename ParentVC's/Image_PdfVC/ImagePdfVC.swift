@@ -25,8 +25,12 @@ class ImagePdfVC: UIViewController {
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
+        search.placeholder = "Search".translated()
+        search.delegate = self
+        addDoneButton()
 
         headinglabel.text = "Image/Pdf".translated()
+        headinglabel.setFont(style: .header, size: FontSize.HeaderSize)
         // Do any additional setup after loading the view.
         
         CellRegistre()
@@ -81,3 +85,34 @@ extension ImagePdfVC : UITableViewDelegate,UITableViewDataSource{
     
     
 }
+
+extension ImagePdfVC: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        search.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        search.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        search.resignFirstResponder()
+    }
+
+}
+
+

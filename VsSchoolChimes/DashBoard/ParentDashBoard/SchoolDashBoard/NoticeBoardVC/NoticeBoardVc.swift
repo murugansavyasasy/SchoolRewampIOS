@@ -15,6 +15,9 @@ class NoticeBoardVc: UIViewController {
     
     @IBOutlet weak var tableview: UITableView!
     
+    
+    @IBOutlet weak var searchbar: UISearchBar!
+    
     var images : [UIImage] = []
     
     var previousOffset: CGFloat = 0.0
@@ -23,7 +26,12 @@ class NoticeBoardVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchbar.placeholder = "Search".translated()
+        searchbar.delegate = self
+        addDoneButton()
+        
         HeadingLabel.text = "NoticeBoard".translated()
+        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         tableview.delegate = self
         tableview.dataSource = self
         
@@ -38,6 +46,11 @@ class NoticeBoardVc: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
 //        ApiCallFunc
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableview.reloadData()
     }
     
     @IBAction func Plusclick(_ sender : Any){
@@ -92,3 +105,35 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     
     //scrol
 }
+
+@available(iOS 14.0, *)
+extension NoticeBoardVc: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchbar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        searchbar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        searchbar.resignFirstResponder()
+    }
+
+}
+
+

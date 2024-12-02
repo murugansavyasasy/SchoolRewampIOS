@@ -28,6 +28,11 @@ class VideoTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Set up shadowView for shadow
+        
+        datelbl.setFont(style: .title, size: FontSize.TitleSize)
+        videoName.setFont(style: .title, size: FontSize.TitleSize)
+        descriptContent.setFont(style: .body, size: FontSize.BodySize)
+        
         hiddenui(true)
         animationview()
         Unreadview.isHidden = true

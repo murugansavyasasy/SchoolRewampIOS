@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="HeaderLabel" destination="fWt-bp-UNa" id="qhn-Ld-pXW"/>
                 <outlet property="searchview" destination="WOf-iN-p5e" id="4CJ-1x-fHI"/>
                 <outlet property="tableview" destination="DFV-CH-evV" id="YIw-7I-2lp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

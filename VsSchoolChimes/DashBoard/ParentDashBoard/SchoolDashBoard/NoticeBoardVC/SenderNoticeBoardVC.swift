@@ -13,6 +13,11 @@ import AWSS3
 class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate {
     
     @IBOutlet weak var HeadingLabel: UILabel!
+    
+    @IBOutlet weak var FromLabel: UILabel!
+    
+    @IBOutlet weak var UploadAttachLbl: UILabel!
+    @IBOutlet weak var ToLabel: UILabel!
     @IBOutlet weak var attachmentView: RectangularDashedView!
     @IBOutlet weak var textfield: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -37,18 +42,14 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HeadingLabel.text =  "Compose NoticeBoard".translated()
-              FromDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
-               FromDatePicker.datePickerMode = .date
-               FromDatePicker.minimumDate = Date()
-       
-               ToDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
-               ToDatePicker.datePickerMode = .date
-               ToDatePicker.minimumDate = Date()
-
-        SubmitBtn.layer.cornerRadius = Colornames.CORadius10
-        textview.text = "Type content here"
-        textview.textColor = .lightGray
+        FromDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+        FromDatePicker.datePickerMode = .date
+        FromDatePicker.minimumDate = Date()
+        
+        ToDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+        ToDatePicker.datePickerMode = .date
+        ToDatePicker.minimumDate = Date()
+        
         textview.delegate = self
         textfield.delegate = self
         
@@ -58,24 +59,51 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         collectionHeight.constant = 0
         
         photoPickManager.onImagePicked = { [weak self] images in
-                           guard let self = self else { return }
-                           // Handle selected images here
-                    
-                    selectedImages.append(contentsOf: images)
+            guard let self = self else { return }
+            // Handle selected images here
+            
+            selectedImages.append(contentsOf: images)
             collectionView.delegate = self
             collectionView.dataSource = self
-                   
-                           for image in images {
-                               print("Selected image: \(image)")
-                               photoPickManager.uploadAWS(image: image)
-                           }
-                       }
+            
+            for image in images {
+                print("Selected image: \(image)")
+                photoPickManager.uploadAWS(image: image)
+            }
+        }
         
         let attachmentGesture = UITapGestureRecognizer(target: self, action: #selector(presentSelectionAlert))
         
         attachmentView.addGestureRecognizer(attachmentGesture)
         
+        StyleAndTranslater()
         
+    }
+    
+    func StyleAndTranslater(){
+        //MARK: Translate
+        HeadingLabel.text =  "Compose NoticeBoard".translated()
+        
+        //MARK: UI Design
+        SubmitBtn.layer.cornerRadius = Colornames.CORadius10
+        textview.text = "Type content here"
+        textview.textColor = .lightGray
+        textview.layer.cornerRadius = Colornames.CORadius10
+        textview.layer.borderWidth = 0.8
+        textview.layer.borderColor = UIColor.black.cgColor
+        textfield.layer.cornerRadius = Colornames.CORadius10
+        textfield.layer.borderWidth = 0.8
+        textfield.layer.borderColor = UIColor.black.cgColor
+        
+        //MARK: Label Font
+        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        FromLabel.setFont(style: .title, size: FontSize.TitleSize)
+        UploadAttachLbl.setFont(style: .body, size: FontSize.BodySize)
+        ToLabel.setFont(style: .title, size: FontSize.TitleSize)
+
+        //MARK: Label Font
+        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -478,6 +506,9 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
         
         if selectedImages.count > 3{
             collectionHeight.constant = 240
+        }
+        if selectedImages.count == 0{
+            collectionHeight.constant = 0
         }
 
                return selectedImages.count

@@ -24,6 +24,10 @@ class ImagePdfTv: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        DateLbl.setFont(style: .title, size: FontSize.TitleSize)
+        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         animationview()
         hiddenui(true)
         GifImage.isHidden = true

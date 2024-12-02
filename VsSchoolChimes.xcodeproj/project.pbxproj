@@ -87,6 +87,8 @@
 		847AB6F42CF09A6800952AC1 /* SelectRecipientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6EC2CF09A6800952AC1 /* SelectRecipientVC.swift */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
+		848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */; };
+		848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */; };
 		848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848F7A6D2CF8CB85004EF617 /* AnimatView.xib */; };
 		848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
@@ -353,6 +355,8 @@
 		847AB6ED2CF09A6800952AC1 /* SelectRecipientVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRecipientVC.xib; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
+		848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderImgPdfVC.swift; sourceTree = "<group>"; };
+		848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderImgPdfVC.xib; sourceTree = "<group>"; };
 		848F7A6D2CF8CB85004EF617 /* AnimatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimatView.xib; sourceTree = "<group>"; };
 		848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatView.swift; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
@@ -789,6 +793,15 @@
 			path = SelectRecipient;
 			sourceTree = "<group>";
 		};
+		848B94662CFD724800FFC5C2 /* Sender_ImgPdfVc */ = {
+			isa = PBXGroup;
+			children = (
+				848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */,
+				848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */,
+			);
+			path = Sender_ImgPdfVc;
+			sourceTree = "<group>";
+		};
 		848F7A6C2CF8CA5A004EF617 /* AnimationView */ = {
 			isa = PBXGroup;
 			children = (
@@ -936,6 +949,7 @@
 		84A2717A2CEDAB9F0033EB02 /* Image_PdfVC */ = {
 			isa = PBXGroup;
 			children = (
+				848B94662CFD724800FFC5C2 /* Sender_ImgPdfVc */,
 				84A271772CEDAB9F0033EB02 /* ImageTvCell */,
 				84A271782CEDAB9F0033EB02 /* ImagePdfVC.swift */,
 				84A271792CEDAB9F0033EB02 /* ImagePdfVC.xib */,
@@ -1958,6 +1972,7 @@
 				84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
+				848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */,
 				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
@@ -2191,6 +2206,7 @@
 				849970BB2CF8750B00800B07 /* ImageCViewCell.swift in Sources */,
 				849970BC2CF8750B00800B07 /* AssignmentListCTVC.swift in Sources */,
 				849970BD2CF8750B00800B07 /* ImageTVC.swift in Sources */,
+				848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */,
 				849970BE2CF8750B00800B07 /* AssigmentViewVC.swift in Sources */,
 				84A5BEAD2C19824E00E32496 /* LocalizableStrings.swift in Sources */,
 				84A5BE8A2C197B9F00E32496 /* Preferences.swift in Sources */,

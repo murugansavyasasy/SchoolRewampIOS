@@ -17,6 +17,7 @@ class VideoVC: UIViewController {
     
     
     
+    @IBOutlet weak var HeaderLabel: UILabel!
     
     @IBOutlet weak var searchview: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
@@ -35,6 +36,9 @@ class VideoVC: UIViewController {
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        HeaderLabel.text = "Video".translated()
+        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
         keyboardDionebtn()
         uiupdate()

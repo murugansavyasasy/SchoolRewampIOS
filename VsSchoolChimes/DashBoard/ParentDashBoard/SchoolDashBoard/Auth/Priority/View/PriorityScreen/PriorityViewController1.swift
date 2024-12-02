@@ -55,6 +55,7 @@ class PriorityViewController1: UIViewController {
 
             ParentButton.setTitle("Parent", for: .normal)
             teacherButton.setTitle("Principal", for: .normal)
+           ParentButton.setTitleColor(.black, for:.normal)
 
             DispatchQueue.main.async {
                 self.teacherButton.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -89,11 +90,12 @@ class PriorityViewController1: UIViewController {
     @IBAction func teacherAct(_ sender: Any) {
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
 
-        teacherButton.tintColor = .white
+        //teacherButton.tintColor = .white
+        teacherButton.setTitleColor(.white, for:.normal)
         
 //        ParentButton.backgroundColor = .clear
         gradientcolours(button: ParentButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        ParentButton.tintColor = .black
+        ParentButton.setTitleColor(.black, for:.normal)
       
         
         tableview.delegate = self
@@ -106,14 +108,15 @@ class PriorityViewController1: UIViewController {
     @IBAction func ParentAct(_ sender: Any) {
         
         gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        ParentButton.tintColor = .white
+        
+        ParentButton.setTitleColor(.white, for:.normal)
         
         teacherButton.backgroundColor = .clear
         
        // ParentButton.backgroundColor = .clear
         gradientcolours(button: teacherButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         
-        teacherButton.tintColor = .black
+        teacherButton.setTitleColor(.black, for:.normal)
        
         
         tableview.delegate = self

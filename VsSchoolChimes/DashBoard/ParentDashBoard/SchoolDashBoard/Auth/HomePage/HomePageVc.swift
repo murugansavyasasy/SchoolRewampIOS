@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate{
     
+    @IBOutlet weak var Searchbar: UISearchBar!
     @IBOutlet weak var AddressLabel: UILabel!
     @IBOutlet weak var SchoolNameLabel: UILabel!
     @IBOutlet weak var BellImage: UIImageView!
@@ -24,8 +25,6 @@ class HomePageVc: UIViewController,UITabBarDelegate{
     @IBOutlet weak var bottomCv: UICollectionView!
     var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Homework","Schedule Exam/Test","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
     
-   // var Imgitems : [String] = ["Messages from management","Video Upload","Circulars"]
-    
     var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Homework","Schedule ExamTest","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
     
     let HomePageBottomCell = "BottomCVCell"
@@ -34,26 +33,21 @@ class HomePageVc: UIViewController,UITabBarDelegate{
     private let tabBar = UITabBar()
     private var containerView = UIView()
     
-    
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
-    
-    
-    let name = "saran"
-    
     
     let alert = CustomAlert()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
         // Do any additional setup after loading the view.
-        
-        
-     
-        
-        searchHeightCon.constant = 56
+        Searchbar.placeholder = "Search".translated()
+        Searchbar.delegate = self
+        addDoneButton()
+        searchHeightCon.constant = 0
         
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
         TopCv.register(UINib(nibName: CellConfingName.HomePageTopCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageTopCell)
@@ -89,6 +83,7 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         
     }
     
+   
     
     //    override func viewWillAppear(_ animated: Bool) {
     //            super.viewWillAppear(animated)
@@ -164,6 +159,8 @@ class HomePageVc: UIViewController,UITabBarDelegate{
     
     
     @objc func SearchViewHidden() {
+        
+       
         
         if searchHeightCon.constant == 0{
             
@@ -393,4 +390,35 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
     }
   
     
+}
+
+
+@available(iOS 14.0, *)
+extension HomePageVc: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        Searchbar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        Searchbar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        Searchbar.resignFirstResponder()
+    }
+
 }

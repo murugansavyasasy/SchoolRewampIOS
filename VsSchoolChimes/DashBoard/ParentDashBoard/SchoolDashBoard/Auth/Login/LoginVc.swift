@@ -159,20 +159,29 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
     }
     
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//
+//
+//    if textField === MobilTextFld {
+//
+//    return range.location <= 9
+//    }
+//    else{
+//
+//    return true
+//
+//    }
+//
+//    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
-
-    if textField === MobilTextFld {
-
-    return range.location <= 9
-    }
-    else{
-
-    return true
-
+        if textField === MobilTextFld {
+            let newLength = (textField.text?.count ?? 0) + string.count - range.length
+            return newLength <= 10
+        }
+        return true
     }
 
-    }
 
     
     func addDoneButtonOnKeyboard()

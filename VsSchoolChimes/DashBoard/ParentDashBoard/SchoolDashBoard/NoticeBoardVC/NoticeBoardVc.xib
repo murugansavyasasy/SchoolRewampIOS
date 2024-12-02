@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="HeadingLabel" destination="z6a-3N-Jeu" id="ej2-hn-GsZ"/>
                 <outlet property="plusImgview" destination="G7p-It-k2L" id="Utx-bY-2JZ"/>
+                <outlet property="searchbar" destination="OZ7-nr-L1Y" id="WMa-Io-S5r"/>
                 <outlet property="tableview" destination="SKX-Pn-iin" id="M6G-BM-iox"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
