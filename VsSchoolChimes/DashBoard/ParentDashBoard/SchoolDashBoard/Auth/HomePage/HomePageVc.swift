@@ -310,6 +310,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                         // Perform OK action
                     },
                     onNo: {
+                        let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
+                        
                         print("No button tapped")
                         // Perform No action
                     }

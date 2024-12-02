@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class SenderAssignmentViewController: UIViewController {
     
+    @IBOutlet weak var plusView: UIViewX!
     @IBOutlet weak var assignmentCreateView: UIView!
     @IBOutlet weak var listView: UIView!
     @IBOutlet weak var tv: UITableView!
@@ -35,15 +36,22 @@ class SenderAssignmentViewController: UIViewController {
         
     
         let createGesture = UITapGestureRecognizer(target: self, action: #selector(createSelecteAct))
-        createView.addGestureRecognizer(createGesture)
+        plusView.addGestureRecognizer(createGesture)
         
-        let listShowGesture = UITapGestureRecognizer(target: self, action: #selector(viewSelecteAct))
-        ViewSeg.addGestureRecognizer(listShowGesture)
+//        let listShowGesture = UITapGestureRecognizer(target: self, action: #selector(viewSelecteAct))
+//        ViewSeg.addGestureRecognizer(listShowGesture)
         tv.isHidden = true
         assTitlLbl.text = "Assignment".translated()
-        viewLBl.text = "VIEW".translated()
+//        viewLBl.text = "VIEW".translated()
         headingLBl.text = "Select the type in which you want to create the assignment".translated()
-        createLbl.text = "CREATE".translated()
+//        createLbl.text = "CREATE".translated()
+        
+        listView.isHidden = false
+        tv.isHidden = false
+       
+//        ViewSeg.backgroundColor = UIColor(named: "ButtonColor")
+//        createView.backgroundColor = .lightGray
+        assignmentCreateView.isHidden = true
         
         tv.dataSource = self
         tv.delegate = self
@@ -54,7 +62,9 @@ class SenderAssignmentViewController: UIViewController {
     }
 
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        assignmentCreateView.isHidden = true
+    }
     @IBAction func viewSelecteAct() {
         print("ViewSelect")
         listView.isHidden = false
@@ -66,11 +76,11 @@ class SenderAssignmentViewController: UIViewController {
     }
     
     @IBAction func createSelecteAct() {
-        createView.backgroundColor = UIColor(named: "ButtonColor")
-        listView.isHidden = true
-        ViewSeg.backgroundColor = .lightGray
+//        createView.backgroundColor = UIColor(named: "ButtonColor")
+//        listView.isHidden = true
+//        ViewSeg.backgroundColor = .lightGray
         assignmentCreateView.isHidden = false
-        tv.isHidden = true
+//        tv.isHidden = true
     }
     
     

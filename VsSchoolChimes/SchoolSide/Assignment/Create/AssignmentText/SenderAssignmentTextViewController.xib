@@ -211,10 +211,10 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APT-0M-ktd" customClass="RectangularDashedView" customModule="VsSchoolChimes" customModuleProvider="target">
-                            <rect key="frame" x="20" y="291" width="353" height="50"/>
+                            <rect key="frame" x="10" y="291" width="373" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPS-5X-AWS">
-                                    <rect key="frame" x="83.666666666666686" y="10" width="186" height="30"/>
+                                    <rect key="frame" x="93.666666666666686" y="10" width="186" height="30"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="Click here to choose Image">
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -257,8 +257,8 @@
                         <constraint firstItem="jGH-5q-5kF" firstAttribute="top" secondItem="hvG-ky-gfd" secondAttribute="bottom" constant="10" id="AuZ-Mx-vlS"/>
                         <constraint firstItem="Q7a-Ea-2mM" firstAttribute="top" secondItem="bvR-Ur-rgO" secondAttribute="bottom" constant="10" id="AzX-Zb-LfF"/>
                         <constraint firstItem="zlr-A5-Hgv" firstAttribute="top" secondItem="jGH-5q-5kF" secondAttribute="bottom" constant="10" id="BOX-aP-qqE"/>
-                        <constraint firstAttribute="trailing" secondItem="APT-0M-ktd" secondAttribute="trailing" constant="20" id="F6S-aN-Aha"/>
-                        <constraint firstItem="APT-0M-ktd" firstAttribute="leading" secondItem="Dya-AT-xDx" secondAttribute="leading" constant="20" id="GqT-c7-bqR"/>
+                        <constraint firstAttribute="trailing" secondItem="APT-0M-ktd" secondAttribute="trailing" constant="10" id="F6S-aN-Aha"/>
+                        <constraint firstItem="APT-0M-ktd" firstAttribute="leading" secondItem="Dya-AT-xDx" secondAttribute="leading" constant="10" id="GqT-c7-bqR"/>
                         <constraint firstAttribute="trailing" secondItem="a9f-Ki-boo" secondAttribute="trailing" constant="10" id="IKj-Vi-5jx"/>
                         <constraint firstItem="hvG-ky-gfd" firstAttribute="top" secondItem="Dya-AT-xDx" secondAttribute="top" id="LAm-lL-Qxv"/>
                         <constraint firstItem="APT-0M-ktd" firstAttribute="top" secondItem="Q7a-Ea-2mM" secondAttribute="bottom" constant="10" id="MTB-CB-Wja"/>
