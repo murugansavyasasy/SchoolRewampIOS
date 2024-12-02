@@ -304,6 +304,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
                     on: self,
                     onOk: {
+                        
+                        
+                        let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
                         print("OK button tapped")
                         // Perform OK action
                     },
