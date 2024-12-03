@@ -9,8 +9,16 @@ import UIKit
 import AWSCore
 import AWSS3
 
+protocol DeleteImge{
+    func deleteImage(index:Int)
+}
 @available(iOS 14.0, *)
-class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate ,UIDocumentPickerDelegate{
+class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate ,UIDocumentPickerDelegate, DeleteImge{
+    func deleteImage(index: Int) {
+        selectedImages.remove(at: index)
+        costomView.imageCollectionview.reloadData()
+    }
+    
     
     @IBOutlet weak var eventTxt: UITextField!
     @IBOutlet weak var EventTtleLbl: UILabel!
@@ -23,6 +31,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     @IBOutlet weak var contentTxtView: UITextView!
     @IBOutlet weak var pickerDateLbl: UILabel!
     
+    @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var eventDeatail: UILabel!
     @IBOutlet weak var addPhotoLbl: UILabel!
     @IBOutlet weak var timeBtn: UIButton!
@@ -110,15 +119,20 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
-        subTitleLbl.setFont(style:.title, size: 20)
-        EventTtleLbl.setFont(style:.body, size: 14)
-        headerLbl.setFont(style:.header, size: 18)
-        eventDeatail.setFont(style:.body, size: 14)
-        addPhotoLbl.setFont(style:.body, size: 14)
+        subTitleLbl.setFont(style:.title, size: FontSize.TitleSize)
+        EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
+        headerLbl.setFont(style:.header, size: FontSize.HeaderSize)
+        eventDeatail.setFont(style:.body, size: FontSize.BodySize)
+        addPhotoLbl.setFont(style:.body, size: FontSize.BodySize)
         timeBtn.setTitleFont(style: .body, size: 12)
         dateBtn.setTitleFont(style: .body, size: 12)
-        pickerDateLbl.setFont(style:.body, size: 14)
-        placeLbl.setFont(style:.body, size: 14)
+        pickerDateLbl.setFont(style:.body, size: FontSize.BodySize)
+        placeLbl.setFont(style:.body, size: FontSize.BodySize)
+        placeLbl.text = "Venue".translated()
+        addPhotoLbl.text = "Add Photos".translated()
+        eventDeatail.text = "Event Details".translated()
+        EventTtleLbl.text = "Event Title".translated()
+        headerLbl.text = "Create Event".translated()
         // Assuming setFont(style:size:) sets the desired UIFont
         
         
@@ -163,13 +177,26 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         adjustTextViewHeightWithConstraint(textView)
+        let sentenceCount = countSentences(in: textView.text)
+        contentCount.text = "\(sentenceCount) of 30"
+
+    }
+    // Helper function to count sentences
+    func countSentences(in text: String) -> Int {
+        let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let sentences = trimmedText.components(separatedBy: CharacterSet(charactersIn: ".!?"))
+        return sentences.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }.count
     }
     func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
         // Calculate the size needed for the text
-        let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-        
-        // Update the height constraint
-        textViewHeightConstraint.constant = sizeThatFits.height
+        if textView.text.isEmpty {
+               // Set default height to 60
+               textViewHeightConstraint.constant = 60
+           } else {
+               // Calculate the size needed for the text
+               let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+               textViewHeightConstraint.constant = sizeThatFits.height
+           }
         textView.layoutIfNeeded() // Refresh the layout
     }
     func setupPlaceholder() {
@@ -212,16 +239,19 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             cell.layer.cornerRadius = 20
             return cell
         }else{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImagePdfCvCell", for: indexPath) as! ImagePdfCvCell
-            if selectedImages.count > indexPath.item {
-                 cell.imageView.image = selectedImages[indexPath.item]
-             } else {
-                 cell.imageView.image = nil
-             }
+            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
+            cell.delegate = self
+            cell.deleteBtn.tag = indexPath.item - 1
+            if selectedImages.count > indexPath.item - 1 {
+                // Assign the image starting from the second image in the selectedImages array
+                cell.imageViews.image = selectedImages[indexPath.item - 1]
+            } else {
+                cell.imageViews.image = nil
+            }
             if selectedImages.count <= 2{
-                collectionViewHeght.constant = 100
+                collectionViewHeght.constant = 120
             }else{
-                collectionViewHeght.constant = 200
+                collectionViewHeght.constant = 220
             }
             return cell
         }
@@ -231,7 +261,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         let width = (costomView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
         
-        return CGSize(width: width, height: 80)
+        return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
@@ -265,6 +295,22 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             
             // Present the alert
             self.present(alertController, animated: true, completion: nil)
+        }else{
+            if selectedImages.count > indexPath.item - 1 {
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+
+                // Safe unwrapping of imgView before assigning
+                vc.img = selectedImages[indexPath.item - 1]
+//                if let imgView = vc.imgView {
+//                    imgView.image = selectedImages[indexPath.item - 1]
+//                    
+//                } else {
+//                    print("imgView is nil")
+//                }
+//                
+                present(vc, animated: true)
+            }
         }
     }
     

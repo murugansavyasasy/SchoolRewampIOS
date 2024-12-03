@@ -44,7 +44,7 @@ class ImageSelection:UIView{
     }
     func registerCell(){
         imageCollectionview.register(UINib(nibName: "AttachmentCVCell", bundle: nil), forCellWithReuseIdentifier: "AttachmentCVCell")
-        imageCollectionview.register(UINib(nibName: "ImagePdfCvCell", bundle: nil), forCellWithReuseIdentifier: "ImagePdfCvCell")
+        imageCollectionview.register(UINib(nibName: "ImageCvCell", bundle: nil), forCellWithReuseIdentifier: "ImageCvCell")
     }
     
 }

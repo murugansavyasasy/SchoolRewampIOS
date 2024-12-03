@@ -15,10 +15,12 @@ class ImagePdfCvCell: UICollectionViewCell {
    
     @IBOutlet weak var IndicaterImageView: UIImageView!
     @IBOutlet weak var fullView: UIView!
+    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        IndicaterImageView.isHidden = true
+//        IndicaterImageView.isHidden = true
 //        fullView.layer.cornerRadius = 15
         webView.isHidden = true
         

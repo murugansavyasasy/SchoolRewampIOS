@@ -105,6 +105,8 @@
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
 		848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */; };
 		848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */; };
+		848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848BEEE22CFF093100581A55 /* PreviewImageVC.xib */; };
+		848BEEE42CFF093100581A55 /* PreviewImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BEEE12CFF093100581A55 /* PreviewImageVC.swift */; };
 		848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848F7A6D2CF8CB85004EF617 /* AnimatView.xib */; };
 		848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
@@ -391,6 +393,8 @@
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
 		848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderImgPdfVC.swift; sourceTree = "<group>"; };
 		848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderImgPdfVC.xib; sourceTree = "<group>"; };
+		848BEEE12CFF093100581A55 /* PreviewImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageVC.swift; sourceTree = "<group>"; };
+		848BEEE22CFF093100581A55 /* PreviewImageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewImageVC.xib; sourceTree = "<group>"; };
 		848F7A6D2CF8CB85004EF617 /* AnimatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimatView.xib; sourceTree = "<group>"; };
 		848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatView.swift; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
@@ -736,6 +740,8 @@
 				8406583C2CFD927C00080CF6 /* EventsListTVC.xib */,
 				840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */,
 				840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */,
+				848BEEE12CFF093100581A55 /* PreviewImageVC.swift */,
+				848BEEE22CFF093100581A55 /* PreviewImageVC.xib */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -2036,6 +2042,7 @@
 				847AB6F12CF09A6800952AC1 /* SelectRecipientVC.xib in Resources */,
 				8406583D2CFD927C00080CF6 /* EventsListTVC.xib in Resources */,
 				84A271822CEDAB9F0033EB02 /* ImagePdfCvCell.xib in Resources */,
+				848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */,
 				84A271832CEDAB9F0033EB02 /* ImagePdfTv.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
@@ -2361,6 +2368,7 @@
 				840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
 				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,
+				848BEEE42CFF093100581A55 /* PreviewImageVC.swift in Sources */,
 				8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */,
 				84EFFAED2CCFB32800C11C26 /* rectangelDash.swift in Sources */,
 			);
