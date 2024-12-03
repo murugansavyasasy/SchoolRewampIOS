@@ -150,7 +150,14 @@
 "Total" = "Total";
 "View" = "View";
 
-
+//MARK: Sender side Events
+"Venue" = "Venue";
+"Event Title" = "Event Title";
+"Event Details" = "Event Details";
+"Add Photos" = "Add Photos";
+"Next" = "Next";
+"Host Event" = "Host Event";
+"Create Event" = "Create Event";
 
 
 

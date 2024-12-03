@@ -167,3 +167,11 @@
 "Total" = "รวมทั้งหมด";
 "View" = "ดู";
 
+//MARK: Sender side Events
+"Venue" = "สถานที่จัดงาน";
+"Event Title" = "ชื่อกิจกรรม";
+"Event Details" = "รายละเอียดกิจกรรม";
+"Add Photos" = "เพิ่มรูปภาพ";
+"Next" = "ถัดไป";
+"Host Event" = "จัดกิจกรรม";
+"Create Event" = "สร้างกิจกรรม";

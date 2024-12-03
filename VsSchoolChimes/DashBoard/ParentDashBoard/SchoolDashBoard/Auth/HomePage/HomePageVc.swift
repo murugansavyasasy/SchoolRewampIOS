@@ -350,6 +350,10 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let vc = SenderEventsVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
+            }else if items[indexPath.row] == "Messages from management".translated(){
+                let vc = SenderImgPdfVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
             }
         }
         

@@ -65,10 +65,11 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             selectedImages.append(contentsOf: images)
             collectionView.delegate = self
             collectionView.dataSource = self
+            collectionView.reloadData()
             
             for image in images {
                 print("Selected image: \(image)")
-                photoPickManager.uploadAWS(image: image)
+               // photoPickManager.uploadAWS(image: image)
             }
         }
         
@@ -80,6 +81,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
     }
     
+
     func StyleAndTranslater(){
         //MARK: Translate
         HeadingLabel.text =  "Compose NoticeBoard".translated()
@@ -401,6 +403,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         }
     
     func selectImages() {
+        
             photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
 
 

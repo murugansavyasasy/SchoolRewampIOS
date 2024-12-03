@@ -36,8 +36,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+//        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
+//        selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 
         registerCell()
         filterData = studentData
