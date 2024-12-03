@@ -13,8 +13,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StudentHistryVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="HeaderLabel" destination="Ia6-uU-gnj" id="qRo-Pa-HUP"/>
                 <outlet property="headerView" destination="GN1-gS-A5g" id="X5M-qX-G4s"/>
                 <outlet property="historyTable" destination="lbl-7B-HhZ" id="tQg-AY-dL5"/>
+                <outlet property="nameLbl" destination="OGK-va-8fw" id="EX4-fl-IlK"/>
                 <outlet property="rollNoLbl" destination="OV7-tl-vWS" id="AYw-gj-8EF"/>
                 <outlet property="search" destination="g9Q-hn-bhR" id="nL9-7t-1DA"/>
                 <outlet property="selectAllBtn" destination="2Eh-TK-gsW" id="tB7-K7-Cho"/>

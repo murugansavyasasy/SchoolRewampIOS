@@ -12,7 +12,8 @@ class ImageCvCell: UICollectionViewCell {
     @IBOutlet weak var imageViews: UIImageView!
     
     @IBOutlet weak var TrashIcon: UIImageView!
-    
+    @IBOutlet weak var deleteBtn: UIButton!
+    var delegate:DeleteImge?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +21,9 @@ class ImageCvCell: UICollectionViewCell {
         imageViews.layer.cornerRadius = Colornames.CORadius10
         
     }
-
+    
+    @IBAction func deleteImg(_ sender: UIButton) {
+        delegate?.deleteImage(index: sender.tag)
+    }
+    
 }

@@ -316,6 +316,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                         // Perform OK action
                     },
                     onNo: {
+                        let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        self.present(vc, animated: true)
+                        
+                        
                         print("No button tapped")
                         // Perform No action
                     }
@@ -347,7 +352,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }else if items[indexPath.row] == "Circulars".translated(){
-                let vc = SenderEventsVC(nibName: nil, bundle: nil)
+                let vc = EventsVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }else if items[indexPath.row] == "Messages from management".translated(){

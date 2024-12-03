@@ -11,57 +11,7 @@ import PhotosUI
 import AWSS3
 //AttachmentsReuseView
 @available(iOS 14.0, *)
-//
-//class AttachmentsReuseView : UIView, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate  {
-//    
-//    
-//   
-//    
-//    protocol AttachmentsReuseView {
-//        var name: String { get }
-//        func camera() -> String
-//    }
-//    
-//    
-//    let myCat = Attachments(name: "Whiskers")
-//   
-//    
-//    
-//    
-//    struct Attachments: AttachmentsReuseView {
-//        
-//        func getCurrentViewController() -> UIViewController? {
-//
-//        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
-//            var currentController: UIViewController! = rootController
-//            while( currentController.presentedViewController != nil ) {
-//                currentController = currentController.presentedViewController
-//            }
-//            return currentController
-//        }
-//        return nil
-//
-//        }
-//        var name: String
-//        
-//        func camera() -> String {
-//            let nagivate = self.getCurrentViewController()
-//            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//                let imagePicker = UIImagePickerController()
-//                imagePicker.delegate = self
-//                imagePicker.sourceType = .camera
-//                imagePicker.allowsEditing = true // Allows editing of the captured image
-//                nagivate!.present(imagePicker, animated: true, completion: nil)
-//            } else {
-//                // Camera is not available, show an alert
-//                let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
-//                nagivate!.present(alert, animated: true, completion: nil)
-//            }
-//        }
-//    }
-//    
-//}
+
 
 
 class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate,PHPickerViewControllerDelegate {
@@ -122,24 +72,6 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
         viewController.present(documentPicker, animated: true, completion: nil)
     }
     // Handle the image once it has been captured
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.editedImage] as? UIImage {
-            // Use the captured image
-            // For example, display it in an image view or save it
-            print("Captured Image: \(image)")
-            self.selectedImages.append(image)
-        } else if let image = info[.originalImage] as? UIImage {
-            print("Captured Image: \(image)")
-            self.selectedImages.append(image)
-        }
-        dismissViewController()
-    }
-    
-    // Handle cancellation
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismissViewController()
-    }
-    
     
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
@@ -247,46 +179,7 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
     }
     
    
-       // MARK: - PHPickerViewControllerDelegate
-  
-        // Present the picker
-//        func presentImagePicker(from viewController: UIViewController) {
-//            var configuration = PHPickerConfiguration()
-//            configuration.selectionLimit = 3 // 0 allows unlimited selection
-//            configuration.filter = .images  // Only images
-//            
-//            let picker = PHPickerViewController(configuration: configuration)
-//            picker.delegate = self
-//            
-//            viewController.present(picker, animated: true, completion: nil)
-//        }
-        
-//        // Delegate method to handle selected images
-//        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-//            print("aaaaaaPHPickerViewController")
-//            picker.dismiss(animated: true, completion: nil)
-//            
-//            var selectedImages = [UIImage]()
-//            let group = DispatchGroup()
-//            
-//            for result in results {
-//                group.enter()
-//                if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-//                    result.itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-//                        if let image = image as? UIImage {
-//                            selectedImages.append(image)
-//                        }
-//                        group.leave()
-//                    }
-//                } else {
-//                    group.leave()
-//                }
-//            }
-//            
-//            group.notify(queue: .main) {
-//                self.onImagesPicked?(selectedImages)
-//            }
-//        }
+      
     
  
     func uploadAWS(image : UIImage){
@@ -403,12 +296,10 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
 }
 
 
+
+
 @available(iOS 14.0, *)
 extension CameraUtility : PHPickerViewControllerDelegate{
-    
-    
-//    var imagePicker: UIImagePickerController?
-
     
    
     func selectImages(from viewController: UIViewController) {
@@ -439,5 +330,23 @@ extension CameraUtility : PHPickerViewControllerDelegate{
         }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info:
+     [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.editedImage] as? UIImage {
+            // Use the captured image
+            // For example, display it in an image view or save it
+            print("Captured Image: \(image)")
+            self.selectedImages.append(image)
+        } else if let image = info[.originalImage] as? UIImage {
+            print("Captured Image: \(image)")
+            self.selectedImages.append(image)
+        }
+        dismissViewController()
+    }
+    
+    // Handle cancellation
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismissViewController()
+    }
     
 }

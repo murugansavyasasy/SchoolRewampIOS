@@ -29,20 +29,32 @@
                             <constraint firstAttribute="height" constant="28" id="nnH-9p-2EX"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P1s-O8-NbB">
+                        <rect key="frame" x="177" y="88" width="25" height="28"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <connections>
+                            <action selector="deleteImg:" destination="gTV-IL-0wX" eventType="touchUpInside" id="4qZ-e6-FbX"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="p43-r7-nQ5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="AzC-Vj-Hao"/>
+                <constraint firstItem="P1s-O8-NbB" firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" id="B58-wl-Vfa"/>
                 <constraint firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" constant="10" id="D9k-4s-TJc"/>
                 <constraint firstAttribute="trailing" secondItem="p43-r7-nQ5" secondAttribute="trailing" constant="10" id="KT4-Mp-Ixk"/>
+                <constraint firstItem="P1s-O8-NbB" firstAttribute="leading" secondItem="amK-p2-KzG" secondAttribute="leading" id="PtN-yB-MEo"/>
                 <constraint firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" constant="9" id="Tjn-ab-Qvu"/>
+                <constraint firstItem="P1s-O8-NbB" firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" id="lNM-Pl-Viy"/>
                 <constraint firstAttribute="bottom" secondItem="p43-r7-nQ5" secondAttribute="bottom" constant="10" id="qzx-2x-hNo"/>
                 <constraint firstItem="p43-r7-nQ5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="uqd-c2-eLG"/>
+                <constraint firstItem="P1s-O8-NbB" firstAttribute="top" secondItem="amK-p2-KzG" secondAttribute="top" id="yuM-zs-yKM"/>
             </constraints>
             <size key="customSize" width="187" height="94"/>
             <connections>
                 <outlet property="TrashIcon" destination="amK-p2-KzG" id="LVs-dT-38d"/>
+                <outlet property="deleteBtn" destination="P1s-O8-NbB" id="Reg-UE-1M8"/>
                 <outlet property="imageViews" destination="p43-r7-nQ5" id="hJk-zK-BF2"/>
             </connections>
             <point key="canvasLocation" x="232.06106870229007" y="2.4647887323943665"/>
@@ -51,7 +63,7 @@
     <resources>
         <image name="trash.square.fill" catalog="system" width="128" height="114"/>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
