@@ -12,6 +12,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         print("\(status) \(index)")
     }
     
+    @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var statusLbl: UILabel!
@@ -37,8 +38,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         super.viewDidLoad()
         
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        selectAllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-
+        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        statusLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
         registerCell()
         filterData = studentData
         search.delegate = self

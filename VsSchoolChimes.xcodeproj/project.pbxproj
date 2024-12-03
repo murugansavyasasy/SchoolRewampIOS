@@ -36,6 +36,12 @@
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
 		840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */; };
 		840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
+		840658392CFD8D4E00080CF6 /* EventsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840658382CFD8D4E00080CF6 /* EventsVC.xib */; };
+		8406583A2CFD8D4E00080CF6 /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658372CFD8D4E00080CF6 /* EventsVC.swift */; };
+		8406583D2CFD927C00080CF6 /* EventsListTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8406583C2CFD927C00080CF6 /* EventsListTVC.xib */; };
+		8406583E2CFD927C00080CF6 /* EventsListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406583B2CFD927C00080CF6 /* EventsListTVC.swift */; };
+		840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */; };
+		840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
@@ -235,6 +241,8 @@
 		84EFFAED2CCFB32800C11C26 /* rectangelDash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAEC2CCFB32800C11C26 /* rectangelDash.swift */; };
 		84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EFFAF32CCFB68A00C11C26 /* ImageCvCell.xib */; };
 		84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAF22CCFB68A00C11C26 /* ImageCvCell.swift */; };
+		84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */; };
+		84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */; };
 		F29035602CDC924900F3E67C /* MobileVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F290355F2CDC924900F3E67C /* MobileVc.xib */; };
 		F29035612CDC924900F3E67C /* MobileVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F290355E2CDC924900F3E67C /* MobileVc.swift */; };
 /* End PBXBuildFile section */
@@ -308,6 +316,12 @@
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendenceTVC.swift; sourceTree = "<group>"; };
 		840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendenceTVC.xib; sourceTree = "<group>"; };
+		840658372CFD8D4E00080CF6 /* EventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsVC.swift; sourceTree = "<group>"; };
+		840658382CFD8D4E00080CF6 /* EventsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsVC.xib; sourceTree = "<group>"; };
+		8406583B2CFD927C00080CF6 /* EventsListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsListTVC.swift; sourceTree = "<group>"; };
+		8406583C2CFD927C00080CF6 /* EventsListTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsListTVC.xib; sourceTree = "<group>"; };
+		840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCVCell.swift; sourceTree = "<group>"; };
+		840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentCVCell.xib; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
@@ -517,6 +531,8 @@
 		84EFFAEC2CCFB32800C11C26 /* rectangelDash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = rectangelDash.swift; sourceTree = "<group>"; };
 		84EFFAF22CCFB68A00C11C26 /* ImageCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCvCell.swift; sourceTree = "<group>"; };
 		84EFFAF32CCFB68A00C11C26 /* ImageCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCvCell.xib; sourceTree = "<group>"; };
+		84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSelection.xib; sourceTree = "<group>"; };
+		84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
 		87307EB2684F6F92EC1CE272 /* Pods-VsSchoolChimes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.release.xcconfig"; sourceTree = "<group>"; };
 		B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -711,6 +727,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		840658362CFD8D1B00080CF6 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				840658372CFD8D4E00080CF6 /* EventsVC.swift */,
+				840658382CFD8D4E00080CF6 /* EventsVC.xib */,
+				8406583B2CFD927C00080CF6 /* EventsListTVC.swift */,
+				8406583C2CFD927C00080CF6 /* EventsListTVC.xib */,
+				840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */,
+				840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
 		8442A8672CDB787A0006068E /* PriorityScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -867,6 +896,8 @@
 			children = (
 				848F7A6D2CF8CB85004EF617 /* AnimatView.xib */,
 				848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */,
+				84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */,
+				84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */,
 			);
 			path = AnimationView;
 			sourceTree = "<group>";
@@ -1098,6 +1129,7 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				840658362CFD8D1B00080CF6 /* Events */,
 				848F7A6C2CF8CA5A004EF617 /* AnimationView */,
 				849970C82CF8752400800B07 /* Comunication */,
 				849970B22CF8750B00800B07 /* Assignment */,
@@ -2002,6 +2034,7 @@
 				847AB6EF2CF09A6800952AC1 /* RecipientTvCell.xib in Resources */,
 				847AB6F02CF09A6800952AC1 /* Std_Grp_header.xib in Resources */,
 				847AB6F12CF09A6800952AC1 /* SelectRecipientVC.xib in Resources */,
+				8406583D2CFD927C00080CF6 /* EventsListTVC.xib in Resources */,
 				84A271822CEDAB9F0033EB02 /* ImagePdfCvCell.xib in Resources */,
 				84A271832CEDAB9F0033EB02 /* ImagePdfTv.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
@@ -2022,6 +2055,7 @@
 				849970B42CF8750B00800B07 /* AssignmentListVC.xib in Resources */,
 				849970B52CF8750B00800B07 /* AssignmentListCTVC.xib in Resources */,
 				849970B62CF8750B00800B07 /* ImageTVC.xib in Resources */,
+				840658392CFD8D4E00080CF6 /* EventsVC.xib in Resources */,
 				849970B72CF8750B00800B07 /* ImageCViewCell.xib in Resources */,
 				849970B82CF8750B00800B07 /* PageVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
@@ -2040,6 +2074,7 @@
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
 				848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */,
+				84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */,
 				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
@@ -2052,6 +2087,7 @@
 				84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */,
 				84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */,
 				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
+				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
@@ -2240,6 +2276,7 @@
 				8442A8682CDB787A0006068E /* principalTVCell.swift in Sources */,
 				8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */,
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
+				8406583E2CFD927C00080CF6 /* EventsListTVC.swift in Sources */,
 				F29035612CDC924900F3E67C /* MobileVc.swift in Sources */,
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				18BAF4DE2CEB3CB200517441 /* SenderAssignmentViewController.swift in Sources */,
@@ -2252,6 +2289,7 @@
 				84A5BE902C197C6000E32496 /* CheckBox.swift in Sources */,
 				189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */,
 				84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */,
+				840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */,
 				84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */,
 				847AB6E62CF09A6300952AC1 /* SenderEventsVC.swift in Sources */,
 				84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */,
@@ -2270,6 +2308,7 @@
 				18BAF3E72CE8BF0900517441 /* PhotoPickManager.swift in Sources */,
 				84A5BE922C197CE800E32496 /* UIImageViewX.swift in Sources */,
 				844188642CC8C839006483C3 /* ResponceModal.swift in Sources */,
+				84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */,
 				849970B92CF8750B00800B07 /* PageVC.swift in Sources */,
 				849970BA2CF8750B00800B07 /* AssignmentListVC.swift in Sources */,
 				849970BB2CF8750B00800B07 /* ImageCViewCell.swift in Sources */,
@@ -2317,6 +2356,7 @@
 				8442A8F62CDC83860006068E /* RateUsViewController.swift in Sources */,
 				8442A8F72CDC83860006068E /* RatingTableViewCell.swift in Sources */,
 				849978452CEF1FE5007D45BA /* StudentHistryTVC.swift in Sources */,
+				8406583A2CFD8D4E00080CF6 /* EventsVC.swift in Sources */,
 				849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */,
 				840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
