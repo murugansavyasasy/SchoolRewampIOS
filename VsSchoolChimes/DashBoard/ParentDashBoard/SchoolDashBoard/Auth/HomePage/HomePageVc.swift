@@ -326,13 +326,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     }
                 )
             }
-            else if items[indexPath.row] == "PTM".translated() {
+            else if items[indexPath.row].translated() == "PTM".translated() {
                 
                 videoNavigate()
                 
             }else if items[indexPath.row].translated() == "Notice Board".translated() {
                 
-                let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+                //let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+                let vc = SendNoticeBoardVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
                 

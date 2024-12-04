@@ -129,11 +129,13 @@
 "Back to Home <<" = "முகப்புக்கு திரும்பவும் <<";
 
 "Enter Video Title" = "வீடியோ தலைப்பு உள்ளிடவும்";
-"Video Description" = "வீடியோ விளக்கம்";
+"Enter Video Description" = "வீடியோ விவரத்தை உள்ளிடவும்";
 "Choose Video From Gallery" = "கேலரியிலிருந்து வீடியோ தேர்வு செய்யவும்";
 "Change Video" = "வீடியோ மாற்றவும்";
 "Upload Video" = "வீடியோ பதிவேற்றவும்";
 "Send" = "அனுப்ப";
+"Click To Choose Video From File" = "வீடியோவை தேர்ந்தெடுக்க கிளிக் செய்யவும்";
+
 //MARK: Home Work Sender Side
 "Home Work" = "வீட்டு வேலை";
 "Content" = "உள்ளடக்கம்";

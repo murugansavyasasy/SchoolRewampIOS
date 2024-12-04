@@ -55,15 +55,13 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
        
                 
                 // Disable horizontal scrolling
-        scrollview.contentSize = CGSize(width: scrollview.frame.width, height: scrollview.contentSize.height)
-        scrollview.showsHorizontalScrollIndicator = false
-        scrollview.alwaysBounceHorizontal = false
-        
-        
-       // changeVideoBtn.isHidden = true
+//        scrollview.contentSize = CGSize(width: scrollview.frame.width, height: scrollview.contentSize.height)
+//        scrollview.showsHorizontalScrollIndicator = false
+//        scrollview.alwaysBounceHorizontal = false
+//        
+            chooseVideoBtn.isHidden = true
 
-        BaseView.layer.cornerRadius = 10
-        VideoPlayer.layer.cornerRadius = 10
+       
         StyleAndTranslater()
 
        // playBtn.isHidden = true
@@ -75,16 +73,23 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 //        let selectedAlertGesture = UITapGestureRecognizer(target: self, action: #selector(pickVideoFromGallery))
 //        selectVideoView.addGestureRecognizer(selectedAlertGesture)
         
-//        let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(playVideo))
-//        VideoPlayer.addGestureRecognizer(PlayGesture)
+        let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
+        VideoPlayer.addGestureRecognizer(PlayGesture)
     }
     
     func StyleAndTranslater(){
         
         //MARK: UI update
-        titleTxtFld.layer.cornerRadius = Colornames.CORadius10
-        titleTxtFld.layer.borderWidth = 0.8
-        titleTxtFld.layer.borderColor = UIColor.black.cgColor
+//        BaseView.layer.cornerRadius = 10
+//        BaseView.layer.shadowColor = UIColor.black.cgColor
+//        BaseView.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        BaseView.layer.shadowRadius = 5
+//        BaseView.layer.shadowOpacity = 0.3
+        BaseView.layer.cornerRadius = 10
+        VideoPlayer.layer.cornerRadius = 10
+//        titleTxtFld.layer.cornerRadius = Colornames.CORadius10
+//        titleTxtFld.layer.borderWidth = 0.8
+//        titleTxtFld.layer.borderColor = UIColor.black.cgColor
         descTxtView.layer.cornerRadius = Colornames.CORadius10
         descTxtView.layer.borderWidth = 0.8
         descTxtView.layer.borderColor = UIColor.black.cgColor
@@ -95,6 +100,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         //MARK: Translate
         HeaderLabel.text = "Video".translated()
         uploadVideoTitleLbl.text = "Upload Video".translated()
+        chooseVideoLabel.text = "Click To Choose Video From File".translated()
         titleTxtFld.placeholder = "Enter Video Title".translated()
         descTxtView.text = "Enter Video Description".translated()
         descTxtView.textColor = .lightGray
@@ -106,7 +112,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         chooseVideoLabel.setFont(style: .title, size: FontSize.TitleSize)
-        uploadVideoTitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        uploadVideoTitleLbl.setFont(style: .header, size: 17)
         changeVideoBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         chooseVideoBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         sendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -160,7 +166,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             playerViewController?.view.frame = VideoPlayer.bounds
             self.VideoPlayer.addSubview(playerViewController!.view)
             playerViewController?.didMove(toParent: self)
-
+            playerViewController?.view.layer.cornerRadius = 10
+            playerViewController?.view.clipsToBounds = true
             player?.play()
         }
     }
@@ -184,10 +191,11 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             //PlayerHeight.constant = 200
             
             ThumnailImage.isHidden = false
+            ThumnailImage.layer.cornerRadius = 10
             ThumnailImage.image = UIImage(cgImage: cgImage)
             chooseVideoLabel.isHidden = true
-            playBtn.setImage(UIImage(named: "play-button"), for: .normal)
             playBtn.isHidden = false
+            playBtn.setImage(UIImage(named: "play-button"), for: .normal)
 //            chooseVideoBtn.isHidden = true
 //            changeVideoBtn.isHidden = false
             //return UIImage(cgImage: cgImage)
@@ -199,8 +207,9 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 
     
     @IBAction func ChooseVideoBtnAct(_ sender: Any) {
-        
-        pickVideoFromGallery()
+        if playerurl == nil{
+            pickVideoFromGallery()
+        }
     }
     
     @IBAction func backAction() {
@@ -212,6 +221,9 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         if playBtn.currentImage == UIImage(named: "play-button"){
             playVideo()
         }
+        else{
+            pickVideoFromGallery()
+        }
     }
     
     
@@ -222,10 +234,10 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             alert.showAlert(title: "Video", message: "Please choose a Video", on: self)
         }
         else{
-            stopCurrentVideo()
-            playerurl = nil
+           // stopCurrentVideo()
+//            playerurl = nil
             
-            playerViewController?.view.removeFromSuperview()
+           // playerViewController?.view.removeFromSuperview()
             pickVideoFromGallery()
         }
     }
@@ -263,6 +275,10 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         // MARK: This method is called when the user has picked a video
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let videoURL = info[.mediaURL] as? URL {
+                if playerurl != nil{
+                    stopCurrentVideo()
+                    playerurl = nil
+                }
                 playerurl = videoURL
                 print("Selected video URL: \(videoURL)")
                 generateThumbnail(from: playerurl!)

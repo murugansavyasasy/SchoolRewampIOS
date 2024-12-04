@@ -104,11 +104,13 @@
 "Section or student" = " खंड या छात्र";
 //MARK: Video Sender Side
 "Enter Video Title" = "वीडियो शीर्षक दर्ज करें";
-"Video Description" = "वीडियो विवरण";
+"Enter Video Description" = "वीडियो विवरण दर्ज करें";
 "Choose Video From Gallery" = "गैलरी से वीडियो चुनें";
 "Change Video" = "वीडियो बदलें";
 "Upload Video" = "वीडियो अपलोड करें";
 "Send" = "भेजें";
+"Click To Choose Video From File" = "फाइल से वीडियो चुनने के लिए क्लिक करें";
+
 //MARK: Home Work Sender Side
 "Home Work" = "होमवर्क";
 "Content" = "सामग्री";
