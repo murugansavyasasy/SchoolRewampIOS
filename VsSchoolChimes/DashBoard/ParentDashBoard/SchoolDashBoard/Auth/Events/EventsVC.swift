@@ -30,15 +30,22 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     @IBOutlet weak var costomView: ImageSelection!
     @IBOutlet weak var contentTxtView: UITextView!
     @IBOutlet weak var pickerDateLbl: UILabel!
+    @IBOutlet weak var calander2Btn: HalfColorButton!
     
+    @IBOutlet weak var TxtOuterview: UIView!
     @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var eventDeatail: UILabel!
     @IBOutlet weak var addPhotoLbl: UILabel!
     @IBOutlet weak var timeBtn: UIButton!
     @IBOutlet weak var dateBtn: UIButton!
-    @IBOutlet weak var calanderBtn: UIButton!
+    @IBOutlet weak var todate: UIButton!
+    
+    @IBOutlet weak var toDateLbl: UILabel!
+    @IBOutlet weak var calanderBtn: HalfColorButton!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var Totime: UIButton!
     var placeholderLabel: UILabel!
     var activeButton: UIButton?
     var timePicker: UIDatePicker!
@@ -62,7 +69,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         setInitialButtonTitles()
         registerCell()
         setupPlaceholder()
-        
+        keyboardDionebtn()
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
             // Handle selected images here
@@ -101,9 +108,10 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         // Set the formatted time to the time button
         timeBtn.setTitle(formattedTime, for: .normal)
-        
+        todate.setTitle(formattedDate, for: .normal)
+        dateBtn.setTitle(formattedDate, for: .normal)
         // Set the date and time to the date button
-        dateSet(formattedDate, dateOnly)
+        dateSet(formattedDate, dateOnly,dateOnly)
     }
 
     
@@ -111,76 +119,155 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
         contentTxtView.delegate = self
-        contentTxtView.layer.cornerRadius = 10
-        contentTxtView.layer.borderWidth = 0.5
-        contentTxtView.layer.borderColor = UIColor.black.cgColor
+        TxtOuterview.layer.cornerRadius = 10
+        TxtOuterview.layer.borderWidth = 0.5
+        TxtOuterview.layer.borderColor = UIColor.black.cgColor
+        
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
-        subTitleLbl.setFont(style:.title, size: FontSize.TitleSize)
+
+        calanderBtn.layer.borderWidth = 1 // Border width
+        calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
+        calander2Btn.layer.borderWidth = 1 // Border width
+        calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
+        calander2Btn.layer.cornerRadius = 10
+        calanderBtn.layer.cornerRadius = 10 // Add corner radius if needed
+
+        subTitleLbl.setFont(style:.title, size: FontSize.HeaderSize)
         EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
         headerLbl.setFont(style:.header, size: FontSize.HeaderSize)
         eventDeatail.setFont(style:.body, size: FontSize.BodySize)
         addPhotoLbl.setFont(style:.body, size: FontSize.BodySize)
+        Totime.setTitleFont(style: .body, size: 12)
         timeBtn.setTitleFont(style: .body, size: 12)
         dateBtn.setTitleFont(style: .body, size: 12)
-        pickerDateLbl.setFont(style:.body, size: FontSize.BodySize)
+        todate.setTitleFont(style: .body, size: 12)
+        
+        calanderBtn.layer.cornerRadius = 10
         placeLbl.setFont(style:.body, size: FontSize.BodySize)
         placeLbl.text = "Venue".translated()
-        addPhotoLbl.text = "Add Photos".translated()
+        addPhotoLbl.text = "Add Photos (Optional?)".translated()
         eventDeatail.text = "Event Details".translated()
         EventTtleLbl.text = "Event Title".translated()
         headerLbl.text = "Create Event".translated()
         // Assuming setFont(style:size:) sets the desired UIFont
-        
+        setAttributedText(for: addPhotoLbl, with: "Add Photos (Optional?)", splitAt: 10, color1: .black, color2: .lightGray)
         
     }
-    func dateSet( _ Date: String, _ splitdate: String) {
-        print(Date)
+    func dateSet(_ date: String, _ splitDate: String,_ currectndate:String) {
+
         
-        dateBtn.setTitle(Date, for: .normal)
-        let janFont = pickerDateLbl.font ?? UIFont.systemFont(ofSize: 17) // Default fallback
-        let dayFont = placeLbl.font ?? UIFont.systemFont(ofSize: 14)      // Default fallback
-        
-        // Split the date into parts
-        let components = splitdate.split(separator: " ")
-        let weekday = components[0] // "Tue"
-        let day = components.count > 1 ? components[1] : "" // "3" or "12"
-        
-        // Create the attributed string with a newline
-        let attributedText = NSMutableAttributedString(string: "\(weekday)\n\(day)")
-        
-        // Define the range for "Tue" (weekday)
-        let dayRange = NSRange(location: 0, length: weekday.count)
-        
-        // Define the range for the day number (e.g., "3" or "12")
-        let dayNumberRange = NSRange(location: weekday.count + 1, length: day.count)
-        
-        // Apply the font to "Tue"
-        attributedText.addAttribute(.font, value: janFont, range: dayRange)
-        
-        // Apply the font to the day number (e.g., "3" or "12")
-        attributedText.addAttribute(.font, value: dayFont, range: dayNumberRange)
-        
-        // Set the paragraph style to center align
+        // Fonts for different parts
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)    // Larger font for day number
+
+        // Split the date into components
+        let components = splitDate.split(separator: " ")
+        guard let weekday = components.first else {
+            print("Error: No weekday found in splitDate")
+            return
+        }
+        let day = components.count > 1 ? components[1] : ""
+
+        // Create an attributed string
+        let attributedText = NSMutableAttributedString()
+
+        // Add the weekday part
+        attributedText.append(NSAttributedString(string: "\(weekday)\n", attributes: [
+            .font: weekdayFont,
+            .foregroundColor: UIColor.darkGray // Optional: Set weekday color
+        ]))
+
+        // Add the day part
+        attributedText.append(NSAttributedString(string: "\(day)", attributes: [
+            .font: dayFont,
+            .foregroundColor: UIColor.black // Optional: Set day color
+        ]))
+
+        // Set paragraph style for centered alignment
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-        
+        if currectndate != ""{
+            toDateLbl.attributedText = attributedText
+            pickerDateLbl.attributedText = attributedText
+        }
+       
+        if dateSelection == false{
+            todate.setTitle(date, for: .normal)
+            toDateLbl.attributedText = attributedText
+            
+        }else{
+            pickerDateLbl.attributedText = attributedText
+            dateBtn.setTitle(date, for: .normal)
+        }
         // Set the attributed text to the label
-        pickerDateLbl.attributedText = attributedText
-        pickerDateLbl.numberOfLines = 0 // Allow multiple lines
+        
+        pickerDateLbl.numberOfLines = 0 // Allow multiline
+//        pickerDateLbl.textAlignment = .justified // Ensure text is centered in the label
+    }
+
+
+    func setAttributedText(for label: UILabel, with text: String, splitAt index: Int, color1: UIColor, color2: UIColor) {
+        guard index < text.count else { return } // Ensure index is within bounds
+        
+        // Split the string
+        let firstPart = String(text.prefix(index))
+        let secondPart = String(text.suffix(text.count - index))
+        
+        // Create attributed strings with different colors
+        let attributedString = NSMutableAttributedString(string: firstPart, attributes: [.foregroundColor: color1])
+        let secondAttributedString = NSAttributedString(string: secondPart, attributes: [.foregroundColor: color2])
+        
+        // Append the second part to the first
+        attributedString.append(secondAttributedString)
+        
+        // Set it to the label
+        label.attributedText = attributedString
+    }
+    func keyboardDionebtn(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        placeTxt.inputAccessoryView = toolbar
+        eventTxt.inputAccessoryView = toolbar
+        contentTxtView.inputAccessoryView = toolbar
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)  // Dismiss the keyboard
     }
     
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         adjustTextViewHeightWithConstraint(textView)
-        let sentenceCount = countSentences(in: textView.text)
-        contentCount.text = "\(sentenceCount) of 30"
 
+//        if textView.text.count <= 500{
+//            contentTxtView.isEditable = false
+//        }else{
+//            contentCount.text = "\(textView.text.count) of 500"
+//        }
     }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Calculate the new length of the text
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        if updatedText.count <= 500 {
+            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "Alert", message: "Reach Your Limit", on: self)
+//            contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
     // Helper function to count sentences
     func countSentences(in text: String) -> Int {
         let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -218,8 +305,23 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         showTimePicker(for: sender, date: false)
         dateSelection = false
     }
-    
+    @IBAction func ToTimeBtn(_ sender: UIButton) {
+        showTimePicker(for: sender, date: false)
+        dateSelection = true
+    }
+    @IBAction func toDate(_ sender: UIButton) {
+        showTimePicker(for: sender, date: true)
+        dateSelection = false
+    }
     @IBAction func chooseSchool(_ sender: UIButton) {
+        if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{
+            let vc = SelectRecipientVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Alert", message: "Fill All Required Fields", on: self)
+        }
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -269,8 +371,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             //
             // Camera option
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-    //
-//                openCamera()
             }
             alertController.addAction(cameraAction)
             
@@ -302,12 +402,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
 
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
-//                if let imgView = vc.imgView {
-//                    imgView.image = selectedImages[indexPath.item - 1]
-//                    
-//                } else {
-//                    print("imgView is nil")
-//                }
 //                
                 present(vc, animated: true)
             }
@@ -321,204 +415,13 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
 
            }
     func selectPDF() {
-
-
-
-            print("SELECT PDF")
-
-            
-
-
-
-            
-
             let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
 
             documentPicker.delegate = self
 
             self.present(documentPicker, animated: true, completion: nil)
 
-            
-
         }
-
-        
-
-//        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
-//
-//            let fileurl: URL = urls as URL
-//
-//            let filename = urls.lastPathComponent
-//
-//            let fileextension = urls.pathExtension
-//
-//            print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
-//            let imageData = NSData(contentsOf: urls)
-//            
-//
-//            do {
-//
-//                pdfData = try Data(contentsOf: urls, options: NSData.ReadingOptions())
-//
-//                uploadPDFFileToAWS(pdfData: pdfData!)
-//
-//                
-//
-//            } catch {
-//
-//                print("set PDF filer error : ", error)
-//
-//                
-//
-//            }
-//
-//               
-//
-//            
-//
-//        }
-    
-
-//    func uploadPDFFileToAWS(pdfData : Data){
-//
-//            let S3BucketName = AwsCredentials.bucketNameIndia
-//
-//            let CognitoPoolID = AwsCredentials.CognitoPoolID
-//
-//            let Region = AWSRegionType.APSouth1
-//
-//            let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-//
-//            let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-//
-//            let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
-//
-//            
-//
-//            let ext = imageName as String
-//
-//            
-//
-//            let dateFormatter = DateFormatter()
-//
-//            dateFormatter.dateFormat = "dd-MM-yyyy"
-//
-//            
-//
-//            let  currentDate =   dateFormatter.string(from: Date())
-//
-//            
-//
-//            
-//
-//            let fileName = imageNameWithoutExtension
-//
-//            let fileType = ".pdf"
-//
-//            
-//
-//            let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-//
-//            
-//
-//            do {
-//
-//                try pdfData.write(to: imageURL)
-//
-//            }
-//
-//            catch {}
-//
-//            
-//
-//            print(imageURL)
-//
-//            
-//
-//            let uploadRequest = AWSS3TransferManagerUploadRequest()
-//
-//            uploadRequest?.body = imageURL
-//
-//            uploadRequest?.key =  currentDate +  "/" + "File_" + ext
-//
-//            uploadRequest?.bucket = S3BucketName
-//
-//            
-//
-//            uploadRequest?.contentType = "application/pdf"
-//
-//            
-//
-//            
-//
-//            let transferManager = AWSS3TransferManager.default()
-//
-//            transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-//
-//                
-//
-//                if let error = task.error {
-//
-//                    print("Upload failed : (\(error))")
-//
-//                    
-//
-//                  
-//
-//                }
-//
-//                
-//
-//                if task.result != nil {
-//
-//                    let url = AWSS3.default().configuration.endpoint.url
-//
-//                    let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-//
-//                    if let absoluteString = publicURL?.absoluteString {
-//
-//                        print("Uploaded to:\(absoluteString)")
-//
-//                      
-//
-//                        let imageDict = NSMutableDictionary()
-//
-//                        imageDict["FileName"] = absoluteString
-//
-//                        self.imageUrlArray.add(imageDict)
-//
-//                        self.convertedImagesUrlArray = self.imageUrlArray
-//
-//                        
-//
-//                        
-//
-//                        
-//
-//                        
-//
-//                     
-//
-//                    }
-//
-//                }
-//
-//                else {
-//
-//                    
-//
-//                  
-//
-//                    print("Unexpected empty result.")
-//
-//                }
-//
-//                return nil
-//
-//            }
-//
-//        }
-
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
 
             controller.dismiss(animated: true, completion: nil)
@@ -572,8 +475,12 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let selectedTime = timePicker.date // Selected time from timePicker
         
         let formattedTime = timeFormatter.string(from: selectedTime)
-        timeBtn.setTitle(formattedTime, for: .normal)
         
+        if dateSelection == true{
+            Totime.setTitle(formattedTime, for: .normal)
+        }else{
+            timeBtn.setTitle(formattedTime, for: .normal)
+        }
         // Hide the picker and Done button after selection
         timePicker.isHidden = true
         doneButton2.isHidden = true
@@ -592,7 +499,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let dateOnly = dateOnlyFormatter.string(from: selectedDate)   // "Tue 3"
         
         // Pass the formatted values to the dateSet method
-        dateSet(formattedDate, dateOnly)
+        dateSet(formattedDate, dateOnly,"")
+        
         datePicker.isHidden = true
         timePicker.isHidden = true
         doneButton.isHidden = true
@@ -609,9 +517,10 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             // Show the date picker
             datePicker.isHidden = false
             doneButton.isHidden = false
-            
+            doneButton2.isHidden = true
+            timePicker.isHidden = true
             // Set the frame for the datePicker and make sure it’s within bounds
-            let pickerYPosition = buttonFrame.maxY + 10
+            let pickerYPosition = buttonFrame.minY - 310
             datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
             
             // Set appearance for datePicker
@@ -632,9 +541,11 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             // Show the time picker
             timePicker.isHidden = false
             doneButton2.isHidden = false
-            
+            datePicker.isHidden = true
+            doneButton.isHidden = true
             // Set the frame for the timePicker
-            let pickerYPosition = buttonFrame.maxY + 10
+//            let pickerYPosition = buttonFrame.maxY + 10
+            let pickerYPosition = buttonFrame.minY - 260
             timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
             
             // Set appearance for timePicker
@@ -655,4 +566,20 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
 
 }
-
+class HalfColorButton: UIButton {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Create a layer for the 60% background color
+        let coloredLayer = CALayer()
+        coloredLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height * 0.4) // 60% height
+        coloredLayer.backgroundColor = UIColor.white.cgColor // Set the desired color
+        
+        // Remove old layers to avoid duplication
+        self.layer.sublayers?.removeAll(where: { $0 is CALayer })
+        // Add the 60% color layer
+        self.layer.addSublayer(coloredLayer)
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+    }
+}
