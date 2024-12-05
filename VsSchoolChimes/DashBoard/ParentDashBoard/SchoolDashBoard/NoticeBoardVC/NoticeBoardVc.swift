@@ -34,6 +34,7 @@ class NoticeBoardVc: UIViewController {
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         tableview.delegate = self
         tableview.dataSource = self
+        plusImgview.isHidden = true
         
         let nib = UINib(nibName:"NoticeBoardTvcellTableViewCell", bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: "NoticeBoardTvcellTableViewCell")

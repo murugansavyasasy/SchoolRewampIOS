@@ -17,9 +17,9 @@
                 <outlet property="Searchbar" destination="QYB-jp-54h" id="H99-Ox-d9W"/>
                 <outlet property="TopCv" destination="Lsi-XR-Teu" id="Xuc-JJ-caO"/>
                 <outlet property="bottomCv" destination="E3y-MD-bUI" id="dpr-iv-T0s"/>
+                <outlet property="loginDetailView" destination="jac-fc-67P" id="TOH-w4-Nds"/>
                 <outlet property="pageContorler" destination="sco-PE-HIn" id="Zfn-iq-e3v"/>
                 <outlet property="schoolLogoImg" destination="tRe-Ow-MoT" id="6GQ-V2-D2O"/>
-                <outlet property="search" destination="QYB-jp-54h" id="pcZ-YW-28l"/>
                 <outlet property="searchHeightCon" destination="1CX-pc-74w" id="GZe-Hd-fig"/>
                 <outlet property="searchImgView" destination="V29-JE-wYd" id="7MK-DN-pGG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -75,14 +75,14 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bell" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KX3-w0-nId">
-                                            <rect key="frame" x="356" y="22.666666666666668" width="30" height="26.999999999999982"/>
+                                            <rect key="frame" x="356" y="22.666666666666664" width="30" height="27"/>
                                             <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="bTe-g5-7iP"/>
                                             </constraints>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="V29-JE-wYd">
-                                            <rect key="frame" x="316" y="21.000000000000007" width="30" height="28.33333333333335"/>
+                                            <rect key="frame" x="316" y="21.000000000000004" width="30" height="28.333333333333339"/>
                                             <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="1Bf-uG-XmK"/>
@@ -212,7 +212,7 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

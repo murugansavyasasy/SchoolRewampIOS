@@ -31,6 +31,7 @@ class PriorityViewController1: UIViewController {
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
    
+    var passedValue : Int!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,6 +99,7 @@ class PriorityViewController1: UIViewController {
         ParentButton.setTitleColor(.black, for:.normal)
       
         
+        passedValue = 1
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
@@ -119,6 +121,7 @@ class PriorityViewController1: UIViewController {
         teacherButton.setTitleColor(.black, for:.normal)
        
         
+        passedValue = 2
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
@@ -154,6 +157,7 @@ class PriorityViewController1: UIViewController {
             
             let vc = TapBarVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
+            vc.passedValue = passedValue
             present(vc, animated: true)
         }
     }
