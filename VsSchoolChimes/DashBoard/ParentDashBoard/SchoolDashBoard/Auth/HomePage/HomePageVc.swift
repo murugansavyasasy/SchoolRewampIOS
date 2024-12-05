@@ -361,6 +361,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             
 //            getValue = 1 for Sender side  0 for parent side
             
+            print("getValue",getValue)
             if getValue == 1 {
                 let name = "Video Upload".translated()
                 let comunication = "Communication".translated()
@@ -431,7 +432,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     present(vc, animated: true)
                 }
                 
-                
+                print("ID",items[indexPath.row])
                 
                
             }else{

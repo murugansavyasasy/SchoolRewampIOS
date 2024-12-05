@@ -31,7 +31,7 @@ class PriorityViewController1: UIViewController {
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
    
-    var passedValue : Int!
+    var passedValue = 1
     override func viewDidLoad() {
         super.viewDidLoad()
         
