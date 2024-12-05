@@ -167,3 +167,34 @@
 "Total" = "รวมทั้งหมด";
 "View" = "ดู";
 
+//Temp:
+"Name" = "ชื่อ";
+"RollNo" = "หมายเลขม้วน";
+"Status" = "สถานะ";
+"LeaveRequests" = "คำขอลาหยุด";
+"RollNo DESC" = "Roll No เรียงจากมากไปน้อย";
+"RollNo ASC" = "Roll No เรียงจากน้อยไปมาก";
+"Name ASC" = "ชื่อ เรียงจากน้อยไปมาก";
+"Name DESC" = "ชื่อ เรียงจากมากไปน้อย";
+"Apsent" = "ขาด";
+"Present" = "มา";
+"Filter" = "กรอง";
+"Section" = "ส่วน '10th C'";
+
+
+//MARK: Event
+"Circulars" = "วงเวียน";
+"Optional" = "(ตัวเลือก?)";
+"AddPhotos" = "เพิ่มรูปภาพ";
+"EventTitle" = "หัวข้อเหตุการณ์";
+"EventDetails" = "รายละเอียดเหตุการณ์";
+"AddPhotos1" = "เพิ่มรูปภาพ (ตัวเลือก?)";
+"Venue" = "สถานที่จัดงาน";
+"From" = "จาก";
+"To" = "ถึง";
+"CreateEvent" = "สร้างกิจกรรม";
+"History" = "ประวัติศาสตร์";
+"Create" = "สร้าง";
+"EnterPlace" = "กรอกสถานที่";
+"EnterTitle" = "กรอกชื่อเรื่อง";
+"EnterTextHere" = "กรอกข้อความของคุณที่นี่...";

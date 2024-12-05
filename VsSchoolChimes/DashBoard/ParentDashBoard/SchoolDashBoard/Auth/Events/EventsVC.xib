@@ -49,7 +49,7 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0p3-uj-eYZ">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="880.66666666666663"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="820.66666666666663"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FYI-dc-NJq">
                                     <rect key="frame" x="10" y="10" width="373" height="770.66666666666663"/>
@@ -420,7 +420,7 @@
                                 <constraint firstItem="FYI-dc-NJq" firstAttribute="top" secondItem="0p3-uj-eYZ" secondAttribute="top" constant="10" id="L5A-as-Xcg"/>
                                 <constraint firstItem="FYI-dc-NJq" firstAttribute="leading" secondItem="0p3-uj-eYZ" secondAttribute="leading" constant="10" id="oQX-Vv-ZG7"/>
                                 <constraint firstAttribute="trailing" secondItem="FYI-dc-NJq" secondAttribute="trailing" constant="10" id="r2O-uO-8V4"/>
-                                <constraint firstAttribute="bottom" secondItem="FYI-dc-NJq" secondAttribute="bottom" constant="100" id="sKA-UI-qxF"/>
+                                <constraint firstAttribute="bottom" secondItem="FYI-dc-NJq" secondAttribute="bottom" constant="40" id="sKA-UI-qxF"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -434,7 +434,7 @@
                 </scrollView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="topBackgroundCLr"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="G4F-kd-bRK" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="OQY-IY-QVn"/>
                 <constraint firstItem="G4F-kd-bRK" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="Owi-Ia-gjQ"/>
@@ -460,9 +460,6 @@
         </namedColor>
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

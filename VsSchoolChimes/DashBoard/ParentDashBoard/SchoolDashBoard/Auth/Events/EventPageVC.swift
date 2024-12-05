@@ -6,6 +6,7 @@
 //
 import UIKit
 
+@available(iOS 14.0, *)
 class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource{
 
     @IBOutlet weak var outerView: UIStackView!
@@ -13,16 +14,18 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     @IBOutlet weak var createEvent: UIButton!
     @IBOutlet weak var presentView: UIView! // Container view to embed the page view controller
     
+    @IBOutlet weak var TitleHederLbl: UILabel!
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
-    
+    var page1 = UIViewController()
+    var page2 = UIViewController() 
+    var titleLbl = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        outerView.layer.cornerRadius = 20
-        historyBtn.layer.cornerRadius = 20
-        createEvent.layer.cornerRadius = 20
+        uiConficration()
         setupPageViewController()
-        loadPages()
+//        pages = [page1, page2]
+        loadPages([page1, page2])
         disableSwipeGesture()
         gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createEvent.setTitleColor(.white, for:.normal)
@@ -33,7 +36,17 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
             pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
         }
     }
-    
+    func uiConficration(){
+        TitleHederLbl.text = titleLbl
+        TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        outerView.layer.cornerRadius = 20
+        historyBtn.layer.cornerRadius = 20
+        createEvent.layer.cornerRadius = 20
+        createEvent.setTitleFont(style: .body, size: FontSize.BodySize)
+        historyBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        historyBtn.setTitle("History".translated(), for: .normal)
+        createEvent.setTitle("Create".translated(), for: .normal)
+    }
     private func setupPageViewController() {
         // Initialize the page view controller
         
@@ -102,13 +115,13 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     }
     
     
-    func loadPages() {
+    func loadPages(_ CV:[UIViewController]) {
         // Initialize view controllers for pages
-        if #available(iOS 14.0, *) {
-            let page1 = EventsVC(nibName: nil, bundle: nil)
-            let page2 = EventHistoryVC(nibName: nil, bundle: nil)
-            pages = [page1, page2]
-        }
+//        if #available(iOS 14.0, *) {
+//            let page1 = EventsVC(nibName: nil, bundle: nil)
+//            let page2 = EventHistoryVC(nibName: nil, bundle: nil)
+            pages = CV
+//        }
     }
 
     // MARK: - SelectedDelegate Method

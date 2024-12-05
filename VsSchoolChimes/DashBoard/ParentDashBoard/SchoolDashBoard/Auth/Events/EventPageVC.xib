@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventPageVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="TitleHederLbl" destination="aZf-FC-Yxc" id="4TJ-aS-qUQ"/>
                 <outlet property="createEvent" destination="njW-Lw-5Wv" id="fpE-mC-5y3"/>
                 <outlet property="historyBtn" destination="1af-1a-6C4" id="4j4-49-p35"/>
                 <outlet property="outerView" destination="1dg-g2-rGC" id="8Ov-KD-9HB"/>
@@ -27,13 +28,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpr-Lv-zOq">
                     <rect key="frame" x="0.0" y="99" width="393" height="719"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="1dg-g2-rGC">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="1dg-g2-rGC">
                             <rect key="frame" x="50" y="10" width="293" height="40"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njW-Lw-5Wv">
                                     <rect key="frame" x="0.0" y="0.0" width="161.66666666666666" height="40"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Create"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Create"/>
                                     <connections>
                                         <action selector="SelectionController:" destination="-1" eventType="touchUpInside" id="seB-bB-RhD"/>
                                     </connections>
@@ -41,8 +42,8 @@
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1af-1a-6C4">
                                     <rect key="frame" x="131.66666666666663" y="0.0" width="161.33333333333337" height="40"/>
                                     <color key="tintColor" name="topBackgroundCLr 1"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="History"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="History"/>
                                     <connections>
                                         <action selector="SelectionController:" destination="-1" eventType="touchUpInside" id="pzf-yy-ree"/>
                                     </connections>

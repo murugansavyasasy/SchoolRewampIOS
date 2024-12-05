@@ -150,20 +150,39 @@
 "Total" = "Total";
 "View" = "View";
 
+//MARK: Attendence
+"Name" = "Name";
+"RollNo" = "Roll No";
+"Status" = "Status";
+"LeaveRequests" = "Leave Requests";
+"Section" = "Section '10th C'";
+"RollNo DESC" = "Roll No DESC";
+"RollNo ASC" = "Roll No ASC";
+"Name ASC" = "Name ASC";
+"Name DESC" = "Name DESC";
+"Apsent" = "Absent";
+"Present" = "Present";
+"Filter" = "Filter";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//MARK: Event
+"Circulars" = "Circulars";
+"EnterPlace" = "Enter place";
+"EnterTitle" = "Enter Title";
+"EnterTextHere" = "Enter your Text here...";
+"AddPhotos1" = "Add Photos (Optional?)";
+"Venue" = "Venue";
+"History" = "History";
+"Create" = "Create";
+"AddPhotos" = "Add Photos";
+"Optional" = "(Optional?)";
+"From" = "From";
+"To" = "To";
+"EventTitle" = "Event Title";
+"EventDetails" = "Event Details";
+"CreateEvent" = "Create Event";
+"EnterPlace" = "Enter place";
+"EnterTitle" = "Enter Title";
+"EnterTextHere" = "Enter your Text here...";
 
 
 

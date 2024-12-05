@@ -48,8 +48,10 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        filteredItems = items
+        setupSearchBar()
+                       startPlaceholderRotation()
         
-       
         // Do any additional setup after loading the view.
         Searchbar.placeholder = "Search".translated()
         Searchbar.delegate = self
@@ -72,7 +74,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         startAutoScroll()
         
-        search.delegate = self
+//        search.delegate = self
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
@@ -89,9 +91,10 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
+    }
         
     func setupSearchBar() {
-        search.placeholder = "Search "  + items[currentPlaceholderIndex].translated()
+        Searchbar.placeholder = "Search "  + items[currentPlaceholderIndex].translated()
         }
 
         func startPlaceholderRotation() {
@@ -102,7 +105,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
 
         func updatePlaceholder() {
             currentPlaceholderIndex = (currentPlaceholderIndex + 1) % items.count
-            search.placeholder = "Search "  + items[currentPlaceholderIndex].translated()
+            Searchbar.placeholder = "Search "  + items[currentPlaceholderIndex].translated()
         }
 
         deinit {
@@ -112,22 +115,22 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
    
     
-    //    override func viewWillAppear(_ animated: Bool) {
-    //            super.viewWillAppear(animated)
-    //            print("viewWillAppear - View is about to appear.")
-    //
-    //        TopCv.reloadData()
-    //
-    //          TopCv.delegate = self
-    //          TopCv.dataSource = self
-    //
-    //          bottomCv.delegate = self
-    //          bottomCv.dataSource = self
-    //
-    //        bottomCv.reloadData()
-    //
-    //        restartAnimations()
-    //        }
+        override func viewWillAppear(_ animated: Bool) {
+                super.viewWillAppear(animated)
+                print("viewWillAppear - View is about to appear.")
+    
+            TopCv.reloadData()
+    
+              TopCv.delegate = self
+              TopCv.dataSource = self
+    
+              bottomCv.delegate = self
+              bottomCv.dataSource = self
+    
+            bottomCv.reloadData()
+    
+            restartAnimations()
+            }
     
     func restartAnimations() {
         // Assuming you have shimmer animations or other animations that need to be reset
@@ -158,15 +161,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
-        search.endEditing(true)
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-       
-        search.resignFirstResponder()
-    }
+
+//    
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//       
+//        search.resignFirstResponder()
+//    }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -392,8 +392,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 videoNavigate()
                 
             }else if items[indexPath.row].translated() == "Notice Board".translated() {
-                
-                let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+//                
+//                let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                present(vc, animated: true)
+                let vc = EventPageVC(nibName: nil, bundle: nil)
+                vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+                vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
+                vc.titleLbl = "Notice Board".translated()
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
                 
@@ -401,7 +407,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
                 homeWorkNavigate()
                 
-            }else if items[indexPath.row] == "Leave Requests".translated(){
+            }else if items[indexPath.row].translated() == "Leave Requests".translated(){
                 //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
                 let vc = StudentHistryVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
@@ -412,8 +418,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let vc = PageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
-            }else if items[indexPath.row] == "Circulars".translated(){
+            }else if items[indexPath.row].translated() == "Circulars".translated(){
                 let vc = EventPageVC(nibName: nil, bundle: nil)
+                vc.page1 = EventsVC(nibName: nil, bundle: nil)
+                vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil) /*EventHistoryVC(nibName: nil, bundle: nil)*/
+                vc.titleLbl = "CreateEvent".translated()
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
@@ -475,6 +484,10 @@ extension HomePageVc: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         Searchbar.resignFirstResponder()
+    }
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        Searchbar.endEditing(true)
     }
     
     func addDoneButton(){

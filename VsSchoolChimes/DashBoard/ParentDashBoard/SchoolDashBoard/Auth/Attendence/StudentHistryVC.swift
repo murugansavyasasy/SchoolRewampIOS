@@ -11,6 +11,15 @@ import DropDown
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func statusUpdate(status: Bool,index:Int) {
         studentData[index].isAbsent = status
+        // Calculate the total count of present students
+        totalcount = studentData.filter { !$0.isAbsent }.count
+        if totalcount == 0 {
+            // All students are absent
+            selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
+        } else {
+            // At least one student is present
+            selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        }
     }
     
     @IBOutlet weak var HeaderLabel: UILabel!
@@ -41,7 +50,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var filterData : [Student]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        rollNoLbl.text = "RollNo".translated()
+        nameLbl.text = "Name".translated()
+        statusLbl.text = "Status".translated()
+        HeaderLabel.text = "Section".translated()
+        search.placeholder = "Search".translated()
+        filterBtn.setTitle("Filter".translated(), for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
         rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -60,8 +74,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     @IBAction func fliter(_ sender: UIButton) {
         dropDown.dataSource = ["RollNo DESC","RollNo ASC","Name ASC","Name DESC", "Apsent", "Present"]
-        dropDown.bottomOffset = CGPoint(x: 90, y: (filterBtn.bounds.height - 60))
+        dropDown.bottomOffset = CGPoint(x: -90, y: (filterBtn.bounds.height - 110))
+        
         dropDown.direction = .bottom
+        
         dropDown.show()
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
@@ -96,7 +112,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             historyTable.reloadData()
             // Update the label inside the UIView
             if let label = self.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                self.filterBtn.setTitle(item, for: .normal)
+                self.filterBtn.setTitle(item.translated(), for: .normal)
+                
                 filterBtn.setImage(UIImage(systemName: "square"), for: .normal)
                 
             }
@@ -109,6 +126,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     @IBAction func selectAllStd(_ sender: UIButton) {
         sender.isSelected.toggle()
         for i in 0..<studentData.count {
+            print(sender.isSelected)
             studentData[i].isAbsent = !sender.isSelected// Update your data model appropriately
         }
         if !sender.isSelected{
@@ -139,6 +157,9 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
         if let student = filterData?[indexPath.row] {
             cell.configure(with: student, index: indexPath.row)
+        }
+        if selectAllBtn.isSelected{
+            cell.custSwitch.isOn.toggle()
         }
         cell.delegate = self
         //        let student = studentData[indexPath.row]

@@ -152,12 +152,13 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         calanderBtn.layer.cornerRadius = 10
         placeLbl.setFont(style:.body, size: FontSize.BodySize)
         placeLbl.text = "Venue".translated()
-        addPhotoLbl.text = "Add Photos (Optional?)".translated()
-        eventDeatail.text = "Event Details".translated()
-        EventTtleLbl.text = "Event Title".translated()
-//        headerLbl.text = "Create Event".translated()
-        // Assuming setFont(style:size:) sets the desired UIFont
-        setAttributedText(for: addPhotoLbl, with: "Add Photos (Optional?)", splitAt: 10, color1: .black, color2: .lightGray)
+        addPhotoLbl.text = "AddPhotos".translated()
+        eventDeatail.text = "EventDetails".translated()
+        EventTtleLbl.text = "EventTitle".translated()
+        placeTxt.placeholder = "EnterPlace".translated()
+        eventTxt.placeholder = "EnterTitle".translated()
+        
+        setAttributedText(for: addPhotoLbl, with: "AddPhotos1".translated(), firstString: "AddPhotos".translated(), secondString: "Optional".translated(), color1: .black, color2: .lightGray)
         
     }
     func dateSet(_ date: String, _ splitDate: String,_ currectndate:String) {
@@ -211,23 +212,27 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     
-    func setAttributedText(for label: UILabel, with text: String, splitAt index: Int, color1: UIColor, color2: UIColor) {
-        guard index < text.count else { return } // Ensure index is within bounds
+    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
+        print(text)
+        print(firstString)
+        print(secondString)
+        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
         
-        // Split the string
-        let firstPart = String(text.prefix(index))
-        let secondPart = String(text.suffix(text.count - index))
+        // Find ranges of the substrings
+        let firstRange = (text as NSString).range(of: firstString)
+        let secondRange = (text as NSString).range(of: secondString)
         
-        // Create attributed strings with different colors
-        let attributedString = NSMutableAttributedString(string: firstPart, attributes: [.foregroundColor: color1])
-        let secondAttributedString = NSAttributedString(string: secondPart, attributes: [.foregroundColor: color2])
+        // Create a mutable attributed string
+        let attributedString = NSMutableAttributedString(string: text)
         
-        // Append the second part to the first
-        attributedString.append(secondAttributedString)
+        // Apply colors to the respective ranges
+        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
+        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
         
-        // Set it to the label
+        // Set the attributed string to the label
         label.attributedText = attributedString
     }
+
     func keyboardDionebtn(){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -282,7 +287,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Enter your text here..."
+        placeholderLabel.text = "EnterTextHere".translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -517,7 +522,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             doneButton2.isHidden = true
             timePicker.isHidden = true
             // Set the frame for the datePicker and make sure it’s within bounds
-            let pickerYPosition = buttonFrame.minY - 310
+            let pickerYPosition = view.frame.minY + 110
             datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
             
             // Set appearance for datePicker
@@ -529,7 +534,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             datePicker.layer.cornerRadius = 20
             
             // Position the Done button at the bottom-right of the picker
-            doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
+            doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
             
             // Add datePicker to the view (ensure it’s in the view hierarchy)
             self.view.addSubview(datePicker)
