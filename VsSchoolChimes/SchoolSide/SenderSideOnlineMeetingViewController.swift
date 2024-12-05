@@ -30,6 +30,12 @@ class SenderSideOnlineMeetingViewController: UIViewController {
         datePicker.minimumDate = Date()
  
         
+        
+        timePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+        timePicker.datePickerMode = .time
+        timePicker.minimumDate = Date()
+ 
+        
         let selectMeetingGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         selectMeetingDropDownView.addGestureRecognizer(selectMeetingGesture)
         let backGest = UITapGestureRecognizer(target: self, action: #selector(backVc))

@@ -8,18 +8,21 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class HomePageVc: UIViewController,UITabBarDelegate{
+class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
+    @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var BellImage: UIImageView!
-    
     @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
-    
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
     @IBOutlet weak var TopCv: UICollectionView!
-    
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
+    
+    var filteredItems: [String] = []
+    
+    var searchItem = 0
+    
     var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Homework","Schedule Exam/Test","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
     
    // var Imgitems : [String] = ["Messages from management","Video Upload","Circulars"]
@@ -40,7 +43,8 @@ class HomePageVc: UIViewController,UITabBarDelegate{
     
     let name = "saran"
     
-    
+    var currentPlaceholderIndex = 0
+    var timer: Timer?
     let alert = CustomAlert()
     
     override func viewDidLoad() {
@@ -48,9 +52,9 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         
         // Do any additional setup after loading the view.
         
-        
+        search.delegate = self
      
-        
+        filteredItems = items
         searchHeightCon.constant = 56
         
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
@@ -69,6 +73,8 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         
         startAutoScroll()
         
+        search.delegate = self
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -82,7 +88,30 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         BellImage.addGestureRecognizer(tap)
         BellImage.isUserInteractionEnabled = true
         
+       
+        setupSearchBar()
+               startPlaceholderRotation()
+        // Do any additional setup after loading the view.
     }
+    func setupSearchBar() {
+        search.placeholder = "Search "  + items[currentPlaceholderIndex].translated()
+        }
+
+        func startPlaceholderRotation() {
+            timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
+                self?.updatePlaceholder()
+            }
+        }
+
+        func updatePlaceholder() {
+            currentPlaceholderIndex = (currentPlaceholderIndex + 1) % items.count
+            search.placeholder = "Search "  + items[currentPlaceholderIndex].translated()
+        }
+
+        deinit {
+            timer?.invalidate()
+        }
+
     
     
     //    override func viewWillAppear(_ animated: Bool) {
@@ -125,6 +154,29 @@ class HomePageVc: UIViewController,UITabBarDelegate{
         }
 
     }
+    
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        search.endEditing(true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+       
+        search.resignFirstResponder()
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        searchItem = 1
+            if searchText.isEmpty {
+                filteredItems = items // Show all items if no search text
+            } else {
+                filteredItems = items.filter { $0.lowercased().contains(searchText.lowercased()) }
+            }
+        TopCv.reloadData() // Refresh the table view to show filtered results
+        }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -213,15 +265,19 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         print("numberOfItemsInSection")
-        if collectionView == bottomCv{
-            
-            return items.count
+        if searchItem == 1 {
+            return filteredItems.count
         }else{
             
-            
-            return 5
+            if collectionView == bottomCv{
+                
+                return items.count
+            }else{
+                
+                
+                return 5
+            }
         }
-        
     }
     
     
@@ -231,29 +287,36 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == bottomCv{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
             
-            cell.MenuLbl.text = nil
-            cell.MenuImgView.image  = nil
-            //            if items[indexPath.row]
-            let label = items[indexPath.row].translated()
-            
-            let img = UIImage(named: Imgitems[indexPath.row])
-//           let sum = indexPath.row % Imgitems.count
-//            let img = UIImage(named: Imgitems[sum] )
-            
-            cell.MenuLbl.setFont(style: .body, size: 10)
-            
-            cell.MenuLbl.text = label
-            cell.MenuImgView.image  = img
-//            cell.MenuImgView.image = img!.withRenderingMode(.alwaysTemplate)
-//            cell.MenuImgView.tintColor = .white
-//
-            cell.applyGradient()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-                cell.GradientView.animateView(enable: false)
-//                cell.MenuLabelview.animateView(enable: false)
-                //cell.image = UIImage(named: Imgitems[indexPath.row] )!
-                //cell.setImg(img: UIImage(named: Imgitems[indexPath.row] )!)
+            if searchItem == 1 {
+                
+                let label = items[indexPath.row].translated()
+                cell.MenuLbl.text = label
+            }else{
+               
+                cell.MenuLbl.text = nil
+                cell.MenuImgView.image  = nil
+                //            if items[indexPath.row]
+                let label = items[indexPath.row].translated()
+                
+                let img = UIImage(named: Imgitems[indexPath.row])
+                //           let sum = indexPath.row % Imgitems.count
+                //            let img = UIImage(named: Imgitems[sum] )
+                
+                cell.MenuLbl.setFont(style: .body, size: 10)
+                
+                cell.MenuLbl.text = label
+                cell.MenuImgView.image  = img
+                //            cell.MenuImgView.image = img!.withRenderingMode(.alwaysTemplate)
+                //            cell.MenuImgView.tintColor = .white
+                //
+                cell.applyGradient()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                    cell.GradientView.animateView(enable: false)
+                    //                cell.MenuLabelview.animateView(enable: false)
+                    //cell.image = UIImage(named: Imgitems[indexPath.row] )!
+                    //cell.setImg(img: UIImage(named: Imgitems[indexPath.row] )!)
+                }
             }
             return cell
         }else{
