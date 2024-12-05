@@ -54,7 +54,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         super.viewDidLoad()
         filteredItems = items
         setupSearchBar()
-                       startPlaceholderRotation()
+        startPlaceholderRotation()
         
         
         print("getValue",getValue)
@@ -98,13 +98,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-    }
+        
         
         
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         loginDetailView.addGestureRecognizer(redirectGesture)
     }
-    
     @IBAction func redirectAct() {
         
         dismiss(animated: true)
@@ -370,10 +369,6 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == bottomCv{
-            
-//            getValue = 1 for Sender side  0 for parent side
-            
-            print("getValue",getValue)
             if getValue == 1 {
                 let name = "Video Upload".translated()
                 let comunication = "Communication".translated()
@@ -410,8 +405,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                     
                 }else if items[indexPath.row].translated() == "Notice Board".translated() {
-                    
-                    let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+                    let vc = EventPageVC(nibName: nil, bundle: nil)
+                    vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+                    vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
@@ -419,7 +415,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                     homeWorkNavigate()
                     
-                }else if items[indexPath.row] == "Leave Requests".translated(){
+                }else if items[indexPath.row].translated() == "Leave Requests".translated(){
                     //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
                     let vc = StudentHistryVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
@@ -430,10 +426,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row] == "Circulars".translated(){
-                    let vc = SenderEventsVC(nibName: nil, bundle: nil)
+                }else if items[indexPath.row].translated() == "Circulars".translated(){
+                 
+                    let vc = EventPageVC(nibName: nil, bundle: nil)
+                    vc.page1 = EventsVC(nibName: nil, bundle: nil)
+                    vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
+                    
                 }else if items[indexPath.row] == "Online Meeting".translated(){
                     let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
@@ -489,9 +489,10 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                 }else if items[indexPath.row].translated() == "Notice Board".translated() {
                     
-                    let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+                    let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
+                
                     
                 }  else if items[indexPath.row] == "schoolss".translated() {
                     
@@ -508,8 +509,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = PageVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row] == "Circulars".translated(){
-                    let vc = EventPageVC(nibName: nil, bundle: nil)
+                }else if items[indexPath.row].translated() == "Circulars".translated(){
+                    let vc = SenderEventsVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }
