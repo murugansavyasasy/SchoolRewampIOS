@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
+    @IBOutlet weak var loginDetailView: UIView!
     @IBOutlet weak var Searchbar: UISearchBar!
     @IBOutlet weak var AddressLabel: UILabel!
     @IBOutlet weak var SchoolNameLabel: UILabel!
@@ -23,11 +24,14 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     var filteredItems: [String] = []
     
+    var getValue : Int!
     var searchItem = 0
     
-    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Homework","Schedule Exam/Test","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
+    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence", "Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"
+    ]
     
-    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Homework","Schedule ExamTest","Notice Board","Attendance marking","Messages from management","Leave Requests","Assignment","Interaction with student","Online Meeting","Lesson Plan","PTM","Mark your attendence"]
+    
+    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence", "Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     let HomePageBottomCell = "BottomCVCell"
     var currentIndex = 0
@@ -52,6 +56,9 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         setupSearchBar()
                        startPlaceholderRotation()
         
+        
+        print("getValue",getValue)
+        
         // Do any additional setup after loading the view.
         Searchbar.placeholder = "Search".translated()
         Searchbar.delegate = self
@@ -74,7 +81,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         startAutoScroll()
         
-//        search.delegate = self
+        Searchbar.delegate = self
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
@@ -93,6 +100,16 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
     }
         
+        
+        let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
+        loginDetailView.addGestureRecognizer(redirectGesture)
+    }
+    
+    @IBAction func redirectAct() {
+        
+        dismiss(animated: true)
+
+    }
     func setupSearchBar() {
         Searchbar.placeholder = "Search "  + items[currentPlaceholderIndex].translated()
         }
@@ -158,6 +175,17 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             
         }
 
+    }
+    
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        Searchbar.endEditing(true)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+       
+        Searchbar.resignFirstResponder()
     }
     
     
@@ -342,97 +370,154 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == bottomCv{
-            let name = "Video Upload".translated()
-            let comunication = "Communication".translated()
-            if name == items[indexPath.row].translated(){
-                let vc = VideoVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-            }else if comunication == items[indexPath.row].translated(){
-                let vc = ComunicationVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-            }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
-                let vc = ImagePdfVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-              
-            }else if items[indexPath.row].translated() == "Lesson Plan".translated() {
+            
+//            getValue = 1 for Sender side  0 for parent side
+            
+            print("getValue",getValue)
+            if getValue == 1 {
+                let name = "Video Upload".translated()
+                let comunication = "Communication".translated()
+                if name == items[indexPath.row].translated(){
+                    videoNavigate()
+                }else if comunication == items[indexPath.row].translated(){
+                    let vc = ComunicationVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
+                    let vc = SenderImgPdfVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                    
+                }else if items[indexPath.row].translated() == "Lesson Plan".translated() {
+                    
+                    alert.showAlertCancel (
+                        title: "Confirm Action",
+                        message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
+                        on: self,
+                        onOk: {
+                            
+                            print("OK button tapped")
+                            // Perform OK action
+                        },
+                        onNo: {
+                          
+                            print("No button tapped")
+                            // Perform No action
+                        }
+                    )
+                }
+                else if items[indexPath.row] == "PTM".translated() {
+                    
+                    
+                }else if items[indexPath.row].translated() == "Notice Board".translated() {
+                    
+                    let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                    
+                }  else if items[indexPath.row] == "schoolss".translated() {
+                    
+                    homeWorkNavigate()
+                    
+                }else if items[indexPath.row] == "Leave Requests".translated(){
+                    //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
+                    let vc = StudentHistryVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                    
+                }else if items[indexPath.row] == "Assignment".translated(){
+                    
+                    let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row] == "Circulars".translated(){
+                    let vc = SenderEventsVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row] == "Online Meeting".translated(){
+                    let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row] == "Homework".translated(){
+                    let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }
                 
-                // imagePdfNavigate()
+                print("ID",items[indexPath.row])
+                
+               
+            }else{
                 
                 
-                alert.showAlertCancel (
-                    title: "Confirm Action",
-                    message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
-                    on: self,
-                    onOk: {
-                        
-                        
-                        let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
-                        
-                        print("OK button tapped")
-                        // Perform OK action
-                    },
-                    onNo: {
-                        let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
-                        vc.modalPresentationStyle = .fullScreen
-                        self.present(vc, animated: true)
-                        
-                        
-                        print("No button tapped")
-                        // Perform No action
-                    }
-                )
+                let name = "Video Upload".translated()
+                let comunication = "Communication".translated()
+                if name == items[indexPath.row].translated(){
+                    let vc = VideoVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if comunication == items[indexPath.row].translated(){
+                    let vc = ComunicationVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row].translated() == "Image/Pdf".translated() {
+                    let vc = ImagePdfVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                    
+                }else if items[indexPath.row].translated() == "Lesson Plan".translated() {
+                    
+                    alert.showAlertCancel (
+                        title: "Confirm Action",
+                        message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
+                        on: self,
+                        onOk: {
+                            
+                            print("OK button tapped")
+                            // Perform OK action
+                        },
+                        onNo: {
+                          
+                            print("No button tapped")
+                            // Perform No action
+                        }
+                    )
+                }
+                else if items[indexPath.row] == "PTM".translated() {
+                    
+                    videoNavigate()
+                    
+                }else if items[indexPath.row].translated() == "Notice Board".translated() {
+                    
+                    let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                    
+                }  else if items[indexPath.row] == "schoolss".translated() {
+                    
+                    homeWorkNavigate()
+                    
+                }else if items[indexPath.row] == "Leave Requests".translated(){
+                    //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
+                    let vc = StudentHistryVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                    
+                }else if items[indexPath.row] == "Assignment".translated(){
+                    
+                    let vc = PageVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row] == "Circulars".translated(){
+                    let vc = EventPageVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }
+                
             }
-            else if items[indexPath.row] == "PTM".translated() {
-                
-                videoNavigate()
-                
-            }else if items[indexPath.row].translated() == "Notice Board".translated() {
-//                
-//                let vc = NoticeBoardVc(nibName: nil, bundle: nil)
-//                vc.modalPresentationStyle = .fullScreen
-//                present(vc, animated: true)
-                let vc = EventPageVC(nibName: nil, bundle: nil)
-                vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-                vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
-                vc.titleLbl = "Notice Board".translated()
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-                
-            }  else if items[indexPath.row] == "schoolss".translated() {
-                
-                homeWorkNavigate()
-                
-            }else if items[indexPath.row].translated() == "Leave Requests".translated(){
-                //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
-                let vc = StudentHistryVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-                
-            }else if items[indexPath.row] == "Assignment".translated(){
-                
-                let vc = PageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-            }else if items[indexPath.row].translated() == "Circulars".translated(){
-                let vc = EventPageVC(nibName: nil, bundle: nil)
-                vc.page1 = EventsVC(nibName: nil, bundle: nil)
-                vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil) /*EventHistoryVC(nibName: nil, bundle: nil)*/
-                vc.titleLbl = "CreateEvent".translated()
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-            }
+            
         }
-        
     }
-    
-    
-    
-    
     
     //    func imagePdfNavigate() {
     //        let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
@@ -480,15 +565,7 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
 
 @available(iOS 14.0, *)
 extension HomePageVc: UISearchBarDelegate{
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        Searchbar.resignFirstResponder()
-    }
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
-        Searchbar.endEditing(true)
-    }
+ 
     
     func addDoneButton(){
         

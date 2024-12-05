@@ -56,6 +56,12 @@
 "Lesson Plan" = "பாடத் திட்டம்";
 "PTM" = "பெற்றோர்-ஆசிரியர் கூட்டம்";
 "Mark your attendence" = "உங்கள் வருகையை குறிக்கவும்";
+"Absentees Report" = "வரவில்லைவர்களின் அறிக்கை";
+"School Strength" = "பள்ளியின் மொத்த மாணவர் எண்ணிக்கை";
+"Daily Collection" = "தினசரி வசூல்";
+"Student Report" = "மாணவர் அறிக்கை";
+"Fee Pending Report" = "நிலுவையில் உள்ள கட்டண அறிக்கை";
+"Staff Wise Attendance Report" = "ஊழியர் வாரியாக வருகை அறிக்கை";
 
 
 // MARK: profile page

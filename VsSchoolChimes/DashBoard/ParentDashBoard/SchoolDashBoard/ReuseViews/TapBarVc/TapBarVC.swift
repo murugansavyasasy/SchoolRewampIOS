@@ -20,6 +20,7 @@ class TapBarVC: UIViewController,UITabBarDelegate {
        private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = ProfileViewController()
     var languages : String!
+    var passedValue : Int!
        override func viewDidLoad() {
            super.viewDidLoad()
            
@@ -37,6 +38,12 @@ class TapBarVC: UIViewController,UITabBarDelegate {
            setupContainerView()
 
            // Set the initial view controller
+           
+          
+           firstVC.getValue = passedValue
+           // OR
+           // let newViewController = MyViewController(passedValue: "Hello, Swift!") // Option 2
+         
            selectViewController(firstVC)
        }
 
