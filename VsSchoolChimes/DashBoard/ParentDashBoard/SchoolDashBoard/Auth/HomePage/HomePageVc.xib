@@ -19,6 +19,7 @@
                 <outlet property="bottomCv" destination="E3y-MD-bUI" id="dpr-iv-T0s"/>
                 <outlet property="pageContorler" destination="sco-PE-HIn" id="Zfn-iq-e3v"/>
                 <outlet property="schoolLogoImg" destination="tRe-Ow-MoT" id="6GQ-V2-D2O"/>
+                <outlet property="search" destination="QYB-jp-54h" id="pcZ-YW-28l"/>
                 <outlet property="searchHeightCon" destination="1CX-pc-74w" id="GZe-Hd-fig"/>
                 <outlet property="searchImgView" destination="V29-JE-wYd" id="7MK-DN-pGG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
