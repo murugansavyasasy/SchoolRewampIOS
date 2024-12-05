@@ -27,9 +27,11 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var getValue : Int!
     var searchItem = 0
     
-    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence"]
+    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence", "Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"
+    ]
     
-    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence"]
+    
+    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence", "Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     let HomePageBottomCell = "BottomCVCell"
     var currentIndex = 0
@@ -423,7 +425,13 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
+                }else if items[indexPath.row] == "Homework".translated(){
+                    let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
                 }
+                
+                
                 
                
             }else{

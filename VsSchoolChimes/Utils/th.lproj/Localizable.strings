@@ -53,7 +53,12 @@
 "Lesson Plan" = "แผนการสอน";
 "PTM" = "การประชุมผู้ปกครองและครู";
 "Mark your attendance" = "บันทึกการเข้าเรียนของคุณ";
-
+"Absentees Report" = "รายงานการขาดเรียน";
+"School Strength" = "จำนวนนักเรียนในโรงเรียน";
+"Daily Collection" = "การเก็บเงินรายวัน";
+"Student Report" = "รายงานนักเรียน";
+"Fee Pending Report" = "รายงานค้างชำระค่าเรียน";
+"Staff Wise Attendance Report" = "รายงานการเข้าชั้นเรียนของพนักงานตามลำดับ";
 
 // MARK: profile page
 "Family Details" = "รายละเอียดครอบครัว";
