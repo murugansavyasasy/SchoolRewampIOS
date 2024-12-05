@@ -245,12 +245,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         adjustTextViewHeightWithConstraint(textView)
-        
-        //        if textView.text.count <= 500{
-        //            contentTxtView.isEditable = false
-        //        }else{
-        //            contentCount.text = "\(textView.text.count) of 500"
-        //        }
     }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Calculate the new length of the text

@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import DropDown
 
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func statusUpdate(status: Bool,index:Int) {
-        print("\(status) \(index)")
+        studentData[index].isAbsent = status
     }
     
     @IBOutlet weak var HeaderLabel: UILabel!
@@ -19,7 +20,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     @IBOutlet weak var rollNoLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var selectAllBtn: UIButton!
+    @IBOutlet weak var filterBtn: UIButton!
+    @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var historyTable: UITableView!
+    
+    var dropDown = DropDown()
     var studentData:[Student] = [Student(name: "viswah", isAbsent: true, rollnumber: "76979871", phoneNo: "9087654321"),
                                  Student(name: "chandhru", isAbsent: true, rollnumber: "76979871", phoneNo: "9597296160"),
                                  Student(name: "kothai", isAbsent: true, rollnumber: "76979872", phoneNo: "9360183031"),
@@ -41,12 +46,62 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
         rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
         statusLbl.setFont(style: .title, size: FontSize.TitleSize)
-        
+        filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         registerCell()
         filterData = studentData
         search.delegate = self
         headerView.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
+        let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(fliter))
+        categoryDropDownView.addGestureRecognizer(categoryGesture)
+        
+        
+        
+    }
+    @IBAction func fliter(_ sender: UIButton) {
+        dropDown.dataSource = ["RollNo DESC","RollNo ASC","Name ASC","Name DESC", "Apsent", "Present"]
+        dropDown.bottomOffset = CGPoint(x: 90, y: (filterBtn.bounds.height - 60))
+        dropDown.direction = .bottom
+        dropDown.show()
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+            self.filterBtn.setTitle(item, for: .normal)
+           
+            switch item{
+            case "RollNo ASC":
+                let sortedByRollNumber = studentData.sorted { $0.rollnumber < $1.rollnumber }
+                filterData = sortedByRollNumber
+            case "RollNo DESC":
+                let sortedByName = studentData.sorted { $0.rollnumber > $1.rollnumber }
+                filterData = sortedByName
+            case "Name ASC":
+                let sortedByName = studentData.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+                filterData = sortedByName
+            case "Name DESC":
+                let sortedByName = studentData.sorted { $0.name > $1.name }
+                filterData = sortedByName
+            case "Apsent":
+               
+                filterData = studentData.sorted {
+                    !$0.isAbsent && $1.isAbsent
+                }
+            case "Present":
+                filterData = studentData.sorted {
+                    $0.isAbsent && !$1.isAbsent // Absent students first
+                }
+            default:
+                filterData = studentData
+                
+            }
+            historyTable.reloadData()
+            // Update the label inside the UIView
+            if let label = self.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                self.filterBtn.setTitle(item, for: .normal)
+                filterBtn.setImage(UIImage(systemName: "square"), for: .normal)
+                
+            }
+        }
+        
     }
     func registerCell(){
         historyTable.register(UINib(nibName: "AttendenceTVC", bundle: nil), forCellReuseIdentifier: "AttendenceTVC")
@@ -55,7 +110,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         sender.isSelected.toggle()
         for i in 0..<studentData.count {
             studentData[i].isAbsent = !sender.isSelected// Update your data model appropriately
-          }
+        }
         if !sender.isSelected{
             selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
             totalcount = 0
@@ -64,7 +119,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
         }
         
-          // Reload the entire table view to reflect the changes
+        // Reload the entire table view to reflect the changes
         historyTable.reloadData()
     }
     
@@ -75,7 +130,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
 }
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studentData.count
+        return filterData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,33 +138,33 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         cell.nameLbl.text = filterData?[indexPath.row].name
         cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
         if let student = filterData?[indexPath.row] {
-               cell.configure(with: student, index: indexPath.row)
-           }
+            cell.configure(with: student, index: indexPath.row)
+        }
         cell.delegate = self
-//        let student = studentData[indexPath.row]
-//
-//        cell.outerView.layer.borderColor = student.isAbsent ? UIColor.clear.cgColor : UIColor.red.cgColor
-//        cell.outerView.layer.borderWidth = student.isAbsent ? 0 : 1
-//        let statusImage = student.isAbsent ? UIImage(named: "p") : UIImage(named: "a")
-////        if indexPath.row % 2 == 0 {
-////            cell.stdImage.image = UIImage(named: img[0])
-////        } else {
-////            cell.stdImage.image = UIImage(named: img[1])
-////        }
-//        cell.statusBtn.setImage(statusImage, for: .normal)
-//        cell.nameLbl.text = studentData[indexPath.row].name
-//        cell.rollNomber.text = studentData[indexPath.row].rollnumber
-//        let title = studentData[indexPath.row].phoneNo
-//        let attributedTitle = NSAttributedString(string: title, attributes: [
-//            .underlineStyle: NSUnderlineStyle.single.rawValue
-//        ])
-//
-//        // Use `setAttributedTitle` to set the attributed text on the button
-//        cell.phnBtn.setAttributedTitle(attributedTitle, for: .normal)
-
+        //        let student = studentData[indexPath.row]
+        //
+        //        cell.outerView.layer.borderColor = student.isAbsent ? UIColor.clear.cgColor : UIColor.red.cgColor
+        //        cell.outerView.layer.borderWidth = student.isAbsent ? 0 : 1
+        //        let statusImage = student.isAbsent ? UIImage(named: "p") : UIImage(named: "a")
+        ////        if indexPath.row % 2 == 0 {
+        ////            cell.stdImage.image = UIImage(named: img[0])
+        ////        } else {
+        ////            cell.stdImage.image = UIImage(named: img[1])
+        ////        }
+        //        cell.statusBtn.setImage(statusImage, for: .normal)
+        //        cell.nameLbl.text = studentData[indexPath.row].name
+        //        cell.rollNomber.text = studentData[indexPath.row].rollnumber
+        //        let title = studentData[indexPath.row].phoneNo
+        //        let attributedTitle = NSAttributedString(string: title, attributes: [
+        //            .underlineStyle: NSUnderlineStyle.single.rawValue
+        //        ])
+        //
+        //        // Use `setAttributedTitle` to set the attributed text on the button
+        //        cell.phnBtn.setAttributedTitle(attributedTitle, for: .normal)
+        
         return cell
     }
-
+    
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -128,7 +183,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 // Change background color to red
                 cell.outerView.layer.borderColor = UIColor.red.cgColor
                 cell.outerView.layer.borderWidth = 1
-              
+                
                 
                 cell.statusBtn.setImage(UIImage(named: "a"), for: .normal)
             },
