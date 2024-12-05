@@ -408,6 +408,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = EventPageVC(nibName: nil, bundle: nil)
                     vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
                     vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
+                    vc.titleLbl = items[indexPath.row].translated()
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
@@ -431,6 +432,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = EventPageVC(nibName: nil, bundle: nil)
                     vc.page1 = EventsVC(nibName: nil, bundle: nil)
                     vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
+                    vc.titleLbl = items[indexPath.row].translated()
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
