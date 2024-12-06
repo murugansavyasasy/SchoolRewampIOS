@@ -8,6 +8,8 @@
 import UIKit
 import AWSCore
 import AWSS3
+import SDWebImage
+import SwiftUI
 
 @available(iOS 14.0, *)
 class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate {
@@ -38,10 +40,23 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     
     var imageUrlArray = NSMutableArray()
     var pdfData : Data? = nil
+    
+    var desc = ""
+    var title1 = ""
+    var items : [String] = []
+    var code = 0
+    var delete = true
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if title1 == ""{
+            SendNotice()
+        }else{
+            resendFromHistory()
+        }
+        StyleAndTranslater()
         FromDatePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
         FromDatePicker.datePickerMode = .date
         FromDatePicker.minimumDate = Date()
@@ -56,7 +71,10 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
         collectionView.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
-        collectionHeight.constant = 0
+       // collectionHeight.constant = 0
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
@@ -77,7 +95,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
         attachmentView.addGestureRecognizer(attachmentGesture)
         
-        StyleAndTranslater()
+       
         
     }
     
@@ -85,11 +103,11 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func StyleAndTranslater(){
         //MARK: Translate
         HeadingLabel.text =  "Compose NoticeBoard".translated()
+       
         
         //MARK: UI Design
         SubmitBtn.layer.cornerRadius = Colornames.CORadius10
-        textview.text = "Type content here"
-        textview.textColor = .lightGray
+       
         textview.layer.cornerRadius = Colornames.CORadius10
         textview.layer.borderWidth = 0.8
         textview.layer.borderColor = UIColor.black.cgColor
@@ -106,6 +124,20 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         //MARK: Label Font
         SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 
+    }
+    
+    func SendNotice(){
+        textview.text = "Type content here"
+        textfield.text = "Type News Topiccc"
+        textview.textColor = .lightGray
+    }
+    
+    func resendFromHistory(){
+        textview.text = desc
+        textview.textColor = .black
+        textfield.text = title1
+        SubmitBtn.backgroundColor = .button
+        code = 1
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -230,27 +262,29 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     
     
     @IBAction func presentSelectionAlert() {
+        
+        if items.count + selectedImages.count < 5 {
             let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
             //
             // Camera option
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-    //
-//                openCamera()
+                //
+                //                openCamera()
             }
             alertController.addAction(cameraAction)
             
             // Gallery option
             let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-    //
+                //
                 selectImages()
-    //
-                       }
+                //
+            }
             alertController.addAction(galleryAction)
             
-//             PDF option
+            //             PDF option
             let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-    
-               selectPDF()
+                
+                selectPDF()
             }
             alertController.addAction(pdfAction)
             
@@ -260,6 +294,13 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             
             // Present the alert
             self.present(alertController, animated: true, completion: nil)
+            
+        }
+        
+        else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "Alert", message: "Photos Limit Reached", on: self)
+        }
         }
     
     func uploadPDFFileToAWS(pdfData : Data){
@@ -404,7 +445,8 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     
     func selectImages() {
         
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
+        var limit = 5-(items.count+selectedImages.count)
+        photoPickManager.presentPhotoPicker(from: self, selectionLimit: limit)
 
 
            }
@@ -502,19 +544,39 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if selectedImages.count != 0 && selectedImages.count <= 3{
+        if code == 0{
+            if selectedImages.count != 0 && selectedImages.count <= 3{
+                
+                collectionHeight.constant = 120
+            }
             
-            collectionHeight.constant = 120
-        }
-        
-        if selectedImages.count > 3{
-            collectionHeight.constant = 240
-        }
-        if selectedImages.count == 0{
-            collectionHeight.constant = 0
+            else if selectedImages.count > 3{
+                collectionHeight.constant = 240
+            }
+            
+            else if selectedImages.count == 0 {
+                collectionHeight.constant = 0
+            }
+            
+            return selectedImages.count
         }
 
-               return selectedImages.count
+        else{
+            
+            if items.count != 0 && items.count <= 3{
+                
+                collectionHeight.constant = 120
+            }
+            
+            else if items.count > 3{
+                collectionHeight.constant = 240
+            }
+            
+            else if items.count == 0{
+                collectionHeight.constant = 0
+            }
+            return items.count+selectedImages.count
+        }
                
 
            }
@@ -524,8 +586,34 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
            func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+               
+               print("itemsCount",items.count)
 
-               cell.imageViews.image = selectedImages[indexPath.item]
+               if code == 0{
+                   cell.imageViews.image = selectedImages[indexPath.item]
+                   cell.TrashIcon.isHidden = false
+               }else {
+                   print("fsghwdgvdhbdvgdgvegvgveh")
+                   
+                   if indexPath.item < items.count {
+                       cell.TrashIcon.isHidden = true
+                       cell.imageViews.sd_setImage(with: URL(string: items[indexPath.item] ?? ""), placeholderImage: UIImage(named: ""))
+                   }
+                   if indexPath.item >= items.count{
+                       
+                       var selindex = indexPath.item - items.count
+                       cell.imageViews.image = selectedImages[selindex]
+//                       let count = selectedImages.count
+//                       print("Selected Images Count",selectedImages.count)
+//                       for i in 0..<count {
+//                           print("indexindex",i)
+//                           cell.imageViews.image = selectedImages[i]
+//                           cell.TrashIcon.isHidden = false
+//                       }
+
+                   }
+                
+               }
 
                return cell
 
@@ -538,10 +626,15 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
            func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
                // Delete the selected image
-
-               selectedImages.remove(at: indexPath.item)
-
-               collectionView.deleteItems(at: [indexPath])
+               if indexPath.item >= items.count{
+                   
+                   var selindex = indexPath.item - items.count
+                   
+                   //selectedImages.remove(at: indexPath.item)
+                   selectedImages.remove(at: selindex)
+                   
+                   collectionView.deleteItems(at: [indexPath])
+               }
 
            }
 

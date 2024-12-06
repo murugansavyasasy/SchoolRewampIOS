@@ -9,6 +9,12 @@ import UIKit
 
 class SendNoticeBoardVC: UIViewController {
     
+    @IBOutlet weak var fromDteLabel: UILabel!
+    @IBOutlet weak var fromCalenderBtn: HalfColorButton!
+    
+    @IBOutlet weak var ToCalenderBtn: HalfColorButton!
+    @IBOutlet weak var TodateLbl: UILabel!
+    
     @IBOutlet weak var SubHeader: UILabel!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var FromDateBtn: UIButton!
@@ -24,6 +30,7 @@ class SendNoticeBoardVC: UIViewController {
     
     var datePicker : UIDatePicker!
     var doneButton : UIButton!
+    var dateselection = false
     
     
     
@@ -31,17 +38,60 @@ class SendNoticeBoardVC: UIViewController {
         super.viewDidLoad()
         
         createDatepicker()
+        StyleAndTranslater()
+        
+
+        fromDteLabel.textColor = .black
 
        
+    }
+    
+    func StyleAndTranslater() {
+        
+        //MARK: UI Update
+        DescTxtView.layer.cornerRadius = Colornames.CORadius10
+        DescTxtView.layer.borderWidth = 1
+        DescTxtView.layer.borderColor = UIColor.black.cgColor
+        
+        //MARK: Translate
+        
+        //MARK: Font Style
+        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        TitleLabel.setFont(style: .title, size: FontSize.TitleSize)
+        LetterCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
+        AddPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        fromDteLabel.setFont(style: .body, size: FontSize.BodySize)
+        TodateLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        FromDateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        TodateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
     }
 
 
     @IBAction func SetToDate(_ sender: Any) {
+        dateselection = false
+        showDatepicker(button: sender as! UIButton)
         
     }
     @IBAction func SetFromDate(_ sender: Any) {
         
+        dateselection = true
+        showDatepicker(button: sender as! UIButton)
+    }
+    
+    
+    @IBAction func FromCalenderAct(_ sender: Any) {
         
+        dateselection = true
+        showDatepicker(button: sender as! UIButton)
+    }
+    
+    @IBAction func ToCalenderAct(_ sender: Any) {
+        
+        dateselection = false
         showDatepicker(button: sender as! UIButton)
     }
     
@@ -56,6 +106,7 @@ class SendNoticeBoardVC: UIViewController {
     func createDatepicker(){
           datePicker = UIDatePicker()
           datePicker.datePickerMode = .date
+          datePicker.minimumDate = Date()
           datePicker.backgroundColor = .white
         
         if #available(iOS 14.0, *) {
@@ -102,28 +153,26 @@ class SendNoticeBoardVC: UIViewController {
         self.view.addSubview(doneButton)
     }
 
-    @objc func doneButtonTapped(){
+    @IBAction func doneButtonTapped(){
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMMM d, yyyy"
+        dateFormatter.dateFormat =  "EEE d MMM yyyy"
         let datelabel = dateFormatter.string(from: datePicker.date)
         
-        FromDateBtn.setTitle(datelabel, for: .normal)
+        if dateselection == true {
+           var fromdate = datePicker.date
+            //if fromdate
+            FromDateBtn.setTitle(datelabel, for: .normal)
+            datePicker.minimumDate = datePicker.date
+        }
+        else{
+            
+            var todate = datePicker.date
+            TodateBtn.setTitle(datelabel, for: .normal)
+        }
+        
         datePicker.isHidden = true
         doneButton.isHidden = true
-        
     }
-      
-//      @objc func dateChanged(_ sender: UIDatePicker) {
-//          let dateFormatter = DateFormatter()
-//          dateFormatter.dateStyle = .medium
-//          let selectedDate = dateFormatter.string(from: sender.date)
-//          FromDateBtn.setTitle(selectedDate, for: .normal)
-//      }
-//      
-//      @objc func dismissDatePicker() {
-//          datePicker?.removeFromSuperview()
-//          overlayView?.removeFromSuperview()
-//      }
-  
+    
 }

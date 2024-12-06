@@ -332,8 +332,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
             }else if items[indexPath.row].translated() == "Notice Board".translated() {
                 
-                //let vc = NoticeBoardVc(nibName: nil, bundle: nil)
-                let vc = SendNoticeBoardVC(nibName: nil, bundle: nil)
+                let vc = NoticeBoardVc(nibName: nil, bundle: nil)
+                //let vc = SendNoticeBoardVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
                 
@@ -360,7 +360,13 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let vc = SenderImgPdfVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
+            }else if items[indexPath.row].translated() == "Online Meeting".translated() {
+                let vc = OnlineMeetingVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
             }
+            
+            
         }
         
     }

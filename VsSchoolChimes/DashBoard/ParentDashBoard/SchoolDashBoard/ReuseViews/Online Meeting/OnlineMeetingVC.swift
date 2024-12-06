@@ -1,0 +1,318 @@
+//
+//  OnlineMeetingVC.swift
+//  VsSchoolChimes
+//
+//  Created by Admin on 05/12/24.
+//
+
+import UIKit
+import EventKit
+
+class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
+    
+    @IBOutlet weak var Gradientview: UIStackView!
+    @IBOutlet weak var receiverView: UIView!
+    @IBOutlet weak var createView: UIView!
+    
+    @IBOutlet weak var calenderImgview: UIImageView!
+    
+    @IBOutlet weak var LinkTxtfld: UITextField!
+    @IBOutlet weak var SubmitBtn: UIButton!
+    @IBOutlet weak var TimeBtn: UIButton!
+    @IBOutlet weak var DateBtn: UIButton!
+    @IBOutlet weak var infoBtn: UIButton!
+    @IBOutlet weak var selectMeetingView: UIView!
+    @IBOutlet weak var LettercountLbl: UILabel!
+    @IBOutlet weak var DescriptTxtview: UITextView!
+    @IBOutlet weak var DetailsLbl: UILabel!
+    @IBOutlet weak var titleTxtfld: UITextField!
+    @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var viewBtn: UIButton!
+    @IBOutlet weak var createBtn: UIButton!
+    @IBOutlet weak var HeaderLabel: UILabel!
+    
+    @IBOutlet weak var tableview: UITableView!
+    
+    let eventStore = EKEventStore()
+    var data = ["Parents meeting", "Google Meeting", "Annual day Discussion"]
+    let assetColors: [String] = ["meetingcolour1", /*"priortitClr1",*/ "meetcolour2"]
+    let gradientcolour : [String] = ["MeetGradient1", /*"gradient2",*/ "MeetGradient2"]
+    var datePicker : UIDatePicker!
+    var doneButton : UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        receiverView.isHidden = true
+        createView.isHidden = false
+        
+        createView.layer.cornerRadius = 10
+        createView.layer.shadowColor = UIColor.black.cgColor
+        createView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        createView.layer.shadowRadius = 5
+        createView.layer.shadowOpacity = 0.3
+        createView.layer.cornerRadius = 10
+        
+        createDatepicker()
+        
+        DescriptTxtview.layer.cornerRadius = 10
+        DescriptTxtview.layer.borderWidth = 1
+        DescriptTxtview.layer.borderColor = UIColor.black.cgColor
+        
+        viewBtn.layer.cornerRadius = 20
+        createBtn.layer.cornerRadius = 20
+        Gradientview.layer.cornerRadius = 20
+    
+        
+        gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        createBtn.setTitleColor(UIColor.white, for: .normal)
+        
+        selectMeetingView.layer.cornerRadius = 10
+        infoBtn.layer.cornerRadius = 10
+        LinkTxtfld.layer.cornerRadius = 10
+        LinkTxtfld.layer.borderWidth = 1
+        LinkTxtfld.layer.borderColor = UIColor.black.cgColor
+        SubmitBtn.layer.cornerRadius = 10
+        
+        let nib  = UINib(nibName: CellConfingName.MeetingsTVcell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: CellConfingName.MeetingsTVcell)
+        
+        tableview.delegate = self
+        tableview.dataSource = self
+        
+
+        // Do any additional setup after loading the view.
+    }
+
+    func gradientcolours(button : UIButton,colours : [CGColor]){
+        
+        
+        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+               
+               // Create and configure the gradient layer
+               let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colours
+               gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
+               gradientLayer.frame = button.bounds
+               gradientLayer.cornerRadius = button.layer.cornerRadius
+               
+               // Insert the gradient layer into the button's layer
+               button.layer.insertSublayer(gradientLayer, at: 0)
+        
+    }
+
+    func createReminder(for task: String) {
+           eventStore.requestAccess(to: .reminder) { [weak self] (granted, error) in
+               if let error = error {
+                   print("Error requesting access: \(error.localizedDescription)")
+                   return
+               }
+
+               if granted {
+                   self?.addReminder(task: task)
+               } else {
+                   print("Access to reminders not granted.")
+                   DispatchQueue.main.async {
+                       let alert = UIAlertController(
+                           title: "Permission Denied",
+                           message: "Please enable reminders access in Settings.",
+                           preferredStyle: .alert
+                       )
+                       alert.addAction(UIAlertAction(title: "OK", style: .default))
+                       self?.present(alert, animated: true)
+                   }
+               }
+           }
+       }
+
+       func addReminder(task: String) {
+           let reminder = EKReminder(eventStore: eventStore)
+           reminder.title = task
+           reminder.notes = "Task reminder for \(task)"
+           reminder.dueDateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: Date().addingTimeInterval(3600)) // Due in 1 hour
+           reminder.calendar = eventStore.defaultCalendarForNewReminders()
+
+           do {
+               try eventStore.save(reminder, commit: true)
+               print("Reminder added for \(task).")
+               DispatchQueue.main.async {
+                   let alert = UIAlertController(
+                       title: "Success",
+                       message: "Reminder added for \(task).",
+                       preferredStyle: .alert
+                   )
+                   alert.addAction(UIAlertAction(title: "OK", style: .default))
+                   self.present(alert, animated: true)
+               }
+           } catch {
+               print("Failed to save reminder: \(error.localizedDescription)")
+               DispatchQueue.main.async {
+                   let alert = UIAlertController(
+                       title: "Error",
+                       message: "Failed to create reminder.",
+                       preferredStyle: .alert
+                   )
+                   alert.addAction(UIAlertAction(title: "OK", style: .default))
+                   self.present(alert, animated: true)
+               }
+           }
+       }
+    
+    func didTapCreateReminder(at indexPath: IndexPath) {
+            let taskName = data[indexPath.row]
+
+            // Show confirmation alert
+            let alert = UIAlertController(
+                title: "Set Reminder",
+                message: "Do you want to set a reminder for \(taskName)?",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                self.createReminder(for: taskName)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+
+            self.present(alert, animated: true, completion: nil)
+        }
+
+    
+    @IBAction func createBtnAct(_ sender: Any) {
+        gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        createBtn.setTitleColor(UIColor.white, for: .normal)
+        
+        gradientcolours(button: viewBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+        viewBtn.setTitleColor(UIColor.black, for: .normal)
+        
+        receiverView.isHidden = true
+        createView.isHidden = false
+    }
+    
+    @IBAction func viewBtnAct(_ sender: Any) {
+        
+        gradientcolours(button: viewBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        viewBtn.setTitleColor(UIColor.white, for: .normal)
+        
+        gradientcolours(button: createBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+        createBtn.setTitleColor(UIColor.black, for: .normal)
+       
+        receiverView.isHidden = false
+        receiverView.alpha = 1
+        createView.isHidden = true
+    }
+    
+    @IBAction func BackBtnAct(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
+    
+    func createDatepicker(){
+          datePicker = UIDatePicker()
+          datePicker.datePickerMode = .date
+          datePicker.minimumDate = Date()
+          datePicker.backgroundColor = .white
+        
+        if #available(iOS 14.0, *) {
+            datePicker.preferredDatePickerStyle = .inline
+        }
+        
+        datePicker.isHidden = true
+        self.view.addSubview(datePicker!)
+        
+        // Initialize and configure Done button
+        doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.isHidden = true
+        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.layer.cornerRadius = 8
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        self.view.addSubview(doneButton)
+        
+      }
+    
+    func showDatepicker(button: UIButton) {
+        datePicker.isHidden = false
+        doneButton.isHidden = false
+        
+        let buttonFrame = button.convert(button.bounds, to: self.view)
+        
+        // Set the frame for the datePicker
+        let pickerYPosition = buttonFrame.maxY + 10
+        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
+        
+        // Set appearance for datePicker
+        datePicker.backgroundColor = .white
+        datePicker.layer.shadowColor = UIColor.black.cgColor
+        datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+        datePicker.layer.shadowRadius = 5
+        datePicker.layer.shadowOpacity = 0.3
+        datePicker.layer.cornerRadius = 20
+        
+        doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
+
+        // Add both datePicker and Done button to the view
+        self.view.addSubview(datePicker)
+        self.view.addSubview(doneButton)
+    }
+
+    @IBAction func doneButtonTapped(){
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat =  "EEE d MMM yyyy"
+        let datelabel = dateFormatter.string(from: datePicker.date)
+        
+        DateBtn.setTitle(datelabel, for: .normal)
+        
+        datePicker.isHidden = true
+        doneButton.isHidden = true
+    }
+    
+    @IBAction func SelectdateAct(_ sender: Any) {
+        
+        showDatepicker(button: sender as! UIButton)
+        
+    }
+    
+    @IBAction func SelectTimeAct(_ sender: Any) {
+    }
+}
+
+extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.MeetingsTVcell, for: indexPath) as! MeetingsTVcell
+        
+        let colorName = assetColors[indexPath.row % assetColors.count]
+        let colour1 = UIColor(named: colorName)
+        let gradient = gradientcolour[indexPath.row % gradientcolour.count]
+        let colour2 =  UIColor(named: gradient)
+        
+        cell.cellview.backgroundColor = colour1
+        cell.contentview.backgroundColor = colour2
+        cell.indexPath = indexPath
+        cell.delegate = self
+//        if let color1 = colour1, let color2 = colour2 {
+//                    cell.setGradientColors([color2.cgColor, color1.cgColor])
+//                }
+        
+//        if indexPath.row % 2 == 0{
+//            cell.cellview.backgroundColor = UIColor.systemBlue
+//        }
+//        else{
+//            cell.cellview.backgroundColor = UIColor.orange
+//        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    
+}

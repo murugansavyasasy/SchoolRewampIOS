@@ -11,15 +11,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="273" id="KGk-i7-Jjw" customClass="NoticeBoardTvcellTableViewCell" customModule="VsSchoolChimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="378" height="273"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="436" id="KGk-i7-Jjw" customClass="NoticeBoardTvcellTableViewCell" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="378" height="436"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="378" height="273"/>
+                <rect key="frame" x="0.0" y="0.0" width="378" height="436"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLP-ce-oCO" customClass="AnimatView" customModule="VsSchoolChimes" customModuleProvider="target">
-                        <rect key="frame" x="10" y="30" width="358" height="233"/>
+                        <rect key="frame" x="10" y="30" width="358" height="396"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-UY-KqC">
                                 <rect key="frame" x="8" y="49" width="342" height="120"/>
@@ -59,7 +59,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kz9-cN-IxL">
-                                <rect key="frame" x="8" y="206" width="330" height="17"/>
+                                <rect key="frame" x="8" y="206" width="330" height="142"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -78,6 +78,22 @@
                                 <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="currentPageIndicatorTintColor" systemColor="systemBlueColor"/>
                             </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NLk-6b-9PN">
+                                <rect key="frame" x="280" y="363" width="70" height="25"/>
+                                <color key="backgroundColor" systemColor="systemMintColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="JU8-tr-UAF"/>
+                                    <constraint firstAttribute="height" constant="25" id="TRW-tH-oNT"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Select" image="paperplane" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                </state>
+                                <connections>
+                                    <action selector="Select:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ycj-iq-2mo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -89,14 +105,16 @@
                             <constraint firstItem="3fk-V0-e47" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="Jc2-QS-qX3"/>
                             <constraint firstItem="0ta-Ym-h3a" firstAttribute="leading" secondItem="dRZ-ZP-W8D" secondAttribute="leading" constant="5" id="NcJ-AQ-uuW"/>
                             <constraint firstItem="kwf-UY-KqC" firstAttribute="top" secondItem="ZlO-yr-9O1" secondAttribute="bottom" constant="20" id="S3g-O4-3t0"/>
+                            <constraint firstAttribute="trailing" secondItem="NLk-6b-9PN" secondAttribute="trailing" constant="8" id="SiI-jt-r6T"/>
                             <constraint firstItem="3fk-V0-e47" firstAttribute="bottom" secondItem="kwf-UY-KqC" secondAttribute="bottom" id="XIP-6g-gUH"/>
                             <constraint firstAttribute="trailing" secondItem="ZlO-yr-9O1" secondAttribute="trailing" constant="8" id="bH7-tW-QXV"/>
+                            <constraint firstItem="NLk-6b-9PN" firstAttribute="top" secondItem="Kz9-cN-IxL" secondAttribute="bottom" constant="15" id="csA-Lv-Rmv"/>
                             <constraint firstAttribute="trailing" secondItem="Kz9-cN-IxL" secondAttribute="trailing" constant="20" id="eKx-4Z-jxJ"/>
                             <constraint firstItem="0ta-Ym-h3a" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="-15" id="gmH-j7-GUP"/>
                             <constraint firstItem="kwf-UY-KqC" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="ix2-dq-YQi"/>
+                            <constraint firstAttribute="bottom" secondItem="NLk-6b-9PN" secondAttribute="bottom" constant="8" id="q0f-BZ-Btm"/>
                             <constraint firstItem="dRZ-ZP-W8D" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="10" id="roz-UW-uPs"/>
                             <constraint firstItem="3lM-Ge-F8d" firstAttribute="top" secondItem="kwf-UY-KqC" secondAttribute="bottom" constant="8" id="rsK-a6-mdv"/>
-                            <constraint firstAttribute="bottom" secondItem="Kz9-cN-IxL" secondAttribute="bottom" constant="10" id="rxA-Tb-hrZ"/>
                             <constraint firstItem="Kz9-cN-IxL" firstAttribute="top" secondItem="3lM-Ge-F8d" secondAttribute="bottom" constant="10" id="xOi-UT-hW0"/>
                             <constraint firstItem="Kz9-cN-IxL" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="yhp-gc-1wX"/>
                         </constraints>
@@ -121,13 +139,17 @@
                 <outlet property="pagecontroller" destination="3fk-V0-e47" id="8Ui-Eb-NEa"/>
                 <outlet property="pinImage" destination="0ta-Ym-h3a" id="Pic-M1-3qO"/>
             </connections>
-            <point key="canvasLocation" x="174.04580152671755" y="77.816901408450704"/>
+            <point key="canvasLocation" x="174.04580152671755" y="135.21126760563382"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="NoticePin" width="128" height="128"/>
+        <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemMintColor">
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

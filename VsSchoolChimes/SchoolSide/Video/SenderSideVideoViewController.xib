@@ -38,7 +38,7 @@
                     <rect key="frame" x="0.0" y="112" width="393" height="706"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YCs-7m-sdl">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="728.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="658.33333333333337"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Video" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7FG-n7-N9r">
                                     <rect key="frame" x="20.000000000000007" y="14.999999999999998" width="106.66666666666669" height="20.333333333333329"/>
@@ -47,10 +47,10 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1n-sf-EEP">
-                                    <rect key="frame" x="15" y="43.333333333333371" width="363" height="670"/>
+                                    <rect key="frame" x="15" y="43.333333333333371" width="363" height="600"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="rFZ-Gn-oLq">
-                                            <rect key="frame" x="85" y="350" width="193" height="40"/>
+                                            <rect key="frame" x="85" y="280" width="193" height="40"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glm-PR-6xJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="40"/>
@@ -79,7 +79,7 @@
                                             </constraints>
                                         </stackView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lf5-pm-GCi">
-                                            <rect key="frame" x="23" y="455" width="317" height="1"/>
+                                            <rect key="frame" x="23" y="385" width="317" height="1"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="EWP-yu-cSm"/>
@@ -89,7 +89,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Video Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pSF-J5-ga7">
-                                            <rect key="frame" x="23" y="410" width="317" height="45"/>
+                                            <rect key="frame" x="23" y="340" width="317" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="45" id="B0g-I2-P24"/>
                                             </constraints>
@@ -97,7 +97,7 @@
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Video Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CEp-JK-AaV">
-                                            <rect key="frame" x="23" y="470" width="317" height="120"/>
+                                            <rect key="frame" x="23" y="400" width="317" height="120"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="120" id="yZ4-HP-G7l"/>
@@ -107,13 +107,13 @@
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbI-R4-QyT">
-                                            <rect key="frame" x="39" y="15" width="284" height="320"/>
+                                            <rect key="frame" x="39" y="15" width="284" height="250"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-sV-NY1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="284" height="320"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="284" height="250"/>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Uu-iX-poB">
-                                                    <rect key="frame" x="107" y="124.99999999999997" width="70" height="70"/>
+                                                    <rect key="frame" x="107" y="89.999999999999972" width="70" height="70"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="70" id="cfb-AT-7cj"/>
@@ -127,7 +127,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click To Choose Video From File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3yM-XU-sp1">
-                                                    <rect key="frame" x="19.666666666666671" y="213.99999999999997" width="244.66666666666663" height="20.333333333333343"/>
+                                                    <rect key="frame" x="19.666666666666671" y="178.99999999999997" width="244.66666666666663" height="20.333333333333343"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -138,7 +138,7 @@
                                                 <constraint firstItem="5Uu-iX-poB" firstAttribute="centerX" secondItem="fbI-R4-QyT" secondAttribute="centerX" id="1gh-oK-8Gj"/>
                                                 <constraint firstItem="3yM-XU-sp1" firstAttribute="centerX" secondItem="fbI-R4-QyT" secondAttribute="centerX" id="2o4-Ic-myM"/>
                                                 <constraint firstItem="3yM-XU-sp1" firstAttribute="top" secondItem="5Uu-iX-poB" secondAttribute="bottom" constant="19" id="4Br-Bc-B1B"/>
-                                                <constraint firstAttribute="height" constant="320" id="Ely-rY-ACG"/>
+                                                <constraint firstAttribute="height" constant="250" id="Ely-rY-ACG"/>
                                                 <constraint firstItem="IL8-sV-NY1" firstAttribute="leading" secondItem="fbI-R4-QyT" secondAttribute="leading" id="IsP-zk-tg5"/>
                                                 <constraint firstAttribute="bottom" secondItem="IL8-sV-NY1" secondAttribute="bottom" id="SN8-Db-sHX"/>
                                                 <constraint firstAttribute="trailing" secondItem="IL8-sV-NY1" secondAttribute="trailing" id="WT9-CN-UwI"/>
@@ -148,7 +148,7 @@
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NRQ-AW-2gc">
-                                            <rect key="frame" x="23" y="605" width="316" height="40"/>
+                                            <rect key="frame" x="23" y="535" width="316" height="40"/>
                                             <color key="backgroundColor" name="ButtonColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="VmU-Qa-NAl"/>
@@ -270,7 +270,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -16,6 +16,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlegmail</string>
+		<string>x-apple-reminder</string>
 	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
@@ -51,5 +52,7 @@
 		<string>fetch</string>
 		<string>remote-notification</string>
 	</array>
+	<key>NSRemindersUsageDescription</key>
+	<string>We need access to create reminders for you.</string>
 </dict>
 </plist>
