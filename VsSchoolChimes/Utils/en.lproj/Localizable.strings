@@ -114,11 +114,13 @@
 "Section or student" = "Section or student";
 //MARK: Video Sender Side
 "Enter Video Title" = "Enter Video Title";
-"Video Description" = "Video Description";
+"Enter Video Description" = "Enter Video Description";
 "Choose Video From Gallery" = "Choose Video From Gallery";
 "Change Video" = "Change Video";
 "Upload Video" = "Upload Video";
 "Send" = "Send";
+"Click To Choose Video From File" = "Click To Choose Video From File";
+
 //MARK: Home Work Sender Side
 "Home Work" = "Home Work";
 "Content" = "Content";
@@ -156,6 +158,7 @@
 "Total" = "Total";
 "View" = "View";
 
+//MARK: Sender side Events
 //MARK: Attendence
 "Name" = "Name";
 "RollNo" = "Roll No";

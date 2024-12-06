@@ -26,40 +26,19 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Um9-NA-C5Z">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Um9-NA-C5Z">
+                    <rect key="frame" x="0.0" y="89" width="393" height="729"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Image / Pdf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1a-sQ-TbS">
-                            <rect key="frame" x="124" y="15.333333333333327" width="145" height="20.333333333333329"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkS-Fo-wiL">
-                            <rect key="frame" x="8" y="8" width="75" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="75" id="iWp-U5-Stk"/>
-                                <constraint firstAttribute="height" constant="35" id="kZn-Ky-VGn"/>
-                            </constraints>
-                            <color key="tintColor" systemColor="darkTextColor"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="arrow.left" catalog="system">
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                            </state>
-                            <connections>
-                                <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="pam-8o-iah"/>
-                            </connections>
-                        </button>
-                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-j7-TB5">
-                            <rect key="frame" x="8" y="63" width="377" height="50"/>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-j7-TB5">
+                            <rect key="frame" x="8" y="30" width="377" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="lC7-kr-OiF"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sse-JX-kDl" customClass="RectangularDashedView" customModule="VsSchoolChimes" customModuleProvider="target">
-                            <rect key="frame" x="15" y="353" width="363" height="50"/>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sse-JX-kDl" customClass="RectangularDashedView" customModule="VsSchoolChimes" customModuleProvider="target">
+                            <rect key="frame" x="15" y="320" width="363" height="50"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="77K-bm-WQZ">
                                     <rect key="frame" x="20" y="12" width="45" height="25"/>
@@ -95,8 +74,8 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-1T-OPu">
-                            <rect key="frame" x="10" y="123" width="373" height="200"/>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-1T-OPu">
+                            <rect key="frame" x="10" y="90" width="373" height="200"/>
                             <color key="backgroundColor" systemColor="systemGray5Color"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="200" id="iM0-sf-Ni2"/>
@@ -108,8 +87,8 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNV-7i-BCH">
-                            <rect key="frame" x="20" y="418" width="353" height="40"/>
+                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNV-7i-BCH">
+                            <rect key="frame" x="20" y="420" width="353" height="40"/>
                             <color key="backgroundColor" name="ButtonColor"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="353" id="bUZ-LD-naI"/>
@@ -131,25 +110,44 @@
                         <constraint firstItem="dpP-j7-TB5" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="8" id="C23-a7-rMl"/>
                         <constraint firstAttribute="trailing" secondItem="dpP-j7-TB5" secondAttribute="trailing" constant="8" id="FV2-Qa-UQb"/>
                         <constraint firstItem="sse-JX-kDl" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="15" id="IGi-lh-xnG"/>
-                        <constraint firstItem="dpP-j7-TB5" firstAttribute="top" secondItem="VkS-Fo-wiL" secondAttribute="bottom" constant="20" id="MZC-dG-Tqp"/>
-                        <constraint firstItem="K1a-sQ-TbS" firstAttribute="centerX" secondItem="Um9-NA-C5Z" secondAttribute="centerX" id="Qc5-sb-uvA"/>
-                        <constraint firstItem="HNV-7i-BCH" firstAttribute="top" secondItem="sse-JX-kDl" secondAttribute="bottom" constant="15" id="Qim-fu-5bf"/>
-                        <constraint firstItem="VkS-Fo-wiL" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="8" id="Sky-SC-RQG"/>
+                        <constraint firstItem="HNV-7i-BCH" firstAttribute="top" secondItem="sse-JX-kDl" secondAttribute="bottom" constant="50" id="Jwm-AV-nYg"/>
                         <constraint firstItem="ZrA-1T-OPu" firstAttribute="top" secondItem="dpP-j7-TB5" secondAttribute="bottom" constant="10" id="YUU-9v-ZBn"/>
                         <constraint firstItem="sse-JX-kDl" firstAttribute="top" secondItem="ZrA-1T-OPu" secondAttribute="bottom" constant="30" id="ccG-I5-bUG"/>
-                        <constraint firstItem="K1a-sQ-TbS" firstAttribute="centerY" secondItem="VkS-Fo-wiL" secondAttribute="centerY" id="cpR-D9-pMh"/>
-                        <constraint firstItem="VkS-Fo-wiL" firstAttribute="top" secondItem="Um9-NA-C5Z" secondAttribute="top" constant="8" id="eIC-Nz-XaJ"/>
                         <constraint firstItem="HNV-7i-BCH" firstAttribute="centerX" secondItem="Um9-NA-C5Z" secondAttribute="centerX" id="hZ0-TF-qCl"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Image / Pdf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1a-sQ-TbS">
+                    <rect key="frame" x="124" y="64" width="145" height="20.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkS-Fo-wiL">
+                    <rect key="frame" x="8" y="63.333333333333343" width="75" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="5QS-Ig-fFD"/>
+                        <constraint firstAttribute="height" constant="22" id="C5r-GP-WQN"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="darkTextColor"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="arrow.left" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="pam-8o-iah"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="K1a-sQ-TbS" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="2tB-7e-ZS4"/>
+                <constraint firstItem="K1a-sQ-TbS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="JLE-zG-9h8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Um9-NA-C5Z" secondAttribute="trailing" id="Sn9-bn-Pcw"/>
                 <constraint firstItem="Um9-NA-C5Z" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YpV-dW-onc"/>
-                <constraint firstItem="Um9-NA-C5Z" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="otn-fd-oeg"/>
+                <constraint firstItem="K1a-sQ-TbS" firstAttribute="centerY" secondItem="VkS-Fo-wiL" secondAttribute="centerY" id="dC5-tF-emN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Um9-NA-C5Z" secondAttribute="bottom" id="qvT-cE-MM1"/>
+                <constraint firstItem="VkS-Fo-wiL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="xKC-lT-Pd4"/>
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>

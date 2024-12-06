@@ -8,6 +8,8 @@
 import UIKit
 import AWSCore
 import AWSS3
+import SDWebImage
+import SwiftUI
 
 @available(iOS 14.0, *)
 class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate, DeleteImge {
@@ -93,7 +95,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         }
         
         
-        StyleAndTranslater()
+       
         
     }
     //MARK: BUTTON TITLE CURRANT TIME
@@ -224,6 +226,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func StyleAndTranslater(){
         //MARK: Translate
         HeadingLabel.text =  "Compose NoticeBoard".translated()
+       
         
         //MARK: UI Design
         //        SubmitBtn.layer.cornerRadius = Colornames.CORadius10
@@ -255,8 +258,30 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
     }
     
+    func SendNotice(){
+        textview.text = "Type content here"
+        textfield.text = "Type News Topiccc"
+        textview.textColor = .lightGray
+    }
     
+    func resendFromHistory(){
+        textview.text = desc
+        textview.textColor = .black
+        textfield.text = title1
+        SubmitBtn.backgroundColor = .button
+        code = 1
+    }
     
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        if sender == FromDatePicker{
+            ToDatePicker.minimumDate = FromDatePicker.date
+        }
+        self.dismiss(animated: true, completion: nil)
+        let selectedDate = sender.date
+        print("Selected Date: \(selectedDate)")
+      
+        }
+     
     @IBAction func SubmitAction(_ sender: Any) {
         
         let vc = SelectRecipientVC(nibName: nil, bundle: nil)
@@ -771,6 +796,8 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
             //
             // Camera option
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                //
+                //                openCamera()
             }
             alertController.addAction(cameraAction)
             
@@ -805,6 +832,143 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
                 //
                 present(vc, animated: true)
             }
+
+               
+
+            
+
+        }
+
+        
+
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+
+            controller.dismiss(animated: true, completion: nil)
+
+        }
+
+
+}
+
+@available(iOS 14.0, *)
+extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        if code == 0{
+            if selectedImages.count != 0 && selectedImages.count <= 3{
+                
+                collectionHeight.constant = 120
+            }
+            
+            else if selectedImages.count > 3{
+                collectionHeight.constant = 240
+            }
+            
+            else if selectedImages.count == 0 {
+                collectionHeight.constant = 0
+            }
+            
+            return selectedImages.count
+        }
+
+        else{
+            
+            if items.count != 0 && items.count <= 3{
+                
+                collectionHeight.constant = 120
+            }
+            
+            else if items.count > 3{
+                collectionHeight.constant = 240
+            }
+            
+            else if items.count == 0{
+                collectionHeight.constant = 0
+            }
+            return items.count+selectedImages.count
+        }
+               
+
+           }
+
+           
+
+           func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+               
+               print("itemsCount",items.count)
+
+               if code == 0{
+                   cell.imageViews.image = selectedImages[indexPath.item]
+                   cell.TrashIcon.isHidden = false
+               }else {
+                   print("fsghwdgvdhbdvgdgvegvgveh")
+                   
+                   if indexPath.item < items.count {
+                       cell.TrashIcon.isHidden = true
+                       cell.imageViews.sd_setImage(with: URL(string: items[indexPath.item] ?? ""), placeholderImage: UIImage(named: ""))
+                   }
+                   if indexPath.item >= items.count{
+                       
+                       var selindex = indexPath.item - items.count
+                       cell.imageViews.image = selectedImages[selindex]
+//                       let count = selectedImages.count
+//                       print("Selected Images Count",selectedImages.count)
+//                       for i in 0..<count {
+//                           print("indexindex",i)
+//                           cell.imageViews.image = selectedImages[i]
+//                           cell.TrashIcon.isHidden = false
+//                       }
+
+                   }
+                
+               }
+
+               return cell
+
+           }
+
+           
+
+           // MARK: - UICollectionView Delegate
+
+           func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+               // Delete the selected image
+               if indexPath.item >= items.count{
+                   
+                   var selindex = indexPath.item - items.count
+                   
+                   //selectedImages.remove(at: indexPath.item)
+                   selectedImages.remove(at: selindex)
+                   
+                   collectionView.deleteItems(at: [indexPath])
+               }
+
+           }
+
+           
+
+           
+
+        
+
+    }
+
+
+
+    @available(iOS 14.0, *)
+
+    extension SenderNoticeBoardVC: UICollectionViewDelegateFlowLayout {
+
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+            let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
+
+            return CGSize(width: width, height: width)
+
         }
     }
     

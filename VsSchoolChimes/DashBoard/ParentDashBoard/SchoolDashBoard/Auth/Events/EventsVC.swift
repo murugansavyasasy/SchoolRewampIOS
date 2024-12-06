@@ -76,10 +76,10 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             // Handle selected images here
             
             selectedImages.append(contentsOf: images)
-            //            for image in images {
-            //                print("Selected image: \(image)")
-            //                photoPickManager.uploadAWS(image: image)
-            //            }
+            for image in images {
+                print("Selected image: \(image)")
+               // photoPickManager.uploadAWS(image: image)
+            }
             costomView.imageCollectionview.reloadData()
         }
         

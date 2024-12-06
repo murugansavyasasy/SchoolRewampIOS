@@ -122,11 +122,13 @@
 
 //MARK: Video Sender Side
 "Enter Video Title" = "ป้อนชื่อวิดีโอ";
-"Video Description" = "คำอธิบายวิดีโอ";
+"Enter Video Description" = "ป้อนคำอธิบายวิดีโอ";
 "Choose Video From Gallery" = "เลือกวิดีโอจากแกลเลอรี";
 "Change Video" = "เปลี่ยนวิดีโอ";
 "Upload Video" = "อัปโหลดวิดีโอ";
 "Send" = "ส่ง";
+"Click To Choose Video From File" = "คลิกเพื่อเลือกวิดีโอจากไฟล์";
+
 //MARK: Home Work Sender Side
 "Home Work" = "การบ้าน";
 "Content" = "เนื้อหา";
@@ -172,6 +174,7 @@
 "Total" = "รวมทั้งหมด";
 "View" = "ดู";
 
+//MARK: Sender side Events
 //Temp:
 "Name" = "ชื่อ";
 "RollNo" = "หมายเลขม้วน";

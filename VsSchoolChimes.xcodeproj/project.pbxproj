@@ -42,6 +42,10 @@
 		8406583E2CFD927C00080CF6 /* EventsListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406583B2CFD927C00080CF6 /* EventsListTVC.swift */; };
 		840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */; };
 		840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */; };
+		8407525E2D0178060008498E /* OnlineMeetingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407525C2D0178060008498E /* OnlineMeetingVC.swift */; };
+		8407525F2D0178060008498E /* OnlineMeetingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8407525D2D0178060008498E /* OnlineMeetingVC.xib */; };
+		842342012CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842342002CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib */; };
+		842342022CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842341FF2CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
@@ -87,6 +91,8 @@
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F52CDF47C20006068E /* ChngLangFil.swift */; };
 		8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */; };
+		844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844914862D01A8EF0007A875 /* MeetingsTVcell.xib */; };
+		844914882D01A8EF0007A875 /* MeetingsTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844914852D01A8EF0007A875 /* MeetingsTVcell.swift */; };
 		84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */; };
 		84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */; };
 		84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */; };
@@ -328,6 +334,10 @@
 		8406583C2CFD927C00080CF6 /* EventsListTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsListTVC.xib; sourceTree = "<group>"; };
 		840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCVCell.swift; sourceTree = "<group>"; };
 		840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentCVCell.xib; sourceTree = "<group>"; };
+		8407525C2D0178060008498E /* OnlineMeetingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineMeetingVC.swift; sourceTree = "<group>"; };
+		8407525D2D0178060008498E /* OnlineMeetingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlineMeetingVC.xib; sourceTree = "<group>"; };
+		842341FF2CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNoticeBoardVC.swift; sourceTree = "<group>"; };
+		842342002CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendNoticeBoardVC.xib; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
@@ -381,6 +391,8 @@
 		8442A9F52CDF47C20006068E /* ChngLangFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangFil.swift; sourceTree = "<group>"; };
 		8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangConsFil.swift; sourceTree = "<group>"; };
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		844914852D01A8EF0007A875 /* MeetingsTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsTVcell.swift; sourceTree = "<group>"; };
+		844914862D01A8EF0007A875 /* MeetingsTVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingsTVcell.xib; sourceTree = "<group>"; };
 		84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardTvcellTableViewCell.swift; sourceTree = "<group>"; };
 		84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardTvcellTableViewCell.xib; sourceTree = "<group>"; };
 		84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardVc.swift; sourceTree = "<group>"; };
@@ -758,6 +770,17 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
+		8407525B2D0177D60008498E /* Online Meeting */ = {
+			isa = PBXGroup;
+			children = (
+				8407525C2D0178060008498E /* OnlineMeetingVC.swift */,
+				8407525D2D0178060008498E /* OnlineMeetingVC.xib */,
+				844914852D01A8EF0007A875 /* MeetingsTVcell.swift */,
+				844914862D01A8EF0007A875 /* MeetingsTVcell.xib */,
+			);
+			path = "Online Meeting";
+			sourceTree = "<group>";
+		};
 		8442A8672CDB787A0006068E /* PriorityScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -845,6 +868,8 @@
 			children = (
 				84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */,
 				84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */,
+				842341FF2CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift */,
+				842342002CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib */,
 			);
 			path = NoticeBoardTv;
 			sourceTree = "<group>";
@@ -1713,6 +1738,7 @@
 		84EFF9E92CCCAE5900C11C26 /* ReuseViews */ = {
 			isa = PBXGroup;
 			children = (
+				8407525B2D0177D60008498E /* Online Meeting */,
 				84EFF4942CE388B800E39BEA /* ProfilepageVc */,
 				8494B6622CD1EC47004B0746 /* TapBarVc */,
 				84EFF9EF2CCCAFDD00C11C26 /* HelpVc */,
@@ -2021,6 +2047,7 @@
 				84B050AF2CF842E4002B63D4 /* Tvcell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				84B050B02CF842E4002B63D4 /* ExamTmTblVCViewController.xib in Resources */,
+				844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
 				849E572C2C1FF633006119DA /* PirorityTableViewCell.xib in Resources */,
@@ -2082,6 +2109,7 @@
 				849970C92CF8752400800B07 /* DateCVC.xib in Resources */,
 				849970CA2CF8752400800B07 /* HistoryTC.xib in Resources */,
 				849970CB2CF8752400800B07 /* TextHistoryTVCell.xib in Resources */,
+				8407525F2D0178060008498E /* OnlineMeetingVC.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
 				18BAF4DD2CEB3CB200517441 /* SenderAssignmentViewController.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
@@ -2093,6 +2121,7 @@
 				84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
+				842342012CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib in Resources */,
 				848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */,
 				84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */,
 				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
@@ -2295,6 +2324,7 @@
 				84A5BE8E2C197C3000E32496 /* Toast.swift in Sources */,
 				84A5BF952C1AF06500E32496 /* TermsAndConditionModel.swift in Sources */,
 				8442A8682CDB787A0006068E /* principalTVCell.swift in Sources */,
+				8407525E2D0178060008498E /* OnlineMeetingVC.swift in Sources */,
 				8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */,
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
 				8406583E2CFD927C00080CF6 /* EventsListTVC.swift in Sources */,
@@ -2346,6 +2376,7 @@
 				84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */,
 				849F313C2D00613B00BACEC7 /* EventPageVC.swift in Sources */,
 				84EFF9972CCB5B0400C11C26 /* CountryVc.swift in Sources */,
+				842342022CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift in Sources */,
 				84EFFACE2CCF90DE00C11C26 /* SettingHeaderView.swift in Sources */,
 				84EFFACF2CCF90DE00C11C26 /* SettingsTableViewCell.swift in Sources */,
 				84EFFAD02CCF90DE00C11C26 /* SettingsViewController.swift in Sources */,
@@ -2363,6 +2394,7 @@
 				18CA85612CF99EFB00984D7C /* AssignmentViewTotalViewController.swift in Sources */,
 				84EFFAEB2CCFA4A100C11C26 /* ReportBugVcViewController.swift in Sources */,
 				84A5BE9A2C197E0B00E32496 /* ResponseName.swift in Sources */,
+				844914882D01A8EF0007A875 /* MeetingsTVcell.swift in Sources */,
 				84A5BE962C197D2C00E32496 /* UILabel.swift in Sources */,
 				8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */,
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,

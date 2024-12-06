@@ -8,6 +8,8 @@
 import UIKit
 import Photos
 import Alamofire
+import AVKit
+import AVFoundation
 
 
 enum UploadResult {
@@ -15,81 +17,245 @@ case success(String)
 case failure(Error)
 }
 class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
-
-    @IBOutlet weak var backView: UIView!
+    
+    
+    @IBOutlet weak var chooseVideoLabel: UILabel!
+    @IBOutlet weak var scrollview: UIScrollView!
+    @IBOutlet weak var HeaderLabel: UILabel!
+    
+    @IBOutlet weak var BaseView: UIView!
+    
     @IBOutlet weak var selectVideoView: RectangularDashedView!
-    @IBOutlet weak var secStudBtn: UIButton!
-    @IBOutlet weak var stdSecBtn: UIButton!
-    @IBOutlet weak var groupBtn: UIButton!
+    
+    @IBOutlet weak var playBtn: UIButton!
+    
+    @IBOutlet weak var PlayerHeight: NSLayoutConstraint!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var uploadVideoTitleLbl: UILabel!
     @IBOutlet weak var changeVideoBtn: UIButton!
-    @IBOutlet weak var chooseVdoLbl: UILabel!
-    @IBOutlet weak var descTxtFld: UITextField!
+    @IBOutlet weak var chooseVideoBtn: UIButton!
+    @IBOutlet weak var descTxtView: UITextView!
     @IBOutlet weak var titleTxtFld: UITextField!
     
-    @IBOutlet weak var staffSideOverAllView: UIView!
+    @IBOutlet weak var VideoPlayer: UIView!
+    
+    @IBOutlet weak var ThumnailImage: UIImageView!
     var authToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var videoEmbdUrl : String!
     var iframeLink : String!
     var videoSucessId = 0
     var getType = "Principal"
-
+   
+    var player: AVPlayer?
+    var playerViewController: AVPlayerViewController?
+    var playerurl: URL?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+                
+                // Disable horizontal scrolling
+//        scrollview.contentSize = CGSize(width: scrollview.frame.width, height: scrollview.contentSize.height)
+//        scrollview.showsHorizontalScrollIndicator = false
+//        scrollview.alwaysBounceHorizontal = false
+//        
+            chooseVideoBtn.isHidden = true
 
+       
+        StyleAndTranslater()
+
+       // playBtn.isHidden = true
         
+        //PlayerHeight.constant = 0
         
-        stdSecBtn.setTitle("Standard or section".translated(), for: .normal)
-        secStudBtn.setTitle("Section or student".translated(), for: .normal)
-        groupBtn.setTitle("Groups".translated(), for: .normal)
+        descTxtView.delegate = self
         
+//        let selectedAlertGesture = UITapGestureRecognizer(target: self, action: #selector(pickVideoFromGallery))
+//        selectVideoView.addGestureRecognizer(selectedAlertGesture)
         
+        let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
+        VideoPlayer.addGestureRecognizer(PlayGesture)
+    }
+    
+    func StyleAndTranslater(){
+        
+        //MARK: UI update
+//        BaseView.layer.cornerRadius = 10
+//        BaseView.layer.shadowColor = UIColor.black.cgColor
+//        BaseView.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        BaseView.layer.shadowRadius = 5
+//        BaseView.layer.shadowOpacity = 0.3
+        BaseView.layer.cornerRadius = 10
+        VideoPlayer.layer.cornerRadius = 10
+//        titleTxtFld.layer.cornerRadius = Colornames.CORadius10
+//        titleTxtFld.layer.borderWidth = 0.8
+//        titleTxtFld.layer.borderColor = UIColor.black.cgColor
+        descTxtView.layer.cornerRadius = Colornames.CORadius10
+        descTxtView.layer.borderWidth = 0.8
+        descTxtView.layer.borderColor = UIColor.black.cgColor
+        changeVideoBtn.layer.cornerRadius = Colornames.CORadius10
+        sendBtn.layer.cornerRadius = Colornames.CORadius10
+        chooseVideoBtn.layer.cornerRadius = Colornames.CORadius10
+        
+        //MARK: Translate
+        HeaderLabel.text = "Video".translated()
         uploadVideoTitleLbl.text = "Upload Video".translated()
-        titleTxtFld.text = "Enter Video Title".translated()
-        descTxtFld.placeholder = "Enter Video Description".translated()
+        chooseVideoLabel.text = "Click To Choose Video From File".translated()
+        titleTxtFld.placeholder = "Enter Video Title".translated()
+        descTxtView.text = "Enter Video Description".translated()
+        descTxtView.textColor = .lightGray
+        changeVideoBtn.setTitle("Change Video".translated(), for: .normal)
+        chooseVideoBtn.setTitle("Choose Video".translated(), for: .normal)
+        sendBtn.setTitle("Send".translated(), for: .normal)
         
+        //MARK: Font Style
         
-        let selectedAlertGesture = UITapGestureRecognizer(target: self, action: #selector(pickVideoFromGallery))
-        selectVideoView.addGestureRecognizer(selectedAlertGesture)
-        
-        
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backAction))
-        backView.addGestureRecognizer(backGesture)
-        
-        
-        
-        
-       
-        staffSideOverAllView.isHidden = true
-       
-        
-        if getType == "Principal" || getType == "Group" {
-            sendBtn.isHidden = false
-          
-            staffSideOverAllView.isHidden = true
-          
-        }else {
-            sendBtn.isHidden = true
-           
-            staffSideOverAllView.isHidden = false
-           
-            
-        }
-        
-        
+        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        chooseVideoLabel.setFont(style: .title, size: FontSize.TitleSize)
+        uploadVideoTitleLbl.setFont(style: .header, size: 17)
+        changeVideoBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        chooseVideoBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        sendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
     }
 
 
+//    @objc func playVideo() {
+//        
+//        ThumnailImage.isHidden = true
+//        // 1. Create the AVPlayer and AVPlayerLayer for video playback
+//        let player = AVPlayer(url: playerurl)
+//        let playerLayer = AVPlayerLayer(player: player)
+//        playerLayer.frame = VideoPlayer.bounds
+//        playerLayer.videoGravity = .resizeAspectFill // Adjust to your needs
+//        VideoPlayer.layer.addSublayer(playerLayer)
+//       // player.addObserver(self, forKeyPath: "status", options: [.new, .old], context: nil)
+//        playerViewController = AVPlayerViewController()
+//        playerViewController?.player = player
+//        playerViewController?.showsPlaybackControls = true
+//        self.addChild(playerViewController!)
+//        self.VideoPlayer.addSubview(playerViewController!.view!)
+//        playerViewController?.view.frame = self.view.frame
+//        
+//         //playerViewController = AVPlayerViewController() playerViewController?.player = player playerViewController?.showsPlaybackControls = true self.addChild(playerViewController!) self.view.addSubview(playerViewController!.view) playerViewController?.view.frame = self.view.frame
+//              
+//               player.play()
+//
+//       
+//
+//            //  Remove the thumbnail once the video starts playing
+////            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+////                self.ThumnailImage.removeFromSuperview()
+////            }
+//        
+//    }
+    //MARK: function to play video
+    @objc func playVideo() {
+        playBtn.isHidden = true
+        ThumnailImage.isHidden = true
+
+        if let playerurl = playerurl {
+            player = AVPlayer(url: playerurl)
+            print("playerurl: \(playerurl)")
+
+            playerViewController = AVPlayerViewController()
+            playerViewController?.player = player
+            playerViewController?.showsPlaybackControls = true
+
+            self.addChild(playerViewController!)
+            playerViewController?.view.frame = VideoPlayer.bounds
+            self.VideoPlayer.addSubview(playerViewController!.view)
+            playerViewController?.didMove(toParent: self)
+            playerViewController?.view.layer.cornerRadius = 10
+            playerViewController?.view.clipsToBounds = true
+            player?.play()
+        }
+    }
+
     
+
+
+
+    //MARK: Function to generate thumbnail from the video URL
+    func generateThumbnail(from videoURL: URL){
+        let asset = AVAsset(url: videoURL)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
+//        let thumbnailImageView = UIImageView(frame: VideoPlayer.bounds)
+//                thumbnailImageView.contentMode = .scaleAspectFill
+//                VideoPlayer.addSubview(thumbnailImageView)
+
+        do {
+            let cgImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+           // thumbnailImageView.image = UIImage(cgImage: cgImage)
+            //PlayerHeight.constant = 200
+            
+            ThumnailImage.isHidden = false
+            ThumnailImage.layer.cornerRadius = 10
+            ThumnailImage.image = UIImage(cgImage: cgImage)
+            chooseVideoLabel.isHidden = true
+            playBtn.isHidden = false
+            playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+//            chooseVideoBtn.isHidden = true
+//            changeVideoBtn.isHidden = false
+            //return UIImage(cgImage: cgImage)
+        } catch {
+            print("Error generating thumbnail: \(error)")
+            
+        }
+    }
+
+    
+    @IBAction func ChooseVideoBtnAct(_ sender: Any) {
+        if playerurl == nil{
+            pickVideoFromGallery()
+        }
+    }
     
     @IBAction func backAction() {
         dismiss(animated: true)
     }
     
     
+    @IBAction func PlayBtnAct(_ sender: Any) {
+        if playBtn.currentImage == UIImage(named: "play-button"){
+            playVideo()
+        }
+        else{
+            pickVideoFromGallery()
+        }
+    }
     
+    
+    @IBAction func ChangeVideoBtnAct(_ sender: Any) {
+        
+        if playerurl == nil {
+          let alert = CustomAlert()
+            alert.showAlert(title: "Video", message: "Please choose a Video", on: self)
+        }
+        else{
+           // stopCurrentVideo()
+//            playerurl = nil
+            
+           // playerViewController?.view.removeFromSuperview()
+            pickVideoFromGallery()
+        }
+    }
+    
+    func stopCurrentVideo() {
+        player?.pause()
+        player = nil
+        playerViewController?.view.removeFromSuperview()
+        playerViewController = nil
+    }
+
+    
+    @IBAction func SendBtnAct(_ sender: Any) {
+        
+        let vc = SelectRecipientVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     // MARK: This method is pick Video From Gallery
     @IBAction   func pickVideoFromGallery() {
@@ -109,8 +275,14 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         // MARK: This method is called when the user has picked a video
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let videoURL = info[.mediaURL] as? URL {
+                if playerurl != nil{
+                    stopCurrentVideo()
+                    playerurl = nil
+                }
+                playerurl = videoURL
                 print("Selected video URL: \(videoURL)")
-                uploadVideo(authToken: authToken, videoFilePath: videoURL)
+                generateThumbnail(from: playerurl!)
+                //uploadVideo(authToken: authToken, videoFilePath: videoURL)
                 
             }
             
@@ -163,7 +335,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             "size": "\(fileSize)"
         ],
         "name": titleTxtFld.text,
-        "description": descTxtFld.text
+        "description": descTxtView.text
     ]
 
     AF.request("https://api.vimeo.com/me/videos", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
@@ -324,4 +496,29 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 
 
 
+}
+
+extension SenderSideVideoViewController : UITextViewDelegate{
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        
+        if descTxtView.text == "Enter Video Description".translated(){
+            descTxtView.text = ""
+            descTxtView.textColor = .black
+        }
+    }
+    
+//    func textViewDidChange(_ textView: UITextView) {
+//        
+//        if descTxtView.text.isEmpty{
+//            descTxtView.text = "Enter Video Description".translated()
+//            descTxtView.textColor = .lightGray
+//        }
+//    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if descTxtView.text.isEmpty{
+            descTxtView.text = "Enter Video Description".translated()
+            descTxtView.textColor = .lightGray
+        }
+    }
 }

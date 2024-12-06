@@ -78,6 +78,6 @@ extension UIButton {
 class FontSize {
     
     static var HeaderSize : CGFloat = 20
-    static var TitleSize : CGFloat = 12
+    static var TitleSize : CGFloat = 14
     static var BodySize : CGFloat = 13
 }
