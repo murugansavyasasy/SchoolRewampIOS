@@ -56,6 +56,12 @@
 "Lesson Plan" = "Lesson Plan";
 "PTM" = "PTM";
 "Mark your attendance" = "Mark your attendance";
+"Absentees Report" = "Absentees Report";
+"School Strength" = "School Strength";
+"Daily Collection" = "Daily Collection";
+"Student Report" = "Student Report";
+"Fee Pending Report" = "Fee Pending Report";
+"Staff Wise Attendance Report" = "Staff Wise Attendance Report";
 
 
 // MARK: profile page
@@ -153,26 +159,39 @@
 "View" = "View";
 
 //MARK: Sender side Events
+//MARK: Attendence
+"Name" = "Name";
+"RollNo" = "Roll No";
+"Status" = "Status";
+"LeaveRequests" = "Leave Requests";
+"Section" = "Section '10th C'";
+"RollNo DESC" = "Roll No DESC";
+"RollNo ASC" = "Roll No ASC";
+"Name ASC" = "Name ASC";
+"Name DESC" = "Name DESC";
+"Apsent" = "Absent";
+"Present" = "Present";
+"Filter" = "Filter";
+
+//MARK: Event
+"Circulars" = "Circulars";
+"EnterPlace" = "Enter place";
+"EnterTitle" = "Enter Title";
+"EnterTextHere" = "Enter your Text here...";
+"AddPhotos1" = "Add Photos (Optional?)";
 "Venue" = "Venue";
-"Event Title" = "Event Title";
-"Event Details" = "Event Details";
-"Add Photos" = "Add Photos";
-"Next" = "Next";
-"Host Event" = "Host Event";
-"Create Event" = "Create Event";
-
-
-
-
-
-
-
-
-
-
-
-
-
+"History" = "History";
+"Create" = "Create";
+"AddPhotos" = "Add Photos";
+"Optional" = "(Optional?)";
+"From" = "From";
+"To" = "To";
+"EventTitle" = "Event Title";
+"EventDetails" = "Event Details";
+"CreateEvent" = "Create Event";
+"EnterPlace" = "Enter place";
+"EnterTitle" = "Enter Title";
+"EnterTextHere" = "Enter your Text here...";
 
 
 

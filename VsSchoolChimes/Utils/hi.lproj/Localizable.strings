@@ -56,6 +56,12 @@
 "Lesson Plan" = "पाठ योजना";
 "PTM" = "अभिभावक-शिक्षक बैठक";
 "Mark your attendance" = "अपनी उपस्थिति दर्ज करें";
+"Absentees Report" = "अनुपस्थित रिपोर्ट";
+"School Strength" = "विद्यालय की ताकत";
+"Daily Collection" = "दैनिक संग्रह";
+"Student Report" = " छात्र रिपोर्ट";
+"Fee Pending Report" = "फीस लंबित रिपोर्ट";
+"Staff Wise Attendance Report" = "कर्मचारी वार उपस्थिति रिपोर्ट";
 
 
 // MARK: profile page
@@ -164,12 +170,33 @@
 "View" = "देखें";
 
 //MARK: Sender side Events
+//Temp:
+"Name" = "नाम";
+"RollNo" = "रोल नंबर";
+"Status" = "स्थिति";
+"LeaveRequests" = "छुट्टी के अनुरोध";
+"Section" = "सेक्शन '10वीं सी'";
+"RollNo DESC" = "Roll No घटता क्रम";
+"RollNo ASC" = "Roll No बढ़ता क्रम";
+"Name ASC" = "नाम बढ़ता क्रम";
+"Name DESC" = "नाम घटता क्रम";
+"Apsent" = "अनुपस्थित";
+"Present" = "उपस्थित";
+"Filter" = "फ़िल्टर";
+
+//MARK: Event
+"Circulars" = "परिपत्र";
+"EventTitle" = "कार्यक्रम का शीर्षक";
+"EventDetails" = "कार्यक्रम विवरण";
+"AddPhotos1" = "फोटो जोड़ें (वैकल्पिक?)";
 "Venue" = "स्थान";
-"Event Title" = "कार्यक्रम का शीर्षक";
-"Event Details" = "कार्यक्रम का विवरण";
-"Add Photos" = "फोटो जोड़ें";
-"Next" = "अगला";
-"Host Event" = "कार्यक्रम आयोजित करें";
-"Create Event" = "कार्यक्रम बनाएँ";
-
-
+"From" = "से";
+"To" = "तक";
+"CreateEvent" = "कार्यक्रम बनाएं";
+"History" = "इतिहास";
+"Create" = "बनाएं";
+"Optional" = "(वैकल्पिक?)";
+"AddPhotos" = "फोटो जोड़ें";
+"EnterPlace" = "स्थान दर्ज करें";
+"EnterTitle" = "शीर्षक दर्ज करें";
+"EnterTextHere" = "यहाँ अपना टेक्स्ट दर्ज करें...";

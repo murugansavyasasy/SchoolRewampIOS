@@ -32,6 +32,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     @IBOutlet weak var pickerDateLbl: UILabel!
     @IBOutlet weak var calander2Btn: HalfColorButton!
     
+    @IBOutlet weak var ToLbl: UILabel!
+    @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var TxtOuterview: UIView!
     @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var eventDeatail: UILabel!
@@ -58,7 +60,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     let photoPickManager = PhotoPickerManager.shared
     var selectedImages: [UIImage] = []
     var convertedImagesUrlArray = NSMutableArray()
-    
     var imageUrlArray = NSMutableArray()
     var pdfData : Data? = nil
     
@@ -99,7 +100,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         // Get the current date and time
         let currentDate = Date() // Current date and time
-        let nextHourTime = Calendar.current.date(byAdding: .hour, value: 1, to: currentDate) ?? currentDate
+        let nextHourTime = Calendar.current.date(byAdding: .hour, value: 0, to: currentDate) ?? currentDate
         
         // Format the date and time
         let formattedDate = dateFormatter.string(from: currentDate)   // "Tue 3 Dec 2024"
@@ -109,11 +110,12 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         // Set the formatted time to the time button
         timeBtn.setTitle(formattedTime, for: .normal)
         todate.setTitle(formattedDate, for: .normal)
+        Totime.setTitle(formattedTime, for: .normal)
         dateBtn.setTitle(formattedDate, for: .normal)
         // Set the date and time to the date button
         dateSet(formattedDate, dateOnly,dateOnly)
     }
-
+    
     
     func registerCell(){
         costomView.imageCollectionview.delegate = self
@@ -128,17 +130,18 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
-
+        
         calanderBtn.layer.borderWidth = 1 // Border width
         calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
         calander2Btn.layer.borderWidth = 1 // Border width
         calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
         calander2Btn.layer.cornerRadius = 10
         calanderBtn.layer.cornerRadius = 10 // Add corner radius if needed
-
-        subTitleLbl.setFont(style:.title, size: FontSize.HeaderSize)
         EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
-        headerLbl.setFont(style:.header, size: FontSize.HeaderSize)
+
+        ToLbl.setFont(style:.body, size: FontSize.BodySize)
+        fromLbl.setFont(style:.body, size: FontSize.BodySize)
+        subTitleLbl.setFont(style:.body, size: FontSize.BodySize)
         eventDeatail.setFont(style:.body, size: FontSize.BodySize)
         addPhotoLbl.setFont(style:.body, size: FontSize.BodySize)
         Totime.setTitleFont(style: .body, size: 12)
@@ -149,21 +152,22 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         calanderBtn.layer.cornerRadius = 10
         placeLbl.setFont(style:.body, size: FontSize.BodySize)
         placeLbl.text = "Venue".translated()
-        addPhotoLbl.text = "Add Photos (Optional?)".translated()
-        eventDeatail.text = "Event Details".translated()
-        EventTtleLbl.text = "Event Title".translated()
-        headerLbl.text = "Create Event".translated()
-        // Assuming setFont(style:size:) sets the desired UIFont
-        setAttributedText(for: addPhotoLbl, with: "Add Photos (Optional?)", splitAt: 10, color1: .black, color2: .lightGray)
+        addPhotoLbl.text = "AddPhotos".translated()
+        eventDeatail.text = "EventDetails".translated()
+        EventTtleLbl.text = "EventTitle".translated()
+        placeTxt.placeholder = "EnterPlace".translated()
+        eventTxt.placeholder = "EnterTitle".translated()
+        
+        setAttributedText(for: addPhotoLbl, with: "AddPhotos1".translated(), firstString: "AddPhotos".translated(), secondString: "Optional".translated(), color1: .black, color2: .lightGray)
         
     }
     func dateSet(_ date: String, _ splitDate: String,_ currectndate:String) {
-
+        
         
         // Fonts for different parts
         let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
         let dayFont = UIFont.boldSystemFont(ofSize: 22)    // Larger font for day number
-
+        
         // Split the date into components
         let components = splitDate.split(separator: " ")
         guard let weekday = components.first else {
@@ -171,22 +175,22 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             return
         }
         let day = components.count > 1 ? components[1] : ""
-
+        
         // Create an attributed string
         let attributedText = NSMutableAttributedString()
-
+        
         // Add the weekday part
         attributedText.append(NSAttributedString(string: "\(weekday)\n", attributes: [
             .font: weekdayFont,
             .foregroundColor: UIColor.darkGray // Optional: Set weekday color
         ]))
-
+        
         // Add the day part
         attributedText.append(NSAttributedString(string: "\(day)", attributes: [
             .font: dayFont,
             .foregroundColor: UIColor.black // Optional: Set day color
         ]))
-
+        
         // Set paragraph style for centered alignment
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
@@ -195,7 +199,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             toDateLbl.attributedText = attributedText
             pickerDateLbl.attributedText = attributedText
         }
-       
+        
         if dateSelection == false{
             todate.setTitle(date, for: .normal)
             toDateLbl.attributedText = attributedText
@@ -204,30 +208,31 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             pickerDateLbl.attributedText = attributedText
             dateBtn.setTitle(date, for: .normal)
         }
-        // Set the attributed text to the label
-        
-        pickerDateLbl.numberOfLines = 0 // Allow multiline
-//        pickerDateLbl.textAlignment = .justified // Ensure text is centered in the label
+        pickerDateLbl.numberOfLines = 0
     }
-
-
-    func setAttributedText(for label: UILabel, with text: String, splitAt index: Int, color1: UIColor, color2: UIColor) {
-        guard index < text.count else { return } // Ensure index is within bounds
+    
+    
+    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
+        print(text)
+        print(firstString)
+        print(secondString)
+        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
         
-        // Split the string
-        let firstPart = String(text.prefix(index))
-        let secondPart = String(text.suffix(text.count - index))
+        // Find ranges of the substrings
+        let firstRange = (text as NSString).range(of: firstString)
+        let secondRange = (text as NSString).range(of: secondString)
         
-        // Create attributed strings with different colors
-        let attributedString = NSMutableAttributedString(string: firstPart, attributes: [.foregroundColor: color1])
-        let secondAttributedString = NSAttributedString(string: secondPart, attributes: [.foregroundColor: color2])
+        // Create a mutable attributed string
+        let attributedString = NSMutableAttributedString(string: text)
         
-        // Append the second part to the first
-        attributedString.append(secondAttributedString)
+        // Apply colors to the respective ranges
+        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
+        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
         
-        // Set it to the label
+        // Set the attributed string to the label
         label.attributedText = attributedString
     }
+
     func keyboardDionebtn(){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -245,12 +250,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         adjustTextViewHeightWithConstraint(textView)
-
-//        if textView.text.count <= 500{
-//            contentTxtView.isEditable = false
-//        }else{
-//            contentCount.text = "\(textView.text.count) of 500"
-//        }
     }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Calculate the new length of the text
@@ -263,7 +262,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         } else {
             let alert = CustomAlert()
             alert.showAlert(title: "Alert", message: "Reach Your Limit", on: self)
-//            contentTxtView.isEditable = false // Optionally disable editing
+            //            contentTxtView.isEditable = false // Optionally disable editing
             return false // Reject the change
         }
     }
@@ -277,18 +276,18 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
         // Calculate the size needed for the text
         if textView.text.isEmpty {
-               // Set default height to 60
-               textViewHeightConstraint.constant = 60
-           } else {
-               // Calculate the size needed for the text
-               let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-               textViewHeightConstraint.constant = sizeThatFits.height
-           }
+            // Set default height to 60
+            textViewHeightConstraint.constant = 60
+        } else {
+            // Calculate the size needed for the text
+            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+            textViewHeightConstraint.constant = sizeThatFits.height
+        }
         textView.layoutIfNeeded() // Refresh the layout
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Enter your text here..."
+        placeholderLabel.text = "EnterTextHere".translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -326,6 +325,9 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
+    
+  
+    
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -376,16 +378,16 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             
             // Gallery option
             let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-    //
+                //
                 selectImages()
-    //
-                       }
+                //
+            }
             alertController.addAction(galleryAction)
             
-//             PDF option
+            //             PDF option
             let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-    
-               selectPDF()
+                
+                selectPDF()
             }
             alertController.addAction(pdfAction)
             
@@ -399,34 +401,34 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-
+                
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
-//                
+                //
                 present(vc, animated: true)
             }
         }
     }
     
     func selectImages() {
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
+        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
         print(photoPickManager.imageStr)
-
-
-           }
+        
+        
+    }
     func selectPDF() {
-            let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
-
-            documentPicker.delegate = self
-
-            self.present(documentPicker, animated: true, completion: nil)
-
-        }
-        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-
-            controller.dismiss(animated: true, completion: nil)
-
-        }
+        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
+        
+        documentPicker.delegate = self
+        
+        self.present(documentPicker, animated: true, completion: nil)
+        
+    }
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        
+        controller.dismiss(animated: true, completion: nil)
+        
+    }
     func setupdatePicker() {
         // Initialize the date picker
         datePicker = UIDatePicker()
@@ -468,7 +470,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         doneButton2.addTarget(self, action: #selector(selectedTime), for: .touchUpInside)
         self.view.addSubview(doneButton2)
     }
-
+    
     @objc func selectedTime() {
         let timeFormatter = DateFormatter()
         timeFormatter.timeStyle = .short
@@ -520,7 +522,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             doneButton2.isHidden = true
             timePicker.isHidden = true
             // Set the frame for the datePicker and make sure it’s within bounds
-            let pickerYPosition = buttonFrame.minY - 310
+            let pickerYPosition = view.frame.minY + 110
             datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
             
             // Set appearance for datePicker
@@ -532,7 +534,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             datePicker.layer.cornerRadius = 20
             
             // Position the Done button at the bottom-right of the picker
-            doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
+            doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
             
             // Add datePicker to the view (ensure it’s in the view hierarchy)
             self.view.addSubview(datePicker)
@@ -544,8 +546,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             datePicker.isHidden = true
             doneButton.isHidden = true
             // Set the frame for the timePicker
-//            let pickerYPosition = buttonFrame.maxY + 10
-            let pickerYPosition = buttonFrame.minY - 260
+            //            let pickerYPosition = buttonFrame.maxY + 10
+            let pickerYPosition = buttonFrame.minY - 210
             timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
             
             // Set appearance for timePicker
@@ -564,7 +566,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             self.view.addSubview(doneButton2)
         }
     }
-
+    
 }
 class HalfColorButton: UIButton {
     override func layoutSubviews() {
