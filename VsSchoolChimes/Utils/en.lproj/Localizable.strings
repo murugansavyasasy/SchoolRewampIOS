@@ -169,6 +169,8 @@
 "Apsent" = "Absent";
 "Present" = "Present";
 "Filter" = "Filter";
+"Present" = "Present";
+"Absent" = "Absent";
 
 //MARK: Event
 "Circulars" = "Circulars";
@@ -189,6 +191,8 @@
 "EnterPlace" = "Enter place";
 "EnterTitle" = "Enter Title";
 "EnterTextHere" = "Enter your Text here...";
+"egYogaEvent" = "eg. Yoga event";
+"egChennai" = "eg. Chennai";
 
 
 

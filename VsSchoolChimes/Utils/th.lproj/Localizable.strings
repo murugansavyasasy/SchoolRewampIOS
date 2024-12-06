@@ -185,7 +185,8 @@
 "Present" = "มา";
 "Filter" = "กรอง";
 "Section" = "ส่วน '10th C'";
-
+"Present" = "มา";
+"Absent" = "ขาด";
 
 //MARK: Event
 "Circulars" = "วงเวียน";
@@ -203,3 +204,5 @@
 "EnterPlace" = "กรอกสถานที่";
 "EnterTitle" = "กรอกชื่อเรื่อง";
 "EnterTextHere" = "กรอกข้อความของคุณที่นี่...";
+"egYogaEvent" = "เช่น กิจกรรมโยคะ";
+"egChennai" = "เช่น เชนไน";

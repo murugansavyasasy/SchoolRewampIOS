@@ -155,8 +155,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         addPhotoLbl.text = "AddPhotos".translated()
         eventDeatail.text = "EventDetails".translated()
         EventTtleLbl.text = "EventTitle".translated()
-        placeTxt.placeholder = "EnterPlace".translated()
-        eventTxt.placeholder = "EnterTitle".translated()
+        placeTxt.placeholder = "egChennai".translated()
+        eventTxt.placeholder = "egYogaEvent".translated()
         
         setAttributedText(for: addPhotoLbl, with: "AddPhotos1".translated(), firstString: "AddPhotos".translated(), secondString: "Optional".translated(), color1: .black, color2: .lightGray)
         

@@ -246,7 +246,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         addPhotoLbl.text = "AddPhotos".translated()
         
         setTitle.text = "EventTitle".translated()
-        eventTxt.placeholder = "EnterTitle".translated()
+        eventTxt.placeholder = "egYogaEvent".translated()
         enterDetails.text = "EventDetails".translated()
         setAttributedText(for: addPhotoLbl, with: "AddPhotos1".translated(), firstString: "AddPhotos".translated(), secondString: "Optional".translated(), color1: .black, color2: .lightGray)
         

@@ -39,10 +39,10 @@ class NoticeBoardVc: UIViewController {
         let nib = UINib(nibName:"NoticeBoardTvcellTableViewCell", bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: "NoticeBoardTvcellTableViewCell")
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(Plusclick))
-        plusImgview.addGestureRecognizer(tap)
-        plusImgview.isUserInteractionEnabled = true
-        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(Plusclick))
+//        plusImgview.addGestureRecognizer(tap)
+        plusImgview.isUserInteractionEnabled = false
+        plusImgview.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,9 +55,9 @@ class NoticeBoardVc: UIViewController {
     }
     
     @IBAction func Plusclick(_ sender : Any){
-        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+//        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
     
     
@@ -76,9 +76,9 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NoticeBoardTvcellTableViewCell", for: indexPath) as! NoticeBoardTvcellTableViewCell
         
-        
         return cell
     }
+  
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -93,11 +93,11 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         if contentOffsetY > previousOffset && contentOffsetY > 0 {
             // Scrolling Down
             print("Scrolling Down")
-            plusImgview.isHidden = true
+//            plusImgview.isHidden = true
         } else if contentOffsetY < previousOffset {
             // Scrolling Up
             print("Scrolling Up")
-            plusImgview.isHidden = false
+//            plusImgview.isHidden = false
         }
         
         // Update the previous offset for the next scroll event

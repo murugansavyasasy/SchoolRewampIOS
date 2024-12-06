@@ -71,8 +71,8 @@ class CustomSwitch1: UIView {
         }
     }
     
-    var onText: String = "Present"
-    var offText: String = "Absent"
+    var onText: String = "Present".translated()
+    var offText: String = "Absent".translated()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -157,6 +157,6 @@ class CustomSwitch1: UIView {
         }
         
         // Update the label text
-        label.text = isOn ? onText : offText
+        label.text = isOn ? onText.translated() : offText.translated()
     }
 }
