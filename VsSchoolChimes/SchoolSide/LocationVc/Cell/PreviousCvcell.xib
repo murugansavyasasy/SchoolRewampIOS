@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PreviousCvcell" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="292" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="292" height="120"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqg-vx-ETT">
+                        <rect key="frame" x="0.0" y="0.0" width="292" height="120"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W3h-rg-GrR" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <rect key="frame" x="10" y="10" width="272" height="100"/>
+                                <color key="backgroundColor" name="ColorDaily3"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="W3h-rg-GrR" secondAttribute="bottom" constant="10" id="EAF-TJ-r9u"/>
+                            <constraint firstItem="W3h-rg-GrR" firstAttribute="leading" secondItem="wqg-vx-ETT" secondAttribute="leading" constant="10" id="Id2-km-bkm"/>
+                            <constraint firstAttribute="trailing" secondItem="W3h-rg-GrR" secondAttribute="trailing" constant="10" id="OOe-eZ-ZSg"/>
+                            <constraint firstItem="W3h-rg-GrR" firstAttribute="top" secondItem="wqg-vx-ETT" secondAttribute="top" constant="10" id="UoK-sk-pfM"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="wqg-vx-ETT" secondAttribute="trailing" id="LGT-xz-FoA"/>
+                <constraint firstAttribute="bottom" secondItem="wqg-vx-ETT" secondAttribute="bottom" id="dXX-rW-pu3"/>
+                <constraint firstItem="wqg-vx-ETT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="fTx-wU-fUY"/>
+                <constraint firstItem="wqg-vx-ETT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="jez-FD-qKj"/>
+            </constraints>
+            <size key="customSize" width="292" height="120"/>
+            <point key="canvasLocation" x="311.4503816793893" y="11.971830985915494"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="ColorDaily3">
+            <color red="1" green="0.94499999284744263" blue="0.99199998378753662" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="CalendarCollectionViewCell" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="95" height="129"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="95" height="129"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qYZ-8l-MgQ" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <rect key="frame" x="10" y="4" width="75" height="120"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NqA-Qn-2Dd">
+                                <rect key="frame" x="0.0" y="0.0" width="75" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oct" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K3Y-6t-AvS">
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="30"/>
+                                        <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="16"/>
+                                        <color key="textColor" red="0.94117647059999998" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="K3Y-6t-AvS" firstAttribute="top" secondItem="NqA-Qn-2Dd" secondAttribute="top" id="5jk-dl-EFr"/>
+                                    <constraint firstAttribute="trailing" secondItem="K3Y-6t-AvS" secondAttribute="trailing" id="I6v-gr-Vot"/>
+                                    <constraint firstAttribute="height" constant="30" id="Smf-w5-EiI"/>
+                                    <constraint firstAttribute="bottom" secondItem="K3Y-6t-AvS" secondAttribute="bottom" id="bAy-Bc-mmb"/>
+                                    <constraint firstItem="K3Y-6t-AvS" firstAttribute="leading" secondItem="NqA-Qn-2Dd" secondAttribute="leading" id="mkU-JF-msb"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="13,2024" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHd-7P-xIF">
+                                <rect key="frame" x="5" y="35" width="65" height="75"/>
+                                <fontDescription key="fontDescription" name="Futura-CondensedExtraBold" family="Futura" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axn-DV-Dhy">
+                                <rect key="frame" x="5" y="115" width="65" height="0.0"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="10"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.84313725490196079" green="0.91764705882352937" blue="0.90980392156862744" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="axn-DV-Dhy" secondAttribute="bottom" constant="5" id="Bo8-tJ-l8q"/>
+                            <constraint firstItem="xHd-7P-xIF" firstAttribute="top" secondItem="NqA-Qn-2Dd" secondAttribute="bottom" constant="5" id="D09-KX-0rq"/>
+                            <constraint firstAttribute="width" constant="75" id="I9j-0Y-h7C"/>
+                            <constraint firstItem="xHd-7P-xIF" firstAttribute="leading" secondItem="qYZ-8l-MgQ" secondAttribute="leading" constant="5" id="NV0-hN-7aR"/>
+                            <constraint firstAttribute="trailing" secondItem="NqA-Qn-2Dd" secondAttribute="trailing" id="NYf-hf-2nR"/>
+                            <constraint firstAttribute="trailing" secondItem="axn-DV-Dhy" secondAttribute="trailing" constant="5" id="RgP-r8-cwK"/>
+                            <constraint firstAttribute="trailing" secondItem="xHd-7P-xIF" secondAttribute="trailing" constant="5" id="VNj-Iu-Bei"/>
+                            <constraint firstItem="NqA-Qn-2Dd" firstAttribute="top" secondItem="qYZ-8l-MgQ" secondAttribute="top" id="Xap-Qe-ImU"/>
+                            <constraint firstItem="axn-DV-Dhy" firstAttribute="top" secondItem="xHd-7P-xIF" secondAttribute="bottom" constant="5" id="dkS-LJ-HzC"/>
+                            <constraint firstItem="NqA-Qn-2Dd" firstAttribute="leading" secondItem="qYZ-8l-MgQ" secondAttribute="leading" id="rdb-ju-S0k"/>
+                            <constraint firstItem="axn-DV-Dhy" firstAttribute="leading" secondItem="qYZ-8l-MgQ" secondAttribute="leading" constant="5" id="vFm-4W-3u5"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetY">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="qYZ-8l-MgQ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="PTZ-K1-ruG"/>
+                <constraint firstItem="qYZ-8l-MgQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="SS0-10-Wq0"/>
+                <constraint firstAttribute="trailing" secondItem="qYZ-8l-MgQ" secondAttribute="trailing" constant="10" id="iWk-Rj-ORq"/>
+                <constraint firstAttribute="bottom" secondItem="qYZ-8l-MgQ" secondAttribute="bottom" constant="5" id="nm9-3u-KnP"/>
+            </constraints>
+            <size key="customSize" width="95" height="129"/>
+            <connections>
+                <outlet property="caleView" destination="qYZ-8l-MgQ" id="ide-dQ-KBy"/>
+                <outlet property="dateLbl" destination="xHd-7P-xIF" id="efV-PK-lQH"/>
+                <outlet property="dayLbl" destination="xHd-7P-xIF" id="jFu-if-dp5"/>
+                <outlet property="monthLbl" destination="K3Y-6t-AvS" id="17q-KX-Jlp"/>
+                <outlet property="slotCountLbl" destination="axn-DV-Dhy" id="DnZ-Gs-kim"/>
+            </connections>
+            <point key="canvasLocation" x="293.89312977099235" y="19.366197183098592"/>
+        </collectionViewCell>
+    </objects>
+</document>

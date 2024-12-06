@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="SectionCollectionViewCell" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="167" height="63"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="167" height="63"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HvK-eB-rai" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <rect key="frame" x="5" y="5" width="157" height="53"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VII - A" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7a-Pp-VOo">
+                                <rect key="frame" x="5" y="5" width="147" height="43"/>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1f1-GK-ILM" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <rect key="frame" x="132" y="0.0" width="25" height="25"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SMI-Ai-NFb">
+                                        <rect key="frame" x="2" y="0.0" width="23" height="25"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="6NR-XA-DoM"/>
+                                    <constraint firstItem="SMI-Ai-NFb" firstAttribute="leading" secondItem="1f1-GK-ILM" secondAttribute="leading" constant="2" id="9wc-hi-TnX"/>
+                                    <constraint firstItem="SMI-Ai-NFb" firstAttribute="top" secondItem="1f1-GK-ILM" secondAttribute="top" id="AX8-WO-xlh"/>
+                                    <constraint firstAttribute="trailing" secondItem="SMI-Ai-NFb" secondAttribute="trailing" id="DBM-zt-g2I"/>
+                                    <constraint firstAttribute="bottom" secondItem="SMI-Ai-NFb" secondAttribute="bottom" id="TEf-6v-ryK"/>
+                                    <constraint firstAttribute="width" constant="25" id="f9j-1Q-ksb"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.95294117647058818" blue="0.85490196078431369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="1f1-GK-ILM" firstAttribute="top" secondItem="HvK-eB-rai" secondAttribute="top" id="9qy-Vf-SZ1"/>
+                            <constraint firstAttribute="trailing" secondItem="l7a-Pp-VOo" secondAttribute="trailing" constant="5" id="Cgp-rT-eJk"/>
+                            <constraint firstItem="l7a-Pp-VOo" firstAttribute="top" secondItem="HvK-eB-rai" secondAttribute="top" constant="5" id="PGR-P4-xyt"/>
+                            <constraint firstAttribute="trailing" secondItem="1f1-GK-ILM" secondAttribute="trailing" id="Qcu-ug-7MH"/>
+                            <constraint firstItem="l7a-Pp-VOo" firstAttribute="leading" secondItem="HvK-eB-rai" secondAttribute="leading" constant="5" id="RBf-kp-m7v"/>
+                            <constraint firstAttribute="bottom" secondItem="l7a-Pp-VOo" secondAttribute="bottom" constant="5" id="nTV-rv-Jeh"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetY">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="HvK-eB-rai" secondAttribute="bottom" constant="5" id="2n6-gP-M1M"/>
+                <constraint firstAttribute="trailing" secondItem="HvK-eB-rai" secondAttribute="trailing" constant="5" id="cpE-Be-8L4"/>
+                <constraint firstItem="HvK-eB-rai" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="jWw-M3-wBh"/>
+                <constraint firstItem="HvK-eB-rai" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="o8U-e1-Pc6"/>
+            </constraints>
+            <size key="customSize" width="167" height="63"/>
+            <connections>
+                <outlet property="absentcountLbl" destination="SMI-Ai-NFb" id="7u2-84-uBp"/>
+                <outlet property="sectionClick" destination="HvK-eB-rai" id="wVB-SV-9aw"/>
+                <outlet property="sectionNameLbl" destination="l7a-Pp-VOo" id="Ca9-UY-8oK"/>
+            </connections>
+            <point key="canvasLocation" x="219.08396946564883" y="-13.732394366197184"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="219" id="KGk-i7-Jjw" customClass="TakeReadingSkillTableViewCell" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="542" height="219"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="542" height="219"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNX-rF-e0K">
+                        <rect key="frame" x="0.0" y="0.0" width="542" height="219"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Idt-rh-Can" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <rect key="frame" x="10" y="10" width="522" height="199"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="szu-IE-aOz">
+                                <rect key="frame" x="10" y="10" width="502" height="65"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Attachment " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9UO-cZ-pH1">
+                                        <rect key="frame" x="0.0" y="0.0" width="241" height="65"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" systemColor="systemIndigoColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0M-4B-APK">
+                                        <rect key="frame" x="261" y="0.0" width="241" height="65"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="uZF-JL-zbR">
+                                <rect key="frame" x="10" y="80" width="502" height="24"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Type" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Mb-UE-Bgg">
+                                        <rect key="frame" x="0.0" y="0.0" width="241" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" systemColor="systemIndigoColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgC-fT-Sru">
+                                        <rect key="frame" x="261" y="0.0" width="241" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvn-Na-bkd" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <rect key="frame" x="191" y="139" width="140" height="40"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View Attachment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="76J-Ma-Jvg">
+                                        <rect key="frame" x="5.3333333333333428" y="10" width="129.66666666666666" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="serach_color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="85m-Je-oEc"/>
+                                    <constraint firstItem="76J-Ma-Jvg" firstAttribute="centerX" secondItem="xvn-Na-bkd" secondAttribute="centerX" id="AT3-Xn-ieq"/>
+                                    <constraint firstItem="76J-Ma-Jvg" firstAttribute="centerY" secondItem="xvn-Na-bkd" secondAttribute="centerY" id="Dvh-Tt-lvV"/>
+                                    <constraint firstAttribute="height" constant="40" id="ELC-Mb-KN1"/>
+                                    <constraint firstItem="76J-Ma-Jvg" firstAttribute="top" secondItem="xvn-Na-bkd" secondAttribute="top" constant="10" id="lGZ-Sk-6fF"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="szu-IE-aOz" firstAttribute="leading" secondItem="Idt-rh-Can" secondAttribute="leading" constant="10" id="39P-6w-VaJ"/>
+                            <constraint firstItem="uZF-JL-zbR" firstAttribute="top" secondItem="szu-IE-aOz" secondAttribute="bottom" constant="20" id="5q7-7j-NPs"/>
+                            <constraint firstItem="uZF-JL-zbR" firstAttribute="leading" secondItem="Idt-rh-Can" secondAttribute="leading" constant="10" id="DEL-6v-JAR"/>
+                            <constraint firstAttribute="trailing" secondItem="uZF-JL-zbR" secondAttribute="trailing" constant="10" id="GSX-Vk-AIM"/>
+                            <constraint firstItem="xvn-Na-bkd" firstAttribute="centerX" secondItem="Idt-rh-Can" secondAttribute="centerX" id="J43-4h-Z1y"/>
+                            <constraint firstAttribute="bottom" secondItem="xvn-Na-bkd" secondAttribute="bottom" constant="20" id="MNc-Pp-kyo"/>
+                            <constraint firstAttribute="trailing" secondItem="szu-IE-aOz" secondAttribute="trailing" constant="10" id="Ok1-TT-GwZ"/>
+                            <constraint firstItem="xvn-Na-bkd" firstAttribute="top" secondItem="uZF-JL-zbR" secondAttribute="bottom" constant="20" id="Yux-oo-ZC6"/>
+                            <constraint firstItem="uZF-JL-zbR" firstAttribute="top" secondItem="szu-IE-aOz" secondAttribute="bottom" constant="20" id="Yv6-9X-lmh"/>
+                            <constraint firstItem="szu-IE-aOz" firstAttribute="top" secondItem="Idt-rh-Can" secondAttribute="top" constant="10" id="i5Q-jF-ysd"/>
+                            <constraint firstItem="szu-IE-aOz" firstAttribute="centerX" secondItem="xvn-Na-bkd" secondAttribute="centerX" id="rtj-cg-2li"/>
+                            <constraint firstItem="uZF-JL-zbR" firstAttribute="centerX" secondItem="xvn-Na-bkd" secondAttribute="centerX" id="wfh-mw-xtI"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" systemColor="systemGray5Color"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="tNX-rF-e0K" secondAttribute="trailing" id="1HL-bv-G44"/>
+                    <constraint firstAttribute="bottom" secondItem="tNX-rF-e0K" secondAttribute="bottom" id="3eL-Wd-Vh5"/>
+                    <constraint firstItem="Idt-rh-Can" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="8Ra-dX-Mc0"/>
+                    <constraint firstItem="Idt-rh-Can" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Pru-Jv-PmI"/>
+                    <constraint firstAttribute="bottom" secondItem="Idt-rh-Can" secondAttribute="bottom" constant="10" id="bNI-az-Oix"/>
+                    <constraint firstItem="tNX-rF-e0K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="e8x-Wk-8TF"/>
+                    <constraint firstAttribute="trailing" secondItem="Idt-rh-Can" secondAttribute="trailing" constant="10" id="ina-mt-L44"/>
+                    <constraint firstItem="tNX-rF-e0K" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="x5c-bp-j2z"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="attachmentLbl" destination="z0M-4B-APK" id="n0n-pX-EF4"/>
+                <outlet property="typeLbl" destination="sgC-fT-Sru" id="oht-aJ-FFv"/>
+                <outlet property="viewAttac" destination="xvn-Na-bkd" id="0hl-IU-ATX"/>
+            </connections>
+            <point key="canvasLocation" x="308.39694656488547" y="-15.140845070422536"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="serach_color">
+            <color red="0.0" green="0.37599998712539673" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
