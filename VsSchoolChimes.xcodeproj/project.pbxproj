@@ -97,6 +97,12 @@
 		84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */; };
 		84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */; };
 		84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE32CE866E30010DA24 /* NoticeBoardVc.xib */; };
+		846D83E62D02D91000B69344 /* Tvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83E12D02D91000B69344 /* Tvcell.xib */; };
+		846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */; };
+		846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83DE2D02D91000B69344 /* SideTvcell.xib */; };
+		846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83DD2D02D91000B69344 /* SideTvcell.swift */; };
+		846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E02D02D91000B69344 /* Tvcell.swift */; };
+		846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */; };
 		84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C622CEDE02400E7D367 /* SDWebImage */; };
 		84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C642CEDE02400E7D367 /* SDWebImageMapKit */; };
 		847AB6E52CF09A6300952AC1 /* SenderEventsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6E32CF09A6300952AC1 /* SenderEventsVC.xib */; };
@@ -201,12 +207,6 @@
 		84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFCE2C1B06D500E32496 /* CountryListViewModel.swift */; };
 		84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD02C1B079A00E32496 /* MobileNumberViewModel.swift */; };
 		84A5BFD32C1B084800E32496 /* OtpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD22C1B084800E32496 /* OtpViewModel.swift */; };
-		84B050AB2CF842E4002B63D4 /* SideTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B050A22CF842E4002B63D4 /* SideTvcell.swift */; };
-		84B050AC2CF842E4002B63D4 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B050A82CF842E4002B63D4 /* ExamTmTblVCViewController.swift */; };
-		84B050AD2CF842E4002B63D4 /* Tvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B050A52CF842E4002B63D4 /* Tvcell.swift */; };
-		84B050AE2CF842E4002B63D4 /* SideTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B050A32CF842E4002B63D4 /* SideTvcell.xib */; };
-		84B050AF2CF842E4002B63D4 /* Tvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B050A62CF842E4002B63D4 /* Tvcell.xib */; };
-		84B050B02CF842E4002B63D4 /* ExamTmTblVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B050A92CF842E4002B63D4 /* ExamTmTblVCViewController.xib */; };
 		84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */; };
 		84B2E0622CEB412900561E4F /* SenderNoticeBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */; };
 		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
@@ -397,6 +397,12 @@
 		84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardTvcellTableViewCell.xib; sourceTree = "<group>"; };
 		84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardVc.swift; sourceTree = "<group>"; };
 		84666AE32CE866E30010DA24 /* NoticeBoardVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardVc.xib; sourceTree = "<group>"; };
+		846D83DD2D02D91000B69344 /* SideTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideTvcell.swift; sourceTree = "<group>"; };
+		846D83DE2D02D91000B69344 /* SideTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideTvcell.xib; sourceTree = "<group>"; };
+		846D83E02D02D91000B69344 /* Tvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tvcell.swift; sourceTree = "<group>"; };
+		846D83E12D02D91000B69344 /* Tvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tvcell.xib; sourceTree = "<group>"; };
+		846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
+		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
 		847AB6E22CF09A6300952AC1 /* SenderEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderEventsVC.swift; sourceTree = "<group>"; };
 		847AB6E32CF09A6300952AC1 /* SenderEventsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderEventsVC.xib; sourceTree = "<group>"; };
 		847AB6E72CF09A6800952AC1 /* RecipientTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientTvCell.swift; sourceTree = "<group>"; };
@@ -503,12 +509,6 @@
 		84A5BFCE2C1B06D500E32496 /* CountryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListViewModel.swift; sourceTree = "<group>"; };
 		84A5BFD02C1B079A00E32496 /* MobileNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberViewModel.swift; sourceTree = "<group>"; };
 		84A5BFD22C1B084800E32496 /* OtpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpViewModel.swift; sourceTree = "<group>"; };
-		84B050A22CF842E4002B63D4 /* SideTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideTvcell.swift; sourceTree = "<group>"; };
-		84B050A32CF842E4002B63D4 /* SideTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideTvcell.xib; sourceTree = "<group>"; };
-		84B050A52CF842E4002B63D4 /* Tvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tvcell.swift; sourceTree = "<group>"; };
-		84B050A62CF842E4002B63D4 /* Tvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tvcell.xib; sourceTree = "<group>"; };
-		84B050A82CF842E4002B63D4 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
-		84B050A92CF842E4002B63D4 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
 		84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardVC.swift; sourceTree = "<group>"; };
 		84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderNoticeBoardVC.xib; sourceTree = "<group>"; };
 		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
@@ -886,6 +886,35 @@
 			path = NoticeBoardVC;
 			sourceTree = "<group>";
 		};
+		846D83DF2D02D91000B69344 /* SideTvCell */ = {
+			isa = PBXGroup;
+			children = (
+				846D83DD2D02D91000B69344 /* SideTvcell.swift */,
+				846D83DE2D02D91000B69344 /* SideTvcell.xib */,
+			);
+			path = SideTvCell;
+			sourceTree = "<group>";
+		};
+		846D83E22D02D91000B69344 /* TvCell */ = {
+			isa = PBXGroup;
+			children = (
+				846D83E02D02D91000B69344 /* Tvcell.swift */,
+				846D83E12D02D91000B69344 /* Tvcell.xib */,
+			);
+			path = TvCell;
+			sourceTree = "<group>";
+		};
+		846D83E52D02D91000B69344 /* ExamTimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				846D83DF2D02D91000B69344 /* SideTvCell */,
+				846D83E22D02D91000B69344 /* TvCell */,
+				846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */,
+				846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */,
+			);
+			path = ExamTimeTable;
+			sourceTree = "<group>";
+		};
 		847AB6E12CF09A3000952AC1 /* SheduleExam */ = {
 			isa = PBXGroup;
 			children = (
@@ -1096,8 +1125,8 @@
 		84A2717B2CEDAB9F0033EB02 /* ParentVC's */ = {
 			isa = PBXGroup;
 			children = (
+				846D83E52D02D91000B69344 /* ExamTimeTable */,
 				84A2717A2CEDAB9F0033EB02 /* Image_PdfVC */,
-				84B050AA2CF842E4002B63D4 /* ExamTimeTable */,
 			);
 			path = "ParentVC's";
 			sourceTree = "<group>";
@@ -1646,35 +1675,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		84B050A42CF842E4002B63D4 /* SideTvCell */ = {
-			isa = PBXGroup;
-			children = (
-				84B050A22CF842E4002B63D4 /* SideTvcell.swift */,
-				84B050A32CF842E4002B63D4 /* SideTvcell.xib */,
-			);
-			path = SideTvCell;
-			sourceTree = "<group>";
-		};
-		84B050A72CF842E4002B63D4 /* TvCell */ = {
-			isa = PBXGroup;
-			children = (
-				84B050A52CF842E4002B63D4 /* Tvcell.swift */,
-				84B050A62CF842E4002B63D4 /* Tvcell.xib */,
-			);
-			path = TvCell;
-			sourceTree = "<group>";
-		};
-		84B050AA2CF842E4002B63D4 /* ExamTimeTable */ = {
-			isa = PBXGroup;
-			children = (
-				84B050A42CF842E4002B63D4 /* SideTvCell */,
-				84B050A72CF842E4002B63D4 /* TvCell */,
-				84B050A82CF842E4002B63D4 /* ExamTmTblVCViewController.swift */,
-				84B050A92CF842E4002B63D4 /* ExamTmTblVCViewController.xib */,
-			);
-			path = ExamTimeTable;
-			sourceTree = "<group>";
-		};
 		84C00E6A2CF6D79000E34A83 /* TermsandCondVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -2043,10 +2043,7 @@
 				847AB6E52CF09A6300952AC1 /* SenderEventsVC.xib in Resources */,
 				8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */,
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
-				84B050AE2CF842E4002B63D4 /* SideTvcell.xib in Resources */,
-				84B050AF2CF842E4002B63D4 /* Tvcell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
-				84B050B02CF842E4002B63D4 /* ExamTmTblVCViewController.xib in Resources */,
 				844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
@@ -2139,6 +2136,9 @@
 				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
 				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
+				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
+				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
+				846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
@@ -2315,9 +2315,6 @@
 				84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */,
 				84EFFA392CCCB44300C11C26 /* ContactUsVc.swift in Sources */,
 				847AB6F22CF09A6800952AC1 /* RecipientTvCell.swift in Sources */,
-				84B050AB2CF842E4002B63D4 /* SideTvcell.swift in Sources */,
-				84B050AC2CF842E4002B63D4 /* ExamTmTblVCViewController.swift in Sources */,
-				84B050AD2CF842E4002B63D4 /* Tvcell.swift in Sources */,
 				847AB6F32CF09A6800952AC1 /* Std_Grp_header.swift in Sources */,
 				847AB6F42CF09A6800952AC1 /* SelectRecipientVC.swift in Sources */,
 				84A5BEAF2C1982BA00E32496 /* CustomFonts.swift in Sources */,
@@ -2368,6 +2365,9 @@
 				848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */,
 				849970BE2CF8750B00800B07 /* AssigmentViewVC.swift in Sources */,
 				84A5BEAD2C19824E00E32496 /* LocalizableStrings.swift in Sources */,
+				846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */,
+				846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */,
+				846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */,
 				84A5BE8A2C197B9F00E32496 /* Preferences.swift in Sources */,
 				84C00E722CF6DF9600E34A83 /* splashVc.swift in Sources */,
 				84A5BE462C19719700E32496 /* ViewController.swift in Sources */,

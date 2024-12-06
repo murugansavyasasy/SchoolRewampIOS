@@ -424,7 +424,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                 }else if items[indexPath.row] == "Assignment".translated(){
                     
-                    let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
+//                    let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
+                    let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }else if items[indexPath.row].translated() == "Circulars".translated(){
@@ -437,7 +438,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     present(vc, animated: true)
                     
                 }else if items[indexPath.row] == "Online Meeting".translated(){
-                    let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
+//                    let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
+                    let vc = OnlineMeetingVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }else if items[indexPath.row] == "Homework".translated(){

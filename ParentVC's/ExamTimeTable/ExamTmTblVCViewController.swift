@@ -13,8 +13,11 @@ class ExamTmTblVCViewController: UIViewController {
     
     @IBOutlet weak var tv: UITableView!
     
-    var SideItemArry = [""]
+    var SideItemArry = ["QuatalyExamQuatalyExam","SSlC ExamQuatalyExam","Hsc ExamQuatalyExam","HalfYearExamQuatalyExam"]
     var  TvSide = [""]
+    var isCellSelected = false
+    var selectedIdex : Int!
+    var  count = 1
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,9 +51,9 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
         if tableView == sideTv{
             
             
-            return 10
+            return SideItemArry.count
         }else{
-            return 10
+            return count
             
         }
     }
@@ -61,6 +64,26 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
             
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SideTvcell, for: indexPath) as! SideTvcell
             
+            if selectedIdex == indexPath.row{
+                
+                cell.layer.cornerRadius = 10
+                                 cell.clipsToBounds = true
+                cell.backgroundColor = UIColor(named: "topBackgroundCLr 1")
+                
+                count = indexPath.row+1
+                tv.reloadData()
+                
+            }else{
+                
+                
+                cell.backgroundColor = .white // Default background color
+                       cell.layer.cornerRadius = 0  // Reset corner radius for reuse
+                       cell.clipsToBounds = true    // Ensures corner radius is applied
+            }
+           
+            
+            
+            cell.ExameLbl.text = SideItemArry[indexPath.row]
             return cell
         }else{
            
@@ -74,6 +97,28 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if tableView == sideTv{
+            
+//            if isCellSelected { return }
+//              isCellSelected = true
+//
+//              if let cell = tableView.cellForRow(at: indexPath) {
+//                  // Example: Change cell appearance
+//                  cell.layer.cornerRadius = 10
+//                  cell.clipsToBounds = true
+//                  cell.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+//              }
+//
+//              // Simulate a delay for the action and reset the flag
+//              DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+//                  self.isCellSelected = false
+//                  tableView.deselectRow(at: indexPath, animated: true)
+//              }
+            
+            
+            selectedIdex = indexPath.row
+            
+            sideTv.reloadData()
+            
             
         }
         

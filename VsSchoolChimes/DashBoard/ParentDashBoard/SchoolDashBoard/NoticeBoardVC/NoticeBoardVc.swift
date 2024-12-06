@@ -163,12 +163,12 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     
     func didTapButton(title: String, content: String, items: [String]) {
         
-        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        vc.desc = content
-        vc.title1 = title
-        vc.items = items
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+//        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+//        vc.desc = content
+//        vc.title1 = title
+//        vc.items = items
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
     //scrol
 }

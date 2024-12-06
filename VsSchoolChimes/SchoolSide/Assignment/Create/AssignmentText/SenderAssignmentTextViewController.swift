@@ -11,8 +11,15 @@ import AWSCore
 import AWSS3
 
 @available(iOS 14.0, *)
-class SenderAssignmentTextViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate {
+class SenderAssignmentTextViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge {
+    func deleteImage(index: Int) {
+        selectedImages.remove(at: index)
+        selectImgPdfview.imageCollectionview.reloadData()
+    }
+    
 
+    @IBOutlet weak var AssignmenttypeLbl: UILabel!
+    @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var fullTextView: UIView!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var backView: UIView!
@@ -27,6 +34,10 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     @IBOutlet weak var subDateLbl: UILabel!
     @IBOutlet weak var contentTextView: UITextView!
     
+    @IBOutlet weak var selectImgPdfview: ImageSelection!
+    
+    @IBOutlet weak var AssignmentTypeview: UIView!
+    
     var selectedShow = ""
     var selectedImages: [UIImage] = []
     var getType = "Principal"
@@ -40,6 +51,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     var convertedImagesUrlArray = NSMutableArray()
     let photoPickManager = PhotoPickerManager.shared
     let dropDown = DropDown()
+    let TypeDropDown = DropDown()
     
     var pdfData: Data?
     override func viewDidLoad() {
@@ -59,17 +71,29 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             collectionView.isHidden = true
         }
         
-        collectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
+        selectImgPdfview.layer.cornerRadius = 10
+        contentTextView.layer.cornerRadius = 10
+        contentTextView.layer.borderWidth = 1
+        contentTextView.layer.borderColor = UIColor.black.cgColor
         
-        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = Date()
+        
+//        collectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
+        
+//        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
+//        datePicker.datePickerMode = .date
+//        datePicker.minimumDate = Date()
  
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        backView.addGestureRecognizer(backGesture)
-        
+//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
+//        backView.addGestureRecognizer(backGesture)
+//        
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
+        
+        let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
+        AssignmentTypeview.addGestureRecognizer(typeGesture)
+        
+        selectImgPdfview.imageCollectionview.delegate = self
+        selectImgPdfview.imageCollectionview.dataSource = self
         
 //        MARK: Gallery Image
         photoPickManager.onImagePicked = { [weak self] images in
@@ -78,10 +102,12 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             selectedImages.append(contentsOf: images)
             for image in images {
                 print("Selected image: \(image)")
-                collectionView.isHidden = false
-                collectionView.delegate = self
-                collectionView.dataSource = self
-                photoPickManager.uploadAWS(image: image)
+//                collectionView.isHidden = false
+//                collectionView.delegate = self
+//                collectionView.dataSource = self
+//                photoPickManager.uploadAWS(image: image)
+                
+                selectImgPdfview.imageCollectionview.reloadData()
             }
         }
         
@@ -98,6 +124,8 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
                 photoPickManager.uploadAWS(image: images)
 //            }
         }
+        
+        
         
 //        MARK: PDF
         photoPickManager.onPdfPicked = { [weak self] pdf in
@@ -135,6 +163,20 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
                // Update the label inside the UIView
             if let label = self?.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self!.categoryDropDownLbl.text = item
+               }
+           }
+    }
+    
+    @IBAction  func typeDropdown (){
+        TypeDropDown.dataSource = ["Text", "Image", "Pdf"]
+        TypeDropDown.bottomOffset = CGPoint(x: 0, y:(AssignmentTypeview.bounds.height))
+        TypeDropDown.direction = .bottom
+        TypeDropDown.show()
+        TypeDropDown.selectionAction = { [weak self] (index: Int, item: String) in
+               print("Selected item: \(item) at index: \(index)")
+               // Update the label inside the UIView
+            if let label = self?.TypeDropDown.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                self!.AssignmenttypeLbl.text = item
                }
            }
     }
@@ -228,38 +270,118 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
 
 
 @available(iOS 14.0, *)
-extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollectionViewDataSource{
+extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
        // MARK: - UICollectionView DataSource
-       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-           return selectedImages.count
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-           cell.imageViews.image = selectedImages[indexPath.item]
-           return cell
-       }
-       
-       // MARK: - UICollectionView Delegate
-       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-           // Delete the selected image
-           selectedImages.remove(at: indexPath.item)
-           collectionView.deleteItems(at: [indexPath])
-       }
-       
+//       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//           return selectedImages.count
+//       }
+//       
+//       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+//           cell.imageViews.image = selectedImages[indexPath.item]
+//           return cell
+//       }
+//       
+//       // MARK: - UICollectionView Delegate
+//       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//           // Delete the selected image
+//           selectedImages.remove(at: indexPath.item)
+//           collectionView.deleteItems(at: [indexPath])
+//       }
+//       
+//    
+//}
+//
+//@available(iOS 14.0, *)
+//extension SenderAssignmentTextViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
+//        return CGSize(width: width, height: width)
+//    }
+//    
+//    
+//    
+//
     
-}
-
-@available(iOS 14.0, *)
-extension SenderAssignmentTextViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-        return CGSize(width: width, height: width)
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1 + selectedImages.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.item == 0{
+            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
+            cell.layer.cornerRadius = 20
+            return cell
+        }else{
+            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
+            cell.delegate = self
+            cell.deleteBtn.tag = indexPath.item - 1
+            if selectedImages.count > indexPath.item - 1 {
+                // Assign the image starting from the second image in the selectedImages array
+                cell.imageViews.image = selectedImages[indexPath.item - 1]
+            } else {
+                cell.imageViews.image = nil
+            }
+            if selectedImages.count <= 2{
+                collectionViewHeght.constant = 120
+            }else{
+                collectionViewHeght.constant = 220
+            }
+            return cell
+        }
+    }
     
-    
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let width = (selectImgPdfview.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
+        
+        return CGSize(width: width, height: 100)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0{
+            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+            //
+            // Camera option
+            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+            }
+            alertController.addAction(cameraAction)
+            
+            // Gallery option
+            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+                //
+                selectImages()
+                //
+            }
+            alertController.addAction(galleryAction)
+            
+            //             PDF option
+            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+                
+                //selectPDF()
+            }
+            alertController.addAction(pdfAction)
+            
+            // Cancel action
+            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            // Present the alert
+            self.present(alertController, animated: true, completion: nil)
+        }else{
+            if selectedImages.count > indexPath.item - 1 {
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                
+                // Safe unwrapping of imgView before assigning
+                vc.img = selectedImages[indexPath.item - 1]
+                //
+                present(vc, animated: true)
+            }
+        }
+    }
+
 }
-    
