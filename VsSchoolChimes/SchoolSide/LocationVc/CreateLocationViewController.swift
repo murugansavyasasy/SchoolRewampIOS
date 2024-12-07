@@ -8,7 +8,7 @@
 
 import UIKit
 import DropDown
-import ObjectMapper
+//import ObjectMapper
 class CreateLocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var backView: UIView!
@@ -175,7 +175,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
             
             refreshAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [self] (action: UIAlertAction!) in
                 
-                AddLocation()
+//                AddLocation()
                 
             }))
             
@@ -250,61 +250,61 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate {
 
     
     
-    func AddLocation(){
-        
-                    let addLocationModal = AddloactionModal()
-        
-        addLocationModal.instituteId = InstitudeId
-        addLocationModal.latitude = latitude
-        addLocationModal.longitude = longitude
-        addLocationModal.location = loactiontextfiled.text!
-        addLocationModal.userId = userId
-        
-        addLocationModal.distance = Int(distanceTextfiled.text!)
-        
-                    var  addLocationModalStr = addLocationModal.toJSONString()
-                    print("punchModalStr",addLocationModal.toJSON())
-        
-        
-        LocationRequest.call_request(param: addLocationModalStr!) {
-        
-                        [self] (res) in
-        
-                        let addLocationResp : punchResponce = Mapper<punchResponce>().map(JSONString: res)!
-        
-                        if addLocationResp.status == 1 {
-        
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                              dismiss(animated: true)
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }else{
-        
-                            
-                            
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                              dismiss(animated: true)
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }
-        
-        
-        
-                    }
-        
-        
-    }
+//    func AddLocation(){
+//        
+//                    let addLocationModal = AddloactionModal()
+//        
+//        addLocationModal.instituteId = InstitudeId
+//        addLocationModal.latitude = latitude
+//        addLocationModal.longitude = longitude
+//        addLocationModal.location = loactiontextfiled.text!
+//        addLocationModal.userId = userId
+//        
+//        addLocationModal.distance = Int(distanceTextfiled.text!)
+//        
+//                    var  addLocationModalStr = addLocationModal.toJSONString()
+//                    print("punchModalStr",addLocationModal.toJSON())
+//        
+//        
+//        LocationRequest.call_request(param: addLocationModalStr!) {
+//        
+//                        [self] (res) in
+//        
+//                        let addLocationResp : punchResponce = Mapper<punchResponce>().map(JSONString: res)!
+//        
+//                        if addLocationResp.status == 1 {
+//        
+//                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+//        
+//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//        
+//                              dismiss(animated: true)
+//                                
+//                                
+//                            }))
+//                        present(refreshAlert, animated: true, completion: nil)
+//                        }else{
+//        
+//                            
+//                            
+//                            
+//                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+//        
+//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//        
+//                              dismiss(animated: true)
+//                                
+//                                
+//                            }))
+//                        present(refreshAlert, animated: true, completion: nil)
+//                        }
+//        
+//        
+//        
+//                    }
+//        
+//        
+//    }
    
   
 }

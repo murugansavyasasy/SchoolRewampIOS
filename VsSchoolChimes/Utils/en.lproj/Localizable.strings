@@ -64,6 +64,17 @@
 "Staff Wise Attendance Report" = "Staff Wise Attendance Report";
 
 
+
+"Events/Holidays" = "Events/Holidays";
+"Request Leave" = "Request Leave";
+"Fee Details" = "Fee Details";
+"Images" = "Images";
+"Interaction with Staff" = "Interaction with Staff";
+"Quiz Exam" = "Quiz Exam";
+"LSRW" = "LSRW";
+"Class Timetable" = "Class Timetable";
+"Certificate Request" = "Certificate Request";
+
 // MARK: profile page
 "Family Details" = "Family Details";
 "Fathername" = "Fathername";

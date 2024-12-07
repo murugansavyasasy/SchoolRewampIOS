@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ObjectMapper
+//import ObjectMapper
 import DropDown
 import Alamofire
 struct Item {
@@ -89,8 +89,8 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     var selectedIndexPath: IndexPath?
 
     var clickIdType  = 0
-    var getTeacherData : [GetTeacherwiseSlotAvailabilityData] = []
-    var slotHistoryForParentData : [SlotHistoryForParentResponseData] = []
+//    var getTeacherData : [GetTeacherwiseSlotAvailabilityData] = []
+//    var slotHistoryForParentData : [SlotHistoryForParentResponseData] = []
     var items: [Item] = [
            Item(title: "Item 1", isExpanded: false),
            Item(title: "Item 2", isExpanded: false),
@@ -113,8 +113,8 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     var getSubjectIdArr =  [Int]()
 var getLoginClassId : Int!
     var getEventDate : String!
-    var dropDownData : [SubjectListForStudentData] = []
-    var studSlotData : [SlotAvailabilityForStudentsData] = []
+//    var dropDownData : [SubjectListForStudentData] = []
+//    var studSlotData : [SlotAvailabilityForStudentsData] = []
     var eventDateArr = [String]()
     var eventCountArr = [String]()
     var duplicateStaffTimes: [Int: [(from_time: String, to_time: String)]] = [:]
@@ -132,16 +132,16 @@ var getLoginClassId : Int!
         tvLeading.constant = 0
         tvTralling.constant = 0
         tv.isHidden=true
-        DefaultsKeys.timesarr.removeAll()
-        let userDefaults = UserDefaults.standard
-        sectionId = userDefaults.integer(forKey: DefaultsKeys.SectionId)
-        instituteId = userDefaults.integer(forKey: DefaultsKeys.SchoolD)
-        staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
-        getLoginClassId = userDefaults.integer(forKey: DefaultsKeys.ClassID)
-        var strChild = userDefaults.string(forKey: DefaultsKeys.chilId)
+//        DefaultsKeys.timesarr.removeAll()
+//        let userDefaults = UserDefaults.standard
+//        sectionId = userDefaults.integer(forKey: DefaultsKeys.SectionId)
+//        instituteId = userDefaults.integer(forKey: DefaultsKeys.SchoolD)
+//        staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
+//        getLoginClassId = userDefaults.integer(forKey: DefaultsKeys.ClassID)
+//        var strChild = userDefaults.string(forKey: DefaultsKeys.chilId)
 
       
-        studentId = Int(strChild!)
+//        studentId = Int(strChild!)
        
 
         cv.register(UINib(nibName: "PTMCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PTMCollectionViewCell")
@@ -182,7 +182,7 @@ var getLoginClassId : Int!
 
 print("studentId",studentId)
      
-        slotAvailability(studId: studentId, instId: instituteId)
+//        slotAvailability(studId: studentId, instId: instituteId)
 
 
         cv.register(UINib(nibName: rowNib, bundle: nil), forCellWithReuseIdentifier: rowNib)
@@ -191,7 +191,7 @@ print("studentId",studentId)
         cv.delegate = self
         generateDates()
        
-        subjectListForStudent(studId: studentId, instId: instituteId)
+//        subjectListForStudent(studId: studentId, instId: instituteId)
         
         var todaysDate = NSDate()
                 var dateFormatter = DateFormatter()
@@ -204,7 +204,7 @@ print("studentId",studentId)
 
 
         
-        teacherWiseSlotAvailable(eventDate: getEventDate)
+//        teacherWiseSlotAvailable(eventDate: getEventDate)
 
         tv.register(UINib(nibName: "TimeHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "TimeHeader")
 
@@ -234,17 +234,17 @@ print("studentId",studentId)
         var sub_names : [String] = []
 
 
-        dropDownData.forEach { (field) in
-            sub_names.append(field.subjectName)
-            getSubjectIdArr.append(field.subjectId)
-        }
+//        dropDownData.forEach { (field) in
+//            sub_names.append(field.subjectName)
+//            getSubjectIdArr.append(field.subjectId)
+//        }
 
         drop_down.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             dropDownLbl.text = item
             getSubjectId = getSubjectIdArr[index]
             print(" gest.fieldLbl.text", dropDownLbl.text)
-            teacherWiseSlotAvailable(eventDate: getEventDate)
+//            teacherWiseSlotAvailable(eventDate: getEventDate)
 
             if index < 1 {
                 classId = 0
@@ -261,7 +261,7 @@ print("studentId",studentId)
     }
     @IBAction func backVc(){
         
-        DefaultsKeys.bookingSlotId.removeAll()
+//        DefaultsKeys.bookingSlotId.removeAll()
         dismiss(animated: true)
 
 
@@ -303,25 +303,25 @@ print("studentId",studentId)
             
             var boools = true
             
-            for i in studSlotData{
-                
-                let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format
-                    let dateString = dateFormatter.string(from: date)
-              
-                if i.eventDate == dateString{
-                    boools = false
-                    print("dateString",dateString)
-                    cell.slotCountLbl.isHidden = boools
-                    
-                    cell.slotCountLbl.text = "Available slots " + i.count
-                    
-                }else{
-                    
-                    cell.slotCountLbl.isHidden = boools
-                }
-                
-            }
+//            for i in studSlotData{
+//                
+//                let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format
+//                    let dateString = dateFormatter.string(from: date)
+//              
+//                if i.eventDate == dateString{
+//                    boools = false
+//                    print("dateString",dateString)
+//                    cell.slotCountLbl.isHidden = boools
+//                    
+//                    cell.slotCountLbl.text = "Available slots " + i.count
+//                    
+//                }else{
+//                    
+//                    cell.slotCountLbl.isHidden = boools
+//                }
+//                
+//            }
             
             
             
@@ -362,10 +362,10 @@ print("studentId",studentId)
 
         let selectedDate = dates[indexPath.item]
         
-        let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format
-            let dateString = dateFormatter.string(from: selectedDate)
-        teacherWiseSlotAvailable(eventDate : dateString)
+//        let dateFormatter = DateFormatter()
+//            dateFormatter.dateFormat = "dd/MM/yyyy" // Set your desired format
+//            let dateString = dateFormatter.string(from: selectedDate)
+//        teacherWiseSlotAvailable(eventDate : dateString)
 
         cv.dataSource = self
         cv.delegate = self
@@ -400,7 +400,7 @@ print("studentId",studentId)
         calendarView.isHidden = false
         subviewHeight.constant = 40
         tvTop.constant = 20
-        teacherWiseSlotAvailable(eventDate: getEventDate)
+//        teacherWiseSlotAvailable(eventDate: getEventDate)
         noRecordsView.isHidden = true
         tv.isHidden = false
         bookSlotBtn.isHidden = false
@@ -413,7 +413,7 @@ print("studentId",studentId)
         tvTralling.constant = 30
         subView.isHidden = true
         calendarView.isHidden = true
-        slotHistoryForParent()
+//        slotHistoryForParent()
         print("calanderHeightCon.constant",calanderHeightCon.constant)
         calanderHeightCon.constant = 0
         subviewHeight.constant = -20
@@ -533,7 +533,7 @@ print("studentId",studentId)
 
                 
 
-                return slotHistoryForParentData.count
+                return 3
 
             }
 
@@ -545,161 +545,162 @@ print("studentId",studentId)
 
             print("TVcellForRowAtcellForRowAt")
 
-            if segment1.backgroundColor == UIColor(named: "CheckBoxSelectColor") {
-
-                let cell = tableView.dequeueReusableCell(withIdentifier: cancelTvCell, for: indexPath) as! cancelTableViewCell
-
-                               cell.events = exNames
-                               let event = exNames[indexPath.section]
-                               cell.configure(with: event.slots)
-                               
-                               var timeAArr : [Int] = []
-
-
-               print("ISBOOKEDVAL",exNames[indexPath.section].slots[indexPath.row].isBooked == 1)
-
-                               
-
-
-                               cell.slotdetails1 = exNames[indexPath.row].slots
-
-                
-                
-                cell.call_back = { [self]
-                    (val) in
-
-//                    cell.configure(with: event.slots)
-                   
-                    tv.dataSource = self
-                    tv.delegate = self
-                    tv.reloadData()
-                    }
-
-                
-
-                               return cell
-
-
-            }else{
-
-
-
-                let cell = tableView.dequeueReusableCell(withIdentifier: teacherSlotIdentifier, for: indexPath) as! StaffPtmTableViewCell
-                
-                cell.backView.layer.cornerRadius = 20
-               
-                cell.backView.layer.masksToBounds = true
-                cell.backView.layer.shadowColor = UIColor.black.cgColor
-                cell.backView.layer.shadowOpacity = 0.5
-                cell.backView.layer.shadowOffset = CGSize(width: 4, height: 4)
-                cell.backView.layer.shadowRadius = 1
-                cell.backView.layer.masksToBounds = false
-                cell.statusview.layer.masksToBounds = true
-                cell.statusview.layer.shadowColor = UIColor.white.cgColor
-                cell.statusview.layer.shadowOpacity = 0.5
-                cell.statusview.layer.shadowOffset = CGSize(width: 4, height: 4)
-                cell.statusview.layer.shadowRadius = 5
-                cell.statusview.layer.masksToBounds = false
-
-                var slotHistort : SlotHistoryForParentResponseData = slotHistoryForParentData[indexPath.row]
-
-                cell.cancelAndReponeView.isHidden = true
-
-                if slotHistort.status == "Upcoming" {
-
-                    cell.cancelView.isHidden = false
-
-                }else{
-
-                    cell.cancelView.isHidden = true
-
-                }
-
-                let cancelGes = CanelSlotGesture(target: self, action: #selector(slotCancelAct))
-
-                cancelGes.slotId = Int(slotHistort.slot_id)
-
-                print("SLotId",slotHistort.slot_id)
-
-                cell.cancelView.addGestureRecognizer(cancelGes)
-
-                cell.eventName.text = slotHistort.purpose
-
-                cell.studentName.text = slotHistort.staff_name
-
-                cell.statusLbl.text = slotHistort.status
-
-                cell.dateAndTimeLbl.text = slotHistort.slot_date
-
-                cell.zoomLbl.text =  " Mode - " + slotHistort.mode
-
-//                cell.eventLink.text = slotHistort.event_link
-
-
-
-                if slotHistort.status == "Completed" {
-
-                    cell.statusLbl.textColor = UIColor(named: "completed")
-
-               } else if slotHistort.status == "Available" {
-
-                   cell.statusLbl.textColor = .systemCyan
-
-                } else if slotHistort.status == "Upcoming" {
-
-                    cell.statusLbl.textColor = .systemCyan
-
-               }else if slotHistort.status == "Expired" {
-
-                   cell.statusLbl.textColor = UIColor(named: "Expried")
-
-                }else if slotHistort.status == "Cancelled" {
-
-                    cell.statusLbl.textColor = UIColor(named: "Expried")
-
-                }else{
-
-                    cell.statusLbl.textColor = UIColor(named: "Expried")
-
-               }
+//            if segment1.backgroundColor == UIColor(named: "CheckBoxSelectColor") {
 //
-                
-                if slotHistort.event_link == ""{
-
-                    cell.eventLink.isHidden = true
-
-                }else{
-
-                    cell.eventLink.isHidden = false
-                   
-                    cell.eventLink.isUserInteractionEnabled = true
-                    let click = LinkSClicks(target: self, action: #selector(linkClickVC))
-                    click.link = slotHistort.event_link
-                    cell.eventLink.addGestureRecognizer(click)
-
-
-                }
-                
-                
-                let eventDate = slotHistort.slot_date
-                let dateFormatter = DateFormatter()
-                // Input format
-                dateFormatter.dateFormat = "dd/MM/yyyy"
-
-                if let date = dateFormatter.date(from: eventDate!) {
-
-                    dateFormatter.dateFormat = "E, MMM d, yyyy"
-                    let formattedDate = dateFormatter.string(from: date)
-
-                    cell.dateAndTimeLbl.text = formattedDate + "," + slotHistort.slot_time 
-                    print(formattedDate)
-                } else {
-                    print("Invalid date format")
-                } // date converstion End
-
+                let cell = tableView.dequeueReusableCell(withIdentifier: cancelTvCell, for: indexPath) as! cancelTableViewCell
+//
+//                               cell.events = exNames
+//                               let event = exNames[indexPath.section]
+//                               cell.configure(with: event.slots)
+//                               
+//                               var timeAArr : [Int] = []
+//
+//
+//               print("ISBOOKEDVAL",exNames[indexPath.section].slots[indexPath.row].isBooked == 1)
+//
+//                               
+//
+//
+//                               cell.slotdetails1 = exNames[indexPath.row].slots
+//
+//                
+//                
+//                cell.call_back = { [self]
+//                    (val) in
+//
+////                    cell.configure(with: event.slots)
+//                   
+//                    tv.dataSource = self
+//                    tv.delegate = self
+//                    tv.reloadData()
+//                    }
+//
+//                
+//
+//                               return cell
+//
+//
+//            }
+//            else{
+//
+//
+//
+//                let cell = tableView.dequeueReusableCell(withIdentifier: teacherSlotIdentifier, for: indexPath) as! StaffPtmTableViewCell
+//                
+//                cell.backView.layer.cornerRadius = 20
+//               
+//                cell.backView.layer.masksToBounds = true
+//                cell.backView.layer.shadowColor = UIColor.black.cgColor
+//                cell.backView.layer.shadowOpacity = 0.5
+//                cell.backView.layer.shadowOffset = CGSize(width: 4, height: 4)
+//                cell.backView.layer.shadowRadius = 1
+//                cell.backView.layer.masksToBounds = false
+//                cell.statusview.layer.masksToBounds = true
+//                cell.statusview.layer.shadowColor = UIColor.white.cgColor
+//                cell.statusview.layer.shadowOpacity = 0.5
+//                cell.statusview.layer.shadowOffset = CGSize(width: 4, height: 4)
+//                cell.statusview.layer.shadowRadius = 5
+//                cell.statusview.layer.masksToBounds = false
+//
+//                var slotHistort : SlotHistoryForParentResponseData = slotHistoryForParentData[indexPath.row]
+//
+//                cell.cancelAndReponeView.isHidden = true
+//
+//                if slotHistort.status == "Upcoming" {
+//
+//                    cell.cancelView.isHidden = false
+//
+//                }else{
+//
+//                    cell.cancelView.isHidden = true
+//
+//                }
+//
+//                let cancelGes = CanelSlotGesture(target: self, action: #selector(slotCancelAct))
+//
+//                cancelGes.slotId = Int(slotHistort.slot_id)
+//
+//                print("SLotId",slotHistort.slot_id)
+//
+//                cell.cancelView.addGestureRecognizer(cancelGes)
+//
+//                cell.eventName.text = slotHistort.purpose
+//
+//                cell.studentName.text = slotHistort.staff_name
+//
+//                cell.statusLbl.text = slotHistort.status
+//
+//                cell.dateAndTimeLbl.text = slotHistort.slot_date
+//
+//                cell.zoomLbl.text =  " Mode - " + slotHistort.mode
+//
+////                cell.eventLink.text = slotHistort.event_link
+//
+//
+//
+//                if slotHistort.status == "Completed" {
+//
+//                    cell.statusLbl.textColor = UIColor(named: "completed")
+//
+//               } else if slotHistort.status == "Available" {
+//
+//                   cell.statusLbl.textColor = .systemCyan
+//
+//                } else if slotHistort.status == "Upcoming" {
+//
+//                    cell.statusLbl.textColor = .systemCyan
+//
+//               }else if slotHistort.status == "Expired" {
+//
+//                   cell.statusLbl.textColor = UIColor(named: "Expried")
+//
+//                }else if slotHistort.status == "Cancelled" {
+//
+//                    cell.statusLbl.textColor = UIColor(named: "Expried")
+//
+//                }else{
+//
+//                    cell.statusLbl.textColor = UIColor(named: "Expried")
+//
+//               }
+////
+//                
+//                if slotHistort.event_link == ""{
+//
+//                    cell.eventLink.isHidden = true
+//
+//                }else{
+//
+//                    cell.eventLink.isHidden = false
+//                   
+//                    cell.eventLink.isUserInteractionEnabled = true
+//                    let click = LinkSClicks(target: self, action: #selector(linkClickVC))
+//                    click.link = slotHistort.event_link
+//                    cell.eventLink.addGestureRecognizer(click)
+//
+//
+//                }
+//                
+//                
+//                let eventDate = slotHistort.slot_date
+//                let dateFormatter = DateFormatter()
+//                // Input format
+//                dateFormatter.dateFormat = "dd/MM/yyyy"
+//
+//                if let date = dateFormatter.date(from: eventDate!) {
+//
+//                    dateFormatter.dateFormat = "E, MMM d, yyyy"
+//                    let formattedDate = dateFormatter.string(from: date)
+//
+//                    cell.dateAndTimeLbl.text = formattedDate + "," + slotHistort.slot_time 
+//                    print(formattedDate)
+//                } else {
+//                    print("Invalid date format")
+//                } // date converstion End
+//
                 return cell
-
-            }
+//
+//            }
 
         }
 
@@ -769,51 +770,51 @@ print("studentId",studentId)
 
 
 
-        func groupSlotsByStaffEventSubject(apiResponse: GetTeacherwiseSlotAvailabilityResponse) -> [Event] {
-
-            var eventDict: [String: Event] = [:]
-
-            
-
-            for slotData in apiResponse.data {
-
-                let key = "\(slotData.staff_id)-\(slotData.event_name)-\(slotData.subject_name)"
-
-                
-
-                // Create Slot object
-
-                let slot = Slot(fromTime: slotData.from_time, toTime: slotData.to_time, slotId: slotData.slot_id,isBooked: slotData.is_booked)
-
-                
-
-                if var event = eventDict[key] {
-
-                    // If the event already exists, append the slot
-
-                    event.slots.append(slot)
-
-                    eventDict[key] = event
-
-                } else {
-
-                    // If the event doesn't exist, create a new Event object
-
-                    let newEvent = Event(staffId: slotData.staff_id, eventName: slotData.event_name, subjectName: slotData.subject_name, staff_name: slotData.staff_name, event_mode: slotData.event_mode, slots: [slot])
-
-                    eventDict[key] = newEvent
-
-                }
-
-            }
-
-            
-
-            // Convert the dictionary to an array of Event objects
-
-            return Array(eventDict.values)
-
-        }
+//        func groupSlotsByStaffEventSubject(apiResponse: GetTeacherwiseSlotAvailabilityResponse) -> [Event] {
+//
+//            var eventDict: [String: Event] = [:]
+//
+//            
+//
+//            for slotData in apiResponse.data {
+//
+//                let key = "\(slotData.staff_id)-\(slotData.event_name)-\(slotData.subject_name)"
+//
+//                
+//
+//                // Create Slot object
+//
+//                let slot = Slot(fromTime: slotData.from_time, toTime: slotData.to_time, slotId: slotData.slot_id,isBooked: slotData.is_booked)
+//
+//                
+//
+//                if var event = eventDict[key] {
+//
+//                    // If the event already exists, append the slot
+//
+//                    event.slots.append(slot)
+//
+//                    eventDict[key] = event
+//
+//                } else {
+//
+//                    // If the event doesn't exist, create a new Event object
+//
+//                    let newEvent = Event(staffId: slotData.staff_id, eventName: slotData.event_name, subjectName: slotData.subject_name, staff_name: slotData.staff_name, event_mode: slotData.event_mode, slots: [slot])
+//
+//                    eventDict[key] = newEvent
+//
+//                }
+//
+//            }
+//
+//            
+//
+//            // Convert the dictionary to an array of Event objects
+//
+//            return Array(eventDict.values)
+//
+//        }
 
 
 
@@ -821,7 +822,7 @@ print("studentId",studentId)
 
 
 
-            teacherWiseSlotAvailable(eventDate: gets.slotDate)
+//            teacherWiseSlotAvailable(eventDate: gets.slotDate)
 
         }
 
@@ -831,304 +832,304 @@ print("studentId",studentId)
 
                 
 
-           func teacherWiseSlotAvailable(eventDate : String) {
-
-               duplicateStaffTimes.removeAll()
-
-            print("CONDTION")
-               
-               DefaultsKeys.date.removeAll()
-
-            let param : [String : Any] =
-
-            [
-
-                "event_date": eventDate,
-
-                "student_id": studentId!,
-
-                "subject_id": getSubjectId,
-
-                "class_teacher_id": classId,
-
-                "institute_id": instituteId
-
-            ]
-
-               print(param)
-   
-            GetTeacherWiseSlotAvailabilityRequest.call_request(param: param){ [self]
-
-                (res) in
-
-
-
-                let teacherWiseSlotResponse : GetTeacherwiseSlotAvailabilityResponse = Mapper<GetTeacherwiseSlotAvailabilityResponse>().map(JSONString: res)!
-
-                print("teacherWiseSlotAvailableRESPONSE",teacherWiseSlotResponse)
-
-                if teacherWiseSlotResponse.Status == 1  {
-
-                       let groupedEvents = groupSlotsByStaffEventSubject(apiResponse: teacherWiseSlotResponse)
-
-                    exNames = groupedEvents
-             
-                    
-                    
-                    
-                    tv.isHidden = false
-
-                    noRecordsView.isHidden = true
-
-                    noRecordsLbl.isHidden =  true
-
-                    tv.dataSource = self
-
-                    tv.delegate = self
-
-                    tv.reloadData()
-
-                    cv.dataSource = self
-
-                    cv.delegate = self
-
-                    cv.reloadData()
-
-
-
-                }else{
-
-
-
-                    noRecordsView.isHidden = false
-
-                    noRecordsLbl.isHidden =  false
-
-                    noRecordsLbl.text = teacherWiseSlotResponse.Message
-
-                    tv.isHidden = true
-                    
-              
-           }
-
-            }
-
-        }
-
-
-
-        func subjectListForStudent(studId : Int,instId : Int) {
-
-            let param : [String : Any] =
-
-            [
-
-                "student_id": studId,
-
-
-
-                "institute_id": instId
-
-            ]
-
-
-
-    print("teacherWiseSlotAvailablePARAM",param)
-
-
-
-            SubjectListForStudentRequest.call_request(param: param){ [self]
-
-                (res) in
-
-
-
-                let teacherWiseSlotResponse : SubjectListForStudentResponse = Mapper<SubjectListForStudentResponse>().map(JSONString: res)!
-
-
-
-
-
-                if teacherWiseSlotResponse.Status == 1  {
-
-
-                    dropDownData = teacherWiseSlotResponse.data
-
-                    if dropDownData.count == 0{
-
-                        
-
-                        
-
-                    }else{
-
-//                        dropDownLbl.text = dropDownData[0].subjectName
-
-                        //                classId = dropDownData[0].classTeacherId
-
-                    }
-
-                    tv.dataSource = self
-
-                    tv.delegate = self
-
-                    tv.reloadData()
-
-
-
-                }else{
-
-
-                    tv.dataSource = self
-                    tv.delegate = self
-                    tv.reloadData()
-
-
-
-                }
-
-            }
-
-
-
-        }
-
-
-
-
-
-        func slotAvailability(studId : Int,instId : Int) {
-
-
-            let param : [String : Any] =
-
-            [
-
-                "student_id": studId,
-
-
-
-                "institute_id": instId
-
-            ]
-
-
-
-
-
-    print("slotAvailabilityPARAM",param)
-
-            SlotAvailablityForStudentRequest.call_request(param: param){ [self]
-
-                (res) in
-
-
-
-                let slotAvailabilityResponse : SlotAvailabilityForStudentsResponse = Mapper<SlotAvailabilityForStudentsResponse>().map(JSONString: res)!
-
-
-
-
-
-                if slotAvailabilityResponse.Status == 1  {
-
-
-                    studSlotData = slotAvailabilityResponse.data
-
-                    cv.dataSource = self
-
-                    cv.delegate = self
-
-                    cv.reloadData()
-
-
-
-                }else{
-
-
-
-                    cv.dataSource = self
-
-                    cv.delegate = self
-
-                    cv.reloadData()
-
-
-
-                }
-
-            }
-
-
-
-        }
-
-
-
-
-
-
-
-        func bookingSlot() {
-
-            let bookingSlotsForStudModal = BookingSlotsForStudModal()
-
-
-
-            bookingSlotsForStudModal.student_id = studentId
-
-            bookingSlotsForStudModal.slot_id  = DefaultsKeys.bookingSlotId
-
-            bookingSlotsForStudModal.institute_id = instituteId
-
-
-         
-
-
-            var  bookingSlotsForStudModalStr = bookingSlotsForStudModal.toJSONString()
-
-            print("bookingSlotsForStudModalStr",bookingSlotsForStudModal.toJSON())
-
-
-
-
-
-            BookSlotsForStudentRequest.call_request(param: bookingSlotsForStudModalStr!) {
-
-
-
-                [self] (res) in
-
-
-
-                let bookingSlotsForStudRes : BookingSlotsForStudentsResponse = Mapper<BookingSlotsForStudentsResponse>().map(JSONString: res)!
-
-
-
-                if bookingSlotsForStudRes.Status == 1 {
-
-
-                    DefaultsKeys.bookingSlotId.removeAll()
-
-                    let refreshAlert = UIAlertController(title: "", message: bookingSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                       
-                        dismiss(animated: true)
-                       
-                    }))
-                    present(refreshAlert, animated: true, completion: nil)
-
-
-                }else{
-
-                }
-
-            }
-
-
-
-        }
+//           func teacherWiseSlotAvailable(eventDate : String) {
+//
+//               duplicateStaffTimes.removeAll()
+//
+//            print("CONDTION")
+//               
+//               DefaultsKeys.date.removeAll()
+//
+//            let param : [String : Any] =
+//
+//            [
+//
+//                "event_date": eventDate,
+//
+//                "student_id": studentId!,
+//
+//                "subject_id": getSubjectId,
+//
+//                "class_teacher_id": classId,
+//
+//                "institute_id": instituteId
+//
+//            ]
+//
+//               print(param)
+//   
+//            GetTeacherWiseSlotAvailabilityRequest.call_request(param: param){ [self]
+//
+//                (res) in
+//
+//
+//
+//                let teacherWiseSlotResponse : GetTeacherwiseSlotAvailabilityResponse = Mapper<GetTeacherwiseSlotAvailabilityResponse>().map(JSONString: res)!
+//
+//                print("teacherWiseSlotAvailableRESPONSE",teacherWiseSlotResponse)
+//
+//                if teacherWiseSlotResponse.Status == 1  {
+//
+//                       let groupedEvents = groupSlotsByStaffEventSubject(apiResponse: teacherWiseSlotResponse)
+//
+//                    exNames = groupedEvents
+//             
+//                    
+//                    
+//                    
+//                    tv.isHidden = false
+//
+//                    noRecordsView.isHidden = true
+//
+//                    noRecordsLbl.isHidden =  true
+//
+//                    tv.dataSource = self
+//
+//                    tv.delegate = self
+//
+//                    tv.reloadData()
+//
+//                    cv.dataSource = self
+//
+//                    cv.delegate = self
+//
+//                    cv.reloadData()
+//
+//
+//
+//                }else{
+//
+//
+//
+//                    noRecordsView.isHidden = false
+//
+//                    noRecordsLbl.isHidden =  false
+//
+//                    noRecordsLbl.text = teacherWiseSlotResponse.Message
+//
+//                    tv.isHidden = true
+//                    
+//              
+//           }
+//
+//            }
+//
+//        }
+
+
+
+//        func subjectListForStudent(studId : Int,instId : Int) {
+//
+//            let param : [String : Any] =
+//
+//            [
+//
+//                "student_id": studId,
+//
+//
+//
+//                "institute_id": instId
+//
+//            ]
+//
+//
+//
+//    print("teacherWiseSlotAvailablePARAM",param)
+//
+//
+//
+//            SubjectListForStudentRequest.call_request(param: param){ [self]
+//
+//                (res) in
+//
+//
+//
+//                let teacherWiseSlotResponse : SubjectListForStudentResponse = Mapper<SubjectListForStudentResponse>().map(JSONString: res)!
+//
+//
+//
+//
+//
+//                if teacherWiseSlotResponse.Status == 1  {
+//
+//
+//                    dropDownData = teacherWiseSlotResponse.data
+//
+//                    if dropDownData.count == 0{
+//
+//                        
+//
+//                        
+//
+//                    }else{
+//
+////                        dropDownLbl.text = dropDownData[0].subjectName
+//
+//                        //                classId = dropDownData[0].classTeacherId
+//
+//                    }
+//
+//                    tv.dataSource = self
+//
+//                    tv.delegate = self
+//
+//                    tv.reloadData()
+//
+//
+//
+//                }else{
+//
+//
+//                    tv.dataSource = self
+//                    tv.delegate = self
+//                    tv.reloadData()
+//
+//
+//
+//                }
+//
+//            }
+//
+//
+//
+//        }
+
+
+
+
+
+//        func slotAvailability(studId : Int,instId : Int) {
+//
+//
+//            let param : [String : Any] =
+//
+//            [
+//
+//                "student_id": studId,
+//
+//
+//
+//                "institute_id": instId
+//
+//            ]
+//
+//
+//
+//
+//
+//    print("slotAvailabilityPARAM",param)
+//
+//            SlotAvailablityForStudentRequest.call_request(param: param){ [self]
+//
+//                (res) in
+//
+//
+//
+//                let slotAvailabilityResponse : SlotAvailabilityForStudentsResponse = Mapper<SlotAvailabilityForStudentsResponse>().map(JSONString: res)!
+//
+//
+//
+//
+//
+//                if slotAvailabilityResponse.Status == 1  {
+//
+//
+//                    studSlotData = slotAvailabilityResponse.data
+//
+//                    cv.dataSource = self
+//
+//                    cv.delegate = self
+//
+//                    cv.reloadData()
+//
+//
+//
+//                }else{
+//
+//
+//
+//                    cv.dataSource = self
+//
+//                    cv.delegate = self
+//
+//                    cv.reloadData()
+//
+//
+//
+//                }
+//
+//            }
+//
+//
+//
+//        }
+
+
+
+
+
+
+
+//        func bookingSlot() {
+//
+//            let bookingSlotsForStudModal = BookingSlotsForStudModal()
+//
+//
+//
+//            bookingSlotsForStudModal.student_id = studentId
+//
+//            bookingSlotsForStudModal.slot_id  = DefaultsKeys.bookingSlotId
+//
+//            bookingSlotsForStudModal.institute_id = instituteId
+//
+//
+//         
+//
+//
+//            var  bookingSlotsForStudModalStr = bookingSlotsForStudModal.toJSONString()
+//
+//            print("bookingSlotsForStudModalStr",bookingSlotsForStudModal.toJSON())
+//
+//
+//
+//
+//
+//            BookSlotsForStudentRequest.call_request(param: bookingSlotsForStudModalStr!) {
+//
+//
+//
+//                [self] (res) in
+//
+//
+//
+//                let bookingSlotsForStudRes : BookingSlotsForStudentsResponse = Mapper<BookingSlotsForStudentsResponse>().map(JSONString: res)!
+//
+//
+//
+//                if bookingSlotsForStudRes.Status == 1 {
+//
+//
+//                    DefaultsKeys.bookingSlotId.removeAll()
+//
+//                    let refreshAlert = UIAlertController(title: "", message: bookingSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
+//                    
+//                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                       
+//                        dismiss(animated: true)
+//                       
+//                    }))
+//                    present(refreshAlert, animated: true, completion: nil)
+//
+//
+//                }else{
+//
+//                }
+//
+//            }
+//
+//
+//
+//        }
 
 
 
@@ -1174,7 +1175,7 @@ print("studentId",studentId)
 
                             if nameField.text != "" {
 
-                                cancelSlot(slotId: ges.slotId,SlotReason: nameField.text!)
+//                                cancelSlot(slotId: ges.slotId,SlotReason: nameField.text!)
 
                                 print("SLOTID",ges.slotId)
 
@@ -1208,147 +1209,147 @@ print("studentId",studentId)
 
 
 
-        func cancelAndClose() {
-
-
-            let cancelSlotsForStudModal = CancelAndCloseSlotByStaffModal()
-
-
-
-            cancelSlotsForStudModal.slot_id = 49
-
-            cancelSlotsForStudModal.staff_id = staffId
-
-            cancelSlotsForStudModal.institute_id = instituteId
-
-
-            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
-
-            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
-
-            CancelSlotByParentRequest.call_request(param: cancelSlotsForStudModalStr!) {
-
-                [self] (res) in
-
-
-                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
-
-
-
-                if cancelSlotsForStudRes.Status == 1 {
-
-
-                }else{
-
-                
-                }
-
-            }
-
-
-
-        }
-
-
-
-
-
-        func slotHistoryForParent() {
-
-            let param : [String : Any] =
-
-            [
-
-
-
-                "student_id": studentId!,
-
-
-
-                "section_id": sectionId,
-
-                "class_id":  getLoginClassId!,
-
-
-
-                "institute_id": instituteId
-
-
-
-
-
-            ]
-
-
-
-    print("slotHistoryForParentPARAM",param)
-
-            SlotHistoryForStudentRequest.call_request(param: param){ [self]
-
-                (res) in
-
-
-
-                let slotHistoryResponse : SlotHistoryForParentResponse = Mapper<SlotHistoryForParentResponse>().map(JSONString: res)!
-
-
-
-
-
-                if slotHistoryResponse.Status == 1  {
-
-
-
-
-
-                    slotHistoryForParentData = slotHistoryResponse.data
-
-
-
-                    noRecordsView.isHidden = true
-
-                    noRecordsLbl.isHidden =  true
-
-
-
-                    if let headerView = tv.tableHeaderView {
-
-                        headerView.isHidden = true
-
-                    }
-
-                    tv.dataSource = self
-
-                    tv.delegate = self
-
-                    tv.reloadData()
-
-
-
-                }else{
-
-                    if let headerView = tv.tableHeaderView {
-
-                        headerView.isHidden = true
-
-                    }
-
-                    noRecordsView.isHidden = false
-
-                    noRecordsLbl.isHidden =  false
-
-                    noRecordsLbl.text = slotHistoryResponse.Message
-
-
-
-
-                }
-
-            }
-
-
-
-        }
+//        func cancelAndClose() {
+//
+//
+//            let cancelSlotsForStudModal = CancelAndCloseSlotByStaffModal()
+//
+//
+//
+//            cancelSlotsForStudModal.slot_id = 49
+//
+//            cancelSlotsForStudModal.staff_id = staffId
+//
+//            cancelSlotsForStudModal.institute_id = instituteId
+//
+//
+//            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
+//
+//            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
+//
+//            CancelSlotByParentRequest.call_request(param: cancelSlotsForStudModalStr!) {
+//
+//                [self] (res) in
+//
+//
+//                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
+//
+//
+//
+//                if cancelSlotsForStudRes.Status == 1 {
+//
+//
+//                }else{
+//
+//                
+//                }
+//
+//            }
+//
+//
+//
+//        }
+
+
+
+
+
+//        func slotHistoryForParent() {
+//
+//            let param : [String : Any] =
+//
+//            [
+//
+//
+//
+//                "student_id": studentId!,
+//
+//
+//
+//                "section_id": sectionId,
+//
+//                "class_id":  getLoginClassId!,
+//
+//
+//
+//                "institute_id": instituteId
+//
+//
+//
+//
+//
+//            ]
+//
+//
+//
+//    print("slotHistoryForParentPARAM",param)
+//
+//            SlotHistoryForStudentRequest.call_request(param: param){ [self]
+//
+//                (res) in
+//
+//
+//
+//                let slotHistoryResponse : SlotHistoryForParentResponse = Mapper<SlotHistoryForParentResponse>().map(JSONString: res)!
+//
+//
+//
+//
+//
+//                if slotHistoryResponse.Status == 1  {
+//
+//
+//
+//
+//
+//                    slotHistoryForParentData = slotHistoryResponse.data
+//
+//
+//
+//                    noRecordsView.isHidden = true
+//
+//                    noRecordsLbl.isHidden =  true
+//
+//
+//
+//                    if let headerView = tv.tableHeaderView {
+//
+//                        headerView.isHidden = true
+//
+//                    }
+//
+//                    tv.dataSource = self
+//
+//                    tv.delegate = self
+//
+//                    tv.reloadData()
+//
+//
+//
+//                }else{
+//
+//                    if let headerView = tv.tableHeaderView {
+//
+//                        headerView.isHidden = true
+//
+//                    }
+//
+//                    noRecordsView.isHidden = false
+//
+//                    noRecordsLbl.isHidden =  false
+//
+//                    noRecordsLbl.text = slotHistoryResponse.Message
+//
+//
+//
+//
+//                }
+//
+//            }
+//
+//
+//
+//        }
 
 
 
@@ -1362,367 +1363,367 @@ print("studentId",studentId)
 
 
 
-        func createSlotByStaff() {
+//        func createSlotByStaff() {
+//
+//
+//
+//
+//
+//                     let createStdModal = CreateStdSecDetails()
+//
+//                        createStdModal.class_id = classId
+//
+//                        createStdModal.section_id = sectionId
+//
+//
+//
+//                    let createSlotsModal = CreateSlotList()
+//
+//
+//
+//                    createSlotsModal.from_time = "12"
+//
+//                    createSlotsModal.to_time = "1333"
+//
+//
+//
+//
+//
+//
+//
+//            let createSlotsByStaffModal = CreateSlotsByStaffModal()
+//
+//
+//
+//                            createSlotsByStaffModal.institute_id = instituteId
+//
+//                            createSlotsByStaffModal.date = "1333"
+//
+//                            createSlotsByStaffModal.staff_id = staffId
+//
+//                            createSlotsByStaffModal.break_time = 12
+//
+//                            createSlotsByStaffModal.duration = 1333
+//
+//                            createSlotsByStaffModal.event_name = "1344555"
+//
+//                            createSlotsByStaffModal.from_time = "12"
+//
+//                            createSlotsByStaffModal.to_time = "1333"
+//
+//                            createSlotsByStaffModal.meeting_mode = "1344555"
+//
+//                            createSlotsByStaffModal.event_link = "12"
+//
+//                            createSlotsByStaffModal.slots = [createSlotsModal]
+//
+//                            createSlotsByStaffModal.std_sec_details = [createStdModal]
+//
+//
+//
+//            var  createSlotsByStaffModalStr = createSlotsByStaffModal.toJSONString()
+//
+//            print("createSlotsByStaffModal",createSlotsByStaffModal.toJSON())
+//
+//            BookSlotsForStudentRequest.call_request(param: createSlotsByStaffModalStr!) {
+//
+//
+//
+//                [self] (res) in
+//
+//
+//
+//                let bookingSlotsForStudRes : BookingSlotsForStudentsResponse = Mapper<BookingSlotsForStudentsResponse>().map(JSONString: res)!
+//
+//                //
+//
+//                //
+//
+//                if bookingSlotsForStudRes.Status == 1 {
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                }else{
+//
+//                    //
+//
+//
+//
+//                }
+//
+//            }
+//
+//
+//
+//        }
+
+
 
 
 
 
 
-                     let createStdModal = CreateStdSecDetails()
 
-                        createStdModal.class_id = classId
 
-                        createStdModal.section_id = sectionId
 
-
-
-                    let createSlotsModal = CreateSlotList()
-
-
-
-                    createSlotsModal.from_time = "12"
-
-                    createSlotsModal.to_time = "1333"
-
-
-
-
-
-
-
-            let createSlotsByStaffModal = CreateSlotsByStaffModal()
-
-
-
-                            createSlotsByStaffModal.institute_id = instituteId
-
-                            createSlotsByStaffModal.date = "1333"
-
-                            createSlotsByStaffModal.staff_id = staffId
-
-                            createSlotsByStaffModal.break_time = 12
-
-                            createSlotsByStaffModal.duration = 1333
-
-                            createSlotsByStaffModal.event_name = "1344555"
-
-                            createSlotsByStaffModal.from_time = "12"
-
-                            createSlotsByStaffModal.to_time = "1333"
-
-                            createSlotsByStaffModal.meeting_mode = "1344555"
-
-                            createSlotsByStaffModal.event_link = "12"
-
-                            createSlotsByStaffModal.slots = [createSlotsModal]
-
-                            createSlotsByStaffModal.std_sec_details = [createStdModal]
-
-
-
-            var  createSlotsByStaffModalStr = createSlotsByStaffModal.toJSONString()
-
-            print("createSlotsByStaffModal",createSlotsByStaffModal.toJSON())
-
-            BookSlotsForStudentRequest.call_request(param: createSlotsByStaffModalStr!) {
-
-
-
-                [self] (res) in
-
-
-
-                let bookingSlotsForStudRes : BookingSlotsForStudentsResponse = Mapper<BookingSlotsForStudentsResponse>().map(JSONString: res)!
-
-                //
-
-                //
-
-                if bookingSlotsForStudRes.Status == 1 {
-
-
-
-
-
-
-
-
-
-                }else{
-
-                    //
-
-
-
-                }
-
-            }
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-        func cancelSlot(slotId : Int,SlotReason : String) {
-
-
-
-
-
-
-
-            let cancelSlotsForStudModal = CancelSlotsForStudModal()
-
-
-
-            cancelSlotsForStudModal.student_id = studentId
-
-            cancelSlotsForStudModal.slot_id = slotId
-
-            cancelSlotsForStudModal.cancelled_reason = SlotReason
-
-            cancelSlotsForStudModal.institute_id = instituteId
-
-
-
-
-
-            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
-
-            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
-
-
-
-
-
-            CancelSlotByParentRequest.call_request(param: cancelSlotsForStudModalStr!) {
-
-
-
-                [self] (res) in
-
-
-
-                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
-
-
-
-                if cancelSlotsForStudRes.Status == 1 {
-
-
-
-
-
-                    let alert = UIAlertController(title: "", message: cancelSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
-
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-
-                    self.present(alert, animated: true, completion:{ [self] in
-
-                        //
-
-
-
-                        tv.dataSource = self
-
-                        tv.delegate = self
-
-                        tv.reloadData()
-
-
-
-                        alert.view.superview?.isUserInteractionEnabled = true
-
-    //                    alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
-
-                    })
-
-
-
-
-
-
-
-                }else{
-
-                    //
-
-
-
-                    let alert = UIAlertController(title: "Alert", message: cancelSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
-
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-
-                    self.present(alert, animated: true, completion:{ [self] in
-
-                        //
-
-
-
-                        tv.dataSource = self
-
-                        tv.delegate = self
-
-                        tv.reloadData()
-
-
-
-                        alert.view.superview?.isUserInteractionEnabled = true
-
-    //
-
-                    })
-
-
-
-                }
-
-
-
-
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-
-
-        func cancelAndReopenSlot() {
-
-
-
-
-
-
-
-            let cancelSlotsForStudModal = CancelSlotsForStudModal()
-
-
-
-            cancelSlotsForStudModal.student_id = 12
-
-            cancelSlotsForStudModal.slot_id = 1333
-
-            cancelSlotsForStudModal.institute_id = instituteId
-
-            cancelSlotsForStudModal.cancelled_reason = "ttt"
-
-
-
-
-
-            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
-
-            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
-
-
-
-
-
-            CancelSlotByParentRequest.call_request(param: cancelSlotsForStudModalStr!) {
-
-
-
-                [self] (res) in
-
-
-
-                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
-
-
-
-                if cancelSlotsForStudRes.Status == 1 {
-
-
-
-
-
-
-
-
-
-                }else{
-
-                    //
-
-
-
-                }
-
-
-
-
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-
-        @IBAction func bookSlotAct(_ sender: Any) {
-
-if DefaultsKeys.bookingSlotId.count == 0{
-
-    let refreshAlert = UIAlertController(title: "", message: "Select time", preferredStyle: UIAlertController.Style.alert)
-
-                       refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-
-
-                       }))
-                   present(refreshAlert, animated: true, completion: nil)
-
-}else{
-
-
-    let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to Book Slot?", preferredStyle: UIAlertController.Style.alert)
-
-    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-
-
-
-        bookingSlot()
-
-    }))
-
-
-    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-    print("Handle Cancel Logic here")
-    }))
-
-    present(refreshAlert, animated: true, completion: nil)
-
-
-
-}
-        }
+//        func cancelSlot(slotId : Int,SlotReason : String) {
+//
+//
+//
+//
+//
+//
+//
+//            let cancelSlotsForStudModal = CancelSlotsForStudModal()
+//
+//
+//
+//            cancelSlotsForStudModal.student_id = studentId
+//
+//            cancelSlotsForStudModal.slot_id = slotId
+//
+//            cancelSlotsForStudModal.cancelled_reason = SlotReason
+//
+//            cancelSlotsForStudModal.institute_id = instituteId
+//
+//
+//
+//
+//
+//            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
+//
+//            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
+//
+//
+//
+//
+//
+//            CancelSlotByParentRequest.call_request(param: cancelSlotsForStudModalStr!) {
+//
+//
+//
+//                [self] (res) in
+//
+//
+//
+//                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
+//
+//
+//
+//                if cancelSlotsForStudRes.Status == 1 {
+//
+//
+//
+//
+//
+//                    let alert = UIAlertController(title: "", message: cancelSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
+//
+//                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+//
+//                    self.present(alert, animated: true, completion:{ [self] in
+//
+//                        //
+//
+//
+//
+//                        tv.dataSource = self
+//
+//                        tv.delegate = self
+//
+//                        tv.reloadData()
+//
+//
+//
+//                        alert.view.superview?.isUserInteractionEnabled = true
+//
+//    //                    alert.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+//
+//                    })
+//
+//
+//
+//
+//
+//
+//
+//                }else{
+//
+//                    //
+//
+//
+//
+//                    let alert = UIAlertController(title: "Alert", message: cancelSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
+//
+//                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+//
+//                    self.present(alert, animated: true, completion:{ [self] in
+//
+//                        //
+//
+//
+//
+//                        tv.dataSource = self
+//
+//                        tv.delegate = self
+//
+//                        tv.reloadData()
+//
+//
+//
+//                        alert.view.superview?.isUserInteractionEnabled = true
+//
+//    //
+//
+//                    })
+//
+//
+//
+//                }
+//
+//
+//
+//
+//
+//
+//
+//            }
+//
+//
+//
+//        }
+
+
+
+
+
+
+
+//        func cancelAndReopenSlot() {
+//
+//
+//
+//
+//
+//
+//
+//            let cancelSlotsForStudModal = CancelSlotsForStudModal()
+//
+//
+//
+//            cancelSlotsForStudModal.student_id = 12
+//
+//            cancelSlotsForStudModal.slot_id = 1333
+//
+//            cancelSlotsForStudModal.institute_id = instituteId
+//
+//            cancelSlotsForStudModal.cancelled_reason = "ttt"
+//
+//
+//
+//
+//
+//            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
+//
+//            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
+//
+//
+//
+//
+//
+//            CancelSlotByParentRequest.call_request(param: cancelSlotsForStudModalStr!) {
+//
+//
+//
+//                [self] (res) in
+//
+//
+//
+//                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
+//
+//
+//
+//                if cancelSlotsForStudRes.Status == 1 {
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                }else{
+//
+//                    //
+//
+//
+//
+//                }
+//
+//
+//
+//
+//
+//
+//
+//            }
+//
+//
+//
+//        }
+
+
+
+
+
+
+
+
+
+
+
+//        @IBAction func bookSlotAct(_ sender: Any) {
+//
+//if DefaultsKeys.bookingSlotId.count == 0{
+//
+//    let refreshAlert = UIAlertController(title: "", message: "Select time", preferredStyle: UIAlertController.Style.alert)
+//
+//                       refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//
+//
+//                       }))
+//                   present(refreshAlert, animated: true, completion: nil)
+//
+//}else{
+//
+//
+//    let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to Book Slot?", preferredStyle: UIAlertController.Style.alert)
+//
+//    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//
+//
+//
+//        bookingSlot()
+//
+//    }))
+//
+//
+//    refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+//    print("Handle Cancel Logic here")
+//    }))
+//
+//    present(refreshAlert, animated: true, completion: nil)
+//
+//
+//
+//}
+//        }
 
         
 

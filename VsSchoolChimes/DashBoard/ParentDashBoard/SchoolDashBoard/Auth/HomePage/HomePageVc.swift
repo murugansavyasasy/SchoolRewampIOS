@@ -27,11 +27,21 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var getValue : Int!
     var searchItem = 0
     
-    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence", "Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"
-    ]
+    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence", "Text to Parents/Staff","School / Class Events","School Needs","Very Important Info"
+                             ,"Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+//
+    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence",  "Text to Parents/Staff","School / Class Events","School Needs","Very Important Info"
+                                ,"Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     
-    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Mark your attendence", "Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+    
+    var receiverItems : [String] = [ "Communication","Homework" ,"Exam/Test","Exam Marks","Image/Pdf","Video Upload","Circulars","Notice Board","Assignment","Online Meeting","Attendance Report"
+                              ,"Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
+
+    var receiverImageItems : [String] = [ "Communication","Homework" ,"Exam/Test","Exam Marks","Image/Pdf","Video Upload","Circulars","Notice Board","Assignment","Online Meeting","Attendance Report"
+                              ,"Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
+
+    
     
     let HomePageBottomCell = "BottomCVCell"
     var currentIndex = 0
@@ -44,7 +54,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     private lazy var fourthVC = SettingsViewController()
     
     
-    let name = "saran"
+
     
     var currentPlaceholderIndex = 0
     var timer: Timer?
@@ -301,8 +311,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         }else{
             
             if collectionView == bottomCv{
-                
-                return items.count
+                if getValue == 1 {
+                    return items.count
+                }else{
+                    return receiverItems.count
+                }
             }else{
                 
                 
@@ -318,12 +331,13 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == bottomCv{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
             
+            if getValue == 1 {
             if searchItem == 1 {
                 
                 let label = items[indexPath.row].translated()
                 cell.MenuLbl.text = label
             }else{
-               
+                
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
                 //            if items[indexPath.row]
@@ -348,6 +362,39 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     //cell.image = UIImage(named: Imgitems[indexPath.row] )!
                     //cell.setImg(img: UIImage(named: Imgitems[indexPath.row] )!)
                 }
+            }
+            }else{
+                if searchItem == 1 {
+                    
+                    let label = receiverItems[indexPath.row].translated()
+                    cell.MenuLbl.text = label
+                }else{
+                    
+                    cell.MenuLbl.text = nil
+                    cell.MenuImgView.image  = nil
+                    //            if items[indexPath.row]
+                    let label = receiverItems[indexPath.row].translated()
+                    
+                    let img = UIImage(named: receiverImageItems[indexPath.row])
+                    //           let sum = indexPath.row % Imgitems.count
+                    //            let img = UIImage(named: Imgitems[sum] )
+                    
+                    cell.MenuLbl.setFont(style: .body, size: 10)
+                    
+                    cell.MenuLbl.text = label
+                    cell.MenuImgView.image  = img
+                    //            cell.MenuImgView.image = img!.withRenderingMode(.alwaysTemplate)
+                    //            cell.MenuImgView.tintColor = .white
+                    //
+                    cell.applyGradient()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                        cell.GradientView.animateView(enable: false)
+                        //                cell.MenuLabelview.animateView(enable: false)
+                        //cell.image = UIImage(named: Imgitems[indexPath.row] )!
+                        //cell.setImg(img: UIImage(named: Imgitems[indexPath.row] )!)
+                    }
+            }
             }
             return cell
         }else{
@@ -451,7 +498,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }
-                
+                else if items[indexPath.row] == "Absentees Report".translated(){
+                    let vc = NewAbsenteesViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }
                 print("ID",items[indexPath.row])
                 
                
@@ -464,7 +515,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = VideoVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if comunication == items[indexPath.row].translated(){
+                }else if comunication == receiverItems[indexPath.row].translated(){
                     let vc = ComunicationVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
@@ -502,7 +553,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     present(vc, animated: true)
                 
                     
-                }  else if items[indexPath.row] == "schoolss".translated() {
+                }  else if receiverItems[indexPath.row] == "schoolss".translated() {
                     
                     homeWorkNavigate()
                     
@@ -522,7 +573,18 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = SenderEventsVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
+                }else if receiverItems[indexPath.row].translated() == "Exam/Test".translated(){
+                    let vc = ExamTmTblVCViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if receiverItems[indexPath.row].translated() == "LSRW".translated(){
+                    let vc = LsrwListShowViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
                 }
+                
+                
+                
                 
             }
             

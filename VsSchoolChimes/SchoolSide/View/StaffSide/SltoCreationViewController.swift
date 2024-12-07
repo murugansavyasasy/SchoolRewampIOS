@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ObjectMapper
+//import ObjectMapper
 import DropDown
 import FSCalendar
 class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, UITextFieldDelegate {
@@ -51,7 +51,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
     @IBOutlet weak var toTimeLbl: UILabel!
     @IBOutlet weak var fromTime: UILabel!
     var url_time: String!
-    var standerdata        : [StandardSectionDetailsForStaffData] = []
+//    var standerdata        : [StandardSectionDetailsForStaffData] = []
     var dat : [DateEntry] = []
     var dateArry : [String] = []
     var  time = ""
@@ -119,7 +119,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
         
        cv.register(UINib(nibName: cvIdentifer, bundle: nil), forCellWithReuseIdentifier: cvIdentifer)
         slotBreakSwitch.addTarget(self, action: #selector(switchIsChanged), for: UIControl.Event.valueChanged)
-        standerAndSec()
+//        standerAndSec()
     }
     
     
@@ -180,25 +180,25 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
         
         print("viewWillAppear")
             
-            for i in DefaultsKeys.dateArr{
-                if let index = dateArry.firstIndex(of: i) {
-                    dateArry.remove(at: index)
-                }
-                let dateString = i
-                       let dateFormat = "dd-MM-yyyy"
-               
-                       let dateFormatter = DateFormatter()
-                       dateFormatter.dateFormat = dateFormat
-               
-                       // Convert string to date
-                       if let dates = dateFormatter.date(from: dateString) {
-                           print("Converted Date:", dates)
-                           self.FscalanderView.deselect(dates)
-                       } else {
-                           print("Failed to convert string to date.")
-                       }
-
-        }
+//            for i in DefaultsKeys.dateArr{
+//                if let index = dateArry.firstIndex(of: i) {
+//                    dateArry.remove(at: index)
+//                }
+//                let dateString = i
+//                       let dateFormat = "dd-MM-yyyy"
+//               
+//                       let dateFormatter = DateFormatter()
+//                       dateFormatter.dateFormat = dateFormat
+//               
+//                       // Convert string to date
+//                       if let dates = dateFormatter.date(from: dateString) {
+//                           print("Converted Date:", dates)
+//                           self.FscalanderView.deselect(dates)
+//                       } else {
+//                           print("Failed to convert string to date.")
+//                       }
+//
+//        }
         
     }
     
@@ -242,7 +242,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return standerdata.count
+        return 3
        
     }
     
@@ -262,11 +262,11 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
                 cell.sectionLbl.textColor = UIColor.black // Change to your deselected text color
             }
         
-        let data : StandardSectionDetailsForStaffData = standerdata[indexPath.row]
-        
-        
-    
-        cell.sectionLbl.text = data.class_name + " - " + data.section_name
+//        let data : StandardSectionDetailsForStaffData = standerdata[indexPath.row]
+//        
+//        
+//    
+//        cell.sectionLbl.text = data.class_name + " - " + data.section_name
       
         return cell
     }
@@ -277,13 +277,13 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
         if let cell = collectionView.cellForItem(at: indexPath) as? SlotsCollectionViewCell {
             // Update cell appearance for selection
             print("didSelectItemAt")
-            let data : StandardSectionDetailsForStaffData = standerdata[indexPath.row]
-            
-            cell.sectionFullView.backgroundColor = UIColor(named: "AppDark")
-            cell.sectionLbl.textColor = UIColor.white
-            let classid = String(data.class_id)
-            let sectionid = String(data.section_id)
-            classAnsStander.append(classid + " - " + sectionid)
+//            let data : StandardSectionDetailsForStaffData = standerdata[indexPath.row]
+//
+//            cell.sectionFullView.backgroundColor = UIColor(named: "AppDark")
+//            cell.sectionLbl.textColor = UIColor.white
+//            let classid = String(data.class_id)
+//            let sectionid = String(data.section_id)
+//            classAnsStander.append(classid + " - " + sectionid)
         }
   
     }
@@ -295,42 +295,42 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
            print("didDeselectItemAt")
             
             
-            let data : StandardSectionDetailsForStaffData = standerdata[indexPath.row]
-            
-            
-            let classid = String(data.class_id)
-            let sectionid = String(data.section_id)
-           
-            
-            print("helloo",classAnsStander)
-            if classAnsStander.contains(classid + " - " + sectionid){
-                
-                if let index = classAnsStander.firstIndex(of: classid + " - " + sectionid) {
-                    classAnsStander.remove(at: index)
-                }
-//                classAnsStander.remove(at: indexPath.row)
-                
-                print("classAnsStander",classAnsStander)
-            }
-            
-            cell.sectionFullView.backgroundColor = .lightGray
-
-            cell.sectionLbl.textColor = UIColor.black
+//            let data : StandardSectionDetailsForStaffData = standerdata[indexPath.row]
+//            
+//            
+//            let classid = String(data.class_id)
+//            let sectionid = String(data.section_id)
+//           
+//            
+//            print("helloo",classAnsStander)
+//            if classAnsStander.contains(classid + " - " + sectionid){
+//                
+//                if let index = classAnsStander.firstIndex(of: classid + " - " + sectionid) {
+//                    classAnsStander.remove(at: index)
+//                }
+////                classAnsStander.remove(at: indexPath.row)
+//                
+//                print("classAnsStander",classAnsStander)
+//            }
+//            
+//            cell.sectionFullView.backgroundColor = .lightGray
+//
+//            cell.sectionLbl.textColor = UIColor.black
             
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let data : StandardSectionDetailsForStaffData = standerdata[indexPath.item]
-        
-        let text = data.class_name + " - " + data.section_name
+//        
+//        let data : StandardSectionDetailsForStaffData = standerdata[indexPath.item]
+//        
+//        let text = data.class_name + " - " + data.section_name
            let font = UIFont.systemFont(ofSize: 16) // Set your preferred font size
            let width = collectionView.frame.width - 20 // Adjust based on your padding
            
-        let height = calculateHeightForText(text, width: width, font: font) + 40// Add padding for margins
+//        let height = calculateHeightForText(text, width: width, font: font) + 40// Add padding for margins
            
-           return CGSize(width: collectionView.frame.width/3, height: height)
+           return CGSize(width: collectionView.frame.width/3, height: 100)
         
 //        return CGSize(width: collectionView.frame.width/3, height: 50) // Adjust item size as needed
         }
@@ -614,33 +614,33 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
      }
    @IBAction  func Fromtime(){
         
-        RPickerTwo.selectDate(title: "Select time", cancelText: "Cancel", datePickerMode: .time, style: .Wheel, didSelectDate: {[weak self] (today_date) in
-            
-            
-            self?.display_date = today_date.dateString("h:mm a")
-//            self?.url_time = today_date.dateString("a:mm:hh")
-            
-            self?.fromTime.text = self!.display_date
-            
-            
-        })
+//        RPickerTwo.selectDate(title: "Select time", cancelText: "Cancel", datePickerMode: .time, style: .Wheel, didSelectDate: {[weak self] (today_date) in
+//            
+//            
+//            self?.display_date = today_date.dateString("h:mm a")
+////            self?.url_time = today_date.dateString("a:mm:hh")
+//            
+//            self?.fromTime.text = self!.display_date
+//            
+//            
+//        })
         
     }
     @IBAction  func Totime(){
             
-            RPickerTwo.selectDate(title: "Select time", cancelText: "Cancel", datePickerMode: .time, style: .Wheel, didSelectDate: {[weak self] (today_date) in
-                
-                
-                self?.display_date = today_date.dateString("h:mm a")
-//                self?.url_time = today_date.dateString("a:mm:hh")
-                
-                self?.toTimeLbl.text = self!.display_date
-                
-                   
-                print("fromTime.text",self!.fromTime.text)
-                print("toTimeLbl.text",self!.toTimeLbl.text)
-              
-            })
+//            RPickerTwo.selectDate(title: "Select time", cancelText: "Cancel", datePickerMode: .time, style: .Wheel, didSelectDate: {[weak self] (today_date) in
+//                
+//                
+//                self?.display_date = today_date.dateString("h:mm a")
+////                self?.url_time = today_date.dateString("a:mm:hh")
+//                
+//                self?.toTimeLbl.text = self!.display_date
+//                
+//                   
+//                print("fromTime.text",self!.fromTime.text)
+//                print("toTimeLbl.text",self!.toTimeLbl.text)
+//              
+//            })
         
         
       
@@ -1048,63 +1048,63 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
     
     
     
-    func standerAndSec(){
-        
-       
-        
-        let param : [String : Any] =
-        [
-
-            "staff_id": staffId!,
-
-            "institute_id": instute!
-
-
-        ]
-
-        print("paramparam",param)
-
-        StandardSectionDetailsStaffRequest.call_request(param: param){ [self]
-            (res) in
-
-            print("resres",res)
-            let slotHistoryResponse : StandardSectionDetailsForStaffResponse = Mapper<StandardSectionDetailsForStaffResponse>().map(JSONString: res)!
-
-
-            if slotHistoryResponse.Status == 1  {
-                norecord.isHidden = true
-                
-                cv.isHidden = false
-                standerdata = slotHistoryResponse.data
-                
-                let itemCount = standerdata.count
-                adjustCollectionViewHeight(for: itemCount)
-                cv.dataSource = self
-                cv.delegate = self
-                cv.reloadData()
-                
-                
-
-            }else{
-                norecord.isHidden = false
-                
-                let refreshAlert = UIAlertController(title: "", message: slotHistoryResponse.Message, preferredStyle: UIAlertController.Style.alert)
-
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-
-                    dismiss(animated: true)
-                }))
-            present(refreshAlert, animated: true, completion: nil)
-                norecord.text = slotHistoryResponse.Message
-                
-                
-                
-                cv.isHidden = true
-            }
-        }
-        
-        
-    }
+//    func standerAndSec(){
+//        
+//       
+//        
+//        let param : [String : Any] =
+//        [
+//
+//            "staff_id": staffId!,
+//
+//            "institute_id": instute!
+//
+//
+//        ]
+//
+//        print("paramparam",param)
+//
+//        StandardSectionDetailsStaffRequest.call_request(param: param){ [self]
+//            (res) in
+//
+//            print("resres",res)
+//            let slotHistoryResponse : StandardSectionDetailsForStaffResponse = Mapper<StandardSectionDetailsForStaffResponse>().map(JSONString: res)!
+//
+//
+//            if slotHistoryResponse.Status == 1  {
+//                norecord.isHidden = true
+//                
+//                cv.isHidden = false
+//                standerdata = slotHistoryResponse.data
+//                
+//                let itemCount = standerdata.count
+//                adjustCollectionViewHeight(for: itemCount)
+//                cv.dataSource = self
+//                cv.delegate = self
+//                cv.reloadData()
+//                
+//                
+//
+//            }else{
+//                norecord.isHidden = false
+//                
+//                let refreshAlert = UIAlertController(title: "", message: slotHistoryResponse.Message, preferredStyle: UIAlertController.Style.alert)
+//
+//                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//
+//                    dismiss(animated: true)
+//                }))
+//            present(refreshAlert, animated: true, completion: nil)
+//                norecord.text = slotHistoryResponse.Message
+//                
+//                
+//                
+//                cv.isHidden = true
+//            }
+//        }
+//        
+//        
+//    }
     
     func adjustCollectionViewHeight(for itemCount: Int) {
         var height: CGFloat = 55  // Default height for 1 to 3 items

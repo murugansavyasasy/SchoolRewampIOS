@@ -8,22 +8,22 @@
 
 import UIKit
 
-import ObjectMapper
+//import ObjectMapper
 class LSRWTakingSkillViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
    
-    
-
     @IBOutlet weak var backView: UIView!
-    
-    
-    
-    
     @IBOutlet weak var tv: UITableView!
+    
+    
+    
+    
+    
     var skillId : String!
-    var attachData : [GetAttachmentForSkillData] = []
+//    var attachData : [GetAttachmentForSkillData] = []
     let rowId = "TakeReadingSkillTableViewCell"
     
     var studentId = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,12 +31,12 @@ class LSRWTakingSkillViewController: UIViewController,UITableViewDataSource,UITa
         
         let userDefaults = UserDefaults.standard
        
-        studentId = userDefaults.string(forKey: DefaultsKeys.chilId)!
+//        studentId = userDefaults.string(forKey: DefaultsKeys.chilId)!
         
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
         backView.addGestureRecognizer(backGesture)
         
-        viewAllSkillByStudent()
+//        viewAllSkillByStudent()
         
         
         tv.register(UINib(nibName: rowId, bundle: nil), forCellReuseIdentifier: rowId)
@@ -60,63 +60,63 @@ class LSRWTakingSkillViewController: UIViewController,UITableViewDataSource,UITa
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        attachData.count
+        3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: rowId, for: indexPath) as! TakeReadingSkillTableViewCell
-        let getAttach : GetAttachmentForSkillData = attachData[indexPath.row]
-        cell.typeLbl.text = ": " + getAttach.ActivityType
-        
-        cell.selectionStyle = .none
-        
-        if getAttach.ActivityType == "TEXT" {
-            cell.attachmentLbl.text = ": " + getAttach.Attachment
-        }else{
-            cell.attachmentLbl.text = ": " + String(getAttach.Order)
-        }
-        
-        let attachGes = AttachGesture(target: self, action: #selector(AttachmentRedirect))
-        attachGes.attachment = getAttach.Attachment
-        attachGes.getType = getAttach.ActivityType
-        cell.viewAttac.addGestureRecognizer(attachGes)
+//        let getAttach : GetAttachmentForSkillData = attachData[indexPath.row]
+//        cell.typeLbl.text = ": " + getAttach.ActivityType
+//        
+//        cell.selectionStyle = .none
+//        
+//        if getAttach.ActivityType == "TEXT" {
+//            cell.attachmentLbl.text = ": " + getAttach.Attachment
+//        }else{
+//            cell.attachmentLbl.text = ": " + String(getAttach.Order)
+//        }
+//        
+//        let attachGes = AttachGesture(target: self, action: #selector(AttachmentRedirect))
+//        attachGes.attachment = getAttach.Attachment
+//        attachGes.getType = getAttach.ActivityType
+//        cell.viewAttac.addGestureRecognizer(attachGes)
 
         
         return cell
     }
     
     
-    func viewAllSkillByStudent(){
-        
-        
-        
-        
-        let getAttchStudentModal = GetAttachmentForSkillModal()
-        getAttchStudentModal.StudentID =  studentId
-        getAttchStudentModal.SkillId = skillId
-        
-        
-        var  getAttchStudentModalStr = getAttchStudentModal.toJSONString()
-        
-        print("getAttchStudentModalStr",getAttchStudentModalStr)
-        GetAttachmentForSkillRequest.call_request(param: getAttchStudentModalStr!) {
-            
-            [self] (res) in
-            
-            let getAttachResp : GetAttachmentForSkillResponse = Mapper<GetAttachmentForSkillResponse>().map(JSONString: res)!
-            if  DefaultsKeys.failedErrorCode != 500 {
-                if getAttachResp.Status == 1 {
-                    attachData = getAttachResp.getAttachData
-                    tv.dataSource = self
-                    tv.delegate = self
-                    tv.reloadData()
-                    
-                }
-            }
-            
-        }
-        
-    }
+//    func viewAllSkillByStudent(){
+//        
+//        
+//        
+//        
+//        let getAttchStudentModal = GetAttachmentForSkillModal()
+//        getAttchStudentModal.StudentID =  studentId
+//        getAttchStudentModal.SkillId = skillId
+//        
+//        
+//        var  getAttchStudentModalStr = getAttchStudentModal.toJSONString()
+//        
+//        print("getAttchStudentModalStr",getAttchStudentModalStr)
+//        GetAttachmentForSkillRequest.call_request(param: getAttchStudentModalStr!) {
+//            
+//            [self] (res) in
+//            
+//            let getAttachResp : GetAttachmentForSkillResponse = Mapper<GetAttachmentForSkillResponse>().map(JSONString: res)!
+//            if  DefaultsKeys.failedErrorCode != 500 {
+//                if getAttachResp.Status == 1 {
+//                    attachData = getAttachResp.getAttachData
+//                    tv.dataSource = self
+//                    tv.delegate = self
+//                    tv.reloadData()
+//                    
+//                }
+//            }
+//            
+//        }
+//        
+//    }
         
     @IBAction func AttachmentRedirect(ges : AttachGesture) {
             
