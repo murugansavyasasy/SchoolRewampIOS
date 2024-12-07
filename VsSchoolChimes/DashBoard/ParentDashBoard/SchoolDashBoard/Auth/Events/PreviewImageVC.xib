@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="imgView" destination="4yl-s2-YkC" id="3gd-W1-glF"/>
                 <outlet property="outerView" destination="ydE-Gv-3Nj" id="1aa-iC-fyc"/>
+                <outlet property="pdfView" destination="mFu-pa-TRI" id="Tc9-lN-dWK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,6 +28,14 @@
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4yl-s2-YkC">
                             <rect key="frame" x="0.0" y="0.0" width="361" height="659"/>
                         </imageView>
+                        <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mFu-pa-TRI">
+                            <rect key="frame" x="0.0" y="0.0" width="361" height="659"/>
+                            <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <wkWebViewConfiguration key="configuration">
+                                <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                <wkPreferences key="preferences"/>
+                            </wkWebViewConfiguration>
+                        </wkWebView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkX-dV-Ofn">
                             <rect key="frame" x="326" y="0.0" width="35" height="35"/>
                             <constraints>
@@ -43,6 +52,10 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="mFu-pa-TRI" firstAttribute="bottom" secondItem="4yl-s2-YkC" secondAttribute="bottom" id="0d8-GJ-qKi"/>
+                        <constraint firstItem="mFu-pa-TRI" firstAttribute="top" secondItem="4yl-s2-YkC" secondAttribute="top" id="1Rt-Ed-UPZ"/>
+                        <constraint firstItem="mFu-pa-TRI" firstAttribute="leading" secondItem="4yl-s2-YkC" secondAttribute="leading" id="IKc-uH-uzM"/>
+                        <constraint firstItem="mFu-pa-TRI" firstAttribute="trailing" secondItem="4yl-s2-YkC" secondAttribute="trailing" id="K5S-LH-OJA"/>
                         <constraint firstAttribute="trailing" secondItem="qkX-dV-Ofn" secondAttribute="trailing" id="LQz-eQ-caO"/>
                         <constraint firstItem="4yl-s2-YkC" firstAttribute="top" secondItem="ydE-Gv-3Nj" secondAttribute="top" id="PY8-Wu-GI4"/>
                         <constraint firstItem="qkX-dV-Ofn" firstAttribute="top" secondItem="ydE-Gv-3Nj" secondAttribute="top" id="e3F-Nj-uMC"/>

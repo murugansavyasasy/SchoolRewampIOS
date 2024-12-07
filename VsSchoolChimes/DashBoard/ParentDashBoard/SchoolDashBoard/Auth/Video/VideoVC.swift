@@ -110,7 +110,7 @@ class VideoVC: UIViewController {
         self.view.endEditing(true)
     }
     func CellRegistre(){
-        tableview.register(UINib(nibName: "VideoTVCell", bundle: nil), forCellReuseIdentifier: "VideoTVCell")
+        tableview.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
     }
     
     @IBAction func back(_ sender: Any) {
@@ -129,7 +129,7 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "VideoTVCell", for: indexPath) as! VideoTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
         cell.videoName.text = filteredData[indexPath.row].name
         cell.playbtl.tag = indexPath.row
         cell.descriptContent.attributedText = descript(for: filteredData[indexPath.row].description ?? "", expanded: false)

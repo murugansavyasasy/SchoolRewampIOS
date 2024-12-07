@@ -12,7 +12,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func statusUpdate(status: Bool,index:Int) {
         studentData[index].isAbsent = status
         // Calculate the total count of present students
-        totalcount = studentData.filter { !$0.isAbsent }.count
+        totalcount = studentData.filter { $0.isAbsent }.count
         if totalcount == 0 {
             // All students are absent
             selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
@@ -121,13 +121,17 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
     }
     func registerCell(){
-        historyTable.register(UINib(nibName: "AttendenceTVC", bundle: nil), forCellReuseIdentifier: "AttendenceTVC")
+        historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
     }
     @IBAction func selectAllStd(_ sender: UIButton) {
         sender.isSelected.toggle()
         for i in 0..<studentData.count {
-            print(sender.isSelected)
             studentData[i].isAbsent = !sender.isSelected// Update your data model appropriately
+        }
+        for cell in historyTable.visibleCells {
+            if let customCell = cell as? AttendenceTVC {
+                customCell.custSwitch.isOn = !sender.isSelected
+            }
         }
         if !sender.isSelected{
             selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
@@ -152,15 +156,15 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AttendenceTVC", for: indexPath) as! AttendenceTVC
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
         cell.nameLbl.text = filterData?[indexPath.row].name
         cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
-        if let student = filterData?[indexPath.row] {
-            cell.configure(with: student, index: indexPath.row)
-        }
-        if selectAllBtn.isSelected{
-            cell.custSwitch.isOn.toggle()
-        }
+//        if let student = filterData?[indexPath.row] {
+//            cell.configure(with: student, index: indexPath.row)
+//        }
+        cell.index = indexPath.row
+        cell.isAbsent = filterData?[indexPath.row].isAbsent ?? true
+
         cell.delegate = self
         //        let student = studentData[indexPath.row]
         //

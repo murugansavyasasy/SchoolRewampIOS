@@ -25,7 +25,9 @@ class NoticeBoardVc: UIViewController, SelectNotice {
     var images : [UIImage] = []
     
     var previousOffset: CGFloat = 0.0
+    var delegate : HistorySelectDelegate?
     
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,10 +45,10 @@ class NoticeBoardVc: UIViewController, SelectNotice {
         let nib = UINib(nibName:"NoticeBoardTvcellTableViewCell", bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: "NoticeBoardTvcellTableViewCell")
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(Plusclick))
-        plusImgview.addGestureRecognizer(tap)
-        plusImgview.isUserInteractionEnabled = true
-        
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(Plusclick))
+//        plusImgview.addGestureRecognizer(tap)
+        plusImgview.isUserInteractionEnabled = false
+        plusImgview.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,9 +61,9 @@ class NoticeBoardVc: UIViewController, SelectNotice {
     }
     
     @IBAction func Plusclick(_ sender : Any){
-        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+//        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
     
     
@@ -89,6 +91,7 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         
         return cell
     }
+  
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -103,11 +106,11 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         if contentOffsetY > previousOffset && contentOffsetY > 0 {
             // Scrolling Down
             print("Scrolling Down")
-            plusImgview.isHidden = true
+//            plusImgview.isHidden = true
         } else if contentOffsetY < previousOffset {
             // Scrolling Up
             print("Scrolling Up")
-            plusImgview.isHidden = false
+//            plusImgview.isHidden = false
         }
         
         // Update the previous offset for the next scroll event
@@ -162,13 +165,8 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     }
     
     func didTapButton(title: String, content: String, items: [String]) {
-        
-//        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-//        vc.desc = content
-//        vc.title1 = title
-//        vc.items = items
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
+        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+
     }
     //scrol
 }

@@ -537,13 +537,13 @@
                                                                     <rect key="frame" x="-2" y="9" width="280" height="31"/>
                                                                 </slider>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.30 am" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cFh-4a-Fzg">
-                                                                    <rect key="frame" x="228.33333333333331" y="44.666666666666629" width="47.666666666666686" height="13.333333333333336"/>
+                                                                    <rect key="frame" x="228.33333333333331" y="48.666666666666629" width="47.666666666666686" height="13.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czM-7g-5yj">
-                                                                    <rect key="frame" x="0.0" y="44.666666666666629" width="23.666666666666668" height="13.333333333333336"/>
+                                                                    <rect key="frame" x="0.0" y="48.666666666666629" width="23.666666666666668" height="13.333333333333336"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -553,9 +553,9 @@
                                                             <constraints>
                                                                 <constraint firstItem="F5q-LX-VKf" firstAttribute="centerY" secondItem="ury-c2-oc1" secondAttribute="centerY" constant="-5" id="BZ3-u2-EGA"/>
                                                                 <constraint firstItem="czM-7g-5yj" firstAttribute="leading" secondItem="ury-c2-oc1" secondAttribute="leading" id="LX5-rR-CMY"/>
-                                                                <constraint firstAttribute="bottom" secondItem="cFh-4a-Fzg" secondAttribute="bottom" id="Pq4-z0-3nE"/>
+                                                                <constraint firstAttribute="bottom" secondItem="cFh-4a-Fzg" secondAttribute="bottom" constant="-4" id="Pq4-z0-3nE"/>
                                                                 <constraint firstAttribute="trailing" secondItem="F5q-LX-VKf" secondAttribute="trailing" constant="10" id="djB-OF-Qxx"/>
-                                                                <constraint firstAttribute="bottom" secondItem="czM-7g-5yj" secondAttribute="bottom" id="feg-OT-jGr"/>
+                                                                <constraint firstAttribute="bottom" secondItem="czM-7g-5yj" secondAttribute="bottom" constant="-4" id="feg-OT-jGr"/>
                                                                 <constraint firstAttribute="trailing" secondItem="cFh-4a-Fzg" secondAttribute="trailing" constant="10" id="ojp-2T-b0R"/>
                                                                 <constraint firstItem="F5q-LX-VKf" firstAttribute="leading" secondItem="ury-c2-oc1" secondAttribute="leading" id="xuw-nV-NcF"/>
                                                             </constraints>
@@ -999,7 +999,7 @@
             <color red="0.76099997758865356" green="0.90600001811981201" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

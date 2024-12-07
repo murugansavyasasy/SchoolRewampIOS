@@ -32,5 +32,10 @@ class CellConfingName {
     static let MeetingsTVcell = "MeetingsTVcell"
     static let PiechartCVCell = "PiechartCVCell"
 
+    static let AttachmentCVCell = "AttachmentCVCell"
+    static let DateCVC = "DateCVC"
+    static let ImageTVC = "ImageTVC"
+    static let AttendenceTVC = "AttendenceTVC"
+    static let VideoTVCell = "VideoTVCell"
    
 }

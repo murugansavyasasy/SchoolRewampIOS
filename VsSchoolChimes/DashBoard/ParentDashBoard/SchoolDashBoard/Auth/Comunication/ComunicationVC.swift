@@ -289,7 +289,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func CellRegistre(){
         historytable.register(UINib(nibName: CellConfingName.HistoryTC, bundle: nil), forCellReuseIdentifier: CellConfingName.HistoryTC)
         historytable.register(UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
-        dateCV.register(UINib(nibName: "DateCVC", bundle: nil), forCellWithReuseIdentifier: "DateCVC")
+        dateCV.register(UINib(nibName: CellConfingName.DateCVC, bundle: nil), forCellWithReuseIdentifier: CellConfingName.DateCVC)
         
     }
     
@@ -1137,7 +1137,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // get a reference to our storyboard cell
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCVC", for: indexPath as IndexPath) as! DateCVC
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCVC, for: indexPath as IndexPath) as! DateCVC
         
         let selectedDate = selectedDates[indexPath.item]
         let dateFormatter = DateFormatter()

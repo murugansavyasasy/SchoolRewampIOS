@@ -91,7 +91,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     
     
     func hiddenui(_ hide:Bool){
-        cellview.changeHeightAndAnimate(40, 110, 31, 100, top: 5)
+        cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
         pinImage.isHidden = hide
         datelbl.isHidden = hide
         dicriptContent.isHidden = hide
@@ -195,5 +195,6 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         
         return CGSize(width: 250, height: 135)
     }
+    
     
 }

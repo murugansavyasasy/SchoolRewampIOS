@@ -197,6 +197,8 @@
 "Apsent" = "अनुपस्थित";
 "Present" = "उपस्थित";
 "Filter" = "फ़िल्टर";
+"Present" = "उपस्थित";
+"Absent" = "अनुपस्थित";
 
 //MARK: Event
 "Circulars" = "परिपत्र";
@@ -214,3 +216,5 @@
 "EnterPlace" = "स्थान दर्ज करें";
 "EnterTitle" = "शीर्षक दर्ज करें";
 "EnterTextHere" = "यहाँ अपना टेक्स्ट दर्ज करें...";
+"egYogaEvent" = "उदा. योग कार्यक्रम";
+"egChennai" = "उदा. चेन्नई";

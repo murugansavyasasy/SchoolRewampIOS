@@ -15,8 +15,11 @@ protocol DeleteImge{
 @available(iOS 14.0, *)
 class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate ,UIDocumentPickerDelegate, DeleteImge{
     func deleteImage(index: Int) {
+        
         selectedImages.remove(at: index)
         costomView.imageCollectionview.reloadData()
+        
+        
     }
     
     
@@ -56,7 +59,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var doneButton2: UIButton!
     var time = "Jan\n15"
     var dateSelection = false
-    
+    var url : URL?
     let photoPickManager = PhotoPickerManager.shared
     var selectedImages: [UIImage] = []
     var convertedImagesUrlArray = NSMutableArray()
@@ -71,19 +74,39 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         registerCell()
         setupPlaceholder()
         keyboardDionebtn()
+        imageSelection()
+        
+    }
+    func imageSelection(){
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
             // Handle selected images here
-            
-            selectedImages.append(contentsOf: images)
-            for image in images {
-                print("Selected image: \(image)")
-               // photoPickManager.uploadAWS(image: image)
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
             }
+            selectedImages.append(contentsOf: images)
             costomView.imageCollectionview.reloadData()
         }
-        
-        
+        photoPickManager.pdfUrl = { [weak self] pdfurl in
+            guard let self = self else { return }
+            selectedImages.removeAll()
+            url = pdfurl.absoluteURL
+            selectedImages.append(UIImage(named: "pdf")!)
+            //            url = URL(string:pdfurl)
+            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
+            costomView.imageCollectionview.reloadData()
+        }
+        photoPickManager.onCameraImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            // Handle selected images here
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
+            selectedImages.append(images)
+            costomView.imageCollectionview.reloadData()
+        }
     }
     //MARK: BUTTON TITLE CURRANT TIME
     func setInitialButtonTitles() {
@@ -138,7 +161,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         calander2Btn.layer.cornerRadius = 10
         calanderBtn.layer.cornerRadius = 10 // Add corner radius if needed
         EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
-
+        
         ToLbl.setFont(style:.body, size: FontSize.BodySize)
         fromLbl.setFont(style:.body, size: FontSize.BodySize)
         subTitleLbl.setFont(style:.body, size: FontSize.BodySize)
@@ -155,8 +178,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         addPhotoLbl.text = "AddPhotos".translated()
         eventDeatail.text = "EventDetails".translated()
         EventTtleLbl.text = "EventTitle".translated()
-        placeTxt.placeholder = "EnterPlace".translated()
-        eventTxt.placeholder = "EnterTitle".translated()
+        placeTxt.placeholder = "egChennai".translated()
+        eventTxt.placeholder = "egYogaEvent".translated()
         
         setAttributedText(for: addPhotoLbl, with: "AddPhotos1".translated(), firstString: "AddPhotos".translated(), secondString: "Optional".translated(), color1: .black, color2: .lightGray)
         
@@ -232,7 +255,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         // Set the attributed string to the label
         label.attributedText = attributedString
     }
-
+    
     func keyboardDionebtn(){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -326,7 +349,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         dismiss(animated: true)
     }
     
-  
+    
     
     
     
@@ -334,18 +357,27 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return 1 + selectedImages.count
+        
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
+            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
         }else{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
+            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
             cell.delegate = self
             cell.deleteBtn.tag = indexPath.item - 1
+            //            if url != nil{
+            //                cell.selectedFileURL = url
+            //                cell.pdf.isHidden = false
+            //            }else{
+            //                cell.pdf.isHidden = false
+            //            }
             if selectedImages.count > indexPath.item - 1 {
                 // Assign the image starting from the second image in the selectedImages array
                 cell.imageViews.image = selectedImages[indexPath.item - 1]
@@ -373,6 +405,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             //
             // Camera option
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                openCamera()
             }
             alertController.addAction(cameraAction)
             
@@ -401,7 +434,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                
+                vc.selectedFileURL = url
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
                 //
@@ -411,17 +444,27 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func selectImages() {
-        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
-        print(photoPickManager.imageStr)
-        
+        if selectedImages.count != 5{
+            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
+    }
+    func openCamera(){
+        if selectedImages.count != 5{
+            photoPickManager.openCamera(from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
         
     }
     func selectPDF() {
-        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
-        
-        documentPicker.delegate = self
-        
-        self.present(documentPicker, animated: true, completion: nil)
+        photoPickManager.pickPDF(from: self)
         
     }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {

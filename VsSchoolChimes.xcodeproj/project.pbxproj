@@ -2702,6 +2702,7 @@
 				8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */,
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
+				84B050B02CF842E4002B63D4 /* ExamTmTblVCViewController.xib in Resources */,
 				844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,

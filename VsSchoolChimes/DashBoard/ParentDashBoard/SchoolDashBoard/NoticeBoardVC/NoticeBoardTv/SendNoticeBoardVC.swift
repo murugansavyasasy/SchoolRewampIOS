@@ -31,7 +31,7 @@ class SendNoticeBoardVC: UIViewController {
     var datePicker : UIDatePicker!
     var doneButton : UIButton!
     var dateselection = false
-    
+   
     
     
     override func viewDidLoad() {
