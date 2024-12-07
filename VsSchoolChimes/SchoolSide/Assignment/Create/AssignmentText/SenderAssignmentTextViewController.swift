@@ -17,15 +17,21 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
-
+    
+    @IBOutlet weak var AddphotosLbl: UILabel!
+    @IBOutlet weak var SubmissionDateLbl: UILabel!
+    @IBOutlet weak var letterscountLbl: UILabel!
+    @IBOutlet weak var DescriptionLbl: UILabel!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var addphotosheight: NSLayoutConstraint!
+    @IBOutlet weak var CreateView: UIView!
+    
     @IBOutlet weak var AssignmenttypeLbl: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var fullTextView: UIView!
-    @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var chooseImgBtn: UIButton!
-    @IBOutlet weak var imageSelectView: RectangularDashedView!
     @IBOutlet weak var categoryDropDownLbl: UILabel!
     @IBOutlet weak var assignTitleTxtFld: UITextField!
     @IBOutlet weak var chooseRecipientsBtn: UIButton!
@@ -57,25 +63,39 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if selectedShow == "Text" {
-            imageSelectView.isHidden = true
-            fullTextView.isHidden = false
-            collectionView.isHidden = true
-        }else if selectedShow == "Image" {
-            imageSelectView.isHidden = false
-            fullTextView.isHidden = true
-            collectionView.isHidden = true
-        }else if selectedShow == "Pdf" {
-            imageSelectView.isHidden = true
-            fullTextView.isHidden = true
-            collectionView.isHidden = true
-        }
+//        if selectedShow == "Text" {
+//            imageSelectView.isHidden = true
+//            fullTextView.isHidden = false
+//            collectionView.isHidden = true
+//        }else if selectedShow == "Image" {
+//            imageSelectView.isHidden = false
+//            fullTextView.isHidden = true
+//            collectionView.isHidden = true
+//        }else if selectedShow == "Pdf" {
+//            imageSelectView.isHidden = true
+//            fullTextView.isHidden = true
+//            collectionView.isHidden = true
+//        }
         
+        CreateView.layer.cornerRadius = 10
+        CreateView.layer.shadowColor = UIColor.black.cgColor
+        CreateView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        CreateView.layer.shadowRadius = 5
+        CreateView.layer.shadowOpacity = 0.3
+        CreateView.layer.cornerRadius = 10
+        
+        AssignmentTypeview.layer.cornerRadius = 10
+        categoryDropDownView.layer.cornerRadius = 10
         selectImgPdfview.layer.cornerRadius = 10
         contentTextView.layer.cornerRadius = 10
         contentTextView.layer.borderWidth = 1
         contentTextView.layer.borderColor = UIColor.black.cgColor
+        chooseRecipientsBtn.backgroundColor = .button
+        chooseRecipientsBtn.layer.cornerRadius = 10
+        collectionViewHeght.constant = 0
+        addphotosheight.constant = 0
         
+        StyleAndTranslater()
         
 //        collectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
@@ -118,9 +138,9 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             selectedImages.append(images)
 //            for image in images {
                 print("Selected image: \(images)")
-                collectionView.isHidden = false
-                collectionView.delegate = self
-                collectionView.dataSource = self
+//                collectionView.isHidden = false
+//                collectionView.delegate = self
+//                collectionView.dataSource = self
                 photoPickManager.uploadAWS(image: images)
 //            }
         }
@@ -140,6 +160,26 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     
     }
 
+    func  StyleAndTranslater(){
+        
+        //MARK: Button Font Style
+        //chooseImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        chooseRecipientsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
+        //MARK: Label Font Style
+        AddphotosLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SubmissionDateLbl.setFont(style: .title, size: FontSize.TitleSize)
+        letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
+        DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
+        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        categoryDropDownLbl.setFont(style: .title, size: FontSize.TitleSize)
+        categoryLbl.setFont(style: .title, size: FontSize.TitleSize)
+        //subDateLbl.setFont(style: .title, size: FontSize.TitleSize)
+
+        
+    }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         self.dismiss(animated: true, completion: nil)
@@ -147,6 +187,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         print("Selected Date: \(selectedDate)")
         }
     @IBAction func backVc() {
+        
         dismiss(animated: true)
     }
 
@@ -155,7 +196,9 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     
     @IBAction  func categoryDropdown (){
         dropDown.dataSource = ["GENERAL", "CLASS WORK", "PROJECT", "RESEARCH PAPER"]
-        dropDown.bottomOffset = CGPoint(x: 0, y:(categoryDropDownView.bounds.height))
+        self.view.layoutIfNeeded()
+        dropDown.width = categoryDropDownView.bounds.width
+        dropDown.bottomOffset = CGPoint(x: 0, y: categoryDropDownView.bounds.height - 110)
         dropDown.direction = .bottom
         dropDown.show()
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
@@ -168,14 +211,26 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     @IBAction  func typeDropdown (){
-        TypeDropDown.dataSource = ["Text", "Image", "Pdf"]
-        TypeDropDown.bottomOffset = CGPoint(x: 0, y:(AssignmentTypeview.bounds.height))
+        TypeDropDown.dataSource = ["TEXT", "IMAGE", "PDF"]
+        self.view.layoutIfNeeded()
+        TypeDropDown.width = AssignmentTypeview.bounds.width
+        TypeDropDown.bottomOffset = CGPoint(x: 0, y: AssignmentTypeview.bounds.height - 220)
+       
         TypeDropDown.direction = .bottom
         TypeDropDown.show()
         TypeDropDown.selectionAction = { [weak self] (index: Int, item: String) in
                print("Selected item: \(item) at index: \(index)")
                // Update the label inside the UIView
-            if let label = self?.TypeDropDown.subviews.first(where: { $0 is UILabel }) as? UILabel {
+            if item == "TEXT"{
+                
+                self!.collectionViewHeght.constant = 0
+                self!.addphotosheight.constant = 0
+            }
+            else{
+                self!.collectionViewHeght.constant = 120
+                self!.addphotosheight.constant = 20
+            }
+            if let label = self?.AssignmentTypeview.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self!.AssignmenttypeLbl.text = item
                }
            }

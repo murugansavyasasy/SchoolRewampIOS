@@ -128,6 +128,7 @@ class TapBarVC: UIViewController,UITabBarDelegate {
                selectViewController(secondVC)
            case 2:
                selectViewController(thirdVC)
+               
            case 3:
                selectViewController(fourthVC)
            default:

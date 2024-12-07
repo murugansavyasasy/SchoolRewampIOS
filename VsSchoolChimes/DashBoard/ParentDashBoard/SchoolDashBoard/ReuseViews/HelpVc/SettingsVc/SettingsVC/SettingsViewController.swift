@@ -14,10 +14,12 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var SettingspageHeading: UILabel!
     
     @IBOutlet weak var tableview: UITableView!
+    
+    let Setting = SettingStringFile()
    
     let sections: [Section] = [
-        Section(title: "GENERAL".translated(), items: ["Notifications".translated(), "FAQ".translated(), "Contact Us".translated(), "Terms and Conditions".translated(),"Change App Language".translated()]),
-        Section(title: "FEEDBACK".translated(), items: ["Report a bug".translated(), "Send Feedback".translated(), "Logout".translated()])
+        Section(title: "GENERAL", items: ["Notifications", "FAQ".translated(), "Contact Us", "Terms and Conditions","Change App Language"]),
+        Section(title: "FEEDBACK", items: ["Report a bug", "Send Feedback", "Logout"])
        ]
  
  
@@ -76,7 +78,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier:CellConfingName.SettingHeaderView) as! SettingHeaderView
-        cell.headerLabel.text = sections[section].title
+        cell.headerLabel.text = sections[section].title.translated()
         cell.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
         
         return cell
@@ -92,7 +94,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SettingsTableViewCell, for: indexPath) as! SettingsTableViewCell
-        cell.nameLbl.text = sections[indexPath.section].items[indexPath.row]
+        cell.nameLbl.text = sections[indexPath.section].items[indexPath.row].translated()
         
         
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
@@ -105,27 +107,35 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      
         
         
-        if  sections[indexPath.section].items[indexPath.row] == "Contact Us".translated(){
+        print("items[indexPath.row]", sections[indexPath.section].items[indexPath.row])
+        print("SettingStringFile.contactUs", Setting.termsAndConditions)
+        
+        
+        if  sections[indexPath.section].items[indexPath.row].translated() == Setting.contactUs{
+            
+            
+            print("SettingStringFile.contactUs",Setting.contactUs)
             
             let vc = ContactUsVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
-        }else if  sections[indexPath.section].items[indexPath.row] == "Notifications".translated(){
+        }else if  sections[indexPath.section].items[indexPath.row].translated() == Setting.notifications{
             
             let vc = NotificationViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
         }
-        else if  sections[indexPath.section].items[indexPath.row] == "Report a bug".translated(){
+        else if  sections[indexPath.section].items[indexPath.row].translated() == Setting.reportABug{
             
             let vc = ReportBugVcViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
-        }else if  sections[indexPath.section].items[indexPath.row] == "Send Feedback".translated(){
+        }else if  sections[indexPath.section].items[indexPath.row].translated() == Setting.sendFeedback{
             
             let vc = RateUsViewController(nibName: "RateUsViewController", bundle: nil)
             vc.modalPresentationStyle = .fullScreen
@@ -134,7 +144,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }
         
         
-        else if  sections[indexPath.section].items[indexPath.row] == "Logout".translated(){
+        else if  sections[indexPath.section].items[indexPath.row].translated() == Setting.logout{
             
             let vc = LogoutViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen
@@ -143,7 +153,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
         }
         
-        else if  sections[indexPath.section].items[indexPath.row] == "FAQ".translated(){
+        else if  sections[indexPath.section].items[indexPath.row].translated() == Setting.faq{
             
             
             let vc = FAQViewController(nibName: nil, bundle: nil)
@@ -152,13 +162,13 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }
         
         
-        else if  sections[indexPath.section].items[indexPath.row] == "Change App Language".translated(){
+        else if  sections[indexPath.section].items[indexPath.row].translated() == Setting.changeAppLanguage{
             
            
             let vc = LanguageVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
-        }else if sections[indexPath.section].items[indexPath.row] == "Terms and Conditions".translated(){
+        }else if sections[indexPath.section].items[indexPath.row].translated() == Setting.termsAndConditions{
             
             let vc = TermsAndCondVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen

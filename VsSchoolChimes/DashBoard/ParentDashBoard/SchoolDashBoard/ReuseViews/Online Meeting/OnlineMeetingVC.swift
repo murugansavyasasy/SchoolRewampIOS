@@ -7,6 +7,7 @@
 
 import UIKit
 import EventKit
+import DropDown
 
 class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     
@@ -39,6 +40,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     let gradientcolour : [String] = ["MeetGradient1", /*"gradient2",*/ "MeetGradient2"]
     var datePicker : UIDatePicker!
     var doneButton : UIButton!
+    var dropDown = DropDown()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,6 +76,10 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         LinkTxtfld.layer.borderColor = UIColor.black.cgColor
         SubmitBtn.layer.cornerRadius = 10
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MeetingDropdown))
+        selectMeetingView.addGestureRecognizer(tap)
+        
+        
         let nib  = UINib(nibName: CellConfingName.MeetingsTVcell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.MeetingsTVcell)
         
@@ -82,6 +88,23 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         
 
         // Do any additional setup after loading the view.
+    }
+    
+    @IBAction func MeetingDropdown(){
+        dropDown.anchorView = selectMeetingView
+           dropDown.dataSource = ["Zoom Meeting", "Google Meet", "Microsoft Teams","Others"]
+        dropDown.show()
+           dropDown.bottomOffset = CGPoint(x: 0, y: selectMeetingView.bounds.height)
+           
+           dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+               print("Selected item: \(item) at index: \(index)")
+               
+               // Update the label inside the UIView
+               if let label = self?.selectMeetingView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                   label.text = item
+               }
+                   
+           }
     }
 
     func gradientcolours(button : UIButton,colours : [CGColor]){
