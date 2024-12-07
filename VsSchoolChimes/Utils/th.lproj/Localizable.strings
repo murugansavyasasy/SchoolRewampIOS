@@ -60,6 +60,17 @@
 "Fee Pending Report" = "รายงานค้างชำระค่าเรียน";
 "Staff Wise Attendance Report" = "รายงานการเข้าชั้นเรียนของพนักงานตามลำดับ";
 
+
+"Events/Holidays" = "กิจกรรม/วันหยุด";
+"Request Leave" = "ขออนุญาตลาหยุด";
+"Fee Details" = "รายละเอียดค่าใช้จ่าย";
+"Images" = "รูปภาพ";
+"Interaction with Staff" = "การติดต่อกับเจ้าหน้าที่";
+"Quiz Exam" = "แบบทดสอบ/การสอบ";
+"LSRW" = "ฟัง พูด อ่าน เขียน ";
+"Class Timetable" = "ตารางเรียน";
+"Certificate Request" = "คำขอใบรับรอง";
+
 // MARK: profile page
 "Family Details" = "รายละเอียดครอบครัว";
 "Fathername" = "ชื่อบิดา";

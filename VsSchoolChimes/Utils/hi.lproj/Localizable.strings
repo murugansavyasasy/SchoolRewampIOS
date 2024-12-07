@@ -64,6 +64,20 @@
 "Staff Wise Attendance Report" = "कर्मचारी वार उपस्थिति रिपोर्ट";
 
 
+
+"Events/Holidays" = "कार्यक्रम/छुट्टियां";
+"Request Leave" = "अवकाश का अनुरोध";
+"Fee Details" = "शुल्क विवरण";
+"Images" = "छवियां";
+"Interaction with Staff" = "कर्मचारियों के साथ बातचीत";
+"Quiz Exam" = "प्रश्नोत्तरी परीक्षा";
+"LSRW" = "सुनना, बोलना, पढ़ना, लिखना ";
+"Class Timetable" = "कक्षा समय सारिणी";
+"Certificate Request" = "प्रमाणपत्र अनुरोध";
+
+
+
+
 // MARK: profile page
 "Family Details" = "परिवार का विवरण";
 "Fathername" = "पिता का नाम";

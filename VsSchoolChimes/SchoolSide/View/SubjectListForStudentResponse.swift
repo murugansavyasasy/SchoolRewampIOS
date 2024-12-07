@@ -7,49 +7,49 @@
 //
 
 import Foundation
-import ObjectMapper
-
-
-class SubjectListForStudentResponse     : Mappable {
-
-var Status                                       : Int!
-var Message                                      : String!
-var data                                         : [SubjectListForStudentData]!
-
-
-required init?(map: ObjectMapper.Map) {
-mapping(map: map)
-}
-
-func mapping(map: ObjectMapper.Map) {
-Status                                           <- map["Status"]
-Message                                          <- map["Message"]
-data                                             <- map["data"]
-
-}
-
-}
-
-class SubjectListForStudentData         : Mappable {
-
-
-    var subjectName                                      : String!
-    var subjectId                                    : Int!
-    var classTeacherId                                    : Int!
-
-
-
-required init?(map: ObjectMapper.Map)            {
-mapping(map: map)
-}
-
-func mapping(map: ObjectMapper.Map)              {
-    subjectName                                          <- map["subjectName"]
-    subjectId                                        <- map["subjectId"]
-    classTeacherId                                        <- map["classTeacherId"]
-
-
-}
-}
-
-
+//import ObjectMapper
+//
+//
+//class SubjectListForStudentResponse     : Mappable {
+//
+//var Status                                       : Int!
+//var Message                                      : String!
+//var data                                         : [SubjectListForStudentData]!
+//
+//
+//required init?(map: ObjectMapper.Map) {
+//mapping(map: map)
+//}
+//
+//func mapping(map: ObjectMapper.Map) {
+//Status                                           <- map["Status"]
+//Message                                          <- map["Message"]
+//data                                             <- map["data"]
+//
+//}
+//
+//}
+//
+//class SubjectListForStudentData         : Mappable {
+//
+//
+//    var subjectName                                      : String!
+//    var subjectId                                    : Int!
+//    var classTeacherId                                    : Int!
+//
+//
+//
+//required init?(map: ObjectMapper.Map)            {
+//mapping(map: map)
+//}
+//
+//func mapping(map: ObjectMapper.Map)              {
+//    subjectName                                          <- map["subjectName"]
+//    subjectId                                        <- map["subjectId"]
+//    classTeacherId                                        <- map["classTeacherId"]
+//
+//
+//}
+//}
+//
+//
