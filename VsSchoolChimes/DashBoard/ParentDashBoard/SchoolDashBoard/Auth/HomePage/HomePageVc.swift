@@ -23,6 +23,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var bottomCv: UICollectionView!
     
     var filteredItems: [String] = []
+    let menuName = MenuStringFile()
     
     var getValue : Int!
     var searchItem = 0
@@ -423,18 +424,18 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
                 let name = "Video Upload".translated()
                 let comunication = "Communication".translated()
-                if items[indexPath.row].translated() == MenuStringFile.VideoUpload{
+                if items[indexPath.row].translated() == menuName.VideoUpload{
                     videoNavigate()
-                }else if items[indexPath.row].translated() == MenuStringFile.Communication{
+                }else if items[indexPath.row].translated() == menuName.Communication{
                     let vc = ComunicationVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row].translated() == MenuStringFile.ImagePdf {
+                }else if items[indexPath.row].translated() == menuName.ImagePdf {
                     let vc = SenderImgPdfVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
-                }else if items[indexPath.row].translated() == MenuStringFile.LessonPlan {
+                }else if items[indexPath.row].translated() == menuName.LessonPlan {
                     
                     alert.showAlertCancel (
                         title: "Confirm Action",
@@ -452,10 +453,10 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                         }
                     )
                 }
-                else if items[indexPath.row] == MenuStringFile.PTM {
+                else if items[indexPath.row] == menuName.PTM {
                     
                     
-                }else if items[indexPath.row].translated() == MenuStringFile.NoticeBoard {
+                }else if items[indexPath.row].translated() == menuName.NoticeBoard {
                     let vc = EventPageVC(nibName: nil, bundle: nil)
                     vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
                     vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
@@ -467,19 +468,19 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                     homeWorkNavigate()
                     
-                }else if items[indexPath.row].translated() == MenuStringFile.LeaveRequests{
+                }else if items[indexPath.row].translated() == menuName.LeaveRequests{
                     //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
                     let vc = StudentHistryVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
-                }else if items[indexPath.row] == MenuStringFile.Assignment{
+                }else if items[indexPath.row] == menuName.Assignment{
                     
 //                    let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
                     let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row].translated() == MenuStringFile.Circulars{
+                }else if items[indexPath.row].translated() == menuName.Circulars{
                  
                     let vc = EventPageVC(nibName: nil, bundle: nil)
                     vc.page1 = EventsVC(nibName: nil, bundle: nil)
@@ -488,12 +489,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
-                }else if items[indexPath.row] == MenuStringFile.OnlineMeeting{
+                }else if items[indexPath.row] == menuName.OnlineMeeting{
 //                    let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
                     let vc = OnlineMeetingVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row] == MenuStringFile.Homework{
+                }else if items[indexPath.row] == menuName.Homework{
                     let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
@@ -509,8 +510,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             }else{
                 
                 
-                let name = MenuStringFile.VideoUpload
-                let comunication = MenuStringFile.Communication
+                let name = menuName.VideoUpload
+                let comunication = menuName.Communication
                 if name == items[indexPath.row].translated(){
                     let vc = VideoVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
@@ -519,12 +520,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = ComunicationVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row].translated() == MenuStringFile.ImagePdf {
+                }else if items[indexPath.row].translated() == menuName.ImagePdf {
                     let vc = ImagePdfVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
-                }else if items[indexPath.row].translated() == MenuStringFile.LessonPlan {
+                }else if items[indexPath.row].translated() == menuName.LessonPlan {
                     
                     alert.showAlertCancel (
                         title: AlertstringFile.title,
@@ -542,11 +543,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                         }
                     )
                 }
-                else if items[indexPath.row] == MenuStringFile.PTM {
+                else if items[indexPath.row] == menuName.PTM {
                     
                     videoNavigate()
                     
-                }else if items[indexPath.row].translated() == MenuStringFile.NoticeBoard {
+                }else if items[indexPath.row].translated() == menuName.NoticeBoard {
                     
                     let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
@@ -557,27 +558,27 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                     homeWorkNavigate()
                     
-                }else if items[indexPath.row] == MenuStringFile.LeaveRequests{
+                }else if items[indexPath.row] == menuName.LeaveRequests{
                     //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
                     let vc = StudentHistryVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
-                }else if items[indexPath.row] == MenuStringFile.Assignment{
+                }else if items[indexPath.row] == menuName.Assignment{
                     
                     let vc = PageVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row].translated() == MenuStringFile.Circulars{
+                }else if items[indexPath.row].translated() == menuName.Circulars{
                     
                     let vc = SenderEventsVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if receiverItems[indexPath.row].translated() == "Exam/Test".translated(){
+                }else if receiverItems[indexPath.row].translated() == menuName.ExamTest{
                     let vc = ExamTmTblVCViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if receiverItems[indexPath.row].translated() == "LSRW".translated(){
+                }else if receiverItems[indexPath.row].translated() == menuName.LSRW{
                     let vc = LsrwListShowViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
