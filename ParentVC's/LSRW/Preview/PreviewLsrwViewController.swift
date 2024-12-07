@@ -82,7 +82,7 @@ class PreviewLsrwViewController: UIViewController,AVAudioRecorderDelegate, AVAud
             
             img.isUserInteractionEnabled = true
             
-            self.img.sd_setImage(with: URL(string: attactText)!, placeholderImage: UIImage(named: "placeHolder.png"), options: SDWebImageOptions.refreshCached)
+//            self.img.sd_setImage(with: URL(string: attactText)!, placeholderImage: UIImage(named: "placeHolder.png"), options: SDWebImageOptions.refreshCached)
             voiceHoleView.isHidden = true
             textView.isHidden = true
             

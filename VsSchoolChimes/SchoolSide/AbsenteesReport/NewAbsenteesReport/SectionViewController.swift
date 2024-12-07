@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ObjectMapper
+//import ObjectMapper
 
 class SectionViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource {
     
@@ -20,12 +20,12 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backView: UIView!
-    var SectionWiseDatadetailsss : [SectionWiseDatadetails] = []
+//    var SectionWiseDatadetailsss : [SectionWiseDatadetails] = []
     var classNAme = ""
     var SchoolId  = String()
     let cvIconRowId = "SectionCollectionViewCell"
     let TVIdenfier = "SectionTvTableViewCell"
-    var studetDataRef : [StudentDataDetails] = []
+//    var studetDataRef : [StudentDataDetails] = []
     var SectionName = ""
     var ClickID = 0
     var DateRef : String!
@@ -39,7 +39,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         
         noRecordView.isHidden = true
         noRecordLbl.isHidden = true
-        sectionApiList(SectionId : SectionWiseDatadetailsss[0].SectionId, SchoolId: SchoolId)
+//        sectionApiList(SectionId : SectionWiseDatadetailsss[0].SectionId, SchoolId: SchoolId)
         let backViews = UITapGestureRecognizer(target: self, action: #selector(BackVc))
         backView.addGestureRecognizer(backViews)
         
@@ -57,7 +57,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return studetDataRef.count
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -68,37 +68,37 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         
         cell.selectionStyle = .none
         
-        let studentList :  StudentDataDetails = studetDataRef[indexPath.row]
-        
-        
-        
-        cell.nameLbl.text = studentList.studentName
-        cell.SectionLbl.text = SectionName
-        cell.AddmisionLbl.text =  "AdmissionNo" +  "  "  + " - " + "  " + studentList.admissionNo
-        
-        let rectShape = CAShapeLayer()
-        rectShape.bounds =  cell.profileImageView.frame
-        rectShape.position =  cell.profileImageView.center
-        rectShape.path = UIBezierPath(roundedRect:  cell.profileImageView.bounds, byRoundingCorners: [.topLeft,.bottomLeft], cornerRadii: CGSize(width: 6, height: 25)).cgPath
-        
-        
-        cell.profileImageView.layer.mask = rectShape
-        
-        
-        if studentList.photoPath == "" || studentList.photoPath == nil {
-            
-            
-            cell.profileImageView.image = UIImage(named: "profile")
-            
-            
-        }else{
-            
-            
-            
-            cell.profileImageView.sd_setImage(with: URL(string:  studentList.photoPath), placeholderImage: UIImage(named: "profile"))
-            
-        }
-        
+//        let studentList :  StudentDataDetails = studetDataRef[indexPath.row]
+//        
+//        
+//        
+//        cell.nameLbl.text = studentList.studentName
+//        cell.SectionLbl.text = SectionName
+//        cell.AddmisionLbl.text =  "AdmissionNo" +  "  "  + " - " + "  " + studentList.admissionNo
+//        
+//        let rectShape = CAShapeLayer()
+//        rectShape.bounds =  cell.profileImageView.frame
+//        rectShape.position =  cell.profileImageView.center
+//        rectShape.path = UIBezierPath(roundedRect:  cell.profileImageView.bounds, byRoundingCorners: [.topLeft,.bottomLeft], cornerRadii: CGSize(width: 6, height: 25)).cgPath
+//        
+//        
+//        cell.profileImageView.layer.mask = rectShape
+//        
+//        
+//        if studentList.photoPath == "" || studentList.photoPath == nil {
+//            
+//            
+//            cell.profileImageView.image = UIImage(named: "profile")
+//            
+//            
+//        }else{
+//            
+//            
+//            
+//            cell.profileImageView.sd_setImage(with: URL(string:  studentList.photoPath), placeholderImage: UIImage(named: "profile"))
+//            
+//        }
+//        
         
         
         return cell
@@ -114,7 +114,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return SectionWiseDatadetailsss.count
+        return 4
         
         
     }
@@ -145,12 +145,12 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         
         
         
-        let abesents  : SectionWiseDatadetails = SectionWiseDatadetailsss[indexPath.row]
-        
-        
-        SectionName =  classNAme + " " + "-" + " " + abesents.SectionName
-        cell.sectionNameLbl.text = classNAme + " " + "-" + " " + abesents.SectionName
-        cell.absentcountLbl.text = abesents.TotalAbsentees
+//        let abesents  : SectionWiseDatadetails = SectionWiseDatadetailsss[indexPath.row]
+//        
+//        
+//        SectionName =  classNAme + " " + "-" + " " + abesents.SectionName
+//        cell.sectionNameLbl.text = classNAme + " " + "-" + " " + abesents.SectionName
+//        cell.absentcountLbl.text = abesents.TotalAbsentees
         
         return cell
         
@@ -174,13 +174,13 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let abesents  : SectionWiseDatadetails = SectionWiseDatadetailsss[indexPath.row]
+//        let abesents  : SectionWiseDatadetails = SectionWiseDatadetailsss[indexPath.row]
         
         ClickID = indexPath.row
         
-        SectionName =  classNAme + " " + "-" + " " + abesents.SectionName
+//        SectionName =  classNAme + " " + "-" + " " + abesents.SectionName
         
-        sectionApiList(SectionId : abesents.SectionId, SchoolId: SchoolId)
+//        sectionApiList(SectionId : abesents.SectionId, SchoolId: SchoolId)
         
         cv.dataSource = self
         cv.delegate = self
@@ -206,57 +206,57 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     
     
     
-    func sectionApiList(SectionId : String!,SchoolId : String!){
-        
-        
-        let section = studentListModal()
-        
-        section.schoolId = SchoolId
-        section.sectionId = SectionId
-        section.absentOn = DateRef
-        
-        let sectionStr = section.toJSONString()
-        
-        print("sectionStrsectionStr",section.toJSON())
-        
-        StudentListReqst .call_request(param: sectionStr!){ [self]
-            
-            (res) in
-            
-            
-            let overallResp : studentListResponce =
-            Mapper<studentListResponce>().map(JSONString: res)!
-            
-            if overallResp.Status == 1{
-                
-                
-                studetDataRef = overallResp.data
-                
-                noRecordView.isHidden = true
-                noRecordLbl.isHidden = true
-                
-                tv.delegate = self
-                tv.dataSource = self
-                tv.reloadData()
-                
-            }else{
-                
-                
-                noRecordView.isHidden = false
-                noRecordLbl.isHidden = false
-                noRecordLbl.text = overallResp.Message
-                
-            }
-            
-            
-            
-            
-            
-        }
-        
-        
-        
-    }
+//    func sectionApiList(SectionId : String!,SchoolId : String!){
+//        
+//        
+//        let section = studentListModal()
+//        
+//        section.schoolId = SchoolId
+//        section.sectionId = SectionId
+//        section.absentOn = DateRef
+//        
+//        let sectionStr = section.toJSONString()
+//        
+//        print("sectionStrsectionStr",section.toJSON())
+//        
+//        StudentListReqst .call_request(param: sectionStr!){ [self]
+//            
+//            (res) in
+//            
+//            
+//            let overallResp : studentListResponce =
+//            Mapper<studentListResponce>().map(JSONString: res)!
+//            
+//            if overallResp.Status == 1{
+//                
+//                
+//                studetDataRef = overallResp.data
+//                
+//                noRecordView.isHidden = true
+//                noRecordLbl.isHidden = true
+//                
+//                tv.delegate = self
+//                tv.dataSource = self
+//                tv.reloadData()
+//                
+//            }else{
+//                
+//                
+//                noRecordView.isHidden = false
+//                noRecordLbl.isHidden = false
+//                noRecordLbl.text = overallResp.Message
+//                
+//            }
+//            
+//            
+//            
+//            
+//            
+//        }
+//        
+//        
+//        
+//    }
     
 }
 class SectionClick : UITapGestureRecognizer{

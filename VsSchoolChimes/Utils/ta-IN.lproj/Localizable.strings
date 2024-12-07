@@ -62,7 +62,15 @@
 "Student Report" = "மாணவர் அறிக்கை";
 "Fee Pending Report" = "நிலுவையில் உள்ள கட்டண அறிக்கை";
 "Staff Wise Attendance Report" = "ஊழியர் வாரியாக வருகை அறிக்கை";
-
+"Events/Holidays" =  "நிகழ்வுகள்/விடுமுறை";
+"Request Leave" = "விடுப்பு கோரிக்கை";
+"Fee Details" = "கட்டண விவரங்கள்";
+"Images" = "படங்கள்";
+"Interaction with Staff" = "பணியாளர்களுடன் தொடர்பு";
+"Quiz Exam" = "வினாடி வினா தேர்வு";
+"LSRW" = "கேட்குதல், பேசுதல், வாசித்தல், எழுதுதல்";
+"Class Timetable" = "வகுப்பு நேர அட்டவணை";
+"Certificate Request" = "சான்றிதழ் கோரிக்கை";
 
 // MARK: profile page
 

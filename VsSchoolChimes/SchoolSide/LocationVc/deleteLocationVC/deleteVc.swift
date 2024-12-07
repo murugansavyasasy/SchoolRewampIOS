@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ObjectMapper
+//import ObjectMapper
 class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
@@ -19,7 +19,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var InstitudeId : Int!
     var userId : Int!
     @IBOutlet weak var backView: UIView!
-    var getdata : [GetLatModaldataDetails] = []
+//    var getdata : [GetLatModaldataDetails] = []
     
     @IBOutlet weak var tv: UITableView!
     override func viewDidLoad() {
@@ -34,7 +34,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         imageView.image = gifImage
         let back  = UITapGestureRecognizer(target: self, action: #selector(backViewss))
         backView.addGestureRecognizer(back)
-        standerAndSec()
+//        standerAndSec()
     }
 
     
@@ -46,7 +46,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return getdata.count
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,22 +54,22 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
         deleteTV
         
         cell.selectionStyle = .none
-        let data : GetLatModaldataDetails = getdata[indexPath.row]
-        
-       
-        cell.logidudeLbl.text = data.longitude + " - " + data.latitude
-        cell.locationLbl.text = data.location
-        cell.distanceLbl.text =  "Distance" +  " - " +  data.distance + "Meters"
-
-        let deleteImage = Deleteclick(target: self, action: #selector(deletClick))
-        deleteImage.deleteID = data.id
-        cell.deleteImageView.addGestureRecognizer(deleteImage)
-        let editImages = Deleteclick(target: self, action: #selector(Edit))
-      
-        editImages.deleteID = data.id
-        editImages.distance = data.distance
-        editImages.location = data.location
-        cell.editImageView.addGestureRecognizer(editImages)
+//        let data : GetLatModaldataDetails = getdata[indexPath.row]
+//        
+//       
+//        cell.logidudeLbl.text = data.longitude + " - " + data.latitude
+//        cell.locationLbl.text = data.location
+//        cell.distanceLbl.text =  "Distance" +  " - " +  data.distance + "Meters"
+//
+//        let deleteImage = Deleteclick(target: self, action: #selector(deletClick))
+//        deleteImage.deleteID = data.id
+//        cell.deleteImageView.addGestureRecognizer(deleteImage)
+//        let editImages = Deleteclick(target: self, action: #selector(Edit))
+//      
+//        editImages.deleteID = data.id
+//        editImages.distance = data.distance
+//        editImages.location = data.location
+//        cell.editImageView.addGestureRecognizer(editImages)
      
         return cell
         
@@ -111,7 +111,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
                         if distance != "" && location != ""{
                             
                             
-                            edit(Id: ges.deleteID, Distance: distance, Location: location)
+//                            edit(Id: ges.deleteID, Distance: distance, Location: location)
                         }else{
                             
                             let refreshAlert = UIAlertController(title: "", message: "Location or distance field is empty", preferredStyle: UIAlertController.Style.alert)
@@ -144,7 +144,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
 
       
-            deletApi(LocationId : ges.deleteID)
+//            deletApi(LocationId : ges.deleteID)
       
         }))
 
@@ -164,165 +164,165 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     
-    func standerAndSec(){
-        
-       
-        
-        let param : [String : Any] =
-        [
-
-            "institute_id": InstitudeId!
-
-
-        ]
-
-        print("paramparam",param)
-
-        GetLocationReq.call_request(param: param){ [self]
-            (res) in
-
-            print("resres",res)
-            let getLocationResponse : getLatModel = Mapper<getLatModel>().map(JSONString: res)!
-
-
-            if getLocationResponse.status == 1  {
-              
-                getdata = getLocationResponse.data
-                
-                if getdata.count == 0{
-                    
-                   
-                    noRecLbl.isHidden = false
-                    noRecLbl.text = "No record found."
-                }else{
-                    
-                    noRecLbl.isHidden = true
-                    
-                }
-                tv.isHidden  = false
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-
-            }else{
-                tv.isHidden  = true
-                noRecLbl.isHidden = false
-                noRecLbl.text = getLocationResponse.message
-            }
-        }
-        
-        
-    }
+//    func standerAndSec(){
+//        
+//       
+//        
+//        let param : [String : Any] =
+//        [
+//
+//            "institute_id": InstitudeId!
+//
+//
+//        ]
+//
+//        print("paramparam",param)
+//
+//        GetLocationReq.call_request(param: param){ [self]
+//            (res) in
+//
+//            print("resres",res)
+//            let getLocationResponse : getLatModel = Mapper<getLatModel>().map(JSONString: res)!
+//
+//
+//            if getLocationResponse.status == 1  {
+//              
+//                getdata = getLocationResponse.data
+//                
+//                if getdata.count == 0{
+//                    
+//                   
+//                    noRecLbl.isHidden = false
+//                    noRecLbl.text = "No record found."
+//                }else{
+//                    
+//                    noRecLbl.isHidden = true
+//                    
+//                }
+//                tv.isHidden  = false
+//                tv.dataSource = self
+//                tv.delegate = self
+//                tv.reloadData()
+//
+//            }else{
+//                tv.isHidden  = true
+//                noRecLbl.isHidden = false
+//                noRecLbl.text = getLocationResponse.message
+//            }
+//        }
+//        
+//        
+//    }
     
-    func  deletApi(LocationId : Int){
-        
-        
-        
-        let delet = deleteModal()
-        
-        delet.instituteId = InstitudeId
-        delet.locationId = LocationId
-        
-        var deletstr = delet.toJSONString()
-        
-        
-        DeleteRequest.call_request(param: deletstr!) {
-        
-                        [self] (res) in
-        
-                        let addLocationResp : punchResponce = Mapper<punchResponce>().map(JSONString: res)!
-        
-                        if addLocationResp.status == 1 {
-        
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                                standerAndSec()
-                            
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }else{
-        
-                            
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                          
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }
-        
-        
-        
-                    }
-    }
+//    func  deletApi(LocationId : Int){
+//        
+//        
+//        
+//        let delet = deleteModal()
+//        
+//        delet.instituteId = InstitudeId
+//        delet.locationId = LocationId
+//        
+//        var deletstr = delet.toJSONString()
+//        
+//        
+//        DeleteRequest.call_request(param: deletstr!) {
+//        
+//                        [self] (res) in
+//        
+//                        let addLocationResp : punchResponce = Mapper<punchResponce>().map(JSONString: res)!
+//        
+//                        if addLocationResp.status == 1 {
+//        
+//                            noRecLbl.isHidden = true
+//                            
+//                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+//        
+//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                                standerAndSec()
+//                            
+//                                
+//                                
+//                            }))
+//                        present(refreshAlert, animated: true, completion: nil)
+//                        }else{
+//        
+//                            
+//                            noRecLbl.isHidden = true
+//                            
+//                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+//        
+//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//        
+//                          
+//                                
+//                                
+//                            }))
+//                        present(refreshAlert, animated: true, completion: nil)
+//                        }
+//        
+//        
+//        
+//                    }
+//    }
     
     
-    func  edit(Id : Int,Distance : String,Location : String){
-        
-        
-        
-        let edit = EditLocModal()
-        
-        
-        edit.id = Id
-        edit.distance = Distance
-        edit.location = Location
-        edit.userId = userId
-        
-    
-        
-        var editstr = edit.toJSONString()
-        
-        
-        EditLocrequest.call_request(param: editstr!) {
-        
-                        [self] (res) in
-        
-                        let addLocationResp : EditLocResponce = Mapper<EditLocResponce>().map(JSONString: res)!
-        
-                        if addLocationResp.status == 1 {
-        
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                                standerAndSec()
-                            
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }else{
-        
-                            
-                            noRecLbl.isHidden = true
-                            
-                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
-        
-                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-        
-                          
-                                
-                                
-                            }))
-                        present(refreshAlert, animated: true, completion: nil)
-                        }
-        
-        
-        
-                    }
-    }
+//    func  edit(Id : Int,Distance : String,Location : String){
+//        
+//        
+//        
+//        let edit = EditLocModal()
+//        
+//        
+//        edit.id = Id
+//        edit.distance = Distance
+//        edit.location = Location
+//        edit.userId = userId
+//        
+//    
+//        
+//        var editstr = edit.toJSONString()
+//        
+//        
+//        EditLocrequest.call_request(param: editstr!) {
+//        
+//                        [self] (res) in
+//        
+//                        let addLocationResp : EditLocResponce = Mapper<EditLocResponce>().map(JSONString: res)!
+//        
+//                        if addLocationResp.status == 1 {
+//        
+//                            noRecLbl.isHidden = true
+//                            
+//                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+//        
+//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                                standerAndSec()
+//                            
+//                                
+//                                
+//                            }))
+//                        present(refreshAlert, animated: true, completion: nil)
+//                        }else{
+//        
+//                            
+//                            noRecLbl.isHidden = true
+//                            
+//                            let refreshAlert = UIAlertController(title: "", message: addLocationResp.message, preferredStyle: UIAlertController.Style.alert)
+//        
+//                            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//        
+//                          
+//                                
+//                                
+//                            }))
+//                        present(refreshAlert, animated: true, completion: nil)
+//                        }
+//        
+//        
+//        
+//                    }
+//    }
     
     
     

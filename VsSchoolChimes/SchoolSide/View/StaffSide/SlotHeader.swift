@@ -23,14 +23,14 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
     let cvRowIdentifier = "SlotsCollectionViewCell"
   
 //
-    var stdSecDetails: [sectionDetails] = [] {
-           didSet {
-               
-               
-               cv.reloadData()
-           }
-       }
-       
+//    var stdSecDetails: [sectionDetails] = [] {
+//           didSet {
+//               
+//               
+//               cv.reloadData()
+//           }
+//       }
+//       
        override func awakeFromNib() {
            super.awakeFromNib()
            
@@ -48,7 +48,7 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
         
         
 
-        return stdSecDetails.count
+        return 2
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -56,10 +56,10 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvRowIdentifier, for: indexPath) as! SlotsCollectionViewCell
         print("SlotcellForItemAt")
         
-        let data : sectionDetails = stdSecDetails[indexPath.row]
-        cell.sectionFullView.backgroundColor = UIColor(named: "AppDark")
-        cell.sectionLbl.textColor = .white
-        cell.sectionLbl.text = data.class_name + " - " + data.section_name
+//        let data : sectionDetails = stdSecDetails[indexPath.row]
+//        cell.sectionFullView.backgroundColor = UIColor(named: "AppDark")
+//        cell.sectionLbl.textColor = .white
+//        cell.sectionLbl.text = data.class_name + " - " + data.section_name
         return cell
     }
 

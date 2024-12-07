@@ -8,7 +8,7 @@
 
     import UIKit
     import CoreLocation
-    import ObjectMapper
+//    import ObjectMapper
     import DropDown
     import LocalAuthentication
 class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,CLLocationManagerDelegate {
@@ -50,12 +50,12 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var currentLat = ""
     var currentLogi = ""
     var RefrenceAddress = ""
-    var getHistorydata  : [GetHirstorydatadetails] = []
+//    var getHistorydata  : [GetHirstorydatadetails] = []
     var instituteId : Int!
     var staffId : Int!
     var type : Int!
     var years: [String] = []
-    var fetchdata : [FechdataDetails]!
+//    var fetchdata : [FechdataDetails]!
     let dropDown = DropDown()
     var selectedDictionary = NSDictionary()
     var monthNames: [String] = []
@@ -88,15 +88,15 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         selectMontheight.constant = 0
         
       
-      let strUDID : String = Util.str_deviceid()
+//      let strUDID : String = Util.str_deviceid()
         
-        print("strUDID",strUDID)
+//        print("strUDID",strUDID)
       
         let deviceModel = getDeviceModelName()
       
         device = deviceModel
         print("Device Model: \(deviceModel)")
-        secureId = strUDID
+//        secureId = strUDID
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM"  // This will give the full month name
@@ -130,9 +130,9 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
           
             
-            instituteId = userDefaults.integer(forKey: DefaultsKeys.SchoolD)
-            staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
-            bioMatricEnable = userDefaults.integer(forKey: DefaultsKeys.biometricEnable)
+//            instituteId = userDefaults.integer(forKey: DefaultsKeys.SchoolD)
+//            staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
+//            bioMatricEnable = userDefaults.integer(forKey: DefaultsKeys.biometricEnable)
             
         }
         
@@ -399,7 +399,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         tv.isHidden = false
         
-        AttendaceHistory()
+//        AttendaceHistory()
     }
     
     
@@ -463,7 +463,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
             punchFullView.isHidden = false
             errorLabel.isHidden = true
             ErrorLablelView.isHidden = true
-            punchAPi()
+//            punchAPi()
           
             
         } else {
@@ -526,7 +526,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
             selectYearsLbl.text = item
             
             selectMonthlbl.text = monthNames[0]
-            AttendaceHistory()
+//            AttendaceHistory()
         }
     }
     
@@ -552,7 +552,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             selectMonthlbl.text = item
             
-            AttendaceHistory()
+//            AttendaceHistory()
         }
     }
     
@@ -639,7 +639,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         currentLat = String(currentLatitude)
         currentLogi = String(currentLongitude)
         
-        loactionFech(curentLogittude : currentLogi , currentLatitute : currentLat, distance: Int(distanceInMeters))
+//        loactionFech(curentLogittude : currentLogi , currentLatitute : currentLat, distance: Int(distanceInMeters))
         
         locationManager.stopUpdatingLocation()
     }
@@ -720,7 +720,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return getHistorydata.count
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -743,86 +743,86 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.firstInLbl.isHidden = false
         cell.workingHrsLbl.isHidden = false
         cell.toDateLbl.isHidden = false
-        let data : GetHirstorydatadetails = getHistorydata[indexPath.row]
-        
-        cell.namelbl.text = data.staffName
-        
-        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? "0")"
-        
+//        let data : GetHirstorydatadetails = getHistorydata[indexPath.row]
+//        
+//        cell.namelbl.text = data.staffName
+//        
+//        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? "0")"
+//        
        
         
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
         
-        let eventDate = data.date
-        let dateFormatter = DateFormatter()
-        // Input format
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+//        let eventDate = data.date
+//        let dateFormatter = DateFormatter()
+//        // Input format
+//        dateFormatter.dateFormat = "dd/MM/yyyy"
+//        
+//        if let date = dateFormatter.date(from: eventDate!) {
+//            
+//            dateFormatter.dateFormat = "EEEE"
+//            let formattedDate1 = dateFormatter.string(from: date)
+//            
+//            dateFormatter.dateFormat = "MMM"
+//            let formattedDate2 = dateFormatter.string(from: date)
+//            
+//            dateFormatter.dateFormat = "d"
+//            let formattedDate = dateFormatter.string(from: date)
+//            
+//            cell.dayLbl.text =  formattedDate1
+//            cell.datelbl.text = formattedDate
+//            cell.mnthLbl.text =  formattedDate2
+//            
+//            print(formattedDate)
+//        } else {
+//            print("Invalid date format")
+//        } // date converstion End
+//        
         
-        if let date = dateFormatter.date(from: eventDate!) {
-            
-            dateFormatter.dateFormat = "EEEE"
-            let formattedDate1 = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "MMM"
-            let formattedDate2 = dateFormatter.string(from: date)
-            
-            dateFormatter.dateFormat = "d"
-            let formattedDate = dateFormatter.string(from: date)
-            
-            cell.dayLbl.text =  formattedDate1
-            cell.datelbl.text = formattedDate
-            cell.mnthLbl.text =  formattedDate2
-            
-            print(formattedDate)
-        } else {
-            print("Invalid date format")
-        } // date converstion End
         
-        
-        
-        
-        if data.leave_type == "Absent"{
-            
-            cell.StatusLbl.text = data.leave_type
-            cell.StatusLbl.backgroundColor = .red
-            
-            cell.attendanceTypeLbl.text = data.attendance_type
-            
-            
-        }else{
-            cell.namelbl.text = data.staffName
-            
-            cell.StatusLbl.backgroundColor  = UIColor(named: "presentGreen")
-            cell.attendanceTypeLbl.text = data.attendance_type
-            cell.StatusLbl.text = data.leave_type
-            
-            
-        }
-        
-        cell.firstInLbl.text =  "First in - \(data.in_time ?? "0")"
-        if data.in_time ?? "" == "" {
-            cell.firstInLbl.isHidden = true
-        }
-        
-        cell.namelbl.text = data.staffName
-        if data.working_hours ?? "" == "" {
-            cell.workingHrsLbl.isHidden = true
-        }
-        cell.toDateLbl.text = "Last out - \(data.out_time ?? "0")"
-        if data.out_time ?? "" == "" {
-            cell.toDateLbl.isHidden = true
-        }
-        cell.attendanceTypeLbl.text = data.attendance_type
-        cell.namelbl.text =
-            data.staffName
-    
-        
-        let click = imageClick(target: self, action: #selector(click))
-        click.date = data.date
-        click.staffId = data.staffId
-       
-        cell.fullView.addGestureRecognizer(click)
+//        
+//        if data.leave_type == "Absent"{
+//            
+//            cell.StatusLbl.text = data.leave_type
+//            cell.StatusLbl.backgroundColor = .red
+//            
+//            cell.attendanceTypeLbl.text = data.attendance_type
+//            
+//            
+//        }else{
+//            cell.namelbl.text = data.staffName
+//            
+//            cell.StatusLbl.backgroundColor  = UIColor(named: "presentGreen")
+//            cell.attendanceTypeLbl.text = data.attendance_type
+//            cell.StatusLbl.text = data.leave_type
+//            
+//            
+//        }
+//        
+//        cell.firstInLbl.text =  "First in - \(data.in_time ?? "0")"
+//        if data.in_time ?? "" == "" {
+//            cell.firstInLbl.isHidden = true
+//        }
+//        
+//        cell.namelbl.text = data.staffName
+//        if data.working_hours ?? "" == "" {
+//            cell.workingHrsLbl.isHidden = true
+//        }
+//        cell.toDateLbl.text = "Last out - \(data.out_time ?? "0")"
+//        if data.out_time ?? "" == "" {
+//            cell.toDateLbl.isHidden = true
+//        }
+//        cell.attendanceTypeLbl.text = data.attendance_type
+//        cell.namelbl.text =
+//            data.staffName
+//    
+//        
+//        let click = imageClick(target: self, action: #selector(click))
+//        click.date = data.date
+//        click.staffId = data.staffId
+//       
+//        cell.fullView.addGestureRecognizer(click)
         return cell
     }
     
@@ -842,125 +842,125 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
-    func punchAPi(){
-        
-       
-        
-        
-        
-        let punchModal = punchModal()
-        
-        punchModal.institute_id = instituteId
-        punchModal.user_id = staffId
-        punchModal.staff_or_student = "staff"
-        punchModal.punch_type = punch_type
-        punchModal.device_id = secureId
-        punchModal.device_model = device
-        
-        var  punchModalStr = punchModal.toJSONString()
-        print("punchModalStr",punchModal.toJSON())
-        
-        
-        PunchRequest.call_request(param: punchModalStr!) {
-            
-            [self] (res) in
-            
-            let PunchRes : punchResponce = Mapper<punchResponce>().map(JSONString: res)!
-            
-            if PunchRes.status == 1 {
-                
-                let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-
-                    
-                }))
-                present(refreshAlert, animated: true, completion: nil)
-            }else{
-                
-                
-                let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                    
-
-                    
-                }))
-                present(refreshAlert, animated: true, completion: nil)
-                
-            }
-            
-            
-            
-        }
-        
-        
-    }
+//    func punchAPi(){
+//        
+//       
+//        
+//        
+//        
+//        let punchModal = punchModal()
+//        
+//        punchModal.institute_id = instituteId
+//        punchModal.user_id = staffId
+//        punchModal.staff_or_student = "staff"
+//        punchModal.punch_type = punch_type
+//        punchModal.device_id = secureId
+//        punchModal.device_model = device
+//        
+//        var  punchModalStr = punchModal.toJSONString()
+//        print("punchModalStr",punchModal.toJSON())
+//        
+//        
+//        PunchRequest.call_request(param: punchModalStr!) {
+//            
+//            [self] (res) in
+//            
+//            let PunchRes : punchResponce = Mapper<punchResponce>().map(JSONString: res)!
+//            
+//            if PunchRes.status == 1 {
+//                
+//                let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
+//                
+//                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                    
+//
+//                    
+//                }))
+//                present(refreshAlert, animated: true, completion: nil)
+//            }else{
+//                
+//                
+//                let refreshAlert = UIAlertController(title: "", message: PunchRes.message, preferredStyle: UIAlertController.Style.alert)
+//                
+//                refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                    
+//
+//                    
+//                }))
+//                present(refreshAlert, animated: true, completion: nil)
+//                
+//            }
+//            
+//            
+//            
+//        }
+//        
+//        
+//    }
     
     
-    func AttendaceHistory(){
-        
-        let year = selectYearsLbl.text!
-        var YearLbl = ""
-        let monthName = selectMonthlbl.text!
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM" // Full month name format
-        
-        if let date = dateFormatter.date(from: monthName) {
-            let calendar = Calendar.current
-            let monthNumber = calendar.component(.month, from: date)
-            print("The month number for \(monthName) is \(monthNumber).")
-            
-            if  monthNumber == 1 || monthNumber == 2 || monthNumber == 3 || monthNumber == 4 || monthNumber == 5 || monthNumber == 6 || monthNumber == 7 || monthNumber == 8 || monthNumber == 9 {
-                YearLbl = year +  "-" + "0" + String(monthNumber)
-            }else{
-                YearLbl = year +  "-"  + String(monthNumber)
-                
-            }
-            
-        } else {
-            print("Invalid month name.")
-        }
-        
-        let param : [String : Any] =
-        [
-            
-            "institiuteId": instituteId!,
-            "attendance_month" : YearLbl,
-            "userId"    : staffId!
-            
-            
-        ]
-        
-        print("paramparam",param)
-        
-        GetAttendanceHistroyReq.call_request(param: param){ [self]
-            (res) in
-            
-            print("resres",res)
-            let getattendace : GethistoryModal = Mapper<GethistoryModal>().map(JSONString: res)!
-            
-            
-            if getattendace.status == 1  {
-                tv.isHidden  = false
-                
-                getHistorydata = getattendace.data
-                noRecordLbl.isHidden = true
-                tv.dataSource = self
-                tv.delegate = self
-                tv.reloadData()
-                
-            }else{
-                tv.isHidden  = true
-                noRecordLbl.isHidden = false
-                noRecordLbl.text = getattendace.message
-                
-            }
-        }
-        
-        
-    }
+//    func AttendaceHistory(){
+//        
+//        let year = selectYearsLbl.text!
+//        var YearLbl = ""
+//        let monthName = selectMonthlbl.text!
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "MMMM" // Full month name format
+//        
+//        if let date = dateFormatter.date(from: monthName) {
+//            let calendar = Calendar.current
+//            let monthNumber = calendar.component(.month, from: date)
+//            print("The month number for \(monthName) is \(monthNumber).")
+//            
+//            if  monthNumber == 1 || monthNumber == 2 || monthNumber == 3 || monthNumber == 4 || monthNumber == 5 || monthNumber == 6 || monthNumber == 7 || monthNumber == 8 || monthNumber == 9 {
+//                YearLbl = year +  "-" + "0" + String(monthNumber)
+//            }else{
+//                YearLbl = year +  "-"  + String(monthNumber)
+//                
+//            }
+//            
+//        } else {
+//            print("Invalid month name.")
+//        }
+//        
+//        let param : [String : Any] =
+//        [
+//            
+//            "institiuteId": instituteId!,
+//            "attendance_month" : YearLbl,
+//            "userId"    : staffId!
+//            
+//            
+//        ]
+//        
+//        print("paramparam",param)
+//        
+//        GetAttendanceHistroyReq.call_request(param: param){ [self]
+//            (res) in
+//            
+//            print("resres",res)
+//            let getattendace : GethistoryModal = Mapper<GethistoryModal>().map(JSONString: res)!
+//            
+//            
+//            if getattendace.status == 1  {
+//                tv.isHidden  = false
+//                
+//                getHistorydata = getattendace.data
+//                noRecordLbl.isHidden = true
+//                tv.dataSource = self
+//                tv.delegate = self
+//                tv.reloadData()
+//                
+//            }else{
+//                tv.isHidden  = true
+//                noRecordLbl.isHidden = false
+//                noRecordLbl.text = getattendace.message
+//                
+//            }
+//        }
+//        
+//        
+//    }
     
     
     func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
@@ -980,64 +980,64 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return degrees * .pi / 180
     }
     
-    func loactionFech(curentLogittude : String , currentLatitute : String, distance : Int  ){
-        
-        
-        
-        let param : [String : Any] =
-        [
-            
-            "userId": staffId!,
-            "institute_id" : instituteId!
-            
-        ]
-        
-        print("paramparamm,nc",param)
-        
-        fechLocationReq.call_request(param: param){ [self]
-            (res) in
-            
-            print("resres",res)
-            let getattendace : fechModal = Mapper<fechModal>().map(JSONString: res)!
-            
-            if getattendace.status == 1  {
-                noRecordLbl.isHidden = true
-                for i in getattendace.data{
-                    var distanceInt = Int(i.distance)
-                    let distance = haversineDistance(lat1: Double(i.latitude)!, lon1: Double(i.longitude)!, lat2: Double(currentLatitute)!, lon2: Double(curentLogittude)!)
-                    currentDistanceForPuchCheck = distance
-                    apiDistanceForPuchCheck = distanceInt
-                    
-                    // Check if the distance is smaller
-                    if distance <= Double(distanceInt!) {
-                      
-                        punchFullView.isHidden = false
-                        errorLabel.isHidden = true
-                        ErrorLablelView.isHidden = true
-                        
-                        break
-                        
-                    } else {
-                       
-                        
-                        errorLabel.isHidden = false
-                        punchFullView.isHidden = true
-                        ErrorLablelView.isHidden = false
-                    }
-                    
-                }
-                
-            }else{
-                
-                ErrorLablelView.isHidden = true
-                noRecordLbl.text = getattendace.message
-                noRecordLbl.isHidden = false
-                
-            }
-        }
-        
-        
-    }
+//    func loactionFech(curentLogittude : String , currentLatitute : String, distance : Int  ){
+//        
+//        
+//        
+//        let param : [String : Any] =
+//        [
+//            
+//            "userId": staffId!,
+//            "institute_id" : instituteId!
+//            
+//        ]
+//        
+//        print("paramparamm,nc",param)
+//        
+//        fechLocationReq.call_request(param: param){ [self]
+//            (res) in
+//            
+//            print("resres",res)
+//            let getattendace : fechModal = Mapper<fechModal>().map(JSONString: res)!
+//            
+//            if getattendace.status == 1  {
+//                noRecordLbl.isHidden = true
+//                for i in getattendace.data{
+//                    var distanceInt = Int(i.distance)
+//                    let distance = haversineDistance(lat1: Double(i.latitude)!, lon1: Double(i.longitude)!, lat2: Double(currentLatitute)!, lon2: Double(curentLogittude)!)
+//                    currentDistanceForPuchCheck = distance
+//                    apiDistanceForPuchCheck = distanceInt
+//                    
+//                    // Check if the distance is smaller
+//                    if distance <= Double(distanceInt!) {
+//                      
+//                        punchFullView.isHidden = false
+//                        errorLabel.isHidden = true
+//                        ErrorLablelView.isHidden = true
+//                        
+//                        break
+//                        
+//                    } else {
+//                       
+//                        
+//                        errorLabel.isHidden = false
+//                        punchFullView.isHidden = true
+//                        ErrorLablelView.isHidden = false
+//                    }
+//                    
+//                }
+//                
+//            }else{
+//                
+//                ErrorLablelView.isHidden = true
+//                noRecordLbl.text = getattendace.message
+//                noRecordLbl.isHidden = false
+//                
+//            }
+//        }
+//        
+//        
+//    }
     
     
   

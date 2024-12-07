@@ -22,7 +22,7 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     @IBOutlet weak var holeview: UIViewX!
     @IBOutlet weak var lineview: UIViewX!
     var identifier = "TimeCollectionViewCell"
-    var getTeacherData : [GetTeacherwiseSlotAvailabilityData] = []
+//    var getTeacherData : [GetTeacherwiseSlotAvailabilityData] = []
     
     var duplicateStaffTimes: [Int: [(from_time: String, to_time: String)]] = [:]
     var staffIdsArray : [Int] = []
@@ -76,146 +76,146 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! TimeCollectionViewCell
                 
                
-                cell.timelbl.text =   slotdetails[indexPath.row].fromTime + " - " +  slotdetails[indexPath.row].toTime
-
-
-        timeAArr.removeAll()
-        
-        
-                for i in slotdetails{
-
-                    if i.isBooked == 1{
-                        for ival in slotdetails {
-                                timeAArr.append(ival.slotId)
-
-                    }
-                    }
-                    else{
-
-                    }
-
-                }
-
-
-                if timeAArr.count != 0 {
-
-
-                    for value in slotdetails {
-                       
-                        if timeAArr.contains(value.slotId) {
-
-
-                            if slotdetails[indexPath.row].isBooked == 1{
-                                cell.timeHoleView.backgroundColor = .systemOrange
-                                        cell.timelbl.textColor = .white
-                                cell.timeHoleView.isUserInteractionEnabled = false
-                                cv.allowsSelection = false
-
-
-                                    }
-                                    else{
-                                        cell.timeHoleView.backgroundColor = .white
-                                        cell.timeHoleView.borderColor = .lightGray
-                                        cell.timelbl.textColor = .lightGray
-                                        cell.timeHoleView.isUserInteractionEnabled = false
-                                        cv.allowsSelection = false
-
-
-                                    }
-
-                        }
-                    }
-
-                }else {
-                    cell.timeHoleView.backgroundColor = .white
-                    cell.timeHoleView.isUserInteractionEnabled = true
-                    cell.timelbl.textColor = .black
-                    cv.allowsSelection = true
-
-                   
-
-
-                }
-
-        
-        
-        
-        let lowercasedArray = DefaultsKeys.timesarr.map { $0.lowercased() }
-                if DefaultsKeys.timesarr.count != 0 {
-                                      
-                                    
-                     if lowercasedArray.contains(slotdetails[indexPath.row].fromTime) || lowercasedArray.contains(slotdetails[indexPath.row].toTime) {
-                                               cell.timeHoleView.backgroundColor = .white
-                                               cell.timeHoleView.borderColor = .lightGray
-                                               cell.timelbl.textColor = .lightGray
-                                               cell.timeHoleView.isUserInteractionEnabled = false
-                         cv.allowsSelection = false
-
-
-                                           }else{
-                                               cell.timeHoleView.backgroundColor = .white
-                                               cell.timeHoleView.isUserInteractionEnabled = true
-                                               cell.timelbl.textColor = .black
-                                               cv.allowsSelection = true
-
-
-
-
-                                           }
-                                       
-                               }
-        
-        
-        
-        
-        
-        
-     
-
-        if DefaultsKeys.ClickID == slotdetails[indexPath.row].slotId  {
-            cell.timeHoleView.backgroundColor = .systemOrange
-                   cell.timelbl.textColor = .white
-            cv.allowsSelection = true
-
-            if DefaultsKeys.bookingSlotId.count != 0{
-                
-                    
-                
-                var seen = Set<Int>()
-                                let uniqueValues = DefaultsKeys.bookingSlotId.filter { element in
-                                    if seen.contains(element) {
-                                        print("element",element)
-                                        return false
-                                    } else {
-                                        seen.insert(element)
-                //
-                                        print("seenseen",seen)
-
-                                        return true
-                                    }
-                                }
-                                print("uniqueValues",uniqueValues)
-                                DefaultsKeys.bookingSlotId = uniqueValues
-                            }
-                
-                
-            
-                          }
-        
-        
-        
-        
-        
-        
-                          else{
-//                              cell.timeHoleView.backgroundColor = .white
-//                              cell.timeHoleView.borderColor = .lightGray
-//                              cell.timelbl.textColor = .lightGray
-//                              cell.timeHoleView.isUserInteractionEnabled = false
-
-                          }
-        
-        
+//                cell.timelbl.text =   slotdetails[indexPath.row].fromTime + " - " +  slotdetails[indexPath.row].toTime
+//
+//
+//        timeAArr.removeAll()
+//        
+//        
+//                for i in slotdetails{
+//
+//                    if i.isBooked == 1{
+//                        for ival in slotdetails {
+//                                timeAArr.append(ival.slotId)
+//
+//                    }
+//                    }
+//                    else{
+//
+//                    }
+//
+//                }
+//
+//
+//                if timeAArr.count != 0 {
+//
+//
+//                    for value in slotdetails {
+//                       
+//                        if timeAArr.contains(value.slotId) {
+//
+//
+//                            if slotdetails[indexPath.row].isBooked == 1{
+//                                cell.timeHoleView.backgroundColor = .systemOrange
+//                                        cell.timelbl.textColor = .white
+//                                cell.timeHoleView.isUserInteractionEnabled = false
+//                                cv.allowsSelection = false
+//
+//
+//                                    }
+//                                    else{
+//                                        cell.timeHoleView.backgroundColor = .white
+//                                        cell.timeHoleView.borderColor = .lightGray
+//                                        cell.timelbl.textColor = .lightGray
+//                                        cell.timeHoleView.isUserInteractionEnabled = false
+//                                        cv.allowsSelection = false
+//
+//
+//                                    }
+//
+//                        }
+//                    }
+//
+//                }else {
+//                    cell.timeHoleView.backgroundColor = .white
+//                    cell.timeHoleView.isUserInteractionEnabled = true
+//                    cell.timelbl.textColor = .black
+//                    cv.allowsSelection = true
+//
+//                   
+//
+//
+//                }
+//
+//        
+//        
+//        
+//        let lowercasedArray = DefaultsKeys.timesarr.map { $0.lowercased() }
+//                if DefaultsKeys.timesarr.count != 0 {
+//                                      
+//                                    
+//                     if lowercasedArray.contains(slotdetails[indexPath.row].fromTime) || lowercasedArray.contains(slotdetails[indexPath.row].toTime) {
+//                                               cell.timeHoleView.backgroundColor = .white
+//                                               cell.timeHoleView.borderColor = .lightGray
+//                                               cell.timelbl.textColor = .lightGray
+//                                               cell.timeHoleView.isUserInteractionEnabled = false
+//                         cv.allowsSelection = false
+//
+//
+//                                           }else{
+//                                               cell.timeHoleView.backgroundColor = .white
+//                                               cell.timeHoleView.isUserInteractionEnabled = true
+//                                               cell.timelbl.textColor = .black
+//                                               cv.allowsSelection = true
+//
+//
+//
+//
+//                                           }
+//                                       
+//                               }
+//        
+//        
+//        
+//        
+//        
+//        
+//     
+//
+//        if DefaultsKeys.ClickID == slotdetails[indexPath.row].slotId  {
+//            cell.timeHoleView.backgroundColor = .systemOrange
+//                   cell.timelbl.textColor = .white
+//            cv.allowsSelection = true
+//
+//            if DefaultsKeys.bookingSlotId.count != 0{
+//                
+//                    
+//                
+//                var seen = Set<Int>()
+//                                let uniqueValues = DefaultsKeys.bookingSlotId.filter { element in
+//                                    if seen.contains(element) {
+//                                        print("element",element)
+//                                        return false
+//                                    } else {
+//                                        seen.insert(element)
+//                //
+//                                        print("seenseen",seen)
+//
+//                                        return true
+//                                    }
+//                                }
+//                                print("uniqueValues",uniqueValues)
+//                                DefaultsKeys.bookingSlotId = uniqueValues
+//                            }
+//                
+//                
+//            
+//                          }
+//        
+//        
+//        
+//        
+//        
+//        
+//                          else{
+////                              cell.timeHoleView.backgroundColor = .white
+////                              cell.timeHoleView.borderColor = .lightGray
+////                              cell.timelbl.textColor = .lightGray
+////                              cell.timeHoleView.isUserInteractionEnabled = false
+//
+//                          }
+//        
+//        
         
         
                 return cell
@@ -237,11 +237,11 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
-            DefaultsKeys.timesarr.removeAll()
+//            DefaultsKeys.timesarr.removeAll()
     
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimeCollectionViewCell", for: indexPath) as! TimeCollectionViewCell
 
-            DefaultsKeys.ClickID = slotdetails[indexPath.row].slotId
+//            DefaultsKeys.ClickID = slotdetails[indexPath.row].slotId
             print("slotde.row.isBooked",slotdetails[indexPath.row].isBooked)
             print("slotdDefaultsKeys.ClickIDd",slotdetails[indexPath.row].isBooked)
 
@@ -271,7 +271,7 @@ print("COLRR",cell.timeHoleView.backgroundColor)
                     if ids.contains(slotdetails[indexPath.row].slotId){
 
                         slotIdArr.append(slotdetails[indexPath.row].slotId)
-                        DefaultsKeys.bookingSlotId.append(contentsOf: slotIdArr)
+//                        DefaultsKeys.bookingSlotId.append(contentsOf: slotIdArr)
 
                     }else{
 
@@ -325,8 +325,8 @@ print("COLRR",cell.timeHoleView.backgroundColor)
 
 
 
-                            DefaultsKeys.timesarr.append(timeGetList)
-                            print("DefaultsKeys.timesarr", DefaultsKeys.timesarr)
+//                            DefaultsKeys.timesarr.append(timeGetList)
+//                            print("DefaultsKeys.timesarr", DefaultsKeys.timesarr)
 
 
                             time = calendar.date(byAdding: .minute, value: 1, to: time)!

@@ -11,10 +11,10 @@ import DropDown
 import PhotosUI
 import Alamofire
 import AVFoundation
-import ObjectMapper
+//import ObjectMapper
 import KRProgressHUD
 
-class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate, PHPickerViewControllerDelegate,AVAudioRecorderDelegate, AVAudioPlayerDelegate,UITextViewDelegate {
+class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate,UITextViewDelegate {
     
     @IBOutlet weak var addAttachHeadingLbl: UILabel!
     @IBOutlet weak var restrictionTv: UITableView!
@@ -100,7 +100,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     var studentId = String()
     var skillId : String!
     var cameraSelect : Int!
-    var restrictionData : [RestrictionResponse] = []
+//    var restrictionData : [RestrictionResponse] = []
     var imageLimit : Int!
     var restrictionRowNib = "RestrictionTableViewCell"
     var strTextViewPlaceholder = String()
@@ -112,7 +112,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         
         let userDefaults = UserDefaults.standard
        
-        studentId = userDefaults.string(forKey: DefaultsKeys.chilId)!
+//        studentId = userDefaults.string(forKey: DefaultsKeys.chilId)!
         
         contentTextViw.delegate = self
         addBtn.backgroundColor = .lightGray
@@ -127,8 +127,8 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
         backView.addGestureRecognizer(backGesture)
         
-        let strImageLimit : NSString = UserDefaults.standard.object(forKey: IMAGE_COUNT) as! NSString
-        imageLimit = strImageLimit.integerValue
+//        let strImageLimit : NSString = UserDefaults.standard.object(forKey: IMAGE_COUNT) as! NSString
+//        imageLimit = strImageLimit.integerValue
         print("imageLimit",imageLimit)
         addAttachHeadingLbl.isHidden = true
         
@@ -435,7 +435,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                     // Change the button color to gray when no text exists
                     self.addBtn.backgroundColor = .lightGray
                 }
-            uploadPDFFileToAWS(pdfData: pdfData!)
+//            uploadPDFFileToAWS(pdfData: pdfData!)
             
         } catch {
             print("set PDF filer error : ", error)
@@ -471,14 +471,18 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     func ImagePickerGallery() {
         
         
-        var config = PHPickerConfiguration()
-                  config.selectionLimit = imageLimit // Limit selection to 5 images
-                  config.filter = .images    // Only allow images
-                  let picker = PHPickerViewController(configuration: config)
-                  picker.delegate = self
-     
-                  present(picker, animated: true, completion: nil)
-                  
+//        var config = PHPickerConfiguration()
+//                  config.selectionLimit = imageLimit // Limit selection to 5 images
+//                  config.filter = .images    // Only allow images
+//        if #available(iOS 14.0, *) {
+//            let picker = PHPickerViewController(configuration: config)
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//                  picker.delegate = self
+//     
+//                  present(picker, animated: true, completion: nil)
+//                  
     }
     
     
@@ -508,229 +512,64 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             restrictionTv.isHidden = false
             restrictionView.isHidden = false
             
-            restrictionList()
+//            restrictionList()
             
             
         }
        }
     
     
-    func uploadPDFFileToAWS(pdfData : Data){
-        let S3BucketName = DefaultsKeys.bucketNameIndia
-        let CognitoPoolID = DefaultsKeys.CognitoPoolID
-        let Region = AWSRegionType.APSouth1
-        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
-        
-        let ext = imageName as String
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let  currentDate =   dateFormatter.string(from: Date())
-        
-        
-        let fileName = imageNameWithoutExtension
-        let fileType = ".pdf"
-        
-        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-        
-        do {
-            try pdfData.write(to: imageURL)
-        }
-        catch {}
-        
-        print(imageURL)
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        
-        uploadRequest?.body = imageURL
-        uploadRequest?.key =  currentDate +  "/" + "File_" + ext
-        uploadRequest?.bucket = S3BucketName
-        
-        uploadRequest?.contentType = "application/pdf"
-        
-        let transferManager = AWSS3TransferManager.default()
-        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-            
-            if let error = task.error {
-                print("Upload failed : (\(error))")
-                
-                
-            }
-            
-            if task.result != nil {
-                let url = AWSS3.default().configuration.endpoint.url
-                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-                if let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                    aswPdf.removeAll()
-                    aswPdf.append(absoluteString)
-               
-                    
-                    let imageDict = NSMutableDictionary()
-                    imageDict["FileName"] = absoluteString
-                    self.imageUrlArray.add(imageDict)
-                  
-                    DispatchQueue.main.async {
-                        addBtn.backgroundColor = UIColor(named: "AddContent")
-                        self.convertedImagesUrlArray = self.imageUrlArray
-                    }
-                  
-                }
-            }
-            else {
-                
-                
-                print("Unexpected empty result.")
-            }
-            return nil
-        }
-    }
+   
     
-    func presentPhotoPicker(from viewController: UIViewController, selectionLimit: Int = 1) {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = selectionLimit
-        configuration.filter = .images // Only images
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        viewController.present(picker, animated: true, completion: nil)
-    }
+//    func presentPhotoPicker(from viewController: UIViewController, selectionLimit: Int = 1) {
+//        var configuration = PHPickerConfiguration()
+//        configuration.selectionLimit = selectionLimit
+//        configuration.filter = .images // Only images
+//        
+//        let picker = PHPickerViewController(configuration: configuration)
+//        picker.delegate = self
+//        
+//        viewController.present(picker, animated: true, completion: nil)
+//    }
 
     // Delegate method to handle selected items
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        var images = [UIImage]()
-        let dispatchGroup = DispatchGroup()
-        
-        for result in results {
-            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-                dispatchGroup.enter()
-                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
-                    if let image = object as? UIImage {
-                        images.append(image)
-                        
-                        if images.count > 0 {
-                                // Change the button color to blue when text exists
-                            DispatchQueue.main.async {
-                                self?.addBtn.backgroundColor = UIColor(named: "AddContent")
-                            }
-                            } else {
-                                // Change the button color to gray when no text exists
-                                self!.addBtn.backgroundColor = .lightGray
-                            }
-                        KRProgressHUD.show()
-                        self!.uploadAWS(image:image)
-                    }
-                    
-                    dispatchGroup.leave()
-                }
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            self?.onImagePicked?(images)
-        }
-    }
+//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+//        picker.dismiss(animated: true, completion: nil)
+//        
+//        var images = [UIImage]()
+//        let dispatchGroup = DispatchGroup()
+//        
+//        for result in results {
+//            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
+//                dispatchGroup.enter()
+//                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+//                    if let image = object as? UIImage {
+//                        images.append(image)
+//                        
+//                        if images.count > 0 {
+//                                // Change the button color to blue when text exists
+//                            DispatchQueue.main.async {
+//                                self?.addBtn.backgroundColor = UIColor(named: "AddContent")
+//                            }
+//                            } else {
+//                                // Change the button color to gray when no text exists
+//                                self!.addBtn.backgroundColor = .lightGray
+//                            }
+//                        KRProgressHUD.show()
+////                        self!.uploadAWS(image:image)
+//                    }
+//                    
+//                    dispatchGroup.leave()
+//                }
+//            }
+//        }
+//        
+//        dispatchGroup.notify(queue: .main) { [weak self] in
+//            self?.onImagePicked?(images)
+//        }
+//    }
     
-    func uploadAWS(image : UIImage){
-    
-        aswImg.removeAll()
-        let S3BucketName =  DefaultsKeys.bucketNameIndia
-           
-        let CognitoPoolID = DefaultsKeys.CognitoPoolID
-        let Region = AWSRegionType.APSouth1
-        
-        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".png")
-        
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let  currentDate =   dateFormatter.string(from: Date())
-        
-        let ext = imageName as String
-        
-        let fileName = imageNameWithoutExtension
-        let fileType = ".jpg"
-        
-        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-        let data = image.jpegData(compressionQuality: 0.9)
-        do {
-            try data?.write(to: imageURL)
-        }
-        catch {}
-        
-        print(imageURL)
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest?.body = imageURL
-        uploadRequest?.key =   currentDate +  "/" + "File_" + ext
-        uploadRequest?.bucket = S3BucketName
-        
-        if getImagePdfType == "Image" {
-            uploadRequest?.contentType = "image/png"
-        } else{
-            uploadRequest?.contentType = "image/png"
-        }
-      
-        let transferManager = AWSS3TransferManager.default()
-        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-            
-            if let error = task.error {
-                print("Upload failed : (\(error))")
-            }
-            var imageFilePath = NSMutableArray()
-            if task.result != nil {
-                let url = AWSS3.default().configuration.endpoint.url
-                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-                if let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                   
-                  
-                    aswImg.append(absoluteString)
-                    
-                    print("aswImg",aswImg.count)
-                  
-                    
-                    let imageDicthome = NSMutableDictionary()
-                    imageDicthome["path"] = absoluteString
-                    imageDicthome["type"] = "IMAGE"
-                    let imageDict = NSMutableDictionary()
-                    var emptyDictionary = [String: String]()
-                    
-                    imageFilePath.add(imageDicthome)
-                    
-                    KRProgressHUD.dismiss()
-                    DispatchQueue.main.async {
-                        
-                        addBtn.backgroundColor = UIColor(named: "AddContent")
-                        
-                    }
-                    self.currentImageCount = self.currentImageCount + 1
-                    if self.currentImageCount < self.totalImageCount{
-                        DispatchQueue.main.async {
-                            self.getImageURL(images: self.originalImagesArray)
-                       
-                        }
-                    }else{
-                        self.convertedImagesUrlArray = self.imageUrlArray
-                        
-                        
-                    }
-                }
-            }
-            
-            return nil
-        }
-       
-    }
+   
     func getImageURL(images : [UIImage]){
         
         
@@ -738,7 +577,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         self.originalImagesArray = images
         self.totalImageCount = images.count
         if currentImageCount < images.count{
-            self.uploadAWS(image: images[currentImageCount])
+//            self.uploadAWS(image: images[currentImageCount])
         }
     }
     
@@ -780,12 +619,12 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             picker.dismiss(animated: true, completion: nil)
             self.addBtn.backgroundColor = UIColor(named: "AddContent")
 
-            self.uploadAWS(image:chosenImage)
+//            self.uploadAWS(image:chosenImage)
 
         }else {
             if let videoURL = info[.mediaURL] as? URL {
                 print("Selected video URL: \(videoURL)")
-                uploadVideo(authToken: authToken, videoFilePath: videoURL)
+//                uploadVideo(authToken: authToken, videoFilePath: videoURL)
                 
             }
             
@@ -811,238 +650,238 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     return nil
     }
 
-    func createVimeoUploadURL(authToken: String, videoFilePath: URL, completion: @escaping (UploadResult) -> Void) {
+//    func createVimeoUploadURL(authToken: String, videoFilePath: URL, completion: @escaping (UploadResult) -> Void) {
+//
+//    guard let fileSize = getFileSize(at: videoFilePath) else {
+//        completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get file size"])))
+//        return
+//    }
+//
+//    let headers: HTTPHeaders = [
+//        "Authorization": "Bearer \(authToken)",
+//        "Content-Type": "application/json",
+//        "Accept": "application/vnd.vimeo.*+json;version=3.4"
+//    ]
+//        let userDefaults = UserDefaults.standard
+//        var getDownload =  userDefaults.value(forKey: DefaultsKeys.allowVideoDownload)
+//    let parameters: [String: Any] = [
+//        "upload": [
+//            "approach": "tus",
+//            "size": "\(fileSize)"
+//        ],
+//        "privacy":[
+//            "view":"unlisted",
+//            "download": getDownload
+//        ],
+//        "name": "TestTitle",
+//        "description": "descTxtFld.text"
+//    ]
+//
+//    AF.request("https://api.vimeo.com/me/videos", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+//        .responseJSON { [self] response in
+//            switch response.result {
+//            case .success(let value):
+//                print("Vimeo API Response: \(value)") // Print the full JSON
+//                if let json = value as? [String: Any],
+//                   let upload = json["upload"] as? [String: Any],
+//                   let uploadLink = upload["upload_link"] as? String {
+//                    
+//                    let embedUrl = json["player_embed_url"] as! String
+//                    
+//                    let embed = json["embed"]! as AnyObject
+////                    iframeLink = embed["html"]  as! String
+//                    videoEmbdUrl = embedUrl as! String
+//                    print("videoEmbdUrl",videoEmbdUrl)
+//                    aswImg.append(videoEmbdUrl)
+//                    videoSucessId = 1
+//                    addBtn.backgroundColor = UIColor(named: "AddContent")
+//
+//                    
+//                    VideoStatus()
+//                    completion(.success(uploadLink))
+//                    
+//                    
+//                } else {
+//                    completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Upload link not found"])))
+//                    
+//                    videoSucessId = 0
+//                    VideoStatus()
+//                }
+//            case .failure(let error):
+//                completion(.failure(error))
+//                
+//                
+//                videoSucessId = 0
+//                VideoStatus()
+//            }
+//        }
+//    }
 
-    guard let fileSize = getFileSize(at: videoFilePath) else {
-        completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get file size"])))
-        return
-    }
-
-    let headers: HTTPHeaders = [
-        "Authorization": "Bearer \(authToken)",
-        "Content-Type": "application/json",
-        "Accept": "application/vnd.vimeo.*+json;version=3.4"
-    ]
-        let userDefaults = UserDefaults.standard
-        var getDownload =  userDefaults.value(forKey: DefaultsKeys.allowVideoDownload)
-    let parameters: [String: Any] = [
-        "upload": [
-            "approach": "tus",
-            "size": "\(fileSize)"
-        ],
-        "privacy":[
-            "view":"unlisted",
-            "download": getDownload
-        ],
-        "name": "TestTitle",
-        "description": "descTxtFld.text"
-    ]
-
-    AF.request("https://api.vimeo.com/me/videos", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-        .responseJSON { [self] response in
-            switch response.result {
-            case .success(let value):
-                print("Vimeo API Response: \(value)") // Print the full JSON
-                if let json = value as? [String: Any],
-                   let upload = json["upload"] as? [String: Any],
-                   let uploadLink = upload["upload_link"] as? String {
-                    
-                    let embedUrl = json["player_embed_url"] as! String
-                    
-                    let embed = json["embed"]! as AnyObject
-//                    iframeLink = embed["html"]  as! String
-                    videoEmbdUrl = embedUrl as! String
-                    print("videoEmbdUrl",videoEmbdUrl)
-                    aswImg.append(videoEmbdUrl)
-                    videoSucessId = 1
-                    addBtn.backgroundColor = UIColor(named: "AddContent")
-
-                    
-                    VideoStatus()
-                    completion(.success(uploadLink))
-                    
-                    
-                } else {
-                    completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Upload link not found"])))
-                    
-                    videoSucessId = 0
-                    VideoStatus()
-                }
-            case .failure(let error):
-                completion(.failure(error))
-                
-                
-                videoSucessId = 0
-                VideoStatus()
-            }
-        }
-    }
-
-    func uploadVideoToVimeo(uploadLink: String, videoFilePath: URL, authToken: String, chunkSize: Int = 5 * 1024 * 1024, completion: @escaping (UploadResult) -> Void) {
-    guard let fileHandle = try? FileHandle(forReadingFrom: videoFilePath) else {
-        completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to read video file"])))
-        return
-    }
+//    func uploadVideoToVimeo(uploadLink: String, videoFilePath: URL, authToken: String, chunkSize: Int = 5 * 1024 * 1024, completion: @escaping (UploadResult) -> Void) {
+//    guard let fileHandle = try? FileHandle(forReadingFrom: videoFilePath) else {
+//        completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to read video file"])))
+//        return
+//    }
    
-    var offset: Int = 0
-    let fileSize = fileHandle.seekToEndOfFile()
-    fileHandle.seek(toFileOffset: 0)
+//    var offset: Int = 0
+//    let fileSize = fileHandle.seekToEndOfFile()
+//    fileHandle.seek(toFileOffset: 0)
+//
+//    print("fileHandleBefore",fileHandle)
+//    func uploadNextChunk() {
+//        let chunkData = fileHandle.readData(ofLength: chunkSize)
+//        
+//        if chunkData.isEmpty {
+//            fileHandle.closeFile()
+//            completion(.success(("")))
+//            return
+//        }
+//        
+//        var request = URLRequest(url: URL(string: uploadLink)!)
+//        request.httpMethod = "PATCH"
+//        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
+//        request.setValue("application/offset+octet-stream", forHTTPHeaderField: "Content-Type")
+//        request.setValue("\(offset)", forHTTPHeaderField: "Upload-Offset")
+//        request.setValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
+//        request.httpBody = chunkData
+//        
+//        let uploadTask = URLSession.shared.uploadTask(with: request, from: chunkData) { (data, response, error) in
+//            if let error = error {
+//                completion(.failure(error))
+//                return
+//            }
+//            
+//            if let httpResponse = response as? HTTPURLResponse {
+//                if httpResponse.statusCode == 204 {
+//                    offset += chunkSize
+//                    uploadNextChunk()
+//                } else if httpResponse.statusCode == 412 {
+//                    // Handle 412 error (precondition failed), retry or get correct offset from server
+//                    if let rangeHeader = httpResponse.value(forHTTPHeaderField: "Upload-Offset"), let serverOffset = Int(rangeHeader) {
+//                        offset = serverOffset
+//                        uploadNextChunk()
+//                    } else {
+//                        let error = NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to upload chunk: Precondition Failed"])
+//                        completion(.failure(error))
+//                    }
+//                } else {
+//                    let error = NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to upload chunk, status code: \(httpResponse.statusCode)"])
+//                    completion(.failure(error))
+//                }
+//            }
+//        }
+//        
+//        uploadTask.resume()
+//    }
 
-    print("fileHandleBefore",fileHandle)
-    func uploadNextChunk() {
-        let chunkData = fileHandle.readData(ofLength: chunkSize)
-        
-        if chunkData.isEmpty {
-            fileHandle.closeFile()
-            completion(.success(("")))
-            return
-        }
-        
-        var request = URLRequest(url: URL(string: uploadLink)!)
-        request.httpMethod = "PATCH"
-        request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/offset+octet-stream", forHTTPHeaderField: "Content-Type")
-        request.setValue("\(offset)", forHTTPHeaderField: "Upload-Offset")
-        request.setValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
-        request.httpBody = chunkData
-        
-        let uploadTask = URLSession.shared.uploadTask(with: request, from: chunkData) { (data, response, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 204 {
-                    offset += chunkSize
-                    uploadNextChunk()
-                } else if httpResponse.statusCode == 412 {
-                    // Handle 412 error (precondition failed), retry or get correct offset from server
-                    if let rangeHeader = httpResponse.value(forHTTPHeaderField: "Upload-Offset"), let serverOffset = Int(rangeHeader) {
-                        offset = serverOffset
-                        uploadNextChunk()
-                    } else {
-                        let error = NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to upload chunk: Precondition Failed"])
-                        completion(.failure(error))
-                    }
-                } else {
-                    let error = NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to upload chunk, status code: \(httpResponse.statusCode)"])
-                    completion(.failure(error))
-                }
-            }
-        }
-        
-        uploadTask.resume()
-    }
-
-    uploadNextChunk()
-    }
+//    uploadNextChunk()
+//    }
 
         
-        func VideoStatus(){
-            
-            if videoSucessId == 0 {
-                
+//        func VideoStatus(){
+//            
+//            if videoSucessId == 0 {
+//                
+//
+//            }else{
+//                
+//            }
+//            
+//        }
+//    func uploadVideo(authToken: String, videoFilePath: URL) {
+//    createVimeoUploadURL(authToken: authToken, videoFilePath: videoFilePath) { [self] result in
+//        switch result {
+//        case .success(let uploadLink):
+//            uploadVideoToVimeo(uploadLink: uploadLink, videoFilePath: videoFilePath, authToken: authToken) { [self] result in
+//                switch result {
+//                case .success:
+//                    print("Video uploaded successfully!")
+//                   
+//                    addBtn.backgroundColor = UIColor(named: "AddContent")
+//                case .failure(let error):
+//                    print("Failed to upload video: \(error)")
+//   
+//                   
+//                    let refreshAlert = UIAlertController(title: "", message: "Failed to upload video", preferredStyle: UIAlertController.Style.alert)
+//                    
+//                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//                        
+//                        
+//                        
+//                    }))
+//                    
+//                    
+//                    present(refreshAlert, animated: true, completion: nil)
+//                   
+//                }
+//                
+//                
+//            }
+//        case .failure(let error):
+//            print("Failed to create upload URL: \(error)")
+//   
+//           
+//            let refreshAlert = UIAlertController(title: "", message: "Failed to upload video", preferredStyle: UIAlertController.Style.alert)
+//            
+//            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+//            }))
+//            
+//            
+//            present(refreshAlert, animated: true, completion: nil)
+//            
+//            
+//        }
+//    }
+//    }
 
-            }else{
-                
-            }
-            
-        }
-    func uploadVideo(authToken: String, videoFilePath: URL) {
-    createVimeoUploadURL(authToken: authToken, videoFilePath: videoFilePath) { [self] result in
-        switch result {
-        case .success(let uploadLink):
-            uploadVideoToVimeo(uploadLink: uploadLink, videoFilePath: videoFilePath, authToken: authToken) { [self] result in
-                switch result {
-                case .success:
-                    print("Video uploaded successfully!")
-                   
-                    addBtn.backgroundColor = UIColor(named: "AddContent")
-                case .failure(let error):
-                    print("Failed to upload video: \(error)")
    
-                   
-                    let refreshAlert = UIAlertController(title: "", message: "Failed to upload video", preferredStyle: UIAlertController.Style.alert)
-                    
-                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-                        
-                        
-                        
-                    }))
-                    
-                    
-                    present(refreshAlert, animated: true, completion: nil)
-                   
-                }
-                
-                
-            }
-        case .failure(let error):
-            print("Failed to create upload URL: \(error)")
-   
-           
-            let refreshAlert = UIAlertController(title: "", message: "Failed to upload video", preferredStyle: UIAlertController.Style.alert)
-            
-            refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-            }))
-            
-            
-            present(refreshAlert, animated: true, completion: nil)
-            
-            
-        }
-    }
-    }
-
-   
-    func Awws3Voice(URLPath : URL) {
-        
-        if let remoteUrl = URL(string: URLPath.absoluteString) {
-            let task = URLSession.shared.downloadTask(with: remoteUrl) { localUrl, response, error in
-                if let error = error {
-                    print("Error downloading file: \(error.localizedDescription)")
-                    return
-                }
-                
-                guard let localUrl = localUrl else {
-                    print("No local file URL available.")
-                    return
-                }
-                
-                // Log the local URL
-                print("Local file URL: \(localUrl)")
-                
-                // Upload the downloaded file to S3
-                AWSS3TransferUtility.default().uploadFile(
-                    localUrl,
-                    bucket: DefaultsKeys.bucketNameIndia,
-                    key: URLPath.absoluteString,
-                    contentType: "audio/mpeg",
-                    expression: nil
-                ) { [self] task, error in
-                    if let error = error {
-                        print("Error uploading file: \(error.localizedDescription)")
-                    } else {
-                        print("task",task)
-                        let s3Url = "https://\(DefaultsKeys.bucketNameIndia).s3.amazonaws.com/\(URLPath.absoluteString)"
-                        
-                              print("File successfully uploaded to S3. URL: \(s3Url)")
-                        DispatchQueue.main.async {
-                            self.addBtn.backgroundColor = UIColor(named: "AddContent")
-                        }
-                        aswVoice.append(s3Url)
-                      
-                       
-                        print("File successfully uploaded to S3.")
-                    }
-                }
-            }
-            task.resume()
-        }
-       
-        
-    }
+//    func Awws3Voice(URLPath : URL) {
+//        
+//        if let remoteUrl = URL(string: URLPath.absoluteString) {
+//            let task = URLSession.shared.downloadTask(with: remoteUrl) { localUrl, response, error in
+//                if let error = error {
+//                    print("Error downloading file: \(error.localizedDescription)")
+//                    return
+//                }
+//                
+//                guard let localUrl = localUrl else {
+//                    print("No local file URL available.")
+//                    return
+//                }
+//                
+//                // Log the local URL
+//                print("Local file URL: \(localUrl)")
+//                
+//                // Upload the downloaded file to S3
+//                AWSS3TransferUtility.default().uploadFile(
+//                    localUrl,
+//                    bucket: DefaultsKeys.bucketNameIndia,
+//                    key: URLPath.absoluteString,
+//                    contentType: "audio/mpeg",
+//                    expression: nil
+//                ) { [self] task, error in
+//                    if let error = error {
+//                        print("Error uploading file: \(error.localizedDescription)")
+//                    } else {
+//                        print("task",task)
+//                        let s3Url = "https://\(DefaultsKeys.bucketNameIndia).s3.amazonaws.com/\(URLPath.absoluteString)"
+//                        
+//                              print("File successfully uploaded to S3. URL: \(s3Url)")
+//                        DispatchQueue.main.async {
+//                            self.addBtn.backgroundColor = UIColor(named: "AddContent")
+//                        }
+//                        aswVoice.append(s3Url)
+//                      
+//                       
+//                        print("File successfully uploaded to S3.")
+//                    }
+//                }
+//            }
+//            task.resume()
+//        }
+//       
+//        
+//    }
 
     @IBAction func takeReadingSkill() {
         let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
@@ -1061,90 +900,90 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     }
     
     
-    @IBAction func submitAct() {
-        
-        
-        var imageAryy : [AttachmentData] = []
-        
-        
-        let attachModal = AttachmentData()
-       
-        for path in pathArr {
-            attachModal.content = path
-            print("pathArr",path)
-
-        }
-        
-        for path in typeArr {
-            attachModal.type = path
-            print("typeArr",path)
-
-        }
-        
-        
-        
-        var attachments: [AttachmentData] = []
-
-        // Ensure pathArr and typeArr are of the same length
-        guard pathArr.count == typeArr.count else {
-            print("Error: pathArr and typeArr must have the same number of elements")
-            return
-        }
-        
-        
-        for (index, path) in pathArr.enumerated() {
-            let attachModal = AttachmentData()
-            attachModal.content = path
-            attachModal.type = typeArr[index]
-            attachments.append(attachModal)
-        }
-
-        for attachment in attachments {
-            print("Content: \(attachment.content ?? ""), Type: \(attachment.type ?? "")")
-        }
-        print("attacattachmentsl",attachments)
-        
-        let submitModal = SubmitResponseForSkillModal()
-        submitModal.StudentID = studentId
-        submitModal.SkillId = skillId
-        submitModal.attachment = attachments
-        
-        
-        print("submitModal",submitModal)
-        var  submitModalStr = submitModal.toJSONString()
-        print("submitModalStr",submitModalStr)
-      
-        
-        SubmitSkillStudentRequest.call_request(param: submitModalStr!) {
-            
-            [self] (res) in
-            
-            let submitModalResp : [SubmitResponse] = Mapper<SubmitResponse>().mapArray(JSONString: res)!
-            
-            if  DefaultsKeys.failedErrorCode != 500 {
-                if submitModalResp[0].Status == 1 {
-                    
-                    let alert = UIAlertController(title: "Alert",
-                                                  message: submitModalResp[0].Message,
-                                                  preferredStyle: .alert)
-                    
-                    // Add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
-                        dismiss(animated: true)
-                    }))
-                    
-                    // Present the alert
-                    self.present(alert, animated: true, completion: nil)
-                    
-                    //
-                    
-                }
-                
-                
-            }
-        }
-        
-    }
+//    @IBAction func submitAct() {
+//        
+//        
+//        var imageAryy : [AttachmentData] = []
+//        
+//        
+//        let attachModal = AttachmentData()
+//       
+//        for path in pathArr {
+//            attachModal.content = path
+//            print("pathArr",path)
+//
+//        }
+//        
+//        for path in typeArr {
+//            attachModal.type = path
+//            print("typeArr",path)
+//
+//        }
+//        
+//        
+//        
+//        var attachments: [AttachmentData] = []
+//
+//        // Ensure pathArr and typeArr are of the same length
+//        guard pathArr.count == typeArr.count else {
+//            print("Error: pathArr and typeArr must have the same number of elements")
+//            return
+//        }
+//        
+//        
+//        for (index, path) in pathArr.enumerated() {
+//            let attachModal = AttachmentData()
+//            attachModal.content = path
+//            attachModal.type = typeArr[index]
+//            attachments.append(attachModal)
+//        }
+//
+//        for attachment in attachments {
+//            print("Content: \(attachment.content ?? ""), Type: \(attachment.type ?? "")")
+//        }
+//        print("attacattachmentsl",attachments)
+//        
+//        let submitModal = SubmitResponseForSkillModal()
+//        submitModal.StudentID = studentId
+//        submitModal.SkillId = skillId
+//        submitModal.attachment = attachments
+//        
+//        
+//        print("submitModal",submitModal)
+//        var  submitModalStr = submitModal.toJSONString()
+//        print("submitModalStr",submitModalStr)
+//      
+//        
+//        SubmitSkillStudentRequest.call_request(param: submitModalStr!) {
+//            
+//            [self] (res) in
+//            
+//            let submitModalResp : [SubmitResponse] = Mapper<SubmitResponse>().mapArray(JSONString: res)!
+//            
+//            if  DefaultsKeys.failedErrorCode != 500 {
+//                if submitModalResp[0].Status == 1 {
+//                    
+//                    let alert = UIAlertController(title: "Alert",
+//                                                  message: submitModalResp[0].Message,
+//                                                  preferredStyle: .alert)
+//                    
+//                    // Add an action (button)
+//                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+//                        dismiss(animated: true)
+//                    }))
+//                    
+//                    // Present the alert
+//                    self.present(alert, animated: true, completion: nil)
+//                    
+//                    //
+//                    
+//                }
+//                
+//                
+//            }
+//        }
+//        
+//    }
     
     
     
@@ -1446,7 +1285,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                
 
-                Awws3Voice(URLPath:  Audiopath)
+//                Awws3Voice(URLPath:  Audiopath)
 
                 self.voiceRecordBtn.setImage(UIImage(named:"VocieRecord"), for: UIControl.State.normal)
 
@@ -1817,23 +1656,23 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         }
     
     
-    func restrictionList() {
-        
-        RestrictionRequest.call_request(param: ""){ [self]
-            
-            (res) in
-    
-            let restrictionResp : [RestrictionResponse] =
-            Mapper<RestrictionResponse>().mapArray(JSONString: res)!
-            
-            restrictionData = restrictionResp
-            restrictionTv.delegate = self
-            restrictionTv.dataSource = self
-            restrictionTv.reloadData()
-            
-        }
-        
-    }
+//    func restrictionList() {
+//        
+//        RestrictionRequest.call_request(param: ""){ [self]
+//            
+//            (res) in
+//    
+//            let restrictionResp : [RestrictionResponse] =
+//            Mapper<RestrictionResponse>().mapArray(JSONString: res)!
+//            
+//            restrictionData = restrictionResp
+//            restrictionTv.delegate = self
+//            restrictionTv.dataSource = self
+//            restrictionTv.reloadData()
+//            
+//        }
+//        
+//    }
     func textViewDidEndEditing(_ textView: UITextView) {
         print("false")
 
@@ -1894,7 +1733,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("pathArrcount",pathArr.count)
         if tableView == restrictionTv {
-            return restrictionData.count
+            return 10
         }else{
             return pathArr.count
         }
@@ -1906,8 +1745,8 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             
             let cell = tableView.dequeueReusableCell(withIdentifier: restrictionRowNib, for: indexPath) as! RestrictionTableViewCell
             
-            let restriction : RestrictionResponse = restrictionData[indexPath.row]
-            cell.contentLbl.text = restriction.Content
+//            let restriction : RestrictionResponse = restrictionData[indexPath.row]
+//            cell.contentLbl.text = restriction.Content
             cell.selectionStyle = .none
          
             return cell
@@ -1954,8 +1793,8 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             
             if submitView.backgroundColor != .lightGray {
                 
-                let submitGesture = UITapGestureRecognizer(target: self, action: #selector(submitAct))
-                submitView.addGestureRecognizer(submitGesture)
+//                let submitGesture = UITapGestureRecognizer(target: self, action: #selector(submitAct))
+//                submitView.addGestureRecognizer(submitGesture)
                 
             }
             
