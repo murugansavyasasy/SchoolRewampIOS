@@ -35,6 +35,8 @@ class PriorityViewController1: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserDefaults.standard.set(passedValue, forKey: "passvalue")
+        
         NextButtonView.isHidden = true
         NextButtonView.layer.cornerRadius = 18
         
@@ -100,6 +102,7 @@ class PriorityViewController1: UIViewController {
       
         
         passedValue = 1
+        UserDefaults.standard.set(passedValue, forKey: "passvalue")
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
@@ -122,6 +125,7 @@ class PriorityViewController1: UIViewController {
        
         
         passedValue = 2
+        UserDefaults.standard.set(passedValue, forKey: "passvalue")
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()

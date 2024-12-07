@@ -66,8 +66,8 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         filteredItems = items
         setupSearchBar()
         startPlaceholderRotation()
-        
-        
+        let value = UserDefaults.standard.integer(forKey: "passvalue")
+        getValue = value
         print("getValue",getValue)
         
         // Do any additional setup after loading the view.
