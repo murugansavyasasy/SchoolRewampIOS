@@ -32,6 +32,9 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     var doneButton: UIButton!
     var datePicker: UIDatePicker!
     var activeButton: UIButton?
+    var Title = ""
+    var desript = ""
+    var url : URL?
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var setTitle: UILabel!
@@ -58,8 +61,8 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         setInitialButtonTitles()
         setupPlaceholder()
         keyboardDionebtn()
-        
-        
+        StyleAndTranslater()
+        imageSelection()
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
         outerTxt.layer.cornerRadius = 10
@@ -82,22 +85,56 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
         costomView.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
+        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        if desript != ""{
+            textview.text = desript
+            placeholderLabel.isHidden = !Title.isEmpty
+            contentCount.text = "\(textview.text.count) of 500"
+        }
+        if Title != ""{
+            eventTxt.text =  Title
+            
+        }
+    }
+    func imageSelection(){
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
             // Handle selected images here
-            
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
             selectedImages.append(contentsOf: images)
+//            for image in images {
+//                print("Selected image: \(image)")
+//               // photoPickManager.uploadAWS(image: image)
+//            }
             costomView.imageCollectionview.reloadData()
-            //            for image in images {
-            //                print("Selected image: \(image)")
-            //                photoPickManager.uploadAWS(image: image)
-            //            }
         }
-        
-        
-       
-        
+        photoPickManager.pdfUrl = { [weak self] pdfurl in
+            guard let self = self else { return }
+            selectedImages.removeAll()
+            url = pdfurl.absoluteURL
+            selectedImages.append(UIImage(named: "pdf")!)
+//            url = URL(string:pdfurl)
+//            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
+            costomView.imageCollectionview.reloadData()
+        }
+        photoPickManager.onCameraImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            // Handle selected images here
+            
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
+            selectedImages.append(images)
+            costomView.imageCollectionview.reloadData()
+        }
     }
+    
     //MARK: BUTTON TITLE CURRANT TIME
     func setInitialButtonTitles() {
         let dateFormatter = DateFormatter()
@@ -226,7 +263,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func StyleAndTranslater(){
         //MARK: Translate
         HeadingLabel.text =  "Compose NoticeBoard".translated()
-       
+        
         
         //MARK: UI Design
         //        SubmitBtn.layer.cornerRadius = Colornames.CORadius10
@@ -258,30 +295,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
     }
     
-    func SendNotice(){
-        textview.text = "Type content here"
-        textfield.text = "Type News Topiccc"
-        textview.textColor = .lightGray
-    }
     
-    func resendFromHistory(){
-        textview.text = desc
-        textview.textColor = .black
-        textfield.text = title1
-        SubmitBtn.backgroundColor = .button
-        code = 1
-    }
-    
-    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        if sender == FromDatePicker{
-            ToDatePicker.minimumDate = FromDatePicker.date
-        }
-        self.dismiss(animated: true, completion: nil)
-        let selectedDate = sender.date
-        print("Selected Date: \(selectedDate)")
-      
-        }
-     
     @IBAction func SubmitAction(_ sender: Any) {
         
         let vc = SelectRecipientVC(nibName: nil, bundle: nil)
@@ -316,9 +330,8 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        //        placeTxt.inputAccessoryView = toolbar
-        //        eventTxt.inputAccessoryView = toolbar
-        //        contentTxtView.inputAccessoryView = toolbar
+        eventTxt.inputAccessoryView = toolbar
+        textview.inputAccessoryView = toolbar
     }
     @objc func doneKeyboard() {
         view.endEditing(true)  // Dismiss the keyboard
@@ -377,19 +390,6 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
     }
     
-    //    func textViewDidBeginEditing(_ textView: UITextView) {
-    //
-    //        if textview.text == "Type content here"{
-    //            textView.text = nil
-    //        }
-    //
-    //        if textfield.text?.isEmpty == false && textview.text.isEmpty == false{
-    //            SubmitBtn.backgroundColor = .button
-    //        }
-    //        else{
-    //            SubmitBtn.backgroundColor = .systemGray4
-    //        }
-    //    }
     func textViewDidEndEditing(_ textView: UITextView) {
         
         if textview.text.isEmpty == true{
@@ -436,263 +436,21 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     
     // MARK: File Attachments Actions
     
-    
-    @IBAction func presentSelectionAlert() {
-        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-        //
-        // Camera option
-        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-            //
-            //                openCamera()
-        }
-        alertController.addAction(cameraAction)
-        
-        // Gallery option
-        let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-            //
-            selectImages()
-            //
-        }
-        alertController.addAction(galleryAction)
-        
-        //             PDF option
-        let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-            
-            selectPDF()
-        }
-        alertController.addAction(pdfAction)
-        
-        // Cancel action
-        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        // Present the alert
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    func uploadPDFFileToAWS(pdfData : Data){
-        
-        let S3BucketName = AwsCredentials.bucketNameIndia
-        
-        let CognitoPoolID = AwsCredentials.CognitoPoolID
-        
-        let Region = AWSRegionType.APSouth1
-        
-        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-        
-        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-        
-        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
-        
-        
-        
-        let ext = imageName as String
-        
-        
-        
-        let dateFormatter = DateFormatter()
-        
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        
-        
-        let  currentDate =   dateFormatter.string(from: Date())
-        
-        
-        
-        
-        
-        let fileName = imageNameWithoutExtension
-        
-        let fileType = ".pdf"
-        
-        
-        
-        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-        
-        
-        
-        do {
-            
-            try pdfData.write(to: imageURL)
-            
-        }
-        
-        catch {}
-        
-        
-        
-        print(imageURL)
-        
-        
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        
-        uploadRequest?.body = imageURL
-        
-        uploadRequest?.key =  currentDate +  "/" + "File_" + ext
-        
-        uploadRequest?.bucket = S3BucketName
-        
-        
-        
-        uploadRequest?.contentType = "application/pdf"
-        
-        
-        
-        
-        
-        let transferManager = AWSS3TransferManager.default()
-        
-        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-            
-            
-            
-            if let error = task.error {
-                
-                print("Upload failed : (\(error))")
-                
-                
-                
-                
-                
-            }
-            
-            
-            
-            if task.result != nil {
-                
-                let url = AWSS3.default().configuration.endpoint.url
-                
-                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-                
-                if let absoluteString = publicURL?.absoluteString {
-                    
-                    print("Uploaded to:\(absoluteString)")
-                    
-                    
-                    
-                    let imageDict = NSMutableDictionary()
-                    
-                    imageDict["FileName"] = absoluteString
-                    
-                    self.imageUrlArray.add(imageDict)
-                    
-                    self.convertedImagesUrlArray = self.imageUrlArray
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                }
-                
-            }
-            
-            else {
-                
-                
-                
-                
-                
-                print("Unexpected empty result.")
-                
-            }
-            
-            return nil
-            
-        }
-        
-    }
-    
     func selectImages() {
-        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
         
-        
-    }
+            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
+
+
+           }
+    func openCamera(){
+        photoPickManager.openCamera(from: self)
+
+
+       }
     func selectPDF() {
-        
-        
-        
-        print("SELECT PDF")
-        
-        
-        
-        
-        
-        
-        
-        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
-        
-        documentPicker.delegate = self
-        
-        self.present(documentPicker, animated: true, completion: nil)
-        
-        
+        photoPickManager.pickPDF(from: self)
         
     }
-    
-    
-    
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        let fileurl: URL = urls as URL
-        
-        let filename = urls.lastPathComponent
-        
-        let fileextension = urls.pathExtension
-        
-        print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
-        
-        
-        
-        
-        
-        let imageData = NSData(contentsOf: urls)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        do {
-            
-            pdfData = try Data(contentsOf: urls, options: NSData.ReadingOptions())
-            
-            uploadPDFFileToAWS(pdfData: pdfData!)
-            
-            
-            
-        } catch {
-            
-            print("set PDF filer error : ", error)
-            
-            
-            
-        }
-        
-        
-        
-        
-        
-    }
-    
     
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -706,51 +464,6 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
 
 @available(iOS 14.0, *)
 extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    //
-    //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    //
-    //        if selectedImages.count != 0 && selectedImages.count <= 3{
-    //
-    //            collectionHeight.constant = 120
-    //        }
-    //
-    //        if selectedImages.count > 3{
-    //            collectionHeight.constant = 240
-    //        }
-    //        if selectedImages.count == 0{
-    //            collectionHeight.constant = 0
-    //        }
-    //
-    //               return selectedImages.count
-    //
-    //
-    //           }
-    //
-    //
-    //
-    //           func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    //
-    //               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-    //
-    //               cell.imageViews.image = selectedImages[indexPath.item]
-    //
-    //               return cell
-    //
-    //           }
-    //
-    //
-    //
-    //           // MARK: - UICollectionView Delegate
-    //
-    //           func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //
-    //               // Delete the selected image
-    //
-    //               selectedImages.remove(at: indexPath.item)
-    //
-    //               collectionView.deleteItems(at: [indexPath])
-    //
-    //           }
     
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -762,11 +475,11 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
+            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
         }else{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
+            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
             cell.delegate = self
             cell.deleteBtn.tag = indexPath.item - 1
             if selectedImages.count > indexPath.item - 1 {
@@ -797,7 +510,7 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
             // Camera option
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
                 //
-                //                openCamera()
+                openCamera()
             }
             alertController.addAction(cameraAction)
             
@@ -826,150 +539,28 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                
+                vc.selectedFileURL = url
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
                 //
                 present(vc, animated: true)
             }
-
-               
-
             
-
+            
+            
+            
+            
         }
-
         
-
+        
+        
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-
+            
             controller.dismiss(animated: true, completion: nil)
-
+            
         }
-
-
-}
-
-@available(iOS 14.0, *)
-extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if code == 0{
-            if selectedImages.count != 0 && selectedImages.count <= 3{
-                
-                collectionHeight.constant = 120
-            }
-            
-            else if selectedImages.count > 3{
-                collectionHeight.constant = 240
-            }
-            
-            else if selectedImages.count == 0 {
-                collectionHeight.constant = 0
-            }
-            
-            return selectedImages.count
-        }
-
-        else{
-            
-            if items.count != 0 && items.count <= 3{
-                
-                collectionHeight.constant = 120
-            }
-            
-            else if items.count > 3{
-                collectionHeight.constant = 240
-            }
-            
-            else if items.count == 0{
-                collectionHeight.constant = 0
-            }
-            return items.count+selectedImages.count
-        }
-               
-
-           }
-
-           
-
-           func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-               
-               print("itemsCount",items.count)
-
-               if code == 0{
-                   cell.imageViews.image = selectedImages[indexPath.item]
-                   cell.TrashIcon.isHidden = false
-               }else {
-                   print("fsghwdgvdhbdvgdgvegvgveh")
-                   
-                   if indexPath.item < items.count {
-                       cell.TrashIcon.isHidden = true
-                       cell.imageViews.sd_setImage(with: URL(string: items[indexPath.item] ?? ""), placeholderImage: UIImage(named: ""))
-                   }
-                   if indexPath.item >= items.count{
-                       
-                       var selindex = indexPath.item - items.count
-                       cell.imageViews.image = selectedImages[selindex]
-//                       let count = selectedImages.count
-//                       print("Selected Images Count",selectedImages.count)
-//                       for i in 0..<count {
-//                           print("indexindex",i)
-//                           cell.imageViews.image = selectedImages[i]
-//                           cell.TrashIcon.isHidden = false
-//                       }
-
-                   }
-                
-               }
-
-               return cell
-
-           }
-
-           
-
-           // MARK: - UICollectionView Delegate
-
-           func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-               // Delete the selected image
-               if indexPath.item >= items.count{
-                   
-                   var selindex = indexPath.item - items.count
-                   
-                   //selectedImages.remove(at: indexPath.item)
-                   selectedImages.remove(at: selindex)
-                   
-                   collectionView.deleteItems(at: [indexPath])
-               }
-
-           }
-
-           
-
-           
-
         
-
-    }
-
-
-
-    @available(iOS 14.0, *)
-
-    extension SenderNoticeBoardVC: UICollectionViewDelegateFlowLayout {
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-            let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-
-            return CGSize(width: width, height: width)
-
-        }
     }
     
 }

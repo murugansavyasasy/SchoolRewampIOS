@@ -25,7 +25,9 @@ class NoticeBoardVc: UIViewController, SelectNotice {
     var images : [UIImage] = []
     
     var previousOffset: CGFloat = 0.0
+    var delegate : HistorySelectDelegate?
     
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -163,13 +165,8 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     }
     
     func didTapButton(title: String, content: String, items: [String]) {
-        
-        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        vc.desc = content
-        vc.title1 = title
-        vc.items = items
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+
     }
     //scrol
 }

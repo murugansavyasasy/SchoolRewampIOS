@@ -24,6 +24,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
     var onImagesPicked: (([UIImage]) -> Void)?
     static let shared = PhotoPickerManager()
     var onPdfPicked: ((Data) -> Void)?
+    var pdfUrl :((URL) -> Void)?
     var onImagePicked: (([UIImage]) -> Void)?
     var onCameraImagePicked: ((UIImage) -> Void)?
     var onPdfString: ((String) -> Void)?
@@ -44,7 +45,6 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
         
         let picker = PHPickerViewController(configuration: configuration)
         picker.delegate = self
-        
         viewController.present(picker, animated: true, completion: nil)
     }
     
@@ -161,6 +161,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
         dispatchGroup.notify(queue: .main) { [weak self] in
             print("set PDF filer errr")
             self?.onPdfPicked?(self!.pdfData!)
+            self?.pdfUrl?(fileurl)
         }
         
     }

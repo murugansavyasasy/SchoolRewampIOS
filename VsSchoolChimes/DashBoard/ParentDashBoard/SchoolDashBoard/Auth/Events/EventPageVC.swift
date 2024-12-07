@@ -5,9 +5,11 @@
 //  Created by admin on 04/12/24.
 //
 import UIKit
-
+protocol HistorySelectDelegate{
+    func select(Title:String,Description:String,Images:[UIImage],pdf:String)
+}
 @available(iOS 14.0, *)
-class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource{
+class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate{
 
     @IBOutlet weak var outerView: UIStackView!
     @IBOutlet weak var historyBtn: UIButton!
@@ -117,11 +119,12 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     
     func loadPages(_ CV:[UIViewController]) {
         // Initialize view controllers for pages
-//        if #available(iOS 14.0, *) {
-//            let page1 = EventsVC(nibName: nil, bundle: nil)
-//            let page2 = EventHistoryVC(nibName: nil, bundle: nil)
+
+        if let page2 = CV[1] as? NoticeBoardVc {
+            page2.delegate = self
+         }
             pages = CV
-//        }
+
     }
 
     // MARK: - SelectedDelegate Method
@@ -165,5 +168,25 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
             return 0
         }
         return currentIndex
+    }
+    func select(Title:String,Description:String,Images:[UIImage],pdf:String) {
+        if let page1 = pages[0] as? SenderNoticeBoardVC {
+//            page1.selectedImages = Img
+            page1.Title = Title
+            page1.desript = Description
+            print(Description)
+            guard 1 >= 0 else {
+                print("Index out of bounds")
+                return
+            }
+            gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+            createEvent.setTitleColor(.white, for:.normal)
+            gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+            historyBtn.setTitleColor(.black, for:.normal)
+            let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+            let direction: UIPageViewController.NavigationDirection = 1 > currentIndex ? .forward : .reverse
+
+            pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
+         }
     }
 }

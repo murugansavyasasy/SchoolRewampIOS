@@ -23,33 +23,81 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "90FFB788-8A09-45A0-97A4-DFC62C60A4EA"
-            shouldBeEnabled = "No"
+            uuid = "235BB2E4-9FD3-4AED-A19C-98EECD5BD224"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/DashBoard/ParentDashBoard/SchoolDashBoard/NoticeBoardVC/SenderNoticeBoardVC.swift"
+            filePath = "VsSchoolChimes/SchoolSide/ImagePdf/PhotoPickManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "convertURLToData(from:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4D083EC8-51BD-4216-93E8-BA8370CD148C"
-            shouldBeEnabled = "No"
+            uuid = "9EA18723-6789-4C8C-96DE-6F23A9D87519"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/DashBoard/ParentDashBoard/SchoolDashBoard/Auth/Comunication/TextHistoryTVCell.swift"
+            filePath = "VsSchoolChimes/SchoolSide/ImagePdf/PhotoPickManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "8"
-            endingLineNumber = "8"
-            landmarkName = "SelectedTextDelegate"
-            landmarkType = "5">
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "convertURLToData(from:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "22C41E5E-AD27-490D-937A-27F50DEF451B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolSide/ImagePdf/PhotoPickManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "uploadAWS(image:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0AF0B008-0CA4-4BBF-8933-49064C17EC6E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/SchoolSide/ImagePdf/PhotoPickManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "uploadPDFFileToAWS(pdfData:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "25A38F05-BD8E-4278-90C9-069F790834D3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/DashBoard/ParentDashBoard/SchoolDashBoard/Auth/Events/PreviewImageVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

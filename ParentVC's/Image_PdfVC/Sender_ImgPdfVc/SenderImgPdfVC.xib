@@ -14,9 +14,8 @@
             <connections>
                 <outlet property="HeaderLabel" destination="K1a-sQ-TbS" id="Mlu-MU-QB4"/>
                 <outlet property="SelectButton" destination="HNV-7i-BCH" id="i7C-76-zgR"/>
-                <outlet property="UploadView" destination="sse-JX-kDl" id="Ixb-IZ-ffa"/>
-                <outlet property="collectionHeight" destination="iM0-sf-Ni2" id="R8r-86-fJ1"/>
-                <outlet property="collectionview" destination="ZrA-1T-OPu" id="dHX-nj-W3m"/>
+                <outlet property="UploadView" destination="sse-JX-kDl" id="dXF-bm-3Tb"/>
+                <outlet property="collectionHeight" destination="S8h-3s-wPX" id="8NY-NG-L3X"/>
                 <outlet property="textfield" destination="dpP-j7-TB5" id="74i-9L-hi4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -26,10 +25,10 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Um9-NA-C5Z">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Um9-NA-C5Z">
                     <rect key="frame" x="0.0" y="89" width="393" height="729"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-j7-TB5">
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-j7-TB5">
                             <rect key="frame" x="8" y="30" width="377" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="lC7-kr-OiF"/>
@@ -37,14 +36,14 @@
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sse-JX-kDl" customClass="RectangularDashedView" customModule="VsSchoolChimes" customModuleProvider="target">
-                            <rect key="frame" x="15" y="320" width="363" height="50"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sse-JX-kDl" customClass="ImageSelection" customModule="VsSchoolChimes" customModuleProvider="target">
+                            <rect key="frame" x="15" y="100" width="363" height="100"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="77K-bm-WQZ">
+                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="77K-bm-WQZ">
                                     <rect key="frame" x="20" y="12" width="45" height="25"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Upload Attchment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3g-dS-HIb">
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Upload Attchment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3g-dS-HIb">
                                     <rect key="frame" x="73.000000000000014" y="15" width="130.33333333333337" height="17"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
@@ -54,7 +53,7 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="S8h-3s-wPX"/>
+                                <constraint firstAttribute="height" constant="100" id="S8h-3s-wPX"/>
                             </constraints>
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -74,24 +73,10 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="ZrA-1T-OPu">
-                            <rect key="frame" x="10" y="90" width="373" height="200"/>
-                            <color key="backgroundColor" systemColor="systemGray5Color"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="200" id="iM0-sf-Ni2"/>
-                            </constraints>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4WQ-5q-CQc">
-                                <size key="itemSize" width="128" height="128"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            </collectionViewFlowLayout>
-                        </collectionView>
-                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNV-7i-BCH">
-                            <rect key="frame" x="20" y="420" width="353" height="40"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNV-7i-BCH">
+                            <rect key="frame" x="20" y="250" width="353" height="40"/>
                             <color key="backgroundColor" name="ButtonColor"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="353" id="bUZ-LD-naI"/>
                                 <constraint firstAttribute="height" constant="40" id="s7r-Xe-aiV"/>
                             </constraints>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -104,16 +89,15 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="ZrA-1T-OPu" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="10" id="1XU-nV-ItO"/>
                         <constraint firstAttribute="trailing" secondItem="sse-JX-kDl" secondAttribute="trailing" constant="15" id="1jz-GK-M9a"/>
-                        <constraint firstAttribute="trailing" secondItem="ZrA-1T-OPu" secondAttribute="trailing" constant="10" id="BXj-d8-B7a"/>
+                        <constraint firstAttribute="trailing" secondItem="HNV-7i-BCH" secondAttribute="trailing" constant="20" id="35T-6f-fCO"/>
                         <constraint firstItem="dpP-j7-TB5" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="8" id="C23-a7-rMl"/>
                         <constraint firstAttribute="trailing" secondItem="dpP-j7-TB5" secondAttribute="trailing" constant="8" id="FV2-Qa-UQb"/>
                         <constraint firstItem="sse-JX-kDl" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="15" id="IGi-lh-xnG"/>
                         <constraint firstItem="HNV-7i-BCH" firstAttribute="top" secondItem="sse-JX-kDl" secondAttribute="bottom" constant="50" id="Jwm-AV-nYg"/>
-                        <constraint firstItem="ZrA-1T-OPu" firstAttribute="top" secondItem="dpP-j7-TB5" secondAttribute="bottom" constant="10" id="YUU-9v-ZBn"/>
-                        <constraint firstItem="sse-JX-kDl" firstAttribute="top" secondItem="ZrA-1T-OPu" secondAttribute="bottom" constant="30" id="ccG-I5-bUG"/>
-                        <constraint firstItem="HNV-7i-BCH" firstAttribute="centerX" secondItem="Um9-NA-C5Z" secondAttribute="centerX" id="hZ0-TF-qCl"/>
+                        <constraint firstItem="HNV-7i-BCH" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="20" id="gAf-HM-h3a"/>
+                        <constraint firstItem="sse-JX-kDl" firstAttribute="top" secondItem="dpP-j7-TB5" secondAttribute="bottom" constant="20" id="h30-jb-YrN"/>
+                        <constraint firstItem="dpP-j7-TB5" firstAttribute="top" secondItem="Um9-NA-C5Z" secondAttribute="top" constant="30" id="sKm-Nd-GUe"/>
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Image / Pdf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1a-sQ-TbS">
@@ -146,6 +130,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Um9-NA-C5Z" secondAttribute="trailing" id="Sn9-bn-Pcw"/>
                 <constraint firstItem="Um9-NA-C5Z" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YpV-dW-onc"/>
                 <constraint firstItem="K1a-sQ-TbS" firstAttribute="centerY" secondItem="VkS-Fo-wiL" secondAttribute="centerY" id="dC5-tF-emN"/>
+                <constraint firstItem="Um9-NA-C5Z" firstAttribute="top" secondItem="K1a-sQ-TbS" secondAttribute="bottom" constant="4.6666666666666714" id="mKU-et-DgS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Um9-NA-C5Z" secondAttribute="bottom" id="qvT-cE-MM1"/>
                 <constraint firstItem="VkS-Fo-wiL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="xKC-lT-Pd4"/>
             </constraints>
@@ -166,9 +151,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

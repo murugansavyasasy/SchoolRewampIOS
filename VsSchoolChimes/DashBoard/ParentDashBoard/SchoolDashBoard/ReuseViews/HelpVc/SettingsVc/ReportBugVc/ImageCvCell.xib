@@ -18,6 +18,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="212" height="125"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
+                    <wkWebView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7MX-fw-h8e">
+                        <rect key="frame" x="10" y="10" width="192" height="105"/>
+                        <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <wkWebViewConfiguration key="configuration">
+                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                            <wkPreferences key="preferences"/>
+                        </wkWebViewConfiguration>
+                    </wkWebView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p43-r7-nQ5">
                         <rect key="frame" x="10" y="10" width="192" height="105"/>
                     </imageView>
@@ -40,6 +48,7 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
+                <constraint firstItem="7MX-fw-h8e" firstAttribute="top" secondItem="p43-r7-nQ5" secondAttribute="top" id="3dw-Sf-c2B"/>
                 <constraint firstItem="p43-r7-nQ5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="AzC-Vj-Hao"/>
                 <constraint firstItem="P1s-O8-NbB" firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" id="B58-wl-Vfa"/>
                 <constraint firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" constant="10" id="D9k-4s-TJc"/>
@@ -48,7 +57,10 @@
                 <constraint firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" constant="9" id="Tjn-ab-Qvu"/>
                 <constraint firstItem="P1s-O8-NbB" firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" id="lNM-Pl-Viy"/>
                 <constraint firstAttribute="bottom" secondItem="p43-r7-nQ5" secondAttribute="bottom" constant="10" id="qzx-2x-hNo"/>
+                <constraint firstItem="7MX-fw-h8e" firstAttribute="trailing" secondItem="p43-r7-nQ5" secondAttribute="trailing" id="rmS-aQ-UX8"/>
                 <constraint firstItem="p43-r7-nQ5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="uqd-c2-eLG"/>
+                <constraint firstItem="7MX-fw-h8e" firstAttribute="leading" secondItem="p43-r7-nQ5" secondAttribute="leading" id="x4M-cT-Tjp"/>
+                <constraint firstItem="7MX-fw-h8e" firstAttribute="bottom" secondItem="p43-r7-nQ5" secondAttribute="bottom" id="yAL-Ix-0Zq"/>
                 <constraint firstItem="P1s-O8-NbB" firstAttribute="top" secondItem="amK-p2-KzG" secondAttribute="top" id="yuM-zs-yKM"/>
             </constraints>
             <size key="customSize" width="187" height="94"/>
@@ -56,6 +68,7 @@
                 <outlet property="TrashIcon" destination="amK-p2-KzG" id="LVs-dT-38d"/>
                 <outlet property="deleteBtn" destination="P1s-O8-NbB" id="Reg-UE-1M8"/>
                 <outlet property="imageViews" destination="p43-r7-nQ5" id="hJk-zK-BF2"/>
+                <outlet property="pdf" destination="7MX-fw-h8e" id="40g-RU-g4u"/>
             </connections>
             <point key="canvasLocation" x="232.06106870229007" y="2.4647887323943665"/>
         </collectionViewCell>

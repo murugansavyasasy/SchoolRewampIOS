@@ -30,6 +30,10 @@ class CellConfingName {
     static let AssignmentListCTVC = "AssignmentListCTVC"
     static let StudentHistryTVC = "StudentHistryTVC"
     static let MeetingsTVcell = "MeetingsTVcell"
-
+    static let AttachmentCVCell = "AttachmentCVCell"
+    static let DateCVC = "DateCVC"
+    static let ImageTVC = "ImageTVC"
+    static let AttendenceTVC = "AttendenceTVC"
+    static let VideoTVCell = "VideoTVCell"
    
 }

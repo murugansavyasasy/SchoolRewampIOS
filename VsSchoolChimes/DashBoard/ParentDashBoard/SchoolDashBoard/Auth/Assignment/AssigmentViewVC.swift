@@ -19,7 +19,7 @@ class AssigmentViewVC: UIViewController {
     }
     func register(){
 //        viewAssigmentTable.register(UINib(nibName: "ImageTVC", bundle: nil), forHeaderFooterViewReuseIdentifier: "ImageTVC")
-        viewAssigmentTable.register(UINib(nibName: "ImageTVC", bundle: nil), forCellReuseIdentifier: "ImageTVC")
+        viewAssigmentTable.register(UINib(nibName: CellConfingName.ImageTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.ImageTVC)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -43,7 +43,7 @@ extension AssigmentViewVC:UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = viewAssigmentTable.dequeueReusableCell(withIdentifier: "ImageTVC", for: indexPath) as! ImageTVC
+        let cell = viewAssigmentTable.dequeueReusableCell(withIdentifier: CellConfingName.ImageTVC, for: indexPath) as! ImageTVC
     
         return cell
     }

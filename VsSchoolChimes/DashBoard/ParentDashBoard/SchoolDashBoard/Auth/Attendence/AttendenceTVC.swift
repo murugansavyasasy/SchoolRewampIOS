@@ -17,7 +17,8 @@ class AttendenceTVC: UITableViewCell, Attendence {
     
     var custSwitch: CustomSwitch1!
     var delegate: Attendence?
-    
+    var index = 0
+    var isAbsent = true
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -26,20 +27,6 @@ class AttendenceTVC: UITableViewCell, Attendence {
         custSwitch.delegate = self
         custSwitch.onText = "Present"
         custSwitch.offText = "Absent"
-        
-        // Add the custom switch to the container view
-        customSwitchContainer.addSubview(custSwitch)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // Dynamically set the frame of the custom switch to match the container view
-        custSwitch.frame = customSwitchContainer.bounds
-//        custSwitch.updateLayout() // Ensure the custom switch adjusts its layout
-    }
-    
-    func configure(with student: Student, index: Int) {
         rollNo.layer.backgroundColor = UIColor(red: 189/255, green: 230/255, blue: 254/255, alpha: 1).cgColor
         rollNo.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 18)
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -51,10 +38,22 @@ class AttendenceTVC: UITableViewCell, Attendence {
         rollNo.layer.cornerRadius = 8
         
         // Set the switch state based on the student's attendance status
-        custSwitch.isOn = student.isAbsent
+        custSwitch.isOn = isAbsent
         custSwitch.index = index
-
+        // Add the custom switch to the container view
+        customSwitchContainer.addSubview(custSwitch)
+        
+        
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Dynamically set the frame of the custom switch to match the container view
+        custSwitch.frame = customSwitchContainer.bounds
+//        custSwitch.updateLayout() // Ensure the custom switch adjusts its layout
+    }
+
 }
 
 class CustomSwitch1: UIView {

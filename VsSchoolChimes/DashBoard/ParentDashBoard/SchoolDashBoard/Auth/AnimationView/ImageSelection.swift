@@ -43,8 +43,8 @@ class ImageSelection:UIView{
         registerCell()
     }
     func registerCell(){
-        imageCollectionview.register(UINib(nibName: "AttachmentCVCell", bundle: nil), forCellWithReuseIdentifier: "AttachmentCVCell")
-        imageCollectionview.register(UINib(nibName: "ImageCvCell", bundle: nil), forCellWithReuseIdentifier: "ImageCvCell")
+        imageCollectionview.register(UINib(nibName: CellConfingName.AttachmentCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.AttachmentCVCell)
+        imageCollectionview.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
     }
     
 }
