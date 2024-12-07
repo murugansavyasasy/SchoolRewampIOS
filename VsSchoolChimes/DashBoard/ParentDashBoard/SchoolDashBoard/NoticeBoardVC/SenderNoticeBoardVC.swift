@@ -107,10 +107,10 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
                 url = nil
             }
             selectedImages.append(contentsOf: images)
-//            for image in images {
-//                print("Selected image: \(image)")
-//               // photoPickManager.uploadAWS(image: image)
-//            }
+            //            for image in images {
+            //                print("Selected image: \(image)")
+            //               // photoPickManager.uploadAWS(image: image)
+            //            }
             costomView.imageCollectionview.reloadData()
         }
         photoPickManager.pdfUrl = { [weak self] pdfurl in
@@ -118,8 +118,8 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
             selectedImages.append(UIImage(named: "pdf")!)
-//            url = URL(string:pdfurl)
-//            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
+            //            url = URL(string:pdfurl)
+            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()
         }
         photoPickManager.onCameraImagePicked = { [weak self] images in
@@ -437,16 +437,25 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     // MARK: File Attachments Actions
     
     func selectImages() {
-        
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
-
-
-           }
+        if selectedImages.count != 5{
+            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
+    }
     func openCamera(){
-        photoPickManager.openCamera(from: self)
-
-
-       }
+        if selectedImages.count != 5{
+            photoPickManager.openCamera(from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
+        
+    }
     func selectPDF() {
         photoPickManager.pickPDF(from: self)
         

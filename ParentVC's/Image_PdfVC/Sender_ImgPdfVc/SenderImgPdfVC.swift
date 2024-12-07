@@ -34,7 +34,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         UploadView.imageCollectionview.dataSource = self
         
     }
-
+    
     func imageSelection(){
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
@@ -51,8 +51,8 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
             selectedImages.append(UIImage(named: "pdf")!)
-//            url = URL(string:pdfurl)
-//            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
+            //            url = URL(string:pdfurl)
+            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             UploadView.imageCollectionview.reloadData()
         }
         photoPickManager.onCameraImagePicked = { [weak self] images in
@@ -72,24 +72,24 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         //
         // Camera option
         let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-//
-                openCamera()
+            //
+            openCamera()
         }
         alertController.addAction(cameraAction)
         
         // Gallery option
         let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-//
+            //
             selectImages()
-           
-//
-                   }
+            
+            //
+        }
         alertController.addAction(galleryAction)
         
-//             PDF option
+        //             PDF option
         let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-
-           selectPDF()
+            
+            selectPDF()
         }
         alertController.addAction(pdfAction)
         
@@ -103,21 +103,30 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     }
     
     func selectImages() {
-        
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
-
-
-           }
+        if selectedImages.count != 5{
+            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
+    }
     func openCamera(){
-        photoPickManager.openCamera(from: self)
-
-
-       }
+        if selectedImages.count != 5{
+            photoPickManager.openCamera(from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
+        
+    }
     func selectPDF() {
         photoPickManager.pickPDF(from: self)
         
     }
-
+    
     @IBAction func SelectBtnAct(_ sender: Any) {
     }
     
@@ -130,59 +139,59 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
 @available(iOS 14.0, *)
 extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        
-//        if selectedImages.count != 0 && selectedImages.count <= 3{
-//            
-//            collectionHeight.constant = 120
-//        }
-//        
-//       else if selectedImages.count > 3{
-//            collectionHeight.constant = 240
-//        }
-//       else if selectedImages.count == 0{
-//            collectionHeight.constant = 0
-//        }
-//       
-//               return selectedImages.count
-//               
-//
-//           }
-//
-//           
-//
-//           func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//
-//               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-//
-//               cell.imageViews.image = selectedImages[indexPath.item]
-//
-//               return cell
-//
-//           }
-//
-//           
-//
-//           // MARK: - UICollectionView Delegate
-//
-//           func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//               // Delete the selected image
-//
-//               selectedImages.remove(at: indexPath.item)
-//
-//               collectionview.deleteItems(at: [indexPath])
-//
-//           }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-//
-//        return CGSize(width: width, height: width)
-//
-//    }
-
+    //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    //
+    //        if selectedImages.count != 0 && selectedImages.count <= 3{
+    //
+    //            collectionHeight.constant = 120
+    //        }
+    //
+    //       else if selectedImages.count > 3{
+    //            collectionHeight.constant = 240
+    //        }
+    //       else if selectedImages.count == 0{
+    //            collectionHeight.constant = 0
+    //        }
+    //
+    //               return selectedImages.count
+    //
+    //
+    //           }
+    //
+    //
+    //
+    //           func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    //
+    //               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+    //
+    //               cell.imageViews.image = selectedImages[indexPath.item]
+    //
+    //               return cell
+    //
+    //           }
+    //
+    //
+    //
+    //           // MARK: - UICollectionView Delegate
+    //
+    //           func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //
+    //               // Delete the selected image
+    //
+    //               selectedImages.remove(at: indexPath.item)
+    //
+    //               collectionview.deleteItems(at: [indexPath])
+    //
+    //           }
+    //
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    //
+    //        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
+    //
+    //        return CGSize(width: width, height: width)
+    //
+    //    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -242,7 +251,7 @@ extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,U
             //             PDF option
             let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
                 
-//                selectPDF()
+                //                selectPDF()
             }
             alertController.addAction(pdfAction)
             
@@ -264,7 +273,7 @@ extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,U
             }
         }
     }
-
+    
 }
 
 

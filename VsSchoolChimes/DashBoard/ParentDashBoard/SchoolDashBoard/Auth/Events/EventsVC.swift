@@ -15,10 +15,10 @@ protocol DeleteImge{
 @available(iOS 14.0, *)
 class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate ,UIDocumentPickerDelegate, DeleteImge{
     func deleteImage(index: Int) {
-
-            selectedImages.remove(at: index)
-            costomView.imageCollectionview.reloadData()
-
+        
+        selectedImages.remove(at: index)
+        costomView.imageCollectionview.reloadData()
+        
         
     }
     
@@ -86,10 +86,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 url = nil
             }
             selectedImages.append(contentsOf: images)
-//            for image in images {
-//                print("Selected image: \(image)")
-//               // photoPickManager.uploadAWS(image: image)
-//            }
             costomView.imageCollectionview.reloadData()
         }
         photoPickManager.pdfUrl = { [weak self] pdfurl in
@@ -97,8 +93,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
             selectedImages.append(UIImage(named: "pdf")!)
-//            url = URL(string:pdfurl)
-//            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
+            //            url = URL(string:pdfurl)
+            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()
         }
         photoPickManager.onCameraImagePicked = { [weak self] images in
@@ -165,7 +161,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         calander2Btn.layer.cornerRadius = 10
         calanderBtn.layer.cornerRadius = 10 // Add corner radius if needed
         EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
-
+        
         ToLbl.setFont(style:.body, size: FontSize.BodySize)
         fromLbl.setFont(style:.body, size: FontSize.BodySize)
         subTitleLbl.setFont(style:.body, size: FontSize.BodySize)
@@ -259,7 +255,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         // Set the attributed string to the label
         label.attributedText = attributedString
     }
-
+    
     func keyboardDionebtn(){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
@@ -353,7 +349,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         dismiss(animated: true)
     }
     
-  
+    
     
     
     
@@ -361,8 +357,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-     
-            return 1 + selectedImages.count
+        
+        return 1 + selectedImages.count
         
         
     }
@@ -376,12 +372,12 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
             cell.delegate = self
             cell.deleteBtn.tag = indexPath.item - 1
-//            if url != nil{
-//                cell.selectedFileURL = url
-//                cell.pdf.isHidden = false
-//            }else{
-//                cell.pdf.isHidden = false
-//            }
+            //            if url != nil{
+            //                cell.selectedFileURL = url
+            //                cell.pdf.isHidden = false
+            //            }else{
+            //                cell.pdf.isHidden = false
+            //            }
             if selectedImages.count > indexPath.item - 1 {
                 // Assign the image starting from the second image in the selectedImages array
                 cell.imageViews.image = selectedImages[indexPath.item - 1]
@@ -448,16 +444,25 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func selectImages() {
-        
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5)
-
-
-           }
+        if selectedImages.count != 5{
+            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
+    }
     func openCamera(){
-        photoPickManager.openCamera(from: self)
-
-
-       }
+        if selectedImages.count != 5{
+            photoPickManager.openCamera(from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            
+        }
+        
+    }
     func selectPDF() {
         photoPickManager.pickPDF(from: self)
         
