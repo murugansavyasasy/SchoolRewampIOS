@@ -498,7 +498,21 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = NewAbsenteesViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
+                } else if items[indexPath.row] == "Fee Pending Report".translated(){
+                    let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row] == "Mark Your Attendance".translated(){
+                    let vc = LocationViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row] == "Very Important Info".translated(){
+                    let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
                 }
+                
+                
                 print("ID",items[indexPath.row])
                 
                

@@ -141,6 +141,22 @@
 		18926CDC2D0306CA002BBB97 /* CheckAviableTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C6B2D0306CA002BBB97 /* CheckAviableTv.xib */; };
 		18926CDD2D0306CA002BBB97 /* StaffPtmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C772D0306CA002BBB97 /* StaffPtmViewController.xib */; };
 		18926CDE2D0306CA002BBB97 /* TimeHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C862D0306CA002BBB97 /* TimeHeader.xib */; };
+		18926D262D04140B002BBB97 /* SectionwiesReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D182D04140B002BBB97 /* SectionwiesReq.swift */; };
+		18926D272D04140B002BBB97 /* NewPendingResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1A2D04140B002BBB97 /* NewPendingResp.swift */; };
+		18926D282D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1E2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift */; };
+		18926D292D04140B002BBB97 /* acidmicYrResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D232D04140B002BBB97 /* acidmicYrResponce.swift */; };
+		18926D2A2D04140B002BBB97 /* PendingFeeReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D212D04140B002BBB97 /* PendingFeeReportViewController.swift */; };
+		18926D2B2D04140B002BBB97 /* AcidmicYrRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D242D04140B002BBB97 /* AcidmicYrRequest.swift */; };
+		18926D2C2D04140B002BBB97 /* NewPendingReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D192D04140B002BBB97 /* NewPendingReq.swift */; };
+		18926D2D2D04140B002BBB97 /* PendingReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D172D04140B002BBB97 /* PendingReq.swift */; };
+		18926D2E2D04140B002BBB97 /* classWisePendingReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1B2D04140B002BBB97 /* classWisePendingReq.swift */; };
+		18926D2F2D04140B002BBB97 /* PendingApiResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D162D04140B002BBB97 /* PendingApiResp.swift */; };
+		18926D302D04140B002BBB97 /* PendingFeeReportTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D132D04140B002BBB97 /* PendingFeeReportTableViewCell.swift */; };
+		18926D312D04140B002BBB97 /* PendingFeeReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D142D04140B002BBB97 /* PendingFeeReportTableViewCell.xib */; };
+		18926D322D04140B002BBB97 /* PendingFeeReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */; };
+		18926D332D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D1D2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib */; };
+		18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */; };
+		18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */; };
 		189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99052CE3195D00FE98A5 /* VimeoUpload.swift */; };
 		189E99692CE35F6C00FE98A5 /* ImageNotificationService.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		189E99822CE3794A00FE98A5 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189E99802CE3794A00FE98A5 /* NotificationService.swift */; };
@@ -555,6 +571,22 @@
 		18926CA32D0306CA002BBB97 /* TeacherWiseSlotAvailabilityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherWiseSlotAvailabilityResponse.swift; sourceTree = "<group>"; };
 		18926CA42D0306CA002BBB97 /* SubjectListForStudentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListForStudentResponse.swift; sourceTree = "<group>"; };
 		18926CA52D0306CA002BBB97 /* verifyReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyReq.swift; sourceTree = "<group>"; };
+		18926D132D04140B002BBB97 /* PendingFeeReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeReportTableViewCell.swift; sourceTree = "<group>"; };
+		18926D142D04140B002BBB97 /* PendingFeeReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeReportTableViewCell.xib; sourceTree = "<group>"; };
+		18926D162D04140B002BBB97 /* PendingApiResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingApiResp.swift; sourceTree = "<group>"; };
+		18926D172D04140B002BBB97 /* PendingReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingReq.swift; sourceTree = "<group>"; };
+		18926D182D04140B002BBB97 /* SectionwiesReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionwiesReq.swift; sourceTree = "<group>"; };
+		18926D192D04140B002BBB97 /* NewPendingReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPendingReq.swift; sourceTree = "<group>"; };
+		18926D1A2D04140B002BBB97 /* NewPendingResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPendingResp.swift; sourceTree = "<group>"; };
+		18926D1B2D04140B002BBB97 /* classWisePendingReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = classWisePendingReq.swift; sourceTree = "<group>"; };
+		18926D1D2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib; sourceTree = "<group>"; };
+		18926D1E2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeReportTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
+		18926D212D04140B002BBB97 /* PendingFeeReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeReportViewController.swift; sourceTree = "<group>"; };
+		18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeReportViewController.xib; sourceTree = "<group>"; };
+		18926D232D04140B002BBB97 /* acidmicYrResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acidmicYrResponce.swift; sourceTree = "<group>"; };
+		18926D242D04140B002BBB97 /* AcidmicYrRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidmicYrRequest.swift; sourceTree = "<group>"; };
+		18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantInfoViewController.swift; sourceTree = "<group>"; };
+		18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantInfoViewController.xib; sourceTree = "<group>"; };
 		189E99052CE3195D00FE98A5 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
 		189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VsSchoolChimes.entitlements; sourceTree = "<group>"; };
 		189E99622CE35F6C00FE98A5 /* ImageNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ImageNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1274,6 +1306,68 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		18926D152D04140B002BBB97 /* TvCell */ = {
+			isa = PBXGroup;
+			children = (
+				18926D132D04140B002BBB97 /* PendingFeeReportTableViewCell.swift */,
+				18926D142D04140B002BBB97 /* PendingFeeReportTableViewCell.xib */,
+			);
+			path = TvCell;
+			sourceTree = "<group>";
+		};
+		18926D1C2D04140B002BBB97 /* PendingAPi */ = {
+			isa = PBXGroup;
+			children = (
+				18926D162D04140B002BBB97 /* PendingApiResp.swift */,
+				18926D172D04140B002BBB97 /* PendingReq.swift */,
+				18926D182D04140B002BBB97 /* SectionwiesReq.swift */,
+				18926D192D04140B002BBB97 /* NewPendingReq.swift */,
+				18926D1A2D04140B002BBB97 /* NewPendingResp.swift */,
+				18926D1B2D04140B002BBB97 /* classWisePendingReq.swift */,
+			);
+			path = PendingAPi;
+			sourceTree = "<group>";
+		};
+		18926D1F2D04140B002BBB97 /* Footer */ = {
+			isa = PBXGroup;
+			children = (
+				18926D1C2D04140B002BBB97 /* PendingAPi */,
+				18926D1D2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib */,
+				18926D1E2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift */,
+			);
+			path = Footer;
+			sourceTree = "<group>";
+		};
+		18926D202D04140B002BBB97 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				18926D152D04140B002BBB97 /* TvCell */,
+				18926D1F2D04140B002BBB97 /* Footer */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		18926D252D04140B002BBB97 /* PendingFeeReport */ = {
+			isa = PBXGroup;
+			children = (
+				18926D202D04140B002BBB97 /* Cell */,
+				18926D212D04140B002BBB97 /* PendingFeeReportViewController.swift */,
+				18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */,
+				18926D232D04140B002BBB97 /* acidmicYrResponce.swift */,
+				18926D242D04140B002BBB97 /* AcidmicYrRequest.swift */,
+			);
+			path = PendingFeeReport;
+			sourceTree = "<group>";
+		};
+		18926D342D041D54002BBB97 /* ImportantInfo */ = {
+			isa = PBXGroup;
+			children = (
+				18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */,
+				18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */,
+			);
+			path = ImportantInfo;
+			sourceTree = "<group>";
+		};
 		189E99492CE353FE00FE98A5 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
@@ -1293,6 +1387,8 @@
 		189E99DC2CE4925F00FE98A5 /* SchoolSide */ = {
 			isa = PBXGroup;
 			children = (
+				18926D342D041D54002BBB97 /* ImportantInfo */,
+				18926D252D04140B002BBB97 /* PendingFeeReport */,
 				18926CA92D0306CA002BBB97 /* PTMVc */,
 				18926B212D02D7AB002BBB97 /* LocationVc */,
 				18926AF22D02D460002BBB97 /* AbsenteesReport */,
@@ -2712,6 +2808,7 @@
 				18926C632D02DE81002BBB97 /* LSRWTakingSkillViewController.xib in Resources */,
 				18926C642D02DE81002BBB97 /* LsrwListShowTableViewCell.xib in Resources */,
 				84A271812CEDAB9F0033EB02 /* News.gif in Resources */,
+				18926D382D041D74002BBB97 /* ImportantInfoViewController.xib in Resources */,
 				847AB6EF2CF09A6800952AC1 /* RecipientTvCell.xib in Resources */,
 				847AB6F02CF09A6800952AC1 /* Std_Grp_header.xib in Resources */,
 				847AB6F12CF09A6800952AC1 /* SelectRecipientVC.xib in Resources */,
@@ -2752,6 +2849,9 @@
 				849970B82CF8750B00800B07 /* PageVC.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
 				849970C92CF8752400800B07 /* DateCVC.xib in Resources */,
+				18926D312D04140B002BBB97 /* PendingFeeReportTableViewCell.xib in Resources */,
+				18926D322D04140B002BBB97 /* PendingFeeReportViewController.xib in Resources */,
+				18926D332D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib in Resources */,
 				849970CA2CF8752400800B07 /* HistoryTC.xib in Resources */,
 				18926CD22D0306CA002BBB97 /* CheckAviableTvHeader.xib in Resources */,
 				18926CD32D0306CA002BBB97 /* PTMViewController.xib in Resources */,
@@ -2974,6 +3074,7 @@
 				18926CB92D0306CA002BBB97 /* SubjectListForStudentRequest.swift in Sources */,
 				18926CBA2D0306CA002BBB97 /* DateWiseModal.swift in Sources */,
 				18926CBB2D0306CA002BBB97 /* CheckAviableTvHeader.swift in Sources */,
+				18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */,
 				18926CBC2D0306CA002BBB97 /* CancelSlotResponse.swift in Sources */,
 				18926CBD2D0306CA002BBB97 /* CheckAviableTv.swift in Sources */,
 				18926CBE2D0306CA002BBB97 /* TimeHeader.swift in Sources */,
@@ -3105,6 +3206,17 @@
 				84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */,
 				18926BDC2D02DCE1002BBB97 /* StudentListReq.swift in Sources */,
 				18926BDD2D02DCE1002BBB97 /* StudentListResp.swift in Sources */,
+				18926D262D04140B002BBB97 /* SectionwiesReq.swift in Sources */,
+				18926D272D04140B002BBB97 /* NewPendingResp.swift in Sources */,
+				18926D282D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift in Sources */,
+				18926D292D04140B002BBB97 /* acidmicYrResponce.swift in Sources */,
+				18926D2A2D04140B002BBB97 /* PendingFeeReportViewController.swift in Sources */,
+				18926D2B2D04140B002BBB97 /* AcidmicYrRequest.swift in Sources */,
+				18926D2C2D04140B002BBB97 /* NewPendingReq.swift in Sources */,
+				18926D2D2D04140B002BBB97 /* PendingReq.swift in Sources */,
+				18926D2E2D04140B002BBB97 /* classWisePendingReq.swift in Sources */,
+				18926D2F2D04140B002BBB97 /* PendingApiResp.swift in Sources */,
+				18926D302D04140B002BBB97 /* PendingFeeReportTableViewCell.swift in Sources */,
 				18926BDE2D02DCE1002BBB97 /* SectionTvTableViewCell copy.swift in Sources */,
 				18926BDF2D02DCE1002BBB97 /* AbesentReportResp.swift in Sources */,
 				18926BE02D02DCE1002BBB97 /* CVIconCollectionViewCell.swift in Sources */,

@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubmitLsrwViewController" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubmitLsrwViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="PlayVocieButton" destination="PFx-VU-hBK" id="Acl-wx-8hq"/>
                 <outlet property="Slider" destination="yrB-w1-Sok" id="1BV-Xv-aty"/>
@@ -68,8 +68,8 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rgo-OL-42m">
                                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backarrow" translatesAutoresizingMaskIntoConstraints="NO" id="DbU-gT-9g0">
-                                            <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="DbU-gT-9g0">
+                                            <rect key="frame" x="10" y="12.999999999999998" width="20" height="14.33333333333333"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="0QX-gr-Bmt"/>
@@ -101,7 +101,7 @@
                                 <constraint firstItem="L4x-1P-zoC" firstAttribute="leading" secondItem="Rgo-OL-42m" secondAttribute="trailing" constant="20" id="u72-Ga-AIn"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYg-Oq-e3u" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MYg-Oq-e3u" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="10" y="50" width="373" height="40"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Aex-xu-YJy">
@@ -153,7 +153,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fS6-kQ-a6D">
                             <rect key="frame" x="10" y="110" width="373" height="300"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPK-1h-K8j" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPK-1h-K8j" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                     <rect key="frame" x="5" y="5" width="363" height="160"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-WR-a4L">
@@ -311,7 +311,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zNL-Dy-nGv">
                                     <rect key="frame" x="10" y="10" width="353" height="280"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2K7-a3-Bwe" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2K7-a3-Bwe" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                             <rect key="frame" x="5" y="5" width="343" height="55"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pdfImage" translatesAutoresizingMaskIntoConstraints="NO" id="xgE-yJ-H1D">
@@ -417,7 +417,7 @@
                             <rect key="frame" x="10" y="545.33333333333337" width="373" height="143.66666666666663"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tl8-iQ-BTz" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tl8-iQ-BTz" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="131.66666666666666" y="699" width="129.99999999999997" height="40"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submit" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ilW-Hb-QjG">
@@ -440,14 +440,14 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ApB-Es-a7b" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ApB-Es-a7b" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="21.666666666666657" y="239.66666666666669" width="350" height="280.00000000000006"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LZI-R3-b4E">
                                     <rect key="frame" x="5" y="5" width="340" height="220"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ra4-7A-Kaf" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ra4-7A-Kaf" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                     <rect key="frame" x="130" y="229.99999999999994" width="90" height="40"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I agree" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kem-cD-qtH">
@@ -548,7 +548,7 @@
         <image name="AppBG" width="360" height="640"/>
         <image name="PlayIcon" width="60" height="60"/>
         <image name="VocieRecord" width="67.5" height="67.5"/>
-        <image name="backarrow" width="30" height="30"/>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="downArrow" width="20" height="20"/>
         <image name="pdfImage" width="140" height="150"/>
         <namedColor name="presentGreen">
@@ -561,13 +561,13 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

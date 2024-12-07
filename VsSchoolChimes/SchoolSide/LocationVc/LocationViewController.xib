@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationViewController" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="ErrorLablelView" destination="63o-Kq-6GO" id="bUB-DF-n9J"/>
                 <outlet property="attendanceDefltLbl" destination="X1F-WR-N2s" id="uCM-YI-l1P"/>
@@ -46,7 +46,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LpL-kN-N4i">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63o-Kq-6GO" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="63o-Kq-6GO" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="20" y="279.66666666666669" width="353" height="200"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPq-fb-ZVx">
@@ -77,8 +77,8 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTk-xn-OIq">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backarrow" translatesAutoresizingMaskIntoConstraints="NO" id="COY-Ic-0Dq">
-                                            <rect key="frame" x="15" y="15" width="20" height="20"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="COY-Ic-0Dq">
+                                            <rect key="frame" x="15" y="18" width="20" height="14.333333333333329"/>
                                             <color key="tintColor" red="1" green="1" blue="0.99999994039999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="N4p-pQ-96C"/>
@@ -128,7 +128,7 @@
                                         <constraint firstAttribute="height" constant="128" id="rz5-e3-tK2"/>
                                     </constraints>
                                 </imageView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncN-ka-hhZ" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncN-ka-hhZ" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                     <rect key="frame" x="40" y="347" width="313" height="50"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Punch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0lT-0a-qtK">
@@ -185,7 +185,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JsX-xx-kRS">
                             <rect key="frame" x="0.0" y="58" width="393" height="45"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3O-S2-YAE" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3O-S2-YAE" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                     <rect key="frame" x="10" y="0.0" width="182" height="45"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mark Attendance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12a-2Q-eYR">
@@ -208,7 +208,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="feV-r3-s8F" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="feV-r3-s8F" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                     <rect key="frame" x="224" y="0.0" width="159" height="45"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Attendance Details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X1F-WR-N2s">
@@ -245,7 +245,7 @@
                                 <constraint firstItem="feV-r3-s8F" firstAttribute="leading" secondItem="z3O-S2-YAE" secondAttribute="trailing" constant="32" id="zTb-b9-1hC"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D3W-Ac-li4" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D3W-Ac-li4" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="220.33333333333337" y="118" width="130.66666666666663" height="30"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Kxa-Zf-udg">
@@ -277,7 +277,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YdH-fp-M2G" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YdH-fp-M2G" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="20" y="188" width="353" height="466"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location-service-in-metaverse" translatesAutoresizingMaskIntoConstraints="NO" id="fLU-QM-erg">
@@ -305,7 +305,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nf6-ou-5T1" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nf6-ou-5T1" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                     <rect key="frame" x="20" y="408" width="313" height="50"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enabel Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kuq-3u-CAr">
@@ -371,7 +371,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfH-En-hmW" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfH-En-hmW" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="53" y="118" width="140" height="30"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downArrow" translatesAutoresizingMaskIntoConstraints="NO" id="xy2-vz-E78">
@@ -497,7 +497,7 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydh-os-wyQ" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydh-os-wyQ" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                     <rect key="frame" x="5" y="180" width="383" height="523"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authenticate fingerPrint" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jdd-Dk-tyJ">
@@ -525,7 +525,7 @@
                                 <constraint firstAttribute="height" constant="150" id="tQR-4z-GjG"/>
                             </constraints>
                         </imageView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7G-At-YQr" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M7G-At-YQr" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="35" y="379" width="313" height="40"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZZ-32-69Z">
@@ -555,7 +555,7 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nUl-Hv-Ldz" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nUl-Hv-Ldz" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                             <rect key="frame" x="35" y="439" width="313" height="40"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Skip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SbV-go-W07">
@@ -626,7 +626,7 @@
         </view>
     </objects>
     <resources>
-        <image name="backarrow" width="30" height="30"/>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="downArrow" width="20" height="20"/>
         <image name="hwCancel" width="512" height="512"/>
         <image name="location" width="512" height="512"/>

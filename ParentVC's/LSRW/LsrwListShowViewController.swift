@@ -21,8 +21,6 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var nodataView: UIView!
-    
-    
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var backView: UIView!
