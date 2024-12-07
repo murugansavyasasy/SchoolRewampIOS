@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TimeHeader" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="79"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gqy-07-t5G" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+                    <rect key="frame" x="10" y="0.0" width="416" height="79"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="General meeting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXL-vd-X2P">
+                            <rect key="frame" x="8" y="4" width="400" height="18"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Mode - PhoneCall" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMO-6V-EEq">
+                            <rect key="frame" x="8" y="54" width="400" height="18"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SaranRaj - Tamil" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nrq-s9-d9Y">
+                            <rect key="frame" x="8" y="28" width="400" height="19.666666666666671"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ZMO-6V-EEq" firstAttribute="leading" secondItem="gqy-07-t5G" secondAttribute="leading" constant="8" id="4C0-9X-EQz"/>
+                        <constraint firstAttribute="trailing" secondItem="DXL-vd-X2P" secondAttribute="trailing" constant="8" id="64u-oG-kqX"/>
+                        <constraint firstItem="ZMO-6V-EEq" firstAttribute="top" secondItem="nrq-s9-d9Y" secondAttribute="bottom" constant="6.3300000000000001" id="EPy-ea-eBH"/>
+                        <constraint firstItem="nrq-s9-d9Y" firstAttribute="leading" secondItem="gqy-07-t5G" secondAttribute="leading" constant="8" id="P16-Wk-jjk"/>
+                        <constraint firstAttribute="trailing" secondItem="nrq-s9-d9Y" secondAttribute="trailing" constant="8" id="Qfb-RB-zlt"/>
+                        <constraint firstItem="DXL-vd-X2P" firstAttribute="top" secondItem="gqy-07-t5G" secondAttribute="top" constant="4" id="a8d-Wv-vHz"/>
+                        <constraint firstItem="nrq-s9-d9Y" firstAttribute="top" secondItem="DXL-vd-X2P" secondAttribute="bottom" constant="6" id="dEh-7s-cJb"/>
+                        <constraint firstAttribute="bottom" secondItem="ZMO-6V-EEq" secondAttribute="bottom" constant="7" id="eu9-9S-EpQ"/>
+                        <constraint firstAttribute="trailing" secondItem="ZMO-6V-EEq" secondAttribute="trailing" constant="8" id="nhE-cp-Ux2"/>
+                        <constraint firstItem="DXL-vd-X2P" firstAttribute="leading" secondItem="gqy-07-t5G" secondAttribute="leading" constant="8" id="pnr-yh-1k2"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowOffsetY">
+                            <real key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="gqy-07-t5G" secondAttribute="bottom" id="Abc-uj-g9i"/>
+                <constraint firstItem="gqy-07-t5G" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="BMO-Gn-xby"/>
+                <constraint firstItem="gqy-07-t5G" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="dHh-Qd-Kdj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gqy-07-t5G" secondAttribute="trailing" constant="10" id="ggH-Nc-USG"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="holeView" destination="gqy-07-t5G" id="fGf-jp-vbF"/>
+                <outlet property="meetingLbl" destination="DXL-vd-X2P" id="OJw-tb-dtw"/>
+                <outlet property="modeLbl" destination="ZMO-6V-EEq" id="DJD-uj-I55"/>
+                <outlet property="nameAndSubjectLbl" destination="nrq-s9-d9Y" id="IwD-uf-mkG"/>
+            </connections>
+            <point key="canvasLocation" x="271.75572519083971" y="-269.36619718309862"/>
+        </view>
+    </objects>
+</document>
