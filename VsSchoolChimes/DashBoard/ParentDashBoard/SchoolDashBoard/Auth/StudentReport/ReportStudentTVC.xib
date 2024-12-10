@@ -112,7 +112,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="5W2-zK-BSD">
                                 <rect key="frame" x="106" y="70.333333333333329" width="292.66666666666669" height="20.333333333333329"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Veeramalai" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUX-zt-vYr">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUX-zt-vYr">
                                         <rect key="frame" x="0.0" y="0.0" width="157.66666666666666" height="20.333333333333332"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="4et-Es-Ygc"/>
@@ -204,9 +204,13 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9au-Ue-WtV">
                                         <rect key="frame" x="0.0" y="0.0" width="389.66666666666669" height="73.333333333333329"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                         <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="9967645432" image="phone.circle.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="callAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Loq-eu-57M"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yJ-Tq-JEt">
                                         <rect key="frame" x="0.0" y="83.333333333333314" width="389.66666666666669" height="73.333333333333314"/>
@@ -215,6 +219,9 @@
                                         <state key="normal" title="SMS" image="ellipsis.message.fill" catalog="system">
                                             <color key="titleColor" name="AccentColor"/>
                                         </state>
+                                        <connections>
+                                            <action selector="smsAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Pfx-LI-F2y"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJg-4p-dSp">
                                         <rect key="frame" x="0.0" y="166.66666666666669" width="389.66666666666669" height="73.333333333333314"/>
@@ -223,6 +230,9 @@
                                         <state key="normal" title="chandhru@gmail.com" image="envelope.badge.fill" catalog="system">
                                             <color key="titleColor" name="AccentColor"/>
                                         </state>
+                                        <connections>
+                                            <action selector="emailAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NFf-3w-JIc"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -296,6 +306,10 @@
                 <outlet property="dobLbl" destination="q13-Sw-YrW" id="rBV-7e-Tow"/>
                 <outlet property="dobTitleLbl" destination="EUB-el-Zhr" id="bus-MR-WTf"/>
                 <outlet property="emailBtn" destination="XJg-4p-dSp" id="PZS-xd-xCG"/>
+                <outlet property="fatherName" destination="faK-ND-Mm2" id="Nsy-vJ-l8b"/>
+                <outlet property="fatherTitle" destination="L0R-Sx-emS" id="nZS-BX-QOv"/>
+                <outlet property="genderLbl" destination="JZu-L9-z8d" id="CyC-ce-Plu"/>
+                <outlet property="genderTitle" destination="kUX-zt-vYr" id="cEw-hk-nlL"/>
                 <outlet property="imgView" destination="zv0-5r-4dn" id="jUZ-m0-Gld"/>
                 <outlet property="mobleNo" destination="9au-Ue-WtV" id="rRD-li-upz"/>
                 <outlet property="nameTitle" destination="PzX-sJ-g7J" id="OHQ-WB-yAh"/>
