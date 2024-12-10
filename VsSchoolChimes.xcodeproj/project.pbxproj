@@ -368,6 +368,28 @@
 		84C829C12D0807CD0024A46A /* ConfettiEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829BD2D0807CD0024A46A /* ConfettiEmitter.swift */; };
 		84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829BF2D0807CD0024A46A /* ConfettiView.swift */; };
 		84C829C32D0807CD0024A46A /* ConfettiLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829BE2D0807CD0024A46A /* ConfettiLayer.swift */; };
+		84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E12D086A490024A46A /* ClassicSparkTrajectoryFactory.swift */; };
+		84C829FB2D086A490024A46A /* FountainFirework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E42D086A490024A46A /* FountainFirework.swift */; };
+		84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829DF2D086A490024A46A /* ClassicFireworkAnimator.swift */; };
+		84C829FD2D086A490024A46A /* ImageSparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F42D086A490024A46A /* ImageSparkView.swift */; };
+		84C829FE2D086A490024A46A /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F72D086A490024A46A /* CGPoint+Extensions.swift */; };
+		84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E72D086A490024A46A /* FountainSparkTrajectoryFactory.swift */; };
+		84C82A002D086A490024A46A /* Firework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E92D086A490024A46A /* Firework.swift */; };
+		84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E62D086A490024A46A /* FountainFireworkController.swift */; };
+		84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F52D086A490024A46A /* ImageSparkViewFactory.swift */; };
+		84C82A032D086A490024A46A /* FireworkSpark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829EA2D086A490024A46A /* FireworkSpark.swift */; };
+		84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829EB2D086A490024A46A /* FireworkSparkScheduler.swift */; };
+		84C82A052D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E22D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift */; };
+		84C82A062D086A490024A46A /* SparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829EE2D086A490024A46A /* SparkView.swift */; };
+		84C82A072D086A490024A46A /* SparkViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829EF2D086A490024A46A /* SparkViewAnimator.swift */; };
+		84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829ED2D086A490024A46A /* SparkTrajectoryFactory.swift */; };
+		84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829EC2D086A490024A46A /* SparkTrajectory.swift */; };
+		84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E52D086A490024A46A /* FountainFireworkAnimator.swift */; };
+		84C82A0B2D086A490024A46A /* ClassicFirework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829DE2D086A490024A46A /* ClassicFirework.swift */; };
+		84C82A0C2D086A490024A46A /* CircleColorSparkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F22D086A490024A46A /* CircleColorSparkView.swift */; };
+		84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F02D086A490024A46A /* SparkViewFactory.swift */; };
+		84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F32D086A490024A46A /* CircleColorSparkViewFactory.swift */; };
+		84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E02D086A490024A46A /* ClassicFireworkController.swift */; };
 		84EB2DC02D06BA11007628DE /* LessonPlanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EB2DBF2D06BA11007628DE /* LessonPlanVC.xib */; };
 		84EB2DC12D06BA11007628DE /* LessonPlanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB2DBE2D06BA11007628DE /* LessonPlanVC.swift */; };
 		84EB2DC42D06BDA5007628DE /* LessonPlanTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EB2DC32D06BDA5007628DE /* LessonPlanTvCell.xib */; };
@@ -835,6 +857,28 @@
 		84C829BD2D0807CD0024A46A /* ConfettiEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiEmitter.swift; sourceTree = "<group>"; };
 		84C829BE2D0807CD0024A46A /* ConfettiLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiLayer.swift; sourceTree = "<group>"; };
 		84C829BF2D0807CD0024A46A /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
+		84C829DE2D086A490024A46A /* ClassicFirework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFirework.swift; sourceTree = "<group>"; };
+		84C829DF2D086A490024A46A /* ClassicFireworkAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFireworkAnimator.swift; sourceTree = "<group>"; };
+		84C829E02D086A490024A46A /* ClassicFireworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicFireworkController.swift; sourceTree = "<group>"; };
+		84C829E12D086A490024A46A /* ClassicSparkTrajectoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactory.swift; sourceTree = "<group>"; };
+		84C829E22D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassicSparkTrajectoryFactoryProtocol.swift; sourceTree = "<group>"; };
+		84C829E42D086A490024A46A /* FountainFirework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FountainFirework.swift; sourceTree = "<group>"; };
+		84C829E52D086A490024A46A /* FountainFireworkAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FountainFireworkAnimator.swift; sourceTree = "<group>"; };
+		84C829E62D086A490024A46A /* FountainFireworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FountainFireworkController.swift; sourceTree = "<group>"; };
+		84C829E72D086A490024A46A /* FountainSparkTrajectoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FountainSparkTrajectoryFactory.swift; sourceTree = "<group>"; };
+		84C829E92D086A490024A46A /* Firework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firework.swift; sourceTree = "<group>"; };
+		84C829EA2D086A490024A46A /* FireworkSpark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworkSpark.swift; sourceTree = "<group>"; };
+		84C829EB2D086A490024A46A /* FireworkSparkScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworkSparkScheduler.swift; sourceTree = "<group>"; };
+		84C829EC2D086A490024A46A /* SparkTrajectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkTrajectory.swift; sourceTree = "<group>"; };
+		84C829ED2D086A490024A46A /* SparkTrajectoryFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkTrajectoryFactory.swift; sourceTree = "<group>"; };
+		84C829EE2D086A490024A46A /* SparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkView.swift; sourceTree = "<group>"; };
+		84C829EF2D086A490024A46A /* SparkViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkViewAnimator.swift; sourceTree = "<group>"; };
+		84C829F02D086A490024A46A /* SparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkViewFactory.swift; sourceTree = "<group>"; };
+		84C829F22D086A490024A46A /* CircleColorSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleColorSparkView.swift; sourceTree = "<group>"; };
+		84C829F32D086A490024A46A /* CircleColorSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleColorSparkViewFactory.swift; sourceTree = "<group>"; };
+		84C829F42D086A490024A46A /* ImageSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkView.swift; sourceTree = "<group>"; };
+		84C829F52D086A490024A46A /* ImageSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkViewFactory.swift; sourceTree = "<group>"; };
+		84C829F72D086A490024A46A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		84EB2DBE2D06BA11007628DE /* LessonPlanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPlanVC.swift; sourceTree = "<group>"; };
 		84EB2DBF2D06BA11007628DE /* LessonPlanVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonPlanVC.xib; sourceTree = "<group>"; };
 		84EB2DC22D06BDA5007628DE /* LessonPlanTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPlanTvCell.swift; sourceTree = "<group>"; };
@@ -2126,6 +2170,7 @@
 		84A5BE7E2C1973F400E32496 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				84C829F92D086A490024A46A /* Fireworks */,
 				84C829C02D0807CD0024A46A /* Confetti */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				8442A85D2CDB726A0006068E /* GoogleService-Info.plist */,
@@ -2513,6 +2558,75 @@
 				84C829BF2D0807CD0024A46A /* ConfettiView.swift */,
 			);
 			path = Confetti;
+			sourceTree = "<group>";
+		};
+		84C829E32D086A490024A46A /* Classic Firework */ = {
+			isa = PBXGroup;
+			children = (
+				84C829DE2D086A490024A46A /* ClassicFirework.swift */,
+				84C829DF2D086A490024A46A /* ClassicFireworkAnimator.swift */,
+				84C829E02D086A490024A46A /* ClassicFireworkController.swift */,
+				84C829E12D086A490024A46A /* ClassicSparkTrajectoryFactory.swift */,
+				84C829E22D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift */,
+			);
+			path = "Classic Firework";
+			sourceTree = "<group>";
+		};
+		84C829E82D086A490024A46A /* Fountain Firework */ = {
+			isa = PBXGroup;
+			children = (
+				84C829E42D086A490024A46A /* FountainFirework.swift */,
+				84C829E52D086A490024A46A /* FountainFireworkAnimator.swift */,
+				84C829E62D086A490024A46A /* FountainFireworkController.swift */,
+				84C829E72D086A490024A46A /* FountainSparkTrajectoryFactory.swift */,
+			);
+			path = "Fountain Firework";
+			sourceTree = "<group>";
+		};
+		84C829F12D086A490024A46A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				84C829E92D086A490024A46A /* Firework.swift */,
+				84C829EA2D086A490024A46A /* FireworkSpark.swift */,
+				84C829EB2D086A490024A46A /* FireworkSparkScheduler.swift */,
+				84C829EC2D086A490024A46A /* SparkTrajectory.swift */,
+				84C829ED2D086A490024A46A /* SparkTrajectoryFactory.swift */,
+				84C829EE2D086A490024A46A /* SparkView.swift */,
+				84C829EF2D086A490024A46A /* SparkViewAnimator.swift */,
+				84C829F02D086A490024A46A /* SparkViewFactory.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		84C829F62D086A490024A46A /* Spark Views */ = {
+			isa = PBXGroup;
+			children = (
+				84C829F22D086A490024A46A /* CircleColorSparkView.swift */,
+				84C829F32D086A490024A46A /* CircleColorSparkViewFactory.swift */,
+				84C829F42D086A490024A46A /* ImageSparkView.swift */,
+				84C829F52D086A490024A46A /* ImageSparkViewFactory.swift */,
+			);
+			path = "Spark Views";
+			sourceTree = "<group>";
+		};
+		84C829F82D086A490024A46A /* System Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				84C829F72D086A490024A46A /* CGPoint+Extensions.swift */,
+			);
+			path = "System Extensions";
+			sourceTree = "<group>";
+		};
+		84C829F92D086A490024A46A /* Fireworks */ = {
+			isa = PBXGroup;
+			children = (
+				84C829E32D086A490024A46A /* Classic Firework */,
+				84C829E82D086A490024A46A /* Fountain Firework */,
+				84C829F12D086A490024A46A /* Model */,
+				84C829F62D086A490024A46A /* Spark Views */,
+				84C829F82D086A490024A46A /* System Extensions */,
+			);
+			path = Fireworks;
 			sourceTree = "<group>";
 		};
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
@@ -3389,6 +3503,28 @@
 				849970CD2CF8752400800B07 /* TextHistoryTVCell.swift in Sources */,
 				849970CE2CF8752400800B07 /* DateCVC.swift in Sources */,
 				849970CF2CF8752400800B07 /* WaveView .swift in Sources */,
+				84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */,
+				84C829FB2D086A490024A46A /* FountainFirework.swift in Sources */,
+				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
+				84C829FD2D086A490024A46A /* ImageSparkView.swift in Sources */,
+				84C829FE2D086A490024A46A /* CGPoint+Extensions.swift in Sources */,
+				84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */,
+				84C82A002D086A490024A46A /* Firework.swift in Sources */,
+				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
+				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,
+				84C82A032D086A490024A46A /* FireworkSpark.swift in Sources */,
+				84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */,
+				84C82A052D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
+				84C82A062D086A490024A46A /* SparkView.swift in Sources */,
+				84C82A072D086A490024A46A /* SparkViewAnimator.swift in Sources */,
+				84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */,
+				84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */,
+				84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */,
+				84C82A0B2D086A490024A46A /* ClassicFirework.swift in Sources */,
+				84C82A0C2D086A490024A46A /* CircleColorSparkView.swift in Sources */,
+				84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */,
+				84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */,
+				84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */,
 				849970D02CF8752400800B07 /* HistoryTC.swift in Sources */,
 				849970D12CF8752400800B07 /* ComunicationVC.swift in Sources */,
 				847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */,
