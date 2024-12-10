@@ -506,6 +506,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 }else if items[indexPath.row].translated() == menuName.LessonPlan {
                     
                     let vc = LessonPlanVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
                 } else if items[indexPath.row] == "Fee Pending Report".translated(){
                     let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen

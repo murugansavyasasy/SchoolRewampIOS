@@ -27,9 +27,13 @@ class LessonPlanVC: UIViewController {
         
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
+//        
+//        let nib = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
+//        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
         
-        let nib = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
+        
+        let nib = UINib(nibName: CellConfingName.LessonDetailsTVcell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonDetailsTVcell)
         
         tableview.delegate = self
         tableview.dataSource = self
@@ -93,9 +97,13 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTvCell, for: indexPath) as! LessonPlanTvCell
-        
-        cell.getvalue(a: Int(complete[indexPath.row]), b: Int(pending[indexPath.row]))
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDetailsTVcell, for: indexPath) as! LessonDetailsTVcell
+        //cell.startProgressAnimation(duration: 9.0)
+        cell.startProgressAnimation()
+      
+        //MARK: Lesson plan tvcell
+//        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTvCell, for: indexPath) as! LessonPlanTvCell
+//        cell.getvalue(a: Int(complete[indexPath.row]), b: Int(pending[indexPath.row]))
 //        cell.val1 = complete[indexPath.row]
 //        cell.val2 = pending[indexPath.row]
         return cell
@@ -106,9 +114,9 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
+        //let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
         
-        cell.animatePopUpEffect()
+       // cell.animatePopUpEffect()
     }
 
     
