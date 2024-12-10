@@ -355,6 +355,19 @@
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E702CF6DF9600E34A83 /* splashVc.xib */; };
 		84C00E722CF6DF9600E34A83 /* splashVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6F2CF6DF9600E34A83 /* splashVc.swift */; };
+		84C829AB2D0805300024A46A /* ReportStudentListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C829A52D0805300024A46A /* ReportStudentListVC.xib */; };
+		84C829AD2D0805300024A46A /* ReportStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C829A72D0805300024A46A /* ReportStudentTVC.xib */; };
+		84C829AE2D0805300024A46A /* StudentReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C829A92D0805300024A46A /* StudentReportVC.xib */; };
+		84C829B02D0805300024A46A /* StudentReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829A82D0805300024A46A /* StudentReportVC.swift */; };
+		84C829B12D0805300024A46A /* ReportStudentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829A62D0805300024A46A /* ReportStudentTVC.swift */; };
+		84C829B22D0805300024A46A /* ReportStudentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829A42D0805300024A46A /* ReportStudentListVC.swift */; };
+		84C829B92D08078A0024A46A /* MarkTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C829B42D08078A0024A46A /* MarkTvCell.xib */; };
+		84C829BA2D08078A0024A46A /* ExameMarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C829B72D08078A0024A46A /* ExameMarVC.xib */; };
+		84C829BB2D08078A0024A46A /* ExameMarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829B62D08078A0024A46A /* ExameMarVC.swift */; };
+		84C829BC2D08078A0024A46A /* MarkTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829B32D08078A0024A46A /* MarkTvCell.swift */; };
+		84C829C12D0807CD0024A46A /* ConfettiEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829BD2D0807CD0024A46A /* ConfettiEmitter.swift */; };
+		84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829BF2D0807CD0024A46A /* ConfettiView.swift */; };
+		84C829C32D0807CD0024A46A /* ConfettiLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829BE2D0807CD0024A46A /* ConfettiLayer.swift */; };
 		84EB2DC02D06BA11007628DE /* LessonPlanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EB2DBF2D06BA11007628DE /* LessonPlanVC.xib */; };
 		84EB2DC12D06BA11007628DE /* LessonPlanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EB2DBE2D06BA11007628DE /* LessonPlanVC.swift */; };
 		84EB2DC42D06BDA5007628DE /* LessonPlanTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EB2DC32D06BDA5007628DE /* LessonPlanTvCell.xib */; };
@@ -809,6 +822,19 @@
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C00E6F2CF6DF9600E34A83 /* splashVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splashVc.swift; sourceTree = "<group>"; };
 		84C00E702CF6DF9600E34A83 /* splashVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = splashVc.xib; sourceTree = "<group>"; };
+		84C829A42D0805300024A46A /* ReportStudentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentListVC.swift; sourceTree = "<group>"; };
+		84C829A52D0805300024A46A /* ReportStudentListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportStudentListVC.xib; sourceTree = "<group>"; };
+		84C829A62D0805300024A46A /* ReportStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentTVC.swift; sourceTree = "<group>"; };
+		84C829A72D0805300024A46A /* ReportStudentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportStudentTVC.xib; sourceTree = "<group>"; };
+		84C829A82D0805300024A46A /* StudentReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentReportVC.swift; sourceTree = "<group>"; };
+		84C829A92D0805300024A46A /* StudentReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentReportVC.xib; sourceTree = "<group>"; };
+		84C829B32D08078A0024A46A /* MarkTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkTvCell.swift; sourceTree = "<group>"; };
+		84C829B42D08078A0024A46A /* MarkTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkTvCell.xib; sourceTree = "<group>"; };
+		84C829B62D08078A0024A46A /* ExameMarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExameMarVC.swift; sourceTree = "<group>"; };
+		84C829B72D08078A0024A46A /* ExameMarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExameMarVC.xib; sourceTree = "<group>"; };
+		84C829BD2D0807CD0024A46A /* ConfettiEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiEmitter.swift; sourceTree = "<group>"; };
+		84C829BE2D0807CD0024A46A /* ConfettiLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiLayer.swift; sourceTree = "<group>"; };
+		84C829BF2D0807CD0024A46A /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		84EB2DBE2D06BA11007628DE /* LessonPlanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPlanVC.swift; sourceTree = "<group>"; };
 		84EB2DBF2D06BA11007628DE /* LessonPlanVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonPlanVC.xib; sourceTree = "<group>"; };
 		84EB2DC22D06BDA5007628DE /* LessonPlanTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPlanTvCell.swift; sourceTree = "<group>"; };
@@ -1882,6 +1908,7 @@
 		84A2717B2CEDAB9F0033EB02 /* ParentVC's */ = {
 			isa = PBXGroup;
 			children = (
+				84C829B82D08078A0024A46A /* ExamMarkVc */,
 				846D83E52D02D91000B69344 /* ExamTimeTable */,
 				84A2717A2CEDAB9F0033EB02 /* Image_PdfVC */,
 				18926C4C2D02DE81002BBB97 /* LSRW */,
@@ -1959,6 +1986,7 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				84C829AA2D0805300024A46A /* StudentReport */,
 				84EB2DBD2D06B9D5007628DE /* Lesson plan */,
 				840658362CFD8D1B00080CF6 /* Events */,
 				848F7A6C2CF8CA5A004EF617 /* AnimationView */,
@@ -2098,6 +2126,7 @@
 		84A5BE7E2C1973F400E32496 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				84C829C02D0807CD0024A46A /* Confetti */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				8442A85D2CDB726A0006068E /* GoogleService-Info.plist */,
 				84A5BE892C197B9F00E32496 /* Preferences.swift */,
@@ -2442,6 +2471,48 @@
 				84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */,
 			);
 			path = TermsandCondVc;
+			sourceTree = "<group>";
+		};
+		84C829AA2D0805300024A46A /* StudentReport */ = {
+			isa = PBXGroup;
+			children = (
+				84C829A42D0805300024A46A /* ReportStudentListVC.swift */,
+				84C829A52D0805300024A46A /* ReportStudentListVC.xib */,
+				84C829A62D0805300024A46A /* ReportStudentTVC.swift */,
+				84C829A72D0805300024A46A /* ReportStudentTVC.xib */,
+				84C829A82D0805300024A46A /* StudentReportVC.swift */,
+				84C829A92D0805300024A46A /* StudentReportVC.xib */,
+			);
+			path = StudentReport;
+			sourceTree = "<group>";
+		};
+		84C829B52D08078A0024A46A /* MarkCell */ = {
+			isa = PBXGroup;
+			children = (
+				84C829B32D08078A0024A46A /* MarkTvCell.swift */,
+				84C829B42D08078A0024A46A /* MarkTvCell.xib */,
+			);
+			path = MarkCell;
+			sourceTree = "<group>";
+		};
+		84C829B82D08078A0024A46A /* ExamMarkVc */ = {
+			isa = PBXGroup;
+			children = (
+				84C829B52D08078A0024A46A /* MarkCell */,
+				84C829B62D08078A0024A46A /* ExameMarVC.swift */,
+				84C829B72D08078A0024A46A /* ExameMarVC.xib */,
+			);
+			path = ExamMarkVc;
+			sourceTree = "<group>";
+		};
+		84C829C02D0807CD0024A46A /* Confetti */ = {
+			isa = PBXGroup;
+			children = (
+				84C829BD2D0807CD0024A46A /* ConfettiEmitter.swift */,
+				84C829BE2D0807CD0024A46A /* ConfettiLayer.swift */,
+				84C829BF2D0807CD0024A46A /* ConfettiView.swift */,
+			);
+			path = Confetti;
 			sourceTree = "<group>";
 		};
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
@@ -2903,6 +2974,11 @@
 				849970CA2CF8752400800B07 /* HistoryTC.xib in Resources */,
 				18926CD22D0306CA002BBB97 /* CheckAviableTvHeader.xib in Resources */,
 				18926CD32D0306CA002BBB97 /* PTMViewController.xib in Resources */,
+				84C829AB2D0805300024A46A /* ReportStudentListVC.xib in Resources */,
+				84C829B92D08078A0024A46A /* MarkTvCell.xib in Resources */,
+				84C829BA2D08078A0024A46A /* ExameMarVC.xib in Resources */,
+				84C829AD2D0805300024A46A /* ReportStudentTVC.xib in Resources */,
+				84C829AE2D0805300024A46A /* StudentReportVC.xib in Resources */,
 				18926CD42D0306CA002BBB97 /* CalendarCollectionViewCell.xib in Resources */,
 				18926CD52D0306CA002BBB97 /* SlotsCollectionViewCell.xib in Resources */,
 				18926CD62D0306CA002BBB97 /* cancelTableViewCell.xib in Resources */,
@@ -3203,6 +3279,9 @@
 				849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */,
 				189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */,
 				844188682CC8C85C006483C3 /* ViewModal.swift in Sources */,
+				84C829B02D0805300024A46A /* StudentReportVC.swift in Sources */,
+				84C829B12D0805300024A46A /* ReportStudentTVC.swift in Sources */,
+				84C829B22D0805300024A46A /* ReportStudentListVC.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
 				84A5BE902C197C6000E32496 /* CheckBox.swift in Sources */,
 				189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */,
@@ -3281,7 +3360,12 @@
 				849970BC2CF8750B00800B07 /* AssignmentListCTVC.swift in Sources */,
 				849970BD2CF8750B00800B07 /* ImageTVC.swift in Sources */,
 				848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */,
+				84C829BB2D08078A0024A46A /* ExameMarVC.swift in Sources */,
+				84C829BC2D08078A0024A46A /* MarkTvCell.swift in Sources */,
 				849970BE2CF8750B00800B07 /* AssigmentViewVC.swift in Sources */,
+				84C829C12D0807CD0024A46A /* ConfettiEmitter.swift in Sources */,
+				84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */,
+				84C829C32D0807CD0024A46A /* ConfettiLayer.swift in Sources */,
 				84A5BEAD2C19824E00E32496 /* LocalizableStrings.swift in Sources */,
 				846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */,
 				846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */,

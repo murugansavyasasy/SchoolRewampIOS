@@ -510,12 +510,16 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                }else if items[indexPath.row] == "Mark Your Attendance".translated(){
+                }else if items[indexPath.row] == menuName.MarkYourAttendance.translated(){
                     let vc = LocationViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }else if items[indexPath.row] == "Very Important Info".translated(){
                     let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row] == menuName.StudentReport{
+                    let vc = ReportStudentListVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }
