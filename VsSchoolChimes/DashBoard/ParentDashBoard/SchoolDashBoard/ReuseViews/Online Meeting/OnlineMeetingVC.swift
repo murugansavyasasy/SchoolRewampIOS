@@ -39,7 +39,9 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     let assetColors: [String] = ["meetingcolour1", /*"priortitClr1",*/ "meetcolour2"]
     let gradientcolour : [String] = ["MeetGradient1", /*"gradient2",*/ "MeetGradient2"]
     var datePicker : UIDatePicker!
+    var timePicker : UIDatePicker!
     var doneButton : UIButton!
+    var doneButton2 : UIButton!
     var dropDown = DropDown()
     
     override func viewDidLoad() {
@@ -56,10 +58,11 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         createView.layer.cornerRadius = 10
         
         createDatepicker()
+        setupTimePicker()
         
         DescriptTxtview.layer.cornerRadius = 10
         DescriptTxtview.layer.borderWidth = 1
-        DescriptTxtview.layer.borderColor = UIColor.black.cgColor
+        DescriptTxtview.layer.borderColor = UIColor.gray.cgColor
         
         viewBtn.layer.cornerRadius = 20
         createBtn.layer.cornerRadius = 20
@@ -73,7 +76,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         infoBtn.layer.cornerRadius = 10
         LinkTxtfld.layer.cornerRadius = 10
         LinkTxtfld.layer.borderWidth = 1
-        LinkTxtfld.layer.borderColor = UIColor.black.cgColor
+        LinkTxtfld.layer.borderColor = UIColor.gray.cgColor
         SubmitBtn.layer.cornerRadius = 10
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(MeetingDropdown))
@@ -291,6 +294,72 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         doneButton.isHidden = true
     }
     
+    @IBAction func selectedTime(){
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat =  "h:mm a"
+        let Timelabel = dateFormatter.string(from: timePicker.date)
+        
+        TimeBtn.setTitle(Timelabel, for: .normal)
+        
+        timePicker.isHidden = true
+        doneButton2.isHidden = true
+    }
+    
+    func setupTimePicker() {
+        // Initialize the time picker
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            timePicker.preferredDatePickerStyle = .wheels
+        }
+        timePicker.backgroundColor = .white
+        timePicker.isHidden = true // Initially hidden
+        self.view.addSubview(timePicker)
+        
+        // Initialize and configure Done button
+        doneButton2 = UIButton(type: .system)
+        doneButton2.setTitle("Done", for: .normal)
+        doneButton2.isHidden = true
+        doneButton2.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton2.setTitleColor(.white, for: .normal)
+        doneButton2.layer.cornerRadius = 8
+        doneButton2.addTarget(self, action: #selector(selectedTime), for: .touchUpInside)
+        self.view.addSubview(doneButton2)
+    }
+    
+ 
+    
+    func showTimepicker(button: UIButton){
+        timePicker.isHidden = false
+        doneButton2.isHidden = false
+        datePicker.isHidden = true
+        doneButton.isHidden = true
+        
+        let buttonFrame = button.convert(button.bounds, to: self.view)
+        // Set the frame for the timePicker
+        //            let pickerYPosition = buttonFrame.maxY + 10
+        let pickerYPosition = buttonFrame.minY - 210
+        timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
+        
+        // Set appearance for timePicker
+        timePicker.backgroundColor = .white
+        timePicker.layer.shadowColor = UIColor.black.cgColor
+        timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+        timePicker.layer.shadowRadius = 5
+        timePicker.layer.shadowOpacity = 0.3
+        timePicker.layer.cornerRadius = 20
+        
+        // Position the Done button at the bottom-right of the picker
+        doneButton2.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + timePicker.frame.height - 40, width: 70, height: 30)
+        
+        // Add timePicker to the view (ensure it’s in the view hierarchy)
+        self.view.addSubview(timePicker)
+        self.view.addSubview(doneButton2)
+    }
+
+    
+    
     @IBAction func SelectdateAct(_ sender: Any) {
         
         showDatepicker(button: sender as! UIButton)
@@ -298,6 +367,8 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     }
     
     @IBAction func SelectTimeAct(_ sender: Any) {
+        
+        showTimepicker(button: sender as! UIButton)
     }
 }
 

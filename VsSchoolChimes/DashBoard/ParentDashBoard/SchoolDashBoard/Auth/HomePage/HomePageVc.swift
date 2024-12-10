@@ -435,7 +435,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
-                }else if items[indexPath.row].translated() == menuName.LessonPlan {
+                }else if items[indexPath.row].translated() == "" {
                     
                     alert.showAlertCancel (
                         title: "Confirm Action",
@@ -501,6 +501,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 }
                 else if items[indexPath.row] == "Absentees Report".translated(){
                     let vc = NewAbsenteesViewController(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else if items[indexPath.row].translated() == menuName.LessonPlan {
+                    
+                    let vc = LessonPlanVC(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }
@@ -582,7 +587,13 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     let vc = LsrwListShowViewController(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
+                }else if receiverItems[indexPath.row].translated() == menuName.Assignment {
+                    
+                    let vc = AssignmentListVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
                 }
+                
                 
                 
                 
@@ -621,13 +632,13 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
         
         if collectionView == bottomCv{
             
-            
             return CGSize(width: collectionView.frame.width/4, height: 130)
+            
         }
         else{
             
-            
             return CGSize(width: 350, height: 140)
+            
         }
         
     }

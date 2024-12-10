@@ -37,5 +37,6 @@ class CellConfingName {
     static let ImageTVC = "ImageTVC"
     static let AttendenceTVC = "AttendenceTVC"
     static let VideoTVCell = "VideoTVCell"
+    static let LessonPlanTvCell = "LessonPlanTvCell"
    
 }

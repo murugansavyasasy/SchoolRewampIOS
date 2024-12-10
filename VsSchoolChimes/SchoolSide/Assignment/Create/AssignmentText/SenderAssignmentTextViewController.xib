@@ -17,6 +17,7 @@
                 <outlet property="AssignmentTypeview" destination="jGH-5q-5kF" id="KXI-Ua-MeD"/>
                 <outlet property="AssignmenttypeLbl" destination="xWF-9v-BEb" id="mok-Jf-XQk"/>
                 <outlet property="CreateView" destination="Dya-AT-xDx" id="x8M-z9-XAK"/>
+                <outlet property="DateBtn" destination="D1f-Rt-alV" id="eGf-zL-viD"/>
                 <outlet property="DescriptionLbl" destination="q4B-lE-7Nq" id="bj6-L5-mmp"/>
                 <outlet property="HeaderLbl" destination="kh2-Ln-BZn" id="1vJ-Vg-5Pk"/>
                 <outlet property="SubmissionDateLbl" destination="6BL-ag-hDD" id="1i0-W8-XmL"/>
@@ -136,7 +137,7 @@
                                         </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQb-9a-RTM">
                                             <rect key="frame" x="0.0" y="49" width="343" height="1"/>
-                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="1" id="xaF-Yf-3Al"/>
                                             </constraints>
@@ -195,6 +196,9 @@
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <imageReference key="image" image="chevron.down" catalog="system" symbolScale="small"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="DateBtnAct:" destination="-1" eventType="touchUpInside" id="dCX-uN-SdH"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jyq-gC-VOT">
                                                     <rect key="frame" x="206" y="0.0" width="87" height="22"/>
@@ -363,10 +367,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

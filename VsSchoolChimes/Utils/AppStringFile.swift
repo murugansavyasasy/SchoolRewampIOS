@@ -46,7 +46,7 @@ class AlertstringFile{
     static let Submit = "Submit".translated()
 
 }
-class MenuTapbar{
+struct MenuTapbar{
     
     
     

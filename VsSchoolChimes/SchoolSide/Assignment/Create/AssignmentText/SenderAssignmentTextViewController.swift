@@ -18,6 +18,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     
+    @IBOutlet weak var DateBtn: UIButton!
     @IBOutlet weak var AddphotosLbl: UILabel!
     @IBOutlet weak var SubmissionDateLbl: UILabel!
     @IBOutlet weak var letterscountLbl: UILabel!
@@ -58,6 +59,8 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     let photoPickManager = PhotoPickerManager.shared
     let dropDown = DropDown()
     let TypeDropDown = DropDown()
+    var datePicker : UIDatePicker!
+    var doneButton : UIButton!
     
     var pdfData: Data?
     override func viewDidLoad() {
@@ -76,7 +79,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
 //            fullTextView.isHidden = true
 //            collectionView.isHidden = true
 //        }
-        
+        createDatepicker()
         CreateView.layer.cornerRadius = 10
         CreateView.layer.shadowColor = UIColor.black.cgColor
         CreateView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -89,13 +92,14 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.layer.cornerRadius = 10
         contentTextView.layer.cornerRadius = 10
         contentTextView.layer.borderWidth = 1
-        contentTextView.layer.borderColor = UIColor.black.cgColor
+        contentTextView.layer.borderColor = UIColor.gray.cgColor
         chooseRecipientsBtn.backgroundColor = .button
         chooseRecipientsBtn.layer.cornerRadius = 10
         collectionViewHeght.constant = 0
         addphotosheight.constant = 0
         
         StyleAndTranslater()
+        
         
 //        collectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
@@ -317,6 +321,75 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     // Handle cancellation
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    @IBAction func DateBtnAct(_ sender: Any) {
+        
+        showDatepicker(button: sender as! UIButton)
+    }
+    
+    func createDatepicker(){
+          datePicker = UIDatePicker()
+          datePicker.datePickerMode = .date
+          datePicker.minimumDate = Date()
+          datePicker.backgroundColor = .white
+        
+        if #available(iOS 14.0, *) {
+            datePicker.preferredDatePickerStyle = .inline
+        }
+        
+        datePicker.isHidden = true
+        self.view.addSubview(datePicker!)
+        
+        // Initialize and configure Done button
+        doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.isHidden = true
+        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.layer.cornerRadius = 8
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        self.view.addSubview(doneButton)
+        
+      }
+    
+    func showDatepicker(button: UIButton) {
+        datePicker.isHidden = false
+        doneButton.isHidden = false
+        
+        let buttonFrame = button.convert(button.bounds, to: self.view)
+        
+        // Set the frame for the datePicker
+        let pickerYPosition = buttonFrame.maxY + 10
+        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
+        
+        // Set appearance for datePicker
+        datePicker.backgroundColor = .white
+        datePicker.layer.shadowColor = UIColor.black.cgColor
+        datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+        datePicker.layer.shadowRadius = 5
+        datePicker.layer.shadowOpacity = 0.3
+        datePicker.layer.cornerRadius = 20
+        
+        doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
+
+        // Add both datePicker and Done button to the view
+        self.view.addSubview(datePicker)
+        self.view.addSubview(doneButton)
+    }
+
+    @IBAction func doneButtonTapped(){
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat =  "EEE d MMM yyyy"
+        let datelabel = dateFormatter.string(from: datePicker.date)
+        
+        DateBtn.setTitle(datelabel, for: .normal)
+        
+        datePicker.isHidden = true
+        doneButton.isHidden = true
     }
     
     
