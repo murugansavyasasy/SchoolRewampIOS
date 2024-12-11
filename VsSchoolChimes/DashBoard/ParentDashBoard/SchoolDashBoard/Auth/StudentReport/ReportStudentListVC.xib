@@ -47,16 +47,17 @@
                             <rect key="frame" x="16" y="80" width="361" height="50"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8hf-ZA-ZyH">
-                                    <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="201" height="50"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
-                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VLU-y9-Qpc">
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="VLU-y9-Qpc">
                                     <rect key="frame" x="0.0" y="0.0" width="361" height="50"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b2R-Wl-AQO">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="201" height="50"/>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="GET ALL STUDENT" image="slider.vertical.3" catalog="system"/>
                                             <connections>
                                                 <action selector="filterStudent:" destination="-1" eventType="touchUpInside" id="Gml-03-Kzq"/>
@@ -68,7 +69,8 @@
                                                 <constraint firstAttribute="width" constant="150" id="3Y7-lC-tPa"/>
                                             </constraints>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
                                             <state key="normal" title="XI &quot;C&quot;" image="chevron.down.square.fill" catalog="system"/>
                                             <connections>
                                                 <action selector="selectCatagory:" destination="-1" eventType="touchUpInside" id="Cwg-th-c8F"/>
@@ -91,7 +93,7 @@
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xAR-WR-MDu">
-                            <rect key="frame" x="16" y="130" width="361" height="146.66666666666663"/>
+                            <rect key="frame" x="16" y="140" width="361" height="146.66666666666663"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0gv-qu-Xgy">
                                     <rect key="frame" x="0.0" y="0.0" width="361" height="68.333333333333329"/>
@@ -196,10 +198,10 @@
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ToU-Kp-IN0">
-                            <rect key="frame" x="0.0" y="281.66666666666674" width="393" height="437.33333333333326"/>
+                            <rect key="frame" x="0.0" y="291.66666666666674" width="393" height="427.33333333333326"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="m6e-1o-K5O">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="437.33333333333331"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="427.33333333333331"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="gdR-wf-HTS"/>
@@ -225,7 +227,7 @@
                         <constraint firstItem="5dl-sf-vkl" firstAttribute="top" secondItem="hOr-xV-ijW" secondAttribute="bottom" constant="10" id="L9J-Gp-C8T"/>
                         <constraint firstAttribute="trailing" secondItem="ToU-Kp-IN0" secondAttribute="trailing" id="N8l-H7-Mgq"/>
                         <constraint firstItem="ToU-Kp-IN0" firstAttribute="top" secondItem="xAR-WR-MDu" secondAttribute="bottom" constant="5.0000000000001137" id="NB5-up-EMy"/>
-                        <constraint firstItem="xAR-WR-MDu" firstAttribute="top" secondItem="5dl-sf-vkl" secondAttribute="bottom" id="PU2-dT-sf9"/>
+                        <constraint firstItem="xAR-WR-MDu" firstAttribute="top" secondItem="5dl-sf-vkl" secondAttribute="bottom" constant="10" id="PU2-dT-sf9"/>
                         <constraint firstItem="xAR-WR-MDu" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" constant="16" id="Tlk-Af-GSW"/>
                         <constraint firstItem="hOr-xV-ijW" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" id="bSz-N4-h4Y"/>
                         <constraint firstItem="hOr-xV-ijW" firstAttribute="top" secondItem="tbE-om-2oh" secondAttribute="top" id="cgm-jt-3C0"/>

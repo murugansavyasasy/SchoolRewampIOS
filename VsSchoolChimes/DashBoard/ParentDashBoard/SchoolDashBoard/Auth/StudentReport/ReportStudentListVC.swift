@@ -38,11 +38,13 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     ]
     var imgs = ["shiyam","StudImg","stuentimg 1"]
     var filterStudent : [StudentList]?
+    var sortedStudent : [StudentList]?
     let menuName = MenuStringFile()
     override func viewDidLoad() {
         super.viewDidLoad()
         pageTitle.text = menuName.StudentReport
         filterStudent = studentList
+        sortedStudent = studentList
         uiConfic()
         if #available(iOS 14.0, *) {
             addDoneButton()
@@ -55,7 +57,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     private func showStackView() {
         classSelection.isHidden = false
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.classSelection.transform = .identity // Reset transform
             self.classSelection.alpha = 1 // Fully visible
             self.sectionSelection.transform = .identity // Reset transform
@@ -65,7 +67,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     private func hideStackView() {
-        UIView.animate(withDuration: 0.3, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.classSelection.transform = CGAffineTransform(translationX: 0, y: -self.classSelection.bounds.height) // Slide up
             self.classSelection.alpha = 0 // Fade out
             self.sectionSelection.transform = CGAffineTransform(translationX: 0, y: -self.sectionSelection.bounds.height) // Slide up
@@ -85,6 +87,22 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         classView.layer.cornerRadius = 10
         classView.layer.shadowColor = UIColor.black.cgColor
         classView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        filterBtn.layer.cornerRadius = 10
+        filterBtn.layer.shadowColor = UIColor.black.cgColor
+        filterBtn.layer.shadowOffset = CGSize(width: 4, height: 4)
+        filterBtn.layer.shadowOpacity = 0.5
+        filterBtn.layer.shadowRadius = 4
+        filterBtn.backgroundColor = .white
+        
+        
+        selectedType.layer.cornerRadius = 10
+        selectedType.layer.shadowColor = UIColor.black.cgColor
+        selectedType.layer.shadowOffset = CGSize(width: 4, height: 4)
+        selectedType.layer.shadowOpacity = 0.5
+        selectedType.layer.shadowRadius = 4
+        selectedType.backgroundColor = .white
+        
+        
         classView.layer.shadowOpacity = 0.5
         classView.layer.shadowRadius = 4
         sectionSelection.isHidden = true
@@ -114,20 +132,20 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
            
             switch item{
             case "RollNo ASC":
-                let sortedByRollNumber = studentList.sorted { $0.AdmissionId < $1.AdmissionId }
+                let sortedByRollNumber = sortedStudent!.sorted { $0.AdmissionId < $1.AdmissionId }
                 filterStudent = sortedByRollNumber
             case "RollNo DESC":
-                let sortedByName = studentList.sorted { $0.AdmissionId > $1.AdmissionId }
+                let sortedByName = sortedStudent?.sorted { $0.AdmissionId > $1.AdmissionId }
                 filterStudent = sortedByName
             case "Name ASC":
-                let sortedByName = studentList.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+                let sortedByName = sortedStudent!.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
                 filterStudent = sortedByName
             case "Name DESC":
-                let sortedByName = studentList.sorted { $0.name > $1.name }
+                let sortedByName = sortedStudent!.sorted { $0.name > $1.name }
                 filterStudent = sortedByName
          
             default:
-                filterStudent = studentList
+                filterStudent = sortedStudent
                 
             }
             reportTable.reloadData()
@@ -160,6 +178,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             
             let filteredStudents = studentList.filter { $0.classname == selectStudentType && $0.sectionName == item }
             filterStudent = filteredStudents
+            sortedStudent = filteredStudents
             reportTable.reloadData()
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
             self.sectionBtn.setTitle(item, for: .normal)
@@ -190,6 +209,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             print("Selected item: \(item) at index: \(index)")
             let filteredStudents = studentList.filter { $0.classname == item }
             filterStudent = filteredStudents
+            sortedStudent = filteredStudents
             reportTable.reloadData()
             //            selectStudentType += item
             selectStudentType = item
