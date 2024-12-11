@@ -177,14 +177,10 @@
 		840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840657FD2CFD6B2200080CF6 /* AttendenceTVC.swift */; };
 		840658392CFD8D4E00080CF6 /* EventsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840658382CFD8D4E00080CF6 /* EventsVC.xib */; };
 		8406583A2CFD8D4E00080CF6 /* EventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658372CFD8D4E00080CF6 /* EventsVC.swift */; };
-		8406583D2CFD927C00080CF6 /* EventsListTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8406583C2CFD927C00080CF6 /* EventsListTVC.xib */; };
-		8406583E2CFD927C00080CF6 /* EventsListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8406583B2CFD927C00080CF6 /* EventsListTVC.swift */; };
 		840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */; };
 		840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */; };
 		8407525E2D0178060008498E /* OnlineMeetingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407525C2D0178060008498E /* OnlineMeetingVC.swift */; };
 		8407525F2D0178060008498E /* OnlineMeetingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8407525D2D0178060008498E /* OnlineMeetingVC.xib */; };
-		842342012CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842342002CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib */; };
-		842342022CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842341FF2CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
@@ -244,8 +240,6 @@
 		846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */; };
 		84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C622CEDE02400E7D367 /* SDWebImage */; };
 		84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C642CEDE02400E7D367 /* SDWebImageMapKit */; };
-		847AB6E52CF09A6300952AC1 /* SenderEventsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6E32CF09A6300952AC1 /* SenderEventsVC.xib */; };
-		847AB6E62CF09A6300952AC1 /* SenderEventsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6E22CF09A6300952AC1 /* SenderEventsVC.swift */; };
 		847AB6EF2CF09A6800952AC1 /* RecipientTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6E82CF09A6800952AC1 /* RecipientTvCell.xib */; };
 		847AB6F02CF09A6800952AC1 /* Std_Grp_header.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6EA2CF09A6800952AC1 /* Std_Grp_header.xib */; };
 		847AB6F12CF09A6800952AC1 /* SelectRecipientVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6ED2CF09A6800952AC1 /* SelectRecipientVC.xib */; };
@@ -659,14 +653,10 @@
 		840657FE2CFD6B2200080CF6 /* AttendenceTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendenceTVC.xib; sourceTree = "<group>"; };
 		840658372CFD8D4E00080CF6 /* EventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsVC.swift; sourceTree = "<group>"; };
 		840658382CFD8D4E00080CF6 /* EventsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsVC.xib; sourceTree = "<group>"; };
-		8406583B2CFD927C00080CF6 /* EventsListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsListTVC.swift; sourceTree = "<group>"; };
-		8406583C2CFD927C00080CF6 /* EventsListTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsListTVC.xib; sourceTree = "<group>"; };
 		840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCVCell.swift; sourceTree = "<group>"; };
 		840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentCVCell.xib; sourceTree = "<group>"; };
 		8407525C2D0178060008498E /* OnlineMeetingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineMeetingVC.swift; sourceTree = "<group>"; };
 		8407525D2D0178060008498E /* OnlineMeetingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnlineMeetingVC.xib; sourceTree = "<group>"; };
-		842341FF2CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendNoticeBoardVC.swift; sourceTree = "<group>"; };
-		842342002CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendNoticeBoardVC.xib; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
@@ -732,8 +722,6 @@
 		846D83E12D02D91000B69344 /* Tvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tvcell.xib; sourceTree = "<group>"; };
 		846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
 		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
-		847AB6E22CF09A6300952AC1 /* SenderEventsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderEventsVC.swift; sourceTree = "<group>"; };
-		847AB6E32CF09A6300952AC1 /* SenderEventsVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderEventsVC.xib; sourceTree = "<group>"; };
 		847AB6E72CF09A6800952AC1 /* RecipientTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientTvCell.swift; sourceTree = "<group>"; };
 		847AB6E82CF09A6800952AC1 /* RecipientTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientTvCell.xib; sourceTree = "<group>"; };
 		847AB6E92CF09A6800952AC1 /* Std_Grp_header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Std_Grp_header.swift; sourceTree = "<group>"; };
@@ -1589,8 +1577,6 @@
 			children = (
 				840658372CFD8D4E00080CF6 /* EventsVC.swift */,
 				840658382CFD8D4E00080CF6 /* EventsVC.xib */,
-				8406583B2CFD927C00080CF6 /* EventsListTVC.swift */,
-				8406583C2CFD927C00080CF6 /* EventsListTVC.xib */,
 				840658412CFD9C3400080CF6 /* AttachmentCVCell.swift */,
 				840658422CFD9C3400080CF6 /* AttachmentCVCell.xib */,
 				848BEEE12CFF093100581A55 /* PreviewImageVC.swift */,
@@ -1701,8 +1687,6 @@
 			children = (
 				84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */,
 				84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */,
-				842341FF2CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift */,
-				842342002CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib */,
 			);
 			path = NoticeBoardTv;
 			sourceTree = "<group>";
@@ -1755,15 +1739,6 @@
 				847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */,
 			);
 			path = SheduleExam;
-			sourceTree = "<group>";
-		};
-		847AB6E42CF09A6300952AC1 /* Events */ = {
-			isa = PBXGroup;
-			children = (
-				847AB6E22CF09A6300952AC1 /* SenderEventsVC.swift */,
-				847AB6E32CF09A6300952AC1 /* SenderEventsVC.xib */,
-			);
-			path = Events;
 			sourceTree = "<group>";
 		};
 		847AB6EB2CF09A6800952AC1 /* selectRecipientTvCell */ = {
@@ -2210,7 +2185,6 @@
 			isa = PBXGroup;
 			children = (
 				847AB6E12CF09A3000952AC1 /* SheduleExam */,
-				847AB6E42CF09A6300952AC1 /* Events */,
 				84666AE42CE866E30010DA24 /* NoticeBoardVC */,
 				84EFF9E92CCCAE5900C11C26 /* ReuseViews */,
 				84A5BE712C19728F00E32496 /* Auth */,
@@ -3007,7 +2981,6 @@
 			files = (
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
 				8442A86C2CDB787A0006068E /* DemoTVCell.xib in Resources */,
-				847AB6E52CF09A6300952AC1 /* SenderEventsVC.xib in Resources */,
 				8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */,
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
@@ -3053,7 +3026,6 @@
 				847AB6EF2CF09A6800952AC1 /* RecipientTvCell.xib in Resources */,
 				847AB6F02CF09A6800952AC1 /* Std_Grp_header.xib in Resources */,
 				847AB6F12CF09A6800952AC1 /* SelectRecipientVC.xib in Resources */,
-				8406583D2CFD927C00080CF6 /* EventsListTVC.xib in Resources */,
 				84A271822CEDAB9F0033EB02 /* ImagePdfCvCell.xib in Resources */,
 				848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */,
 				84A271832CEDAB9F0033EB02 /* ImagePdfTv.xib in Resources */,
@@ -3127,7 +3099,6 @@
 				84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
-				842342012CFF35FD00D0A7B9 /* SendNoticeBoardVC.xib in Resources */,
 				848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */,
 				84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */,
 				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
@@ -3394,7 +3365,6 @@
 				8407525E2D0178060008498E /* OnlineMeetingVC.swift in Sources */,
 				8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */,
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
-				8406583E2CFD927C00080CF6 /* EventsListTVC.swift in Sources */,
 				F29035612CDC924900F3E67C /* MobileVc.swift in Sources */,
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				18BAF4DE2CEB3CB200517441 /* SenderAssignmentViewController.swift in Sources */,
@@ -3413,7 +3383,6 @@
 				84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */,
 				840658442CFD9C3400080CF6 /* AttachmentCVCell.swift in Sources */,
 				84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */,
-				847AB6E62CF09A6300952AC1 /* SenderEventsVC.swift in Sources */,
 				84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */,
 				18CA855C2CF99ACD00984D7C /* AssignmentViewTableViewCell.swift in Sources */,
 				849E57252C1FF4E8006119DA /* PriorityViewController.swift in Sources */,
@@ -3504,7 +3473,6 @@
 				84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */,
 				849F313C2D00613B00BACEC7 /* EventPageVC.swift in Sources */,
 				84EFF9972CCB5B0400C11C26 /* CountryVc.swift in Sources */,
-				842342022CFF35FD00D0A7B9 /* SendNoticeBoardVC.swift in Sources */,
 				84EFFACE2CCF90DE00C11C26 /* SettingHeaderView.swift in Sources */,
 				84EFFACF2CCF90DE00C11C26 /* SettingsTableViewCell.swift in Sources */,
 				84EFFAD02CCF90DE00C11C26 /* SettingsViewController.swift in Sources */,
