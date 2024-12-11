@@ -95,3 +95,208 @@ class WaveView: UIView {
         displayLink?.invalidate()
     }
 }
+
+// MARK: WhatsApp Audio SeekBar
+//class WaveView: UIView {
+//
+//    // MARK: - Properties
+//    private var canvasWidth: CGFloat = 0
+//    private var canvasHeight: CGFloat = 0
+//    private let wavePaint = CAShapeLayer()
+//    private let markerLayer = CAShapeLayer()
+//    private var progressLayer = CAShapeLayer()
+//    private var touchDownX: CGFloat = 0
+//    private var alreadyMoved = false
+//    private var maxSampleValue: Int = 0
+//    private var scaledTouchSlop: CGFloat = 10
+//
+//    var onProgressChanged: ((WaveView, CGFloat, Bool) -> Void)?
+//
+//    var samples: [Int]? {
+//        didSet {
+//            updateMaxSampleValue()
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var progress: CGFloat = 0 {
+//        didSet {
+//            setNeedsDisplay()
+//            updateWaveformProgress()
+//            onProgressChanged?(self, progress, false)
+//        }
+//    }
+//
+//    var maxProgress: CGFloat = 100 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var waveBackgroundColor: UIColor = .lightGray {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var waveProgressColor: UIColor = .white {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var waveGap: CGFloat = 2 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var waveWidth: CGFloat = 5 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var waveMinHeight: CGFloat = 5 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var waveCornerRadius: CGFloat = 2 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var wavePadding: UIEdgeInsets = .zero {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var markers: [CGFloat: String]? {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var markerWidth: CGFloat = 1 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var markerColor: UIColor = .green {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var markerTextColor: UIColor = .red {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var markerTextSize: CGFloat = 12 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    var markerTextPadding: CGFloat = 2 {
+//        didSet {
+//            setNeedsDisplay()
+//        }
+//    }
+//
+//    // MARK: - Initialization
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setup()
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        setup()
+//    }
+//
+//    private func setup() {
+//        layer.addSublayer(progressLayer)
+//        layer.addSublayer(markerLayer)
+//    }
+//
+//    // MARK: - Drawing
+//    override func draw(_ rect: CGRect) {
+//        guard let samples = samples, !samples.isEmpty else { return }
+//        let context = UIGraphicsGetCurrentContext()
+//        context?.clear(rect)
+//
+//        let totalWaveWidth = waveWidth + waveGap
+//        let step = CGFloat(samples.count) / (canvasWidth / totalWaveWidth)
+//
+//        var previousWaveRight = wavePadding.left
+//        let availableHeight = canvasHeight - wavePadding.top - wavePadding.bottom
+//
+//        for i in stride(from: 0, to: samples.count, by: Int(step)) {
+//            let sample = samples[i]
+//            let waveHeight = max(waveMinHeight, availableHeight * CGFloat(sample) / CGFloat(maxSampleValue))
+//            let waveTop = wavePadding.top + (availableHeight - waveHeight) / 2
+//
+//            let waveRect = CGRect(x: previousWaveRight, y: waveTop, width: waveWidth, height: waveHeight)
+//            drawWave(in: waveRect, context: context)
+//
+//            previousWaveRight += totalWaveWidth
+//        }
+//
+//        drawMarkers()
+//    }
+//
+//    private func drawWave(in rect: CGRect, context: CGContext?) {
+//        context?.setFillColor(waveBackgroundColor.cgColor)
+//        let path = UIBezierPath(roundedRect: rect, cornerRadius: waveCornerRadius)
+//        context?.addPath(path.cgPath)
+//        context?.fillPath()
+//    }
+//
+//    private func drawMarkers() {
+//        guard let markers = markers else { return }
+//        for (position, label) in markers {
+//            let markerX = canvasWidth * (position / maxProgress)
+//            drawMarker(at: markerX, label: label)
+//        }
+//    }
+//
+//    private func drawMarker(at x: CGFloat, label: String) {
+//        let path = UIBezierPath(rect: CGRect(x: x - markerWidth / 2, y: 0, width: markerWidth, height: canvasHeight))
+//        markerColor.setFill()
+//        path.fill()
+//
+//        let textAttributes: [NSAttributedString.Key: Any] = [
+//            .font: UIFont.systemFont(ofSize: markerTextSize),
+//            .foregroundColor: markerTextColor
+//        ]
+//        let textSize = label.size(withAttributes: textAttributes)
+//        let textRect = CGRect(x: x - textSize.width / 2, y: canvasHeight - textSize.height - markerTextPadding, width: textSize.width, height: textSize.height)
+//        label.draw(in: textRect, withAttributes: textAttributes)
+//    }
+//
+//    // MARK: - Helpers
+//    private func updateMaxSampleValue() {
+//        maxSampleValue = samples?.max() ?? 0
+//    }
+//
+//    private func updateWaveformProgress() {
+//        let progressWidth = canvasWidth * (progress / maxProgress)
+//        let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: progressWidth, height: canvasHeight))
+//        progressLayer.path = path.cgPath
+//        progressLayer.fillColor = waveProgressColor.cgColor
+//    }
+//
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        canvasWidth = bounds.width
+//        canvasHeight = bounds.height
+//    }
+//}
