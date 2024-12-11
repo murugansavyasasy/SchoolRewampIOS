@@ -254,6 +254,9 @@
 		847AB6F42CF09A6800952AC1 /* SelectRecipientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6EC2CF09A6800952AC1 /* SelectRecipientVC.swift */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
+		8489D86C2D094D42008D9CE9 /* EditLessonplanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8489D86B2D094D42008D9CE9 /* EditLessonplanVC.xib */; };
+		8489D86D2D094D42008D9CE9 /* EditLessonplanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86A2D094D42008D9CE9 /* EditLessonplanVC.swift */; };
+		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
 		848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */; };
 		848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */; };
 		848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848BEEE22CFF093100581A55 /* PreviewImageVC.xib */; };
@@ -739,6 +742,9 @@
 		847AB6ED2CF09A6800952AC1 /* SelectRecipientVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRecipientVC.xib; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
+		8489D86A2D094D42008D9CE9 /* EditLessonplanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonplanVC.swift; sourceTree = "<group>"; };
+		8489D86B2D094D42008D9CE9 /* EditLessonplanVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditLessonplanVC.xib; sourceTree = "<group>"; };
+		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
 		848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderImgPdfVC.swift; sourceTree = "<group>"; };
 		848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderImgPdfVC.xib; sourceTree = "<group>"; };
 		848BEEE12CFF093100581A55 /* PreviewImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageVC.swift; sourceTree = "<group>"; };
@@ -2195,6 +2201,7 @@
 				8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */,
 				189E99052CE3195D00FE98A5 /* VimeoUpload.swift */,
 				84B5D0322D030C24003CFAAF /* AppStringFile.swift */,
+				8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2647,6 +2654,8 @@
 				84EB2DC32D06BDA5007628DE /* LessonPlanTvCell.xib */,
 				84BF8C242D07218A00006FC1 /* LessonDetailsTVcell.swift */,
 				84BF8C252D07218A00006FC1 /* LessonDetailsTVcell.xib */,
+				8489D86A2D094D42008D9CE9 /* EditLessonplanVC.swift */,
+				8489D86B2D094D42008D9CE9 /* EditLessonplanVC.xib */,
 			);
 			path = "Lesson plan";
 			sourceTree = "<group>";
@@ -3144,6 +3153,7 @@
 				84EB2DC02D06BA11007628DE /* LessonPlanVC.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
+				8489D86C2D094D42008D9CE9 /* EditLessonplanVC.xib in Resources */,
 				8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */,
 				84EFF9DC2CCC864800C11C26 /* BottomCVCell.xib in Resources */,
 			);
@@ -3311,6 +3321,7 @@
 				18926CB72D0306CA002BBB97 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
 				18926CB82D0306CA002BBB97 /* CreateSlotsByStaffModal.swift in Sources */,
 				18926CB92D0306CA002BBB97 /* SubjectListForStudentRequest.swift in Sources */,
+				8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */,
 				18926CBA2D0306CA002BBB97 /* DateWiseModal.swift in Sources */,
 				18926CBB2D0306CA002BBB97 /* CheckAviableTvHeader.swift in Sources */,
 				18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */,
@@ -3466,6 +3477,7 @@
 				18926BE12D02DCE1002BBB97 /* NewAbsenteesViewController.swift in Sources */,
 				18926BE22D02DCE1002BBB97 /* ClassTableViewCell.swift in Sources */,
 				18926BE32D02DCE1002BBB97 /* SectionCollectionViewCell.swift in Sources */,
+				8489D86D2D094D42008D9CE9 /* EditLessonplanVC.swift in Sources */,
 				18926BE42D02DCE1002BBB97 /* AbesentRequst.swift in Sources */,
 				18926BE52D02DCE1002BBB97 /* SectionViewController.swift in Sources */,
 				849970B92CF8750B00800B07 /* PageVC.swift in Sources */,

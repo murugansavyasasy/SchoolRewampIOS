@@ -148,6 +148,10 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="Cellview" destination="Q7z-p3-ART" id="HAL-HV-24y"/>
+                <outlet property="DateLbl" destination="45a-v4-vc2" id="fZP-06-ImW"/>
+                <outlet property="RemarksLbl" destination="8cG-Y6-8I8" id="ax9-zE-9Ru"/>
+                <outlet property="TopicLabel" destination="oc9-Zx-T2C" id="aaQ-1G-Jy0"/>
+                <outlet property="UnitLbl" destination="X2a-qO-2gf" id="ZX8-NM-iYx"/>
                 <outlet property="completedIcon" destination="mGQ-DF-8Vg" id="S8e-CP-foD"/>
                 <outlet property="completedLabel" destination="NAG-9C-Tdv" id="MEj-1A-pLe"/>
                 <outlet property="progressBar" destination="6di-n3-1Q0" id="CJa-sq-bqE"/>
@@ -170,7 +174,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

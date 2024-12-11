@@ -34,7 +34,7 @@ class LessonPlanVC: UIViewController {
         
         let nib = UINib(nibName: CellConfingName.LessonDetailsTVcell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonDetailsTVcell)
-        
+//        tableview.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         tableview.delegate = self
         tableview.dataSource = self
         

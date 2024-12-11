@@ -9,31 +9,34 @@ import Foundation
 
 class MenuStringFile{
     
-     let Communication = "Communication".translated()
-     let ImagePdf = "Image/Pdf".translated()
-     let VideoUpload = "Video Upload".translated()
-     let Circulars = "Circulars".translated()
-     let NoticeBoard = "Notice Board".translated()
-     let LeaveRequests = "Leave Requests".translated()
-     let Assignment = "Assignment".translated()
-     let OnlineMeeting = "Online Meeting".translated()
-     let Homework = "Homework".translated()
-     let ScheduleExamTest = "Schedule Exam/Test".translated()
-     let AttendanceMarking = "Attendance marking".translated()
-     let MessagesFromManagement = "Messages from management".translated()
-     let InteractionWithStudent = "Interaction with student".translated()
-     let LessonPlan = "Lesson Plan".translated()
-     let PTM = "PTM".translated()
-     let MarkYourAttendance = "Mark your attendence".translated()
-     let AbsenteesReport = "Absentees Report".translated()
-     let SchoolStrength = "School strenght".translated()
-     let DailyCollection = "Daily Collection".translated()
-     let StudentReport = "Student Report".translated()
-     let FeePendingReport = "Fee Pending Report".translated()
-     let MarkYourAttendanceAgain = "Mark Your Attendance".translated()
-     let StaffWiseAttendanceReport = "Staff Wise Attendance Report".translated()
-     let ExamTest = "Exam/Test".translated()
-     let LSRW = "LSRW".translated()
+    let Communication = "Communication";
+    let ImagePdf = "Image/Pdf";
+    let VideoUpload = "Video Upload";
+    let Circulars = "Circulars";
+    let NoticeBoard = "Notice Board";
+    let LeaveRequests = "Leave Requests";
+    let Assignment = "Assignment";
+    let OnlineMeeting = "Online Meeting";
+    let Homework = "Homework";
+    let ScheduleExamTest = "Schedule Exam/Test";
+    let AttendanceMarking = "Attendance marking";
+    let MessagesFromManagement = "Messages from management";
+    let InteractionWithStudent = "Interaction with student";
+    let LessonPlan = "Lesson Plan";
+    let PTM = "PTM";
+    let TextToParentsStaff = "Text to Parents/Staff";
+    let SchoolClassEvents = "School / Class Events";
+    let SchoolNeeds = "School Needs";
+    let VeryImportantInfo = "Very Important Info";
+    let AbsenteesReport = "Absentees Report";
+    let SchoolStrength = "School strength";
+    let DailyCollection = "Daily Collection";
+    let StudentReport = "Student Report";
+    let FeePendingReport = "Fee Pending Report";
+    let MarkYourAttendance = "Mark Your Attendance";
+    let StaffWiseAttendanceReport = "Staff Wise Attendance Report";
+    let LSRW = "LSRW";
+
 
     
     

@@ -54,7 +54,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
     
-    
+    let MenuRedirect = MenuRedirectHandler.shared
 
     
     var currentPlaceholderIndex = 0
@@ -63,7 +63,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filteredItems = items
+        filteredItems = MenuRedirect.items
         setupSearchBar()
         startPlaceholderRotation()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
@@ -415,230 +415,236 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         
         
     }
+    
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        
-        if collectionView == bottomCv{
-            
-            if getValue == 1 {
-                
-                let name = "Video Upload".translated()
-                let comunication = "Communication".translated()
-                if items[indexPath.row].translated() == menuName.VideoUpload{
-                    videoNavigate()
-                }else if items[indexPath.row].translated() == menuName.Communication{
-                    let vc = ComunicationVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row].translated() == menuName.ImagePdf {
-                    let vc = SenderImgPdfVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                    
-                }else if items[indexPath.row].translated() == "" {
-                    
-                    alert.showAlertCancel (
-                        title: "Confirm Action",
-                        message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
-                        on: self,
-                        onOk: {
-                            
-                            print("OK button tapped")
-                            // Perform OK action
-                        },
-                        onNo: {
-                          
-                            print("No button tapped")
-                            // Perform No action
-                        }
-                    )
-                }
-                else if items[indexPath.row] == menuName.PTM {
-                    
-                    
-                }else if items[indexPath.row].translated() == menuName.NoticeBoard {
-                    let vc = EventPageVC(nibName: nil, bundle: nil)
-                    vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-                    vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
-                    vc.titleLbl = items[indexPath.row].translated()
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                    
-                }  else if items[indexPath.row] == "schoolss".translated() {
-                    
-                    homeWorkNavigate()
-                    
-                }else if items[indexPath.row].translated() == menuName.LeaveRequests{
-                    //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
-                    let vc = StudentHistryVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                    
-                }else if items[indexPath.row] == menuName.Assignment{
-                    
-//                    let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
-                    let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row].translated() == menuName.Circulars{
-                 
-                    let vc = EventPageVC(nibName: nil, bundle: nil)
-                    vc.page1 = EventsVC(nibName: nil, bundle: nil)
-                    vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
-                    vc.titleLbl = items[indexPath.row].translated()
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                    
-                }else if items[indexPath.row] == menuName.OnlineMeeting{
-//                    let vc = SenderSideOnlineMeetingViewController(nibName: nil, bundle: nil)
-                    let vc = OnlineMeetingVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row] == menuName.Homework{
-                    let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }
-                else if items[indexPath.row] == "Absentees Report".translated(){
-                    let vc = NewAbsenteesViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row].translated() == menuName.LessonPlan {
-                    
-                    let vc = LessonPlanVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                } else if items[indexPath.row] == "Fee Pending Report".translated(){
-                    let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row] == menuName.MarkYourAttendance.translated(){
-                    let vc = LocationViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row] == "Very Important Info".translated(){
-                    let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row] == menuName.StudentReport{
-                    let vc = ReportStudentListVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }
-                
-                
-                print("ID",items[indexPath.row])
-                
+
+           
+
+           
+
+           if collectionView == bottomCv{
+
                
-            }else{
-                
-                
-                let name = menuName.VideoUpload
-                let comunication = menuName.Communication
-                if name == items[indexPath.row].translated(){
-                    let vc = VideoVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if comunication == receiverItems[indexPath.row].translated(){
-                    let vc = ComunicationVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row].translated() == menuName.ImagePdf {
-                    let vc = ImagePdfVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
+
+               if getValue == 1 {
+
+                   
+
+                   if MenuRedirect.items[indexPath.row].translated() == menuName.VideoUpload{
+
+                       MenuRedirect.senderVideoNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.Communication{
+
+                       MenuRedirect.senderCommunicationNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.ImagePdf {
+                       
+                       MenuRedirect.senderImgPDfNavigate(from: self)
+                       
+                   }
+                   else  if MenuRedirect.items[indexPath.row].translated() == menuName.Circulars.translated(){
+
+                       MenuRedirect.senderEventNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.NoticeBoard{
+
+                       MenuRedirect.senderNoticeboardNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.ImagePdf.translated() {
+
+                       MenuRedirect.senderImgPDfNavigate(from: self)
+
+
+                   }else if items[indexPath.row].translated() == "" {
+
+                       
+
+//                       alert.showAlertCancel (
+//
+//                           title: "Confirm Action",
+//
+//                           message: "Are you sure you want to proceed?",actionLbl1: "No",actionLbl2: "Submit",
+//
+//                           on: self,
+//
+//                           onOk: {
+//
+//                               
+//
+//                               print("OK button tapped")
+//
+//                               // Perform OK action
+//
+//                           },
+//
+//                           onNo: {
+//
+//                             
+//
+//                               print("No button tapped")
+//
+//                               // Perform No action
+//
+//                           }
+//
+//                       )
+
+                   }
+
+
+
+                   else if MenuRedirect.items[indexPath.row] == menuName.PTM {
+                       
+                       MenuRedirect.senderPtmNavigate(from: self)
+                   }
+
+                   else if MenuRedirect.items[indexPath.row] == menuName.LeaveRequests {
+
+                       MenuRedirect.senderLeaveRequestNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.Assignment {
+
+                       MenuRedirect.senderAssignmentNavigate(from: self)
+
+
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.OnlineMeeting{
+
+                       MenuRedirect.senderOnlineNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row] == menuName.Homework{
+
+                       MenuRedirect.senderHomeWorkNavigate(from: self)
+                       
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.ScheduleExamTest{
+
+                       
+
+                   }else if MenuRedirect.items[indexPath.row] == menuName.LessonPlan{
+
+                       MenuRedirect.senderLessonplanNavigate(from: self)
+
+                   }
+                   else if MenuRedirect.items[indexPath.row] == menuName.AbsenteesReport.translated(){
+
+                       MenuRedirect.senderAbsenteesNavigate(from: self)
+
+                   } else if items[indexPath.row] == menuName.FeePendingReport.translated(){
+
+                       MenuRedirect.senderFeePendingNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row] == menuName.MarkYourAttendance.translated(){
+
                     
-                }else if items[indexPath.row].translated() == menuName.LessonPlan {
-                    
-                    alert.showAlertCancel (
-                        title: AlertstringFile.title,
-                        message: AlertstringFile.AreYouSureYouWantToProceed,actionLbl1: AlertstringFile.No,actionLbl2: AlertstringFile.Submit,
-                        on: self,
-                        onOk: {
+
+                   }else if MenuRedirect.items[indexPath.row] == menuName.VeryImportantInfo.translated(){
+
+                       MenuRedirect.senderImportantInfoNavigate(from: self)
+
+                   }else if MenuRedirect.items[indexPath.row] == menuName.StudentReport.translated(){
+
+                       MenuRedirect.senderStudentreportNavigate(from: self)
+
+                   }
+
+                   else if MenuRedirect.items[indexPath.row] == menuName.DailyCollection.translated(){
+
+
+                   }
+
+                   
+
+                   
+
+                   print("ID",items[indexPath.row])
+
+                   
+
+                  
+
+               }else{
+                   
+                   
+                   
+                   if MenuRedirect.items[indexPath.row].translated() == menuName.VideoUpload.translated(){
+                       
+                       MenuRedirect.receiverVideoNavigate(from: self)
+                       
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.Communication.translated(){
+                       
+                       MenuRedirect.receiverCommunicationNavigate(from: self)
+                       
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.ImagePdf.translated() {
+                       
+                       MenuRedirect.receiverImgPdfNavigate(from: self)
+                       
+                   }
+                   else if MenuRedirect.items[indexPath.row].translated() == menuName.LessonPlan {
                             
-                            print("OK button tapped")
-                            // Perform OK action
-                        },
-                        onNo: {
-                          
-                            print("No button tapped")
-                            // Perform No action
-                        }
-                    )
-                }
-                else if items[indexPath.row] == menuName.PTM {
+                       
+                       
+                   }
+                   
+                   else if MenuRedirect.items[indexPath.row].translated() == menuName.PTM.translated() {
+                       
+                       
+                       
+                       MenuRedirect.receiverPtmNavigate(from: self)
+                       
+                       
+                       
+                   }else if items[indexPath.row].translated() == menuName.NoticeBoard.translated() {
+                       
+                       
+                       
+                       MenuRedirect.receiverNoticeBoardNavigate(from: self)
+                       
+                       
+                       
+                       
+                       
+                   } else if MenuRedirect.items[indexPath.row].translated() == menuName.LeaveRequests.translated(){
+                       
+                       //
+                       
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.Assignment.translated(){
+                       
+                       
+                       
+                       MenuRedirect.receiverAssignmentNavigate(from: self)
+                       
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.Circulars.translated(){
+                       
+                       MenuRedirect.receiverNoticeBoardNavigate(from: self)
+                       
+                      
+                       
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.ScheduleExamTest.translated(){
                     
-                    videoNavigate()
-                    
-                }else if items[indexPath.row].translated() == menuName.NoticeBoard {
-                    
-                    let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                
-                    
-                }  else if receiverItems[indexPath.row] == "schoolss".translated() {
-                    
-                    homeWorkNavigate()
-                    
-                }else if items[indexPath.row] == menuName.LeaveRequests{
-                    //                let vc = AssignmentListVC(nibName: nil, bundle: nil)
-                    let vc = StudentHistryVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                    
-                }else if items[indexPath.row] == menuName.Assignment{
-                    
-                    let vc = PageVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if items[indexPath.row].translated() == menuName.Circulars{
-                    
-                    let vc = SenderEventsVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if receiverItems[indexPath.row].translated() == menuName.ExamTest{
-                    let vc = ExamTmTblVCViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if receiverItems[indexPath.row].translated() == menuName.LSRW{
-                    let vc = LsrwListShowViewController(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else if receiverItems[indexPath.row].translated() == menuName.Assignment {
-                    
-                    let vc = AssignmentListVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }
-                
-                
-                
-                
-                
-            }
-            
+                       MenuRedirect.receiverExamTestNavigate(from: self)
+                       
+                   }else if MenuRedirect.items[indexPath.row].translated() == menuName.LSRW.translated(){
+                       
+                       MenuRedirect.receiverLsrwNavigate(from: self)
+                       
+                   }
+                   
+                   
+                   
+                   
+                   
+                   
+                   
+               }
+
+                   
+
+               
+
         }
-    }
-    
-    //    func imagePdfNavigate() {
-    //        let vc = SenderSideImagePdfViewController(nibName: nil, bundle: nil)
-    //        vc.modalPresentationStyle = .fullScreen
-    //        present(vc, animated: true)
-    //    }
-    
-    func videoNavigate() {
-        let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
     
     
-    
-    func homeWorkNavigate() {
-        let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
     }
 }
 
