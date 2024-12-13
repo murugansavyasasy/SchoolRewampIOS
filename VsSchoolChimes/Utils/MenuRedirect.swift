@@ -89,13 +89,25 @@ class MenuRedirectHandler {
     
     func senderNoticeboardNavigate(from viewController: UIViewController) {
         
-        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+//        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+//        
+//        vc.modalPresentationStyle = .fullScreen
+//        
+//        viewController.present(vc, animated: true)
+        
+        let vc = EventPageVC(nibName: nil, bundle: nil)
+        
+        vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
+        
+        vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
+        
+        //        vc.titleLbl = items[indexPath.row].translated()
         
         vc.modalPresentationStyle = .fullScreen
         
         viewController.present(vc, animated: true)
         
-        
+
         
     }
     
@@ -198,7 +210,7 @@ class MenuRedirectHandler {
     
     func senderStudentreportNavigate(from viewController: UIViewController) {
         
-        let vc = StudentReportVC(nibName: nil, bundle: nil)
+        let vc = ReportStudentListVC(nibName: nil, bundle: nil)
         
         vc.modalPresentationStyle = .fullScreen
         

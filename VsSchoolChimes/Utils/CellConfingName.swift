@@ -40,5 +40,11 @@ class CellConfingName {
     static let LessonPlanTvCell = "LessonPlanTvCell"
     static let ReportStudentTVC = "ReportStudentTVC"
     static let LessonDetailsTVcell = "LessonDetailsTVcell"
+    static let principalTVCell = "principalTVCell"
+    static let DemoTVCell = "DemoTVCell"
+    static let BanerTableViewCell = "BanerTableViewCell"
+    static let RatingTableViewCell = "RatingTableViewCell"
+    static let RatingTypeTableViewCell = "RatingTypeTableViewCell"
+    static let SuggestionsCollectionViewCell = "SuggestionsCollectionViewCell"
    
 }
