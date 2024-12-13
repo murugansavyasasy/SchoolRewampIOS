@@ -313,7 +313,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             
             if collectionView == bottomCv{
                 if getValue == 1 {
-                    return items.count
+                    return MenuRedirect.items.count
                 }else{
                     return receiverItems.count
                 }
@@ -335,14 +335,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             if getValue == 1 {
             if searchItem == 1 {
                 
-                let label = items[indexPath.row].translated()
+                let label = MenuRedirect.items[indexPath.row].translated()
                 cell.MenuLbl.text = label
             }else{
                 
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
                
-                let label = items[indexPath.row].translated()
+                let label = MenuRedirect.items[indexPath.row].translated()
                 
                 let img = UIImage(named: Imgitems[indexPath.row])
               
@@ -550,6 +550,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                    else if MenuRedirect.items[indexPath.row].translated() == menuName.DailyCollection.translated(){
 
 
+                   } else if MenuRedirect.items[indexPath.row].translated() == menuName.SchoolStrength{
+                       MenuRedirect.senderSchoolStrength(from: self)
+                       
                    }
 
                    

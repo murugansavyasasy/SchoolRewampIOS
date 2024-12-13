@@ -46,5 +46,6 @@ class CellConfingName {
     static let RatingTableViewCell = "RatingTableViewCell"
     static let RatingTypeTableViewCell = "RatingTypeTableViewCell"
     static let SuggestionsCollectionViewCell = "SuggestionsCollectionViewCell"
+    static let StrengthTvCell = "StrengthTvCell"
    
 }

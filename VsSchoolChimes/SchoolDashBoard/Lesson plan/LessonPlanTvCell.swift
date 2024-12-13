@@ -10,6 +10,8 @@ import Charts
 
 class LessonPlanTvCell: UITableViewCell {
     
+    @IBOutlet weak var navigateview: UIView!
+    @IBOutlet weak var viewBtn: UIButton!
     @IBOutlet weak var redLabel: UILabel!
     @IBOutlet weak var Redview: UIView!
     @IBOutlet weak var Greenlabel: UILabel!
@@ -18,9 +20,10 @@ class LessonPlanTvCell: UITableViewCell {
     @IBOutlet weak var Cellview: UIView!
     
     @IBOutlet weak var pieChartView: PieChartView!
-    
+   
     var val1: Double! = 75
     var val2: Double! = 25
+    var id  = 0
     
     
     override func awakeFromNib() {
@@ -39,11 +42,19 @@ class LessonPlanTvCell: UITableViewCell {
         Cellview.layer.borderColor = UIColor.lightGray.cgColor
         Cellview.layer.borderWidth = 0.5
 
-        
         // Background color for the card
         Cellview.backgroundColor = .white
+        navigateview.layer.cornerRadius = 10
+        //viewBtn.layer.cornerRadius = 10
         pieChartView.frame = CGRect(x: 0, y: 0, width: 180, height: 165)
         setupPieChart()
+        
+    }
+    
+    
+    @IBAction func ViewbtnAct(_ sender: Any) {
+        
+        id = 1
         
     }
     
@@ -54,48 +65,105 @@ class LessonPlanTvCell: UITableViewCell {
         setChartData()
     }
     
+//    private func setupPieChart() {
+//        // Configure the general look of the pie chart
+//        pieChartView.usePercentValuesEnabled = true
+//        pieChartView.drawSlicesUnderHoleEnabled = false
+//        pieChartView.holeRadiusPercent = 0.0
+//        pieChartView.transparentCircleRadiusPercent = 0.0
+//        pieChartView.chartDescription.enabled = true
+//        pieChartView.drawEntryLabelsEnabled = false
+//        pieChartView.legend.enabled = false
+//    }
+//    
+//    private func setChartData() {
+//        // Define the data entries
+//        let entries = [
+//            PieChartDataEntry(value: val1, label: "Completed"),
+//            PieChartDataEntry(value: val2, label: "Pending")
+//        ]
+//        
+//        let dataSet = PieChartDataSet(entries: entries, label: "")
+//        if #available(iOS 15.0, *) {
+//            dataSet.colors = [UIColor.systemMint,UIColor.systemRed]
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//        
+//        // Set other dataset properties if needed
+//        dataSet.drawValuesEnabled = false // Hide values on the segments
+//        
+//        // Apply the data to the chart
+//        let data = PieChartData(dataSet: dataSet)
+//        pieChartView.data = data
+//        
+//        pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
+//        
+//        // Refresh chart
+//        pieChartView.notifyDataSetChanged()
+//        
+//        Greenlabel.text = "Completed"
+//        redLabel.text = "Pending"
+//        // displayPercentages(entries: entries)
+//        
+//    }
     private func setupPieChart() {
-        // Configure the general look of the pie chart
-        pieChartView.usePercentValuesEnabled = true
-        pieChartView.drawSlicesUnderHoleEnabled = false
-        pieChartView.holeRadiusPercent = 0.0
-        pieChartView.transparentCircleRadiusPercent = 0.0
-        pieChartView.chartDescription.enabled = true
-        pieChartView.drawEntryLabelsEnabled = false
-        pieChartView.legend.enabled = false
-    }
-    
-    private func setChartData() {
-        // Define the data entries
-        let entries = [
-            PieChartDataEntry(value: val1, label: "Completed"),
-            PieChartDataEntry(value: val2, label: "Pending")
-        ]
-        
-        let dataSet = PieChartDataSet(entries: entries, label: "")
-        if #available(iOS 15.0, *) {
-            dataSet.colors = [UIColor.systemMint,UIColor.systemRed]
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        // Set other dataset properties if needed
-        dataSet.drawValuesEnabled = false // Hide values on the segments
-        
-        // Apply the data to the chart
-        let data = PieChartData(dataSet: dataSet)
-        pieChartView.data = data
-        
-        pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
-        
-        // Refresh chart
-        pieChartView.notifyDataSetChanged()
-        
-        Greenlabel.text = "Completed"
-        redLabel.text = "Pending"
-        // displayPercentages(entries: entries)
-    }
-    
+       // Configure the general look of the pie chart
+       pieChartView.usePercentValuesEnabled = true
+       pieChartView.drawSlicesUnderHoleEnabled = false
+       pieChartView.holeRadiusPercent = 0.0
+       pieChartView.transparentCircleRadiusPercent = 0.0
+       pieChartView.chartDescription.enabled = true
+       pieChartView.drawEntryLabelsEnabled = false // Optional: Set to true if you want labels
+       pieChartView.legend.enabled = false
+   }
+
+   private func setChartData() {
+       // Define the data entries
+       let entries = [
+           PieChartDataEntry(value: val1, label: "Completed"),
+           PieChartDataEntry(value: val2, label: "Pending")
+       ]
+       
+       let dataSet = PieChartDataSet(entries: entries, label: "")
+       
+       // Set the colors for the slices
+       if #available(iOS 15.0, *) {
+           dataSet.colors = [UIColor.systemMint, UIColor.systemRed]
+       } else {
+           dataSet.colors = [UIColor.green, UIColor.red]
+       }
+       
+       // Enable value display and format as percentages
+       dataSet.drawValuesEnabled = true
+       dataSet.valueTextColor = .white // Customize text color
+       dataSet.valueFont = UIFont.systemFont(ofSize: 14) // Customize text font
+
+       // Configure number formatter for percentage values
+       let numberFormatter = NumberFormatter()
+       numberFormatter.numberStyle = .percent
+       numberFormatter.maximumFractionDigits = 1
+       numberFormatter.multiplier = 1
+
+       // Set the value formatter
+       dataSet.valueFormatter = DefaultValueFormatter(formatter: numberFormatter)
+       
+       // Apply the data to the chart
+       let data = PieChartData(dataSet: dataSet)
+       pieChartView.data = data
+       
+       // Animate the chart
+       pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
+       
+       // Refresh chart
+       pieChartView.notifyDataSetChanged()
+
+       // Optional: Update the labels outside the chart
+       Greenlabel.text = "Completed"
+       redLabel.text = "Pending"
+   }
+
+
     private func displayPercentages(entries: [PieChartDataEntry]) {
         // Assuming you have a UIStackView named `percentagesStackView` added in your storyboard
         percentagesStackView.arrangedSubviews.forEach { $0.removeFromSuperview() } // Clear old labels

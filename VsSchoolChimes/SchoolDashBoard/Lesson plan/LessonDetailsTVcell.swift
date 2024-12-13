@@ -56,7 +56,7 @@ class LessonDetailsTVcell: UITableViewCell {
         Cellview.layer.borderColor = UIColor.lightGray.cgColor
         Cellview.layer.borderWidth = 0.5
         // Background color for the card
-        Cellview.backgroundColor = .white
+      //  Cellview.backgroundColor = .white
         
         TopicLabel.setFont(style: .title, size: FontSize.TitleSize)
         DateLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -65,8 +65,27 @@ class LessonDetailsTVcell: UITableViewCell {
         startLabel.setFont(style: .body, size:10)
         progressLabel.setFont(style: .body, size: 10)
         completedLabel.setFont(style: .body, size: 10)
-    
         
+        if let originalImage = UIImage(named: "completed") {
+                   let newSize = CGSize(width: 20, height: 20)
+                   
+                   // Call the resizing function
+                   if let resizedImage = originalImage.resizedimg(to: newSize) {
+                       // Set the resized image to the UIImageView
+                       completedIcon.image = resizedImage
+                       print("Image successfully resized")
+                   } else {
+                       print("Failed to resize the image.")
+                   }
+               } else {
+                   print("Image named 'completed' not found in assets.")
+               }
+        
+        completedIcon.contentMode = .scaleAspectFit
+    
+        startIcon.layer.cornerRadius = startIcon.frame.width/2
+        progressIcon.layer.cornerRadius = progressIcon.frame.width/2
+        completedIcon.layer.cornerRadius = completedIcon.frame.width/2
            startIcon.tintColor = .lightGray
            progressIcon.tintColor = .lightGray
            completedIcon.tintColor = .lightGray
@@ -96,7 +115,7 @@ class LessonDetailsTVcell: UITableViewCell {
         guard selection == correct else { return }
 
         // Assuming fireworkController is set up to work with UIImageView as well.
-        self.fireworkController.addFireworks(count: 2, sparks: 8, around: imageView)
+        self.fireworkController.addFireworks(count: 5, sparks: 8, around: imageView)
     }
     
     override func prepareForReuse() {
@@ -189,3 +208,14 @@ class LessonDetailsTVcell: UITableViewCell {
        }
 
 }
+
+// UIImage extension for resizing
+extension UIImage {
+    func resizedimg(to size: CGSize) -> UIImage? {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+}
+

@@ -56,7 +56,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="176.66666666666666" height="40"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Create"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="All classes"/>
                                     <connections>
                                         <action selector="createBtnAct:" destination="-1" eventType="touchUpInside" id="mOL-G0-F6h"/>
                                     </connections>
@@ -65,7 +65,7 @@
                                     <rect key="frame" x="156.66666666666663" y="0.0" width="176.33333333333337" height="40"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="View"/>
+                                    <buttonConfiguration key="configuration" style="plain" title="My classes"/>
                                     <connections>
                                         <action selector="viewBtnAct:" destination="-1" eventType="touchUpInside" id="squ-6g-lcs"/>
                                     </connections>

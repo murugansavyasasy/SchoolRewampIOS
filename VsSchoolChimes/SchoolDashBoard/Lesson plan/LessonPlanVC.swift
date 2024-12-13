@@ -18,6 +18,8 @@ class LessonPlanVC: UIViewController {
     
     let complete :[Double] = [75,60,83,47,90,32]
     let pending :[Double] = [25,40,17,53,10,68]
+    let cellcolour = [UIColor(named: "lesson1"),UIColor(named: "lesson2"),UIColor(named: "lesson3")]
+    var id  = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,12 +30,12 @@ class LessonPlanVC: UIViewController {
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
 //        
-        let nib = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
+        let nib1 = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
+        tableview.register(nib1, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
         
         
-//        let nib = UINib(nibName: CellConfingName.LessonDetailsTVcell, bundle: nil)
-//        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonDetailsTVcell)
+        let nib = UINib(nibName: CellConfingName.LessonDetailsTVcell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonDetailsTVcell)
 //        tableview.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         tableview.delegate = self
         tableview.dataSource = self
@@ -84,7 +86,12 @@ class LessonPlanVC: UIViewController {
     
     @IBAction func BackBtnAct(_ sender: Any) {
         
-        dismiss(animated: true)
+        if id == 1{
+            id = 0
+            tableview.reloadData()
+        }else{
+            dismiss(animated: true)
+        }
     }
     
    
@@ -93,30 +100,71 @@ class LessonPlanVC: UIViewController {
 
 extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        6
+        
+        
+        if  id == 0{
+            
+            return  6
+            
+        }else{
+            
+            return  4
+            
+        }
+                
+       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDetailsTVcell, for: indexPath) as! LessonDetailsTVcell
-//        //cell.startProgressAnimation(duration: 9.0)
-//        cell.startProgressAnimation()
-      
-//        MARK: Lesson plan tvcell
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTvCell, for: indexPath) as! LessonPlanTvCell
-        cell.getvalue(a: Int(complete[indexPath.row]), b: Int(pending[indexPath.row]))
-        cell.val1 = complete[indexPath.row]
-        cell.val2 = pending[indexPath.row]
-        return cell
+        
+        
+        if  id == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTvCell, for: indexPath) as! LessonPlanTvCell
+            cell.getvalue(a: Int(complete[indexPath.row]), b: Int(pending[indexPath.row]))
+            cell.val1 = complete[indexPath.row]
+            cell.val2 = pending[indexPath.row]
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ViewbtnAct))
+            cell.navigateview.addGestureRecognizer(tap)
+            cell.navigateview.isUserInteractionEnabled = true
+            return cell
+            
+        }
+        
+        else{
+            
+            let colour = cellcolour[indexPath.row % cellcolour.count]
+                    let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDetailsTVcell, for: indexPath) as! LessonDetailsTVcell
+                    //cell.startProgressAnimation(duration: 9.0)
+            cell.Cellview.backgroundColor = colour
+                    cell.startProgressAnimation()
+                  
+                 return cell
+        }
+
+       
     }
     
+    @IBAction func ViewbtnAct() {
+        
+        id = 1
+        
+        
+        tableview.reloadData()
+        
+        
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
         
-        cell.animatePopUpEffect()
+        if id == 0{
+            let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
+            
+             cell.animatePopUpEffect()
+        }
     }
 
     

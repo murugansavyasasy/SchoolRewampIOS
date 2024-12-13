@@ -27,13 +27,13 @@ class MenuRedirectHandler {
     
     var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM", "Text to Parents/Staff","School / Class Events","School Needs","Very Important Info"
                              
-                             ,"Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+                             ,"Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     //
     
     var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Text to Parents/Staff","School / Class Events","School Needs","Very Important Info"
                                 
-                                ,"Absentees Report","School strenght","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+                                ,"Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     
     var receiverItems : [String] = [ "Communication","Homework" ,"Exam/Test","Exam Marks","Image/Pdf","Video Upload","Circulars","Notice Board","Assignment","Online Meeting","Attendance Report"
@@ -169,7 +169,7 @@ class MenuRedirectHandler {
     
     func senderAssignmentNavigate(from viewController: UIViewController) {
         
-        let vc = SenderAssignmentViewController(nibName: nil, bundle: nil)
+        let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
         
         vc.modalPresentationStyle = .fullScreen
         
@@ -256,7 +256,17 @@ class MenuRedirectHandler {
         
         
     }
-    
+    func senderSchoolStrength(from viewController: UIViewController) {
+        
+        let vc = SchoolStrengthVC(nibName: nil, bundle: nil)
+        
+        vc.modalPresentationStyle = .fullScreen
+        
+        viewController.present(vc, animated: true)
+        
+        
+        
+    }
     
     
     
