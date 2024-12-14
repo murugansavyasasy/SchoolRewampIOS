@@ -18,7 +18,7 @@ class LessonPlanVC: UIViewController {
     
     let complete :[Double] = [75,60,83,47,90,32]
     let pending :[Double] = [25,40,17,53,10,68]
-    let cellcolour = [UIColor(named: "lesson1"),UIColor(named: "lesson2"),UIColor(named: "lesson3")]
+    let cellcolour = [Colornames.lesson1,Colornames.lesson2,Colornames.lesson3]
     var id  = 0
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -253,7 +253,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
         if collectionView.indexPathsForSelectedItems?.contains(indexPath) == true {
             
             print("IFFFFF")
-                cell.sectionFullView.backgroundColor = UIColor(named: "AppDark") // Change to your selected color
+            cell.sectionFullView.backgroundColor = Colornames.AppDark // Change to your selected color
                 cell.sectionLbl.textColor = UIColor.white // Change to your selected text color
             } else {
                 

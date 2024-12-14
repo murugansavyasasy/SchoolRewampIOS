@@ -35,6 +35,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     var Title = ""
     var desript = ""
     var url : URL?
+    let Img = ImageName()
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var setTitle: UILabel!
@@ -117,7 +118,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             guard let self = self else { return }
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
-            selectedImages.append(UIImage(named: "pdf")!)
+            selectedImages.append(Img.pdf!)
             //            url = URL(string:pdfurl)
             //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()

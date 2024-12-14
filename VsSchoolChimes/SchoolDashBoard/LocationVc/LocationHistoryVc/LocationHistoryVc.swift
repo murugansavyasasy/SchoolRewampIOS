@@ -150,7 +150,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         seachHeight.constant = 56
         tv.isHidden = true
             
-            todayStaffView.backgroundColor = UIColor(named: "CustomOrange")
+        todayStaffView.backgroundColor = Colornames.CustomOrange
        
         allsatffView.backgroundColor = .white
         staffWiseDefaultLbl.textColor = .black
@@ -181,7 +181,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     @IBAction func allStaffVIew(){
         seachHeight.constant = 0
         noRecordLbl.isHidden = true
-        allsatffView.backgroundColor = UIColor(named: "CustomOrange")
+        allsatffView.backgroundColor = Colornames.CustomOrange
       
       
         

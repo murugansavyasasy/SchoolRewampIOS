@@ -388,7 +388,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBAction func history(){
         plusview.isHidden = true
         plusViewHeight.constant = 0
-        histroyView .backgroundColor = UIColor(named: "CustomOrange")
+        histroyView .backgroundColor = Colornames.CustomOrange
         attendanceDefltLbl.textColor = .white
         punchView.backgroundColor = .white
         markAttendDfltLbl.textColor = .black

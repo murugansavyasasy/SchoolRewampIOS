@@ -159,7 +159,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 //            
 //        }
         classWiseView.backgroundColor = .lightGray
-        categoryWiseView.backgroundColor = UIColor(named: "CustomOrange")
+        categoryWiseView.backgroundColor = Colornames.CustomOrange
     }
     
     
@@ -184,7 +184,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         
         
         categoryWiseView.backgroundColor = .lightGray
-        classWiseView.backgroundColor = UIColor(named: "CustomOrange")
+        classWiseView.backgroundColor = Colornames.CheckBoxSelectColor
     }
     
     

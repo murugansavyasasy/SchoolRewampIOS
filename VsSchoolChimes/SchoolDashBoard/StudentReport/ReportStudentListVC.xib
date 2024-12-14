@@ -58,7 +58,7 @@
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="GET ALL STUDENT" image="slider.vertical.3" catalog="system"/>
+                                            <state key="normal" title="GET ALL STUDENT" image="slider.horizontal.3" catalog="system"/>
                                             <connections>
                                                 <action selector="filterStudent:" destination="-1" eventType="touchUpInside" id="Gml-03-Kzq"/>
                                             </connections>
@@ -275,7 +275,7 @@
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="chevron.down.square.fill" catalog="system" width="128" height="114"/>
         <image name="down-arrow" width="512" height="512"/>
-        <image name="slider.vertical.3" catalog="system" width="128" height="110"/>
+        <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

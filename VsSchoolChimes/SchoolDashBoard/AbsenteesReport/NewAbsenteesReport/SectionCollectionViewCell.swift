@@ -24,7 +24,7 @@ class SectionCollectionViewCell: UICollectionViewCell {
                     sectionNameLbl.textColor = .white
                     sectionNameLbl.textColor = .white
                 } else {
-                    sectionClick.backgroundColor = UIColor(named: "StudentColor")
+                    sectionClick.backgroundColor = Colornames.StudentColor
                     sectionNameLbl.textColor = .black
                     sectionNameLbl.textColor = .black
                 }

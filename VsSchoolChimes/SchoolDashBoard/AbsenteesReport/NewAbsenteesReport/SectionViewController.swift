@@ -127,7 +127,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
             
             
             
-            cell.sectionClick.backgroundColor = UIColor(named: "CustomOrange")
+            cell.sectionClick.backgroundColor = Colornames.CustomOrange
             cell.sectionNameLbl.textColor = .white
             cell.sectionNameLbl.textColor = .white
             
@@ -136,7 +136,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
             
             
             
-            cell.sectionClick.backgroundColor = UIColor(named: "LightOrange")
+            cell.sectionClick.backgroundColor = Colornames.LightOrange
             cell.sectionNameLbl.textColor = .black
             cell.sectionNameLbl.textColor = .black
             

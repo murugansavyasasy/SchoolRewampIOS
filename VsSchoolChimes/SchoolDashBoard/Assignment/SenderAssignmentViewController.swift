@@ -70,7 +70,7 @@ class SenderAssignmentViewController: UIViewController {
         listView.isHidden = false
         tv.isHidden = false
        
-        ViewSeg.backgroundColor = UIColor(named: "ButtonColor")
+        ViewSeg.backgroundColor = Colornames.ButtonColor
         createView.backgroundColor = .lightGray
         assignmentCreateView.isHidden = true
     }

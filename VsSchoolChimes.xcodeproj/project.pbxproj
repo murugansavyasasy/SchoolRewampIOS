@@ -1982,6 +1982,7 @@
 				84A5BE762C1972F900E32496 /* FCM */,
 				84A5BE752C1972ED00E32496 /* Repository */,
 				84A5BE722C1972C600E32496 /* DashBoard */,
+				84DCF5F02CECC03200C42504 /* CommonScreens */,
 				84A5BE812C19776600E32496 /* SchoolDashBoard */,
 				84A5BE412C19719700E32496 /* AppDelegate.swift */,
 				84A5BE432C19719700E32496 /* SceneDelegate.swift */,
@@ -2032,7 +2033,6 @@
 			isa = PBXGroup;
 			children = (
 				84A5BE822C19777500E32496 /* ParentDashBoard */,
-				84DCF5F02CECC03200C42504 /* CommonScreens */,
 			);
 			path = DashBoard;
 			sourceTree = "<group>";

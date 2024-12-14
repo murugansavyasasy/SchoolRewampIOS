@@ -85,6 +85,17 @@ class AlertstringFile{
     static let Enter_the_10_digit = "Enter the 10 digit mobile number"
     static let Tems_And_Conition = "Please aggree to the terms and condition"
     static let Enter_Otp = "Enter the otp"
+    let Sectionorstudent = "Section or student".translated()
+    let Standardorsection = "Standard or section".translated()
+    let Select = "Select".translated()
+    let Chooseanoption = "Choose an option".translated()
+    let CameraNotAvailable = "Camera Not Available".translated()
+    let devicehasnoCamara = "This device has no camera.".translated()
+    let Camera = "Camera".translated()
+    let Gallery = "Gallery".translated()
+    let PDF = "PDF".translated()
+    let Cancel = "Cancel".translated()
+    let OK = "OK".translated()
    
 }
 struct MenuTapbar{
@@ -115,7 +126,21 @@ struct SettingStringFile{
 
 class CommonStringFile{
 
-    
+    let RollNo = "RollNo".translated()
+    let Name = "Name".translated()
+    let Status = "Status".translated()
+    let Section = "Section".translated()
+    let UploadAttachment = "Upload Attachment".translated()
+    let UploadImagepdf = "Upload Image/Pdf".translated()
+    let Description = "Description".translated()
+    let FromTime = "From Time".translated()
+    let Schedule = "Schedule".translated()
+    let ToTime = "To Time".translated()
+    let Emergencyvoicemessages = "Emergency voice messages".translated()
+    let VoiceMessage = "Voice Message".translated()
+    let TextMessage = "Text Message".translated()
+    let ScheduleCall = "Schedule Call".translated()
+    let EnterTextHere = "EnterTextHere".translated()
 }
 
 
@@ -136,3 +161,4 @@ class RatingCellStringFile{
     static let Well_done =  "Well done"
     
 }
+

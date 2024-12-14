@@ -65,7 +65,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var convertedImagesUrlArray = NSMutableArray()
     var imageUrlArray = NSMutableArray()
     var pdfData : Data? = nil
-    
+    let AlertMessage = AlertstringFile()
+    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTimePicker()
@@ -92,7 +93,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             guard let self = self else { return }
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
-            selectedImages.append(UIImage(named: "pdf")!)
+            selectedImages.append(Img.pdf!)
             //            url = URL(string:pdfurl)
             //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()
@@ -401,16 +402,16 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+            let alertController = UIAlertController(title: AlertMessage.Select, message: AlertMessage.Chooseanoption, preferredStyle: .actionSheet)
             //
             // Camera option
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+            let cameraAction = UIAlertAction(title: AlertMessage.Camera, style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
             
             // Gallery option
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+            let galleryAction = UIAlertAction(title: AlertMessage.Gallery, style: .default) { [self] _ in
                 //
                 selectImages()
                 //
@@ -418,14 +419,14 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             alertController.addAction(galleryAction)
             
             //             PDF option
-            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: AlertMessage.PDF, style: .default) { [self] _ in
                 
                 selectPDF()
             }
             alertController.addAction(pdfAction)
             
             // Cancel action
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: AlertMessage.Cancel, style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
             // Present the alert

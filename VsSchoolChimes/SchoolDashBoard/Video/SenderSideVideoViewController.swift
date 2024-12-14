@@ -49,7 +49,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     var player: AVPlayer?
     var playerViewController: AVPlayerViewController?
     var playerurl: URL?
-    
+    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -218,7 +218,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     
     
     @IBAction func PlayBtnAct(_ sender: Any) {
-        if playBtn.currentImage == UIImage(named: "play-button"){
+        if playBtn.currentImage == Img.playbutton{
             playVideo()
         }
         else{

@@ -74,7 +74,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
 ////        staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
 //        classId = userDefaults.integer(forKey: DefaultsKeys.ClassID)
 //        studentId = userDefaults.integer(forKey: DefaultsKeys.chilId)
-        todaSlotView.backgroundColor = UIColor(named: CustomOrange)
+        todaSlotView.backgroundColor = Colornames.CustomOrange
         if type == 1 {
             
             
@@ -180,7 +180,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         createView.isHidden = false
         dateLbl.text = "--- Select Date ---"
         slotView.backgroundColor = .lightGray
-        todaSlotView.backgroundColor = UIColor(named: CustomOrange)
+        todaSlotView.backgroundColor = Colornames.CustomOrange
 //        dateWiseSlot()
     }
     @IBAction func  SlotVC (){
@@ -261,7 +261,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if  slotView.backgroundColor == UIColor(named: CustomOrange){
+        if  slotView.backgroundColor == Colornames.CustomOrange{
             
             return 1
         }else{

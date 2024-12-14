@@ -31,10 +31,11 @@ class ReportStudentTVC: UITableViewCell {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tagView: UIView!
     var smsNumber = ""
+    let Img = ImageName()
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        if let originalImage = UIImage(named: "idCard") {
+        if let originalImage = Img.idCard {
             // Resize the image to match outerView's size
             let resizedImage = originalImage.resized(to: outerView.bounds.size)
             
@@ -112,13 +113,14 @@ class ReportStudentTVC: UITableViewCell {
         let subject = "Hello" // Replace with your subject
         let body = "This is a sample email body." // Replace with your email body
         
-        let emailURL = "mailto:\(email)?subject=\(subject)&body=\(body)"
+        let emailURL = "mailto:\(email ?? "")?subject=\(subject)&body=\(body)"
             .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         if let url = URL(string: emailURL ?? ""),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
+            
             print("Mail app is not available or invalid email address.")
         }
     }
@@ -136,7 +138,6 @@ class ReportStudentTVC: UITableViewCell {
             print("Messages app is not available or invalid phone number.")
         }
     }
-
 }
 extension UIImage {
     func resized(to size: CGSize) -> UIImage? {

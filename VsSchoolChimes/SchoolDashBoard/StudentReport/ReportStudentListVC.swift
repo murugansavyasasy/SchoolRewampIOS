@@ -82,14 +82,10 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             // Slide down off the screen and fade out
             self.classSelection.transform = CGAffineTransform(translationX: 0, y: -self.classSelection.bounds.height)
             self.classSelection.alpha = 0
-//            self.sectionSelection.transform = CGAffineTransform(translationX: 0, y: -self.sectionSelection.bounds.height)
-//            self.sectionSelection.alpha = 0
             
         }) { _ in
             // Set isHidden AFTER the animation completes
             self.classSelection.isHidden = true
-//            self.sectionSelection.isHidden = true
-            // Reset transform to identity for reuse
             self.classSelection.transform = .identity
             self.reportTable.isHidden = false
         }
@@ -377,3 +373,5 @@ struct StudentList{
     let classname:String
     let img : String
 }
+
+

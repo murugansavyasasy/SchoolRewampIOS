@@ -330,9 +330,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 case menuName.SchoolStrength:
                     MenuRedirect.senderSchoolStrength(from: self)
                     
+                case menuName.MarkYourAttendance:
+                    MenuRedirect.AttendenceMark(from: self)
+                    
                 case menuName.DailyCollection,
                     menuName.ScheduleExamTest,
-                    menuName.MarkYourAttendance,
                     "":
                     // Do nothing for these cases
                     break

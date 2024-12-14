@@ -165,7 +165,7 @@ var getLoginClassId : Int!
         segment2.addGestureRecognizer(segments2)
         
 //        updateMonthLabel()
-        segment1.backgroundColor = UIColor(named: "CheckBoxSelectColor")
+        segment1.backgroundColor = Colornames.CheckBoxSelectColor
 //
 
 
@@ -293,7 +293,7 @@ print("studentId",studentId)
                 
             }
             else{
-                cell.caleView.backgroundColor = UIColor(named: "NoDataColor")
+                cell.caleView.backgroundColor = Colornames.NoDataColor
                 cell.dayLbl.textColor = .black
                 cell.dateLbl.textColor = .black
                 cell.slotCountLbl.textColor = .black
@@ -392,7 +392,7 @@ print("studentId",studentId)
         tvLeading.constant = 0
         tvTralling.constant = 0
         segmentId = 1
-        segment1.backgroundColor = UIColor(named: "CheckBoxSelectColor")
+        segment1.backgroundColor = Colornames.CheckBoxSelectColor
         segment2.backgroundColor = .white
         calanderHeightCon.constant = 130
 
@@ -420,7 +420,7 @@ print("studentId",studentId)
         print("calanderHeightt",calanderHeightCon.constant)
 
         tvTop.constant = -20
-        segment2.backgroundColor = UIColor(named: "CheckBoxSelectColor")
+        segment2.backgroundColor = Colornames.CheckBoxSelectColor
         segment1.backgroundColor = .white
         if let headerView = tv.tableHeaderView {
             headerView.isHidden = true
@@ -439,7 +439,7 @@ print("studentId",studentId)
 
 //
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if segment1.backgroundColor == UIColor(named: "CheckBoxSelectColor") {
+        if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TimeHeader") as! TimeHeader
 
 
@@ -499,7 +499,7 @@ print("studentId",studentId)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
 
-            if segment1.backgroundColor == UIColor(named: "CheckBoxSelectColor") {
+            if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
 
                 print("getTeacherDatacount",exNames.count)
 
@@ -525,7 +525,7 @@ print("studentId",studentId)
 
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-            if segment1.backgroundColor == UIColor(named: "CheckBoxSelectColor") {
+            if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
 
                return 1
 
@@ -737,7 +737,7 @@ print("studentId",studentId)
 
 
 
-            if segment1.backgroundColor == UIColor(named: "CheckBoxSelectColor") {
+            if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
 
 
 

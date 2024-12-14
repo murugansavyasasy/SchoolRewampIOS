@@ -39,7 +39,7 @@ class SelectRecipientVC: UIViewController {
     
     let dropDown = DropDown()
     let StdDropdown = DropDown()
-    
+    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -316,7 +316,7 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
         
         let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell , for: ges.indexs) as! RecipientTvCell
         
-        cell.checkboxImg.image = UIImage(named: "checkedsquare")
+        cell.checkboxImg.image = Img.checkedsquare
     }
     
  
