@@ -1,14 +1,16 @@
-    //
-    //  HomePageVc.swift
-    //  VsSchoolChimes
-    //
-    //  Created by admin on 26/10/24.
-    //
+//
+//  ParentVC.swift
+//  VsSchoolChimes
+//
+//  Created by admin on 14/12/24.
+//
 
-    import UIKit
+import UIKit
 
-    @available(iOS 14.0, *)
-    class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
+@available(iOS 14.0, *)
+class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+   
+    
 
     @IBOutlet weak var loginDetailView: UIView!
     @IBOutlet weak var Searchbar: UISearchBar!
@@ -200,7 +202,7 @@
 
 
     @available(iOS 14.0, *)
-    extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
+    extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if collectionView == bottomCv{
@@ -275,123 +277,121 @@
 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if collectionView == bottomCv{
-            if getValue == 1 {
-                
-                let menuItem = MenuRedirect.items[indexPath.row]
-                
-                switch menuItem {
-                case menuName.VideoUpload:
-                    MenuRedirect.senderVideoNavigate(from: self)
-                    
-                case menuName.Communication:
-                    MenuRedirect.senderCommunicationNavigate(from: self)
-                    
-                case menuName.ImagePdf, menuName.ImagePdf.translated():
-                    MenuRedirect.senderImgPDfNavigate(from: self)
-                    
-                case menuName.Circulars.translated():
-                    MenuRedirect.senderEventNavigate(from: self)
-                    
-                case menuName.NoticeBoard:
-                    MenuRedirect.senderNoticeboardNavigate(from: self)
-                    
-                case menuName.PTM:
-                    MenuRedirect.senderPtmNavigate(from: self)
-                    
-                case menuName.LeaveRequests:
-                    MenuRedirect.senderStudentreportNavigate(from: self)
-                    
-                case menuName.Assignment:
-                    MenuRedirect.senderAssignmentNavigate(from: self)
-                    
-                case menuName.OnlineMeeting:
-                    MenuRedirect.senderOnlineNavigate(from: self)
-                    
-                case menuName.Homework:
-                    MenuRedirect.senderHomeWorkNavigate(from: self)
-                    
-                case menuName.LessonPlan:
-                    MenuRedirect.senderLessonplanNavigate(from: self)
-                    
-                case menuName.AbsenteesReport:
-                    MenuRedirect.senderAbsenteesNavigate(from: self)
-                    
-                case menuName.FeePendingReport:
-                    MenuRedirect.senderFeePendingNavigate(from: self)
-                    
-                case menuName.StudentReport:
-                    MenuRedirect.senderStudentreportNavigate(from: self)
-                    
-                case menuName.VeryImportantInfo:
-                    MenuRedirect.senderImportantInfoNavigate(from: self)
-                    
-                case menuName.SchoolStrength:
-                    MenuRedirect.senderSchoolStrength(from: self)
-                    
-                case menuName.MarkYourAttendance:
-                    MenuRedirect.AttendenceMark(from: self)
-                    
-                case menuName.DailyCollection,
-                    menuName.ScheduleExamTest,
-                    "":
-                    // Do nothing for these cases
-                    break
-                    
-                default:
-                    // Handle unknown menu items if needed
-                    break
-                }
-                
-            }else{
-                
-                let menuItem = MenuRedirect.items[indexPath.row]
-                
-                switch menuItem {
-                case menuName.VideoUpload:
-                    MenuRedirect.receiverVideoNavigate(from: self)
-                    
-                case menuName.Communication:
-                    MenuRedirect.receiverCommunicationNavigate(from: self)
-                    
-                case menuName.ImagePdf:
-                    MenuRedirect.receiverImgPdfNavigate(from: self)
-                    
-                case menuName.PTM:
-                    MenuRedirect.receiverPtmNavigate(from: self)
-                    
-                case menuName.NoticeBoard,
-                    menuName.Circulars:
-                    MenuRedirect.receiverNoticeBoardNavigate(from: self)
-                    
-                case menuName.Assignment:
-                    MenuRedirect.receiverAssignmentNavigate(from: self)
-                    
-                case menuName.ScheduleExamTest:
-                    MenuRedirect.receiverExamTestNavigate(from: self)
-                    
-                case menuName.LSRW:
-                    MenuRedirect.receiverLsrwNavigate(from: self)
-                    
-                case menuName.LessonPlan,
-                    menuName.LeaveRequests:
-                    // Do nothing for these cases
-                    break
-                    
-                default:
-                    // Handle unknown menu items if needed
-                    break
-                }
-                
-            }
-        }
-    }
-}
 
-@available(iOS 14.0, *)
-extension HomePageVc: UICollectionViewDelegateFlowLayout {
-    
+    if collectionView == bottomCv{
+    if getValue == 1 {
+
+    let menuItem = MenuRedirect.items[indexPath.row]
+
+    switch menuItem {
+    case menuName.VideoUpload:
+    MenuRedirect.senderVideoNavigate(from: self)
+
+    case menuName.Communication:
+    MenuRedirect.senderCommunicationNavigate(from: self)
+
+    case menuName.ImagePdf, menuName.ImagePdf.translated():
+    MenuRedirect.senderImgPDfNavigate(from: self)
+
+    case menuName.Circulars.translated():
+    MenuRedirect.senderEventNavigate(from: self)
+
+    case menuName.NoticeBoard:
+    MenuRedirect.senderNoticeboardNavigate(from: self)
+
+    case menuName.PTM:
+    MenuRedirect.senderPtmNavigate(from: self)
+
+    case menuName.LeaveRequests:
+    MenuRedirect.senderStudentreportNavigate(from: self)
+
+    case menuName.Assignment:
+    MenuRedirect.senderAssignmentNavigate(from: self)
+
+    case menuName.OnlineMeeting:
+    MenuRedirect.senderOnlineNavigate(from: self)
+
+    case menuName.Homework:
+    MenuRedirect.senderHomeWorkNavigate(from: self)
+
+    case menuName.LessonPlan:
+    MenuRedirect.senderLessonplanNavigate(from: self)
+
+    case menuName.AbsenteesReport:
+    MenuRedirect.senderAbsenteesNavigate(from: self)
+
+    case menuName.FeePendingReport:
+    MenuRedirect.senderFeePendingNavigate(from: self)
+
+    case menuName.StudentReport:
+    MenuRedirect.senderStudentreportNavigate(from: self)
+
+    case menuName.VeryImportantInfo:
+    MenuRedirect.senderImportantInfoNavigate(from: self)
+
+    case menuName.SchoolStrength:
+    MenuRedirect.senderSchoolStrength(from: self)
+
+    case menuName.DailyCollection,
+    menuName.ScheduleExamTest,
+    menuName.MarkYourAttendance,
+    "":
+    // Do nothing for these cases
+    break
+
+    default:
+    // Handle unknown menu items if needed
+    break
+    }
+
+    }else{
+
+    let menuItem = MenuRedirect.items[indexPath.row]
+
+    switch menuItem {
+    case menuName.VideoUpload:
+    MenuRedirect.receiverVideoNavigate(from: self)
+
+    case menuName.Communication:
+    MenuRedirect.receiverCommunicationNavigate(from: self)
+
+    case menuName.ImagePdf:
+    MenuRedirect.receiverImgPdfNavigate(from: self)
+
+    case menuName.PTM:
+    MenuRedirect.receiverPtmNavigate(from: self)
+
+    case menuName.NoticeBoard,
+    menuName.Circulars:
+    MenuRedirect.receiverNoticeBoardNavigate(from: self)
+
+    case menuName.Assignment:
+    MenuRedirect.receiverAssignmentNavigate(from: self)
+
+    case menuName.ScheduleExamTest:
+    MenuRedirect.receiverExamTestNavigate(from: self)
+
+    case menuName.LSRW:
+    MenuRedirect.receiverLsrwNavigate(from: self)
+
+    case menuName.LessonPlan,
+    menuName.LeaveRequests:
+    // Do nothing for these cases
+    break
+
+    default:
+    // Handle unknown menu items if needed
+    break
+    }
+
+    }
+    }
+    }
+    }
+
+    @available(iOS 14.0, *)
+    extension ParentVC: UICollectionViewDelegateFlowLayout {
+
     // Set item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
@@ -413,7 +413,7 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
 
 
     @available(iOS 14.0, *)
-    extension HomePageVc: UISearchBarDelegate{
+    extension ParentVC: UISearchBarDelegate{
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
 

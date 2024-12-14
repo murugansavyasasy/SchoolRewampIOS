@@ -155,7 +155,17 @@
 
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 10
+        
+    if passedValue == 1 {
+            
+        return 0
+    }else{
+        
+        return 10
+        
+    }
+        
+   
     }
 
 
@@ -167,7 +177,7 @@
     let gradient = gradientcolour[indexPath.row % gradientcolour.count]
     let colour2 =  UIColor(named: gradient)
 
-    if ParentButton.tintColor == .white {
+    if passedValue  == 2 {
     let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.DemoTVCell, for: indexPath) as! DemoTVCell
 
     if let color1 = colour1, let color2 = colour2 {
