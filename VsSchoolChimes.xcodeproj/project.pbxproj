@@ -265,6 +265,8 @@
 		847AB6F42CF09A6800952AC1 /* SelectRecipientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6EC2CF09A6800952AC1 /* SelectRecipientVC.swift */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
+		8485B6DE2D0C489600C4C2B9 /* MarkAttendenceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8485B6DC2D0C489600C4C2B9 /* MarkAttendenceVC.swift */; };
+		8485B6DF2D0C489600C4C2B9 /* MarkAttendenceVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8485B6DD2D0C489600C4C2B9 /* MarkAttendenceVC.xib */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
 		848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */; };
 		848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */; };
@@ -746,6 +748,8 @@
 		847AB6ED2CF09A6800952AC1 /* SelectRecipientVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRecipientVC.xib; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
+		8485B6DC2D0C489600C4C2B9 /* MarkAttendenceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkAttendenceVC.swift; sourceTree = "<group>"; };
+		8485B6DD2D0C489600C4C2B9 /* MarkAttendenceVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkAttendenceVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
 		848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderImgPdfVC.swift; sourceTree = "<group>"; };
 		848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderImgPdfVC.xib; sourceTree = "<group>"; };
@@ -1781,6 +1785,15 @@
 			path = SelectRecipient;
 			sourceTree = "<group>";
 		};
+		8485B6DB2D0C485600C4C2B9 /* Mark Attendence */ = {
+			isa = PBXGroup;
+			children = (
+				8485B6DC2D0C489600C4C2B9 /* MarkAttendenceVC.swift */,
+				8485B6DD2D0C489600C4C2B9 /* MarkAttendenceVC.xib */,
+			);
+			path = "Mark Attendence";
+			sourceTree = "<group>";
+		};
 		848B94662CFD724800FFC5C2 /* ImagePdfVc */ = {
 			isa = PBXGroup;
 			children = (
@@ -2150,6 +2163,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				8485B6DB2D0C485600C4C2B9 /* Mark Attendence */,
 				18926AF22D02D460002BBB97 /* AbsenteesReport */,
 				18926B212D02D7AB002BBB97 /* LocationVc */,
 				18926CA92D0306CA002BBB97 /* PTMVc */,
@@ -2906,6 +2920,7 @@
 				84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */,
 				849F313B2D00613B00BACEC7 /* EventPageVC.xib in Resources */,
 				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
+				8485B6DF2D0C489600C4C2B9 /* MarkAttendenceVC.xib in Resources */,
 				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
@@ -3292,6 +3307,7 @@
 				84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */,
 				84C82A052D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
 				84C82A062D086A490024A46A /* SparkView.swift in Sources */,
+				8485B6DE2D0C489600C4C2B9 /* MarkAttendenceVC.swift in Sources */,
 				84C82A072D086A490024A46A /* SparkViewAnimator.swift in Sources */,
 				84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */,
 				84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */,

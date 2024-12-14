@@ -66,23 +66,24 @@ class LessonDetailsTVcell: UITableViewCell {
         progressLabel.setFont(style: .body, size: 10)
         completedLabel.setFont(style: .body, size: 10)
         
-        if let originalImage = UIImage(named: "completed") {
-                   let newSize = CGSize(width: 20, height: 20)
-                   
-                   // Call the resizing function
-                   if let resizedImage = originalImage.resizedimg(to: newSize) {
-                       // Set the resized image to the UIImageView
-                       completedIcon.image = resizedImage
-                       print("Image successfully resized")
-                   } else {
-                       print("Failed to resize the image.")
-                   }
-               } else {
-                   print("Image named 'completed' not found in assets.")
-               }
+//        if let originalImage = UIImage(named: "completed") {
+//                   let newSize = CGSize(width: 20, height: 20)
+//                   
+//                   // Call the resizing function
+//                   if let resizedImage = originalImage.resizedimg(to: newSize) {
+//                       // Set the resized image to the UIImageView
+//                       completedIcon.image = resizedImage
+//                       print("Image successfully resized")
+//                   } else {
+//                       print("Failed to resize the image.")
+//                   }
+//               } else {
+//                   print("Image named 'completed' not found in assets.")
+//               }
         
-        completedIcon.contentMode = .scaleAspectFit
-    
+//        completedIcon.contentMode = .scaleAspectFit
+//        completedIcon.clipsToBounds = true
+        
         startIcon.layer.cornerRadius = startIcon.frame.width/2
         progressIcon.layer.cornerRadius = progressIcon.frame.width/2
         completedIcon.layer.cornerRadius = completedIcon.frame.width/2

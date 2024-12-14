@@ -85,7 +85,7 @@ class SchoolStrengthVC: UIViewController {
         }
         
         // Enable value display and format as percentages
-        dataSet.drawValuesEnabled = true
+        dataSet.drawValuesEnabled = false
         dataSet.valueTextColor = .white // Customize text color
         dataSet.valueFont = UIFont.systemFont(ofSize: 14) // Customize text font
         
