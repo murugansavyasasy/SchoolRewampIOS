@@ -173,14 +173,14 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Progress" width="32" height="32"/>
-        <image name="Start" width="74" height="74"/>
-        <image name="completed" width="218.26600646972656" height="199.26699829101562"/>
+        <image name="Progress" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Start" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="completed" width="170.66667175292969" height="170.66667175292969"/>
         <namedColor name="lesson1">
             <color red="0.96470588235294119" green="0.92156862745098034" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

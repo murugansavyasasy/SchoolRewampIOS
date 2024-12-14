@@ -261,39 +261,55 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     
     
     
-    
+
+}
+
+
+
+
+/*
+ 
+ 
+ 
+ //MARK: Func 
+ 
+ 
+ 
+ //MARK: Func
+ 
+ 
 //    func dashBoardList(AcadmiYerId : Int!, instuteId : String!) {
-//        
+//
 //        print("homePagedashBoardList")
-//        
-//        
+//
+//
 //        let pending = pendingModal()
 //        pending.instituteId = instuteId
 //        pending.acadamicYearId = String(AcadmiYerId)
-//        
-//        
+//
+//
 //        let pendingStr = pending.toJSONString()
-//        
+//
 //        print("dashBoarddashBoard",pending.toJSON())
-//        
+//
 //        NewPendingReqs.call_request(param: pendingStr!) {
 //            [self]
 //            (res) in
-//            
-//            
+//
+//
 //            print("PendingReqsts",PendingReqsts.self)
-//            
-//            
+//
+//
 //            let pendingResponse : pendingResp = Mapper<pendingResp>().map(JSONString: res)!
-//            
-//            
-//            
+//
+//
+//
 //            if pendingResponse.Status == 1 {
-//                
+//
 //                pendingdata = pendingResponse.data
-//                
-//                
-//                
+//
+//
+//
 //                if pendingdata.count == 0 {
 //                    nodataLbl.isHidden = false
 //                    noRecordsView.isHidden = false
@@ -303,7 +319,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 //                    nodataLbl.isHidden = true
 //                    noRecordsView.isHidden = true
 //                }
-//                
+//
 //                tv.isHidden = false
 //                tv.dataSource = self
 //                tv.delegate = self
@@ -311,56 +327,56 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 //            }else{
 //                print("nodataLbl")
 //                tv.isHidden = true
-//                
+//
 //                nodataLbl.isHidden = false
-//                
+//
 //                noRecordsView.isHidden = false
 //                nodataLbl.text = "No Records"
-//                
-//                
+//
+//
 //            }
-//            
-//            
-//            
-//            
+//
+//
+//
+//
 //        }
-//        
-//        
-//        
+//
+//
+//
 //    }
-    
-    
+ 
+ 
 //    func SectionWise(AcadmiYerId : Int!, instuteId : String!) {
-//        
+//
 //        print("homePagedashBoardList")
-//        
-//        
+//
+//
 //        let pending = pendingModal()
 //        pending.instituteId = instuteId
 //        pending.acadamicYearId = String(AcadmiYerId)
-//        
-//        
+//
+//
 //        let pendingStr = pending.toJSONString()
-//        
+//
 //        print("dashBoarddashBoard",pending.toJSON())
-//        
+//
 //        classNewPendingReqs.call_request(param: pendingStr!) {
 //            [self]
 //            (res) in
-//            
-//            
+//
+//
 //            print("PendingReqsts",PendingReqsts.self)
-//            
-//            
+//
+//
 //            let pendingResponse : pendingResp = Mapper<pendingResp>().map(JSONString: res)!
-//            
-//            
-//            
+//
+//
+//
 //            if pendingResponse.Status == 1 {
-//                
+//
 //                pendingdata = pendingResponse.data
-//                
-//                
+//
+//
 //                if pendingdata.count == 0 {
 //                    nodataLbl.isHidden = false
 //                    noRecordsView.isHidden = false
@@ -378,124 +394,129 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 //                print("ttgtgtgtg")
 //                tv.isHidden = true
 //                nodataLbl.isHidden = false
-//                
+//
 //                noRecordsView.isHidden = false
 //                nodataLbl.text = "No Records"
-//                
-//                
-//                
+//
+//
+//
 //            }
-//            
-//            
-//            
-//            
+//
+//
+//
+//
 //        }
-//        
-//        
-//        
+//
+//
+//
 //    }
-    
-    
+ 
+ 
 //    func  AcdimyYear(){
-//        
-//        
+//
+//
 //        let param : [String : Any] =
-//        
-//        
-//        
+//
+//
+//
 //        [
-//            
+//
 //            "institute_id" : SchoolId
-//            
-//            
-//            
+//
+//
+//
 //        ]
-//        
-//        
-//        
-//        
-//        
-//        
-//        
+//
+//
+//
+//
+//
+//
+//
 //        print("param",param)
-//        
-//        
-//        
+//
+//
+//
 //        AcdmicYearRequest.call_request(param: param)  {
-//            
-//          
-//            
+//
+//
+//
 //            [self] (res) in
-//            
-//            
-//            
+//
+//
+//
 //            let acdmy : acidmicYrResponce = Mapper<acidmicYrResponce>().map(JSONString: res)!
-//            
-//            
-//            
-//            
+//
+//
+//
+//
 //            if acdmy.Status == 1{
-//                
+//
 //                for i in acdmy.data{
-//                    
-//                    
+//
+//
 //                    if i.currentAcademicYear == 1{
-//                        
+//
 //                        dropDownTextLbl.text = i.yearName
-//                        
-//                        
+//
+//
 //                        if  ClickId == "1"{
-//                            
+//
 //                            dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
 //                        }
 //                        else if ClickId == "2"{
-//                            
+//
 //                            SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
-//                            
-//                            
+//
+//
 //                        }
-//                        
-//                        
-//                        
-//                        
+//
+//
+//
+//
 //                        if let index = acdmy.data.firstIndex(where: { $0.currentAcademicYear == 1 }) {
 //                            // Remove the item from its current position
 //                            let item = acdmy.data.remove(at: index)
 //                            // Insert the item at the first position
 //                            acdmy.data.insert(item, at: 0)
-//                            
+//
 //                            acdmicYearRef = acdmy.data
 //                        }
-//                        
-//                        
-//                        
-//                        
-//                        
+//
+//
+//
+//
+//
 //                    }
-//                    
-//                    
-//                    
-//                    
+//
+//
+//
+//
 //                }
-//                
-//                
+//
+//
 //                for i in acdmicYearRef{
-//                    
+//
 //                    DropDownStr.append(i.yearName)
 //                }
-//                
-//                
+//
+//
 //            }
-//            
+//
 //            else {
-//                
-//                
-//                
-//                
+//
+//
+//
+//
 //            }
-//            
+//
 //        }
-//        
-//        
+//
+//
 //    }
-}
+ 
+ 
+ 
+ 
+ 
+ */

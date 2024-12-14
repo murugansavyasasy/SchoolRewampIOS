@@ -141,9 +141,11 @@ class LessonPlanTvCell: UITableViewCell {
 
        // Configure number formatter for percentage values
        let numberFormatter = NumberFormatter()
-       numberFormatter.numberStyle = .percent
-       numberFormatter.maximumFractionDigits = 1
-       numberFormatter.multiplier = 1
+           numberFormatter.numberStyle = .percent
+           numberFormatter.maximumFractionDigits = 1
+           numberFormatter.multiplier = 1
+           numberFormatter.positiveSuffix = " %" // Append % symbol
+
 
        // Set the value formatter
        dataSet.valueFormatter = DefaultValueFormatter(formatter: numberFormatter)
