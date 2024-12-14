@@ -25,235 +25,110 @@ class MenuRedirectHandler {
         
     }
     
-    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM", "Text to Parents/Staff","School / Class Events","School Needs","Very Important Info"
-                             
-                             ,"Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+    var items : [String] = [ "Communication".translated(),"Image/Pdf".translated(),"Video Upload".translated(),"Circulars".translated(),"Notice Board".translated(),"Leave Requests".translated(),"Assignment".translated(),"Online Meeting".translated(),"Homework".translated(),"Schedule Exam/Test".translated(),"Attendance marking".translated(),"Messages from management".translated(),"Interaction with student".translated(),"Lesson Plan".translated(),"PTM".translated(), "Text to Parents/Staff".translated(),"School / Class Events".translated(),"School Needs".translated(),"Very Important Info".translated(),"Absentees Report".translated(),"School strength".translated(),"Daily Collection".translated(),"Student Report".translated(),"Fee Pending Report".translated(),"Mark Your Attendance".translated(),"Staff Wise Attendance Report".translated()]
     
-    //
+    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Text to Parents/Staff","School / Class Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
-    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Text to Parents/Staff","School / Class Events","School Needs","Very Important Info"
-                                
-                                ,"Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+    var receiverItems : [String] = [ "Communication".translated(),"Homework".translated() ,"Exam/Test".translated(),"Exam Marks".translated(),"Image/Pdf".translated(),"Video Upload".translated(),"Circulars".translated(),"Notice Board".translated(),"Assignment".translated(),"Online Meeting".translated(),"Attendance Report".translated(),"Events/Holidays".translated(),"Request Leave".translated(),"Fee Details".translated(),"Images".translated(),"Interaction with Staff".translated(),"Quiz Exam".translated(),"LSRW".translated(),"Class Timetable".translated(),"Certificate Request".translated(),"PTM".translated()]
     
-    
-    var receiverItems : [String] = [ "Communication","Homework" ,"Exam/Test","Exam Marks","Image/Pdf","Video Upload","Circulars","Notice Board","Assignment","Online Meeting","Attendance Report"
-                                     
-                                     ,"Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
-    
-    
-    
-    var receiverImageItems : [String] = [ "Communication","Homework" ,"Exam/Test","Exam Marks","Image/Pdf","Video Upload","Circulars","Notice Board","Assignment","Online Meeting","Attendance Report"
-                                          
-                                          ,"Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
+    var receiverImageItems : [String] = [ "Communication","Homework" ,"Exam/Test","Exam Marks","Image/Pdf","Video Upload","Circulars","Notice Board","Assignment","Online Meeting","Attendance Report","Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
     
     
     func senderVideoNavigate(from viewController: UIViewController) {
-        
         let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
     }
+    
     func senderHomeWorkNavigate(from viewController: UIViewController) {
-        
         let vc = SenderSideHomeWorkViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
     }
+    
     func senderCommunicationNavigate(from viewController: UIViewController) {
-        
         let vc = ComunicationVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
         
     }
     
     func senderImgPDfNavigate(from viewController: UIViewController) {
-        
         let vc = SenderImgPdfVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
     func senderNoticeboardNavigate(from viewController: UIViewController) {
-        
-//        let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-//        
-//        vc.modalPresentationStyle = .fullScreen
-//        
-//        viewController.present(vc, animated: true)
-        
         let vc = EventPageVC(nibName: nil, bundle: nil)
-        
         vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        
         vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
-        
-        //        vc.titleLbl = items[indexPath.row].translated()
-        
+        vc.titleLbl = "Notice Board".translated()
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-
-        
     }
-    
-    
     
     func senderPtmNavigate(from viewController: UIViewController) {
-        
         let vc = StaffPtmViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
         
-        
-        
     }
-    
-    
-    
-    
     
     func senderEventNavigate(from viewController: UIViewController) {
-        
         let vc = EventPageVC(nibName: nil, bundle: nil)
-        
-        vc.page1 = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        
+        vc.page1 = EventsVC(nibName: nil, bundle: nil)
         vc.page2 = NoticeBoardVc(nibName: nil, bundle: nil)
-        
-        //        vc.titleLbl = items[indexPath.row].translated()
-        
+        vc.titleLbl = "Events".translated()
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
-    
-    
-    
-    
     
     func senderLeaveRequestNavigate(from viewController: UIViewController) {
-        
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
         
-        
-        
     }
-    
-    
-    
-    
     
     func senderAssignmentNavigate(from viewController: UIViewController) {
-        
         let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
+      
     }
     
-    
-    
-    
-    
     func senderOnlineNavigate(from viewController: UIViewController) {
-        
         let vc = OnlineMeetingVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
         
     }
     
     
     func senderLessonplanNavigate(from viewController: UIViewController) {
-        
         let vc = LessonPlanVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
     func senderStudentreportNavigate(from viewController: UIViewController) {
-        
         let vc = ReportStudentListVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
         
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
     
     func senderAbsenteesNavigate(from viewController: UIViewController) {
-        
         let vc = NewAbsenteesViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
-    
-    
-    
-    
-    
-    
     func senderFeePendingNavigate(from viewController: UIViewController) {
-        
         let vc = PendingFeeReportViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
         
     }
     func senderSchoolStrength(from viewController: UIViewController) {
@@ -292,166 +167,64 @@ class MenuRedirectHandler {
     
     
     func senderImportantInfoNavigate(from viewController: UIViewController) {
-        
         let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
-    
-    
-    
-    
-    
-    //
-    //        func senderNewDailyNavigate(from viewController: UIViewController) {
-    //
-    //        let vc = NewDailyCollectionViewController(nibName: nil, bundle: nil)
-    //
-    //        vc.modalPresentationStyle = .fullScreen
-    //
-    //            viewController.present(vc, animated: true)
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     func receiverVideoNavigate(from viewController: UIViewController) {
-        
         let vc = VideoVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
     func receiverCommunicationNavigate(from viewController: UIViewController) {
-        
         let vc = ComunicationVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
-    
-    
-    
-    
     
     func receiverImgPdfNavigate(from viewController: UIViewController) {
-        
         let vc = ImagePdfVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
     }
-    
-    
-    
-    
     
     func receiverPtmNavigate(from viewController: UIViewController) {
-        
         let vc = PTMViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
-    
-    
-    
-    
     
     @available(iOS 14.0, *)
     func receiverNoticeBoardNavigate(from viewController: UIViewController) {
-        
         let vc = SenderNoticeBoardVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
-    
-    
-    
-    
     func receiverAssignmentNavigate(from viewController: UIViewController) {
-        
         let vc = PageVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
     func receiverLeaveRequestNavigate(from viewController: UIViewController) {
-        
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
     
     func receiverExamTestNavigate(from viewController: UIViewController) {
-        
         let vc = ExamTmTblVCViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
     }
     
-    
-    
-    
-    
     func receiverLsrwNavigate(from viewController: UIViewController) {
-        
         let vc = LsrwListShowViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
-        
-        
     }
     
 }
