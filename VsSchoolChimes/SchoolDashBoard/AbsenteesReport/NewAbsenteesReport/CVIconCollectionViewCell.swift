@@ -9,7 +9,6 @@
 import UIKit
 
 class CVIconCollectionViewCell: UICollectionViewCell {
-    
     @IBOutlet weak var dateFulView: UIViewX!
     @IBOutlet weak var MnthLbl: UILabel!
     @IBOutlet weak var countView: UIView!
@@ -19,15 +18,11 @@ class CVIconCollectionViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            // Change the appearance of the cell when it's selected
             if isSelected {
-                //                    self.contentView.backgroundColor = .lightGray
-                
                 dateFulView.backgroundColor = .systemOrange
                 dayLbl.textColor = .white
                 dateLbl.textColor = .white
             } else {
-                // Change it back to the default color when it's deselected
                 self.dateFulView.backgroundColor = .white
                 dayLbl.textColor = .black
                 dateLbl.textColor = .black
@@ -37,7 +32,6 @@ class CVIconCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
 }
