@@ -1615,45 +1615,6 @@
 			path = LocationVc;
 			sourceTree = "<group>";
 		};
-		18D718CF2D0D479B00E9EDA3 /* ClassTvCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ClassTvCell;
-			sourceTree = "<group>";
-		};
-		18D718D02D0D479B00E9EDA3 /* CvIcon */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CvIcon;
-			sourceTree = "<group>";
-		};
-		18D718D12D0D479B00E9EDA3 /* SectionTvCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SectionTvCell;
-			path = ../../../SchoolChimesDeve/Nov26/SchoolChimesIOS/SectionTvCell;
-			sourceTree = "<group>";
-		};
-		18D718D22D0D479B00E9EDA3 /* StudentListApi */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = StudentListApi;
-			path = ../../../SchoolChimesDeve/Nov26/SchoolChimesIOS/StudentListApi;
-			sourceTree = "<group>";
-		};
-		18D718D32D0D479B00E9EDA3 /* SectionVc */ = {
-			isa = PBXGroup;
-			children = (
-				18D718D12D0D479B00E9EDA3 /* SectionTvCell */,
-				18D718D22D0D479B00E9EDA3 /* StudentListApi */,
-			);
-			path = SectionVc;
-			sourceTree = "<group>";
-		};
 		18D718D42D0D479B00E9EDA3 /* NewAbsenteesReport */ = {
 			isa = PBXGroup;
 			children = (
@@ -1673,9 +1634,6 @@
 				18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */,
 				18D718CD2D0D479B00E9EDA3 /* AbesentRequst.swift */,
 				18D718CE2D0D479B00E9EDA3 /* AbesentReportResp.swift */,
-				18D718CF2D0D479B00E9EDA3 /* ClassTvCell */,
-				18D718D02D0D479B00E9EDA3 /* CvIcon */,
-				18D718D32D0D479B00E9EDA3 /* SectionVc */,
 			);
 			path = NewAbsenteesReport;
 			sourceTree = "<group>";
