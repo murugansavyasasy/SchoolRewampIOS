@@ -22,7 +22,6 @@ class ImageShowVc: UIViewController {
     var pageName = ""
     var pdfUrl = ""
     var type = 0
-    var Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -98,7 +97,7 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
         
-        cell.imageView.sd_setImage(with: URL(string: imageURL[indexPath.row]), placeholderImage: Img.placeholder)
+        cell.imageView.sd_setImage(with: URL(string: imageURL[indexPath.row]), placeholderImage: ImageName.placeholder)
         //        cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
         
         return cell

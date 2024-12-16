@@ -9,7 +9,7 @@ import UIKit
 import Charts
 
 class SchoolStrengthVC: UIViewController {
-
+    
     @IBOutlet weak var TotalStrengthView: UIView!
     @IBOutlet weak var totalCountLbl: UILabel!
     @IBOutlet weak var staffCountLbl: UILabel!
@@ -22,9 +22,9 @@ class SchoolStrengthVC: UIViewController {
     var classes = ["9th Standard","10th Standard","12th Standard","11th Standard"]
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         TotalStrengthView.layer.cornerRadius = 10
-      
+        
         TotalStrengthView.layer.masksToBounds = false
         
         // Shadow to make it look "popped up"
@@ -36,7 +36,7 @@ class SchoolStrengthVC: UIViewController {
         // Optional: Add a border for a polished look
         TotalStrengthView.layer.borderColor = UIColor.lightGray.cgColor
         TotalStrengthView.layer.borderWidth = 0.5
-
+        
         // Background color for the card
         TotalStrengthView.backgroundColor = .white
         
@@ -45,14 +45,14 @@ class SchoolStrengthVC: UIViewController {
         totalCountLbl.setFont(style: .body, size: FontSize.BodySize)
         setupPieChart()
         setChartData()
-       
+        
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
         Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
         
         Tv.delegate = self
         Tv.dataSource = self
     }
-
+    
     
     @IBAction func BackbtnAct(_ sender: Any) {
         
@@ -80,10 +80,7 @@ class SchoolStrengthVC: UIViewController {
         let dataSet = PieChartDataSet(entries: entries, label: "")
         if #available(iOS 15.0, *) {
             dataSet.colors = [UIColor.systemMint,UIColor.systemRed]
-        } else {
-            // Fallback on earlier versions
         }
-        
         // Enable value display and format as percentages
         dataSet.drawValuesEnabled = false
         dataSet.valueTextColor = .white // Customize text color
@@ -94,7 +91,7 @@ class SchoolStrengthVC: UIViewController {
         numberFormatter.numberStyle = .percent
         numberFormatter.maximumFractionDigits = 1
         numberFormatter.multiplier = 1
-
+        
         // Set the value formatter
         dataSet.valueFormatter = DefaultValueFormatter(formatter: numberFormatter)
         
@@ -106,25 +103,14 @@ class SchoolStrengthVC: UIViewController {
         
         // Refresh chart
         pieChartView.notifyDataSetChanged()
-        
-//        Greenlabel.text = "Completed"
-//        redLabel.text = "Pending"
-        // displayPercentages(entries: entries)
     }
-    
-   
-
 }
 
-
-
 extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
-   
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isBarChartVisible.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Tv.dequeueReusableCell(withIdentifier: CellConfingName.StrengthTvCell, for: indexPath) as! StrengthTvCell
         cell.standardLbl.text = classes[indexPath.row]
@@ -134,7 +120,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             cell.barChartView.isHidden = false
             cell.barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
         } else {
-           
+            
             cell.barchartHeight.constant = 0
             cell.barChartView.isHidden = true
         }

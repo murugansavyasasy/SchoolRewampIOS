@@ -10,9 +10,6 @@ import Foundation
 import UIKit
 
 class ImageSelection:UIView{
-
-    
-    
     
     @IBOutlet weak var imageCollectionview: UICollectionView!
     

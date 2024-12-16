@@ -35,7 +35,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var scheduleClick = false
     let backgroundcolor = Colornames.topBackgroundCLr
     let tapColor = Colornames.topBackgroundCLr1
-    let Img = ImageName()
     
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
     @IBOutlet weak var TextMsgTitle: UILabel!
@@ -121,18 +120,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         
     }
-   
+    
     
     func StyleAndTranslater() {
         
         //MARK: Translate
-        fromDateLbl.text = "From Time".translated()
-        ScheduleLbl.text = "Schedule".translated()
-        ToDateLbl.text = "To Time".translated()
-        EnableCallLbl.text = "Emergency voice messages".translated()
-        clickVoiceLbl.text = "Voice Message".translated()
-        clickTextView.text = "Text Message".translated()
-        clickSchedule.text = "Schedule Call".translated()
+        fromDateLbl.text = CommonStringFile.FromTime
+        ScheduleLbl.text = CommonStringFile.Schedule
+        ToDateLbl.text = CommonStringFile.ToTime
+        EnableCallLbl.text = CommonStringFile.Emergencyvoicemessages
+        clickVoiceLbl.text = CommonStringFile.VoiceMessage
+        clickTextView.text = CommonStringFile.TextMessage
+        clickSchedule.text = CommonStringFile.ScheduleCall
         
         
         //MARK: Label font style
@@ -171,9 +170,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         scheduleBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TxtMsgSendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-
-
-       
+        
+        
+        
     }
     
     func uiUUpdate(){
@@ -186,7 +185,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         calanderOuter.layer.shadowRadius = 5
         calanderOuter.layer.shadowOpacity = 0.3
         DateSelection.appearance.weekdayTextColor = .red
-        TitleLbl.text = "Communication".translated()
+        TitleLbl.text = MenuStringFile.Communication
         DateSelection.appearance.todayColor = .orange
         DateSelection.appearance.eventDefaultColor = .purple
         DateSelection.allowsMultipleSelection = true
@@ -416,10 +415,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
                 dltbtn.isHidden = false
-                //                sendbtn.isEnabled = true
-                //                moveTextmessage.isHidden = true
                 recoderbtn.isEnabled = false
-                //                // Play audio
                 if let audioUrl = URL(string: AudioPlayUrl ?? "") {
                     playerItem = AVPlayerItem(url: audioUrl)
                     player = AVPlayer(playerItem: playerItem)
@@ -451,9 +447,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textmessageview.isHidden = true
         historyview.isHidden = true
         addfile.isHidden = false
-        tittlemessage.text = "Voice Message"
-        radio1.setImage(UIImage(systemName: "button.programmable"), for: .normal)
-        radio2.setImage(UIImage(systemName: "circle"), for: .normal)
+        tittlemessage.text = CommonStringFile.VoiceMessage
+//        radio1.setImage(UIImage(systemName: "button.programmable"), for: .normal)
+//        radio2.setImage(UIImage(systemName: "circle"), for: .normal)
         //        emengencyCall.isHidden = false
     }
     
@@ -478,7 +474,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         historyview.isHidden = true
         textmessageview.isHidden = false
         voiceview.isHidden = true
-        tittlemessage.text = "Text Message"
+        tittlemessage.text = CommonStringFile.TextMessage
         historytable.reloadData()
         scheduleBtn.backgroundColor = UIColor.white
         scheduleClick = true
@@ -491,7 +487,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func showHistoryView() {
         historyview.isHidden = false
         voiceview.isHidden = true
-        recrdimg.image = Img.mic1
+        recrdimg.image = ImageName.mic1
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
@@ -499,18 +495,17 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         deletRecoding()
         playerheight.constant = 0
         textmessageview.isHidden = true
-        radio1.setImage(Img.circle, for: .normal)
-        radio2.setImage(UIImage(systemName: "button.programmable"), for: .normal)
+        radio1.setImage(ImageName.circle, for: .normal)
         calanderOuter.isHidden = true
-        if tittlemessage.text == "Text Message"{
-            let title = "Back to Text Message"
+        if tittlemessage.text == CommonStringFile.TextMessage{
+            let title = CommonStringFile.BacktoTextMessage
             let attributedTitle = NSAttributedString(string: title, attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue
             ])
             
             historyBtn.setAttributedTitle(attributedTitle, for: .normal)
         }else{
-            let title = "Back to Voice Message"
+            let title = CommonStringFile.VoiceMessage
             let attributedTitle = NSAttributedString(string: title, attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue
             ])
@@ -544,7 +539,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     func stopRecording() {
-        recrdimg.image = Img.mic1
+        recrdimg.image = ImageName.mic1
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
@@ -615,7 +610,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @objc func playerDidFinishPlaying(sender: Notification) {
-        btnplay.setImage(Img.playbutton, for: .normal)
+        btnplay.setImage(ImageName.playbutton, for: .normal)
         player?.pause()
         updateTimer?.invalidate()
         audioRecorder?.updateMeters()
@@ -725,7 +720,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func backToHome(_ sender: UIButton) {
-        if tittlemessage.text == "Text Message"{
+        if tittlemessage.text == CommonStringFile.TextMessage{
             showTextMessageView()
             
         }else{
@@ -752,7 +747,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textmessageview.isHidden = true
         historyview.isHidden = true
         addfile.isHidden = false
-        tittlemessage.text = "Voice Message"
+        tittlemessage.text = CommonStringFile.VoiceMessage
         clickVoiceLbl.textColor = .white
         clickTextView.textColor = .black
         clickSchedule.textColor = .black
@@ -820,7 +815,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         historytable.reloadData()
         textBtn.backgroundColor = UIColor.white
         voiceBtn.backgroundColor = UIColor.white
-        tittlemessage.text = "Schedule Call"
+        tittlemessage.text = CommonStringFile.ScheduleCall
         clickVoiceLbl.textColor = .black
         clickTextView.textColor = .black
         clickSchedule.textColor = .white
@@ -879,18 +874,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying(sender:)),
                                                name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                object: player!.currentItem)
-        
-        
         if playVoicce == true{
             player?.pause()
             playVoicce = false
-            btnplay.setImage(Img.playbutton, for: .normal)
+            btnplay.setImage(ImageName.playbutton, for: .normal)
         }else{
             
             player?.volume = 1
             player?.play()
             playVoicce = true
-            btnplay.setImage(Img.pausebutton, for: .normal)
+            btnplay.setImage(ImageName.pausebutton, for: .normal)
             updateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
         }
         
@@ -909,7 +902,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tittlemessage.text == "Text Message"{
+        if tittlemessage.text == CommonStringFile.TextMessage{
             
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
             
@@ -927,7 +920,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             
             cell.playBtn.tag = indexPath.row
             
-            let image = playIndex == indexPath.row ? Img.pausebutton: Img.playbutton
+            let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
             // Update play state
             let isPlaying = (playIndex == indexPath.row)
             //        var urls = URL(string: AudioPlayUrl)
@@ -965,9 +958,8 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
         // If expanded, show full text with "See less"
         if expanded {
-            let fullString = fullDescription + " See less"
+            let fullString = fullDescription + CommonStringFile.seeLess
             let attributedText = NSMutableAttributedString(string: fullString)
-            
             // Set "See less" text to blue and underline it
             let seeLessRange = (fullString as NSString).range(of: "See less")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
@@ -978,7 +970,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             // Otherwise, truncate and show "See more"
             if fullDescription.count > 120{
                 let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + " See more"
+                fullString = truncatedDescription + CommonStringFile.seemore
             }else{
                 fullString = fullDescription
             }
@@ -1064,11 +1056,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             calendar.deselect(date)
             
             let alert = UIAlertController(
-                title: "Invalid Selection",
-                message: "You can only select dates within the currently displayed month.",
+                title: AlertstringFile.invalidSelection,
+                message: AlertstringFile.selectDatesWithinMonth,
                 preferredStyle: .alert
             )
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
             self.present(alert, animated: true, completion: nil)
             return
         }
@@ -1083,11 +1075,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             calendar.deselect(date)
             
             let alert = UIAlertController(
-                title: "Limit Reached",
-                message: "You can only select up to 6 dates. Please deselect a date to select a new one.",
+                title: "",
+                message: AlertstringFile.Already_Reach_Your_Limit,
                 preferredStyle: .alert
             )
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
             self.present(alert, animated: true, completion: nil)
         }
         

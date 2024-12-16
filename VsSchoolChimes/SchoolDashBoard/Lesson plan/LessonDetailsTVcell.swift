@@ -8,7 +8,7 @@
 import UIKit
 
 class LessonDetailsTVcell: UITableViewCell {
-
+    
     @IBOutlet weak var barwidth: NSLayoutConstraint!
     @IBOutlet weak var progressview: UIView!
     @IBOutlet weak var Cellview: UIView!
@@ -25,24 +25,18 @@ class LessonDetailsTVcell: UITableViewCell {
     
     @IBOutlet weak var progressLine1WidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var progressbar2: UIView!
-   
-       @IBOutlet weak var startIcon: UIImageView!
-       @IBOutlet weak var progressIcon: UIImageView!
-       @IBOutlet weak var completedIcon: UIImageView!
-       @IBOutlet weak var startLabel: UILabel!
-       @IBOutlet weak var progressLabel: UILabel!
-       @IBOutlet weak var completedLabel: UILabel!
-    let Img = ImageName()
+    
+    @IBOutlet weak var startIcon: UIImageView!
+    @IBOutlet weak var progressIcon: UIImageView!
+    @IBOutlet weak var completedIcon: UIImageView!
+    @IBOutlet weak var startLabel: UILabel!
+    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var completedLabel: UILabel!
     var animated = false
     private let fireworkController = ClassicFireworkController()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        
-       // setupBookAppearance()
-       // barwidth.constant = 0
-        // Initialization code
         Cellview.layer.cornerRadius = 12.0
         Cellview.layer.masksToBounds = false
         
@@ -56,7 +50,6 @@ class LessonDetailsTVcell: UITableViewCell {
         Cellview.layer.borderColor = UIColor.lightGray.cgColor
         Cellview.layer.borderWidth = 0.5
         // Background color for the card
-      //  Cellview.backgroundColor = .white
         
         TopicLabel.setFont(style: .title, size: FontSize.TitleSize)
         DateLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -66,66 +59,57 @@ class LessonDetailsTVcell: UITableViewCell {
         progressLabel.setFont(style: .body, size: 10)
         completedLabel.setFont(style: .body, size: 10)
         
-        if let originalImage = Img.completed {
-                   let newSize = CGSize(width: 20, height: 20)
-                   
-                   // Call the resizing function
-                   if let resizedImage = originalImage.resizedimg(to: newSize) {
-                       // Set the resized image to the UIImageView
-                       completedIcon.image = resizedImage
-                       print("Image successfully resized")
-                   } else {
-                       print("Failed to resize the image.")
-                   }
-               } else {
-                   print("Image named 'completed' not found in assets.")
-               }
+        if let originalImage = ImageName.completed {
+            let newSize = CGSize(width: 20, height: 20)
+            
+            // Call the resizing function
+            if let resizedImage = originalImage.resizedimg(to: newSize) {
+                // Set the resized image to the UIImageView
+                completedIcon.image = resizedImage
+                print("Image successfully resized")
+            } else {
+                print("Failed to resize the image.")
+            }
+        } else {
+            print("Image named 'completed' not found in assets.")
+        }
         
         completedIcon.contentMode = .scaleAspectFit
-    
+        
         startIcon.layer.cornerRadius = startIcon.frame.width/2
         progressIcon.layer.cornerRadius = progressIcon.frame.width/2
         completedIcon.layer.cornerRadius = completedIcon.frame.width/2
-           startIcon.tintColor = .lightGray
-           progressIcon.tintColor = .lightGray
-           completedIcon.tintColor = .lightGray
-           
-           // Initial setup for labels
-//           startLabel.textColor = .lightGray
-//           progressLabel.textColor = .lightGray
-//           completedLabel.textColor = .lightGray
-           // Reset progress line widths
-           progressLine1WidthConstraint.constant = 0
-           progressLine2WidthConstraint.constant = 0
-           
-           // Optional: Customize the appearance of progress lines
+        startIcon.tintColor = .lightGray
+        progressIcon.tintColor = .lightGray
+        completedIcon.tintColor = .lightGray
+        
+        progressLine1WidthConstraint.constant = 0
+        progressLine2WidthConstraint.constant = 0
+        
+        // Optional: Customize the appearance of progress lines
         progressBar.backgroundColor = .systemGreen
         progressbar2.backgroundColor = .systemGreen
-           
-           // Layout adjustments if needed
-           self.layoutIfNeeded()
+        
+        // Layout adjustments if needed
+        self.layoutIfNeeded()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     private func checkSolution(selection: Int, correct: Int, imageView: UIImageView) {
         guard selection == correct else { return }
-
+        
         // Assuming fireworkController is set up to work with UIImageView as well.
         self.fireworkController.addFireworks(count: 5, sparks: 8, around: imageView)
     }
     
     override func prepareForReuse() {
-           super.prepareForReuse()
-//           progressLine1WidthConstraint.constant = 0
-//           progressLine2WidthConstraint.constant = 0
-//           resetIconsAndLabels()
-           //animated = false
-       }
-       
+        super.prepareForReuse()
+    }
+    
     
     func startProgressAnimation() {
         
@@ -158,55 +142,42 @@ class LessonDetailsTVcell: UITableViewCell {
                     self.completedIcon.tintColor = .systemGreen
                     self.completedLabel.textColor = .black
                     self.checkSolution(selection: 0, correct: 0, imageView: completedIcon)
-
+                    
                     // The print statement and animation code remain unchanged.
-                    print("imgTapped")
                     UIView.animate(withDuration: 0.5, animations: {
                         imageView!.transform = CGAffineTransform.identity
-                        }, completion: nil)
-
+                    }, completion: nil)
+                    
                 }
             }
             
         }
     }
+    
+    
+    // Reset icons and labels to default state
+    private func resetIconsAndLabels() {
+        startIcon.tintColor = .lightGray
+        progressIcon.tintColor = .lightGray
+        completedIcon.tintColor = .lightGray
+    }
 
-       
-       // Reset icons and labels to default state
-       private func resetIconsAndLabels() {
-           startIcon.tintColor = .lightGray
-           progressIcon.tintColor = .lightGray
-           completedIcon.tintColor = .lightGray
-//           startLabel.textColor = .lightGray
-//           progressLabel.textColor = .lightGray
-//           completedLabel.textColor = .lightGray
-       }
-    
-   // func startProgressAnimation(duration: TimeInterval) {
-   //            // Animate the width of the progressBar
-   //       // barwidth.constant = self.contentView.frame.size.width/2 - 50
-   //        self.barwidth.constant = 80
-   //            UIView.animate(withDuration: duration) {
-   //                self.contentView.layoutIfNeeded()
-   //            }
-   //        }
-    
     private func setupBookAppearance() {
-           // Add rounded corners
-           self.layer.cornerRadius = 10
-           self.layer.masksToBounds = true
-           
-           // Add a border to mimic book edges
-           self.layer.borderColor = UIColor.lightGray.cgColor
-           self.layer.borderWidth = 1
-           
-           // Add a shadow for depth
-           self.layer.shadowColor = UIColor.black.cgColor
-           self.layer.shadowOffset = CGSize(width: 2, height: 2)
-           self.layer.shadowOpacity = 0.3
-           self.layer.shadowRadius = 4
-       }
-
+        // Add rounded corners
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+        
+        // Add a border to mimic book edges
+        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderWidth = 1
+        
+        // Add a shadow for depth
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOffset = CGSize(width: 2, height: 2)
+        self.layer.shadowOpacity = 0.3
+        self.layer.shadowRadius = 4
+    }
+    
 }
 
 // UIImage extension for resizing

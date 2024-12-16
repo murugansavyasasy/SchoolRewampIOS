@@ -13,20 +13,9 @@ class HelpVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        HelppageHeader.text = "Contact Support".translated()
+        HelppageHeader.text = CommonStringFile.ContactSupport
         HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize)
         // Do any additional setup after loading the view.
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

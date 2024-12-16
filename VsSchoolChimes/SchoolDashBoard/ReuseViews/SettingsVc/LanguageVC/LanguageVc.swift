@@ -29,7 +29,6 @@ class LanguageVc: UIViewController {
     var Language = ["English","தமிழ்","हिंदी","ไทย"]
     var  Buttontext = ["Confirm","உறுதிப்படுத்தவும்","पुष्टि करें","ยืนยัน"]
     var index = 0
-    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,12 +110,12 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
             ConfirmBtn.setTitle(Buttontext[index], for: .normal)
             ConfirmBtn.titleLabel?.textAlignment = .center
             ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-            cell.RadioImage.image = Img.checkedTick
+            cell.RadioImage.image = ImageName.checkedTick
             cell.LangIconImg.tintColor = .systemOrange
             
         }else{
             
-            cell.RadioImage.image = Img.CheckCircle
+            cell.RadioImage.image = ImageName.CheckCircle
             cell.LangIconImg.tintColor = .lightGray
         }
         

@@ -8,7 +8,7 @@
 import UIKit
 
 class LessonPlanVC: UIViewController {
-
+    
     @IBOutlet weak var FilterImgview: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var viewBtn: UIButton!
@@ -26,66 +26,45 @@ class LessonPlanVC: UIViewController {
         ButtonStackview.layer.cornerRadius = 20
         createBtn.layer.cornerRadius = 20
         viewBtn.layer.cornerRadius = 20
-        
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
-//        
         let nib1 = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
         tableview.register(nib1, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
-        
-        
         let nib = UINib(nibName: CellConfingName.LessonDetailsTVcell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonDetailsTVcell)
-//        tableview.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         tableview.delegate = self
         tableview.dataSource = self
-        
-        
-
-       
     }
     
     func gradientcolours(button : UIButton,colours : [CGColor]){
-        
-        
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-               
-               // Create and configure the gradient layer
-               let gradientLayer = CAGradientLayer()
+        // Create and configure the gradient layer
+        let gradientLayer = CAGradientLayer()
         gradientLayer.colors = colours
-               gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-               gradientLayer.frame = button.bounds
-               gradientLayer.cornerRadius = button.layer.cornerRadius
-               
-               // Insert the gradient layer into the button's layer
-               button.layer.insertSublayer(gradientLayer, at: 0)
+        gradientLayer.frame = button.bounds
+        gradientLayer.cornerRadius = button.layer.cornerRadius
+        // Insert the gradient layer into the button's layer
+        button.layer.insertSublayer(gradientLayer, at: 0)
         
     }
     
     @IBAction func createBtnAct(_ sender: Any) {
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
-        
         gradientcolours(button: viewBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         viewBtn.setTitleColor(UIColor.black, for: .normal)
-        
-       
     }
     
     @IBAction func viewBtnAct(_ sender: Any) {
-        
         gradientcolours(button: viewBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         viewBtn.setTitleColor(UIColor.white, for: .normal)
-        
         gradientcolours(button: createBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         createBtn.setTitleColor(UIColor.black, for: .normal)
-       
-       
     }
     
     @IBAction func BackBtnAct(_ sender: Any) {
-        
         if id == 1{
             id = 0
             tableview.reloadData()
@@ -93,31 +72,19 @@ class LessonPlanVC: UIViewController {
             dismiss(animated: true)
         }
     }
-    
-   
 }
 
 
 extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         if  id == 0{
-            
             return  6
-            
         }else{
-            
             return  4
-            
         }
-                
-       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
         if  id == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTvCell, for: indexPath) as! LessonPlanTvCell
             cell.getvalue(a: Int(complete[indexPath.row]), b: Int(pending[indexPath.row]))
@@ -129,44 +96,29 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
             cell.navigateview.isUserInteractionEnabled = true
             return cell
             
-        }
-        
-        else{
-            
+        }else{
             let colour = cellcolour[indexPath.row % cellcolour.count]
-                    let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDetailsTVcell, for: indexPath) as! LessonDetailsTVcell
-                    //cell.startProgressAnimation(duration: 9.0)
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDetailsTVcell, for: indexPath) as! LessonDetailsTVcell
+            //cell.startProgressAnimation(duration: 9.0)
             cell.Cellview.backgroundColor = colour
-                    cell.startProgressAnimation()
-                  
-                 return cell
+            cell.startProgressAnimation()
+            return cell
         }
-
-       
     }
     
     @IBAction func ViewbtnAct() {
-        
         id = 1
-        
-        
         tableview.reloadData()
-        
-        
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if id == 0{
             let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
             
-             cell.animatePopUpEffect()
+            cell.animatePopUpEffect()
         }
     }
-
-    
-    
 }

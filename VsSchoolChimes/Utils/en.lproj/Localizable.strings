@@ -185,6 +185,13 @@
 "Filter" = "Filter";
 "Present" = "Present";
 "Absent" = "Absent";
+"RollNo_ASC" = "Roll Number Ascending";
+"RollNo_DESC" = "Roll Number Descending";
+"Name_ASC" = "Name Ascending";
+"Name_DESC" = "Name Descending";
+"getAllStudent" = "Get All Students";
+"completed" = "Completed";
+"pending" = "Pending";
 
 //MARK: Event
 "Circulars" = "Circulars";
@@ -207,8 +214,12 @@
 "EnterTextHere" = "Enter your Text here...";
 "egYogaEvent" = "eg. Yoga event";
 "egChennai" = "eg. Chennai";
-
-
+//MARK: Comunication
+"BackToTextMessage" = "Back to Text Message";
+"BackToVoiceMessage" = "Back to Voice Message";
+"selectedText" = "Selected Text";
+"invalidSelection" = "Invalid Selection";
+"selectDatesWithinMonth" = "You can only select dates within the currently displayed month.";
 
 
 

@@ -51,7 +51,6 @@ class PreviewLsrwViewController: UIViewController,AVAudioRecorderDelegate, AVAud
     var player: AVPlayer?
     var AudioPlayUrl : String!
     var audioRecorder    : AVAudioRecorder!
-    var Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -227,7 +226,7 @@ func loadPDF(from url: URL) {
 
             
 
-            PlayVocieButton.setImage(Img.PlayIcon, for: .normal)
+            PlayVocieButton.setImage(ImageName.PlayIcon, for: .normal)
 
             
 
@@ -253,7 +252,7 @@ func loadPDF(from url: URL) {
 
             player?.play()
 
-            PlayVocieButton.setImage(Img.PauseIcon, for: .normal)
+            PlayVocieButton.setImage(ImageName.PauseIcon, for: .normal)
 
             
 

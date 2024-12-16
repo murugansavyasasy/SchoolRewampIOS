@@ -39,7 +39,7 @@ class MenuStringFile{
   
     
     
-    let Communication = "Communication".translated()
+    static let Communication = "Communication".translated()
     let ImagePdf = "Image/Pdf".translated()
     let VideoUpload = "Video Upload".translated()
     let Circulars = "Circulars".translated()
@@ -106,6 +106,9 @@ class AlertstringFile{
     static let Please_choose_video = "Please choose a Video".translated()
     static let Fill_All_Required_Fields = "Fill All Required Fields".translated()
     
+    static let invalidSelection = "invalidSelection".translated()
+    static let selectDatesWithinMonth = "selectDatesWithinMonth".translated()
+    
     
 }
 struct MenuTapbar{
@@ -134,29 +137,69 @@ struct SettingStringFile{
     let sendFeedback = "Send Feedback".translated()
     let logout = "Logout".translated()
     
+    
 }
 
 class CommonStringFile{
- 
-static let Search = "Search".translated()
-static let seeLess = " See less".translated()
-static let seemore = " See more".translated()
-
-let RollNo = "RollNo".translated()
-let Name = "Name".translated()
-let Status = "Status".translated()
-let Section = "Section".translated()
-let UploadAttachment = "Upload Attachment".translated()
-let UploadImagepdf = "Upload Image/Pdf".translated()
-let Description = "Description".translated()
-let FromTime = "From Time".translated()
-let Schedule = "Schedule".translated()
-let ToTime = "To Time".translated()
-let Emergencyvoicemessages = "Emergency voice messages".translated()
-let VoiceMessage = "Voice Message".translated()
-let TextMessage = "Text Message".translated()
-let ScheduleCall = "Schedule Call".translated()
-let EnterTextHere = "EnterTextHere".translated()
+    
+    static let Search = "Search".translated()
+    static let seeLess = " See less".translated()
+    static let seemore = " See more".translated()
+    static let selectedText = " selectedText".translated()
+    static let RollNoASC = "RollNo_ASC".translated()
+    static let RollNoDESC = "RollNo_DESC".translated()
+    static let NameASC = "Name_ASC".translated()
+    static let NameDESC = "Name_DESC".translated()
+    static let Present = "Present".translated()
+    static let Absent = "Absent".translated()
+    static let getAllStudent = "getAllStudent".translated()
+    static let Logout = "Logout".translated()
+    
+    static let RollNo = "RollNo".translated()
+    static let Name = "Name".translated()
+    static let Status = "Status".translated()
+    static let Section = "Section".translated()
+    static let Standard = "Standard".translated()
+    static let Filter = "Filter".translated()
+    static let UploadAttachment = "Upload Attachment".translated()
+    static let UploadImagepdf = "Upload Image/Pdf".translated()
+    static let Description = "Description".translated()
+    static let Groups = "Groups".translated()
+    static let Sectionorstudent = "Section or student".translated()
+    static let Standardorsection = "Standard or section".translated()
+    static let FromTime = "From Time".translated()
+    static let Schedule = "Schedule".translated()
+    static let ToTime = "To Time".translated()
+    static let Emergencyvoicemessages = "Emergency voice messages".translated()
+    static let VoiceMessage = "Voice Message".translated()
+    static let TextMessage = "Text Message".translated()
+    static let ScheduleCall = "Schedule Call".translated()
+    static let EnterTextHere = "EnterTextHere".translated()
+    static let BacktoTextMessage = "BackToTextMessage".translated()
+    static let BackToVoiceMessage = "BackToVoiceMessage".translated()
+    static let Venue = "Venue".translated()
+    static let AddPhotos = "AddPhotos".translated()
+    static let EventDetails = "EventDetails".translated()
+    static let EventTitle = "EventTitle".translated()
+    static let Optional = "Optional".translated()
+    static let AddPhotos1 = "AddPhotos1".translated()
+    static let egChennai = "egChennai".translated()
+    static let egYogaEvent = "egYogaEvent".translated()
+    static let completed = "completed".translated()
+    static let pending = "pending".translated()
+    static let Enterbugs = "Enter bugs".translated()
+    static let Profile = "Profile".translated()
+    static let AboutStudent = "About Student".translated()
+    static let Contactdetails = "Contact details".translated()
+    static let Registernumber = "Register number".translated()
+    static let FamilyDetails = "Family Details".translated()
+    static let Fathername = "Fathername".translated()
+    static let Fatheroccupation = "Father occupation".translated()
+    static let Mothername = "Mothername".translated()
+    static let Motheroccupation = "Mother occupation".translated()
+    static let SecondaryPhoneno = "Secondary Phone no".translated()
+    static let ContactSupport = "Contact Support".translated()
+    static let TermsandConditions = "Terms and Conditions".translated()
 }
 
 

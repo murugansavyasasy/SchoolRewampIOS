@@ -16,13 +16,6 @@ class ContactUsTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        cellview.layer.shadowColor = UIColor.white.cgColor
-//        cellview.layer.shadowOpacity =  10
-//        cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        cellview.layer.shadowRadius = 3
-//        cellview.layer.masksToBounds = true
-//        cellview.layer.cornerRadius = 5
-        
         cellview.layer.cornerRadius = Colornames.CORadius10
         //cellview.layer.masksToBounds = true
         cellview.layer.shadowColor = UIColor.black.cgColor
@@ -78,45 +71,7 @@ class ContactUsTVCell: UITableViewCell {
     @IBAction func ConnectEmail(){
         
         if let email = mailOrPhoneLabel.text, !email.isEmpty {
-//            // Check if Gmail app is installed
-//            if let gmailURL = URL(string: "googlegmail://co?to=\(email)") {
-//                // Encode the email to be URL-safe
-//                if let encodedEmail = email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-//                   let encodedURL = URL(string: "googlegmail://co?to=\(encodedEmail)") {
-//                    if UIApplication.shared.canOpenURL(encodedURL) {
-//                        UIApplication.shared.open(encodedURL)
-//                        return
-//                    }
-//                }
-//            }
-            
-           
-//
-//            if let gmailURL = URL(string: "googlegmail://") {
-//                        // If the Gmail app is installed, open it
-//                        if UIApplication.shared.canOpenURL(gmailURL) {
-//                            UIApplication.shared.open(gmailURL)
-//                        } else {
-//                            // If Gmail app is not installed, open in Safari
-//                            if let webURL = URL(string: "https://mail.google.com/") {
-//                              UIApplication.shared.open(webURL)
-//                            }
-//                            print("can't open Gmail")
-//                        }
-//                    }
-            
-//            if let email = mailOrPhoneLabel.text, !email.isEmpty {
-//                // Create the "mailto" URL to launch the email client
-//                if let url = URL(string: "mailto:\(email)") {
-//                    // Check if the device can open the email client
-//                    if UIApplication.shared.canOpenURL(url) {
-//                        UIApplication.shared.open(url)
-//                    } else {
-//                        // If the email client can't be opened, show an error message
-//                        print("Unable to open email client.")
-//                    }
-//                }
-//            }
+
         }
     }
     

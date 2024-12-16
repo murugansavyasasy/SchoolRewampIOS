@@ -104,7 +104,6 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     var imageLimit : Int!
     var restrictionRowNib = "RestrictionTableViewCell"
     var strTextViewPlaceholder = String()
-    var Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
@@ -214,7 +213,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 imageOverAllView.isHidden = false
                 addBtn.setTitle("Add File Attachments", for: .normal)
                 addAttachTop.constant = -150
-                uploadFileImg.image = Img.ImageIcon
+                uploadFileImg.image = ImageName.ImageIcon
                 changeImgView.isHidden = false
                 
                 
@@ -229,7 +228,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 imageOverAllView.isHidden = false
                 addAttachTop.constant = -180
                 addBtn.setTitle("Add File Attachments", for: .normal)
-                uploadFileImg.image = Img.ImageIcon
+                uploadFileImg.image = ImageName.ImageIcon
                 changeImgView.isHidden = false
 
                 
@@ -258,7 +257,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 uploadFileLbl.text = "Upload Video"
                 addAttachTop.constant = -150
                 addBtn.setTitle("Add File Attachments", for: .normal)
-                uploadFileImg.image = Img.p23
+                uploadFileImg.image = ImageName.p23
                 changeImgView.isHidden = false
                 imageOverAllView.isHidden = false
 
@@ -1060,7 +1059,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                 finishAudioRecording(success: true)
 
-                self.voiceRecordBtn.setImage(Img.VocieRecord, for: UIControl.State.normal)
+                self.voiceRecordBtn.setImage(ImageName.VocieRecord, for: UIControl.State.normal)
 
                 isRecording = false
 
@@ -1097,7 +1096,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                     meterTimer = Timer.scheduledTimer(timeInterval: 0.1, target:self, selector:#selector(self.updateAudioMeter(timer:)), userInfo:nil, repeats:true)
 
-                    self.voiceRecordBtn.setImage(Img.VoiceRecordSelect, for: UIControl.State.normal)
+                    self.voiceRecordBtn.setImage(ImageName.VoiceRecordSelect, for: UIControl.State.normal)
 
 
                     isRecording = true
@@ -1274,7 +1273,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
 //                Awws3Voice(URLPath:  Audiopath)
 
-                self.voiceRecordBtn.setImage(Img.VocieRecord, for: UIControl.State.normal)
+                self.voiceRecordBtn.setImage(ImageName.VocieRecord, for: UIControl.State.normal)
 
          
 
@@ -1490,7 +1489,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         func funcStopRecording(){
 
    
-            self.voiceRecordBtn.setImage(Img.VocieRecord, for: UIControl.State.normal)
+            self.voiceRecordBtn.setImage(ImageName.VocieRecord, for: UIControl.State.normal)
 
             self.finishRecording(success: true)
 
@@ -1550,7 +1549,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                 player?.pause()
 
-                PlayVocieButton.setImage(Img.PlayIcon, for: .normal)
+                PlayVocieButton.setImage(ImageName.PlayIcon, for: .normal)
 
             }else{
 
@@ -1568,7 +1567,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                 player?.play()
 
-                PlayVocieButton.setImage(Img.PauseIcon, for: .normal)
+                PlayVocieButton.setImage(ImageName.PauseIcon, for: .normal)
 
                 print("enddddd")
 
@@ -1638,7 +1637,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             PlayVocieButton.isSelected = false
 
             playerItem?.seek(to: CMTime.zero)
-            PlayVocieButton.setImage(Img.PlayIcon, for: .normal)
+            PlayVocieButton.setImage(ImageName.PlayIcon, for: .normal)
 
         }
     
@@ -1753,15 +1752,15 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             // Update the cell's image based on type
             switch currentType {
             case "IMAGE":
-                cell.img.image = Img.ImageIcon
+                cell.img.image = ImageName.ImageIcon
             case "TEXT":
-                cell.img.image = Img.TextIcon
+                cell.img.image = ImageName.TextIcon
             case "VIDEO":
-                cell.img.image = Img.p23
+                cell.img.image = ImageName.p23
             case "PDF":
-                cell.img.image = Img.pdfImage
+                cell.img.image = ImageName.pdfImage
             case "VOICE":
-                cell.img.image = Img.p1
+                cell.img.image = ImageName.p1
             default:
                 cell.img.image = nil // Fallback image or nil
             }

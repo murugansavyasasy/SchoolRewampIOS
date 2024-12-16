@@ -16,7 +16,7 @@ class TermsAndCondVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HeadingLabel.text = "Terms and Conditions".translated()
+        HeadingLabel.text = CommonStringFile.TermsandConditions
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
 
         if let pdfURL = URL(string: "https://schoolchimes.com/vs_web/terms_conditions/") {
@@ -24,17 +24,11 @@ class TermsAndCondVC: UIViewController {
              Pdfview.load(request)
             
           }
-            else {
-              print("Invalid URL")
-          }
-
-        
     }
     
         @IBAction func BackAct(_ sender: Any) {
             
             dismiss(animated: true)
-            
         }
     
     

@@ -48,15 +48,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [Student]?
-    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
-        rollNoLbl.text = "RollNo".translated()
-        nameLbl.text = "Name".translated()
-        statusLbl.text = "Status".translated()
-        HeaderLabel.text = "Section".translated()
-        search.placeholder = "Search".translated()
-        filterBtn.setTitle("Filter".translated(), for: .normal)
+        rollNoLbl.text = CommonStringFile.RollNo
+        nameLbl.text = CommonStringFile.Name
+        statusLbl.text = CommonStringFile.Status
+        HeaderLabel.text = CommonStringFile.Section
+        search.placeholder = CommonStringFile.Search
+        filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
         rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -74,35 +73,34 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
     }
     @IBAction func fliter(_ sender: UIButton) {
-        dropDown.dataSource = ["RollNo DESC","RollNo ASC","Name ASC","Name DESC", "Apsent", "Present"]
+        dropDown.dataSource = [CommonStringFile.RollNoDESC,CommonStringFile.RollNoASC,CommonStringFile.NameASC,CommonStringFile.NameDESC, CommonStringFile.Absent,CommonStringFile.Present]
         dropDown.bottomOffset = CGPoint(x: -90, y: (filterBtn.bounds.height - 110))
         
         dropDown.direction = .bottom
         
         dropDown.show()
         dropDown.selectionAction = { [self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
             self.filterBtn.setTitle(item, for: .normal)
             
             switch item{
-            case "RollNo ASC":
+            case CommonStringFile.RollNoASC:
                 let sortedByRollNumber = studentData.sorted { $0.rollnumber < $1.rollnumber }
                 filterData = sortedByRollNumber
-            case "RollNo DESC":
+            case CommonStringFile.RollNoDESC:
                 let sortedByName = studentData.sorted { $0.rollnumber > $1.rollnumber }
                 filterData = sortedByName
-            case "Name ASC":
+            case CommonStringFile.NameASC:
                 let sortedByName = studentData.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
                 filterData = sortedByName
-            case "Name DESC":
+            case CommonStringFile.NameDESC:
                 let sortedByName = studentData.sorted { $0.name > $1.name }
                 filterData = sortedByName
-            case "Apsent":
+            case CommonStringFile.Absent:
                 
                 filterData = studentData.sorted {
                     !$0.isAbsent && $1.isAbsent
                 }
-            case "Present":
+            case CommonStringFile.Present:
                 filterData = studentData.sorted {
                     $0.isAbsent && !$1.isAbsent // Absent students first
                 }
@@ -114,9 +112,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             // Update the label inside the UIView
             if let label = self.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.filterBtn.setTitle(item.translated(), for: .normal)
-                
-                filterBtn.setImage(UIImage(systemName: "square"), for: .normal)
-                
             }
         }
         
@@ -138,15 +133,15 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 customCell.custSwitch.isOn = !isSelectingAll // Correct logic for switch
                 print(i)
             }
-
+            
         }
         
         // Update select all button image and total count
         if isSelectingAll {
-            selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
+            selectAllBtn.setImage(ImageName.checkmark, for: .normal)
             totalcount = studentData.count
         } else {
-            selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+            selectAllBtn.setImage(ImageName.square, for: .normal)
             totalcount = 0
         }
     }
@@ -193,7 +188,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 cell.outerView.layer.borderWidth = 1
                 
                 
-                cell.statusBtn.setImage(self.Img.apsent, for: .normal)
+                cell.statusBtn.setImage(ImageName.apsent, for: .normal)
             },
                               completion: nil)
             totalcount += 1
@@ -204,13 +199,13 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                               animations: {
                 // Change background color to red
                 cell.outerView.layer.borderColor = UIColor.clear.cgColor
-                cell.statusBtn.setImage(self.Img.present, for: .normal)
+                cell.statusBtn.setImage(ImageName.present, for: .normal)
             },
                               completion: nil)
             totalcount -= 1
         }
         
-        let img = totalcount == studentData.count ? UIImage(systemName: "checkmark.rectangle.portrait.fill") : UIImage(systemName: "square")
+        let img = totalcount == studentData.count ? ImageName.checkmark : ImageName.square
         selectAllBtn.setImage(img, for: .normal)
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

@@ -31,11 +31,10 @@ class ReportStudentTVC: UITableViewCell {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tagView: UIView!
     var smsNumber = ""
-    let Img = ImageName()
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        if let originalImage = Img.idCard {
+        if let originalImage = ImageName.idCard {
             // Resize the image to match outerView's size
             let resizedImage = originalImage.resized(to: outerView.bounds.size)
             

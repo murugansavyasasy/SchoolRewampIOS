@@ -9,11 +9,6 @@ import UIKit
 
 @available(iOS 14.0, *)
 class SenderImgPdfVC: UIViewController, DeleteImge {
-    func deleteImage(index: Int) {
-        selectedImages.remove(at: index)
-        UploadView.imageCollectionview.reloadData()
-    }
-    
     
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var HeaderLabel: UILabel!
@@ -25,7 +20,6 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     var selectedImages:[UIImage] = []
     let photoPickManager = PhotoPickerManager.shared
     var url : URL?
-    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,7 +45,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
             guard let self = self else { return }
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
-            selectedImages.append(Img.pdf!)
+            selectedImages.append(ImageName.pdf!)
             //            url = URL(string:pdfurl)
             //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             UploadView.imageCollectionview.reloadData()
@@ -69,33 +63,26 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     }
     @IBAction func uploadImgPdf(){
         
-        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: AlertstringFile.Select, message:AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
         //
         // Camera option
-        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-            //
+        let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
             openCamera()
         }
         alertController.addAction(cameraAction)
         
         // Gallery option
-        let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-            //
+        let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
             selectImages()
-            
-            //
         }
         alertController.addAction(galleryAction)
         
-        //             PDF option
-        let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-            
+        let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
             selectPDF()
         }
         alertController.addAction(pdfAction)
         
-        // Cancel action
-        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         // Present the alert
@@ -109,7 +96,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
             
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
     }
@@ -118,7 +105,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
             photoPickManager.openCamera(from: self)
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
         
@@ -126,6 +113,10 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     func selectPDF() {
         photoPickManager.pickPDF(from: self)
         
+    }
+    func deleteImage(index: Int) {
+        selectedImages.remove(at: index)
+        UploadView.imageCollectionview.reloadData()
     }
     
     @IBAction func SelectBtnAct(_ sender: Any) {
@@ -140,59 +131,6 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
 @available(iOS 14.0, *)
 extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    //
-    //        if selectedImages.count != 0 && selectedImages.count <= 3{
-    //
-    //            collectionHeight.constant = 120
-    //        }
-    //
-    //       else if selectedImages.count > 3{
-    //            collectionHeight.constant = 240
-    //        }
-    //       else if selectedImages.count == 0{
-    //            collectionHeight.constant = 0
-    //        }
-    //
-    //               return selectedImages.count
-    //
-    //
-    //           }
-    //
-    //
-    //
-    //           func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    //
-    //               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-    //
-    //               cell.imageViews.image = selectedImages[indexPath.item]
-    //
-    //               return cell
-    //
-    //           }
-    //
-    //
-    //
-    //           // MARK: - UICollectionView Delegate
-    //
-    //           func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //
-    //               // Delete the selected image
-    //
-    //               selectedImages.remove(at: indexPath.item)
-    //
-    //               collectionview.deleteItems(at: [indexPath])
-    //
-    //           }
-    //
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    //
-    //        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-    //
-    //        return CGSize(width: width, height: width)
-    //
-    //    }
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -202,11 +140,11 @@ extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,U
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0{
-            let cell = UploadView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
+            let cell = UploadView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
         }else{
-            let cell = UploadView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
+            let cell = UploadView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
             cell.delegate = self
             cell.deleteBtn.tag = indexPath.item - 1
             if selectedImages.count > indexPath.item - 1 {
@@ -233,16 +171,16 @@ extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,U
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if indexPath.item == 0{
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+            let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
             //
             // Camera option
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+            let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
             
             // Gallery option
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+            let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
                 //
                 selectImages()
                 //
@@ -250,14 +188,14 @@ extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,U
             alertController.addAction(galleryAction)
             
             //             PDF option
-            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
                 
                 //                selectPDF()
             }
             alertController.addAction(pdfAction)
             
             // Cancel action
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
             // Present the alert

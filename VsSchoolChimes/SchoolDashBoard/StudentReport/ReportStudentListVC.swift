@@ -63,9 +63,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionSelection.alpha = 0
         sectionSelection.transform = CGAffineTransform(translationX: 0, y: -sectionSelection.bounds.height)
         // Prepare table for animation
-           let originalContentOffset = reportTable.contentOffset // Save current offset
-           reportTable.contentOffset = CGPoint(x: 0, y: sectionSelection.bounds.height) // Adjust for the animation start position
-
+        let originalContentOffset = reportTable.contentOffset // Save current offset
+        reportTable.contentOffset = CGPoint(x: 0, y: sectionSelection.bounds.height) // Adjust for the animation start position
+        
         UIView.animate(withDuration: 0.5, animations: {
             self.classSelection.transform = .identity // Reset transform
             self.classSelection.alpha = 1 // Fully visible
@@ -74,7 +74,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             self.reportTable.transform = .identity
             self.reportTable.contentOffset = .zero
         })
-
+        
     }
     
     private func hideStackView() {
@@ -90,7 +90,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             self.reportTable.isHidden = false
         }
     }
-
+    
     func hideSectionView() {
         UIView.animate(withDuration: 0.5, animations: {
             self.sectionSelection.transform = CGAffineTransform(translationX: 0, y: -self.sectionSelection.bounds.height)
@@ -100,7 +100,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 self.hideStackView()
                 self.sectionSelection.isHidden = true
                 self.sectionSelection.transform = .identity
-               }
+            }
             
         }
     }
@@ -140,7 +140,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         selectedType.setTitleFont(style: .body, size: FontSize.BodySize)
-        searchBar.placeholder = "Search".translated()
+        searchBar.placeholder = CommonStringFile.Search
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -148,30 +148,29 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
-        classDropdown.dataSource = ["RollNo DESC","RollNo ASC","Name ASC","Name DESC", "GET ALL STUDENT"]
+        classDropdown.dataSource = [CommonStringFile.RollNoDESC,CommonStringFile.RollNoASC,CommonStringFile.NameASC,CommonStringFile.NameDESC, CommonStringFile.getAllStudent]
         classDropdown.bottomOffset = CGPoint(x: -70, y: (filterBtn.bounds.height - 140))
         
         classDropdown.direction = .bottom
         
         classDropdown.show()
         classDropdown.selectionAction = { [self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
             self.filterBtn.setTitle(item, for: .normal)
-           
+            
             switch item{
-            case "RollNo ASC":
+            case CommonStringFile.RollNoASC:
                 let sortedByRollNumber = sortedStudent!.sorted { $0.AdmissionId < $1.AdmissionId }
                 filterStudent = sortedByRollNumber
-            case "RollNo DESC":
+            case CommonStringFile.RollNoDESC:
                 let sortedByName = sortedStudent?.sorted { $0.AdmissionId > $1.AdmissionId }
                 filterStudent = sortedByName
-            case "Name ASC":
+            case CommonStringFile.NameASC:
                 let sortedByName = sortedStudent!.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
                 filterStudent = sortedByName
-            case "Name DESC":
+            case CommonStringFile.NameDESC:
                 let sortedByName = sortedStudent!.sorted { $0.name > $1.name }
                 filterStudent = sortedByName
-         
+                
             default:
                 filterStudent = sortedStudent
                 
@@ -180,9 +179,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             // Update the label inside the UIView
             if let label = self.filterView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.filterBtn.setTitle(item.translated(), for: .normal)
-                
-                filterBtn.setImage(UIImage(systemName: "square"), for: .normal)
-                
             }
         }
     }
@@ -191,7 +187,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         if classSelection.isHidden {
             showStackView()
         } else {
-//            hideStackView()
+            //            hideStackView()
             hideSectionView()
         }
     }
@@ -203,8 +199,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionDropdown.width = sectionView.bounds.width
         sectionDropdown.show()
         sectionDropdown.selectionAction = { [self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            
             let filteredStudents = studentList.filter { $0.classname == selectStudentType && $0.sectionName == item }
             filterStudent = filteredStudents
             sortedStudent = filteredStudents
@@ -213,9 +207,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
             self.sectionBtn.setTitle(item, for: .normal)
             hideSectionView()
-//            classSelection.isHidden = true
-//            sectionSelection.isHidden = true
-            // Update the label inside the UIView
             if let label = self.sectionDropdown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.sectionBtn.setTitle(item.translated(), for: .normal)
             }
@@ -235,8 +226,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         // Handling the selection action
         sectionDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
-            
-            print("Selected item: \(item) at index: \(index)")
             let filteredStudents = studentList.filter { $0.classname == item }
             filterStudent = filteredStudents
             sortedStudent = filteredStudents
@@ -336,22 +325,15 @@ extension ReportStudentListVC: UISearchBarDelegate{
         reportTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         searchBar.resignFirstResponder()
     }
     
     func addDoneButton(){
-        
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        
         toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
         searchBar.inputAccessoryView = toolbar
     }
     

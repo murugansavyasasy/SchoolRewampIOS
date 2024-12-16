@@ -66,7 +66,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var imageUrlArray = NSMutableArray()
     var pdfData : Data? = nil
     let AlertMessage = AlertstringFile()
-    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTimePicker()
@@ -93,7 +92,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             guard let self = self else { return }
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
-            selectedImages.append(Img.pdf!)
+            selectedImages.append(ImageName.pdf!)
             costomView.imageCollectionview.reloadData()
         }
         photoPickManager.onCameraImagePicked = { [weak self] images in
@@ -173,14 +172,14 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         calanderBtn.layer.cornerRadius = 10
         placeLbl.setFont(style:.body, size: FontSize.BodySize)
-        placeLbl.text = "Venue".translated()
-        addPhotoLbl.text = "AddPhotos".translated()
-        eventDeatail.text = "EventDetails".translated()
-        EventTtleLbl.text = "EventTitle".translated()
-        placeTxt.placeholder = "egChennai".translated()
-        eventTxt.placeholder = "egYogaEvent".translated()
+        placeLbl.text = CommonStringFile.Venue
+        addPhotoLbl.text = CommonStringFile.AddPhotos
+        eventDeatail.text = CommonStringFile.EventDetails
+        EventTtleLbl.text = CommonStringFile.EventTitle
+        placeTxt.placeholder = CommonStringFile.egChennai
+        eventTxt.placeholder = CommonStringFile.egYogaEvent
         
-        setAttributedText(for: addPhotoLbl, with: "AddPhotos1".translated(), firstString: "AddPhotos".translated(), secondString: "Optional".translated(), color1: .black, color2: .lightGray)
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1, firstString: CommonStringFile.AddPhotos, secondString: CommonStringFile.Optional, color1: .black, color2: .lightGray)
         
     }
     func dateSet(_ date: String, _ splitDate: String,_ currectndate:String) {
@@ -309,7 +308,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "EnterTextHere".translated()
+        placeholderLabel.text = CommonStringFile.EnterTextHere
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -476,7 +475,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         // Initialize and configure Done button
         doneButton = UIButton(type: .system)
         doneButton.setTitle(AlertstringFile.Done
-    , for: .normal)
+                            , for: .normal)
         doneButton.isHidden = true
         doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
         doneButton.setTitleColor(.white, for: .normal)

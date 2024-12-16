@@ -285,7 +285,7 @@
                 case menuName.VideoUpload:
                     MenuRedirect.senderVideoNavigate(from: self)
                     
-                case menuName.Communication:
+                case MenuStringFile.Communication:
                     MenuRedirect.senderCommunicationNavigate(from: self)
                     
                 case menuName.ImagePdf, menuName.ImagePdf.translated():
@@ -352,7 +352,7 @@
                 case menuName.VideoUpload:
                     MenuRedirect.receiverVideoNavigate(from: self)
                     
-                case menuName.Communication:
+                case MenuStringFile.Communication:
                     MenuRedirect.receiverCommunicationNavigate(from: self)
                     
                 case menuName.ImagePdf:
