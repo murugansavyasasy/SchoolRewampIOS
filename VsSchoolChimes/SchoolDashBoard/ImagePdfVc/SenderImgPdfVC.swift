@@ -9,6 +9,10 @@ import UIKit
 
 @available(iOS 14.0, *)
 class SenderImgPdfVC: UIViewController, DeleteImge {
+    func deleteImage(index: Int) {
+        selectedImages.remove(at: index)
+        UploadView.imageCollectionview.reloadData()
+    }
     
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var HeaderLabel: UILabel!

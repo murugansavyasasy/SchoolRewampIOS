@@ -333,9 +333,13 @@
                 case menuName.MarkYourAttendance:
                     MenuRedirect.AttendenceMark(from: self)
                     
+                case menuName.InteractionWithStudent:
+                    MenuRedirect.chat(from: self)
+                    
                 case menuName.DailyCollection,
                     menuName.ScheduleExamTest,
                     "":
+              
                     // Do nothing for these cases
                     break
                     

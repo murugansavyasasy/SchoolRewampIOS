@@ -37,7 +37,6 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet weak var histroyView: UIView!
     @IBOutlet weak var punchView: UIView!
     
-    var TvIdentfier = "LocationTableViewCell"
     let locationManager = CLLocationManager()
     var allowedDistance = CLLocationDistance() // 5 meters
     let currentYear = Calendar.current.component(.year, from: Date())
@@ -125,8 +124,8 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
         } else {
             print("Location services are not enabled on this device.")
         }
-        let rowNib = UINib(nibName: TvIdentfier, bundle: nil)
-        tv.register(rowNib, forCellReuseIdentifier: TvIdentfier)
+        let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
+        tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
         let history = UITapGestureRecognizer(target: self, action: #selector(history))
         histroyView.addGestureRecognizer(history)
         let punch = UITapGestureRecognizer(target: self, action: #selector(punch))
@@ -510,7 +509,7 @@ class LocationViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TvIdentfier, for: indexPath) as!
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as!
         LocationTableViewCell
         cell.selectionStyle = .none
         cell.fullView.layer.cornerRadius = 20

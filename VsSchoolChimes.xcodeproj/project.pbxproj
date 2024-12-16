@@ -228,6 +228,10 @@
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		84395FCC2D0D4CAB00FC3242 /* ParentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FCA2D0D4CAB00FC3242 /* ParentVC.swift */; };
 		84395FCD2D0D4CAB00FC3242 /* ParentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FCB2D0D4CAB00FC3242 /* ParentVC.xib */; };
+		84395FE92D10026100FC3242 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FE72D10026100FC3242 /* ChatVC.swift */; };
+		84395FEA2D10026100FC3242 /* ChatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FE82D10026100FC3242 /* ChatVC.xib */; };
+		84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FEC2D1002A900FC3242 /* ChatTVCell.swift */; };
+		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
 		844188682CC8C85C006483C3 /* ViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188672CC8C85C006483C3 /* ViewModal.swift */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
@@ -725,6 +729,10 @@
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		84395FCA2D0D4CAB00FC3242 /* ParentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentVC.swift; sourceTree = "<group>"; };
 		84395FCB2D0D4CAB00FC3242 /* ParentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentVC.xib; sourceTree = "<group>"; };
+		84395FE72D10026100FC3242 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		84395FE82D10026100FC3242 /* ChatVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatVC.xib; sourceTree = "<group>"; };
+		84395FEC2D1002A900FC3242 /* ChatTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTVCell.swift; sourceTree = "<group>"; };
+		84395FED2D1002A900FC3242 /* ChatTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTVCell.xib; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
 		844188672CC8C85C006483C3 /* ViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModal.swift; sourceTree = "<group>"; };
 		8441886E2CC8E18B006483C3 /* Models.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Models.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1719,6 +1727,25 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
+		84395FE62D10023200FC3242 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				84395FEB2D10026600FC3242 /* ChatCell */,
+				84395FE72D10026100FC3242 /* ChatVC.swift */,
+				84395FE82D10026100FC3242 /* ChatVC.xib */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		84395FEB2D10026600FC3242 /* ChatCell */ = {
+			isa = PBXGroup;
+			children = (
+				84395FEC2D1002A900FC3242 /* ChatTVCell.swift */,
+				84395FED2D1002A900FC3242 /* ChatTVCell.xib */,
+			);
+			path = ChatCell;
+			sourceTree = "<group>";
+		};
 		8442A8672CDB787A0006068E /* PriorityScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -2248,6 +2275,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84395FE62D10023200FC3242 /* Chat */,
 				18D718D52D0D479B00E9EDA3 /* AbsenteesReport */,
 				18D718982D0D477900E9EDA3 /* LocationVc */,
 				18D718542D0D471A00E9EDA3 /* NewDailyCollection */,
@@ -2878,6 +2906,7 @@
 				18CA855B2CF99ACD00984D7C /* AssignmentViewTableViewCell.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
 				849E57392C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf in Resources */,
+				84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */,
 				849E57272C1FF4F9006119DA /* PriorityStoryboard.storyboard in Resources */,
 				84EFF9D82CCC862F00C11C26 /* TopCVCell.xib in Resources */,
 				84EFFADF2CCF9EEA00C11C26 /* NotificationTableViewCell.xib in Resources */,
@@ -2975,6 +3004,7 @@
 				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
+				84395FEA2D10026100FC3242 /* ChatVC.xib in Resources */,
 				84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
@@ -3234,6 +3264,7 @@
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
+				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
 				18CA85662CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift in Sources */,
 				180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */,
 				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
@@ -3414,6 +3445,7 @@
 				18CA85612CF99EFB00984D7C /* AssignmentViewTotalViewController.swift in Sources */,
 				84EFFAEB2CCFA4A100C11C26 /* ReportBugVcViewController.swift in Sources */,
 				84A5BE9A2C197E0B00E32496 /* ResponseName.swift in Sources */,
+				84395FE92D10026100FC3242 /* ChatVC.swift in Sources */,
 				844914882D01A8EF0007A875 /* MeetingsTVcell.swift in Sources */,
 				84A5BE962C197D2C00E32496 /* UILabel.swift in Sources */,
 				8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */,

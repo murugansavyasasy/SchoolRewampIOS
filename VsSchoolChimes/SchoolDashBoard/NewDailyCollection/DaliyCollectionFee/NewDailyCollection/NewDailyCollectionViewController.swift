@@ -28,8 +28,6 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var fromLbl: UILabel!
     
-    let rowIdentifier = "PendingFeeReportTableViewCell"
-    let rowIdentifier1 = "PaymentListTableViewCell"
     var url_time : String!
     var url_hours : String!
     var url_minutes : String!
@@ -58,9 +56,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dropDownLbl.textColor = .lightGray
         tv.dataSource = self
         tv.delegate = self
-        tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
-        tv.register(UINib(nibName: rowIdentifier1, bundle: nil), forCellReuseIdentifier: rowIdentifier1)
-        tv.register(UINib(nibName: "DataCollectionTvHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "DataCollectionTvHeaderView")
+        tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
+        tv.register(UINib(nibName: CellConfingName.PaymentListTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentListTableViewCell)
+        tv.register(UINib(nibName:CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
         
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
         backView.addGestureRecognizer(backGesture)
@@ -220,11 +218,11 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if ClickId == "1" || ClickId == "2"{
-            let cell =  tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as!   PendingFeeReportTableViewCell
+            let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
             cell.numberLbl.text = String(indexPath.row+1)
             return cell
         }else{
-            let cell =  tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as!   PendingFeeReportTableViewCell
+            let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
             return cell
         }
         

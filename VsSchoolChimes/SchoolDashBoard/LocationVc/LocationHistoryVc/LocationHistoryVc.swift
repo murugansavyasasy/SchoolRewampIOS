@@ -41,7 +41,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     let dateFormatter = DateFormatter()
     var RefId = 1
     var url_date : String!
-    var TvIdentfier = "LocationTableViewCell"
     var dateAndMoth : String!
     
     override func viewDidLoad() {
@@ -83,8 +82,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     monthNames.append(monthName)
                 }
             }
-            let rowNib = UINib(nibName: TvIdentfier, bundle: nil)
-            tv.register(rowNib, forCellReuseIdentifier: TvIdentfier)
+            let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
+            tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
             let today = UITapGestureRecognizer(target: self, action: #selector(todayView))
             todayStaffView.addGestureRecognizer(today)
             let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
@@ -203,7 +202,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TvIdentfier, for: indexPath) as!
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as!
         LocationTableViewCell
         cell.selectionStyle = .none
         cell.fullView.layer.cornerRadius = 20

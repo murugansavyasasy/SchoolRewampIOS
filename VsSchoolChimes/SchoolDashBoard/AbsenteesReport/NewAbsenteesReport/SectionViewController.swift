@@ -16,22 +16,20 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     @IBOutlet weak var backView: UIView!
     var classNAme = ""
     var SchoolId  = String()
-    let cvIconRowId = "SectionCollectionViewCell"
-    let TVIdenfier = "SectionTvTableViewCell"
     var SectionName = ""
     var ClickID = 0
     var DateRef : String!
     override func viewDidLoad() {
         super.viewDidLoad()
-        cv.register(UINib(nibName: cvIconRowId, bundle: nil), forCellWithReuseIdentifier: cvIconRowId)
+        cv.register(UINib(nibName: CellConfingName.SectionCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SectionCollectionViewCell)
         cv.dataSource = self
         cv.delegate = self
         noRecordView.isHidden = true
         noRecordLbl.isHidden = true
         let backViews = UITapGestureRecognizer(target: self, action: #selector(BackVc))
         backView.addGestureRecognizer(backViews)
-        let rowNib = UINib(nibName: TVIdenfier, bundle: nil)
-        tv.register(rowNib, forCellReuseIdentifier: TVIdenfier)
+        let rowNib = UINib(nibName: CellConfingName.SectionTvTableViewCell, bundle: nil)
+        tv.register(rowNib, forCellReuseIdentifier: CellConfingName.SectionTvTableViewCell)
     }
     
     @IBAction func BackVc(){
@@ -43,7 +41,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TVIdenfier, for: indexPath) as!
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SectionTvTableViewCell, for: indexPath) as!
         SectionTvTableViewCell
         cell.selectionStyle = .none
         return cell
@@ -58,7 +56,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvIconRowId, for: indexPath) as! SectionCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SectionCollectionViewCell, for: indexPath) as! SectionCollectionViewCell
         if ClickID == indexPath.row {
             
             
