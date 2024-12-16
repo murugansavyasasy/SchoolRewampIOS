@@ -16,7 +16,6 @@ class CheckAviableTv: UITableViewCell {
     
     var indexPath: IndexPath?
        
-       // Add a closure to handle the delete action
        var deleteAction: ((IndexPath) -> Void)?
        
        @IBAction func deleteButtonTapped(_ sender: UIButton) {
@@ -26,14 +25,12 @@ class CheckAviableTv: UITableViewCell {
        }
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         statusLbl.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
     }
     
 }

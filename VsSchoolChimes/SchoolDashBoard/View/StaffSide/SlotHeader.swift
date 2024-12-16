@@ -33,21 +33,14 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
 //       
        override func awakeFromNib() {
            super.awakeFromNib()
-           
-//          
-//           
-          
+      
           cv.register(UINib(nibName: cvRowIdentifier, bundle: nil), forCellWithReuseIdentifier: cvRowIdentifier)
            cv.dataSource = self
            cv.delegate = self
        }
-       
       
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        
-
         return 2
     }
 
@@ -63,27 +56,18 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
         return cell
     }
 
-
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/3, height: 50) // Adjust item size as needed
         }
     
-    
     func adjustCollectionViewHeight(for itemCount: Int) {
-        var height: CGFloat = 55  // Default height for 1 to 3 items
-        
+        var height: CGFloat = 55
         if itemCount > 3 {
-            let extraRows = (itemCount - 1) / 3  // Calculate additional rows beyond the first row
-            height += CGFloat(extraRows) * 50  // Increase height for each additional row
+            let extraRows = (itemCount - 1) / 3
+            height += CGFloat(extraRows) * 50
         }
-        
-        
-        
-        
-        // Update the collection view's height constraint
         cvHeight.constant = height
-        cv.layoutIfNeeded()  // Apply the changes
+        cv.layoutIfNeeded()
     }
     
    }

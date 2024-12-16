@@ -14,7 +14,6 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         UploadView.imageCollectionview.reloadData()
     }
     
-    
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var collectionview: UICollectionView!

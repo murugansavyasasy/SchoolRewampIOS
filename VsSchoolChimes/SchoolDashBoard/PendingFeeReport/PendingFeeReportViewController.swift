@@ -13,23 +13,13 @@ import DropDown
 class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     @IBOutlet weak var nodataLbl: UILabel!
-    
     @IBOutlet weak var fromLbl: UILabel!
-    
     @IBOutlet weak var noRecordsView: UIView!
-    
     @IBOutlet weak var tv: UITableView!
-    
-    
-    
     @IBOutlet weak var AcadamidropDown: UIViewX!
-    
     @IBOutlet weak var backView: UIView!
-    
     @IBOutlet weak var dropDownTextLbl: UILabel!
-    
     @IBOutlet weak var classWiseView: UIView!
-    
     @IBOutlet weak var categoryWiseView: UIView!
     
     
@@ -41,14 +31,12 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     var display_date : String!
     var url_date : String!
     var indexList : Int!
-//    var pendingdata : [PendiRespdatadetails] = []
-//    var subpendingdata  : [pendingDataDetails] = []
     var ClickId  = "1"
     var SchoolId  = String()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//    var acdmicYearRef : [AcdmicYrDataDetails] = []
     var DropDownStr : [String] = []
     var type : Int!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,209 +45,77 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         nodataLbl.isHidden = true
         noRecordsView.isHidden = true
         if type == 1 {
-            
         }else{
-//            SchoolId = userDefaults.string(forKey: DefaultsKeys.SchoolD)!
         }
         tv.isHidden = true
-        
         tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
-        
         tv.register(UINib(nibName: "DataCollectionTvHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "DataCollectionTvHeaderView")
-        
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
         backView.addGestureRecognizer(backGesture)
-        
-        
         let dropDown = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
         AcadamidropDown.addGestureRecognizer(dropDown)
-        
-        
-        
         let classWiseGuesture = UITapGestureRecognizer(target: self, action: #selector(classAction))
         classWiseView.addGestureRecognizer(classWiseGuesture)
-        
-        
         let categoryGuesture = UITapGestureRecognizer(target: self, action: #selector(categoryAction))
         categoryWiseView.addGestureRecognizer(categoryGuesture)
-//        AcdimyYear()
-        
-        // Do any additional setup after loading the view.
+
     }
     
     
     @IBAction func DropDownVc(){
-        
-        
         let acadamicYear = DropDownStr
-        
-        dropDown.dataSource = acadamicYear //4
-        
-        dropDown.anchorView = AcadamidropDown //5
-        
+        dropDown.dataSource = acadamicYear
+        dropDown.anchorView = AcadamidropDown
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        
         dropDown.direction = .bottom
         DropDown.appearance().backgroundColor = UIColor.white
-        dropDown.show() //7
-        
-        
+        dropDown.show()
         dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
-            
-            
             self.dropDownTextLbl.text = item
             dropDownTextLbl.textColor = .black
-            
-//            for i in acdmicYearRef {
-//                
-//                if dropDownTextLbl.text == i.yearName{
-//                    
-//                    
-//                    if  ClickId == "1"{
-//                        
-////                        dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
-//                    }
-//                    else if ClickId == "2"{
-//                        
-////                        SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
-//                        
-//                        
-//                    }
-//                    
-//                }
-//                
-//                
-//            }
-            
-            
         }
-        
-        
-        
     }
-    
     
     
     @IBAction func categoryAction() {
         tv.isHidden = true
-        
         ClickId = "1"
-        
-//        for i in acdmicYearRef {
-//            
-//            
-//            if i.currentAcademicYear == 1{
-//                
-//                dropDownTextLbl.text = i.yearName
-//                
-//                dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
-//            }
-//            
-//            
-//        }
         classWiseView.backgroundColor = .lightGray
         categoryWiseView.backgroundColor = Colornames.CustomOrange
     }
     
-    
     @IBAction func classAction() {
         ClickId = "2"
-        
-        
-//        for i in acdmicYearRef {
-//            
-//            
-//            if i.currentAcademicYear == 1{
-//                
-//                dropDownTextLbl.text = i.yearName
-//                
-//                SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
-//            }
-//            
-//            
-//        }
-        
         tv.isHidden = true
-        
-        
         categoryWiseView.backgroundColor = .lightGray
         classWiseView.backgroundColor = Colornames.CheckBoxSelectColor
     }
-    
     
     @IBAction func backVC() {
         dismiss(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return 2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell =  tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as!   PendingFeeReportTableViewCell
-        
-        
-        
-//        cell.numberLbl.text = String(indexPath.row+1)
-//        if pendingdata[indexPath.section].data[indexPath.row].amount == nil{
-//            cell.amountLbl.text = "0.0"
-//            
-//        }else{
-//            cell.amountLbl.text = "₹" + pendingdata[indexPath.section].data[indexPath.row].amount
-//        }
-//        
-//        cell.classLbl.text = pendingdata[indexPath.section].data[indexPath.row].TypeName
-//        
-//        
-//        
-        
         return cell
     }
     
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
-        
     }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
-//        
-//        
-////        let datas : PendiRespdatadetails = pendingdata[section]
-////        
-////        
-////        headerView.classLbl.text = datas.Category
-////        
-////        
-////        
-////        if datas.total == nil{
-////            headerView.amountLbl.text = "0.0"
-////            
-////        }else{
-////            headerView.amountLbl.text = "₹" + datas.total
-////        }
-////        
-//        
-//        
-//        return headerView
-//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return UITableView.automaticDimension
-        
-        
     }
-    
-    
     
 
 }
@@ -270,10 +126,106 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 /*
  
  
+ //MARK: Var 
+ var acdmicYearRef : [AcdmicYrDataDetails] = []
+ var pendingdata : [PendiRespdatadetails] = []
+//    var subpendingdata  : [pendingDataDetails] = []
  
- //MARK: Func 
+ //MARK: DropDown
+ 
+ for i in acdmicYearRef {
+//
+//                if dropDownTextLbl.text == i.yearName{
+//
+//
+//                    if  ClickId == "1"{
+//
+////                        dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
+//                    }
+//                    else if ClickId == "2"{
+//
+////                        SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
+//
+//
+//                    }
+//
+//                }
+//
+//
+//            }
+ 
+ //MARK: categoryAction
  
  
+ 
+//        for i in acdmicYearRef {
+//
+//
+//            if i.currentAcademicYear == 1{
+//
+//                dropDownTextLbl.text = i.yearName
+//
+//                dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
+//            }
+//
+//
+//        }
+ 
+ //MARK: classAction
+ 
+ 
+//        for i in acdmicYearRef {
+//
+//
+//            if i.currentAcademicYear == 1{
+//
+//                dropDownTextLbl.text = i.yearName
+//
+//                SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
+//            }
+//
+//
+//        }
+ //MARK: viewForHeaderInSection
+ 
+ 
+ //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+ //        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
+ //
+ //
+ ////        let datas : PendiRespdatadetails = pendingdata[section]
+ ////
+ ////
+ ////        headerView.classLbl.text = datas.Category
+ ////
+ ////
+ ////
+ ////        if datas.total == nil{
+ ////            headerView.amountLbl.text = "0.0"
+ ////
+ ////        }else{
+ ////            headerView.amountLbl.text = "₹" + datas.total
+ ////        }
+ ////
+ //
+ //
+ //        return headerView
+ //    }
+     
+ //MARK: cellForRowAt
+ 
+ cell.numberLbl.text = String(indexPath.row+1)
+//        if pendingdata[indexPath.section].data[indexPath.row].amount == nil{
+//            cell.amountLbl.text = "0.0"
+//
+//        }else{
+//            cell.amountLbl.text = "₹" + pendingdata[indexPath.section].data[indexPath.row].amount
+//        }
+//
+//        cell.classLbl.text = pendingdata[indexPath.section].data[indexPath.row].TypeName
+//
+//
+//
  
  //MARK: Func
  
