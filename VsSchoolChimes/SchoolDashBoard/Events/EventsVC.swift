@@ -94,8 +94,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
             selectedImages.append(Img.pdf!)
-            //            url = URL(string:pdfurl)
-            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()
         }
         photoPickManager.onCameraImagePicked = { [weak self] images in
@@ -260,7 +258,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func keyboardDionebtn(){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         placeTxt.inputAccessoryView = toolbar
@@ -285,7 +283,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             return true // Allow the change
         } else {
             let alert = CustomAlert()
-            alert.showAlert(title: "Alert", message: "Reach Your Limit", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             //            contentTxtView.isEditable = false // Optionally disable editing
             return false // Reject the change
         }
@@ -343,7 +341,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             self.present(vc, animated: true, completion: nil)
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "Alert", message: "Fill All Required Fields", on: self)
+            alert.showAlert(title: "Alert", message: AlertstringFile.Fill_All_Required_Fields, on: self)
         }
     }
     @IBAction func back(_ sender: UIButton) {
@@ -373,14 +371,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
             cell.delegate = self
             cell.deleteBtn.tag = indexPath.item - 1
-            //            if url != nil{
-            //                cell.selectedFileURL = url
-            //                cell.pdf.isHidden = false
-            //            }else{
-            //                cell.pdf.isHidden = false
-            //            }
             if selectedImages.count > indexPath.item - 1 {
-                // Assign the image starting from the second image in the selectedImages array
                 cell.imageViews.image = selectedImages[indexPath.item - 1]
             } else {
                 cell.imageViews.image = nil
@@ -402,16 +393,16 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            let alertController = UIAlertController(title: AlertMessage.Select, message: AlertMessage.Chooseanoption, preferredStyle: .actionSheet)
+            let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
             //
             // Camera option
-            let cameraAction = UIAlertAction(title: AlertMessage.Camera, style: .default) { [self] _ in
+            let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
             
             // Gallery option
-            let galleryAction = UIAlertAction(title: AlertMessage.Gallery, style: .default) { [self] _ in
+            let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
                 //
                 selectImages()
                 //
@@ -419,14 +410,14 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             alertController.addAction(galleryAction)
             
             //             PDF option
-            let pdfAction = UIAlertAction(title: AlertMessage.PDF, style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
                 
                 selectPDF()
             }
             alertController.addAction(pdfAction)
             
             // Cancel action
-            let cancelAction = UIAlertAction(title: AlertMessage.Cancel, style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
             // Present the alert
@@ -450,7 +441,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            alert.showAlert(title: "", message:AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
     }
@@ -459,7 +450,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             photoPickManager.openCamera(from: self)
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
         
@@ -484,7 +475,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         datePicker.isHidden = true // Initially hidden
         // Initialize and configure Done button
         doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitle(AlertstringFile.Done
+    , for: .normal)
         doneButton.isHidden = true
         doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
         doneButton.setTitleColor(.white, for: .normal)
@@ -506,7 +498,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         // Initialize and configure Done button
         doneButton2 = UIButton(type: .system)
-        doneButton2.setTitle("Done", for: .normal)
+        doneButton2.setTitle(AlertstringFile.Done, for: .normal)
         doneButton2.isHidden = true
         doneButton2.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
         doneButton2.setTitleColor(.white, for: .normal)

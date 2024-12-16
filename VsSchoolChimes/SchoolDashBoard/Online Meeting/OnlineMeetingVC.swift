@@ -141,8 +141,8 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
                    print("Access to reminders not granted.")
                    DispatchQueue.main.async {
                        let alert = UIAlertController(
-                           title: "Permission Denied",
-                           message: "Please enable reminders access in Settings.",
+                        title: AlertstringFile.PermissionDenied,
+                        message: AlertstringFile.enableRemindersAccess,
                            preferredStyle: .alert
                        )
                        alert.addAction(UIAlertAction(title: "OK", style: .default))
@@ -194,10 +194,10 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
                 message: "Do you want to set a reminder for \(taskName)?",
                 preferredStyle: .alert
             )
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: { _ in
                 self.createReminder(for: taskName)
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: AlertstringFile.No, style: .cancel, handler: nil))
 
             self.present(alert, animated: true, completion: nil)
         }
@@ -391,16 +391,7 @@ extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
         cell.contentview.backgroundColor = colour2
         cell.indexPath = indexPath
         cell.delegate = self
-//        if let color1 = colour1, let color2 = colour2 {
-//                    cell.setGradientColors([color2.cgColor, color1.cgColor])
-//                }
-        
-//        if indexPath.row % 2 == 0{
-//            cell.cellview.backgroundColor = UIColor.systemBlue
-//        }
-//        else{
-//            cell.cellview.backgroundColor = UIColor.orange
-//        }
+
         return cell
     }
     

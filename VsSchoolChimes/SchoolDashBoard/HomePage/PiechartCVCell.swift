@@ -31,11 +31,11 @@ class PiechartCVCell: UICollectionViewCell {
         Cellview.layer.shadowRadius = 3
         Cellview.layer.masksToBounds = false
         
-        schoolstrength.text = "School Strength".translated()
-        Totalstrength.text = "Total Strength".translated()
-        Staffscount.text = "Staff's count".translated()
-        Boyscount.text = "Boy's count".translated()
-        Girlscount.text = "Girl's count".translated()
+        schoolstrength.text = PiechartCvcellStringFile.SchoolStrength
+        Totalstrength.text = PiechartCvcellStringFile.TotalStrength
+        Staffscount.text = PiechartCvcellStringFile.StaffStrength
+        Boyscount.text =  PiechartCvcellStringFile.boy
+        Girlscount.text =  PiechartCvcellStringFile.girls
         
         
         pieChartView.frame = CGRect(x: 0, y: 0, width: 180, height: 165)

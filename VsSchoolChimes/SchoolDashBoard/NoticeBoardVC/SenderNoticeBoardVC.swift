@@ -239,7 +239,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         datePicker.isHidden = true // Initially hidden
         // Initialize and configure Done button
         doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
+        doneButton.setTitle(AlertstringFile.Done, for: .normal)
         doneButton.isHidden = true
         doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
         doneButton.setTitleColor(.white, for: .normal)
@@ -267,7 +267,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     }
     func StyleAndTranslater(){
         //MARK: Translate
-        HeadingLabel.text =  "Compose NoticeBoard".translated()
+        HeadingLabel.text =  MenuTapbar.ComposeNotifications.translated()
        
         
         
@@ -356,7 +356,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func keyboardDionebtn(){
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         eventTxt.inputAccessoryView = toolbar
@@ -442,7 +442,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             return true // Allow the change
         } else {
             let alert = CustomAlert()
-            alert.showAlert(title: "Alert", message: "Reach Your Limit", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Reach_Your_Limit, on: self)
             //            contentTxtView.isEditable = false // Optionally disable editing
             return false // Reject the change
         }
@@ -471,7 +471,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
     }
@@ -480,16 +480,14 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             photoPickManager.openCamera(from: self)
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "Warning!", message: "Already Reach Your Maximum Limit", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
-        
     }
     func selectPDF() {
         photoPickManager.pickPDF(from: self)
         
     }
-    
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
@@ -583,16 +581,9 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
                 //
                 present(vc, animated: true)
             }
-            
-            
-            
-            
-            
-
+    
         }
-        
-        
-        
+       
 
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
             

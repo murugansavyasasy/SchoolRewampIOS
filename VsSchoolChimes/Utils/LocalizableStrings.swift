@@ -13,10 +13,10 @@ struct StringsName {
    
     var appname  = ""
  
-    var Home = "Home".translated()
-    var Help = "Help".translated()
-     var Settings = "Settings".translated()
-     var Profile = "Profile".translated()
+    static var Home = "Home".translated()
+    static var Help = "Help".translated()
+    static var Settings = "Settings".translated()
+    static  var Profile = "Profile".translated()
    
   
     
