@@ -141,8 +141,6 @@
 		18D718662D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718522D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib */; };
 		18D718672D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718472D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib */; };
 		18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7183E2D0D471A00E9EDA3 /* PaymentListTableViewCell.xib */; };
-		18D7186C2D0D472100E9EDA3 /* ImportantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718692D0D472100E9EDA3 /* ImportantInfoViewController.swift */; };
-		18D7186D2D0D472100E9EDA3 /* ImportantInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7186A2D0D472100E9EDA3 /* ImportantInfoViewController.xib */; };
 		18D718992D0D477900E9EDA3 /* EditLocReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187F2D0D477900E9EDA3 /* EditLocReq.swift */; };
 		18D7189A2D0D477900E9EDA3 /* GetLocationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718862D0D477900E9EDA3 /* GetLocationResp.swift */; };
 		18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7188E2D0D477900E9EDA3 /* LocationHistoryVc.swift */; };
@@ -640,8 +638,6 @@
 		18D7184F2D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollectionFeeModal.swift; sourceTree = "<group>"; };
 		18D718512D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaliyCollectionFeeViewController.swift; sourceTree = "<group>"; };
 		18D718522D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DaliyCollectionFeeViewController.xib; sourceTree = "<group>"; };
-		18D718692D0D472100E9EDA3 /* ImportantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantInfoViewController.swift; sourceTree = "<group>"; };
-		18D7186A2D0D472100E9EDA3 /* ImportantInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantInfoViewController.xib; sourceTree = "<group>"; };
 		18D7186E2D0D477900E9EDA3 /* LocationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationTableViewCell.xib; sourceTree = "<group>"; };
 		18D7186F2D0D477900E9EDA3 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		18D718702D0D477900E9EDA3 /* PreviousCvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousCvcell.swift; sourceTree = "<group>"; };
@@ -1522,15 +1518,6 @@
 			path = NewDailyCollection;
 			sourceTree = "<group>";
 		};
-		18D7186B2D0D472100E9EDA3 /* ImportantInfo 2 */ = {
-			isa = PBXGroup;
-			children = (
-				18D718692D0D472100E9EDA3 /* ImportantInfoViewController.swift */,
-				18D7186A2D0D472100E9EDA3 /* ImportantInfoViewController.xib */,
-			);
-			path = "ImportantInfo 2";
-			sourceTree = "<group>";
-		};
 		18D718762D0D477900E9EDA3 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -2265,7 +2252,6 @@
 			children = (
 				18D718D52D0D479B00E9EDA3 /* AbsenteesReport */,
 				18D718982D0D477900E9EDA3 /* LocationVc */,
-				18D7186B2D0D472100E9EDA3 /* ImportantInfo 2 */,
 				18D718542D0D471A00E9EDA3 /* NewDailyCollection */,
 				8485B6DB2D0C485600C4C2B9 /* Mark Attendence */,
 				18926CA92D0306CA002BBB97 /* PTMVc */,
@@ -2907,7 +2893,6 @@
 				8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */,
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
-				18D7186D2D0D472100E9EDA3 /* ImportantInfoViewController.xib in Resources */,
 				844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
@@ -3439,7 +3424,6 @@
 				8485B6DE2D0C489600C4C2B9 /* MarkAttendenceVC.swift in Sources */,
 				84C82A072D086A490024A46A /* SparkViewAnimator.swift in Sources */,
 				84C82A082D086A490024A46A /* SparkTrajectoryFactory.swift in Sources */,
-				18D7186C2D0D472100E9EDA3 /* ImportantInfoViewController.swift in Sources */,
 				84C82A092D086A490024A46A /* SparkTrajectory.swift in Sources */,
 				84C82A0A2D086A490024A46A /* FountainFireworkAnimator.swift in Sources */,
 				84C82A0B2D086A490024A46A /* ClassicFirework.swift in Sources */,
