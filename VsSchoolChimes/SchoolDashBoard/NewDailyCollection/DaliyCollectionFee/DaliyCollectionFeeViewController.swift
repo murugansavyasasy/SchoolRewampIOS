@@ -38,18 +38,16 @@ class DaliyCollectionFeeViewController: UIViewController,UITableViewDataSource,U
     var indexList : Int!
     var getClickType : Int!
     var schoolType : String!
-    let rowIdentifier = "DailyCollectionTableViewCell"
-    let CurrentrowIdentifier = "DailyCollectionFeeCurrentTableViewCell"
     let paymentrowIdentifier = "DailyCollectionFeePaymentTypeTableViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let rowNib = UINib(nibName: rowIdentifier, bundle: nil)
-        tv.register(rowNib, forCellReuseIdentifier: rowIdentifier)
+        let rowNib = UINib(nibName: CellConfingName.DailyCollectionTableViewCell, bundle: nil)
+        tv.register(rowNib, forCellReuseIdentifier: CellConfingName.DailyCollectionTableViewCell)
         
-        let CurrentrowNib = UINib(nibName: CurrentrowIdentifier, bundle: nil)
-        tv.register(CurrentrowNib, forCellReuseIdentifier: CurrentrowIdentifier)
+        let CurrentrowNib = UINib(nibName: CellConfingName.DailyCollectionFeeCurrentTableViewCell, bundle: nil)
+        tv.register(CurrentrowNib, forCellReuseIdentifier: CellConfingName.DailyCollectionFeeCurrentTableViewCell)
         
         let paymentrowNib = UINib(nibName: paymentrowIdentifier, bundle: nil)
         tv.register(paymentrowNib, forCellReuseIdentifier: paymentrowIdentifier)
@@ -92,7 +90,7 @@ class DaliyCollectionFeeViewController: UIViewController,UITableViewDataSource,U
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell =  tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as!   DailyCollectionTableViewCell
+        let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.DailyCollectionTableViewCell, for: indexPath) as!   DailyCollectionTableViewCell
         return cell
         
     }

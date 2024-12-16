@@ -19,8 +19,6 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     
-    let cvRowIdentifier = "SlotsCollectionViewCell"
-    var tvcellIdentifier = "StaffPtmTableViewCell"
     var instituteId  = Int()
     var sectionId = Int()
     var staffId  = Int()
@@ -55,7 +53,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         todaSlotView.backgroundColor = Colornames.CustomOrange
         print("SchoolId",SchoolId)
         print("staffIdstaffId",staffId)
-        tv.register(UINib(nibName: tvcellIdentifier, bundle: nil), forCellReuseIdentifier: tvcellIdentifier)
+        tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
         let rownib2 = UINib(nibName: HeaderTv, bundle: nil)
         tv.register(rownib2, forHeaderFooterViewReuseIdentifier: HeaderTv)
         nodatalabl.isHidden = true
@@ -127,7 +125,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: tvcellIdentifier, for: indexPath) as! StaffPtmTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StaffPtmTableViewCell, for: indexPath) as! StaffPtmTableViewCell
             cell.selectionStyle = .none
             cell.backView.layer.cornerRadius = 20
             cell.backView.layer.masksToBounds = true
@@ -154,7 +152,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvRowIdentifier, for: indexPath) as! SlotsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SlotsCollectionViewCell, for: indexPath) as! SlotsCollectionViewCell
        
         return cell
     }

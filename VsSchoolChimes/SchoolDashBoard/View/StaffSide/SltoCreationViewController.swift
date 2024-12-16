@@ -49,7 +49,6 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
     var dat : [DateEntry] = []
     var dateArry : [String] = []
     var  time = ""
-    let cvIdentifer = "SlotsCollectionViewCell"
     var display_date : String!
     var timeArry : [String] = []
     let dropDown = DropDown()
@@ -108,7 +107,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapToView))
         tapToviewLbl.addGestureRecognizer(tap)
         
-       cv.register(UINib(nibName: cvIdentifer, bundle: nil), forCellWithReuseIdentifier: cvIdentifer)
+       cv.register(UINib(nibName: CellConfingName.SlotsCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SlotsCollectionViewCell)
         slotBreakSwitch.addTarget(self, action: #selector(switchIsChanged), for: UIControl.Event.valueChanged)
 
     }
@@ -194,7 +193,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvIdentifer, for: indexPath) as! SlotsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SlotsCollectionViewCell, for: indexPath) as! SlotsCollectionViewCell
         
         if collectionView.indexPathsForSelectedItems?.contains(indexPath) == true {
             print("IFFFFF")

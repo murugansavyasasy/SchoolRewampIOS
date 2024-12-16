@@ -20,7 +20,6 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
     @IBOutlet weak var cv: UICollectionView!
     
     
-    let cvRowIdentifier = "SlotsCollectionViewCell"
   
 //
 //    var stdSecDetails: [sectionDetails] = [] {
@@ -34,7 +33,7 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
        override func awakeFromNib() {
            super.awakeFromNib()
       
-          cv.register(UINib(nibName: cvRowIdentifier, bundle: nil), forCellWithReuseIdentifier: cvRowIdentifier)
+           cv.register(UINib(nibName: CellConfingName.SlotsCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SlotsCollectionViewCell)
            cv.dataSource = self
            cv.delegate = self
        }
@@ -46,7 +45,7 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvRowIdentifier, for: indexPath) as! SlotsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SlotsCollectionViewCell, for: indexPath) as! SlotsCollectionViewCell
         print("SlotcellForItemAt")
         
 //        let data : sectionDetails = stdSecDetails[indexPath.row]

@@ -13,15 +13,14 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var tv: UITableView!
     
-    var identifier = "deleteTV"
     var InstitudeId : Int!
     var userId : Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         noRecLbl.isHidden = true
-        let rowNib = UINib(nibName: identifier, bundle: nil)
-        tv.register(rowNib, forCellReuseIdentifier: identifier)
+        let rowNib = UINib(nibName: CellConfingName.deleteTV, bundle: nil)
+        tv.register(rowNib, forCellReuseIdentifier: CellConfingName.deleteTV)
         let gifImage = UIImage.gifImageWithName("Map Location")
         imageView.image = gifImage
         let back  = UITapGestureRecognizer(target: self, action: #selector(backViewss))
@@ -37,7 +36,7 @@ class deleteVc: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as!
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.deleteTV, for: indexPath) as!
         deleteTV
         cell.selectionStyle = .none
         return cell

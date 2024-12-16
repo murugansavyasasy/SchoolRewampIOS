@@ -16,12 +16,11 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     var staffId : Int!
     var instituteId : Int!
     var date : String!
-    var identifier = "PunchHistTableViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let rowNiib = UINib(nibName: identifier, bundle: nil)
-        tv.register(rowNiib, forCellReuseIdentifier: identifier)
+        let rowNiib = UINib(nibName: CellConfingName.PunchHistTableViewCell, bundle: nil)
+        tv.register(rowNiib, forCellReuseIdentifier: CellConfingName.PunchHistTableViewCell)
         noRecordLbl.isHidden = true
         let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
         backView.addGestureRecognizer(back)
@@ -37,7 +36,7 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell  = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! PunchHistTableViewCell
+        let cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell
         return cell
     }
     

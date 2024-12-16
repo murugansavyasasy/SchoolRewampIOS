@@ -31,7 +31,6 @@ class CellConfingName {
     static let StudentHistryTVC = "StudentHistryTVC"
     static let MeetingsTVcell = "MeetingsTVcell"
     static let PiechartCVCell = "PiechartCVCell"
-
     static let AttachmentCVCell = "AttachmentCVCell"
     static let DateCVC = "DateCVC"
     static let ImageTVC = "ImageTVC"
@@ -48,5 +47,23 @@ class CellConfingName {
     static let SuggestionsCollectionViewCell = "SuggestionsCollectionViewCell"
     static let StrengthTvCell = "StrengthTvCell"
     static let NoticeBoardTvcellTableViewCell = "NoticeBoardTvcellTableViewCell"
+    static let SectionCollectionViewCell = "SectionCollectionViewCell"
+    static let SectionTvTableViewCell = "SectionTvTableViewCell"
+    static let CVIconCollectionViewCell = "CVIconCollectionViewCell"
+    static let ClassTableViewCell = "ClassTableViewCell"
+    static let deleteTV = "deleteTV"
+    static let LocationTableViewCell = "LocationTableViewCell"
+    static let DailyCollectionTableViewCell = "DailyCollectionTableViewCell"
+    static let DailyCollectionFeeCurrentTableViewCell = "DailyCollectionFeeCurrentTableViewCell"
+    static let CheckAviableTvHeader = "CheckAviableTvHeader"
+    static let CheckAviableTv = "CheckAviableTv"
+    static let SlotsCollectionViewCell = "SlotsCollectionViewCell"
+    static let PendingFeeReportTableViewCell = "PendingFeeReportTableViewCell"
+    static let PaymentListTableViewCell = "PaymentListTableViewCell"
+    static let PunchHistTableViewCell = "PunchHistTableViewCell"
+    static let StaffPtmTableViewCell = "StaffPtmTableViewCell"
+    static let TimeHeader = "TimeHeader"
+    static let cancelTableViewCell = "cancelTableViewCell"
+   
    
 }

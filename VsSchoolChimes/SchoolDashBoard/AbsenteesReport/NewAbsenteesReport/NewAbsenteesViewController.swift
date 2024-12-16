@@ -15,9 +15,7 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var cvIcon: UICollectionView!
     
-    let cvIconRowId = "CVIconCollectionViewCell"
-    let cvBottomRowId = "CVIconCollectionViewCell"
-    let TvIdentfier = "ClassTableViewCell"
+   
     var DateRef = ""
     var absenton = ""
     var Id = ""
@@ -27,11 +25,11 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         Id = "1"
-        cvIcon.register(UINib(nibName: cvIconRowId, bundle: nil), forCellWithReuseIdentifier: cvIconRowId)
+        cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
         let back = UITapGestureRecognizer(target: self, action: #selector(BackVc))
         backView.addGestureRecognizer(back)
-        let rowNib = UINib(nibName: TvIdentfier, bundle: nil)
-        Tv.register(rowNib, forCellReuseIdentifier: TvIdentfier)
+        let rowNib = UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil)
+        Tv.register(rowNib, forCellReuseIdentifier: CellConfingName.ClassTableViewCell)
     }
     
     @IBAction func BackVc() {
@@ -48,7 +46,7 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TvIdentfier, for: indexPath) as!
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ClassTableViewCell, for: indexPath) as!
         ClassTableViewCell
         return cell
     }
@@ -62,7 +60,7 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvIconRowId, for: indexPath) as! CVIconCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CVIconCollectionViewCell, for: indexPath) as! CVIconCollectionViewCell
         if ClickID == indexPath.row {
             cell.dateFulView.backgroundColor = .systemOrange
             cell.dayLbl.textColor = .white

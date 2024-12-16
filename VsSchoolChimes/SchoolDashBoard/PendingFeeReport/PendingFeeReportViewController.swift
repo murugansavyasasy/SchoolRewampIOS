@@ -24,7 +24,6 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     
     
     let dropDown = DropDown()
-    let rowIdentifier = "PendingFeeReportTableViewCell"
     var url_time : String!
     var url_hours : String!
     var url_minutes : String!
@@ -48,7 +47,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         }else{
         }
         tv.isHidden = true
-        tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
+        tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: "DataCollectionTvHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "DataCollectionTvHeaderView")
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
         backView.addGestureRecognizer(backGesture)

@@ -76,9 +76,6 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     var studentId  : Int!
     var classId  = 0
     var yearArr = [Int]()
-    var teacherSlotIdentifier =  "StaffPtmTableViewCell"
-    var HeaderTv = "TimeHeader"
-    var cancelTvCell  = "cancelTableViewCell"
     var getSubjectId = 0
     var getSubjectIdArr =  [Int]()
     var getLoginClassId : Int!
@@ -101,9 +98,9 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         tvTralling.constant = 0
         tv.isHidden=true
         cv.register(UINib(nibName: "PTMCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PTMCollectionViewCell")
-        tv.register(UINib(nibName: cancelTvCell, bundle: nil), forCellReuseIdentifier: cancelTvCell)
+        tv.register(UINib(nibName: CellConfingName.cancelTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.cancelTableViewCell)
         tv.register(UINib(nibName: tvcellIdentifier, bundle: nil), forCellReuseIdentifier: tvcellIdentifier)
-        tv.register(UINib(nibName: teacherSlotIdentifier, bundle: nil), forCellReuseIdentifier: teacherSlotIdentifier)
+        tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
         tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         selectedCell = IndexPath()
         let segments1 = UITapGestureRecognizer(target: self, action: #selector(seg1Vc))
@@ -127,7 +124,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         var DateInFormat = dateFormatter.string(from: todaysDate as Date)
         print("DateInFormat",DateInFormat)
         getEventDate = DateInFormat
-        tv.register(UINib(nibName: "TimeHeader", bundle: nil), forHeaderFooterViewReuseIdentifier: "TimeHeader")
+        tv.register(UINib(nibName: CellConfingName.TimeHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.TimeHeader)
         
     }
     
@@ -257,7 +254,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
-            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "TimeHeader") as! TimeHeader
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.TimeHeader) as! TimeHeader
 
 
             headerView.meetingLbl.text = exNames[section].eventName
@@ -357,7 +354,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
 
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-                let cell = tableView.dequeueReusableCell(withIdentifier: cancelTvCell, for: indexPath) as! cancelTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.cancelTableViewCell, for: indexPath) as! cancelTableViewCell
                 return cell
 
         }

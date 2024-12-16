@@ -20,7 +20,6 @@ class ImportantInfoViewController: UIViewController {
         
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
         backView.addGestureRecognizer(backGesture)
-        // Do any additional setup after loading the view.
     }
 
     

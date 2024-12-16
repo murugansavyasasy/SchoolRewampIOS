@@ -22,8 +22,6 @@ class CheckAviableViewController: UIViewController,UITableViewDelegate,UITableVi
 
     var timeStr : [String] = []
     var datStr : [String] = []
-    var header = "CheckAviableTvHeader"
-    var tvcellIdentifier = "CheckAviableTv"
     var screenId : Int!
     var StdAryy : [String] = []
     var ApiID = 0
@@ -50,10 +48,10 @@ class CheckAviableViewController: UIViewController,UITableViewDelegate,UITableVi
         
   
         checkAvilbDefltLbl.text = "Check slot avilibality"
-        tv.register(UINib(nibName: tvcellIdentifier, bundle: nil), forCellReuseIdentifier: tvcellIdentifier)
+        tv.register(UINib(nibName: CellConfingName.CheckAviableTv, bundle: nil), forCellReuseIdentifier: CellConfingName.CheckAviableTv)
         
-        let rownib2 = UINib(nibName: header, bundle: nil)
-        tv.register(rownib2, forHeaderFooterViewReuseIdentifier: header)
+        let rownib2 = UINib(nibName: CellConfingName.CheckAviableTvHeader, bundle: nil)
+        tv.register(rownib2, forHeaderFooterViewReuseIdentifier: CellConfingName.CheckAviableTvHeader)
         let checkAvibale = UITapGestureRecognizer(target: self, action: #selector(chechVc))
         checkAviablityView.addGestureRecognizer(checkAvibale)
         let back = UITapGestureRecognizer(target: self, action: #selector(backVC))
@@ -98,7 +96,7 @@ class CheckAviableViewController: UIViewController,UITableViewDelegate,UITableVi
       }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-                let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: header) as! CheckAviableTvHeader
+                let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.CheckAviableTv) as! CheckAviableTvHeader
                 return headerView
             }
     
@@ -115,7 +113,7 @@ class CheckAviableViewController: UIViewController,UITableViewDelegate,UITableVi
       
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: tvcellIdentifier, for: indexPath) as! CheckAviableTv
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.CheckAviableTv, for: indexPath) as! CheckAviableTv
         return cell
     }
  
