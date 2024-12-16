@@ -21,15 +21,6 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
     
     
   
-//
-//    var stdSecDetails: [sectionDetails] = [] {
-//           didSet {
-//               
-//               
-//               cv.reloadData()
-//           }
-//       }
-//       
        override func awakeFromNib() {
            super.awakeFromNib()
       
@@ -46,7 +37,6 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SlotsCollectionViewCell, for: indexPath) as! SlotsCollectionViewCell
-        print("SlotcellForItemAt")
         
 //        let data : sectionDetails = stdSecDetails[indexPath.row]
 //        cell.sectionFullView.backgroundColor = UIColor(named: "AppDark")

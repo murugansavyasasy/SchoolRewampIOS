@@ -26,7 +26,6 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var classId  = Int()
     var display_date : String!
     var url_date : String!
-    var HeaderTv = "SlotHeader"
     var CustomOrange = "AppDark"
     var type : Int!
     var SchoolId : String!
@@ -54,8 +53,8 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         print("SchoolId",SchoolId)
         print("staffIdstaffId",staffId)
         tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
-        let rownib2 = UINib(nibName: HeaderTv, bundle: nil)
-        tv.register(rownib2, forHeaderFooterViewReuseIdentifier: HeaderTv)
+        let rownib2 = UINib(nibName: CellConfingName.SlotHeader, bundle: nil)
+        tv.register(rownib2, forHeaderFooterViewReuseIdentifier: CellConfingName.SlotHeader)
         nodatalabl.isHidden = true
         let back = UITapGestureRecognizer(target: self , action:#selector(backVC) )
         backView.addGestureRecognizer(back)

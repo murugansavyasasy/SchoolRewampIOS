@@ -64,6 +64,13 @@ class CellConfingName {
     static let StaffPtmTableViewCell = "StaffPtmTableViewCell"
     static let TimeHeader = "TimeHeader"
     static let cancelTableViewCell = "cancelTableViewCell"
-   
-   
+    static let  DataCollectionTvHeaderView = "DataCollectionTvHeaderView"
+    static let  DailyCollectionFeePaymentTypeTableViewCell = "DailyCollectionFeePaymentTypeTableViewCell"
+    static let  SlotHeader = "SlotHeader"
+    static let  SlotHistoryTableViewCell = "SlotHistoryTableViewCell"
+    static let  PTMCollectionViewCell = "PTMCollectionViewCell"
+    static let  CalendarCollectionViewCell = "CalendarCollectionViewCell"
+    
+    
+    
 }

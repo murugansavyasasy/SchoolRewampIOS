@@ -41,7 +41,7 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TVIdenfier, for: indexPath) as!
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SectionTvTableViewCell, for: indexPath) as!
         SectionTvTableViewCell
         cell.selectionStyle = .none
         return cell

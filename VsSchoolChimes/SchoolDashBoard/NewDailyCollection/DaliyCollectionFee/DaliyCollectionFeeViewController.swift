@@ -38,7 +38,6 @@ class DaliyCollectionFeeViewController: UIViewController,UITableViewDataSource,U
     var indexList : Int!
     var getClickType : Int!
     var schoolType : String!
-    let paymentrowIdentifier = "DailyCollectionFeePaymentTypeTableViewCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +48,8 @@ class DaliyCollectionFeeViewController: UIViewController,UITableViewDataSource,U
         let CurrentrowNib = UINib(nibName: CellConfingName.DailyCollectionFeeCurrentTableViewCell, bundle: nil)
         tv.register(CurrentrowNib, forCellReuseIdentifier: CellConfingName.DailyCollectionFeeCurrentTableViewCell)
         
-        let paymentrowNib = UINib(nibName: paymentrowIdentifier, bundle: nil)
-        tv.register(paymentrowNib, forCellReuseIdentifier: paymentrowIdentifier)
+        let paymentrowNib = UINib(nibName: CellConfingName.DailyCollectionFeePaymentTypeTableViewCell, bundle: nil)
+        tv.register(paymentrowNib, forCellReuseIdentifier: CellConfingName.DailyCollectionFeePaymentTypeTableViewCell)
         
         tv.register(UINib(nibName: "DataCollectionTvHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "DataCollectionTvHeaderView")
         

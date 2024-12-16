@@ -91,7 +91,6 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
         Tv.dataSource = self
         Tv.delegate = self
         Tv.reloadData()
-        print("heloooo")
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

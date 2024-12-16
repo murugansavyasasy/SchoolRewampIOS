@@ -48,7 +48,6 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     var currentMonth: Int = Calendar.current.component(.month, from: Date())
     var segmentId = 1
     var ClickID = 0
-    var tvcellIdentifier = "SlotHistoryTableViewCell"
     var selectedCell:IndexPath?
     let daysInMonth = 30
     let daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
@@ -57,7 +56,6 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     var DayArr = [String]()
     var monthNumberArr = [String]()
     var getStaffArr = [Int]()
-    var rowNib = "CalendarCollectionViewCell"
     var selectedIndexPath: IndexPath?
     var clickIdType  = 0
     
@@ -97,9 +95,9 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         tvLeading.constant = 0
         tvTralling.constant = 0
         tv.isHidden=true
-        cv.register(UINib(nibName: "PTMCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "PTMCollectionViewCell")
+        cv.register(UINib(nibName: CellConfingName.PTMCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PTMCollectionViewCell)
         tv.register(UINib(nibName: CellConfingName.cancelTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.cancelTableViewCell)
-        tv.register(UINib(nibName: tvcellIdentifier, bundle: nil), forCellReuseIdentifier: tvcellIdentifier)
+        tv.register(UINib(nibName: CellConfingName.SlotHistoryTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotHistoryTableViewCell)
         tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
         tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         selectedCell = IndexPath()
@@ -114,7 +112,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         viewBack.addGestureRecognizer(backGesture)
         let dropDownGesture = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
         subView.addGestureRecognizer(dropDownGesture)
-        cv.register(UINib(nibName: rowNib, bundle: nil), forCellWithReuseIdentifier: rowNib)
+        cv.register(UINib(nibName: CellConfingName.CalendarCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CalendarCollectionViewCell)
         cv.dataSource = self
         cv.delegate = self
         generateDates()
@@ -164,7 +162,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         }
 
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: rowNib, for: indexPath) as! CalendarCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CalendarCollectionViewCell, for: indexPath) as! CalendarCollectionViewCell
             let date = dates[indexPath.item]
             if ClickID == indexPath.row {
                 cell.caleView.backgroundColor = .systemOrange

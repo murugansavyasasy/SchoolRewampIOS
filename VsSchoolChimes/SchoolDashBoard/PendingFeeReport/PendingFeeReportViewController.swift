@@ -48,7 +48,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         }
         tv.isHidden = true
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
-        tv.register(UINib(nibName: "DataCollectionTvHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "DataCollectionTvHeaderView")
+        tv.register(UINib(nibName: CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
         backView.addGestureRecognizer(backGesture)
         let dropDown = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
@@ -100,7 +100,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =  tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as!   PendingFeeReportTableViewCell
+        let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
         return cell
     }
     

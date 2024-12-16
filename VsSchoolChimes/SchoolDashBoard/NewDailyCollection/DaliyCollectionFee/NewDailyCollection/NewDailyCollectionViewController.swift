@@ -58,7 +58,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         tv.delegate = self
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.PaymentListTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentListTableViewCell)
-        tv.register(UINib(nibName: "DataCollectionTvHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "DataCollectionTvHeaderView")
+        tv.register(UINib(nibName:CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
         
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
         backView.addGestureRecognizer(backGesture)

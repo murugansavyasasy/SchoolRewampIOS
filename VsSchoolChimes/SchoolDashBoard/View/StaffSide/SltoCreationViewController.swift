@@ -117,7 +117,6 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
                if let pastedText = UIPasteboard.general.string, isValidURL(pastedText) {
                    return true
                } else {
-                   print("Invalid URL pasted")
                    return false
                }
            }
