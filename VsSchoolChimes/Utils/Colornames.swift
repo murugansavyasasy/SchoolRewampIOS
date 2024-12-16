@@ -39,7 +39,7 @@ class Colornames {
     static  var lesson3 =  UIColor(named: "lesson3")
 }
 class ImageName{
-    let PlayIcon = UIImage(named: "PlayIcon")!
+    let PlayIcon = UIImage(named: "PlayIcon")
     let PauseIcon = UIImage(named: "PauseIcon")
     let ImageIcon = UIImage(named: "ImageIcon")
     let p23 = UIImage(named: "p23")
