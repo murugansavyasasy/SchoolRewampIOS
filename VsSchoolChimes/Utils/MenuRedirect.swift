@@ -139,6 +139,15 @@ class MenuRedirectHandler {
         
     }
     
+    func senderMgmt(from viewController: UIViewController) {
+        let vc = MessageFromManagementViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+        
+    }
+    
+    
+    
     func senderLocationNavigate(from viewController: UIViewController) {
         let vc = LocationViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen

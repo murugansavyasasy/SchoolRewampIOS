@@ -12,6 +12,10 @@
 		180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180C6E942CE748980071CD04 /* AttachmentsReuseView.swift */; };
 		1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */; };
 		1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */; };
+		187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */; };
+		187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */; };
+		187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF4962D113B6E001422CE /* MessageFromManagementTableViewCell.xib */; };
+		187CF4982D113B6E001422CE /* MessageFromManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF4952D113B6E001422CE /* MessageFromManagementTableViewCell.swift */; };
 		18926C4D2D02DE81002BBB97 /* LsrwListShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C432D02DE81002BBB97 /* LsrwListShowTableViewCell.swift */; };
 		18926C4E2D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C492D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift */; };
 		18926C4F2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */; };
@@ -512,6 +516,10 @@
 		180C6E942CE748980071CD04 /* AttachmentsReuseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsReuseView.swift; sourceTree = "<group>"; };
 		1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideVideoViewController.swift; sourceTree = "<group>"; };
 		1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideVideoViewController.xib; sourceTree = "<group>"; };
+		187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromManagementViewController.swift; sourceTree = "<group>"; };
+		187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageFromManagementViewController.xib; sourceTree = "<group>"; };
+		187CF4952D113B6E001422CE /* MessageFromManagementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromManagementTableViewCell.swift; sourceTree = "<group>"; };
+		187CF4962D113B6E001422CE /* MessageFromManagementTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageFromManagementTableViewCell.xib; sourceTree = "<group>"; };
 		18926C2D2D02DE81002BBB97 /* RestrictionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictionTableViewCell.swift; sourceTree = "<group>"; };
 		18926C2E2D02DE81002BBB97 /* RestrictionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestrictionTableViewCell.xib; sourceTree = "<group>"; };
 		18926C2F2D02DE81002BBB97 /* RestrictionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictionModal.swift; sourceTree = "<group>"; };
@@ -1052,6 +1060,25 @@
 				1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */,
 			);
 			path = Video;
+			sourceTree = "<group>";
+		};
+		187CF48F2D113524001422CE /* MsgFrmManagement */ = {
+			isa = PBXGroup;
+			children = (
+				187CF4942D113B4E001422CE /* Cell */,
+				187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */,
+				187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */,
+			);
+			path = MsgFrmManagement;
+			sourceTree = "<group>";
+		};
+		187CF4942D113B4E001422CE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				187CF4952D113B6E001422CE /* MessageFromManagementTableViewCell.swift */,
+				187CF4962D113B6E001422CE /* MessageFromManagementTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		18926C312D02DE81002BBB97 /* RestrictionVc */ = {
@@ -2275,6 +2302,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				187CF48F2D113524001422CE /* MsgFrmManagement */,
 				84395FE62D10023200FC3242 /* Chat */,
 				18D718D52D0D479B00E9EDA3 /* AbsenteesReport */,
 				18D718982D0D477900E9EDA3 /* LocationVc */,
@@ -2928,6 +2956,7 @@
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
 				84A271802CEDAB9F0033EB02 /* New.gif in Resources */,
 				18926C5D2D02DE81002BBB97 /* FileAttachmentTableViewCell.xib in Resources */,
+				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
 				18926C5E2D02DE81002BBB97 /* LsrwListShowViewController.xib in Resources */,
 				18926C5F2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.xib in Resources */,
 				18926C602D02DE81002BBB97 /* SubmitLsrwViewController.xib in Resources */,
@@ -3040,6 +3069,7 @@
 				842FBAF32D0BFE64007C0B51 /* EditLessonplanVC.xib in Resources */,
 				842FBAF42D0BFE64007C0B51 /* LessonDetailsTVcell.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
+				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
@@ -3286,6 +3316,7 @@
 				84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */,
 				84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */,
 				18D718992D0D477900E9EDA3 /* EditLocReq.swift in Sources */,
+				187CF4982D113B6E001422CE /* MessageFromManagementTableViewCell.swift in Sources */,
 				18D7189A2D0D477900E9EDA3 /* GetLocationResp.swift in Sources */,
 				18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */,
 				18D7189C2D0D477900E9EDA3 /* PunchHistryReq.swift in Sources */,
@@ -3423,6 +3454,7 @@
 				84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */,
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
 				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
+				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
 				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,
 				84C82A032D086A490024A46A /* FireworkSpark.swift in Sources */,
 				84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */,
