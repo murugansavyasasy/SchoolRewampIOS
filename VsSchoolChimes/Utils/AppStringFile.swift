@@ -85,6 +85,7 @@ class AlertstringFile{
     static let Enter_the_10_digit = "Enter the 10 digit mobile number"
     static let Tems_And_Conition = "Please aggree to the terms and condition"
     static let Enter_Otp = "Enter the otp"
+    static let Mark_All_as_Present = "Mark All as Present?"
    
 }
 struct MenuTapbar{

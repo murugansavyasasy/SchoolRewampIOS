@@ -3,4 +3,52 @@
    uuid = "E6CDCC35-0089-4517-84AA-A3131D56217D"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E51DCD3E-3145-45F4-B833-35DFBC1CA4DF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/Repository/MethodName.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "MethodName"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "E51DCD3E-3145-45F4-B833-35DFBC1CA4DF - 84226bf5b278adec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "one-time initialization function for countryList"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/schoolNewStructure/SchoolRewampIOS/VsSchoolChimes/Repository/MethodName.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16">
+               </Location>
+               <Location
+                  uuid = "E51DCD3E-3145-45F4-B833-35DFBC1CA4DF - 10b2d75d8ab527ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.MethodName.countryList.unsafeMutableAddressor : Swift.String"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/schoolNewStructure/SchoolRewampIOS/VsSchoolChimes/Repository/MethodName.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
