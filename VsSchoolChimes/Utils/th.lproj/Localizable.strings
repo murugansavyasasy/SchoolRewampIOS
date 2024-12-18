@@ -201,6 +201,13 @@
 "Section" = "ส่วน '10th C'";
 "Present" = "มา";
 "Absent" = "ขาด";
+"RollNo_ASC" = "หมายเลขโรลจากน้อยไปมาก";
+"RollNo_DESC" = "หมายเลขโรลจากมากไปน้อย";
+"Name_ASC" = "ชื่อจากน้อยไปมาก";
+"Name_DESC" = "ชื่อจากมากไปน้อย";
+"getAllStudent" = "รับนักเรียนทั้งหมด";
+"completed" = "เสร็จสิ้น";
+"pending" = "รอดำเนินการ";
 
 //MARK: Event
 "Circulars" = "วงเวียน";
@@ -220,3 +227,9 @@
 "EnterTextHere" = "กรอกข้อความของคุณที่นี่...";
 "egYogaEvent" = "เช่น กิจกรรมโยคะ";
 "egChennai" = "เช่น เชนไน";
+//MARK: Comunication
+"BackToTextMessage" = "กลับไปที่ข้อความตัวอักษร";
+"BackToVoiceMessage" = "กลับไปที่ข้อความเสียง";
+"selectedText" = "ข้อความที่เลือก";
+"invalidSelection" = "การเลือกไม่ถูกต้อง";
+"selectDatesWithinMonth" = "คุณสามารถเลือกวันที่ภายในเดือนที่แสดงอยู่ในปัจจุบันเท่านั้น";

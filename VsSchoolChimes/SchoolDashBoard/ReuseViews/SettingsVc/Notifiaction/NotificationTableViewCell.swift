@@ -23,15 +23,11 @@ class NotificationTableViewCell: UITableViewCell {
         NameLabel.setFont(style: .title, size: FontSize.TitleSize)
         messageTypeLabel.setFont(style: .title, size: FontSize.TitleSize)
         contentLabel.setFont(style: .body, size: FontSize.BodySize)
-    
-        
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOpacity = 0.5
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellview.layer.shadowRadius = 3
         cellview.layer.masksToBounds = false
-        
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

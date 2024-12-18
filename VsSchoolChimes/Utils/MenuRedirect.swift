@@ -25,7 +25,7 @@ class MenuRedirectHandler {
         
     }
     
-    var items : [String] = [ "Communication".translated(),"Image/Pdf".translated(),"Video Upload".translated(),"Circulars".translated(),"Notice Board".translated(),"Leave Requests".translated(),"Assignment".translated(),"Online Meeting".translated(),"Homework".translated(),"Schedule Exam/Test".translated(),"Attendance marking".translated(),"Messages from management".translated(),"Interaction with student".translated(),"Lesson Plan".translated(),"PTM".translated(), "Text to Parents/Staff".translated(),"School / Class Events".translated(),"School Needs".translated(),"Very Important Info".translated(),"Absentees Report".translated(),"School strength".translated(),"Daily Collection".translated(),"Student Report".translated(),"Fee Pending Report".translated(),"Mark Your Attendance".translated(),"Staff Wise Attendance Report".translated()]
+    var items : [String] = [ "Communication","Image/Pdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule Exam/Test","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM", "Text to Parents/Staff","School / Class Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Text to Parents/Staff","School / Class Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
@@ -90,7 +90,15 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
-    
+    func ScheduleExamVCNavigat(from viewController: UIViewController){
+        let vc = EventPageVC(nibName: nil, bundle: nil)
+        vc.page1 = ScheduleExamVC(nibName: nil, bundle: nil)
+        vc.page2 = ScheduleExamsList(nibName: nil, bundle: nil)
+        vc.titleLbl = "ScheduleExam".translated()
+        vc.button1 = "Schedule"
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     func senderAssignmentNavigate(from viewController: UIViewController) {
         let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -231,5 +239,7 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
+ 
     
 }
+

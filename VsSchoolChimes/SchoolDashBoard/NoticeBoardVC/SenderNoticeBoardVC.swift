@@ -13,29 +13,9 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate, DeleteImge {
-    func deleteImage(index: Int) {
-        selectedImages.remove(at: index)
-        costomView.imageCollectionview.reloadData()
-    }
-    
-    
+  
     @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var textview: UITextView!
-    
-    let photoPickManager = PhotoPickerManager.shared
-    var selectedImages: [UIImage] = []
-    var convertedImagesUrlArray = NSMutableArray()
-    var dateSelection = false
-    var imageUrlArray = NSMutableArray()
-    var pdfData : Data? = nil
-    var placeholderLabel: UILabel!
-    var doneButton: UIButton!
-    var datePicker: UIDatePicker!
-    var activeButton: UIButton?
-    var Title = ""
-    var desript = ""
-    var url : URL?
-    let Img = ImageName()
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var setTitle: UILabel!
@@ -52,10 +32,24 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var addPhotoLbl: UILabel!
     @IBOutlet weak var createDateLbl: UILabel!
-    
     @IBOutlet weak var toDate: UILabel!
     @IBOutlet weak var fromDate: UILabel!
     @IBOutlet weak var eventTxt: UITextField!
+    
+    let photoPickManager = PhotoPickerManager.shared
+    var selectedImages: [UIImage] = []
+    var convertedImagesUrlArray = NSMutableArray()
+    var dateSelection = false
+    var imageUrlArray = NSMutableArray()
+    var pdfData : Data? = nil
+    var placeholderLabel: UILabel!
+    var doneButton: UIButton!
+    var datePicker: UIDatePicker!
+    var activeButton: UIButton?
+    var Title = ""
+    var desript = ""
+    var url : URL?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupdatePicker()
@@ -118,7 +112,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             guard let self = self else { return }
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
-            selectedImages.append(Img.pdf!)
+            selectedImages.append(ImageName.pdf!)
             //            url = URL(string:pdfurl)
             //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()
@@ -136,7 +130,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         }
         
         
-       
+        
         
     }
     
@@ -220,7 +214,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "EnterTextHere".translated()
+        placeholderLabel.text = CommonStringFile.EnterTextHere
         placeholderLabel.font = textview.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -268,14 +262,6 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func StyleAndTranslater(){
         //MARK: Translate
         HeadingLabel.text =  MenuTapbar.ComposeNotifications.translated()
-       
-        
-        
-        //MARK: UI Design
-        //        SubmitBtn.layer.cornerRadius = Colornames.CORadius10
-        //        textfield.layer.cornerRadius = Colornames.CORadius10
-        //        textfield.layer.borderWidth = 0.8
-        //        textfield.layer.borderColor = UIColor.black.cgColor
         
         //MARK: Label Font
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
@@ -289,42 +275,16 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
         todateBtn.setTitleFont(style: .body, size: 12)
         fromdateBtn.setTitleFont(style: .body, size: 12)
-        addPhotoLbl.text = "AddPhotos".translated()
+        addPhotoLbl.text = CommonStringFile.AddPhotos
         
-        setTitle.text = "EventTitle".translated()
-        eventTxt.placeholder = "egYogaEvent".translated()
-        enterDetails.text = "EventDetails".translated()
-        setAttributedText(for: addPhotoLbl, with: "AddPhotos1".translated(), firstString: "AddPhotos".translated(), secondString: "Optional".translated(), color1: .black, color2: .lightGray)
-        
-        //MARK: Label Font
-        //        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        setTitle.text = CommonStringFile.EventTitle
+        eventTxt.placeholder = CommonStringFile.egYogaEvent
+        enterDetails.text = CommonStringFile.EventDetails
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1, firstString: CommonStringFile.AddPhotos, secondString:CommonStringFile.Optional, color1: .black, color2: .lightGray)
         
     }
     
-//    func SendNotice(){
-//        textview.text = "Type content here"
-//        textfield.text = "Type News Topiccc"
-//        textview.textColor = .lightGray
-//    }
     
-//    func resendFromHistory(){
-//        textview.text = desc
-//        textview.textColor = .black
-//        textfield.text = title1
-//        SubmitBtn.backgroundColor = .button
-//        code = 1
-//    }
-//    
-//    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-//        if sender == FromDatePicker{
-//            ToDatePicker.minimumDate = FromDatePicker.date
-//        }
-//        self.dismiss(animated: true, completion: nil)
-//        let selectedDate = sender.date
-//        print("Selected Date: \(selectedDate)")
-//      
-//        }
-     
     @IBAction func SubmitAction(_ sender: Any) {
         
         let vc = SelectRecipientVC(nibName: nil, bundle: nil)
@@ -422,7 +382,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func textViewDidEndEditing(_ textView: UITextView) {
         
         if textview.text.isEmpty == true{
-            textview.text = "Type content here"
+            textview.text = CommonStringFile.EnterTextHere
             textview.textColor = .lightGray
         }
     }
@@ -460,9 +420,6 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         }
         textView.layoutIfNeeded() // Refresh the layout
     }
-    
-    
-    
     // MARK: File Attachments Actions
     
     func selectImages() {
@@ -481,20 +438,19 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
         }
     }
     func selectPDF() {
         photoPickManager.pickPDF(from: self)
-        
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        
         controller.dismiss(animated: true, completion: nil)
-        
     }
-    
+    func deleteImage(index: Int) {
+        selectedImages.remove(at: index)
+        costomView.imageCollectionview.reloadData()
+    }
     
 }
 
@@ -541,50 +497,35 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-            //
-            // Camera option
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-                //
+            let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
+            let cameraAction = UIAlertAction(title:AlertstringFile.Camera, style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
-            
-            // Gallery option
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-                //
+            let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
                 selectImages()
-                //
             }
             alertController.addAction(galleryAction)
-            
-            //             PDF option
-            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
                 
                 selectPDF()
             }
             alertController.addAction(pdfAction)
-            
-            // Cancel action
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title:AlertstringFile.Cancel, style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
-            
-            // Present the alert
             self.present(alertController, animated: true, completion: nil)
         }else{
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 vc.selectedFileURL = url
-                // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
-                //
                 present(vc, animated: true)
             }
-    
+            
         }
-       
-
+        
+        
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
             
             controller.dismiss(animated: true, completion: nil)

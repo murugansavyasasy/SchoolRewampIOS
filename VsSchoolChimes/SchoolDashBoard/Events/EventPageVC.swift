@@ -22,6 +22,8 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     var page1 = UIViewController()
     var page2 = UIViewController() 
     var titleLbl = ""
+    var button1 = "Create".translated()
+    var button2 = "History".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
         uiConficration()
@@ -46,8 +48,8 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         createEvent.layer.cornerRadius = 20
         createEvent.setTitleFont(style: .body, size: FontSize.BodySize)
         historyBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        historyBtn.setTitle("History".translated(), for: .normal)
-        createEvent.setTitle("Create".translated(), for: .normal)
+        historyBtn.setTitle(button2, for: .normal)
+        createEvent.setTitle(button1, for: .normal)
     }
     private func setupPageViewController() {
         // Initialize the page view controller

@@ -11,7 +11,7 @@ import PhotosUI
 import AWSS3
 @available(iOS 14.0, *)
 class SenderSideImagePdfViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate {
-//, UITableViewDataSource, UITableViewDelegate  {
+    //, UITableViewDataSource, UITableViewDelegate  {
     
     @IBOutlet weak var stdSecBtn: UIButton!
     
@@ -40,7 +40,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     var selectedImages: [UIImage] = []
     var getType = "Principal"
     var imageStr : [String] = []
-  
+    
     var schoolListArr = ["Sales","Vss","SSS","SSS2020"]
     var totalImageCount = 0
     var currentImageCount = 0
@@ -53,21 +53,16 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-  
-        
-        stdSecBtn.setTitle("Standard or section".translated(), for: .normal)
-        secStudBtn.setTitle("Section or student".translated(), for: .normal)
-        groupBtn.setTitle("Groups".translated(), for: .normal)
         
         
-        uploadAttacLbl.text = "Upload Attachment".translated()
-        titleLbl.text = "Upload Image/Pdf".translated()
-        descTextField.placeholder = "Description".translated()
-      
+        stdSecBtn.setTitle(CommonStringFile.Standardorsection, for: .normal)
+        secStudBtn.setTitle(CommonStringFile.Sectionorstudent, for: .normal)
+        groupBtn.setTitle(CommonStringFile.Groups, for: .normal)
         
-//        schoolListTv.dataSource = self
-//        schoolListTv.delegate = self
         
+        uploadAttacLbl.text = CommonStringFile.UploadAttachment
+        titleLbl.text = CommonStringFile.UploadImagepdf
+        descTextField.placeholder = CommonStringFile.Description
         imgPdCollectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
         
@@ -98,18 +93,18 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         }
         
         photoPickManager.onImagePicked = { [weak self] images in
-                   guard let self = self else { return }
-                   // Handle selected images here
+            guard let self = self else { return }
+            // Handle selected images here
             
             selectedImages.append(contentsOf: images)
             imgPdCollectionView.delegate = self
             imgPdCollectionView.dataSource = self
-           
-                   for image in images {
-                       print("Selected image: \(image)")
-                       photoPickManager.uploadAWS(image: image)
-                   }
-               }
+            
+            for image in images {
+                print("Selected image: \(image)")
+                //                       photoPickManager.uploadAWS(image: image)
+            }
+        }
         
         
     }
@@ -120,32 +115,32 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     
     @IBAction func presentSelectionAlert() {
-        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-       
+        let alertController = UIAlertController(title:AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
+        
         // Camera option
-        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-
+        let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
+            
             openCamera()
         }
         alertController.addAction(cameraAction)
         
         // Gallery option
-        let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-
+        let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
+            
             selectImages()
-
-                   }
+            
+        }
         alertController.addAction(galleryAction)
         
         // PDF option
-        let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-           
+        let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
+            
             photoPickManager.pickPDF(from: self)
         }
         alertController.addAction(pdfAction)
         
         // Cancel action
-        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         // Present the alert
@@ -163,22 +158,18 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
             present(imagePicker, animated: true, completion: nil)
         } else {
             // Camera is not available, show an alert
-            let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
+            let alert = UIAlertController(title: AlertstringFile.CameraNotAvailable, message:AlertstringFile.devicehasnoCamara, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
     }
     
-   
+    
     // Handle the image once it has been captured
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {
-            // Use the captured image
-            // For example, display it in an image view or save it
-            print("Captured Image: \(image)")
             self.selectedImages.append(image)
         } else if let image = info[.originalImage] as? UIImage {
-            print("Captured Image: \(image)")
             self.selectedImages.append(image)
         }
         dismiss(animated: true, completion: nil)
@@ -189,15 +180,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         dismiss(animated: true, completion: nil)
     }
     
-  
-    
-            
-            
-    
-    
-//    MARK: Button Action
-    
-    
+    //    MARK: Button Action
     @IBAction func toStaffBtnAction(_ sender: UIButton) {
         
     }
@@ -213,37 +196,29 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
 
 @available(iOS 14.0, *)
 extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollectionViewDataSource{
-    
-    
-    
     func selectImages() {
         photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
-
-
-       }
-       
-       
-       // MARK: - UICollectionView DataSource
-       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-           print("selectedImagescount",selectedImages.count)
-           return selectedImages.count
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-           cell.imageViews.image = selectedImages[indexPath.item]
-           return cell
-       }
-       
-       // MARK: - UICollectionView Delegate
-       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-           // Delete the selected image
-           selectedImages.remove(at: indexPath.item)
-           collectionView.deleteItems(at: [indexPath])
-       }
-       
-       
+        
+        
+    }
+    // MARK: - UICollectionView DataSource
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("selectedImagescount",selectedImages.count)
+        return selectedImages.count
+    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+        cell.imageViews.image = selectedImages[indexPath.item]
+        return cell
+    }
+    
+    // MARK: - UICollectionView Delegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Delete the selected image
+        selectedImages.remove(at: indexPath.item)
+        collectionView.deleteItems(at: [indexPath])
+    }
 }
 
 @available(iOS 14.0, *)
@@ -253,26 +228,4 @@ extension SenderSideImagePdfViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: width)
     }
     
-    
-    
-    
 }
-    
-    
-
-//    
-////@available(iOS 14.0, *)
-//
-//// MARK: School List Tv Cell
-////extension SenderSideImagePdfViewController: UITableViewDelegate,UITableViewDataSource {
-////        
-////        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-////            schoolListArr.count
-////        }
-////        
-////        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-////            let cell = tableView.dequeueReusableCell(withIdentifier: "", for: indexPath)
-////            return cell
-////        }
-////  
-////}

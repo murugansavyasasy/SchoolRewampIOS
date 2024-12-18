@@ -34,7 +34,7 @@
 
     UserDefaults.standard.set(passedValue, forKey: "passvalue")
 
-    NextButtonView.isHidden = true
+  
     NextButtonView.layer.cornerRadius = 18
 
     priorityview.layer.cornerRadius = 20
@@ -70,7 +70,6 @@
     let nib1 = UINib(nibName: CellConfingName.principalTVCell, bundle: nil)
     tableview.register(nib1, forCellReuseIdentifier: CellConfingName.principalTVCell)
 
-
     tableview.delegate = self
     tableview.dataSource = self
     tableview.reloadData()
@@ -78,6 +77,7 @@
 
 
     @IBAction func teacherAct(_ sender: Any) {
+        NextButtonView.isHidden = false
     gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
 
 
@@ -98,7 +98,7 @@
 
 
     @IBAction func ParentAct(_ sender: Any) {
-
+        NextButtonView.isHidden = true
     gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
 
     ParentButton.setTitleColor(.white, for:.normal)
@@ -139,14 +139,12 @@
 
     @IBAction func NextAction(_ sender: Any) {
 
-    if selectedIndexPath != nil{
-
     let vc = TapBarVC(nibName: nil, bundle: nil)
     vc.modalPresentationStyle = .fullScreen
     vc.passedValue = passedValue
     present(vc, animated: true)
     }
-    }
+  
 
     }
 
@@ -158,7 +156,7 @@
         
     if passedValue == 1 {
             
-        return 0
+        return 5
     }else{
         
         return 10
@@ -209,35 +207,15 @@
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-    NextButtonView.isHidden = false
-    // Update the selection when a row is tapped
-    updateSelection(for: indexPath, in: tableView)
+        if passedValue  == 2 {
+            
+            let vc = TapBarVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            vc.passedValue = passedValue
+            present(vc, animated: true)
+        }
     }
 
-    private func updateSelection(for indexPath: IndexPath, in tableView: UITableView) {
-    // Check if the row was already selected
-    if selectedIndexPath == indexPath {
-
-    selectedIndexPath = nil // Deselect
-    NextButtonView.isHidden = true
-
-    } else {
-
-    selectedIndexPath = indexPath // Select the new row
-    }
-
-    // Reload data to update the checkboxes
-    tableView.reloadData()
-    }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    // Ensure checkbox is deselected if the row is deselected
-    if let cell = tableView.cellForRow(at: indexPath) as? principalTVCell {
-
-    cell.checkbox.isChecked = false
-
-    }
-    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return UITableView.automaticDimension

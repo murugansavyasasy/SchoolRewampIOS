@@ -25,30 +25,30 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
     var totalImageCount = 0
     var originalImagesArray = [UIImage]()
     var onImagesPicked: (([UIImage]) -> Void)?
-
-   
+    
+    
     func getCurrentViewController() -> UIViewController? {
-   //
-           if let rootController = UIApplication.shared.keyWindow?.rootViewController {
-               var currentController: UIViewController! = rootController
-               while( currentController.presentedViewController != nil ) {
-                   currentController = currentController.presentedViewController
-               }
-               return currentController
-           }
-           return nil
-   
-           }
+        //
+        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
+            var currentController: UIViewController! = rootController
+            while( currentController.presentedViewController != nil ) {
+                currentController = currentController.presentedViewController
+            }
+            return currentController
+        }
+        return nil
+        
+    }
     
     
     func dismissViewController() {
-            // Call dismiss on the view controller if this method is in a view controller context
-            if let viewController = UIApplication.shared.keyWindow?.rootViewController {
-                viewController.dismiss(animated: true, completion: nil)
-            }
+        // Call dismiss on the view controller if this method is in a view controller context
+        if let viewController = UIApplication.shared.keyWindow?.rootViewController {
+            viewController.dismiss(animated: true, completion: nil)
         }
+    }
     static func openCamera(from viewController: UIViewController) {
-       
+        
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = viewController as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
@@ -56,17 +56,17 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
             imagePicker.allowsEditing = true
             viewController.present(imagePicker, animated: true)
         } else {
-            let alert = UIAlertController(title: "Camera Not Available".localized,
-                                          message: "This device has no camera.".localized,
+            let alert = UIAlertController(title: AlertstringFile.CameraNotAvailable,
+                                          message: AlertstringFile.devicehasnoCamara,
                                           preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: nil))
             viewController.present(alert, animated: true)
         }
     }
     
     
     static func selectPDF(from viewController: UIViewController) {
-       
+        
         let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
         documentPicker.delegate = CameraUtility()
         viewController.present(documentPicker, animated: true, completion: nil)
@@ -75,20 +75,11 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
     
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
-
-        
-        
-        
         let fileurl: URL = urls as URL
         let filename = urls.lastPathComponent
         let fileextension = urls.pathExtension
         print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
-        
- 
         let imageData = NSData(contentsOf: urls)
-        
-        
-        
         
         do {
             pdfData = try Data(contentsOf: urls, options: NSData.ReadingOptions())
@@ -98,8 +89,6 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
             print("set PDF filer error : ", error)
             
         }
-           
-        
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -116,13 +105,9 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
         let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
         
         let ext = imageName as String
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        
         let  currentDate =   dateFormatter.string(from: Date())
-        
-        
         let fileName = imageNameWithoutExtension
         let fileType = ".pdf"
         
@@ -141,61 +126,38 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
         uploadRequest?.bucket = S3BucketName
         
         uploadRequest?.contentType = "application/pdf"
-        
-        
         let transferManager = AWSS3TransferManager.default()
         transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
             
             if let error = task.error {
                 print("Upload failed : (\(error))")
-                
-              
             }
             
             if task.result != nil {
                 let url = AWSS3.default().configuration.endpoint.url
                 let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
                 if let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                  
                     let imageDict = NSMutableDictionary()
                     imageDict["FileName"] = absoluteString
                     self.imageUrlArray.add(imageDict)
                     self.convertedImagesUrlArray = self.imageUrlArray
-                    
-                    
-                    
-                    
-                 
                 }
             }
             else {
-                
-              
                 print("Unexpected empty result.")
             }
             return nil
         }
     }
     
-   
-      
-    
- 
     func uploadAWS(image : UIImage){
-    
+        
         let S3BucketName = AwsCredentials.bucketNameIndia
         let CognitoPoolID = AwsCredentials.CognitoPoolID
         let Region = AWSRegionType.APSouth1
-        
-        
-      
         let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
         let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
         let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".png")
-        
-        
-        
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -213,9 +175,6 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
             try data?.write(to: imageURL)
         }
         catch {}
-        
-        print(imageURL)
-        
         let uploadRequest = AWSS3TransferManagerUploadRequest()
         uploadRequest?.body = imageURL
         uploadRequest?.key =   currentDate +  "/" + "File_" + ext
@@ -226,8 +185,6 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
         } else{
             uploadRequest?.contentType = "image/png"
         }
-      
-        
         let transferManager = AWSS3TransferManager.default()
         transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
             
@@ -239,26 +196,13 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
                 let url = AWSS3.default().configuration.endpoint.url
                 let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
                 if let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                    
-                  
-                    
-                    
                     imageStr.append(absoluteString)
-                  
-                    
                     let imageDicthome = NSMutableDictionary()
                     imageDicthome["path"] = absoluteString
                     imageDicthome["type"] = "IMAGE"
                     let imageDict = NSMutableDictionary()
                     var emptyDictionary = [String: String]()
-                    
                     imageFilePath.add(imageDicthome)
-                    
-                    
-                    
-                
-                    
                     self.currentImageCount = self.currentImageCount + 1
                     if self.currentImageCount < self.totalImageCount{
                         DispatchQueue.main.async {
@@ -274,25 +218,14 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
             
             return nil
         }
-       
     }
-    
-    
-  
-    
     func getImageURL(images : [UIImage]){
-        
-       
-       
         self.originalImagesArray = images
         self.totalImageCount = images.count
         if currentImageCount < images.count{
             self.uploadAWS(image: images[currentImageCount])
         }
     }
-    
-    
-    
 }
 
 
@@ -301,7 +234,7 @@ class CameraUtility: NSObject, UIImagePickerControllerDelegate, UINavigationCont
 @available(iOS 14.0, *)
 extension CameraUtility : PHPickerViewControllerDelegate{
     
-   
+    
     func selectImages(from viewController: UIViewController) {
         var config = PHPickerConfiguration()
         config.selectionLimit = 5  // Limit selection to 5 images
@@ -331,7 +264,7 @@ extension CameraUtility : PHPickerViewControllerDelegate{
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info:
-     [UIImagePickerController.InfoKey : Any]) {
+                               [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {
             // Use the captured image
             // For example, display it in an image view or save it

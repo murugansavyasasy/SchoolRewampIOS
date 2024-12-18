@@ -29,20 +29,20 @@ class LanguageVc: UIViewController {
     var Language = ["English","தமிழ்","हिंदी","ไทย"]
     var  Buttontext = ["Confirm","உறுதிப்படுத்தவும்","पुष्टि करें","ยืนยัน"]
     var index = 0
-    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("LanguageVc")
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
         SelectLangLabel.setFont(style: .title, size: FontSize.TitleSize)
+        
         index = UserDefaults.standard.integer(forKey: "index")
         Items[index].selected = true
         
-        let defaults = UserDefaults.standard
-        
-        languageCode = defaults.string(forKey:DefaultsKeys.Language) ?? "en"
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+//        let defaults = UserDefaults.standard
+//        
+//        languageCode = defaults.string(forKey:DefaultsKeys.Language)!
         baseview.layer.cornerRadius = Colornames.CORadius15
         
         ConfirmBtn.layer.cornerRadius = Colornames.CORadius10
@@ -87,14 +87,39 @@ class LanguageVc: UIViewController {
         
         // Apply the language immediately
         userDefault.synchronize()
+        let value = UserDefaults.standard.integer(forKey: "passvalue")
+        
+//        LanguageManager.shared.setLanguage(languageCode)
+//                
+//                // Reload UI
+//        reloadApplication(value: value)
+       
         let vc = TapBarVC(nibName: nil, bundle: nil)
+        vc.passedValue = value
+        vc.languageCode = languageCode
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+        
     }
     
-}
+    // Reload the application to apply the new language
+    func reloadApplication(value : Int) {
+    
+        
+        let window = UIApplication.shared.windows.first
 
-
+        // Instantiate the ViewController from the XIB file
+        let homeVC = TapBarVC(nibName: "TapBarVC", bundle: nil)
+        homeVC.passedValue = value
+        // Set the new rootViewController to the window
+        window?.rootViewController = homeVC
+        window?.makeKeyAndVisible()
+    }
+    
+  
+        }
+        
+ 
 @available(iOS 14.0, *)
 extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
     
@@ -111,12 +136,12 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
             ConfirmBtn.setTitle(Buttontext[index], for: .normal)
             ConfirmBtn.titleLabel?.textAlignment = .center
             ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-            cell.RadioImage.image = Img.checkedTick
+            cell.RadioImage.image = ImageName.checkedTick
             cell.LangIconImg.tintColor = .systemOrange
             
         }else{
             
-            cell.RadioImage.image = Img.CheckCircle
+            cell.RadioImage.image = ImageName.CheckCircle
             cell.LangIconImg.tintColor = .lightGray
         }
         
@@ -165,12 +190,8 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
     
     func adjustTableViewHeight() {
         // Calculate the total height based on rows and row height
-        let totalHeight = CGFloat(Items.count) * 75.0 // 60.0 is example row height; replace with your own
-        
-        // Set the height constraint to the calculated height
+        let totalHeight = CGFloat(Items.count) * 75.0 // 60.0 is example row height; replace
         tableViewHeightConstraint.constant = totalHeight
-        
-        // Update the layout with the new constraint value
         self.baseview.layoutIfNeeded()
     }
 }

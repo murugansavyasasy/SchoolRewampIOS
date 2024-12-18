@@ -218,3 +218,17 @@
 "EnterTextHere" = "यहाँ अपना टेक्स्ट दर्ज करें...";
 "egYogaEvent" = "उदा. योग कार्यक्रम";
 "egChennai" = "उदा. चेन्नई";
+"RollNo_ASC" = "क्रमांक आरोही";
+"RollNo_DESC" = "क्रमांक अवरोही";
+"Name_ASC" = "नाम आरोही";
+"Name_DESC" = "नाम अवरोही";
+"getAllStudent" = "सभी छात्रों को प्राप्त करें";
+"completed" = "पूर्ण";
+"pending" = "लंबित";
+
+//MARK: Comunication
+"BackToTextMessage" = "टेक्स्ट संदेश पर वापस जाएं";
+"BackToVoiceMessage" = "वॉयस संदेश पर वापस जाएं";
+"selectedText" = "चयनित पाठ";
+"invalidSelection" = "अमान्य चयन";
+"selectDatesWithinMonth" = "आप केवल वर्तमान में प्रदर्शित माह के भीतर की तिथियों का चयन कर सकते हैं।";

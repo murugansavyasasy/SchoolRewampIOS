@@ -9,7 +9,7 @@ import UIKit
 import Charts
 
 class StrengthTvCell: UITableViewCell {
-
+    
     @IBOutlet weak var dropdownImgview: UIImageView!
     @IBOutlet weak var countLbl: UILabel!
     @IBOutlet weak var countView: UIView!
@@ -32,72 +32,7 @@ class StrengthTvCell: UITableViewCell {
         setupBarChart()
         setBarChartData()
         
-//        barchartHeight.constant = 0
-//        barChartView.isHidden = true
-       
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
-    
-   
-
-    // Function to set up the bar chart
-//    private func setupBarChart() {
-//        barChartView.noDataText = "No data available."
-//        barChartView.chartDescription.enabled = false
-//        
-//        // X-Axis Configuration
-//        barChartView.xAxis.labelPosition = .bottom
-//        barChartView.xAxis.drawGridLinesEnabled = false
-//        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: ["A", "B", "C", "D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"])
-//        barChartView.xAxis.granularity = 1
-//        
-//        // Y-Axis Configuration
-//        barChartView.leftAxis.axisMinimum = 0 // Ensure Y-axis starts at zero
-//        barChartView.rightAxis.enabled = false // Hide right axis
-//        
-//        // Legend
-//        barChartView.legend.enabled = false
-//    }
-//
-//    // Function to populate bar chart data
-//    private func setBarChartData() {
-//        // Example values for sections A, B, C, D
-//       // let sectionCounts = [50, 75, 30, 60,45,36,47,76,43,32,87]
-//        let sectionCounts = [44, 27, 19, 41, 33, 30, 49, 32, 36, 40, 22, 29, 37, 45, 35, 39, 24, 28, 50, 38, 31, 34, 42, 43, 25, 50]
-//        
-//        // Create data entries for each section
-//        var entries: [BarChartDataEntry] = []
-//        for (index, count) in sectionCounts.enumerated() {
-//            entries.append(BarChartDataEntry(x: Double(index), y: Double(count)))
-//        }
-//        
-//        // Data set
-//        let dataSet = BarChartDataSet(entries: entries, label: "Student Count")
-//        if #available(iOS 15.0, *) {
-//            dataSet.colors = [UIColor.systemMint,UIColor.systemYellow,UIColor.systemOrange,UIColor.systemRed]
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        dataSet.valueFont = .systemFont(ofSize: 12)
-//        dataSet.valueTextColor = .black
-//        
-//        // Add data set to BarChartData
-//        let data = BarChartData(dataSet: dataSet)
-//        data.setValueFormatter(DefaultValueFormatter(decimals: 0)) // No decimal places
-//        
-//        // Assign data to chart
-//        barChartView.data = data
-//        
-//        // Animate chart
-//        barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
-//    }
-
     
     private func setupBarChart() {
         barChartView.noDataText = "No data available."
@@ -113,10 +48,10 @@ class StrengthTvCell: UITableViewCell {
         barChartView.xAxis.granularity = 0.5
         barChartView.xAxis.labelCount = 26
         barChartView.xAxis.avoidFirstLastClippingEnabled = true
-
+        
         // Add extra offsets for better padding
         barChartView.setExtraOffsets(left: 10, top: 10, right: 10, bottom: 10)
-
+        
         // Enable scrolling
         barChartView.setScaleEnabled(false) // Disable pinch zoom
         barChartView.dragEnabled = true // Enable drag
@@ -132,7 +67,7 @@ class StrengthTvCell: UITableViewCell {
         // Adding custom labels (Axis Titles) inside the chart
         addAxisLabels()
     }
-
+    
     private func addAxisLabels() {
         // Add X-Axis Label (Class) inside the chart, below the X-axis
         let xAxisLabel = UILabel()
@@ -145,20 +80,8 @@ class StrengthTvCell: UITableViewCell {
         xAxisLabel.translatesAutoresizingMaskIntoConstraints = false
         xAxisLabel.centerXAnchor.constraint(equalTo: barChartView.centerXAnchor).isActive = true
         xAxisLabel.topAnchor.constraint(equalTo: barChartView.bottomAnchor, constant: -15).isActive = true // Adjust the value to position the label
-
-        // Add Y-Axis Label (Count) inside the chart, near the Y-axis
-//        let yAxisLabel = UILabel()
-//        yAxisLabel.text = "Count"
-//        yAxisLabel.font = .systemFont(ofSize: 14)
-//        yAxisLabel.textColor = .black
-//        barChartView.addSubview(yAxisLabel)
-//        
-//        // Setting position of Y-Axis label manually
-//        yAxisLabel.translatesAutoresizingMaskIntoConstraints = false
-//        yAxisLabel.centerXAnchor.constraint(equalTo: barChartView.leftAnchor, constant: 30).isActive = true // Adjust as necessary
-//        yAxisLabel.centerYAnchor.constraint(equalTo: barChartView.centerYAnchor).isActive = true // Adjust the value to position the label
     }
-
+    
     private func setBarChartData() {
         let sectionCounts = [44, 27, 19, 41, 33, 30, 49, 32, 36, 40, 22, 29, 37, 45, 35, 39, 24, 28, 50, 38, 31, 34, 42, 43, 25, 50]
         
@@ -183,7 +106,7 @@ class StrengthTvCell: UITableViewCell {
         let data = BarChartData(dataSet: dataSet)
         data.setValueFormatter(DefaultValueFormatter(decimals: 0)) // No decimal places
         data.barWidth = 0.5 // Bars take 50% of the allocated space
-
+        
         // Assign data to chart
         barChartView.data = data
         
@@ -195,5 +118,5 @@ class StrengthTvCell: UITableViewCell {
         // Animate chart
         barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
     }
-
+    
 }

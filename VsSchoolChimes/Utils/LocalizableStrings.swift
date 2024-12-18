@@ -26,6 +26,8 @@ struct StringsName {
 
 extension String {
     /// Translates the string using the language bundle defined in `UserDefaults`.
+    ///
+    ///
     func translated() -> String {
         let defaults = UserDefaults.standard
         
@@ -33,6 +35,8 @@ extension String {
         if let languageCode = defaults.string(forKey: DefaultsKeys.Language),
            let path = Bundle.main.path(forResource: languageCode, ofType: "lproj"),
            let bundle = Bundle(path: path) {
+            
+    
             // Translate using the specific language bundle
             return NSLocalizedString(self, bundle: bundle, comment: "")
         }
@@ -41,3 +45,4 @@ extension String {
         return self
     }
 }
+

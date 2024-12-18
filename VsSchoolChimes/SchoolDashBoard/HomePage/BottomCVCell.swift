@@ -26,18 +26,6 @@ class BottomCVCell: UICollectionViewCell {
         animationview()
         
         GradientView.layer.cornerRadius = 12
-    
-//        self.GradientView.animateView(enable: true)
-//        self.MenuLabelview.animateView(enable: true)
-       
-      
-//        contentView.layer.shadowColor = UIColor.black.cgColor
-//        contentView.layer.shadowOpacity = 0.5
-//        contentView.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        contentView.layer.shadowRadius = 3
-//        contentView.layer.masksToBounds = false
-        
-        //MenuImgView.image = image
         GradientView.layer.cornerRadius = Colornames.CORadius10
         //applyGradient()
         

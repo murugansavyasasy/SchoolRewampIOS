@@ -32,7 +32,6 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
 
     let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795387749.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391797604035.png"]
     
-    let Img = ImageName()
 
     var countShimmer = 0
    
@@ -155,7 +154,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         
-        cell.imageView.sd_setImage(with: URL(string: imgs[indexPath.row]), placeholderImage: Img.placeholder)
+        cell.imageView.sd_setImage(with: URL(string: imgs[indexPath.row]), placeholderImage: ImageName.placeholder)
         
         return cell
     }

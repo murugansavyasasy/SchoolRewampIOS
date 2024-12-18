@@ -78,20 +78,19 @@ class ProfileViewController: UIViewController {
         
         
         //MARK: Tranlater
-        Profile.text = "Profile".translated()
-        aboutstudent.text = "About Student".translated()
-        contactdetails.text = "Contact details".translated()
-        section.text = "Section".translated() + ": A"
-        standard.text = "Standard".translated() + ": XI"
-        RegisterNo.text = "Register number".translated() + ": 476543"
-        Familydetails.text = "Family Details".translated()
-        Fathername.text = "Fathername".translated()
-        FatherOccupation.text = "Father occupation".translated()
-        Mothername.text = "Mothername".translated()
-        Motheroccupation.text = "Mother occupation".translated()
-        SeconadaryphoneNo.text = "Secondary Phone no".translated()
-        
-        
+        Profile.text = CommonStringFile.Profile
+        aboutstudent.text = CommonStringFile.AboutStudent
+        contactdetails.text = CommonStringFile.Contactdetails
+        section.text = CommonStringFile.Section + ": A"
+        standard.text = CommonStringFile.Standard + ": XI"
+        RegisterNo.text = CommonStringFile.Registernumber + ": 476543"
+        Familydetails.text = CommonStringFile.FamilyDetails
+        Fathername.text = CommonStringFile.Fathername
+        FatherOccupation.text = CommonStringFile.Fatheroccupation
+        Mothername.text = CommonStringFile.Mothername
+        Motheroccupation.text = CommonStringFile.Motheroccupation
+        SeconadaryphoneNo.text = CommonStringFile.SecondaryPhoneno
+
         //MARK: Button Font Stye
         EditBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         saveBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -110,33 +109,24 @@ class ProfileViewController: UIViewController {
         Motheroccupation.setFont(style: .body, size: FontSize.BodySize)
         SeconadaryphoneNo.setFont(style: .body, size: FontSize.BodySize)
         
-        
     }
     
     @IBAction func SaveAct(_ sender: Any) {
-        
         let alert = CustomAlert()
-        
         alert.showAlert(title:"" , message: "Save changes", on: self)
     }
     
     @IBAction func EditBtnAct(_ sender: Any) {
-        
        // ScrollviewBottom.constant = 70
         if EditBtn.titleLabel!.text == "Edit" {
             SaveBtnHeight.constant = 40
             saveBtn.isHidden = false
-            EditBtn.setTitle("Cancel", for: .normal)
-        
+            EditBtn.setTitle(AlertstringFile.Cancel, for: .normal)
             EditBtn.layoutIfNeeded()
-           
             EditBtn.setImage(nil, for: .normal)
-            
         }else {
             SaveBtnHeight.constant = 0
-            
             saveBtn.isHidden = true
-           
             EditBtn.setTitle("Edit", for: .normal)
             EditBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
         }

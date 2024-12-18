@@ -15,7 +15,7 @@ class ContactUsVc: UIViewController {
     
     var content = ["Our 24*7 Customer Service.","Write us at."]
     var contact = ["9786543210","saranraj@savyasasy.com"]
-    var icon  = [UIImage(named: "Phone"),UIImage(named: "mail")]
+    var icon  = [ImageName.Phone,ImageName.mail]
     
     override func viewDidLoad() {
         super.viewDidLoad()

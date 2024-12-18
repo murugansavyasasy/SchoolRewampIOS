@@ -58,9 +58,9 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdx-9O-8O9" customClass="CheckBox" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="309" y="61" width="24" height="24"/>
+                                <rect key="frame" x="309" y="73" width="24" height="0.0"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="EyD-wa-vBA"/>
+                                    <constraint firstAttribute="height" id="EyD-wa-vBA"/>
                                     <constraint firstAttribute="width" constant="24" id="iMt-Sb-flT"/>
                                 </constraints>
                             </view>
