@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class TapBarVC: UIViewController,UITabBarDelegate {
     
+    
     private let tabBar = UITabBar()
     private var containerView = UIView()
     private lazy var firstVC = HomePageVc()
@@ -19,6 +20,7 @@ class TapBarVC: UIViewController,UITabBarDelegate {
     private lazy var fourthVC = ProfileViewController()
     var languages : String!
     var passedValue : Int!
+    var languageCode : String!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +29,11 @@ class TapBarVC: UIViewController,UITabBarDelegate {
         setupContainerView()
         
         
+        let userDefault = UserDefaults.standard
+        userDefault.set(languageCode, forKey: DefaultsKeys.Language)
+        
         if passedValue == 1{
+            
             firstVC.getValue = passedValue
             selectViewController(firstVC)
             
@@ -41,10 +47,10 @@ class TapBarVC: UIViewController,UITabBarDelegate {
     private func setupTabBar() {
         
         // Configure the tab bar items
-        let firstItem = UITabBarItem(title: StringsName.Home, image:ImageName.house , tag: 0)
-        let secondItem = UITabBarItem(title: StringsName.Help, image: ImageName.questionmark, tag: 1)
-        let thirdItem = UITabBarItem(title : StringsName.Settings, image: ImageName.gearshape, tag: 2)
-        let fourthItem = UITabBarItem(title: StringsName.Profile, image: ImageName.person, tag: 3)
+        let firstItem = UITabBarItem(title: StringsName.Home.translated(), image: UIImage(systemName: "house.fill"), tag: 0)
+        let secondItem = UITabBarItem(title: StringsName.Help.translated(), image: UIImage(systemName: "questionmark.circle.fill"), tag: 1)
+        let thirdItem = UITabBarItem(title : StringsName.Settings.translated(), image: UIImage(systemName: "gearshape.fill"), tag: 2)
+        let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
         
         
         tabBar.backgroundColor = Colornames.bottomClr

@@ -46,6 +46,8 @@ class CellConfingName {
     static let RatingTypeTableViewCell = "RatingTypeTableViewCell"
     static let SuggestionsCollectionViewCell = "SuggestionsCollectionViewCell"
     static let StrengthTvCell = "StrengthTvCell"
+    static let AttendenceReportTVCell = "AttendenceReportTVCell"
+   
     static let NoticeBoardTvcellTableViewCell = "NoticeBoardTvcellTableViewCell"
     static let SectionCollectionViewCell = "SectionCollectionViewCell"
     static let SectionTvTableViewCell = "SectionTvTableViewCell"
@@ -72,6 +74,7 @@ class CellConfingName {
     static let  CalendarCollectionViewCell = "CalendarCollectionViewCell"
     static let  ExamsListTVCell = "ExamsListTVCell"
     static let  ExamsListCVCell = "ExamsListCVCell"
+    static let  ChatTVCell = "ChatTVCell"
     
     
     

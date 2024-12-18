@@ -170,9 +170,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         scheduleBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TxtMsgSendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
-        
-        
+
     }
     
     func uiUUpdate(){
