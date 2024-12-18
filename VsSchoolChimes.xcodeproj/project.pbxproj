@@ -236,6 +236,9 @@
 		84395FEA2D10026100FC3242 /* ChatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FE82D10026100FC3242 /* ChatVC.xib */; };
 		84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FEC2D1002A900FC3242 /* ChatTVCell.swift */; };
 		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
+		843960252D11938000FC3242 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960242D11938000FC3242 /* LanguageManager.swift */; };
+		843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960262D1193AD00FC3242 /* Bundle+Language.swift */; };
+		8439602E2D128CCB00FC3242 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439602D2D128CCB00FC3242 /* SubscriptionView.swift */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
 		844188682CC8C85C006483C3 /* ViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188672CC8C85C006483C3 /* ViewModal.swift */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
@@ -743,6 +746,9 @@
 		84395FE82D10026100FC3242 /* ChatVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatVC.xib; sourceTree = "<group>"; };
 		84395FEC2D1002A900FC3242 /* ChatTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTVCell.swift; sourceTree = "<group>"; };
 		84395FED2D1002A900FC3242 /* ChatTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTVCell.xib; sourceTree = "<group>"; };
+		843960242D11938000FC3242 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		843960262D1193AD00FC3242 /* Bundle+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Language.swift"; sourceTree = "<group>"; };
+		8439602D2D128CCB00FC3242 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
 		844188672CC8C85C006483C3 /* ViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModal.swift; sourceTree = "<group>"; };
 		8441886E2CC8E18B006483C3 /* Models.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Models.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1777,6 +1783,14 @@
 			path = ChatCell;
 			sourceTree = "<group>";
 		};
+		843960282D128A0000FC3242 /* SubscriptionVC */ = {
+			isa = PBXGroup;
+			children = (
+				8439602D2D128CCB00FC3242 /* SubscriptionView.swift */,
+			);
+			path = SubscriptionVC;
+			sourceTree = "<group>";
+		};
 		8442A8672CDB787A0006068E /* PriorityScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -2301,6 +2315,8 @@
 				84B5D0322D030C24003CFAAF /* AppStringFile.swift */,
 				8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */,
 				842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */,
+				843960242D11938000FC3242 /* LanguageManager.swift */,
+				843960262D1193AD00FC3242 /* Bundle+Language.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2566,6 +2582,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				843960282D128A0000FC3242 /* SubscriptionVC */,
 				847AB6EE2CF09A6800952AC1 /* SelectRecipient */,
 				84759C662CEDEF3300E7D367 /* ShowImage */,
 			);
@@ -3270,6 +3287,7 @@
 				18D7185F2D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift in Sources */,
 				18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */,
 				18D718612D0D471A00E9EDA3 /* DailyCollReq.swift in Sources */,
+				8439602E2D128CCB00FC3242 /* SubscriptionView.swift in Sources */,
 				18926CC12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift in Sources */,
 				18926CC22D0306CA002BBB97 /* SubjectListForStudentResponse.swift in Sources */,
 				18926CC32D0306CA002BBB97 /* CheckAviableViewController.swift in Sources */,
@@ -3379,6 +3397,7 @@
 				189E99062CE3195D00FE98A5 /* VimeoUpload.swift in Sources */,
 				844188682CC8C85C006483C3 /* ViewModal.swift in Sources */,
 				84A5BE942C197CF500E32496 /* UIViewX.swift in Sources */,
+				843960252D11938000FC3242 /* LanguageManager.swift in Sources */,
 				84A5BE902C197C6000E32496 /* CheckBox.swift in Sources */,
 				189E99E02CE492B400FE98A5 /* SenderSideImagePdfViewController.swift in Sources */,
 				84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */,
@@ -3392,6 +3411,7 @@
 				842FBAC02D0BEDBF007C0B51 /* StudentReportVC.swift in Sources */,
 				849E572A2C1FF629006119DA /* PirorityTableViewCell.swift in Sources */,
 				84EFFAE12CCF9EEA00C11C26 /* NotificationTableViewCell.swift in Sources */,
+				843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */,
 				84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */,
 				84EFF4962CE388B800E39BEA /* ProfileViewController.swift in Sources */,
 				842FBAE92D0BFE64007C0B51 /* LessonDetailsTVcell.swift in Sources */,

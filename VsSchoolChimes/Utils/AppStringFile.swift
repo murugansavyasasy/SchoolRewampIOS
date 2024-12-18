@@ -197,6 +197,7 @@ class PiechartCvcellStringFile{
 class TexviewStringFile{
     
     static let Enter_video_Description = "Enter Video Description".translated()
+    static let Enter_Chat_Description = "Type your message here...".translated()
 }
 class textFieldStringFile{
     

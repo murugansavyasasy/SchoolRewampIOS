@@ -41,7 +41,7 @@
 
     override func viewDidLoad() {
     super.viewDidLoad()
-    filteredItems = MenuRedirect.items
+        filteredItems = MenuRedirect.items
     setupSearchBar()
     startAutoScroll()
     cellRegistration()
@@ -78,24 +78,24 @@
     override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     print("viewWillAppear - View is about to appear.")
-
-    TopCv.reloadData()
-    TopCv.delegate = self
-    TopCv.dataSource = self
+      
+//    TopCv.reloadData()
+//    TopCv.delegate = self
+//    TopCv.dataSource = self
     bottomCv.delegate = self
     bottomCv.dataSource = self
-    bottomCv.reloadData()
-
-    restartAnimations()
+//    bottomCv.reloadData()
+//
+//    restartAnimations()
     }
 
     override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     print("viewDidAppear - View has appeared on the screen.")
 
-    bottomCv.delegate = self
-    bottomCv.dataSource = self
-    restartAnimations()
+//    bottomCv.delegate = self
+//    bottomCv.dataSource = self
+//    restartAnimations()
 
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -223,7 +223,7 @@
     if getValue == 1 {
     cell.MenuLbl.text = nil
     cell.MenuImgView.image  = nil
-    let label = filteredItems[indexPath.row]
+        let label = filteredItems[indexPath.row].translated()
     let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
     cell.MenuLbl.setFont(style: .body, size: 10)
     cell.MenuLbl.text = label
@@ -275,6 +275,8 @@
 
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        print()
         
         if collectionView == bottomCv{
             if getValue == 1 {

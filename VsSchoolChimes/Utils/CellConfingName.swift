@@ -72,6 +72,7 @@ class CellConfingName {
     static let  SlotHistoryTableViewCell = "SlotHistoryTableViewCell"
     static let  PTMCollectionViewCell = "PTMCollectionViewCell"
     static let  CalendarCollectionViewCell = "CalendarCollectionViewCell"
+    static let  ChatTVCell = "ChatTVCell"
     
     
     
