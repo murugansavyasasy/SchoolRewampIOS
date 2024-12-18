@@ -452,7 +452,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
-        
     }
     func selectPDF() {
         photoPickManager.pickPDF(from: self)

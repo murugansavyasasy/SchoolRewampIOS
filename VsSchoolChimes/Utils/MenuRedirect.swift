@@ -90,7 +90,15 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
-    
+    func ScheduleExamVCNavigat(from viewController: UIViewController){
+        let vc = EventPageVC(nibName: nil, bundle: nil)
+        vc.page1 = ScheduleExamVC(nibName: nil, bundle: nil)
+        vc.page2 = ScheduleExamsList(nibName: nil, bundle: nil)
+        vc.titleLbl = "ScheduleExam".translated()
+        vc.button1 = "Schedule"
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     func senderAssignmentNavigate(from viewController: UIViewController) {
         let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -216,6 +224,7 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
+ 
     
 }
 

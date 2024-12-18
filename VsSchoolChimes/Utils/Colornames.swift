@@ -62,9 +62,9 @@ class ImageName{
     static let unnamed2 = UIImage(named: "unnamed-2")
     static let Phone = UIImage(named: "Phone")
     static let mail = UIImage(named: "mail")
+    static  let checkedTick = UIImage(named: "checked_Tick")
+    static let CheckCircle = UIImage(named: "CheckCircle")
     
-    static  let checkedTick = UIImage(systemName: "checked_Tick")
-    static let CheckCircle = UIImage(systemName: "CheckCircle")
     static let checkmark = UIImage(systemName: "checkmark.rectangle.portrait.fill")
     static let square = UIImage(systemName: "square")
     static let circle = UIImage(systemName: "circle")
