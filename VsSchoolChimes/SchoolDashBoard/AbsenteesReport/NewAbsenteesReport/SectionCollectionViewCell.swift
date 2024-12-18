@@ -9,22 +9,17 @@
 import UIKit
 
 class SectionCollectionViewCell: UICollectionViewCell {
-
     @IBOutlet weak var sectionClick: UIViewX!
     @IBOutlet weak var absentcountLbl: UILabel!
     @IBOutlet weak var sectionNameLbl: UILabel!
-    
-    
     override var isSelected: Bool {
             didSet {
-                // Change the appearance of the cell when it's selected
                 if isSelected {
-//                    self.contentView.backgroundColor = .lightGray
                     sectionClick.backgroundColor = .systemOrange
                     sectionNameLbl.textColor = .white
                     sectionNameLbl.textColor = .white
                 } else {
-                    sectionClick.backgroundColor = UIColor(named: "StudentColor")
+                    sectionClick.backgroundColor = Colornames.StudentColor
                     sectionNameLbl.textColor = .black
                     sectionNameLbl.textColor = .black
                 }
@@ -33,7 +28,6 @@ class SectionCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 }

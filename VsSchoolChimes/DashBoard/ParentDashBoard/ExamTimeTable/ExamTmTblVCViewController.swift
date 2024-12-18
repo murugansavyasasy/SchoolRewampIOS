@@ -68,7 +68,7 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
                 
                 cell.layer.cornerRadius = 10
                                  cell.clipsToBounds = true
-                cell.backgroundColor = UIColor(named: "topBackgroundCLr 1")
+                cell.backgroundColor = Colornames.topBackgroundCLr1
                 
                 count = indexPath.row+1
                 tv.reloadData()

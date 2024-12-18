@@ -135,7 +135,7 @@ class SenderSideHomeWorkViewController: UIViewController, UIImagePickerControlle
     
     
     @IBAction func selectHomeWork() {
-        homeWorkSegView.backgroundColor = UIColor(named: "gradient3")
+        homeWorkSegView.backgroundColor = Colornames.gradient3
         homeWorkReportsSegView.backgroundColor = .white
         homeWorkReportsLbl.textColor = .black
         homeworkLbl.textColor = .white
@@ -151,7 +151,7 @@ class SenderSideHomeWorkViewController: UIViewController, UIImagePickerControlle
     @IBAction func selectHomeWorkReports() {
         overAllHomeWorkListView.isHidden = true
         overAllHomeWorkReportListView.isHidden = false
-        homeWorkReportsSegView.backgroundColor = UIColor(named: "gradient3")
+        homeWorkReportsSegView.backgroundColor = Colornames.gradient3
         homeWorkSegView.backgroundColor = .white
         //        homeWorkReportsSegView.isHidden = false
         //        homeWorkSegView.isHidden = true

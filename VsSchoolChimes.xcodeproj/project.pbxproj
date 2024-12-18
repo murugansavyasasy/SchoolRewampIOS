@@ -12,53 +12,10 @@
 		180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180C6E942CE748980071CD04 /* AttachmentsReuseView.swift */; };
 		1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */; };
 		1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */; };
-		18926B222D02D7AB002BBB97 /* PunchHistryReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B072D02D7AB002BBB97 /* PunchHistryReq.swift */; };
-		18926B232D02D7AB002BBB97 /* CreateLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B1A2D02D7AB002BBB97 /* CreateLocationViewController.swift */; };
-		18926B242D02D7AB002BBB97 /* EditLocReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B082D02D7AB002BBB97 /* EditLocReq.swift */; };
-		18926B252D02D7AB002BBB97 /* PunchHistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926AFD2D02D7AB002BBB97 /* PunchHistTableViewCell.swift */; };
-		18926B262D02D7AB002BBB97 /* EditLocResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B122D02D7AB002BBB97 /* EditLocResp.swift */; };
-		18926B272D02D7AB002BBB97 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B1C2D02D7AB002BBB97 /* LocationViewController.swift */; };
-		18926B282D02D7AB002BBB97 /* StaffListReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B052D02D7AB002BBB97 /* StaffListReq.swift */; };
-		18926B292D02D7AB002BBB97 /* fechLocationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B0E2D02D7AB002BBB97 /* fechLocationResp.swift */; };
-		18926B2A2D02D7AB002BBB97 /* fechLocationResq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B022D02D7AB002BBB97 /* fechLocationResq.swift */; };
-		18926B2B2D02D7AB002BBB97 /* DeleteResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B102D02D7AB002BBB97 /* DeleteResp.swift */; };
-		18926B2C2D02D7AB002BBB97 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926AF82D02D7AB002BBB97 /* LocationTableViewCell.swift */; };
-		18926B2D2D02D7AB002BBB97 /* PunchHistoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B1F2D02D7AB002BBB97 /* PunchHistoryListVC.swift */; };
-		18926B2E2D02D7AB002BBB97 /* PunchReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B002D02D7AB002BBB97 /* PunchReq.swift */; };
-		18926B2F2D02D7AB002BBB97 /* deleteVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B142D02D7AB002BBB97 /* deleteVc.swift */; };
-		18926B302D02D7AB002BBB97 /* PunchHistryResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B112D02D7AB002BBB97 /* PunchHistryResp.swift */; };
-		18926B312D02D7AB002BBB97 /* locationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B0B2D02D7AB002BBB97 /* locationResp.swift */; };
-		18926B322D02D7AB002BBB97 /* locationReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B012D02D7AB002BBB97 /* locationReq.swift */; };
-		18926B332D02D7AB002BBB97 /* GetLocationReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B062D02D7AB002BBB97 /* GetLocationReq.swift */; };
-		18926B342D02D7AB002BBB97 /* LocationHistoryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B172D02D7AB002BBB97 /* LocationHistoryVc.swift */; };
-		18926B352D02D7AB002BBB97 /* HistoryReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B032D02D7AB002BBB97 /* HistoryReq.swift */; };
-		18926B362D02D7AB002BBB97 /* StaffListResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B0C2D02D7AB002BBB97 /* StaffListResp.swift */; };
-		18926B372D02D7AB002BBB97 /* HistoryResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B0D2D02D7AB002BBB97 /* HistoryResp.swift */; };
-		18926B382D02D7AB002BBB97 /* deleteTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926AFC2D02D7AB002BBB97 /* deleteTV.swift */; };
-		18926B392D02D7AB002BBB97 /* DeleteReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B042D02D7AB002BBB97 /* DeleteReq.swift */; };
-		18926B3A2D02D7AB002BBB97 /* PreviousCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926AF92D02D7AB002BBB97 /* PreviousCvcell.swift */; };
-		18926B3B2D02D7AB002BBB97 /* GetLocationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B0F2D02D7AB002BBB97 /* GetLocationResp.swift */; };
-		18926B3C2D02D7AB002BBB97 /* punchResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926B0A2D02D7AB002BBB97 /* punchResp.swift */; };
-		18926B3D2D02D7AB002BBB97 /* Map Location.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18926B1E2D02D7AB002BBB97 /* Map Location.gif */; };
-		18926B3E2D02D7AB002BBB97 /* PreviousCvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926AFA2D02D7AB002BBB97 /* PreviousCvcell.xib */; };
-		18926B3F2D02D7AB002BBB97 /* PunchHistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926AFE2D02D7AB002BBB97 /* PunchHistTableViewCell.xib */; };
-		18926B402D02D7AB002BBB97 /* LocationHistoryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926B182D02D7AB002BBB97 /* LocationHistoryVc.xib */; };
-		18926B412D02D7AB002BBB97 /* PunchHistoryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926B202D02D7AB002BBB97 /* PunchHistoryListVC.xib */; };
-		18926B422D02D7AB002BBB97 /* deleteVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926B152D02D7AB002BBB97 /* deleteVc.xib */; };
-		18926B432D02D7AB002BBB97 /* LocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926AF72D02D7AB002BBB97 /* LocationTableViewCell.xib */; };
-		18926B442D02D7AB002BBB97 /* deleteTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926AFB2D02D7AB002BBB97 /* deleteTV.xib */; };
-		18926B452D02D7AB002BBB97 /* CreateLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926B1B2D02D7AB002BBB97 /* CreateLocationViewController.xib */; };
-		18926B462D02D7AB002BBB97 /* LocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926B1D2D02D7AB002BBB97 /* LocationViewController.xib */; };
-		18926BDC2D02DCE1002BBB97 /* StudentListReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BCA2D02DCE1002BBB97 /* StudentListReq.swift */; };
-		18926BDD2D02DCE1002BBB97 /* StudentListResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BCB2D02DCE1002BBB97 /* StudentListResp.swift */; };
-		18926BDE2D02DCE1002BBB97 /* SectionTvTableViewCell copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BC62D02DCE1002BBB97 /* SectionTvTableViewCell copy.swift */; };
-		18926BDF2D02DCE1002BBB97 /* AbesentReportResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BD52D02DCE1002BBB97 /* AbesentReportResp.swift */; };
-		18926BE02D02DCE1002BBB97 /* CVIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BD02D02DCE1002BBB97 /* CVIconCollectionViewCell.swift */; };
-		18926BE12D02DCE1002BBB97 /* NewAbsenteesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BD32D02DCE1002BBB97 /* NewAbsenteesViewController.swift */; };
-		18926BE22D02DCE1002BBB97 /* ClassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BCF2D02DCE1002BBB97 /* ClassTableViewCell.swift */; };
-		18926BE32D02DCE1002BBB97 /* SectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BCD2D02DCE1002BBB97 /* SectionCollectionViewCell.swift */; };
-		18926BE42D02DCE1002BBB97 /* AbesentRequst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BD42D02DCE1002BBB97 /* AbesentRequst.swift */; };
-		18926BE52D02DCE1002BBB97 /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926BC72D02DCE1002BBB97 /* SectionViewController.swift */; };
+		187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */; };
+		187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */; };
+		187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF4962D113B6E001422CE /* MessageFromManagementTableViewCell.xib */; };
+		187CF4982D113B6E001422CE /* MessageFromManagementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF4952D113B6E001422CE /* MessageFromManagementTableViewCell.swift */; };
 		18926C4D2D02DE81002BBB97 /* LsrwListShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C432D02DE81002BBB97 /* LsrwListShowTableViewCell.swift */; };
 		18926C4E2D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C492D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift */; };
 		18926C4F2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */; };
@@ -168,6 +125,79 @@
 		18CA85612CF99EFB00984D7C /* AssignmentViewTotalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA855E2CF99EFB00984D7C /* AssignmentViewTotalViewController.swift */; };
 		18CA85652CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18CA85642CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib */; };
 		18CA85662CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA85632CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift */; };
+		18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718462D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift */; };
+		18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718402D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift */; };
+		18D718572D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7184D2D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift */; };
+		18D718582D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7184A2D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift */; };
+		18D718592D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7184F2D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift */; };
+		18D7185A2D0D471A00E9EDA3 /* DailycollResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718392D0D471A00E9EDA3 /* DailycollResp.swift */; };
+		18D7185B2D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718442D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift */; };
+		18D7185C2D0D471A00E9EDA3 /* StanderReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7183B2D0D471A00E9EDA3 /* StanderReq.swift */; };
+		18D7185D2D0D471A00E9EDA3 /* DataCollectionTvHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718482D0D471A00E9EDA3 /* DataCollectionTvHeaderView.swift */; };
+		18D7185E2D0D471A00E9EDA3 /* PaymentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7183D2D0D471A00E9EDA3 /* PaymentListTableViewCell.swift */; };
+		18D7185F2D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718512D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift */; };
+		18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7183C2D0D471A00E9EDA3 /* PayModeRequest.swift */; };
+		18D718612D0D471A00E9EDA3 /* DailyCollReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7183A2D0D471A00E9EDA3 /* DailyCollReq.swift */; };
+		18D718622D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7184B2D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib */; };
+		18D718632D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718412D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib */; };
+		18D718642D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718432D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib */; };
+		18D718652D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718492D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib */; };
+		18D718662D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718522D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib */; };
+		18D718672D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718472D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib */; };
+		18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7183E2D0D471A00E9EDA3 /* PaymentListTableViewCell.xib */; };
+		18D718992D0D477900E9EDA3 /* EditLocReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187F2D0D477900E9EDA3 /* EditLocReq.swift */; };
+		18D7189A2D0D477900E9EDA3 /* GetLocationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718862D0D477900E9EDA3 /* GetLocationResp.swift */; };
+		18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7188E2D0D477900E9EDA3 /* LocationHistoryVc.swift */; };
+		18D7189C2D0D477900E9EDA3 /* PunchHistryReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187E2D0D477900E9EDA3 /* PunchHistryReq.swift */; };
+		18D7189D2D0D477900E9EDA3 /* locationReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718782D0D477900E9EDA3 /* locationReq.swift */; };
+		18D7189E2D0D477900E9EDA3 /* PunchHistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718742D0D477900E9EDA3 /* PunchHistTableViewCell.swift */; };
+		18D7189F2D0D477900E9EDA3 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718932D0D477900E9EDA3 /* LocationViewController.swift */; };
+		18D718A02D0D477900E9EDA3 /* HistoryResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718842D0D477900E9EDA3 /* HistoryResp.swift */; };
+		18D718A12D0D477900E9EDA3 /* PunchReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718772D0D477900E9EDA3 /* PunchReq.swift */; };
+		18D718A22D0D477900E9EDA3 /* PunchHistoryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718962D0D477900E9EDA3 /* PunchHistoryListVC.swift */; };
+		18D718A32D0D477900E9EDA3 /* CreateLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718912D0D477900E9EDA3 /* CreateLocationViewController.swift */; };
+		18D718A42D0D477900E9EDA3 /* EditLocResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718892D0D477900E9EDA3 /* EditLocResp.swift */; };
+		18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718792D0D477900E9EDA3 /* fechLocationResq.swift */; };
+		18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7186F2D0D477900E9EDA3 /* LocationTableViewCell.swift */; };
+		18D718A72D0D477900E9EDA3 /* deleteVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7188B2D0D477900E9EDA3 /* deleteVc.swift */; };
+		18D718A82D0D477900E9EDA3 /* DeleteReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187B2D0D477900E9EDA3 /* DeleteReq.swift */; };
+		18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718812D0D477900E9EDA3 /* punchResp.swift */; };
+		18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718822D0D477900E9EDA3 /* locationResp.swift */; };
+		18D718AB2D0D477900E9EDA3 /* StaffListResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718832D0D477900E9EDA3 /* StaffListResp.swift */; };
+		18D718AC2D0D477900E9EDA3 /* PunchHistryResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718882D0D477900E9EDA3 /* PunchHistryResp.swift */; };
+		18D718AD2D0D477900E9EDA3 /* deleteTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718732D0D477900E9EDA3 /* deleteTV.swift */; };
+		18D718AE2D0D477900E9EDA3 /* DeleteResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718872D0D477900E9EDA3 /* DeleteResp.swift */; };
+		18D718AF2D0D477900E9EDA3 /* PreviousCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718702D0D477900E9EDA3 /* PreviousCvcell.swift */; };
+		18D718B02D0D477900E9EDA3 /* GetLocationReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187D2D0D477900E9EDA3 /* GetLocationReq.swift */; };
+		18D718B12D0D477900E9EDA3 /* fechLocationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718852D0D477900E9EDA3 /* fechLocationResp.swift */; };
+		18D718B22D0D477900E9EDA3 /* StaffListReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187C2D0D477900E9EDA3 /* StaffListReq.swift */; };
+		18D718B32D0D477900E9EDA3 /* HistoryReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187A2D0D477900E9EDA3 /* HistoryReq.swift */; };
+		18D718B42D0D477900E9EDA3 /* PreviousCvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718712D0D477900E9EDA3 /* PreviousCvcell.xib */; };
+		18D718B52D0D477900E9EDA3 /* CreateLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718922D0D477900E9EDA3 /* CreateLocationViewController.xib */; };
+		18D718B62D0D477900E9EDA3 /* LocationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7186E2D0D477900E9EDA3 /* LocationTableViewCell.xib */; };
+		18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18D718952D0D477900E9EDA3 /* Map Location.gif */; };
+		18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718722D0D477900E9EDA3 /* deleteTV.xib */; };
+		18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */; };
+		18D718BA2D0D477900E9EDA3 /* deleteVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188C2D0D477900E9EDA3 /* deleteVc.xib */; };
+		18D718BB2D0D477900E9EDA3 /* PunchHistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718752D0D477900E9EDA3 /* PunchHistTableViewCell.xib */; };
+		18D718BC2D0D477900E9EDA3 /* LocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718942D0D477900E9EDA3 /* LocationViewController.xib */; };
+		18D718BD2D0D477900E9EDA3 /* LocationHistoryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188F2D0D477900E9EDA3 /* LocationHistoryVc.xib */; };
+		18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C82D0D479B00E9EDA3 /* ClassTableViewCell.swift */; };
+		18D718D72D0D479B00E9EDA3 /* AbesentRequst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718CD2D0D479B00E9EDA3 /* AbesentRequst.swift */; };
+		18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718BF2D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift */; };
+		18D718D92D0D479B00E9EDA3 /* StudentListResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C42D0D479B00E9EDA3 /* StudentListResp.swift */; };
+		18D718DA2D0D479B00E9EDA3 /* SectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C62D0D479B00E9EDA3 /* SectionCollectionViewCell.swift */; };
+		18D718DB2D0D479B00E9EDA3 /* StudentListReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C32D0D479B00E9EDA3 /* StudentListReq.swift */; };
+		18D718DC2D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C92D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift */; };
+		18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */; };
+		18D718DE2D0D479B00E9EDA3 /* AbesentReportResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718CE2D0D479B00E9EDA3 /* AbesentReportResp.swift */; };
+		18D718DF2D0D479B00E9EDA3 /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C02D0D479B00E9EDA3 /* SectionViewController.swift */; };
+		18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718CA2D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib */; };
+		18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718C22D0D479B00E9EDA3 /* SectionViewController.xib */; };
+		18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718CB2D0D479B00E9EDA3 /* NewAbsenteesViewController.xib */; };
+		18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718C52D0D479B00E9EDA3 /* SectionCollectionViewCell.xib */; };
+		18D718E42D0D479B00E9EDA3 /* ClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718C72D0D479B00E9EDA3 /* ClassTableViewCell.xib */; };
+		18D718E52D0D479B00E9EDA3 /* SectionTvTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718C12D0D479B00E9EDA3 /* SectionTvTableViewCell.xib */; };
 		365CEBD4A280323F11A24C04 /* Pods_VsSchoolChimes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */; };
 		64FD9BAC7760816722588E40 /* Pods_VsSchoolChimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */; };
 		70C33A1286E02FBE2ACB26DE /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */; };
@@ -200,6 +230,12 @@
 		842FBAF42D0BFE64007C0B51 /* LessonDetailsTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBADE2D0BFE64007C0B51 /* LessonDetailsTVcell.xib */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
+		84395FCC2D0D4CAB00FC3242 /* ParentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FCA2D0D4CAB00FC3242 /* ParentVC.swift */; };
+		84395FCD2D0D4CAB00FC3242 /* ParentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FCB2D0D4CAB00FC3242 /* ParentVC.xib */; };
+		84395FE92D10026100FC3242 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FE72D10026100FC3242 /* ChatVC.swift */; };
+		84395FEA2D10026100FC3242 /* ChatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FE82D10026100FC3242 /* ChatVC.xib */; };
+		84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FEC2D1002A900FC3242 /* ChatTVCell.swift */; };
+		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
 		844188682CC8C85C006483C3 /* ViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188672CC8C85C006483C3 /* ViewModal.swift */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
@@ -436,8 +472,6 @@
 		84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFFAF22CCFB68A00C11C26 /* ImageCvCell.swift */; };
 		84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */; };
 		84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */; };
-		F29035602CDC924900F3E67C /* MobileVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = F290355F2CDC924900F3E67C /* MobileVc.xib */; };
-		F29035612CDC924900F3E67C /* MobileVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F290355E2CDC924900F3E67C /* MobileVc.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -484,59 +518,10 @@
 		180C6E942CE748980071CD04 /* AttachmentsReuseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsReuseView.swift; sourceTree = "<group>"; };
 		1861BEEA2CE61DE00095BF28 /* SenderSideVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderSideVideoViewController.swift; sourceTree = "<group>"; };
 		1861BEEB2CE61DE00095BF28 /* SenderSideVideoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderSideVideoViewController.xib; sourceTree = "<group>"; };
-		18926AF72D02D7AB002BBB97 /* LocationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationTableViewCell.xib; sourceTree = "<group>"; };
-		18926AF82D02D7AB002BBB97 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
-		18926AF92D02D7AB002BBB97 /* PreviousCvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousCvcell.swift; sourceTree = "<group>"; };
-		18926AFA2D02D7AB002BBB97 /* PreviousCvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviousCvcell.xib; sourceTree = "<group>"; };
-		18926AFB2D02D7AB002BBB97 /* deleteTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deleteTV.xib; sourceTree = "<group>"; };
-		18926AFC2D02D7AB002BBB97 /* deleteTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteTV.swift; sourceTree = "<group>"; };
-		18926AFD2D02D7AB002BBB97 /* PunchHistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistTableViewCell.swift; sourceTree = "<group>"; };
-		18926AFE2D02D7AB002BBB97 /* PunchHistTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchHistTableViewCell.xib; sourceTree = "<group>"; };
-		18926B002D02D7AB002BBB97 /* PunchReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchReq.swift; sourceTree = "<group>"; };
-		18926B012D02D7AB002BBB97 /* locationReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationReq.swift; sourceTree = "<group>"; };
-		18926B022D02D7AB002BBB97 /* fechLocationResq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fechLocationResq.swift; sourceTree = "<group>"; };
-		18926B032D02D7AB002BBB97 /* HistoryReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryReq.swift; sourceTree = "<group>"; };
-		18926B042D02D7AB002BBB97 /* DeleteReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReq.swift; sourceTree = "<group>"; };
-		18926B052D02D7AB002BBB97 /* StaffListReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffListReq.swift; sourceTree = "<group>"; };
-		18926B062D02D7AB002BBB97 /* GetLocationReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationReq.swift; sourceTree = "<group>"; };
-		18926B072D02D7AB002BBB97 /* PunchHistryReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistryReq.swift; sourceTree = "<group>"; };
-		18926B082D02D7AB002BBB97 /* EditLocReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocReq.swift; sourceTree = "<group>"; };
-		18926B0A2D02D7AB002BBB97 /* punchResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = punchResp.swift; sourceTree = "<group>"; };
-		18926B0B2D02D7AB002BBB97 /* locationResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationResp.swift; sourceTree = "<group>"; };
-		18926B0C2D02D7AB002BBB97 /* StaffListResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffListResp.swift; sourceTree = "<group>"; };
-		18926B0D2D02D7AB002BBB97 /* HistoryResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryResp.swift; sourceTree = "<group>"; };
-		18926B0E2D02D7AB002BBB97 /* fechLocationResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fechLocationResp.swift; sourceTree = "<group>"; };
-		18926B0F2D02D7AB002BBB97 /* GetLocationResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationResp.swift; sourceTree = "<group>"; };
-		18926B102D02D7AB002BBB97 /* DeleteResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteResp.swift; sourceTree = "<group>"; };
-		18926B112D02D7AB002BBB97 /* PunchHistryResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistryResp.swift; sourceTree = "<group>"; };
-		18926B122D02D7AB002BBB97 /* EditLocResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocResp.swift; sourceTree = "<group>"; };
-		18926B142D02D7AB002BBB97 /* deleteVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteVc.swift; sourceTree = "<group>"; };
-		18926B152D02D7AB002BBB97 /* deleteVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deleteVc.xib; sourceTree = "<group>"; };
-		18926B172D02D7AB002BBB97 /* LocationHistoryVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryVc.swift; sourceTree = "<group>"; };
-		18926B182D02D7AB002BBB97 /* LocationHistoryVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationHistoryVc.xib; sourceTree = "<group>"; };
-		18926B1A2D02D7AB002BBB97 /* CreateLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLocationViewController.swift; sourceTree = "<group>"; };
-		18926B1B2D02D7AB002BBB97 /* CreateLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateLocationViewController.xib; sourceTree = "<group>"; };
-		18926B1C2D02D7AB002BBB97 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
-		18926B1D2D02D7AB002BBB97 /* LocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationViewController.xib; sourceTree = "<group>"; };
-		18926B1E2D02D7AB002BBB97 /* Map Location.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Map Location.gif"; sourceTree = "<group>"; };
-		18926B1F2D02D7AB002BBB97 /* PunchHistoryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistoryListVC.swift; sourceTree = "<group>"; };
-		18926B202D02D7AB002BBB97 /* PunchHistoryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchHistoryListVC.xib; sourceTree = "<group>"; };
-		18926BC62D02DCE1002BBB97 /* SectionTvTableViewCell copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionTvTableViewCell copy.swift"; sourceTree = "<group>"; };
-		18926BC72D02DCE1002BBB97 /* SectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
-		18926BC82D02DCE1002BBB97 /* SectionTvTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionTvTableViewCell.xib; sourceTree = "<group>"; };
-		18926BC92D02DCE1002BBB97 /* SectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionViewController.xib; sourceTree = "<group>"; };
-		18926BCA2D02DCE1002BBB97 /* StudentListReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListReq.swift; sourceTree = "<group>"; };
-		18926BCB2D02DCE1002BBB97 /* StudentListResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListResp.swift; sourceTree = "<group>"; };
-		18926BCC2D02DCE1002BBB97 /* SectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionCollectionViewCell.xib; sourceTree = "<group>"; };
-		18926BCD2D02DCE1002BBB97 /* SectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCollectionViewCell.swift; sourceTree = "<group>"; };
-		18926BCE2D02DCE1002BBB97 /* ClassTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClassTableViewCell.xib; sourceTree = "<group>"; };
-		18926BCF2D02DCE1002BBB97 /* ClassTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTableViewCell.swift; sourceTree = "<group>"; };
-		18926BD02D02DCE1002BBB97 /* CVIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVIconCollectionViewCell.swift; sourceTree = "<group>"; };
-		18926BD12D02DCE1002BBB97 /* CVIconCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CVIconCollectionViewCell.xib; sourceTree = "<group>"; };
-		18926BD22D02DCE1002BBB97 /* NewAbsenteesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAbsenteesViewController.xib; sourceTree = "<group>"; };
-		18926BD32D02DCE1002BBB97 /* NewAbsenteesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAbsenteesViewController.swift; sourceTree = "<group>"; };
-		18926BD42D02DCE1002BBB97 /* AbesentRequst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbesentRequst.swift; sourceTree = "<group>"; };
-		18926BD52D02DCE1002BBB97 /* AbesentReportResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbesentReportResp.swift; sourceTree = "<group>"; };
+		187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromManagementViewController.swift; sourceTree = "<group>"; };
+		187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageFromManagementViewController.xib; sourceTree = "<group>"; };
+		187CF4952D113B6E001422CE /* MessageFromManagementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFromManagementTableViewCell.swift; sourceTree = "<group>"; };
+		187CF4962D113B6E001422CE /* MessageFromManagementTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageFromManagementTableViewCell.xib; sourceTree = "<group>"; };
 		18926C2D2D02DE81002BBB97 /* RestrictionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictionTableViewCell.swift; sourceTree = "<group>"; };
 		18926C2E2D02DE81002BBB97 /* RestrictionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestrictionTableViewCell.xib; sourceTree = "<group>"; };
 		18926C2F2D02DE81002BBB97 /* RestrictionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictionModal.swift; sourceTree = "<group>"; };
@@ -647,6 +632,79 @@
 		18CA855F2CF99EFB00984D7C /* AssignmentViewTotalViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentViewTotalViewController.xib; sourceTree = "<group>"; };
 		18CA85632CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentViewTotalTableViewCell.swift; sourceTree = "<group>"; };
 		18CA85642CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentViewTotalTableViewCell.xib; sourceTree = "<group>"; };
+		18D718392D0D471A00E9EDA3 /* DailycollResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailycollResp.swift; sourceTree = "<group>"; };
+		18D7183A2D0D471A00E9EDA3 /* DailyCollReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollReq.swift; sourceTree = "<group>"; };
+		18D7183B2D0D471A00E9EDA3 /* StanderReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StanderReq.swift; sourceTree = "<group>"; };
+		18D7183C2D0D471A00E9EDA3 /* PayModeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayModeRequest.swift; sourceTree = "<group>"; };
+		18D7183D2D0D471A00E9EDA3 /* PaymentListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentListTableViewCell.swift; sourceTree = "<group>"; };
+		18D7183E2D0D471A00E9EDA3 /* PaymentListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaymentListTableViewCell.xib; sourceTree = "<group>"; };
+		18D718402D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDailyCollectionViewController.swift; sourceTree = "<group>"; };
+		18D718412D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewDailyCollectionViewController.xib; sourceTree = "<group>"; };
+		18D718432D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyCollectionFeePaymentTypeTableViewCell.xib; sourceTree = "<group>"; };
+		18D718442D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollectionFeePaymentTypeTableViewCell.swift; sourceTree = "<group>"; };
+		18D718462D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollectionTableViewCell.swift; sourceTree = "<group>"; };
+		18D718472D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyCollectionTableViewCell.xib; sourceTree = "<group>"; };
+		18D718482D0D471A00E9EDA3 /* DataCollectionTvHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCollectionTvHeaderView.swift; sourceTree = "<group>"; };
+		18D718492D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DataCollectionTvHeaderView.xib; sourceTree = "<group>"; };
+		18D7184A2D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollectionFeeCurrentTableViewCell.swift; sourceTree = "<group>"; };
+		18D7184B2D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DailyCollectionFeeCurrentTableViewCell.xib; sourceTree = "<group>"; };
+		18D7184D2D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollectionFeeRequest.swift; sourceTree = "<group>"; };
+		18D7184F2D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCollectionFeeModal.swift; sourceTree = "<group>"; };
+		18D718512D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaliyCollectionFeeViewController.swift; sourceTree = "<group>"; };
+		18D718522D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DaliyCollectionFeeViewController.xib; sourceTree = "<group>"; };
+		18D7186E2D0D477900E9EDA3 /* LocationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationTableViewCell.xib; sourceTree = "<group>"; };
+		18D7186F2D0D477900E9EDA3 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		18D718702D0D477900E9EDA3 /* PreviousCvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousCvcell.swift; sourceTree = "<group>"; };
+		18D718712D0D477900E9EDA3 /* PreviousCvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviousCvcell.xib; sourceTree = "<group>"; };
+		18D718722D0D477900E9EDA3 /* deleteTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deleteTV.xib; sourceTree = "<group>"; };
+		18D718732D0D477900E9EDA3 /* deleteTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteTV.swift; sourceTree = "<group>"; };
+		18D718742D0D477900E9EDA3 /* PunchHistTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistTableViewCell.swift; sourceTree = "<group>"; };
+		18D718752D0D477900E9EDA3 /* PunchHistTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchHistTableViewCell.xib; sourceTree = "<group>"; };
+		18D718772D0D477900E9EDA3 /* PunchReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchReq.swift; sourceTree = "<group>"; };
+		18D718782D0D477900E9EDA3 /* locationReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationReq.swift; sourceTree = "<group>"; };
+		18D718792D0D477900E9EDA3 /* fechLocationResq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fechLocationResq.swift; sourceTree = "<group>"; };
+		18D7187A2D0D477900E9EDA3 /* HistoryReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryReq.swift; sourceTree = "<group>"; };
+		18D7187B2D0D477900E9EDA3 /* DeleteReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReq.swift; sourceTree = "<group>"; };
+		18D7187C2D0D477900E9EDA3 /* StaffListReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffListReq.swift; sourceTree = "<group>"; };
+		18D7187D2D0D477900E9EDA3 /* GetLocationReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationReq.swift; sourceTree = "<group>"; };
+		18D7187E2D0D477900E9EDA3 /* PunchHistryReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistryReq.swift; sourceTree = "<group>"; };
+		18D7187F2D0D477900E9EDA3 /* EditLocReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocReq.swift; sourceTree = "<group>"; };
+		18D718812D0D477900E9EDA3 /* punchResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = punchResp.swift; sourceTree = "<group>"; };
+		18D718822D0D477900E9EDA3 /* locationResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationResp.swift; sourceTree = "<group>"; };
+		18D718832D0D477900E9EDA3 /* StaffListResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffListResp.swift; sourceTree = "<group>"; };
+		18D718842D0D477900E9EDA3 /* HistoryResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryResp.swift; sourceTree = "<group>"; };
+		18D718852D0D477900E9EDA3 /* fechLocationResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fechLocationResp.swift; sourceTree = "<group>"; };
+		18D718862D0D477900E9EDA3 /* GetLocationResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLocationResp.swift; sourceTree = "<group>"; };
+		18D718872D0D477900E9EDA3 /* DeleteResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteResp.swift; sourceTree = "<group>"; };
+		18D718882D0D477900E9EDA3 /* PunchHistryResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistryResp.swift; sourceTree = "<group>"; };
+		18D718892D0D477900E9EDA3 /* EditLocResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocResp.swift; sourceTree = "<group>"; };
+		18D7188B2D0D477900E9EDA3 /* deleteVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteVc.swift; sourceTree = "<group>"; };
+		18D7188C2D0D477900E9EDA3 /* deleteVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deleteVc.xib; sourceTree = "<group>"; };
+		18D7188E2D0D477900E9EDA3 /* LocationHistoryVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryVc.swift; sourceTree = "<group>"; };
+		18D7188F2D0D477900E9EDA3 /* LocationHistoryVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationHistoryVc.xib; sourceTree = "<group>"; };
+		18D718912D0D477900E9EDA3 /* CreateLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLocationViewController.swift; sourceTree = "<group>"; };
+		18D718922D0D477900E9EDA3 /* CreateLocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateLocationViewController.xib; sourceTree = "<group>"; };
+		18D718932D0D477900E9EDA3 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		18D718942D0D477900E9EDA3 /* LocationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationViewController.xib; sourceTree = "<group>"; };
+		18D718952D0D477900E9EDA3 /* Map Location.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Map Location.gif"; sourceTree = "<group>"; };
+		18D718962D0D477900E9EDA3 /* PunchHistoryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistoryListVC.swift; sourceTree = "<group>"; };
+		18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PunchHistoryListVC.xib; sourceTree = "<group>"; };
+		18D718BF2D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SectionTvTableViewCell copy.swift"; sourceTree = "<group>"; };
+		18D718C02D0D479B00E9EDA3 /* SectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
+		18D718C12D0D479B00E9EDA3 /* SectionTvTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionTvTableViewCell.xib; sourceTree = "<group>"; };
+		18D718C22D0D479B00E9EDA3 /* SectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionViewController.xib; sourceTree = "<group>"; };
+		18D718C32D0D479B00E9EDA3 /* StudentListReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListReq.swift; sourceTree = "<group>"; };
+		18D718C42D0D479B00E9EDA3 /* StudentListResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListResp.swift; sourceTree = "<group>"; };
+		18D718C52D0D479B00E9EDA3 /* SectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionCollectionViewCell.xib; sourceTree = "<group>"; };
+		18D718C62D0D479B00E9EDA3 /* SectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		18D718C72D0D479B00E9EDA3 /* ClassTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClassTableViewCell.xib; sourceTree = "<group>"; };
+		18D718C82D0D479B00E9EDA3 /* ClassTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTableViewCell.swift; sourceTree = "<group>"; };
+		18D718C92D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVIconCollectionViewCell.swift; sourceTree = "<group>"; };
+		18D718CA2D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CVIconCollectionViewCell.xib; sourceTree = "<group>"; };
+		18D718CB2D0D479B00E9EDA3 /* NewAbsenteesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAbsenteesViewController.xib; sourceTree = "<group>"; };
+		18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAbsenteesViewController.swift; sourceTree = "<group>"; };
+		18D718CD2D0D479B00E9EDA3 /* AbesentRequst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbesentRequst.swift; sourceTree = "<group>"; };
+		18D718CE2D0D479B00E9EDA3 /* AbesentReportResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbesentReportResp.swift; sourceTree = "<group>"; };
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -679,6 +737,12 @@
 		842FBAE72D0BFE64007C0B51 /* StrengthTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StrengthTvCell.xib; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
+		84395FCA2D0D4CAB00FC3242 /* ParentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentVC.swift; sourceTree = "<group>"; };
+		84395FCB2D0D4CAB00FC3242 /* ParentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentVC.xib; sourceTree = "<group>"; };
+		84395FE72D10026100FC3242 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		84395FE82D10026100FC3242 /* ChatVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatVC.xib; sourceTree = "<group>"; };
+		84395FEC2D1002A900FC3242 /* ChatTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTVCell.swift; sourceTree = "<group>"; };
+		84395FED2D1002A900FC3242 /* ChatTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTVCell.xib; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
 		844188672CC8C85C006483C3 /* ViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModal.swift; sourceTree = "<group>"; };
 		8441886E2CC8E18B006483C3 /* Models.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Models.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -929,8 +993,6 @@
 		B44975D56ECE7FA0CF1EF214 /* Pods_VsSchoolChimes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
-		F290355E2CDC924900F3E67C /* MobileVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MobileVc.swift; path = VsSchoolChimes/MobileVc.swift; sourceTree = SOURCE_ROOT; };
-		F290355F2CDC924900F3E67C /* MobileVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MobileVc.xib; path = VsSchoolChimes/MobileVc.xib; sourceTree = SOURCE_ROOT; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
 		FA8A5D25D3E56CCD6CFE4A08 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1004,161 +1066,23 @@
 			path = Video;
 			sourceTree = "<group>";
 		};
-		18926AF22D02D460002BBB97 /* AbsenteesReport */ = {
+		187CF48F2D113524001422CE /* MsgFrmManagement */ = {
 			isa = PBXGroup;
 			children = (
-				18926BDB2D02DCE1002BBB97 /* NewAbsenteesReport */,
+				187CF4942D113B4E001422CE /* Cell */,
+				187CF4902D11355D001422CE /* MessageFromManagementViewController.swift */,
+				187CF4912D11355D001422CE /* MessageFromManagementViewController.xib */,
 			);
-			path = AbsenteesReport;
+			path = MsgFrmManagement;
 			sourceTree = "<group>";
 		};
-		18926AFF2D02D7AB002BBB97 /* Cell */ = {
+		187CF4942D113B4E001422CE /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				18926AF72D02D7AB002BBB97 /* LocationTableViewCell.xib */,
-				18926AF82D02D7AB002BBB97 /* LocationTableViewCell.swift */,
-				18926AF92D02D7AB002BBB97 /* PreviousCvcell.swift */,
-				18926AFA2D02D7AB002BBB97 /* PreviousCvcell.xib */,
-				18926AFB2D02D7AB002BBB97 /* deleteTV.xib */,
-				18926AFC2D02D7AB002BBB97 /* deleteTV.swift */,
-				18926AFD2D02D7AB002BBB97 /* PunchHistTableViewCell.swift */,
-				18926AFE2D02D7AB002BBB97 /* PunchHistTableViewCell.xib */,
+				187CF4952D113B6E001422CE /* MessageFromManagementTableViewCell.swift */,
+				187CF4962D113B6E001422CE /* MessageFromManagementTableViewCell.xib */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		18926B092D02D7AB002BBB97 /* LocationRequest */ = {
-			isa = PBXGroup;
-			children = (
-				18926B002D02D7AB002BBB97 /* PunchReq.swift */,
-				18926B012D02D7AB002BBB97 /* locationReq.swift */,
-				18926B022D02D7AB002BBB97 /* fechLocationResq.swift */,
-				18926B032D02D7AB002BBB97 /* HistoryReq.swift */,
-				18926B042D02D7AB002BBB97 /* DeleteReq.swift */,
-				18926B052D02D7AB002BBB97 /* StaffListReq.swift */,
-				18926B062D02D7AB002BBB97 /* GetLocationReq.swift */,
-				18926B072D02D7AB002BBB97 /* PunchHistryReq.swift */,
-				18926B082D02D7AB002BBB97 /* EditLocReq.swift */,
-			);
-			path = LocationRequest;
-			sourceTree = "<group>";
-		};
-		18926B132D02D7AB002BBB97 /* LocationResponce */ = {
-			isa = PBXGroup;
-			children = (
-				18926B0A2D02D7AB002BBB97 /* punchResp.swift */,
-				18926B0B2D02D7AB002BBB97 /* locationResp.swift */,
-				18926B0C2D02D7AB002BBB97 /* StaffListResp.swift */,
-				18926B0D2D02D7AB002BBB97 /* HistoryResp.swift */,
-				18926B0E2D02D7AB002BBB97 /* fechLocationResp.swift */,
-				18926B0F2D02D7AB002BBB97 /* GetLocationResp.swift */,
-				18926B102D02D7AB002BBB97 /* DeleteResp.swift */,
-				18926B112D02D7AB002BBB97 /* PunchHistryResp.swift */,
-				18926B122D02D7AB002BBB97 /* EditLocResp.swift */,
-			);
-			path = LocationResponce;
-			sourceTree = "<group>";
-		};
-		18926B162D02D7AB002BBB97 /* deleteLocationVC */ = {
-			isa = PBXGroup;
-			children = (
-				18926B142D02D7AB002BBB97 /* deleteVc.swift */,
-				18926B152D02D7AB002BBB97 /* deleteVc.xib */,
-			);
-			path = deleteLocationVC;
-			sourceTree = "<group>";
-		};
-		18926B192D02D7AB002BBB97 /* LocationHistoryVc */ = {
-			isa = PBXGroup;
-			children = (
-				18926B172D02D7AB002BBB97 /* LocationHistoryVc.swift */,
-				18926B182D02D7AB002BBB97 /* LocationHistoryVc.xib */,
-			);
-			path = LocationHistoryVc;
-			sourceTree = "<group>";
-		};
-		18926B212D02D7AB002BBB97 /* LocationVc */ = {
-			isa = PBXGroup;
-			children = (
-				18926AFF2D02D7AB002BBB97 /* Cell */,
-				18926B092D02D7AB002BBB97 /* LocationRequest */,
-				18926B132D02D7AB002BBB97 /* LocationResponce */,
-				18926B162D02D7AB002BBB97 /* deleteLocationVC */,
-				18926B192D02D7AB002BBB97 /* LocationHistoryVc */,
-				18926B1A2D02D7AB002BBB97 /* CreateLocationViewController.swift */,
-				18926B1B2D02D7AB002BBB97 /* CreateLocationViewController.xib */,
-				18926B1C2D02D7AB002BBB97 /* LocationViewController.swift */,
-				18926B1D2D02D7AB002BBB97 /* LocationViewController.xib */,
-				18926B1E2D02D7AB002BBB97 /* Map Location.gif */,
-				18926B1F2D02D7AB002BBB97 /* PunchHistoryListVC.swift */,
-				18926B202D02D7AB002BBB97 /* PunchHistoryListVC.xib */,
-			);
-			path = LocationVc;
-			sourceTree = "<group>";
-		};
-		18926BD62D02DCE1002BBB97 /* ClassTvCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ClassTvCell;
-			sourceTree = "<group>";
-		};
-		18926BD72D02DCE1002BBB97 /* CvIcon */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CvIcon;
-			sourceTree = "<group>";
-		};
-		18926BD82D02DCE1002BBB97 /* SectionTvCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SectionTvCell;
-			path = ../../../SchoolChimesDeve/Nov26/SchoolChimesIOS/SectionTvCell;
-			sourceTree = "<group>";
-		};
-		18926BD92D02DCE1002BBB97 /* StudentListApi */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = StudentListApi;
-			path = ../../../SchoolChimesDeve/Nov26/SchoolChimesIOS/StudentListApi;
-			sourceTree = "<group>";
-		};
-		18926BDA2D02DCE1002BBB97 /* SectionVc */ = {
-			isa = PBXGroup;
-			children = (
-				18926BD82D02DCE1002BBB97 /* SectionTvCell */,
-				18926BD92D02DCE1002BBB97 /* StudentListApi */,
-			);
-			path = SectionVc;
-			sourceTree = "<group>";
-		};
-		18926BDB2D02DCE1002BBB97 /* NewAbsenteesReport */ = {
-			isa = PBXGroup;
-			children = (
-				18926BC62D02DCE1002BBB97 /* SectionTvTableViewCell copy.swift */,
-				18926BC72D02DCE1002BBB97 /* SectionViewController.swift */,
-				18926BC82D02DCE1002BBB97 /* SectionTvTableViewCell.xib */,
-				18926BC92D02DCE1002BBB97 /* SectionViewController.xib */,
-				18926BCA2D02DCE1002BBB97 /* StudentListReq.swift */,
-				18926BCB2D02DCE1002BBB97 /* StudentListResp.swift */,
-				18926BCC2D02DCE1002BBB97 /* SectionCollectionViewCell.xib */,
-				18926BCD2D02DCE1002BBB97 /* SectionCollectionViewCell.swift */,
-				18926BCE2D02DCE1002BBB97 /* ClassTableViewCell.xib */,
-				18926BCF2D02DCE1002BBB97 /* ClassTableViewCell.swift */,
-				18926BD02D02DCE1002BBB97 /* CVIconCollectionViewCell.swift */,
-				18926BD12D02DCE1002BBB97 /* CVIconCollectionViewCell.xib */,
-				18926BD22D02DCE1002BBB97 /* NewAbsenteesViewController.xib */,
-				18926BD32D02DCE1002BBB97 /* NewAbsenteesViewController.swift */,
-				18926BD42D02DCE1002BBB97 /* AbesentRequst.swift */,
-				18926BD52D02DCE1002BBB97 /* AbesentReportResp.swift */,
-				18926BD62D02DCE1002BBB97 /* ClassTvCell */,
-				18926BD72D02DCE1002BBB97 /* CvIcon */,
-				18926BDA2D02DCE1002BBB97 /* SectionVc */,
-			);
-			path = NewAbsenteesReport;
 			sourceTree = "<group>";
 		};
 		18926C312D02DE81002BBB97 /* RestrictionVc */ = {
@@ -1550,6 +1474,204 @@
 			path = Tv;
 			sourceTree = "<group>";
 		};
+		18D7183F2D0D471A00E9EDA3 /* DailyCollApi */ = {
+			isa = PBXGroup;
+			children = (
+				18D718392D0D471A00E9EDA3 /* DailycollResp.swift */,
+				18D7183A2D0D471A00E9EDA3 /* DailyCollReq.swift */,
+				18D7183B2D0D471A00E9EDA3 /* StanderReq.swift */,
+				18D7183C2D0D471A00E9EDA3 /* PayModeRequest.swift */,
+				18D7183D2D0D471A00E9EDA3 /* PaymentListTableViewCell.swift */,
+				18D7183E2D0D471A00E9EDA3 /* PaymentListTableViewCell.xib */,
+			);
+			path = DailyCollApi;
+			sourceTree = "<group>";
+		};
+		18D718422D0D471A00E9EDA3 /* NewDailyCollection */ = {
+			isa = PBXGroup;
+			children = (
+				18D7183F2D0D471A00E9EDA3 /* DailyCollApi */,
+				18D718402D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift */,
+				18D718412D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib */,
+			);
+			path = NewDailyCollection;
+			sourceTree = "<group>";
+		};
+		18D718452D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				18D718432D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib */,
+				18D718442D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift */,
+			);
+			path = DailyCollectionFeePaymentTypeTableViewCell;
+			sourceTree = "<group>";
+		};
+		18D7184C2D0D471A00E9EDA3 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				18D718452D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell */,
+				18D718462D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift */,
+				18D718472D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib */,
+				18D718482D0D471A00E9EDA3 /* DataCollectionTvHeaderView.swift */,
+				18D718492D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib */,
+				18D7184A2D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift */,
+				18D7184B2D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		18D7184E2D0D471A00E9EDA3 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				18D7184D2D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		18D718502D0D471A00E9EDA3 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				18D7184F2D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		18D718532D0D471A00E9EDA3 /* DaliyCollectionFee */ = {
+			isa = PBXGroup;
+			children = (
+				18D718422D0D471A00E9EDA3 /* NewDailyCollection */,
+				18D7184C2D0D471A00E9EDA3 /* Cell */,
+				18D7184E2D0D471A00E9EDA3 /* Request */,
+				18D718502D0D471A00E9EDA3 /* Modal */,
+				18D718512D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift */,
+				18D718522D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib */,
+			);
+			path = DaliyCollectionFee;
+			sourceTree = "<group>";
+		};
+		18D718542D0D471A00E9EDA3 /* NewDailyCollection */ = {
+			isa = PBXGroup;
+			children = (
+				18D718532D0D471A00E9EDA3 /* DaliyCollectionFee */,
+			);
+			path = NewDailyCollection;
+			sourceTree = "<group>";
+		};
+		18D718762D0D477900E9EDA3 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				18D7186E2D0D477900E9EDA3 /* LocationTableViewCell.xib */,
+				18D7186F2D0D477900E9EDA3 /* LocationTableViewCell.swift */,
+				18D718702D0D477900E9EDA3 /* PreviousCvcell.swift */,
+				18D718712D0D477900E9EDA3 /* PreviousCvcell.xib */,
+				18D718722D0D477900E9EDA3 /* deleteTV.xib */,
+				18D718732D0D477900E9EDA3 /* deleteTV.swift */,
+				18D718742D0D477900E9EDA3 /* PunchHistTableViewCell.swift */,
+				18D718752D0D477900E9EDA3 /* PunchHistTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		18D718802D0D477900E9EDA3 /* LocationRequest */ = {
+			isa = PBXGroup;
+			children = (
+				18D718772D0D477900E9EDA3 /* PunchReq.swift */,
+				18D718782D0D477900E9EDA3 /* locationReq.swift */,
+				18D718792D0D477900E9EDA3 /* fechLocationResq.swift */,
+				18D7187A2D0D477900E9EDA3 /* HistoryReq.swift */,
+				18D7187B2D0D477900E9EDA3 /* DeleteReq.swift */,
+				18D7187C2D0D477900E9EDA3 /* StaffListReq.swift */,
+				18D7187D2D0D477900E9EDA3 /* GetLocationReq.swift */,
+				18D7187E2D0D477900E9EDA3 /* PunchHistryReq.swift */,
+				18D7187F2D0D477900E9EDA3 /* EditLocReq.swift */,
+			);
+			path = LocationRequest;
+			sourceTree = "<group>";
+		};
+		18D7188A2D0D477900E9EDA3 /* LocationResponce */ = {
+			isa = PBXGroup;
+			children = (
+				18D718812D0D477900E9EDA3 /* punchResp.swift */,
+				18D718822D0D477900E9EDA3 /* locationResp.swift */,
+				18D718832D0D477900E9EDA3 /* StaffListResp.swift */,
+				18D718842D0D477900E9EDA3 /* HistoryResp.swift */,
+				18D718852D0D477900E9EDA3 /* fechLocationResp.swift */,
+				18D718862D0D477900E9EDA3 /* GetLocationResp.swift */,
+				18D718872D0D477900E9EDA3 /* DeleteResp.swift */,
+				18D718882D0D477900E9EDA3 /* PunchHistryResp.swift */,
+				18D718892D0D477900E9EDA3 /* EditLocResp.swift */,
+			);
+			path = LocationResponce;
+			sourceTree = "<group>";
+		};
+		18D7188D2D0D477900E9EDA3 /* deleteLocationVC */ = {
+			isa = PBXGroup;
+			children = (
+				18D7188B2D0D477900E9EDA3 /* deleteVc.swift */,
+				18D7188C2D0D477900E9EDA3 /* deleteVc.xib */,
+			);
+			path = deleteLocationVC;
+			sourceTree = "<group>";
+		};
+		18D718902D0D477900E9EDA3 /* LocationHistoryVc */ = {
+			isa = PBXGroup;
+			children = (
+				18D7188E2D0D477900E9EDA3 /* LocationHistoryVc.swift */,
+				18D7188F2D0D477900E9EDA3 /* LocationHistoryVc.xib */,
+			);
+			path = LocationHistoryVc;
+			sourceTree = "<group>";
+		};
+		18D718982D0D477900E9EDA3 /* LocationVc */ = {
+			isa = PBXGroup;
+			children = (
+				18D718762D0D477900E9EDA3 /* Cell */,
+				18D718802D0D477900E9EDA3 /* LocationRequest */,
+				18D7188A2D0D477900E9EDA3 /* LocationResponce */,
+				18D7188D2D0D477900E9EDA3 /* deleteLocationVC */,
+				18D718902D0D477900E9EDA3 /* LocationHistoryVc */,
+				18D718912D0D477900E9EDA3 /* CreateLocationViewController.swift */,
+				18D718922D0D477900E9EDA3 /* CreateLocationViewController.xib */,
+				18D718932D0D477900E9EDA3 /* LocationViewController.swift */,
+				18D718942D0D477900E9EDA3 /* LocationViewController.xib */,
+				18D718952D0D477900E9EDA3 /* Map Location.gif */,
+				18D718962D0D477900E9EDA3 /* PunchHistoryListVC.swift */,
+				18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */,
+			);
+			path = LocationVc;
+			sourceTree = "<group>";
+		};
+		18D718D42D0D479B00E9EDA3 /* NewAbsenteesReport */ = {
+			isa = PBXGroup;
+			children = (
+				18D718BF2D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift */,
+				18D718C02D0D479B00E9EDA3 /* SectionViewController.swift */,
+				18D718C12D0D479B00E9EDA3 /* SectionTvTableViewCell.xib */,
+				18D718C22D0D479B00E9EDA3 /* SectionViewController.xib */,
+				18D718C32D0D479B00E9EDA3 /* StudentListReq.swift */,
+				18D718C42D0D479B00E9EDA3 /* StudentListResp.swift */,
+				18D718C52D0D479B00E9EDA3 /* SectionCollectionViewCell.xib */,
+				18D718C62D0D479B00E9EDA3 /* SectionCollectionViewCell.swift */,
+				18D718C72D0D479B00E9EDA3 /* ClassTableViewCell.xib */,
+				18D718C82D0D479B00E9EDA3 /* ClassTableViewCell.swift */,
+				18D718C92D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift */,
+				18D718CA2D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib */,
+				18D718CB2D0D479B00E9EDA3 /* NewAbsenteesViewController.xib */,
+				18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */,
+				18D718CD2D0D479B00E9EDA3 /* AbesentRequst.swift */,
+				18D718CE2D0D479B00E9EDA3 /* AbesentReportResp.swift */,
+			);
+			path = NewAbsenteesReport;
+			sourceTree = "<group>";
+		};
+		18D718D52D0D479B00E9EDA3 /* AbsenteesReport */ = {
+			isa = PBXGroup;
+			children = (
+				18D718D42D0D479B00E9EDA3 /* NewAbsenteesReport */,
+			);
+			path = AbsenteesReport;
+			sourceTree = "<group>";
+		};
 		3CDBD330E75F67CE1AED6022 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1625,6 +1747,34 @@
 				842FBAE72D0BFE64007C0B51 /* StrengthTvCell.xib */,
 			);
 			path = SchoolStrength;
+			sourceTree = "<group>";
+		};
+		84395FC92D0D4C8B00FC3242 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				84395FCA2D0D4CAB00FC3242 /* ParentVC.swift */,
+				84395FCB2D0D4CAB00FC3242 /* ParentVC.xib */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		84395FE62D10023200FC3242 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				84395FEB2D10026600FC3242 /* ChatCell */,
+				84395FE72D10026100FC3242 /* ChatVC.swift */,
+				84395FE82D10026100FC3242 /* ChatVC.xib */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		84395FEB2D10026600FC3242 /* ChatCell */ = {
+			isa = PBXGroup;
+			children = (
+				84395FEC2D1002A900FC3242 /* ChatTVCell.swift */,
+				84395FED2D1002A900FC3242 /* ChatTVCell.xib */,
+			);
+			path = ChatCell;
 			sourceTree = "<group>";
 		};
 		8442A8672CDB787A0006068E /* PriorityScreen */ = {
@@ -2043,7 +2193,6 @@
 				84A5BE792C19733D00E32496 /* CountryList */,
 				84A5BE7A2C19734E00E32496 /* MobileNumber */,
 				84A5BE7B2C19736200E32496 /* Otp */,
-				84A5BE7C2C19737500E32496 /* SignIn */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -2122,16 +2271,6 @@
 			path = Otp;
 			sourceTree = "<group>";
 		};
-		84A5BE7C2C19737500E32496 /* SignIn */ = {
-			isa = PBXGroup;
-			children = (
-				84A5BFBE2C1B024500E32496 /* View */,
-				84A5BFBD2C1B023A00E32496 /* ViewModel */,
-				84A5BFBB2C1B022900E32496 /* Model */,
-			);
-			path = SignIn;
-			sourceTree = "<group>";
-		};
 		84A5BE7E2C1973F400E32496 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -2169,9 +2308,12 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				187CF48F2D113524001422CE /* MsgFrmManagement */,
+				84395FE62D10023200FC3242 /* Chat */,
+				18D718D52D0D479B00E9EDA3 /* AbsenteesReport */,
+				18D718982D0D477900E9EDA3 /* LocationVc */,
+				18D718542D0D471A00E9EDA3 /* NewDailyCollection */,
 				8485B6DB2D0C485600C4C2B9 /* Mark Attendence */,
-				18926AF22D02D460002BBB97 /* AbsenteesReport */,
-				18926B212D02D7AB002BBB97 /* LocationVc */,
 				18926CA92D0306CA002BBB97 /* PTMVc */,
 				18926D252D04140B002BBB97 /* PendingFeeReport */,
 				18926D342D041D54002BBB97 /* ImportantInfo */,
@@ -2199,6 +2341,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84395FC92D0D4C8B00FC3242 /* HomePage */,
 				84D2D5642CE463CD00606CE8 /* Video */,
 				849970B22CF8750B00800B07 /* Assignment */,
 				18926C4C2D02DE81002BBB97 /* LSRW */,
@@ -2309,29 +2452,6 @@
 			children = (
 				844188852CC915FF006483C3 /* OTPVc.swift */,
 				844188862CC915FF006483C3 /* OTPVc.xib */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		84A5BFBB2C1B022900E32496 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		84A5BFBD2C1B023A00E32496 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		84A5BFBE2C1B024500E32496 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				F290355E2CDC924900F3E67C /* MobileVc.swift */,
-				F290355F2CDC924900F3E67C /* MobileVc.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2798,6 +2918,16 @@
 			files = (
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
 				8442A86C2CDB787A0006068E /* DemoTVCell.xib in Resources */,
+				18D718B42D0D477900E9EDA3 /* PreviousCvcell.xib in Resources */,
+				18D718B52D0D477900E9EDA3 /* CreateLocationViewController.xib in Resources */,
+				18D718B62D0D477900E9EDA3 /* LocationTableViewCell.xib in Resources */,
+				18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */,
+				18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */,
+				18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */,
+				18D718BA2D0D477900E9EDA3 /* deleteVc.xib in Resources */,
+				18D718BB2D0D477900E9EDA3 /* PunchHistTableViewCell.xib in Resources */,
+				18D718BC2D0D477900E9EDA3 /* LocationViewController.xib in Resources */,
+				18D718BD2D0D477900E9EDA3 /* LocationHistoryVc.xib in Resources */,
 				8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */,
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
@@ -2810,6 +2940,7 @@
 				18CA855B2CF99ACD00984D7C /* AssignmentViewTableViewCell.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
 				849E57392C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf in Resources */,
+				84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */,
 				849E57272C1FF4F9006119DA /* PriorityStoryboard.storyboard in Resources */,
 				84EFF9D82CCC862F00C11C26 /* TopCVCell.xib in Resources */,
 				84EFFADF2CCF9EEA00C11C26 /* NotificationTableViewCell.xib in Resources */,
@@ -2831,6 +2962,7 @@
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
 				84A271802CEDAB9F0033EB02 /* New.gif in Resources */,
 				18926C5D2D02DE81002BBB97 /* FileAttachmentTableViewCell.xib in Resources */,
+				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
 				18926C5E2D02DE81002BBB97 /* LsrwListShowViewController.xib in Resources */,
 				18926C5F2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.xib in Resources */,
 				18926C602D02DE81002BBB97 /* SubmitLsrwViewController.xib in Resources */,
@@ -2849,16 +2981,6 @@
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
 				8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */,
-				18926B3D2D02D7AB002BBB97 /* Map Location.gif in Resources */,
-				18926B3E2D02D7AB002BBB97 /* PreviousCvcell.xib in Resources */,
-				18926B3F2D02D7AB002BBB97 /* PunchHistTableViewCell.xib in Resources */,
-				18926B402D02D7AB002BBB97 /* LocationHistoryVc.xib in Resources */,
-				18926B412D02D7AB002BBB97 /* PunchHistoryListVC.xib in Resources */,
-				18926B422D02D7AB002BBB97 /* deleteVc.xib in Resources */,
-				18926B432D02D7AB002BBB97 /* LocationTableViewCell.xib in Resources */,
-				18926B442D02D7AB002BBB97 /* deleteTV.xib in Resources */,
-				18926B452D02D7AB002BBB97 /* CreateLocationViewController.xib in Resources */,
-				18926B462D02D7AB002BBB97 /* LocationViewController.xib in Resources */,
 				849E573A2C1FF6BD006119DA /* RobotoSlab-Regular.ttf in Resources */,
 				84EFF9D32CCC7CD000C11C26 /* HomePageVc.xib in Resources */,
 				18BAF4E22CEC555000517441 /* SenderAssignmentTextViewController.xib in Resources */,
@@ -2902,6 +3024,7 @@
 				8407525F2D0178060008498E /* OnlineMeetingVC.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
 				18BAF4DD2CEB3CB200517441 /* SenderAssignmentViewController.xib in Resources */,
+				84395FCD2D0D4CAB00FC3242 /* ParentVC.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
 				848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */,
@@ -2916,9 +3039,9 @@
 				8442A96A2CDE8AE80006068E /* LanguageVc.xib in Resources */,
 				849E572F2C1FF65F006119DA /* right-arrow.json in Resources */,
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
+				84395FEA2D10026100FC3242 /* ChatVC.xib in Resources */,
 				84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
-				F29035602CDC924900F3E67C /* MobileVc.xib in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
@@ -2927,6 +3050,13 @@
 				849F313B2D00613B00BACEC7 /* EventPageVC.xib in Resources */,
 				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
 				8485B6DF2D0C489600C4C2B9 /* MarkAttendenceVC.xib in Resources */,
+				18D718622D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib in Resources */,
+				18D718632D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib in Resources */,
+				18D718642D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.xib in Resources */,
+				18D718652D0D471A00E9EDA3 /* DataCollectionTvHeaderView.xib in Resources */,
+				18D718662D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.xib in Resources */,
+				18D718672D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib in Resources */,
+				18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */,
 				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
@@ -2936,9 +3066,16 @@
 				842FBAF02D0BFE64007C0B51 /* SchoolStrengthVC.xib in Resources */,
 				842FBAF12D0BFE64007C0B51 /* StrengthTvCell.xib in Resources */,
 				842FBAF22D0BFE64007C0B51 /* LessonPlanTvCell.xib in Resources */,
+				18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */,
+				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
+				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
+				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
+				18D718E42D0D479B00E9EDA3 /* ClassTableViewCell.xib in Resources */,
+				18D718E52D0D479B00E9EDA3 /* SectionTvTableViewCell.xib in Resources */,
 				842FBAF32D0BFE64007C0B51 /* EditLessonplanVC.xib in Resources */,
 				842FBAF42D0BFE64007C0B51 /* LessonDetailsTVcell.xib in Resources */,
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
+				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
 				8476EE2A2D100A22006E1EA6 /* AttendenceReportTVCell.xib in Resources */,
@@ -3119,6 +3256,20 @@
 				18926CBE2D0306CA002BBB97 /* TimeHeader.swift in Sources */,
 				18926CBF2D0306CA002BBB97 /* SltoCreationViewController.swift in Sources */,
 				18926CC02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift in Sources */,
+				84395FCC2D0D4CAB00FC3242 /* ParentVC.swift in Sources */,
+				18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */,
+				18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */,
+				18D718572D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift in Sources */,
+				18D718582D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift in Sources */,
+				18D718592D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift in Sources */,
+				18D7185A2D0D471A00E9EDA3 /* DailycollResp.swift in Sources */,
+				18D7185B2D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift in Sources */,
+				18D7185C2D0D471A00E9EDA3 /* StanderReq.swift in Sources */,
+				18D7185D2D0D471A00E9EDA3 /* DataCollectionTvHeaderView.swift in Sources */,
+				18D7185E2D0D471A00E9EDA3 /* PaymentListTableViewCell.swift in Sources */,
+				18D7185F2D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift in Sources */,
+				18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */,
+				18D718612D0D471A00E9EDA3 /* DailyCollReq.swift in Sources */,
 				18926CC12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift in Sources */,
 				18926CC22D0306CA002BBB97 /* SubjectListForStudentResponse.swift in Sources */,
 				18926CC32D0306CA002BBB97 /* CheckAviableViewController.swift in Sources */,
@@ -3150,6 +3301,7 @@
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
+				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
 				18CA85662CF9A00D00984D7C /* AssignmentViewTotalTableViewCell.swift in Sources */,
 				180C6E952CE748980071CD04 /* AttachmentsReuseView.swift in Sources */,
 				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
@@ -3170,6 +3322,44 @@
 				84A2717C2CEDAB9F0033EB02 /* ImagePdfVC.swift in Sources */,
 				84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */,
 				84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */,
+				18D718992D0D477900E9EDA3 /* EditLocReq.swift in Sources */,
+				187CF4982D113B6E001422CE /* MessageFromManagementTableViewCell.swift in Sources */,
+				18D7189A2D0D477900E9EDA3 /* GetLocationResp.swift in Sources */,
+				18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */,
+				18D7189C2D0D477900E9EDA3 /* PunchHistryReq.swift in Sources */,
+				18D7189D2D0D477900E9EDA3 /* locationReq.swift in Sources */,
+				18D7189E2D0D477900E9EDA3 /* PunchHistTableViewCell.swift in Sources */,
+				18D7189F2D0D477900E9EDA3 /* LocationViewController.swift in Sources */,
+				18D718A02D0D477900E9EDA3 /* HistoryResp.swift in Sources */,
+				18D718A12D0D477900E9EDA3 /* PunchReq.swift in Sources */,
+				18D718A22D0D477900E9EDA3 /* PunchHistoryListVC.swift in Sources */,
+				18D718A32D0D477900E9EDA3 /* CreateLocationViewController.swift in Sources */,
+				18D718A42D0D477900E9EDA3 /* EditLocResp.swift in Sources */,
+				18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */,
+				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
+				18D718A72D0D477900E9EDA3 /* deleteVc.swift in Sources */,
+				18D718A82D0D477900E9EDA3 /* DeleteReq.swift in Sources */,
+				18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */,
+				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
+				18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */,
+				18D718D72D0D479B00E9EDA3 /* AbesentRequst.swift in Sources */,
+				18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */,
+				18D718D92D0D479B00E9EDA3 /* StudentListResp.swift in Sources */,
+				18D718DA2D0D479B00E9EDA3 /* SectionCollectionViewCell.swift in Sources */,
+				18D718DB2D0D479B00E9EDA3 /* StudentListReq.swift in Sources */,
+				18D718DC2D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift in Sources */,
+				18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */,
+				18D718DE2D0D479B00E9EDA3 /* AbesentReportResp.swift in Sources */,
+				18D718DF2D0D479B00E9EDA3 /* SectionViewController.swift in Sources */,
+				18D718AB2D0D477900E9EDA3 /* StaffListResp.swift in Sources */,
+				18D718AC2D0D477900E9EDA3 /* PunchHistryResp.swift in Sources */,
+				18D718AD2D0D477900E9EDA3 /* deleteTV.swift in Sources */,
+				18D718AE2D0D477900E9EDA3 /* DeleteResp.swift in Sources */,
+				18D718AF2D0D477900E9EDA3 /* PreviousCvcell.swift in Sources */,
+				18D718B02D0D477900E9EDA3 /* GetLocationReq.swift in Sources */,
+				18D718B12D0D477900E9EDA3 /* fechLocationResp.swift in Sources */,
+				18D718B22D0D477900E9EDA3 /* StaffListReq.swift in Sources */,
+				18D718B32D0D477900E9EDA3 /* HistoryReq.swift in Sources */,
 				84EFFA392CCCB44300C11C26 /* ContactUsVc.swift in Sources */,
 				847AB6F22CF09A6800952AC1 /* RecipientTvCell.swift in Sources */,
 				847AB6F32CF09A6800952AC1 /* Std_Grp_header.swift in Sources */,
@@ -3181,7 +3371,6 @@
 				8407525E2D0178060008498E /* OnlineMeetingVC.swift in Sources */,
 				8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */,
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
-				F29035612CDC924900F3E67C /* MobileVc.swift in Sources */,
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				18BAF4DE2CEB3CB200517441 /* SenderAssignmentViewController.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,
@@ -3215,33 +3404,6 @@
 				84A5BF9E2C1AF5EE00E32496 /* CountryListModel.swift in Sources */,
 				8442A90C2CDC8B2D0006068E /* FAQViewController.swift in Sources */,
 				180C6E532CE72A860071CD04 /* SenderSideHomeWorkViewController.swift in Sources */,
-				18926B222D02D7AB002BBB97 /* PunchHistryReq.swift in Sources */,
-				18926B232D02D7AB002BBB97 /* CreateLocationViewController.swift in Sources */,
-				18926B242D02D7AB002BBB97 /* EditLocReq.swift in Sources */,
-				18926B252D02D7AB002BBB97 /* PunchHistTableViewCell.swift in Sources */,
-				18926B262D02D7AB002BBB97 /* EditLocResp.swift in Sources */,
-				18926B272D02D7AB002BBB97 /* LocationViewController.swift in Sources */,
-				18926B282D02D7AB002BBB97 /* StaffListReq.swift in Sources */,
-				18926B292D02D7AB002BBB97 /* fechLocationResp.swift in Sources */,
-				18926B2A2D02D7AB002BBB97 /* fechLocationResq.swift in Sources */,
-				18926B2B2D02D7AB002BBB97 /* DeleteResp.swift in Sources */,
-				18926B2C2D02D7AB002BBB97 /* LocationTableViewCell.swift in Sources */,
-				18926B2D2D02D7AB002BBB97 /* PunchHistoryListVC.swift in Sources */,
-				18926B2E2D02D7AB002BBB97 /* PunchReq.swift in Sources */,
-				18926B2F2D02D7AB002BBB97 /* deleteVc.swift in Sources */,
-				18926B302D02D7AB002BBB97 /* PunchHistryResp.swift in Sources */,
-				18926B312D02D7AB002BBB97 /* locationResp.swift in Sources */,
-				18926B322D02D7AB002BBB97 /* locationReq.swift in Sources */,
-				18926B332D02D7AB002BBB97 /* GetLocationReq.swift in Sources */,
-				18926B342D02D7AB002BBB97 /* LocationHistoryVc.swift in Sources */,
-				18926B352D02D7AB002BBB97 /* HistoryReq.swift in Sources */,
-				18926B362D02D7AB002BBB97 /* StaffListResp.swift in Sources */,
-				18926B372D02D7AB002BBB97 /* HistoryResp.swift in Sources */,
-				18926B382D02D7AB002BBB97 /* deleteTV.swift in Sources */,
-				18926B392D02D7AB002BBB97 /* DeleteReq.swift in Sources */,
-				18926B3A2D02D7AB002BBB97 /* PreviousCvcell.swift in Sources */,
-				18926B3B2D02D7AB002BBB97 /* GetLocationResp.swift in Sources */,
-				18926B3C2D02D7AB002BBB97 /* punchResp.swift in Sources */,
 				8442A90D2CDC8B2D0006068E /* FAQTableViewCell.swift in Sources */,
 				84EFF9E82CCCA7F000C11C26 /* AppBottomView.swift in Sources */,
 				18BAF3E72CE8BF0900517441 /* PhotoPickManager.swift in Sources */,
@@ -3262,14 +3424,6 @@
 				18926D2E2D04140B002BBB97 /* classWisePendingReq.swift in Sources */,
 				18926D2F2D04140B002BBB97 /* PendingApiResp.swift in Sources */,
 				18926D302D04140B002BBB97 /* PendingFeeReportTableViewCell.swift in Sources */,
-				18926BDE2D02DCE1002BBB97 /* SectionTvTableViewCell copy.swift in Sources */,
-				18926BDF2D02DCE1002BBB97 /* AbesentReportResp.swift in Sources */,
-				18926BE02D02DCE1002BBB97 /* CVIconCollectionViewCell.swift in Sources */,
-				18926BE12D02DCE1002BBB97 /* NewAbsenteesViewController.swift in Sources */,
-				18926BE22D02DCE1002BBB97 /* ClassTableViewCell.swift in Sources */,
-				18926BE32D02DCE1002BBB97 /* SectionCollectionViewCell.swift in Sources */,
-				18926BE42D02DCE1002BBB97 /* AbesentRequst.swift in Sources */,
-				18926BE52D02DCE1002BBB97 /* SectionViewController.swift in Sources */,
 				849970B92CF8750B00800B07 /* PageVC.swift in Sources */,
 				849970BA2CF8750B00800B07 /* AssignmentListVC.swift in Sources */,
 				849970BB2CF8750B00800B07 /* ImageCViewCell.swift in Sources */,
@@ -3310,6 +3464,7 @@
 				84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */,
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
 				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
+				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
 				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,
 				84C82A032D086A490024A46A /* FireworkSpark.swift in Sources */,
 				84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */,
@@ -3332,6 +3487,7 @@
 				18CA85612CF99EFB00984D7C /* AssignmentViewTotalViewController.swift in Sources */,
 				84EFFAEB2CCFA4A100C11C26 /* ReportBugVcViewController.swift in Sources */,
 				84A5BE9A2C197E0B00E32496 /* ResponseName.swift in Sources */,
+				84395FE92D10026100FC3242 /* ChatVC.swift in Sources */,
 				844914882D01A8EF0007A875 /* MeetingsTVcell.swift in Sources */,
 				84A5BE962C197D2C00E32496 /* UILabel.swift in Sources */,
 				8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */,

@@ -20,41 +20,23 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
     @IBOutlet weak var cv: UICollectionView!
     
     
-    let cvRowIdentifier = "SlotsCollectionViewCell"
   
-//
-//    var stdSecDetails: [sectionDetails] = [] {
-//           didSet {
-//               
-//               
-//               cv.reloadData()
-//           }
-//       }
-//       
        override func awakeFromNib() {
            super.awakeFromNib()
-           
-//          
-//           
-          
-          cv.register(UINib(nibName: cvRowIdentifier, bundle: nil), forCellWithReuseIdentifier: cvRowIdentifier)
+      
+           cv.register(UINib(nibName: CellConfingName.SlotsCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SlotsCollectionViewCell)
            cv.dataSource = self
            cv.delegate = self
        }
-       
       
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        
-
         return 2
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cvRowIdentifier, for: indexPath) as! SlotsCollectionViewCell
-        print("SlotcellForItemAt")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SlotsCollectionViewCell, for: indexPath) as! SlotsCollectionViewCell
         
 //        let data : sectionDetails = stdSecDetails[indexPath.row]
 //        cell.sectionFullView.backgroundColor = UIColor(named: "AppDark")
@@ -63,27 +45,18 @@ class SlotHeader: UITableViewHeaderFooterView, UICollectionViewDelegate, UIColle
         return cell
     }
 
-
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/3, height: 50) // Adjust item size as needed
         }
     
-    
     func adjustCollectionViewHeight(for itemCount: Int) {
-        var height: CGFloat = 55  // Default height for 1 to 3 items
-        
+        var height: CGFloat = 55
         if itemCount > 3 {
-            let extraRows = (itemCount - 1) / 3  // Calculate additional rows beyond the first row
-            height += CGFloat(extraRows) * 50  // Increase height for each additional row
+            let extraRows = (itemCount - 1) / 3
+            height += CGFloat(extraRows) * 50
         }
-        
-        
-        
-        
-        // Update the collection view's height constraint
         cvHeight.constant = height
-        cv.layoutIfNeeded()  // Apply the changes
+        cv.layoutIfNeeded()
     }
     
    }

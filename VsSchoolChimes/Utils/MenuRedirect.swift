@@ -137,40 +137,28 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
+    
     func senderSchoolStrength(from viewController: UIViewController) {
-        
         let vc = SchoolStrengthVC(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
         
     }
     
-    
-    
+    func senderMgmt(from viewController: UIViewController) {
+        let vc = MessageFromManagementViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+        
+    }
     
     
     
     func senderLocationNavigate(from viewController: UIViewController) {
-        
         let vc = LocationViewController(nibName: nil, bundle: nil)
-        
         vc.modalPresentationStyle = .fullScreen
-        
         viewController.present(vc, animated: true)
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
     
     func senderImportantInfoNavigate(from viewController: UIViewController) {
         let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
@@ -229,6 +217,17 @@ class MenuRedirectHandler {
     
     func receiverLsrwNavigate(from viewController: UIViewController) {
         let vc = LsrwListShowViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
+    func AttendenceMark(from viewController: UIViewController){
+        let vc = StudentHistryVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+     func chat(from viewController: UIViewController){
+        let vc = ChatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

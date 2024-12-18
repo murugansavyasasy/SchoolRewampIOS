@@ -33,9 +33,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var doneButton: UIButton!
     var activeButton: UIButton?
     var scheduleClick = false
-    let backgroundcolor = UIColor(named:"topBackgroundCLr")
-    let tapColor = UIColor(named:"topBackgroundCLr 1")
-    
+    let backgroundcolor = Colornames.topBackgroundCLr
+    let tapColor = Colornames.topBackgroundCLr1
+    let Img = ImageName()
     
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
     @IBOutlet weak var TextMsgTitle: UILabel!
@@ -491,7 +491,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func showHistoryView() {
         historyview.isHidden = false
         voiceview.isHidden = true
-        recrdimg.image = UIImage(named: "mic 1")
+        recrdimg.image = Img.mic1
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
@@ -499,7 +499,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         deletRecoding()
         playerheight.constant = 0
         textmessageview.isHidden = true
-        radio1.setImage(UIImage(systemName: "circle"), for: .normal)
+        radio1.setImage(Img.circle, for: .normal)
         radio2.setImage(UIImage(systemName: "button.programmable"), for: .normal)
         calanderOuter.isHidden = true
         if tittlemessage.text == "Text Message"{
@@ -544,7 +544,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     func stopRecording() {
-        recrdimg.image = UIImage(named: "mic 1")
+        recrdimg.image = Img.mic1
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
@@ -615,7 +615,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @objc func playerDidFinishPlaying(sender: Notification) {
-        btnplay.setImage(UIImage(named: "play-button"), for: .normal)
+        btnplay.setImage(Img.playbutton, for: .normal)
         player?.pause()
         updateTimer?.invalidate()
         audioRecorder?.updateMeters()
@@ -884,13 +884,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if playVoicce == true{
             player?.pause()
             playVoicce = false
-            btnplay.setImage(UIImage(named: "play-button"), for: .normal)
+            btnplay.setImage(Img.playbutton, for: .normal)
         }else{
             
             player?.volume = 1
             player?.play()
             playVoicce = true
-            btnplay.setImage(UIImage(named: "pause-button"), for: .normal)
+            btnplay.setImage(Img.pausebutton, for: .normal)
             updateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
         }
         
@@ -927,7 +927,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             
             cell.playBtn.tag = indexPath.row
             
-            let image = playIndex == indexPath.row ? UIImage(named: "pause-button"): UIImage(named: "play-button")
+            let image = playIndex == indexPath.row ? Img.pausebutton: Img.playbutton
             // Update play state
             let isPlaying = (playIndex == indexPath.row)
             //        var urls = URL(string: AudioPlayUrl)

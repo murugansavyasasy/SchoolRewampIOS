@@ -28,7 +28,7 @@ class CalendarCollectionViewCell: UICollectionViewCell {
 //
             } else {
                 
-                self.caleView.backgroundColor = UIColor(named: "NoDataColor")
+                self.caleView.backgroundColor = Colornames.NoDataColor
 
             }
         }
@@ -38,7 +38,7 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.caleView.backgroundColor = UIColor(named: "NoDataColor")
+        self.caleView.backgroundColor = Colornames.NoDataColor
     }
    
 

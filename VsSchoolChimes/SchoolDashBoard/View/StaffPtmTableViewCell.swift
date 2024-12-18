@@ -30,19 +30,10 @@ class StaffPtmTableViewCell: UITableViewCell {
     @IBOutlet weak var backView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-        
-
-              
-              // Add circular cutouts
-//              addCircularCutout(position: .left, to: backView)
-//              addCircularCutout(position: .right, to: backView)
     }
     
     enum CutoutPosition {
@@ -54,15 +45,12 @@ class StaffPtmTableViewCell: UITableViewCell {
         let cutoutView = UIView()
         cutoutView.backgroundColor = .clear
         cutoutView.translatesAutoresizingMaskIntoConstraints = false
-        
         let cutoutLayer = CALayer()
         cutoutLayer.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         cutoutLayer.cornerRadius = 15
         cutoutLayer.backgroundColor = UIColor.white.cgColor
         cutoutView.layer.addSublayer(cutoutLayer)
-        
         view.addSubview(cutoutView)
-        
         let horizontalConstraint: NSLayoutConstraint
         switch position {
         case .left:
@@ -70,7 +58,6 @@ class StaffPtmTableViewCell: UITableViewCell {
         case .right:
             horizontalConstraint = cutoutView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 15)
         }
-        
         NSLayoutConstraint.activate([
             horizontalConstraint,
             cutoutView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -78,10 +65,9 @@ class StaffPtmTableViewCell: UITableViewCell {
             cutoutView.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
-    
 }
+
 extension UIView {
-    
     func roundCorners(_ corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask = CAShapeLayer()

@@ -48,6 +48,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [Student]?
+    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         rollNoLbl.text = "RollNo".translated()
@@ -82,7 +83,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             self.filterBtn.setTitle(item, for: .normal)
-           
+            
             switch item{
             case "RollNo ASC":
                 let sortedByRollNumber = studentData.sorted { $0.rollnumber < $1.rollnumber }
@@ -97,7 +98,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 let sortedByName = studentData.sorted { $0.name > $1.name }
                 filterData = sortedByName
             case "Apsent":
-               
+                
                 filterData = studentData.sorted {
                     !$0.isAbsent && $1.isAbsent
                 }
@@ -125,24 +126,29 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     @IBAction func selectAllStd(_ sender: UIButton) {
         sender.isSelected.toggle()
+        
+        // Update data model to mark all students as present/absent
+        let isSelectingAll = sender.isSelected
         for i in 0..<studentData.count {
-            studentData[i].isAbsent = !sender.isSelected// Update your data model appropriately
-        }
-        for cell in historyTable.visibleCells {
-            if let customCell = cell as? AttendenceTVC {
-                customCell.custSwitch.isOn = !sender.isSelected
+            studentData[i].isAbsent = !isSelectingAll // If selecting all, students are not absent
+            
+            // Properly access the cell using indexPath, not historyTable.cell
+            let indexPath = IndexPath(row: i, section: 0)
+            if let customCell = historyTable.cellForRow(at: indexPath) as? AttendenceTVC {
+                customCell.custSwitch.isOn = !isSelectingAll // Correct logic for switch
+                print(i)
             }
-        }
-        if !sender.isSelected{
-            selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
-            totalcount = 0
-        }else{
-            totalcount = studentData.count
-            selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
+
         }
         
-        // Reload the entire table view to reflect the changes
-        historyTable.reloadData()
+        // Update select all button image and total count
+        if isSelectingAll {
+            selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
+            totalcount = studentData.count
+        } else {
+            selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+            totalcount = 0
+        }
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -159,33 +165,10 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
         cell.nameLbl.text = filterData?[indexPath.row].name
         cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
-//        if let student = filterData?[indexPath.row] {
-//            cell.configure(with: student, index: indexPath.row)
-//        }
         cell.index = indexPath.row
         cell.isAbsent = filterData?[indexPath.row].isAbsent ?? true
-
+        
         cell.delegate = self
-        //        let student = studentData[indexPath.row]
-        //
-        //        cell.outerView.layer.borderColor = student.isAbsent ? UIColor.clear.cgColor : UIColor.red.cgColor
-        //        cell.outerView.layer.borderWidth = student.isAbsent ? 0 : 1
-        //        let statusImage = student.isAbsent ? UIImage(named: "p") : UIImage(named: "a")
-        ////        if indexPath.row % 2 == 0 {
-        ////            cell.stdImage.image = UIImage(named: img[0])
-        ////        } else {
-        ////            cell.stdImage.image = UIImage(named: img[1])
-        ////        }
-        //        cell.statusBtn.setImage(statusImage, for: .normal)
-        //        cell.nameLbl.text = studentData[indexPath.row].name
-        //        cell.rollNomber.text = studentData[indexPath.row].rollnumber
-        //        let title = studentData[indexPath.row].phoneNo
-        //        let attributedTitle = NSAttributedString(string: title, attributes: [
-        //            .underlineStyle: NSUnderlineStyle.single.rawValue
-        //        ])
-        //
-        //        // Use `setAttributedTitle` to set the attributed text on the button
-        //        cell.phnBtn.setAttributedTitle(attributedTitle, for: .normal)
         
         return cell
     }
@@ -210,7 +193,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 cell.outerView.layer.borderWidth = 1
                 
                 
-                cell.statusBtn.setImage(UIImage(named: "a"), for: .normal)
+                cell.statusBtn.setImage(self.Img.apsent, for: .normal)
             },
                               completion: nil)
             totalcount += 1
@@ -221,7 +204,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                               animations: {
                 // Change background color to red
                 cell.outerView.layer.borderColor = UIColor.clear.cgColor
-                cell.statusBtn.setImage(UIImage(named: "p"), for: .normal)
+                cell.statusBtn.setImage(self.Img.present, for: .normal)
             },
                               completion: nil)
             totalcount -= 1

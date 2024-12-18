@@ -28,6 +28,7 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var playerView: WaveView!
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var outerview: UIView!
+    let Img = ImageName()
     override func awakeFromNib() {
         super.awakeFromNib()
         outerview.layer.shadowColor = UIColor.black.cgColor
@@ -60,7 +61,7 @@ class HistoryTC: UITableViewCell {
     }
     
     @objc func playerDidFinishPlaying() {
-        playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+        playBtn.setImage(Img.playbutton, for: .normal)
         isPlaying = false
         audioRecorder?.updateMeters()
         let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160 // Default to -160 if no data
@@ -80,7 +81,7 @@ class HistoryTC: UITableViewCell {
             // Start playback
             player?.volume = 1
             player?.play()
-            playBtn.setImage(UIImage(named: "pause-button"), for: .normal)
+            playBtn.setImage(Img.pausebutton, for: .normal)
             updateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
             // Update player view
             updateAudioLevels(int: 1)
@@ -104,7 +105,7 @@ class HistoryTC: UITableViewCell {
         } else {
             // Pause playback
             player?.pause()
-            playBtn.setImage(UIImage(named: "play-button"), for: .normal)
+            playBtn.setImage(Img.playbutton, for: .normal)
             updateAudioLevels(int: 0)
             // Update time
             if let currentItem = player?.currentItem, let currentTime = player?.currentTime() {

@@ -14,7 +14,6 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         UploadView.imageCollectionview.reloadData()
     }
     
-    
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var collectionview: UICollectionView!
@@ -25,6 +24,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     var selectedImages:[UIImage] = []
     let photoPickManager = PhotoPickerManager.shared
     var url : URL?
+    let Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,7 +50,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
             guard let self = self else { return }
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
-            selectedImages.append(UIImage(named: "pdf")!)
+            selectedImages.append(Img.pdf!)
             //            url = URL(string:pdfurl)
             //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             UploadView.imageCollectionview.reloadData()

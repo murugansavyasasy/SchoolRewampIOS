@@ -104,8 +104,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     var imageLimit : Int!
     var restrictionRowNib = "RestrictionTableViewCell"
     var strTextViewPlaceholder = String()
-    
-    
+    var Img = ImageName()
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
@@ -215,7 +214,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 imageOverAllView.isHidden = false
                 addBtn.setTitle("Add File Attachments", for: .normal)
                 addAttachTop.constant = -150
-                uploadFileImg.image = UIImage(named: "ImageIcon")
+                uploadFileImg.image = Img.ImageIcon
                 changeImgView.isHidden = false
                 
                 
@@ -230,7 +229,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 imageOverAllView.isHidden = false
                 addAttachTop.constant = -180
                 addBtn.setTitle("Add File Attachments", for: .normal)
-                uploadFileImg.image = UIImage(named: "pdfImage")
+                uploadFileImg.image = Img.ImageIcon
                 changeImgView.isHidden = false
 
                 
@@ -259,7 +258,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 uploadFileLbl.text = "Upload Video"
                 addAttachTop.constant = -150
                 addBtn.setTitle("Add File Attachments", for: .normal)
-                uploadFileImg.image = UIImage(named: "p23")
+                uploadFileImg.image = Img.p23
                 changeImgView.isHidden = false
                 imageOverAllView.isHidden = false
 
@@ -307,7 +306,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.dataSource = self
                 tv.reloadData()
                 addBtn.backgroundColor = .lightGray
-                submitView.backgroundColor = UIColor(named: "serach_color")
+                submitView.backgroundColor = Colornames.serach_color
 
             }else  if dropDownTextLbl.text == "Pdf" {
                 
@@ -322,7 +321,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.dataSource = self
                 addBtn.backgroundColor = .lightGray
                 tv.reloadData()
-                submitView.backgroundColor = UIColor(named: "serach_color")
+                submitView.backgroundColor = Colornames.serach_color
 
                 
             }else  if dropDownTextLbl.text == "Voice" {
@@ -335,7 +334,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.delegate = self
                 tv.dataSource = self
                 tv.reloadData()
-                submitView.backgroundColor = UIColor(named: "serach_color")
+                submitView.backgroundColor = Colornames.serach_color
 
             }else  if dropDownTextLbl.text == "Video" {
               
@@ -350,7 +349,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.delegate = self
                 tv.dataSource = self
                 tv.reloadData()
-                submitView.backgroundColor = UIColor(named: "serach_color")
+                submitView.backgroundColor = Colornames.serach_color
 
                 
             }
@@ -388,7 +387,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
           print("Text changed to: \(textView.text ?? "")")
         if textView.text.count > 0 {
                 // Change the button color to blue when text exists
-            addBtn.backgroundColor = UIColor(named: "AddContent")
+            addBtn.backgroundColor = Colornames.AddContent
             } else {
                 // Change the button color to gray when no text exists
                 addBtn.backgroundColor = .lightGray
@@ -429,7 +428,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             if pdfData!.count > 0 {
                     // Change the button color to blue when text exists
                
-                      addBtn.backgroundColor = UIColor(named: "AddContent")
+                addBtn.backgroundColor = Colornames.AddContent
 
                 } else {
                     // Change the button color to gray when no text exists
@@ -469,20 +468,8 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         
     }
     func ImagePickerGallery() {
+
         
-        
-//        var config = PHPickerConfiguration()
-//                  config.selectionLimit = imageLimit // Limit selection to 5 images
-//                  config.filter = .images    // Only allow images
-//        if #available(iOS 14.0, *) {
-//            let picker = PHPickerViewController(configuration: config)
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//                  picker.delegate = self
-//     
-//                  present(picker, animated: true, completion: nil)
-//                  
     }
     
     
@@ -617,7 +604,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                         let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
 
             picker.dismiss(animated: true, completion: nil)
-            self.addBtn.backgroundColor = UIColor(named: "AddContent")
+            self.addBtn.backgroundColor = Colornames.AddContent
 
 //            self.uploadAWS(image:chosenImage)
 
@@ -1073,7 +1060,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                 finishAudioRecording(success: true)
 
-                self.voiceRecordBtn.setImage(UIImage(named:"VocieRecord"), for: UIControl.State.normal)
+                self.voiceRecordBtn.setImage(Img.VocieRecord, for: UIControl.State.normal)
 
                 isRecording = false
 
@@ -1110,7 +1097,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                     meterTimer = Timer.scheduledTimer(timeInterval: 0.1, target:self, selector:#selector(self.updateAudioMeter(timer:)), userInfo:nil, repeats:true)
 
-                    self.voiceRecordBtn.setImage(UIImage(named:"VoiceRecordSelect"), for: UIControl.State.normal)
+                    self.voiceRecordBtn.setImage(Img.VoiceRecordSelect, for: UIControl.State.normal)
 
 
                     isRecording = true
@@ -1287,7 +1274,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
 //                Awws3Voice(URLPath:  Audiopath)
 
-                self.voiceRecordBtn.setImage(UIImage(named:"VocieRecord"), for: UIControl.State.normal)
+                self.voiceRecordBtn.setImage(Img.VocieRecord, for: UIControl.State.normal)
 
          
 
@@ -1503,7 +1490,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         func funcStopRecording(){
 
    
-            self.voiceRecordBtn.setImage(UIImage(named:"VocieRecord"), for: UIControl.State.normal)
+            self.voiceRecordBtn.setImage(Img.VocieRecord, for: UIControl.State.normal)
 
             self.finishRecording(success: true)
 
@@ -1563,7 +1550,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                 player?.pause()
 
-                PlayVocieButton.setImage(UIImage(named: "PlayIcon"), for: .normal)
+                PlayVocieButton.setImage(Img.PlayIcon, for: .normal)
 
             }else{
 
@@ -1581,7 +1568,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
 
                 player?.play()
 
-                PlayVocieButton.setImage(UIImage(named: "PauseIcon"), for: .normal)
+                PlayVocieButton.setImage(Img.PauseIcon, for: .normal)
 
                 print("enddddd")
 
@@ -1651,7 +1638,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             PlayVocieButton.isSelected = false
 
             playerItem?.seek(to: CMTime.zero)
-            PlayVocieButton.setImage(UIImage(named: "PlayIcon"), for: .normal)
+            PlayVocieButton.setImage(Img.PlayIcon, for: .normal)
 
         }
     
@@ -1766,15 +1753,15 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             // Update the cell's image based on type
             switch currentType {
             case "IMAGE":
-                cell.img.image = UIImage(named: "ImageIcon")
+                cell.img.image = Img.ImageIcon
             case "TEXT":
-                cell.img.image = UIImage(named: "TextIcon")
+                cell.img.image = Img.TextIcon
             case "VIDEO":
-                cell.img.image = UIImage(named: "p23")
+                cell.img.image = Img.p23
             case "PDF":
-                cell.img.image = UIImage(named: "pdfImage")
+                cell.img.image = Img.pdfImage
             case "VOICE":
-                cell.img.image = UIImage(named: "p1")
+                cell.img.image = Img.p1
             default:
                 cell.img.image = nil // Fallback image or nil
             }

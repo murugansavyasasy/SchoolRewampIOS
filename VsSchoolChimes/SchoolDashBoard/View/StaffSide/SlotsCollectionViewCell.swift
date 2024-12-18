@@ -13,9 +13,6 @@ class SlotsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var sectionFullView: UIViewX!
     @IBOutlet weak var sectionLbl: UILabel!
     
-    
-    
-   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
