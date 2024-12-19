@@ -205,11 +205,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
-            if getValue == 1 {
+           
                 return filteredItems.count
-            }else{
-                return MenuRedirect.receiverItems.count
-            }
+            
         }else{
             return 5
         }
@@ -221,7 +219,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == bottomCv{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
             
-            if getValue == 1 {
+       
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
                 let label = filteredItems[indexPath.row]
@@ -234,27 +232,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     cell.GradientView.animateView(enable: false)
                 }
-                
-            }else{
-                if searchItem == 1 {
-                    let label = MenuRedirect.receiverItems[indexPath.row]
-                    cell.MenuLbl.text = label
-                }else{
-                    
-                    cell.MenuLbl.text = nil
-                    cell.MenuImgView.image  = nil
-                    let label = MenuRedirect.receiverItems[indexPath.row]
-                    let img = UIImage(named: MenuRedirect.receiverImageItems[indexPath.row])
-                    cell.MenuLbl.setFont(style: .body, size: 10)
-                    cell.MenuLbl.text = label
-                    cell.MenuImgView.image  = img
-                    cell.applyGradient()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        cell.GradientView.animateView(enable: false)
-                    }
-                }
-            }
+   
+            
             return cell
         }else{
             
@@ -277,12 +256,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        print()
+      
         
         if collectionView == bottomCv{
             print("menuName",menuName)
             print("getValue",getValue)
-            if getValue == 1 {
+           
                 
                 let menuItem = MenuRedirect.items[indexPath.row]
                 
@@ -351,48 +330,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     break
                 }
                 
-            }else{
-                
-                let menuItem = MenuRedirect.items[indexPath.row]
-                
-              
-                switch menuItem {
-                case menuName.VideoUpload:
-                    MenuRedirect.receiverVideoNavigate(from: self)
-                    
-                case MenuStringFile.Communication:
-                    MenuRedirect.receiverCommunicationNavigate(from: self)
-                    
-                case menuName.ImagePdf:
-                    MenuRedirect.receiverImgPdfNavigate(from: self)
-                    
-                case menuName.PTM:
-                    MenuRedirect.receiverPtmNavigate(from: self)
-                    
-                case menuName.NoticeBoard,
-                    menuName.Circulars:
-                    MenuRedirect.receiverNoticeBoardNavigate(from: self)
-                    
-                case menuName.Assignment:
-                    MenuRedirect.receiverAssignmentNavigate(from: self)
-                    
-                case menuName.ScheduleExamTest:
-                    MenuRedirect.receiverExamTestNavigate(from: self)
-                    
-                case menuName.LSRW:
-                    MenuRedirect.receiverLsrwNavigate(from: self)
-                    
-                case menuName.LessonPlan,
-                    menuName.LeaveRequests:
-                    // Do nothing for these cases
-                    break
-                    
-                default:
-                    // Handle unknown menu items if needed
-                    break
-                }
-                
-            }
+            
+            
         }
     }
 }

@@ -14,7 +14,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        historyTable.register(UINib(nibName: "NoticeBoardTvcellTableViewCell", bundle: nil), forCellReuseIdentifier: "NoticeBoardTvcellTableViewCell")
+        historyTable.register(UINib(nibName: CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
         // Do any additional setup after loading the view.
     }
     
@@ -23,7 +23,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NoticeBoardTvcellTableViewCell", for: indexPath) as! NoticeBoardTvcellTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

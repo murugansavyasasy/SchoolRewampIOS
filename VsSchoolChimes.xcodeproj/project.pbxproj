@@ -413,6 +413,10 @@
 		84A5BFD32C1B084800E32496 /* OtpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD22C1B084800E32496 /* OtpViewModel.swift */; };
 		84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */; };
 		84B2E0622CEB412900561E4F /* SenderNoticeBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */; };
+		84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */; };
+		84B57EBB2D1437EC00E0EA29 /* EventResiverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EB82D1437EC00E0EA29 /* EventResiverVC.swift */; };
+		84B57EBE2D14402B00E0EA29 /* EventLeaveHistryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EBD2D14402B00E0EA29 /* EventLeaveHistryVC.xib */; };
+		84B57EBF2D14402B00E0EA29 /* EventLeaveHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EBC2D14402B00E0EA29 /* EventLeaveHistryVC.swift */; };
 		84B5D0332D030C24003CFAAF /* AppStringFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B5D0322D030C24003CFAAF /* AppStringFile.swift */; };
 		84BB5EA72D11330E00AD0C87 /* ScheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */; };
 		84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
@@ -963,6 +967,10 @@
 		84A5BFD22C1B084800E32496 /* OtpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpViewModel.swift; sourceTree = "<group>"; };
 		84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardVC.swift; sourceTree = "<group>"; };
 		84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderNoticeBoardVC.xib; sourceTree = "<group>"; };
+		84B57EB82D1437EC00E0EA29 /* EventResiverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventResiverVC.swift; sourceTree = "<group>"; };
+		84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventResiverVC.xib; sourceTree = "<group>"; };
+		84B57EBC2D14402B00E0EA29 /* EventLeaveHistryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLeaveHistryVC.swift; sourceTree = "<group>"; };
+		84B57EBD2D14402B00E0EA29 /* EventLeaveHistryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventLeaveHistryVC.xib; sourceTree = "<group>"; };
 		84B5D0322D030C24003CFAAF /* AppStringFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStringFile.swift; sourceTree = "<group>"; };
 		84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleExamVC.swift; sourceTree = "<group>"; };
 		84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleExamVC.xib; sourceTree = "<group>"; };
@@ -2461,6 +2469,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84B57EB72D142E2800E0EA29 /* Event */,
 				187CF4D12D119C27001422CE /* ClassTimeTable */,
 				84395FC92D0D4C8B00FC3242 /* HomePage */,
 				84D2D5642CE463CD00606CE8 /* Video */,
@@ -2576,6 +2585,17 @@
 				844188862CC915FF006483C3 /* OTPVc.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		84B57EB72D142E2800E0EA29 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				84B57EB82D1437EC00E0EA29 /* EventResiverVC.swift */,
+				84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */,
+				84B57EBC2D14402B00E0EA29 /* EventLeaveHistryVC.swift */,
+				84B57EBD2D14402B00E0EA29 /* EventLeaveHistryVC.xib */,
+			);
+			path = Event;
 			sourceTree = "<group>";
 		};
 		84BB5EA42D1132CF00AD0C87 /* Schedule Exam */ = {
@@ -3077,6 +3097,7 @@
 				18D718B52D0D477900E9EDA3 /* CreateLocationViewController.xib in Resources */,
 				18D718B62D0D477900E9EDA3 /* LocationTableViewCell.xib in Resources */,
 				18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */,
+				84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */,
 				18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */,
 				18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */,
 				84BB5EA72D11330E00AD0C87 /* ScheduleExamVC.xib in Resources */,
@@ -3211,6 +3232,7 @@
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
+				84B57EBE2D14402B00E0EA29 /* EventLeaveHistryVC.xib in Resources */,
 				84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */,
 				84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */,
 				849F313B2D00613B00BACEC7 /* EventPageVC.xib in Resources */,
@@ -3440,6 +3462,7 @@
 				18D7185B2D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift in Sources */,
 				18D7185C2D0D471A00E9EDA3 /* StanderReq.swift in Sources */,
 				18D7185D2D0D471A00E9EDA3 /* DataCollectionTvHeaderView.swift in Sources */,
+				84B57EBF2D14402B00E0EA29 /* EventLeaveHistryVC.swift in Sources */,
 				18D7185E2D0D471A00E9EDA3 /* PaymentListTableViewCell.swift in Sources */,
 				18D7185F2D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift in Sources */,
 				18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */,
@@ -3533,6 +3556,7 @@
 				187CF4DC2D11A176001422CE /* ClassTimeTableTableViewCell.swift in Sources */,
 				18D718AB2D0D477900E9EDA3 /* StaffListResp.swift in Sources */,
 				18D718AC2D0D477900E9EDA3 /* PunchHistryResp.swift in Sources */,
+				84B57EBB2D1437EC00E0EA29 /* EventResiverVC.swift in Sources */,
 				18D718AD2D0D477900E9EDA3 /* deleteTV.swift in Sources */,
 				18D718AE2D0D477900E9EDA3 /* DeleteResp.swift in Sources */,
 				18D718AF2D0D477900E9EDA3 /* PreviousCvcell.swift in Sources */,
