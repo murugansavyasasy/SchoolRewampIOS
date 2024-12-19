@@ -225,6 +225,13 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
+    
+    func receiverclassTimeTable(from viewController: UIViewController) {
+        let vc = ClassTimeTableViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
     func AttendenceMark(from viewController: UIViewController){
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen

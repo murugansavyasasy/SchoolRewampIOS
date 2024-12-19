@@ -280,6 +280,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         print()
         
         if collectionView == bottomCv{
+            print("menuName",menuName)
+            print("getValue",getValue)
             if getValue == 1 {
                 
                 let menuItem = MenuRedirect.items[indexPath.row]
@@ -353,6 +355,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
                 let menuItem = MenuRedirect.items[indexPath.row]
                 
+              
                 switch menuItem {
                 case menuName.VideoUpload:
                     MenuRedirect.receiverVideoNavigate(from: self)

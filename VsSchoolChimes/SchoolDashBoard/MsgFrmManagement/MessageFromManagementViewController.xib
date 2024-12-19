@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageFromManagementViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="backView" destination="s8q-Ko-EOr" id="Y7g-et-ucX"/>
+                <outlet property="tv" destination="wv6-yC-4JQ" id="GZm-F9-SQf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,6 +32,7 @@
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="q4q-9P-opG">
                                             <rect key="frame" x="10" y="18" width="20" height="14.333333333333329"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="Wcv-Si-rsz"/>
                                                 <constraint firstAttribute="width" constant="20" id="blc-Pp-bbd"/>
