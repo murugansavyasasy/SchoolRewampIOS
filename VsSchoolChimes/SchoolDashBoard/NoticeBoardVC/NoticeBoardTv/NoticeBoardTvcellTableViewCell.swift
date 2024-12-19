@@ -16,6 +16,7 @@ protocol SelectNotice: AnyObject {
 @available(iOS 14.0, *)
 class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var HomeworkTitleLbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
     
     @IBOutlet weak var dicriptContent: UILabel!
@@ -28,7 +29,13 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     
     @IBOutlet weak var pinImage: UIImageView!
     @IBOutlet weak var pagecontroller: UIPageControl!
+    
+    @IBOutlet weak var pagecontrollerheight: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var SelectBtn: UIButton!
     var delegate : SelectNotice?
+    var ishomework = false
 
     let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795387749.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391797604035.png"]
     
@@ -42,10 +49,13 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         datelbl.setFont(style: .title, size: FontSize.TitleSize)
         dicriptContent.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
-     
+        HomeworkTitleLbl.isHidden = true
+        CVHeight.constant = 0  // set this to 120 when you need
+        pagecontrollerheight.constant = 0  // set this to 26 when you need
+        pagecontroller.isHidden = true
         hiddenui(true)
         animationview()
-        pinImage.isHidden = true
+        
         cellview.layer.cornerRadius = 10
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOpacity = 0.5
@@ -90,7 +100,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     
     
     func hiddenui(_ hide:Bool){
-        cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
+        
+       // cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
         pinImage.isHidden = hide
         datelbl.isHidden = hide
         dicriptContent.isHidden = hide
@@ -100,8 +111,9 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         collectionview.isHidden = hide
         pagecontroller.isHidden = hide
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white
-        cellview.backgroundColor = color
+        cellview.backgroundColor = .white
     }
+    
     func animationview(){
         cellview.animateView(enable:true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
@@ -109,12 +121,30 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             self.cellview.animateView(enable:false)
             cellview.parentview.isHidden = true
             pinImage.isHidden = false
-            hiddenui(false)
+            
+            if ishomework == true{
+                hideforHomework()
+            }else{
+                
+                hiddenui(false)
+            }
+            
         }
         
     }
     
-    
+    func hideforHomework(){
+        HomeworkTitleLbl.isHidden = false
+        pinImage.isHidden = true
+        datelbl.isHidden = true
+        Pinview.isHidden = true
+        dicriptContent.isHidden = false
+        TitleLbl.isHidden = false
+        collectionview.isHidden = false
+       // pagecontroller.isHidden = false
+        let color = true == true ? UIColor.dashBoardClr : UIColor.white
+        cellview.backgroundColor = color
+    }
     
     
 //    override func layoutSubviews() {

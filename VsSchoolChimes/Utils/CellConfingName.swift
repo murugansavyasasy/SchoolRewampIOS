@@ -75,6 +75,7 @@ class CellConfingName {
     static let  ExamsListTVCell = "ExamsListTVCell"
     static let  ExamsListCVCell = "ExamsListCVCell"
     static let  ChatTVCell = "ChatTVCell"
+    static let  HomeworkreportTV = "HomeworkreportTV"
     
     
     

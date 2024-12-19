@@ -340,6 +340,8 @@
 		849978442CEF1FE5007D45BA /* StudentHistryTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8499783F2CEF1FE5007D45BA /* StudentHistryTVC.xib */; };
 		849978452CEF1FE5007D45BA /* StudentHistryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8499783E2CEF1FE5007D45BA /* StudentHistryTVC.swift */; };
 		849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849978402CEF1FE5007D45BA /* StudentHistryVC.swift */; };
+		849D71F92D13E8D20060E222 /* HomeworkreportTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D71F72D13E8D20060E222 /* HomeworkreportTV.swift */; };
+		849D71FA2D13E8D20060E222 /* HomeworkreportTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D71F82D13E8D20060E222 /* HomeworkreportTV.xib */; };
 		849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E571F2C1FF439006119DA /* MobileNumberViewController.swift */; };
 		849E57222C1FF44B006119DA /* MobileNumberStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849E57212C1FF44B006119DA /* MobileNumberStoryboard.storyboard */; };
 		849E57252C1FF4E8006119DA /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E57242C1FF4E8006119DA /* PriorityViewController.swift */; };
@@ -866,6 +868,8 @@
 		8499783F2CEF1FE5007D45BA /* StudentHistryTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentHistryTVC.xib; sourceTree = "<group>"; };
 		849978402CEF1FE5007D45BA /* StudentHistryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentHistryVC.swift; sourceTree = "<group>"; };
 		849978412CEF1FE5007D45BA /* StudentHistryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentHistryVC.xib; sourceTree = "<group>"; };
+		849D71F72D13E8D20060E222 /* HomeworkreportTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkreportTV.swift; sourceTree = "<group>"; };
+		849D71F82D13E8D20060E222 /* HomeworkreportTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeworkreportTV.xib; sourceTree = "<group>"; };
 		849E571F2C1FF439006119DA /* MobileNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberViewController.swift; sourceTree = "<group>"; };
 		849E57212C1FF44B006119DA /* MobileNumberStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MobileNumberStoryboard.storyboard; sourceTree = "<group>"; };
 		849E57242C1FF4E8006119DA /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
@@ -1079,6 +1083,8 @@
 			children = (
 				180C6E502CE72A860071CD04 /* SenderSideHomeWorkViewController.swift */,
 				180C6E512CE72A860071CD04 /* SenderSideHomeWorkViewController.xib */,
+				849D71F72D13E8D20060E222 /* HomeworkreportTV.swift */,
+				849D71F82D13E8D20060E222 /* HomeworkreportTV.xib */,
 			);
 			path = HomeWork;
 			sourceTree = "<group>";
@@ -3117,6 +3123,7 @@
 				18D718672D0D471A00E9EDA3 /* DailyCollectionTableViewCell.xib in Resources */,
 				18D718682D0D471A00E9EDA3 /* PaymentListTableViewCell.xib in Resources */,
 				840658432CFD9C3400080CF6 /* AttachmentCVCell.xib in Resources */,
+				849D71FA2D13E8D20060E222 /* HomeworkreportTV.xib in Resources */,
 				8442A8FC2CDC83860006068E /* RateUsViewController.xib in Resources */,
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
 				84BB5EB72D11467700AD0C87 /* SchedulePopupVC.xib in Resources */,
@@ -3315,6 +3322,7 @@
 				18926CBC2D0306CA002BBB97 /* CancelSlotResponse.swift in Sources */,
 				18926CBD2D0306CA002BBB97 /* CheckAviableTv.swift in Sources */,
 				18926CBE2D0306CA002BBB97 /* TimeHeader.swift in Sources */,
+				849D71F92D13E8D20060E222 /* HomeworkreportTV.swift in Sources */,
 				18926CBF2D0306CA002BBB97 /* SltoCreationViewController.swift in Sources */,
 				18926CC02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift in Sources */,
 				84395FCC2D0D4CAB00FC3242 /* ParentVC.swift in Sources */,
@@ -3478,8 +3486,6 @@
 				844188642CC8C839006483C3 /* ResponceModal.swift in Sources */,
 				84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */,
 				8476EE2B2D100A22006E1EA6 /* AttendenceReportTVCell.swift in Sources */,
-				18926BDC2D02DCE1002BBB97 /* StudentListReq.swift in Sources */,
-				18926BDD2D02DCE1002BBB97 /* StudentListResp.swift in Sources */,
 				18926D262D04140B002BBB97 /* SectionwiesReq.swift in Sources */,
 				18926D272D04140B002BBB97 /* NewPendingResp.swift in Sources */,
 				18926D282D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift in Sources */,
