@@ -238,7 +238,6 @@
 		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
 		843960252D11938000FC3242 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960242D11938000FC3242 /* LanguageManager.swift */; };
 		843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960262D1193AD00FC3242 /* Bundle+Language.swift */; };
-		8439602E2D128CCB00FC3242 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8439602D2D128CCB00FC3242 /* SubscriptionView.swift */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
 		844188682CC8C85C006483C3 /* ViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188672CC8C85C006483C3 /* ViewModal.swift */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
@@ -344,6 +343,11 @@
 		849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849978402CEF1FE5007D45BA /* StudentHistryVC.swift */; };
 		849D71F92D13E8D20060E222 /* HomeworkreportTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D71F72D13E8D20060E222 /* HomeworkreportTV.swift */; };
 		849D71FA2D13E8D20060E222 /* HomeworkreportTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D71F82D13E8D20060E222 /* HomeworkreportTV.xib */; };
+		849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722E2D14270D0060E222 /* SubscriptionView.swift */; };
+		849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */; };
+		849D72332D14270D0060E222 /* SubscriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722F2D14270D0060E222 /* SubscriptionView.xib */; };
+		849D72342D14270D0060E222 /* SubscriptionTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */; };
+		849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D72352D14272C0060E222 /* NetworkMoniter.swift */; };
 		849E57202C1FF439006119DA /* MobileNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E571F2C1FF439006119DA /* MobileNumberViewController.swift */; };
 		849E57222C1FF44B006119DA /* MobileNumberStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 849E57212C1FF44B006119DA /* MobileNumberStoryboard.storyboard */; };
 		849E57252C1FF4E8006119DA /* PriorityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849E57242C1FF4E8006119DA /* PriorityViewController.swift */; };
@@ -762,7 +766,6 @@
 		84395FED2D1002A900FC3242 /* ChatTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTVCell.xib; sourceTree = "<group>"; };
 		843960242D11938000FC3242 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		843960262D1193AD00FC3242 /* Bundle+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Language.swift"; sourceTree = "<group>"; };
-		8439602D2D128CCB00FC3242 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
 		844188672CC8C85C006483C3 /* ViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModal.swift; sourceTree = "<group>"; };
 		8441886E2CC8E18B006483C3 /* Models.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Models.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -874,6 +877,11 @@
 		849978412CEF1FE5007D45BA /* StudentHistryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentHistryVC.xib; sourceTree = "<group>"; };
 		849D71F72D13E8D20060E222 /* HomeworkreportTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkreportTV.swift; sourceTree = "<group>"; };
 		849D71F82D13E8D20060E222 /* HomeworkreportTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeworkreportTV.xib; sourceTree = "<group>"; };
+		849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTVCell.swift; sourceTree = "<group>"; };
+		849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionTVCell.xib; sourceTree = "<group>"; };
+		849D722E2D14270D0060E222 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
+		849D722F2D14270D0060E222 /* SubscriptionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionView.xib; sourceTree = "<group>"; };
+		849D72352D14272C0060E222 /* NetworkMoniter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMoniter.swift; sourceTree = "<group>"; };
 		849E571F2C1FF439006119DA /* MobileNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberViewController.swift; sourceTree = "<group>"; };
 		849E57212C1FF44B006119DA /* MobileNumberStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MobileNumberStoryboard.storyboard; sourceTree = "<group>"; };
 		849E57242C1FF4E8006119DA /* PriorityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController.swift; sourceTree = "<group>"; };
@@ -1813,14 +1821,6 @@
 			path = ChatCell;
 			sourceTree = "<group>";
 		};
-		843960282D128A0000FC3242 /* SubscriptionVC */ = {
-			isa = PBXGroup;
-			children = (
-				8439602D2D128CCB00FC3242 /* SubscriptionView.swift */,
-			);
-			path = SubscriptionVC;
-			sourceTree = "<group>";
-		};
 		8442A8672CDB787A0006068E /* PriorityScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -2067,6 +2067,25 @@
 				849978412CEF1FE5007D45BA /* StudentHistryVC.xib */,
 			);
 			path = Attendence;
+			sourceTree = "<group>";
+		};
+		849D722D2D14270D0060E222 /* Tvcell */ = {
+			isa = PBXGroup;
+			children = (
+				849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */,
+				849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */,
+			);
+			path = Tvcell;
+			sourceTree = "<group>";
+		};
+		849D72302D14270D0060E222 /* SubscriptionVC */ = {
+			isa = PBXGroup;
+			children = (
+				849D722D2D14270D0060E222 /* Tvcell */,
+				849D722E2D14270D0060E222 /* SubscriptionView.swift */,
+				849D722F2D14270D0060E222 /* SubscriptionView.xib */,
+			);
+			path = SubscriptionVC;
 			sourceTree = "<group>";
 		};
 		849E57162C1FF2E9006119DA /* Login */ = {
@@ -2347,6 +2366,7 @@
 				842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */,
 				843960242D11938000FC3242 /* LanguageManager.swift */,
 				843960262D1193AD00FC3242 /* Bundle+Language.swift */,
+				849D72352D14272C0060E222 /* NetworkMoniter.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2632,7 +2652,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
-				843960282D128A0000FC3242 /* SubscriptionVC */,
+				849D72302D14270D0060E222 /* SubscriptionVC */,
 				847AB6EE2CF09A6800952AC1 /* SelectRecipient */,
 				84759C662CEDEF3300E7D367 /* ShowImage */,
 			);
@@ -3079,6 +3099,8 @@
 				842FBABD2D0BEDBF007C0B51 /* StudentReportVC.xib in Resources */,
 				18926CD22D0306CA002BBB97 /* CheckAviableTvHeader.xib in Resources */,
 				18926CD32D0306CA002BBB97 /* PTMViewController.xib in Resources */,
+				849D72332D14270D0060E222 /* SubscriptionView.xib in Resources */,
+				849D72342D14270D0060E222 /* SubscriptionTVCell.xib in Resources */,
 				84C829B92D08078A0024A46A /* MarkTvCell.xib in Resources */,
 				84C829BA2D08078A0024A46A /* ExameMarVC.xib in Resources */,
 				18926CD42D0306CA002BBB97 /* CalendarCollectionViewCell.xib in Resources */,
@@ -3312,6 +3334,8 @@
 				18926CAF2D0306CA002BBB97 /* CancelAndCloseSlotByStaffModal.swift in Sources */,
 				18926CB02D0306CA002BBB97 /* CalendarHelper.swift in Sources */,
 				842FBAC22D0BEDDC007C0B51 /* TranslationManager.swift in Sources */,
+				849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */,
+				849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */,
 				18926CB12D0306CA002BBB97 /* SlotAvailablityForStudentRequest.swift in Sources */,
 				18926CB22D0306CA002BBB97 /* CalendarCollectionViewCell.swift in Sources */,
 				84BB5EB42D1133AA00AD0C87 /* ExamsListTVCell.swift in Sources */,
@@ -3346,7 +3370,6 @@
 				18D7185F2D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift in Sources */,
 				18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */,
 				18D718612D0D471A00E9EDA3 /* DailyCollReq.swift in Sources */,
-				8439602E2D128CCB00FC3242 /* SubscriptionView.swift in Sources */,
 				18926CC12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift in Sources */,
 				18926CC22D0306CA002BBB97 /* SubjectListForStudentResponse.swift in Sources */,
 				18926CC32D0306CA002BBB97 /* CheckAviableViewController.swift in Sources */,
@@ -3390,6 +3413,7 @@
 				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
 				84EFF9D92CCC862F00C11C26 /* TopCVCell.swift in Sources */,
 				18BAF4E32CEC555000517441 /* SenderAssignmentTextViewController.swift in Sources */,
+				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
 				84A5BFA22C1AF73200E32496 /* MobileNumberModel.swift in Sources */,
 				84A5BFD32C1B084800E32496 /* OtpViewModel.swift in Sources */,
 				84EFFA3F2CCCC98100C11C26 /* Shimmer.swift in Sources */,

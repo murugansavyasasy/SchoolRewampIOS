@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
 
     window?.overrideUserInterfaceStyle = .light
-
+    NetworkMonitor.shared.startMonitoring()
     FirebaseApp.configure()
 
     UNUserNotificationCenter.current().delegate = self
@@ -62,7 +62,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
     }
 
-
+    func applicationWillTerminate(_ application: UIApplication) {
+     // Stop network monitoring when the app is terminated
+     NetworkMonitor.shared.stopMonitoring()
+     }
 
 
 
