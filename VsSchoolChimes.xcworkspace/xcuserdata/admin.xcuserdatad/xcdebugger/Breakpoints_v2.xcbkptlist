@@ -9,50 +9,43 @@
          <BreakpointContent
             uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F"
             shouldBeEnabled = "Yes"
-            uuid = "E51DCD3E-3145-45F4-B833-35DFBC1CA4DF"
-            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
-            filePath = "VsSchoolChimes/Repository/MethodName.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "200"
             endingLineNumber = "200"
             landmarkName = "uploadAWS(image:)"
             landmarkType = "7">
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "MethodName"
-            landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "E51DCD3E-3145-45F4-B833-35DFBC1CA4DF - 84226bf5b278adec"
+                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "one-time initialization function for countryList"
+                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
                   moduleName = "VsSchoolChimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/schoolNewStructure/SchoolRewampIOS/VsSchoolChimes/Repository/MethodName.swift"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16">
+                  startingLineNumber = "200"
+                  endingLineNumber = "200">
                </Location>
                <Location
-                  uuid = "E51DCD3E-3145-45F4-B833-35DFBC1CA4DF - 10b2d75d8ab527ef"
+                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "VsSchoolChimes.MethodName.countryList.unsafeMutableAddressor : Swift.String"
+                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
                   moduleName = "VsSchoolChimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/schoolNewStructure/SchoolRewampIOS/VsSchoolChimes/Repository/MethodName.swift"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16">
+                  startingLineNumber = "200"
+                  endingLineNumber = "200">
                </Location>
             </Locations>
          </BreakpointContent>

@@ -11,43 +11,51 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
     
     @IBOutlet weak var subjectListCollection: UICollectionView!
     @IBOutlet weak var tilteLbl: UILabel!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    var examArray = [
-        ExamsSchedule(subjectName: "Commerce", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false),
-        ExamsSchedule(subjectName: "Computer_Command sdsfd", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false),
-        ExamsSchedule(subjectName: "English", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false),
-        ExamsSchedule(subjectName: "Ezee Notes", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false),
-        ExamsSchedule(subjectName: "Math_Lab", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false),
-        ExamsSchedule(subjectName: "Physics", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false),
-        ExamsSchedule(subjectName: "Tamil", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false),
-        ExamsSchedule(subjectName: "Chemistry", subjectSyllabus: "", date: "", mark: "", imageName: "book-pencil", session: "FN", isSelected: false)
-    ]
+    var examArray :[ExamsSchedule]?
     var filterData : [ExamsSchedule]?
+    var finalArray = [ExamsSchedule]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        keyboardDionebtn()
+        filterData = examArray
         subjectListCollection.register(UINib(nibName: CellConfingName.ExamsListCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ExamsListCVCell)
+        tilteLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        tilteLbl.text = CommonStringFile.scheduleExam
+        searchBar.placeholder = CommonStringFile.Search
     }
-    
+    func keyboardDionebtn(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        searchBar.inputAccessoryView = toolbar
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)
+    }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return examArray.count
+        return filterData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ExamsListCVCell, for: indexPath) as! ExamsListCVCell
-        let exam = examArray[indexPath.item]
-        
-        cell.imgView.image = UIImage(named: exam.imageName)
-        cell.examSchedul = examArray
-        cell.subjectName.text = exam.subjectName
+        let exam = filterData?[indexPath.item]
+        cell.imgView.image = UIImage(named: exam?.imageName ?? "")
+        cell.examSchedul = filterData
+        cell.subjectName.text = exam?.subjectName
+        cell.subName = exam?.subjectName
         cell.deletBtn.tag = indexPath.item
         cell.scheduDelegate = self
-        cell.deletBtn.isHidden = !exam.isSelected
-        if exam.isSelected == false{
+        cell.finalArray = finalArray
+        cell.deletBtn.isHidden = !(exam?.isSelected ?? false)
+        if exam?.isSelected == false{
             cell.outerView.layer.borderColor = UIColor.clear.cgColor
             cell.outerView.layer.borderWidth = 0
         }else{
@@ -65,62 +73,78 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
         let cellWidth = availableWidth / numberOfItemsPerRow
         
         // Get the subject name for the current index
-        let subjectName = examArray[indexPath.item].subjectName
+        guard let subjectName = filterData?[indexPath.item].subjectName else {
+            // Default size when subject name is not available
+            return CGSize(width: cellWidth, height: 150) // Default height if no subject name is available
+        }
         
         // Calculate the dynamic height of the label
         let font = UIFont.systemFont(ofSize: 16) // Set the same font used in the label
-        let labelWidth = cellWidth - 32 // Subtract padding if needed
+        let labelWidth = cellWidth - 32 // Subtract padding/margins if needed
         let labelHeight = calculateLabelHeight(text: subjectName, font: font, width: labelWidth)
         
         // Add extra height for the image, margins, and other views
-        let totalHeight = labelHeight + 120 // 100 can be space for image, padding, etc.
+        let imageHeight: CGFloat = 100 // Assume 100 for the image, can be adjusted
+        let verticalPadding: CGFloat = 20 // Padding between elements inside the cell
+        let totalHeight = labelHeight + imageHeight + verticalPadding
+        
         return CGSize(width: cellWidth, height: totalHeight)
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let exam = examArray[indexPath.item]
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ExamsListCVCell else { return }
-        
-        UIView.transition(
-            with: cell.outerView,
-            duration: 0.3,
-            options: examArray[indexPath.row].isSelected ? .transitionFlipFromLeft : .transitionFlipFromRight,
-            animations: {
-                // Add any changes you want to animate, like updating subviews or labels
-            },
-            completion: nil
-        )
-
-        let vc = SchedulePopupVC(nibName: nil, bundle: nil)
-        vc.index = indexPath.row
-        vc.examSchedul = self.examArray
-        vc.scheduDelegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.present(vc, animated: false)
-    }
+    
+    // Helper function to calculate label height dynamically
     func calculateLabelHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = text.boundingRect(with: constraintRect,
-                                            options: .usesLineFragmentOrigin,
+                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
                                             attributes: [NSAttributedString.Key.font: font],
                                             context: nil)
-        print(boundingBox.height)
         return ceil(boundingBox.height)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let exam = filterData?[indexPath.item]{
+            guard let cell = collectionView.cellForItem(at: indexPath) as? ExamsListCVCell else { return }
+            
+            UIView.transition(
+                with: cell.outerView,
+                duration: 0.3,
+                options: ((filterData?[indexPath.row].isSelected) != nil) ? .transitionFlipFromLeft : .transitionFlipFromRight,
+                animations: {
+                    // Add any changes you want to animate, like updating subviews or labels
+                },
+                completion: nil
+            )
+            
+            let vc = SchedulePopupVC(nibName: nil, bundle: nil)
+            vc.index = indexPath.item
+            vc.finalArray = finalArray
+            if filterData?[indexPath.row].isSelected == true {
+                if let index = finalArray.firstIndex(where: { $0.subjectName ==  filterData?[indexPath.row].subjectName }) {
+                    vc.examSchedul = self.finalArray[index]
+                }
+            }else{
+                vc.examSchedul = filterData?[indexPath.row]
+            }
+            
+            vc.scheduDelegate = self
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            self.present(vc, animated: false)
+            
+        }
+        
+    }
+    
     @IBAction func sendAction(_ sender: UIButton) {
-        for i in 0..<(filterData?.count ?? 0){
-            print(filterData?[i])
+        for i in 0..<(finalArray.count ?? 0){
+            print(finalArray[i])
         }
     }
     
-    func schedulSubject(ExamsSchedule: [ExamsSchedule], delete: Bool) {
+    func schedulSubject(ExamsSchedule: [ExamsSchedule], delete: Bool,index:Int) {
         if delete == false {
-            // Update examArray with new array
-            self.examArray = ExamsSchedule
-            filterData = self.examArray.filter({ exam in
-                return exam.isSelected == true
-            })
+            finalArray = ExamsSchedule
+            filterData?[index].isSelected = true
             subjectListCollection.reloadData()
         } else {
             let alert = CustomAlert()
@@ -129,7 +153,9 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
                                   actionLbl1: "Confirm",
                                   actionLbl2: "Cancel",
                                   on: self) {
-                self.examArray = ExamsSchedule
+                
+                self.finalArray = ExamsSchedule
+                self.filterData?[index].isSelected = false
                 self.subjectListCollection.reloadData()
             } onNo: {
                 print("User canceled the action")
@@ -137,6 +163,37 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
         }
     }
     
+}
+@available(iOS 14.0, *)
+extension ScheduleExamVC: UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            // Reset to full data when the search text is cleared
+            filterData = examArray
+        } else {
+            // Filter data based on the search text
+            filterData = examArray?.filter { student in
+                student.subjectName.lowercased().contains(searchText.lowercased())
+            }
+        }
+        subjectListCollection.reloadData()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        searchBar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        searchBar.resignFirstResponder()
+    }
 }
 struct ExamsSchedule {
     var subjectName: String

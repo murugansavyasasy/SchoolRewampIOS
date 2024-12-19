@@ -102,13 +102,13 @@ class AlertstringFile{
     static let PDF = "PDF".translated()
     static let Cancel = "Cancel".translated()
   
-    static let Enter_the_new_password = "Enter the new password"
-    static let Enterthe_confirm_password = "Enter the confirm password"
-    static let Enter_valid_Mobile = "Enter valid Mobile"
-    static let Invalid = "Invalid Password"
-    static let Enter_the_10_digit = "Enter the 10 digit mobile number"
-    static let Tems_And_Conition = "Please aggree to the terms and condition"
-    static let Enter_Otp = "Enter the otp"
+//    static let Enter_the_new_password = "Enter the new password"
+//    static let Enterthe_confirm_password = "Enter the confirm password"
+//    static let Enter_valid_Mobile = "Enter valid Mobile"
+//    static let Invalid = "Invalid Password"
+//    static let Enter_the_10_digit = "Enter the 10 digit mobile number"
+//    static let Tems_And_Conition = "Please aggree to the terms and condition"
+//    static let Enter_Otp = "Enter the otp"
     static let Mark_All_as_Present = "Mark All as Present?"
    
     static let Failed_to_upload_video = "Failed to upload video".translated()
@@ -183,7 +183,7 @@ class CommonStringFile{
     static let VoiceMessage = "Voice Message".translated()
     static let TextMessage = "Text Message".translated()
     static let ScheduleCall = "Schedule Call".translated()
-    static let EnterTextHere = "EnterTextHere".translated()
+    static let EnterTextHere = "Enter TextHere".translated()
     static let BacktoTextMessage = "BackToTextMessage".translated()
     static let BackToVoiceMessage = "BackToVoiceMessage".translated()
     static let Venue = "Venue".translated()
@@ -209,6 +209,7 @@ class CommonStringFile{
     static let SecondaryPhoneno = "Secondary Phone no".translated()
     static let ContactSupport = "Contact Support".translated()
     static let TermsandConditions = "Terms and Conditions".translated()
+    static let scheduleExam = "scheduleExam".translated()
 }
 
 

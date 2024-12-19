@@ -232,3 +232,5 @@
 "selectedText" = "चयनित पाठ";
 "invalidSelection" = "अमान्य चयन";
 "selectDatesWithinMonth" = "आप केवल वर्तमान में प्रदर्शित माह के भीतर की तिथियों का चयन कर सकते हैं।";
+//MARK: ScheduleExam
+"scheduleExam" = "परीक्षा निर्धारित करें";

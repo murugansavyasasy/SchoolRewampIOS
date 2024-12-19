@@ -149,7 +149,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBAction func filterStudent(_ sender: UIButton) {
         
         classDropdown.dataSource = [CommonStringFile.RollNoDESC,CommonStringFile.RollNoASC,CommonStringFile.NameASC,CommonStringFile.NameDESC, CommonStringFile.getAllStudent]
-        classDropdown.bottomOffset = CGPoint(x: -70, y: (filterBtn.bounds.height - 140))
+        classDropdown.anchorView = filterView
+        classDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
         
         classDropdown.direction = .bottom
         
@@ -194,6 +195,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func section(_ sender: UIButton) {
         sectionDropdown.dataSource = ["'A'","'B'","'C'","'D'"]
+        
+        sectionDropdown.anchorView = sectionView
         sectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
         sectionDropdown.direction = .bottom
         sectionDropdown.width = sectionView.bounds.width
@@ -217,6 +220,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionDropdown.dataSource = ["8th","9th","10th", "11th", "12th"]
         
         // Set the position for dropdown relative to sectionView
+        sectionDropdown.anchorView = sectionView
         sectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height - 70)
         sectionDropdown.direction = .bottom
         sectionDropdown.width = sectionView.bounds.width

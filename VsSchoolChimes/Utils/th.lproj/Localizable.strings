@@ -233,3 +233,5 @@
 "selectedText" = "ข้อความที่เลือก";
 "invalidSelection" = "การเลือกไม่ถูกต้อง";
 "selectDatesWithinMonth" = "คุณสามารถเลือกวันที่ภายในเดือนที่แสดงอยู่ในปัจจุบันเท่านั้น";
+//MARK: ScheduleExam
+"scheduleExam" = "กำหนดการสอบ";

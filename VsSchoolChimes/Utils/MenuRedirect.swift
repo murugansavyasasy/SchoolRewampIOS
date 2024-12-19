@@ -91,11 +91,7 @@ class MenuRedirectHandler {
         
     }
     func ScheduleExamVCNavigat(from viewController: UIViewController){
-        let vc = EventPageVC(nibName: nil, bundle: nil)
-        vc.page1 = ScheduleExamVC(nibName: nil, bundle: nil)
-        vc.page2 = ScheduleExamsList(nibName: nil, bundle: nil)
-        vc.titleLbl = "ScheduleExam".translated()
-        vc.button1 = "Schedule"
+        let vc = ExamCreatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
