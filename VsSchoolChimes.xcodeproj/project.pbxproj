@@ -428,6 +428,8 @@
 		84BDE6FA2D142D2200F12277 /* LeveCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE6F82D142D2200F12277 /* LeveCreateVC.xib */; };
 		84BDE6FD2D142D3900F12277 /* LeveHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE6FB2D142D3900F12277 /* LeveHistoryVC.swift */; };
 		84BDE6FE2D142D3900F12277 /* LeveHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */; };
+		84BDE7192D142E8700F12277 /* LeveHistoryTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE7172D142E8700F12277 /* LeveHistoryTV.swift */; };
+		84BDE71A2D142E8700F12277 /* LeveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE7182D142E8700F12277 /* LeveHistoryTV.xib */; };
 		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E702CF6DF9600E34A83 /* splashVc.xib */; };
@@ -976,6 +978,8 @@
 		84BDE6F82D142D2200F12277 /* LeveCreateVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveCreateVC.xib; sourceTree = "<group>"; };
 		84BDE6FB2D142D3900F12277 /* LeveHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeveHistoryVC.swift; sourceTree = "<group>"; };
 		84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveHistoryVC.xib; sourceTree = "<group>"; };
+		84BDE7172D142E8700F12277 /* LeveHistoryTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeveHistoryTV.swift; sourceTree = "<group>"; };
+		84BDE7182D142E8700F12277 /* LeveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveHistoryTV.xib; sourceTree = "<group>"; };
 		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C00E6F2CF6DF9600E34A83 /* splashVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splashVc.swift; sourceTree = "<group>"; };
@@ -2423,7 +2427,6 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
-				84BDE6F62D142CDC00F12277 /* LeaveRequest */,
 				84BB5EA42D1132CF00AD0C87 /* Schedule Exam */,
 				187CF48F2D113524001422CE /* MsgFrmManagement */,
 				84395FE62D10023200FC3242 /* Chat */,
@@ -2465,6 +2468,7 @@
 				18926C4C2D02DE81002BBB97 /* LSRW */,
 				84A2717A2CEDAB9F0033EB02 /* Image_PdfVC */,
 				846D83E52D02D91000B69344 /* ExamTimeTable */,
+				84BDE6F62D142CDC00F12277 /* LeaveRequest */,
 				84C829B82D08078A0024A46A /* ExamMarkVc */,
 			);
 			path = ParentDashBoard;
@@ -2600,6 +2604,8 @@
 				84BDE6F82D142D2200F12277 /* LeveCreateVC.xib */,
 				84BDE6FB2D142D3900F12277 /* LeveHistoryVC.swift */,
 				84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */,
+				84BDE7172D142E8700F12277 /* LeveHistoryTV.swift */,
+				84BDE7182D142E8700F12277 /* LeveHistoryTV.xib */,
 			);
 			path = LeaveRequest;
 			sourceTree = "<group>";
@@ -3113,6 +3119,7 @@
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
 				84A271802CEDAB9F0033EB02 /* New.gif in Resources */,
+				84BDE71A2D142E8700F12277 /* LeveHistoryTV.xib in Resources */,
 				18926C5D2D02DE81002BBB97 /* FileAttachmentTableViewCell.xib in Resources */,
 				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
 				18926C5E2D02DE81002BBB97 /* LsrwListShowViewController.xib in Resources */,
@@ -3641,6 +3648,7 @@
 				84C829FE2D086A490024A46A /* CGPoint+Extensions.swift in Sources */,
 				84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */,
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
+				84BDE7192D142E8700F12277 /* LeveHistoryTV.swift in Sources */,
 				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
 				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
 				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LeveHistoryVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="historyTable" destination="VEu-bE-JfD" id="hdM-bX-vpe"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,17 +21,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7K-uF-CDB">
-                    <rect key="frame" x="50" y="259" width="343" height="128"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VEu-bE-JfD">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="0ME-7H-RXP"/>
+                                <outlet property="delegate" destination="-1" id="ldc-kp-vIh"/>
+                            </connections>
+                        </tableView>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="VEu-bE-JfD" firstAttribute="top" secondItem="r7K-uF-CDB" secondAttribute="top" id="03S-aI-5nf"/>
+                        <constraint firstAttribute="bottom" secondItem="VEu-bE-JfD" secondAttribute="bottom" id="0dp-fx-N9Z"/>
+                        <constraint firstAttribute="trailing" secondItem="VEu-bE-JfD" secondAttribute="trailing" id="Qy7-YS-ytN"/>
+                        <constraint firstItem="VEu-bE-JfD" firstAttribute="leading" secondItem="r7K-uF-CDB" secondAttribute="leading" id="id6-gr-kgP"/>
+                    </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="r7K-uF-CDB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="50" id="Ku6-UG-PRc"/>
+                <constraint firstItem="r7K-uF-CDB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Ku6-UG-PRc"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="r7K-uF-CDB" secondAttribute="trailing" id="WbD-B5-Gjl"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="r7K-uF-CDB" secondAttribute="bottom" constant="431" id="c6j-wM-A6y"/>
-                <constraint firstItem="r7K-uF-CDB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="200" id="n0z-Fq-1Wk"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="r7K-uF-CDB" secondAttribute="bottom" id="c6j-wM-A6y"/>
+                <constraint firstItem="r7K-uF-CDB" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="n0z-Fq-1Wk"/>
             </constraints>
             <point key="canvasLocation" x="138" y="20"/>
         </view>

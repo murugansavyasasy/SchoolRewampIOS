@@ -80,6 +80,7 @@ class CellConfingName {
     static let  ExamsListCVCell = "ExamsListCVCell"
     static let  ChatTVCell = "ChatTVCell"
     static let  HomeworkreportTV = "HomeworkreportTV"
+    static let  SubscriptionTVCell = "SubscriptionTVCell"
     
     
     

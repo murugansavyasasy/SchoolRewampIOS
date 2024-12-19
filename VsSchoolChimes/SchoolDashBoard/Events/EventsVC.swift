@@ -47,6 +47,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     @IBOutlet weak var toDateLbl: UILabel!
     @IBOutlet weak var calanderBtn: HalfColorButton!
+    
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     
