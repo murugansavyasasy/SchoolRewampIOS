@@ -42,6 +42,7 @@ class MenuStringFile{
     static let Communication = "Communication".translated()
     let ImagePdf = "Image/Pdf".translated()
     let VideoUpload = "Video Upload".translated()
+    let Video = "Video".translated()
     let Circulars = "Circulars".translated()
     let NoticeBoard = "Notice Board".translated()
     let LeaveRequests = "Leave Requests".translated()

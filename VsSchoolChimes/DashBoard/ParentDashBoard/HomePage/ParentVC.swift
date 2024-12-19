@@ -206,11 +206,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if collectionView == bottomCv{
-    if getValue == 1 {
-    return filteredItems.count
-    }else{
+   
     return MenuRedirect.receiverItems.count
-    }
+   
     }else{
     return 5
     }
@@ -222,25 +220,8 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     if collectionView == bottomCv{
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
 
-    if getValue == 1 {
-    cell.MenuLbl.text = nil
-    cell.MenuImgView.image  = nil
-    let label = filteredItems[indexPath.row]
-    let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
-    cell.MenuLbl.setFont(style: .body, size: 10)
-    cell.MenuLbl.text = label
-    cell.MenuImgView.image  = img
-    cell.applyGradient()
-
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-    cell.GradientView.animateView(enable: false)
-    }
-
-    }else{
-    if searchItem == 1 {
-    let label = MenuRedirect.receiverItems[indexPath.row]
-    cell.MenuLbl.text = label
-    }else{
+  
+  
 
     cell.MenuLbl.text = nil
     cell.MenuImgView.image  = nil
@@ -253,11 +234,13 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
     cell.GradientView.animateView(enable: false)
+    
     }
-    }
-    }
+    
     return cell
-    }else{
+    }
+        
+        else{
 
     if indexPath.row == 0 {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.PiechartCVCell , for: indexPath) as! PiechartCVCell
@@ -279,84 +262,20 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
     if collectionView == bottomCv{
-    if getValue == 1 {
 
-    let menuItem = MenuRedirect.items[indexPath.row]
 
-    switch menuItem {
-    case menuName.VideoUpload:
-    MenuRedirect.senderVideoNavigate(from: self)
-
-    case MenuStringFile.Communication:
-    MenuRedirect.senderCommunicationNavigate(from: self)
-
-    case menuName.ImagePdf, menuName.ImagePdf.translated():
-    MenuRedirect.senderImgPDfNavigate(from: self)
-
-    case menuName.Circulars.translated():
-    MenuRedirect.senderEventNavigate(from: self)
-
-    case menuName.NoticeBoard:
-    MenuRedirect.senderNoticeboardNavigate(from: self)
-
-    case menuName.PTM:
-    MenuRedirect.senderPtmNavigate(from: self)
-
-    case menuName.LeaveRequests:
-    MenuRedirect.senderStudentreportNavigate(from: self)
-
-    case menuName.Assignment:
-    MenuRedirect.senderAssignmentNavigate(from: self)
-
-    case menuName.OnlineMeeting:
-    MenuRedirect.senderOnlineNavigate(from: self)
-
-    case menuName.Homework:
-    MenuRedirect.senderHomeWorkNavigate(from: self)
-
-    case menuName.LessonPlan:
-    MenuRedirect.senderLessonplanNavigate(from: self)
-
-    case menuName.AbsenteesReport:
-    MenuRedirect.senderAbsenteesNavigate(from: self)
-
-    case menuName.FeePendingReport:
-    MenuRedirect.senderFeePendingNavigate(from: self)
-
-    case menuName.StudentReport:
-    MenuRedirect.senderStudentreportNavigate(from: self)
-
-    case menuName.VeryImportantInfo:
-    MenuRedirect.senderImportantInfoNavigate(from: self)
-
-    case menuName.SchoolStrength:
-    MenuRedirect.senderSchoolStrength(from: self)
-
-    case menuName.DailyCollection,
-    menuName.ScheduleExamTest,
-    menuName.MarkYourAttendance,
-    "":
-    // Do nothing for these cases
-    break
-
-    default:
-    // Handle unknown menu items if needed
-    break
-    }
-
-    }else{
-
-    let menuItem = MenuRedirect.items[indexPath.row]
+        let menuItem = MenuRedirect.receiverItems[indexPath.row]
 
     switch menuItem {
-    case menuName.VideoUpload:
+    case menuName.Video:
+        
     MenuRedirect.receiverVideoNavigate(from: self)
 
     case MenuStringFile.Communication:
     MenuRedirect.receiverCommunicationNavigate(from: self)
 
     case menuName.ImagePdf:
-        MenuRedirect.receiverclassTimeTable(from: self)
+        MenuRedirect.receiverImgPdfNavigate(from: self)
 
     case menuName.PTM:
     MenuRedirect.receiverPtmNavigate(from: self)
@@ -373,6 +292,8 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     case menuName.LSRW:
     MenuRedirect.receiverLsrwNavigate(from: self)
+    case menuName.SchoolClassEvents:
+        MenuRedirect.ResiverEvent(from: self)
 
     case menuName.LessonPlan,
     menuName.LeaveRequests:
@@ -386,7 +307,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     }
     }
-    }
+   
     }
 
     @available(iOS 14.0, *)

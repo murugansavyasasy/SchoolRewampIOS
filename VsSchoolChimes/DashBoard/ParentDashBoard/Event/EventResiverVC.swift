@@ -1,16 +1,15 @@
 //
-//  EventPageVC.swift
+//  EventResiverVC.swift
 //  VsSchoolChimes
 //
-//  Created by admin on 04/12/24.
+//  Created by admin on 19/12/24.
 //
-import UIKit
-protocol HistorySelectDelegate{
-    func select(Title:String,Description:String,Images:[UIImage],pdf:String)
-}
-@available(iOS 14.0, *)
-class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate{
 
+import UIKit
+
+@available(iOS 14.0, *)
+class EventResiverVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate{
+    
     @IBOutlet weak var outerView: UIStackView!
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
@@ -20,7 +19,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var page1 = UIViewController()
-    var page2 = UIViewController() 
+    var page2 = UIViewController()
     var titleLbl = ""
     var button1 = "Create".translated()
     var button2 = "History".translated()
