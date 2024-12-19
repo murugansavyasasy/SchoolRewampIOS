@@ -18,36 +18,6 @@
             endingLineNumber = "200"
             landmarkName = "uploadAWS(image:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "200"
-                  endingLineNumber = "200">
-               </Location>
-               <Location
-                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "200"
-                  endingLineNumber = "200">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -412,6 +412,10 @@
 		84BB5EB42D1133AA00AD0C87 /* ExamsListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EB12D1133AA00AD0C87 /* ExamsListTVCell.swift */; };
 		84BB5EB72D11467700AD0C87 /* SchedulePopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EB62D11467700AD0C87 /* SchedulePopupVC.xib */; };
 		84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EB52D11467700AD0C87 /* SchedulePopupVC.swift */; };
+		84BDE6F92D142D2200F12277 /* LeveCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE6F72D142D2200F12277 /* LeveCreateVC.swift */; };
+		84BDE6FA2D142D2200F12277 /* LeveCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE6F82D142D2200F12277 /* LeveCreateVC.xib */; };
+		84BDE6FD2D142D3900F12277 /* LeveHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE6FB2D142D3900F12277 /* LeveHistoryVC.swift */; };
+		84BDE6FE2D142D3900F12277 /* LeveHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */; };
 		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E702CF6DF9600E34A83 /* splashVc.xib */; };
@@ -944,6 +948,10 @@
 		84BB5EB22D1133AA00AD0C87 /* ExamsListTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamsListTVCell.xib; sourceTree = "<group>"; };
 		84BB5EB52D11467700AD0C87 /* SchedulePopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulePopupVC.swift; sourceTree = "<group>"; };
 		84BB5EB62D11467700AD0C87 /* SchedulePopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SchedulePopupVC.xib; sourceTree = "<group>"; };
+		84BDE6F72D142D2200F12277 /* LeveCreateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeveCreateVC.swift; sourceTree = "<group>"; };
+		84BDE6F82D142D2200F12277 /* LeveCreateVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveCreateVC.xib; sourceTree = "<group>"; };
+		84BDE6FB2D142D3900F12277 /* LeveHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeveHistoryVC.swift; sourceTree = "<group>"; };
+		84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveHistoryVC.xib; sourceTree = "<group>"; };
 		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C00E6F2CF6DF9600E34A83 /* splashVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splashVc.swift; sourceTree = "<group>"; };
@@ -2348,6 +2356,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84BDE6F62D142CDC00F12277 /* LeaveRequest */,
 				84BB5EA42D1132CF00AD0C87 /* Schedule Exam */,
 				187CF48F2D113524001422CE /* MsgFrmManagement */,
 				84395FE62D10023200FC3242 /* Chat */,
@@ -2514,6 +2523,17 @@
 				845FED3E2D129A0D0090296B /* ExamCreatVC.xib */,
 			);
 			path = "Schedule Exam";
+			sourceTree = "<group>";
+		};
+		84BDE6F62D142CDC00F12277 /* LeaveRequest */ = {
+			isa = PBXGroup;
+			children = (
+				84BDE6F72D142D2200F12277 /* LeveCreateVC.swift */,
+				84BDE6F82D142D2200F12277 /* LeveCreateVC.xib */,
+				84BDE6FB2D142D3900F12277 /* LeveHistoryVC.swift */,
+				84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */,
+			);
+			path = LeaveRequest;
 			sourceTree = "<group>";
 		};
 		84C00E6A2CF6D79000E34A83 /* TermsandCondVc */ = {
@@ -3130,6 +3150,7 @@
 				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
 				846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */,
 				842FBAEF2D0BFE64007C0B51 /* LessonPlanVC.xib in Resources */,
+				84BDE6FA2D142D2200F12277 /* LeveCreateVC.xib in Resources */,
 				842FBAF02D0BFE64007C0B51 /* SchoolStrengthVC.xib in Resources */,
 				842FBAF12D0BFE64007C0B51 /* StrengthTvCell.xib in Resources */,
 				842FBAF22D0BFE64007C0B51 /* LessonPlanTvCell.xib in Resources */,
@@ -3145,6 +3166,7 @@
 				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
+				84BDE6FE2D142D3900F12277 /* LeveHistoryVC.xib in Resources */,
 				8476EE2A2D100A22006E1EA6 /* AttendenceReportTVCell.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
 				8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */,
@@ -3408,6 +3430,7 @@
 				18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */,
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
 				18D718A72D0D477900E9EDA3 /* deleteVc.swift in Sources */,
+				84BDE6FD2D142D3900F12277 /* LeveHistoryVC.swift in Sources */,
 				18D718A82D0D477900E9EDA3 /* DeleteReq.swift in Sources */,
 				18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */,
 				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
@@ -3532,6 +3555,7 @@
 				849970CF2CF8752400800B07 /* WaveView .swift in Sources */,
 				84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				84C829FB2D086A490024A46A /* FountainFirework.swift in Sources */,
+				84BDE6F92D142D2200F12277 /* LeveCreateVC.swift in Sources */,
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
 				84C829FD2D086A490024A46A /* ImageSparkView.swift in Sources */,
 				84C829FE2D086A490024A46A /* CGPoint+Extensions.swift in Sources */,
