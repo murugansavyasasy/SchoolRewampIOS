@@ -220,8 +220,8 @@
 "selectedText" = "Selected Text";
 "invalidSelection" = "Invalid Selection";
 "selectDatesWithinMonth" = "You can only select dates within the currently displayed month.";
-
-
+//MARK: ScheduleExam
+"scheduleExam" = "Schedule Exam";
 
 
 

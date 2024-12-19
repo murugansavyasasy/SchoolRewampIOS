@@ -284,6 +284,8 @@
 		8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */; };
 		844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844914862D01A8EF0007A875 /* MeetingsTVcell.xib */; };
 		844914882D01A8EF0007A875 /* MeetingsTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844914852D01A8EF0007A875 /* MeetingsTVcell.swift */; };
+		845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FED3D2D129A0D0090296B /* ExamCreatVC.swift */; };
+		845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845FED3E2D129A0D0090296B /* ExamCreatVC.xib */; };
 		84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */; };
 		84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */; };
 		84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */; };
@@ -814,6 +816,8 @@
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		844914852D01A8EF0007A875 /* MeetingsTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsTVcell.swift; sourceTree = "<group>"; };
 		844914862D01A8EF0007A875 /* MeetingsTVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingsTVcell.xib; sourceTree = "<group>"; };
+		845FED3D2D129A0D0090296B /* ExamCreatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCreatVC.swift; sourceTree = "<group>"; };
+		845FED3E2D129A0D0090296B /* ExamCreatVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamCreatVC.xib; sourceTree = "<group>"; };
 		84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardTvcellTableViewCell.swift; sourceTree = "<group>"; };
 		84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardTvcellTableViewCell.xib; sourceTree = "<group>"; };
 		84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardVc.swift; sourceTree = "<group>"; };
@@ -2512,6 +2516,8 @@
 				84BB5EB22D1133AA00AD0C87 /* ExamsListTVCell.xib */,
 				84BB5EB52D11467700AD0C87 /* SchedulePopupVC.swift */,
 				84BB5EB62D11467700AD0C87 /* SchedulePopupVC.xib */,
+				845FED3D2D129A0D0090296B /* ExamCreatVC.swift */,
+				845FED3E2D129A0D0090296B /* ExamCreatVC.xib */,
 			);
 			path = "Schedule Exam";
 			sourceTree = "<group>";
@@ -3052,6 +3058,7 @@
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
 				844188872CC915FF006483C3 /* OTPVc.xib in Resources */,
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
+				845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */,
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
 				8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */,
 				84BB5EAF2D11337E00AD0C87 /* ExamsListCVCell.xib in Resources */,
@@ -3495,6 +3502,7 @@
 				18926D2C2D04140B002BBB97 /* NewPendingReq.swift in Sources */,
 				18926D2D2D04140B002BBB97 /* PendingReq.swift in Sources */,
 				18926D2E2D04140B002BBB97 /* classWisePendingReq.swift in Sources */,
+				845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */,
 				18926D2F2D04140B002BBB97 /* PendingApiResp.swift in Sources */,
 				18926D302D04140B002BBB97 /* PendingFeeReportTableViewCell.swift in Sources */,
 				849970B92CF8750B00800B07 /* PageVC.swift in Sources */,

@@ -177,7 +177,7 @@ class CommonStringFile{
     static let VoiceMessage = "Voice Message".translated()
     static let TextMessage = "Text Message".translated()
     static let ScheduleCall = "Schedule Call".translated()
-    static let EnterTextHere = "EnterTextHere".translated()
+    static let EnterTextHere = "Enter TextHere".translated()
     static let BacktoTextMessage = "BackToTextMessage".translated()
     static let BackToVoiceMessage = "BackToVoiceMessage".translated()
     static let Venue = "Venue".translated()
@@ -203,6 +203,7 @@ class CommonStringFile{
     static let SecondaryPhoneno = "Secondary Phone no".translated()
     static let ContactSupport = "Contact Support".translated()
     static let TermsandConditions = "Terms and Conditions".translated()
+    static let scheduleExam = "scheduleExam".translated()
 }
 
 

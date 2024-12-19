@@ -19,6 +19,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="455" height="591"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thD-IK-ZZj" customClass="AnimatView" customModule="VsSchoolChimes" customModuleProvider="target">
+                        <rect key="frame" x="10" y="10" width="414.66666666666669" height="571"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OKB-qZ-tJl">
                         <rect key="frame" x="10" y="10" width="414.66666666666669" height="571"/>
                         <subviews>
@@ -295,7 +299,11 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="OKB-qZ-tJl" secondAttribute="trailing" constant="10" id="4VS-jg-U3r"/>
                     <constraint firstItem="OKB-qZ-tJl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="71J-Vo-YFA"/>
+                    <constraint firstItem="thD-IK-ZZj" firstAttribute="trailing" secondItem="OKB-qZ-tJl" secondAttribute="trailing" id="Db3-ef-6ok"/>
                     <constraint firstItem="OKB-qZ-tJl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="UA9-WK-1NP"/>
+                    <constraint firstItem="thD-IK-ZZj" firstAttribute="leading" secondItem="OKB-qZ-tJl" secondAttribute="leading" id="VXK-Q0-FaB"/>
+                    <constraint firstItem="thD-IK-ZZj" firstAttribute="bottom" secondItem="OKB-qZ-tJl" secondAttribute="bottom" id="WMp-hj-1dY"/>
+                    <constraint firstItem="thD-IK-ZZj" firstAttribute="top" secondItem="OKB-qZ-tJl" secondAttribute="top" id="XnB-xP-kNn"/>
                     <constraint firstAttribute="bottom" secondItem="OKB-qZ-tJl" secondAttribute="bottom" constant="10" id="zu8-rs-P2t"/>
                 </constraints>
             </tableViewCellContentView>
@@ -315,6 +323,7 @@
                 <outlet property="nameTitle" destination="PzX-sJ-g7J" id="OHQ-WB-yAh"/>
                 <outlet property="outerView" destination="OKB-qZ-tJl" id="XEv-Bp-tgA"/>
                 <outlet property="profileView" destination="Y7R-wa-dma" id="nDM-56-D72"/>
+                <outlet property="shimmerView" destination="thD-IK-ZZj" id="AXZ-1n-k9U"/>
                 <outlet property="smsBtn" destination="4yJ-Tq-JEt" id="3zC-e7-eMm"/>
                 <outlet property="studentNmae" destination="PgH-4T-hbX" id="JOs-Yy-0Gr"/>
                 <outlet property="tagView" destination="uMB-is-xK1" id="t4w-3b-pxI"/>

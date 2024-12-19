@@ -8,7 +8,7 @@
 import UIKit
 import DropDown
 protocol ScheduleDelegate{
-    func schedulSubject(ExamsSchedule:[ExamsSchedule],delete:Bool)
+    func schedulSubject(ExamsSchedule:[ExamsSchedule],delete:Bool,index:Int)
 }
 class SchedulePopupVC: UIViewController,UITextViewDelegate {
     @IBOutlet weak var txtFld: UITextField!
@@ -27,7 +27,8 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
     @IBOutlet weak var heighttxt: NSLayoutConstraint!
     @IBOutlet weak var subjectName: UILabel!
     @IBOutlet weak var subjectImg: UIImageView!
-    var examSchedul:[ExamsSchedule]?
+    var examSchedul:ExamsSchedule?
+    var finalArray = [ExamsSchedule]()
     var scheduDelegate:ScheduleDelegate?
     var index = 0
     var datePicker: UIDatePicker!
@@ -60,8 +61,8 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
         outerView.layer.shadowOpacity = 0.3
         sessionView.layer.cornerRadius = 8
         txtSyllobs.layer.cornerRadius = 8
-        subjectImg.image = UIImage(named: examSchedul?[index].imageName ?? "")
-        subjectName.text = examSchedul?[index].subjectName
+        subjectImg.image = UIImage(named: examSchedul?.imageName ?? "")
+        subjectName.text = examSchedul?.subjectName
         SubjectSyllabus.setFont(style: .body, size: FontSize.BodySize)
         subjectName.setFont(style: .body, size: FontSize.BodySize)
         sessionLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -69,19 +70,19 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
         markLbl.setFont(style: .body, size: FontSize.BodySize)
         SchedulBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         cancelBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        txtFld.text = examSchedul?[index].mark
-        txtSyllobs.text = examSchedul?[index].subjectSyllabus
+        txtFld.text = examSchedul?.mark
+        txtSyllobs.text = examSchedul?.subjectSyllabus
         setupdatePicker()
-        if examSchedul?[index].date == ""{
+        if examSchedul?.date == ""{
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "d MMM yyyy"
             let selectedDate = Date()
             let formattedDate = dateFormatter.string(from: selectedDate)
             dateBtn.setTitle(formattedDate, for: .normal)
         }else{
-            dateBtn.setTitle(examSchedul?[index].date, for: .normal)
+            dateBtn.setTitle(examSchedul?.date, for: .normal)
         }
-        self.sessionBtn.setTitle(examSchedul?[index].session, for: .normal)
+        self.sessionBtn.setTitle(examSchedul?.session, for: .normal)
         adjustTextViewHeightWithConstraint(txtSyllobs)
     }
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -134,18 +135,23 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
     }
 
     @IBAction func schedule(_ sender: Any) {
-        examSchedul?[index].date = dateBtn.titleLabel?.text ?? ""
-        examSchedul?[index].mark = txtFld.text ?? ""
-        examSchedul?[index].session = sessionBtn.titleLabel?.text ?? ""
-        examSchedul?[index].subjectSyllabus = txtSyllobs.text ?? ""
-        examSchedul?[index].isSelected = true
-        scheduDelegate?.schedulSubject(ExamsSchedule:examSchedul!, delete: false)
+        examSchedul?.date = dateBtn.titleLabel?.text ?? ""
+        examSchedul?.mark = txtFld.text ?? ""
+        examSchedul?.session = sessionBtn.titleLabel?.text ?? ""
+        examSchedul?.subjectSyllabus = txtSyllobs.text ?? ""
+        examSchedul?.isSelected = true
+        if let selectedArr = examSchedul{
+            finalArray.append(selectedArr)
+        }
+        
+        scheduDelegate?.schedulSubject(ExamsSchedule:finalArray, delete: false, index: index)
         dismiss(animated: false)
     }
     @IBAction func sessionSelection(_ sender: UIButton) {
         view.endEditing(true)  // Dismiss the keyboard
         keyboardWillHide(Notification(name: UIResponder.keyboardWillHideNotification))
         sessionDropdown.dataSource = ["FN","AN"]
+        sessionDropdown.anchorView = sessionView
         sessionDropdown.bottomOffset = CGPoint(x: 0, y: sessionView.bounds.height)
         sessionDropdown.direction = .bottom
         sessionDropdown.width = sessionView.bounds.width
@@ -216,7 +222,7 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
         dateFormatter.dateFormat = "d MMM yyyy"
         let selectedDate = datePicker.date
         let formattedDate = dateFormatter.string(from: selectedDate)
-        examSchedul?[index].date = formattedDate
+        examSchedul?.date = formattedDate
         dateBtn.setTitle(formattedDate, for: .normal)
         datePicker.isHidden = true
         doneButton.isHidden = true

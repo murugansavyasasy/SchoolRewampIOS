@@ -334,21 +334,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     MenuRedirect.senderSchoolStrength(from: self)
                     
                 case menuName.MarkYourAttendance:
-                    MenuRedirect.AttendenceMark(from: self)
+                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
                     
                 case menuName.InteractionWithStudent:
                     MenuRedirect.chat(from: self)
                     
                 case menuName.ScheduleExamTest:
-                    MenuRedirect.ScheduleExamVCNavigat(from: self)
-                case menuName.DailyCollection:
-                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
-                    
-                case menuName.ScheduleExamTest,
-                    menuName.DailyCollection,
-                    "":
-                    
-                    // Do nothing for these cases
+                    MenuRedirect.ScheduleExamVCNavigat(from: self)   
+                case menuName.DailyCollection,"":
                     break
                     
                 default:

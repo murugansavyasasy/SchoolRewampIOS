@@ -24,6 +24,7 @@ class ReportStudentTVC: UITableViewCell {
     @IBOutlet weak var genderLbl: UILabel!
     @IBOutlet weak var fatherName: UILabel!
     
+    @IBOutlet weak var shimmerView: AnimatView!
     @IBOutlet weak var genderTitle: UILabel!
     @IBOutlet weak var fatherTitle: UILabel!
     @IBOutlet weak var profileView: UIView!
@@ -67,6 +68,26 @@ class ReportStudentTVC: UITableViewCell {
         profileView.layer.shadowOffset = CGSize(width: 4, height: 4)
         profileView.layer.shadowOpacity = 0.5
         profileView.layer.shadowRadius = 4
+        
+        hiddenui(true)
+        animationview()
+
+    }
+    func hiddenui(_ hide:Bool){
+        shimmerView.changeHeightAndAnimate(0,0, 60, 60, top: 5)
+        outerView.isHidden = hide
+//        playbtl.isHidden = hide
+        let color = hide == true ? UIColor.dashBoardClr : UIColor.white
+        shimmerView.backgroundColor = color
+    }
+    func animationview(){
+        shimmerView.animateView(enable:true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+            // Code to execute after delay
+            self.shimmerView.animateView(enable:false)
+            shimmerView.parentview.isHidden = true
+            hiddenui(false)
+        }
         
     }
     func confic(student:StudentList){

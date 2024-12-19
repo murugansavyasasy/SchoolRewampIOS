@@ -14,6 +14,8 @@ class ExamsListCVCell: UICollectionViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var outerView: UIView!
     var examSchedul:[ExamsSchedule]?
+    var finalArray = [ExamsSchedule]()
+    var subName: String?
     var scheduDelegate:ScheduleDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,14 +28,13 @@ class ExamsListCVCell: UICollectionViewCell {
         subjectName.setFont(style: .body, size: FontSize.BodySize)
     }
     @IBAction func deleteBtn(_ sender: UIButton) {
+        guard let subjectName = subName else { return }
         
-        examSchedul?[sender.tag].date = ""
-        examSchedul?[sender.tag].mark = ""
-        examSchedul?[sender.tag].session = ""
-        examSchedul?[sender.tag].subjectSyllabus = ""
-        examSchedul?[sender.tag].isSelected = false
-        scheduDelegate?.schedulSubject(ExamsSchedule:examSchedul!, delete: true)
-
+        if let index = finalArray.firstIndex(where: { $0.subjectName == subjectName }) {
+            finalArray.remove(at: index)
+            scheduDelegate?.schedulSubject(ExamsSchedule: finalArray, delete: true, index: sender.tag)
+        } else {
+            print("Subject not found in the array.")
+        }
     }
-    
 }
