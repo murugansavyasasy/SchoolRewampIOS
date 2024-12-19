@@ -75,6 +75,9 @@
                             </imageView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="3fk-V0-e47">
                                 <rect key="frame" x="142.66666666666666" y="143" width="73" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="ven-wA-ptx"/>
+                                </constraints>
                                 <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="currentPageIndicatorTintColor" systemColor="systemBlueColor"/>
                             </pageControl>
@@ -94,18 +97,28 @@
                                     <action selector="Select:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ycj-iq-2mo"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9K-0e-z3J">
+                                <rect key="frame" x="10" y="8" width="338" height="21"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3lM-Ge-F8d" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="0nb-4l-Pox"/>
                             <constraint firstAttribute="trailing" secondItem="kwf-UY-KqC" secondAttribute="trailing" constant="8" id="2KB-LP-m1b"/>
+                            <constraint firstItem="kwf-UY-KqC" firstAttribute="top" secondItem="m9K-0e-z3J" secondAttribute="bottom" constant="20" id="8Ye-vT-lF4"/>
                             <constraint firstItem="dRZ-ZP-W8D" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="8sb-FD-fmm"/>
                             <constraint firstAttribute="trailing" secondItem="3lM-Ge-F8d" secondAttribute="trailing" constant="20" id="BPr-Rj-qMp"/>
+                            <constraint firstItem="m9K-0e-z3J" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="10" id="DYV-mp-7Ks"/>
                             <constraint firstItem="ZlO-yr-9O1" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="8" id="JGp-wX-TdN"/>
                             <constraint firstItem="3fk-V0-e47" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="Jc2-QS-qX3"/>
+                            <constraint firstItem="m9K-0e-z3J" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="8" id="Jig-Eu-tA3"/>
                             <constraint firstItem="0ta-Ym-h3a" firstAttribute="leading" secondItem="dRZ-ZP-W8D" secondAttribute="leading" constant="5" id="NcJ-AQ-uuW"/>
                             <constraint firstItem="kwf-UY-KqC" firstAttribute="top" secondItem="ZlO-yr-9O1" secondAttribute="bottom" constant="20" id="S3g-O4-3t0"/>
                             <constraint firstAttribute="trailing" secondItem="NLk-6b-9PN" secondAttribute="trailing" constant="8" id="SiI-jt-r6T"/>
+                            <constraint firstAttribute="trailing" secondItem="m9K-0e-z3J" secondAttribute="trailing" constant="10" id="V0A-Qw-SJ5"/>
                             <constraint firstItem="3fk-V0-e47" firstAttribute="bottom" secondItem="kwf-UY-KqC" secondAttribute="bottom" id="XIP-6g-gUH"/>
                             <constraint firstAttribute="trailing" secondItem="ZlO-yr-9O1" secondAttribute="trailing" constant="8" id="bH7-tW-QXV"/>
                             <constraint firstItem="NLk-6b-9PN" firstAttribute="top" secondItem="Kz9-cN-IxL" secondAttribute="bottom" constant="15" id="csA-Lv-Rmv"/>
@@ -116,6 +129,7 @@
                             <constraint firstItem="dRZ-ZP-W8D" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="10" id="roz-UW-uPs"/>
                             <constraint firstItem="3lM-Ge-F8d" firstAttribute="top" secondItem="kwf-UY-KqC" secondAttribute="bottom" constant="8" id="rsK-a6-mdv"/>
                             <constraint firstItem="Kz9-cN-IxL" firstAttribute="top" secondItem="3lM-Ge-F8d" secondAttribute="bottom" constant="10" id="xOi-UT-hW0"/>
+                            <constraint firstItem="m9K-0e-z3J" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="xix-Yi-cyi"/>
                             <constraint firstItem="Kz9-cN-IxL" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="yhp-gc-1wX"/>
                         </constraints>
                     </view>
@@ -130,13 +144,16 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="CVHeight" destination="pyv-Ob-4eX" id="c7Z-8C-XF9"/>
+                <outlet property="HomeworkTitleLbl" destination="m9K-0e-z3J" id="LLg-Zu-tsP"/>
                 <outlet property="Pinview" destination="dRZ-ZP-W8D" id="lf7-Qu-BPQ"/>
+                <outlet property="SelectBtn" destination="NLk-6b-9PN" id="kiK-hq-FBD"/>
                 <outlet property="TitleLbl" destination="3lM-Ge-F8d" id="Jay-oC-Tch"/>
                 <outlet property="cellview" destination="iLP-ce-oCO" id="fHG-Ug-O8M"/>
                 <outlet property="collectionview" destination="kwf-UY-KqC" id="NPj-aA-lIp"/>
                 <outlet property="datelbl" destination="ZlO-yr-9O1" id="tge-7U-oWz"/>
                 <outlet property="dicriptContent" destination="Kz9-cN-IxL" id="z1j-N4-cdC"/>
                 <outlet property="pagecontroller" destination="3fk-V0-e47" id="8Ui-Eb-NEa"/>
+                <outlet property="pagecontrollerheight" destination="ven-wA-ptx" id="ehF-aM-kJC"/>
                 <outlet property="pinImage" destination="0ta-Ym-h3a" id="Pic-M1-3qO"/>
             </connections>
             <point key="canvasLocation" x="174.04580152671755" y="135.21126760563382"/>

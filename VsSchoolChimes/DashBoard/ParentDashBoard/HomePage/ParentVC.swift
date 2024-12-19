@@ -356,7 +356,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     MenuRedirect.receiverCommunicationNavigate(from: self)
 
     case menuName.ImagePdf:
-    MenuRedirect.receiverImgPdfNavigate(from: self)
+        MenuRedirect.receiverclassTimeTable(from: self)
 
     case menuName.PTM:
     MenuRedirect.receiverPtmNavigate(from: self)

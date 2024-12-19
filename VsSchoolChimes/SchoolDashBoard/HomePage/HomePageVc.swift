@@ -73,37 +73,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         loginDetailView.addGestureRecognizer(redirectGesture)
-//    setupSearchBar()
-//    startAutoScroll()
-//    cellRegistration()
-//    startPlaceholderRotation()
-//    addDoneButton()
-//    let value = UserDefaults.standard.integer(forKey: "passvalue")
-//    getValue = value
-//    // Do any additional setup after loading the view.
-//    Searchbar.placeholder = CommonStringFile.Search
-//    Searchbar.delegate = self
-//    searchHeightCon.constant = 0
-//    TopCv.delegate = self
-//    TopCv.dataSource = self
-//    bottomCv.isPrefetchingEnabled = true
-//    Searchbar.delegate = self
-//    NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
-//    NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
-//
-//    let searchImage  = UITapGestureRecognizer(target: self, action:#selector(SearchViewHidden))
-//    searchImgView.addGestureRecognizer(searchImage)
-//
-//    searchImgView.isUserInteractionEnabled = true
-//
-//    let tap = UITapGestureRecognizer(target: self, action: #selector(openNotification))
-//    BellImage.addGestureRecognizer(tap)
-//    BellImage.isUserInteractionEnabled = true
-//
-//    SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
-//    AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-//    let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
-//    loginDetailView.addGestureRecognizer(redirectGesture)
+   
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -310,6 +280,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         print()
         
         if collectionView == bottomCv{
+            print("menuName",menuName)
+            print("getValue",getValue)
             if getValue == 1 {
                 
                 let menuItem = MenuRedirect.items[indexPath.row]
@@ -383,6 +355,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
                 let menuItem = MenuRedirect.items[indexPath.row]
                 
+              
                 switch menuItem {
                 case menuName.VideoUpload:
                     MenuRedirect.receiverVideoNavigate(from: self)

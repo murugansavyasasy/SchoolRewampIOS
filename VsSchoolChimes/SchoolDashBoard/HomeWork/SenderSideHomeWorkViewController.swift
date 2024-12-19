@@ -6,87 +6,300 @@
 //
 
 import UIKit
-import PhotosUI
-import AWSS3
-import FSCalendar
+import DropDown
+
 
 @available(iOS 14.0, *)
-class SenderSideHomeWorkViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate, FSCalendarDelegate, FSCalendarDataSource {
+class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice {
     
     
-    @IBOutlet weak var homeWorkCollectionView: UICollectionView!
-    @IBOutlet weak var dateSelectView: FSCalendar!
-    @IBOutlet weak var secLbl: UILabel!
-    @IBOutlet weak var secView: UIView!
-    @IBOutlet weak var stdLbl: UILabel!
-    @IBOutlet weak var stdView: UIView!
-    @IBOutlet weak var dateLbl: UILabel!
-    @IBOutlet weak var overAllHomeWorkReportListView: UIView!
-    @IBOutlet weak var overAllHomeWorkListView: UIView!
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var homeWorkReportsLbl: UILabel!
-    @IBOutlet weak var homeworkLbl: UILabel!
-    @IBOutlet weak var composeHwMsgLbl: UILabel!
-    @IBOutlet weak var ContentTxtView: UITextView!
-    @IBOutlet weak var hwTopicTxtFld: UITextField!
-    @IBOutlet weak var homeWorkReportsSegView: UIView!
-    @IBOutlet weak var homeWorkSegView: UIView!
-    @IBOutlet weak var addAttachBtn: UIButton!
     
-    var imageStr : [String] = []
-    var currentImageCount = 0
+    func deleteImage(index: Int) {
+        selectedImages.remove(at: index)
+        uploadAttachmentView.imageCollectionview.reloadData()
+    }
+    
+    @IBOutlet weak var ReportView: UIView!
+    
+    @IBOutlet weak var TV: UITableView!
+    @IBOutlet weak var SectionView: UIView!
+    @IBOutlet weak var dateBtn: UIButton!
+    
+    @IBOutlet weak var StandardView: UIView!
+    @IBOutlet weak var CalendarView: UIView!
+    @IBOutlet weak var homeworkBtn: UIButton!
+    @IBOutlet weak var ReportBtn: UIButton!
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var Buttonstackview: UIStackView!
+    @IBOutlet weak var ComposeHomeworkView: UIView!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var TitleTxtfield: UITextField!
+    @IBOutlet weak var DetailsLbl: UILabel!
+    @IBOutlet weak var DetailsTxtview: UITextView!
+    @IBOutlet weak var wordsCountLbl: UILabel!
+    @IBOutlet weak var uploadattachmentLbl: UILabel!
+    @IBOutlet weak var uploadAttachmentView: ImageSelection!
+    @IBOutlet weak var RecipientBtn: UIButton!
+    @IBOutlet weak var calenderimgHeight: NSLayoutConstraint!
+    @IBOutlet weak var DateViewheight: NSLayoutConstraint!
+    @IBOutlet weak var calenderHeight: NSLayoutConstraint!
+    
     var selectedImages: [UIImage] = []
-    var totalImageCount = 0
-    var originalImagesArray = [UIImage]()
-    var imageUrlArray = NSMutableArray()
-    var  getImagePdfType : String!
-    var convertedImagesUrlArray = NSMutableArray()
-    var pdfData : Data? = nil
+    var url : URL?
     let photoPickManager = PhotoPickerManager.shared
+    let Img = ImageName()
+    let formatter = DateFormatter()
+    let standardDropdown = DropDown()
+    let SectionDropdown = DropDown()
+    var image = "image/pdf"
+    var delegate : HistorySelectDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        StyleAndTranslater()
+        uploadAttachmentView.imageCollectionview.delegate = self
+        uploadAttachmentView.imageCollectionview.dataSource = self
         
-        overAllHomeWorkReportListView.isHidden = true
+        let nib = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
+        uploadAttachmentView.imageCollectionview.register(nib, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
-        composeHwMsgLbl.text = "Upload Attachment".translated()
+        let imgPdfTV = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
+        TV.register(imgPdfTV, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
         
+        let voiceTV = UINib(nibName:CellConfingName.HomeworkreportTV, bundle: nil)
+        TV.register(voiceTV, forCellReuseIdentifier: CellConfingName.HomeworkreportTV)
         
-        homeWorkCollectionView.delegate = self
-        homeWorkCollectionView.dataSource = self
+        let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
+        StandardView.addGestureRecognizer(standardTap)
         
-        homeWorkCollectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
+        let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
+        SectionView.addGestureRecognizer(sectionTap)
         
-      
+        ComposeHomeworkView.isHidden = false
+        ComposeHomeworkView.alpha = 1
         
-        dateSelectView.isHidden = false
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backAction))
-        backView.addGestureRecognizer(backGesture)
+        ReportView.isHidden = true
+        ReportView.alpha = 0
         
-        let homeWorkGesture = UITapGestureRecognizer(target: self, action: #selector(selectHomeWork))
-        homeWorkSegView.addGestureRecognizer(homeWorkGesture)
+        CalendarView.layer.cornerRadius = 10
+        CalendarView.layer.borderWidth = 1
+        CalendarView.layer.borderColor = UIColor.lightGray.cgColor
         
+        SectionView.layer.cornerRadius = 10
+        StandardView.layer.cornerRadius = 10
         
-        let homeworkReportGesture = UITapGestureRecognizer(target: self, action: #selector(selectHomeWorkReports))
-        homeWorkReportsSegView.addGestureRecognizer(homeworkReportGesture)
-        
-        //        let dateClick = UITapGestureRecognizer(target: self, action: #selector(calanderClikcVC))
-        //        calanderView.addGestureRecognizer(dateClick)
-        
-        
-        photoPickManager.onImagePicked = { [weak self] images in
-                   guard let self = self else { return }
-                   // Handle selected images here
-            
-           
-                   for image in images {
-                       print("Selected image: \(image)")
-                       photoPickManager.uploadAWS(image: image)
-                   }
-               }
-        
-        
+    }
     
+    func StyleAndTranslater(){
+        
+       
+        
+        Buttonstackview.layer.cornerRadius = 20
+        homeworkBtn.layer.cornerRadius = 20
+        ReportBtn.layer.cornerRadius = 20
+        DetailsTxtview.layer.cornerRadius = 10
+        DetailsTxtview.layer.borderWidth = 1
+        DetailsTxtview.layer.borderColor = UIColor.lightGray.cgColor
+        
+        RecipientBtn.layer.cornerRadius = 10
+        
+        gradientcolours(button: homeworkBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        
+        gradientcolours(button: ReportBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+        ReportBtn.setTitleColor(UIColor.black, for: .normal)
+    }
+    
+    func showDatepicker(){
+        
+        // Create a UIDatePicker
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        
+        // Use inline display style for iOS 14+
+        if #available(iOS 14.0, *) {
+            datePicker.preferredDatePickerStyle = .inline
+        }
+        
+        // Set maximum date to today
+        datePicker.maximumDate = Date()
+        
+        // Calculate minimum date (30 days before today)
+        let calendar = Calendar.current
+        if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
+            datePicker.minimumDate = thirtyDaysAgo
+        }
+        
+        
+        // Scale down the entire calendar
+        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65) // Adjust scaling factors
+        
+        // Set frame and center it in the container view
+        datePicker.frame = CalendarView.bounds
+        datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        // Add the date picker to the container view
+        CalendarView.addSubview(datePicker)
+        
+        
+        // Handle date selection
+        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+    }
+
+    @objc func dateChanged(_ sender: UIDatePicker) {
+        
+        formatter.dateFormat = "EEE d MMM yyyy"
+        print("Selected date: \(formatter.string(from: sender.date))")
+        
+        let label = formatter.string(from: sender.date)
+        
+       
+            calenderimgHeight.constant = 38
+         //   DateViewheight.constant = 25
+            calenderHeight.constant = 0
+            CalendarView.isHidden = true
+            dateBtn.isHidden = false
+            dateBtn.setTitle(label, for: .normal)
+            dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            // calenderHeight.constant = 260
+        
+        
+    }
+    
+    @IBAction func SelectStandard() {
+        // Setup dropdown anchor and data source
+        standardDropdown.anchorView = StandardView
+        standardDropdown.dataSource = ["8th", "9th", "10th", "11th"]
+        standardDropdown.bottomOffset = CGPoint(x: 0, y: StandardView.bounds.height)
+        
+        // Show the dropdown
+        standardDropdown.show()
+        
+        // Handle the selection
+        standardDropdown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return } // Safely unwrap self
+            
+            print("Selected item: \(item) at index: \(index)")
+            
+            // Update the label inside the standardView
+            if let label = self.StandardView.subviews.compactMap({ $0 as? UILabel }).first {
+                label.text = item
+            }
+            
+            // Perform additional actions when ID == 1
+           
+            self.CalendarView.isHidden = true
+                self.calenderHeight.constant = 0
+                
+//                self.TV.isHidden = false
+//                self.TV.delegate = self
+//                self.TV.dataSource = self
+//                self.TV.reloadData()
+            
+        }
+    }
+
+    @IBAction func SelectSection() {
+        SectionDropdown.anchorView = SectionView
+        SectionDropdown.dataSource = ["A", "B", "C", "D"]
+        SectionDropdown.show()
+        SectionDropdown.bottomOffset = CGPoint(x: 0, y: SectionView.bounds.height)
+        
+        SectionDropdown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+            print("Selected item: \(item) at index: \(index)")
+            
+            // Update the label inside the UIView
+            if let label = self.SectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.text = item
+            }
+            
+          
+                CalendarView.isHidden = true
+                calenderHeight.constant = 0
+                self.TV.isHidden = false
+                self.TV.delegate = self
+                self.TV.dataSource = self
+                self.TV.reloadData()
+            
+        }
+    }
+    
+    func imageSelection(){
+        photoPickManager.onImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            // Handle selected images here
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
+            selectedImages.append(contentsOf: images)
+                        for image in images {
+                            print("Selected image: \(image)")
+                           // photoPickManager.uploadAWS(image: image)
+                        }
+            uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        photoPickManager.pdfUrl = { [weak self] pdfurl in
+            guard let self = self else { return }
+            selectedImages.removeAll()
+            url = pdfurl.absoluteURL
+            selectedImages.append(ImageName.pdf!)
+            //            url = URL(string:pdfurl)
+            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
+            uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        photoPickManager.onCameraImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            // Handle selected images here
+            
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
+            selectedImages.append(images)
+            uploadAttachmentView.imageCollectionview.reloadData()
+        }
+    }
+    
+    @IBAction func HomeworkBtnAct(_ sender: Any) {
+        
+        gradientcolours(button: homeworkBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        
+        homeworkBtn.setTitleColor(.white, for:.normal)
+        
+        ReportBtn.backgroundColor = .clear
+        
+        
+        gradientcolours(button: ReportBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+        
+        ReportBtn.setTitleColor(.black, for:.normal)
+        
+        ReportView.isHidden = true
+        ReportView.alpha = 0
+        ComposeHomeworkView.isHidden = false
+        ComposeHomeworkView.alpha = 1
+    }
+    
+    @IBAction func ReportsBtnAct(_ sender: Any) {
+        
+        gradientcolours(button: ReportBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        
+        ReportBtn.setTitleColor(.white, for:.normal)
+        
+        homeworkBtn.backgroundColor = .clear
+        
+        
+        gradientcolours(button: homeworkBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+        
+        homeworkBtn.setTitleColor(.black, for:.normal)
+        
+        ComposeHomeworkView.isHidden = true
+        ComposeHomeworkView.alpha = 0
+        ReportView.isHidden = false
+        ReportView.alpha = 1
+        showDatepicker()
+        
     }
     
     
@@ -94,346 +307,288 @@ class SenderSideHomeWorkViewController: UIViewController, UIImagePickerControlle
         dismiss(animated: true)
     }
     
-    
-   
-    @IBAction func addAttachBtnAction(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-        //
-        // Camera option
-        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { _ in
-            self.openCamera()
-        }
-        alertController.addAction(cameraAction)
+    @IBAction func DateBtnAct(_ sender: Any) {
         
-        // Gallery option
-        let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-            selectImages()
-        }
-        alertController.addAction(galleryAction)
-        
-        // PDF option
-        let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { _ in
-            self.selectPDF()
-        }
-        alertController.addAction(pdfAction)
-        
-        // Voice option
-        let voiceAction = UIAlertAction(title: "Voice".translated(), style: .default) { _ in
-            //            self.selectPDF()
-        }
-        alertController.addAction(voiceAction)
-        
-        // Cancel action
-        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        // Present the alert
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    
-    
-    
-    @IBAction func selectHomeWork() {
-        homeWorkSegView.backgroundColor = Colornames.gradient3
-        homeWorkReportsSegView.backgroundColor = .white
-        homeWorkReportsLbl.textColor = .black
-        homeworkLbl.textColor = .white
-        overAllHomeWorkListView.isHidden = false
-        overAllHomeWorkReportListView.isHidden = true
-        //        homeWorkSegView.isHidden = false
-        //        homeWorkReportsSegView.isHidden = true
-        
-    }
-    
-    
-    
-    @IBAction func selectHomeWorkReports() {
-        overAllHomeWorkListView.isHidden = true
-        overAllHomeWorkReportListView.isHidden = false
-        homeWorkReportsSegView.backgroundColor = Colornames.gradient3
-        homeWorkSegView.backgroundColor = .white
-        //        homeWorkReportsSegView.isHidden = false
-        //        homeWorkSegView.isHidden = true
-        homeWorkReportsLbl.textColor = .white
-        homeworkLbl.textColor = .black
-        
-    }
-    
-    
-    
-    
-    
-    
-    @objc private func dateChanged(_ sender: UIDatePicker) {
-        let selectedDate = sender.date
-        // Handle the selected date
-        print("Selected date: \(selectedDate)")
-        
-        
-    }
-    @objc func datePicked(_ sender: UIDatePicker) {
-        let selectedDate = sender.date
-        //           print("Selected Date: \(selectedDate)")
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy" // Set the desired date format
-        
-        // Format the selected date
-        let formattedDate = dateFormatter.string(from: selectedDate)
-        
-        // Print or use the formatted date
-        print("Selected Date: \(formattedDate)")
-        
-        
-        self.dismiss(animated: true, completion: nil)
-        
-        
-    }
-    
-    func minimumDate(for calendar: FSCalendar) -> Date {
-        // Set minimum date to 30 days ago
-        let currentDate = Date()
-        return Calendar.current.date(byAdding: .day, value: -30, to: currentDate) ?? currentDate
-    }
-    
-    func maximumDate(for calendar: FSCalendar) -> Date {
-        // Set maximum date to today
-        return Date()
-    }
-    
-    // MARK: - FSCalendarDelegate
-    
-    func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-        // Allow selection only if the date is within the last 30 days
-        let currentDate = Date()
-        let minDate = Calendar.current.date(byAdding: .day, value: -30, to: currentDate)!
-        return date >= minDate && date <= currentDate
-    }
-    
-    
-    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        let result = formatter.string(from: date)
-        
-        
-        
-        
-        
-    }
-    
-    //    MARK: Handle Select Camera,Pdf,Image
-    @IBAction func openCamera() {
-        // Check if the camera is available
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .camera
-            imagePicker.allowsEditing = true // Allows editing of the captured image
-            present(imagePicker, animated: true, completion: nil)
-        } else {
-            // Camera is not available, show an alert
-            let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+        if calenderHeight.constant == 0 {
+            CalendarView.isHidden = false
+            calenderHeight.constant = 260
+            dateBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+        }else{
+            CalendarView.isHidden = true
+            calenderHeight.constant = 0
+            dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
     }
     
+    @IBAction func RecipentBtnAct(_ sender: Any) {
+        
+    }
+    
+    // MARK: Set gradient colours for Button
+    func gradientcolours(button : UIButton,colours : [CGColor]) {
+        
+    button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+
+    // Create and configure the gradient layer
+    let gradientLayer = CAGradientLayer()
+    gradientLayer.colors = colours
+    gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+    gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
+    gradientLayer.frame = button.bounds
+    gradientLayer.cornerRadius = button.layer.cornerRadius
+
+    // Insert the gradient layer into the button's layer
+    button.layer.insertSublayer(gradientLayer, at: 0)
+
+    }
+    
+    
+    // MARK: File Attachments Actions
+    
+    func selectImages() {
+        if selectedImages.count != 5{
+            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+    }
+    func openCamera(){
+        if selectedImages.count != 5{
+            photoPickManager.openCamera(from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+    }
     func selectPDF() {
-        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
-        documentPicker.delegate = self
-        self.present(documentPicker, animated: true, completion: nil)
-    }
-    // Handle the image once it has been captured
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.editedImage] as? UIImage {
-            // Use the captured image
-            // For example, display it in an image view or save it
-            print("Captured Image: \(image)")
-            self.selectedImages.append(image)
-        } else if let image = info[.originalImage] as? UIImage {
-            print("Captured Image: \(image)")
-            self.selectedImages.append(image)
-        }
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // Handle cancellation
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
-    
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
-        
-        
-        
-        
-        let fileurl: URL = urls as URL
-        let filename = urls.lastPathComponent
-        let fileextension = urls.pathExtension
-        print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
-        
-        
-        let imageData = NSData(contentsOf: urls)
-        
-        
-        
-        
-        do {
-            pdfData = try Data(contentsOf: urls, options: NSData.ReadingOptions())
-            uploadPDFFileToAWS(pdfData: pdfData!)
-            
-        } catch {
-            print("set PDF filer error : ", error)
-            
-        }
-        
+        photoPickManager.pickPDF(from: self)
         
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        
         controller.dismiss(animated: true, completion: nil)
+        
     }
     
+}
+    
+@available(iOS 14.0, *)
+extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1 + selectedImages.count
+    }
     
-    
-    
-    //    MARK: Aws Upload
-   
-    
-    
-    func uploadPDFFileToAWS(pdfData : Data){
-        let S3BucketName = AwsCredentials.bucketNameIndia
-        let CognitoPoolID = AwsCredentials.CognitoPoolID
-        let Region = AWSRegionType.APSouth1
-        let currentTimeStamp = NSString.init(format: "%ld",Date() as CVarArg)
-        let imageNameWithoutExtension = NSString.init(format: "vc_%@",currentTimeStamp)
-        let imageName = NSString.init(format: "%@%@",imageNameWithoutExtension, ".pdf")
-        
-        let ext = imageName as String
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let  currentDate =   dateFormatter.string(from: Date())
-        
-        
-        let fileName = imageNameWithoutExtension
-        let fileType = ".pdf"
-        
-        let imageURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(ext)
-        
-        do {
-            try pdfData.write(to: imageURL)
-        }
-        catch {}
-        
-        print(imageURL)
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest?.body = imageURL
-        uploadRequest?.key =  currentDate +  "/" + "File_" + ext
-        uploadRequest?.bucket = S3BucketName
-        
-        uploadRequest?.contentType = "application/pdf"
-        
-        
-        let transferManager = AWSS3TransferManager.default()
-        transferManager.upload(uploadRequest!).continueWith { [self] (task) -> AnyObject? in
-            
-            if let error = task.error {
-                print("Upload failed : (\(error))")
-                
-                
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.item == 0{
+            let cell = uploadAttachmentView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
+            cell.layer.cornerRadius = 20
+            return cell
+        }else{
+            let cell = uploadAttachmentView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+            cell.delegate = self
+            cell.deleteBtn.tag = indexPath.item - 1
+            if selectedImages.count > indexPath.item - 1 {
+                // Assign the image starting from the second image in the selectedImages array
+                cell.imageViews.image = selectedImages[indexPath.item - 1]
+            } else {
+                cell.imageViews.image = nil
             }
-            
-            if task.result != nil {
-                let url = AWSS3.default().configuration.endpoint.url
-                let publicURL = url?.appendingPathComponent((uploadRequest?.bucket!)!).appendingPathComponent((uploadRequest?.key!)!)
-                if let absoluteString = publicURL?.absoluteString {
-                    print("Uploaded to:\(absoluteString)")
-                    
-                    let imageDict = NSMutableDictionary()
-                    imageDict["FileName"] = absoluteString
-                    self.imageUrlArray.add(imageDict)
-                    self.convertedImagesUrlArray = self.imageUrlArray
-                    
-                    
-                    
-                    
-                    
-                }
+            if selectedImages.count <= 2{
+                collectionViewHeight.constant = 120
+            }else{
+                collectionViewHeight.constant = 220
             }
-            else {
-                
-                
-                print("Unexpected empty result.")
-            }
-            return nil
+            return cell
         }
     }
     
-    
-    
-    
-    
-    
-    
-   
-}
-    
-    
-         
-@available(iOS 14.0, *)
-extension SenderSideHomeWorkViewController : UICollectionViewDelegate,UICollectionViewDataSource{
-    
-    
-    
-    func selectImages() {
-        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
-    }
-       
-       
-    
-       
-       // MARK: - UICollectionView DataSource
-       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-           return selectedImages.count
-       }
-       
-       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-           cell.imageViews.image = selectedImages[indexPath.item]
-           return cell
-       }
-       
-       // MARK: - UICollectionView Delegate
-       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-           // Delete the selected image
-           selectedImages.remove(at: indexPath.item)
-           collectionView.deleteItems(at: [indexPath])
-       }
-       
-       
-    
-}
-
-@available(iOS 14.0, *)
-extension SenderSideHomeWorkViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-        return CGSize(width: width, height: width)
+        
+        let width = (uploadAttachmentView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
+        
+        return CGSize(width: width, height: 100)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0{
+            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+            //
+            // Camera option
+            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                //
+                openCamera()
+            }
+            alertController.addAction(cameraAction)
+            
+            // Gallery option
+            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+                //
+                selectImages()
+                //
+            }
+            alertController.addAction(galleryAction)
+            
+            //             PDF option
+            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+                
+                selectPDF()
+            }
+            alertController.addAction(pdfAction)
+            
+            // Cancel action
+            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            // Present the alert
+            self.present(alertController, animated: true, completion: nil)
+        }else{
+            if selectedImages.count > indexPath.item - 1 {
+                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                vc.selectedFileURL = url
+                // Safe unwrapping of imgView before assigning
+                vc.img = selectedImages[indexPath.item - 1]
+                //
+                present(vc, animated: true)
+            }
+    
+        }
+       
+
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+            
+            controller.dismiss(animated: true, completion: nil)
+            
+        }
+        
+        
     }
     
-    
-    
-    
 }
-    
  
+@available(iOS 14.0, *)
+extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        if indexPath.row == 0 {
+            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+            
+                cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
+                cell.ishomework = true
+                cell.CVHeight.constant = 120
+                cell.pagecontrollerheight.constant = 26
+//            cell.datelbl.isHidden = true
+//            cell.pinImage.isHidden = true
+//            cell.Pinview.isHidden = true
+//            cell.collectionview.isHidden = false
+            cell.pagecontroller.isHidden = false
+            cell.SelectBtn.isHidden = true
+            cell.HomeworkTitleLbl.text = "Write Assignment"
+            cell.TitleLbl.text = "Tamil"
+//            cell.dicriptContent.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment."
+            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+            cell.delegate = self
+            cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
+            cell.dicriptContent.isUserInteractionEnabled = true
+            cell.dicriptContent.addGestureRecognizer(tapGesture)
+           
+            return cell
+        }
+        else if indexPath.row == 1 {
+            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.HomeworkreportTV, for: indexPath) as! HomeworkreportTV
+            
+            cell.HomeworkTitleLbl.text = "Write Assignment"
+            cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
+            cell.SubjectLbl.text = "Tamil"
+            return cell
+        }
+        else {
+            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+            
+            cell.cellview.changeHeightAndAnimate(40,0, 31, 80, top: 5)
+            cell.ishomework = true
+            cell.pagecontrollerheight.constant = 0
+            cell.pagecontroller.isHidden = true
+
+            cell.datelbl.isHidden = true
+            cell.pinImage.isHidden = true
+            cell.Pinview.isHidden = true
+            cell.SelectBtn.isHidden = true
+            cell.CVHeight.constant = 0
+            cell.HomeworkTitleLbl.text = "Write Assignment"
+            cell.TitleLbl.text = "Tamil"
+            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+            cell.delegate = self
+            cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
+            cell.dicriptContent.isUserInteractionEnabled = true
+            cell.dicriptContent.addGestureRecognizer(tapGesture)
+            return cell
+        }
+    }
+    
+    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else { return }
+        let indexPath = IndexPath(row: label.tag, section: 0)
+        let fullDescription = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment."
+        
+        // Toggle the label between expanded and collapsed states
+        let isExpanded = label.numberOfLines == 0
+        label.numberOfLines = isExpanded ? 3 : 0
+        
+        // Update the label text with the appropriate "See more" or "See less" state
+        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
+        
+        // Animate the cell height change
+        TV.beginUpdates()
+        TV.endUpdates()
+    }
+    
+    //MARK: TEXT ADD SEE MORE
+    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
+        // If expanded, show full text with "See less"
+        if expanded {
+            let fullString = fullDescription + CommonStringFile.seeLess
+            let attributedText = NSMutableAttributedString(string: fullString)
+            
+            // Set "See less" text to blue and underline it
+            let seeLessRange = (fullString as NSString).range(of: "See less")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
+            
+            return attributedText
+        } else {
+            var fullString = ""
+            // Otherwise, truncate and show "See more"
+            if fullDescription.count > 120{
+                let truncatedDescription = String(fullDescription.prefix(100))
+                fullString = truncatedDescription + CommonStringFile.seemore
+            }else{
+                fullString = fullDescription
+            }
+            let attributedText = NSMutableAttributedString(string: fullString)
+            
+            // Set "See more" text to blue and underline it
+            let seeMoreRange = (fullString as NSString).range(of: "See more")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
+            return attributedText
+        }
+    }
+    
+    func didTapButton(title: String, content: String, items: [String]) {
+        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+    }
+}
