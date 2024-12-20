@@ -318,7 +318,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     MenuRedirect.senderMarkAttendanceNavigate(from: self)
                     
                 case menuName.InteractionWithStudent:
-                    MenuRedirect.chat(from: self)
+                    ""
+//                    MenuRedirect.chat(from: self)
                     
                 case menuName.ScheduleExamTest:
                     MenuRedirect.ScheduleExamVCNavigat(from: self)   

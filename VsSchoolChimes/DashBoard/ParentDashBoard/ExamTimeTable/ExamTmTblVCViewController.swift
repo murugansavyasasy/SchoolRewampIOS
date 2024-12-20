@@ -38,6 +38,10 @@ class ExamTmTblVCViewController: UIViewController {
 
 
   
+    @IBAction func backBtn(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
 }
 extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
     
@@ -68,7 +72,7 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
                 
                 cell.layer.cornerRadius = 10
                                  cell.clipsToBounds = true
-                cell.backgroundColor = Colornames.topBackgroundCLr1
+                cell.backgroundColor = .parentClr
                 
                 count = indexPath.row+1
                 tv.reloadData()

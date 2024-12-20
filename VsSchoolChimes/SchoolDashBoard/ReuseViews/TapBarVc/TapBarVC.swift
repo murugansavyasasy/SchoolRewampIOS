@@ -53,7 +53,10 @@ class TapBarVC: UIViewController,UITabBarDelegate {
         let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
         
         
-        tabBar.backgroundColor = Colornames.bottomClr
+//      q  tabBar.backgroundColor = Colornames.ParentClr
+        tabBar.tintColor = UIColor.systemPurple
+//        tabBar.barStyle = .black
+//        tabBar.isTranslucent = false
         tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
         tabBar.delegate = self
         tabBar.selectedItem = firstItem

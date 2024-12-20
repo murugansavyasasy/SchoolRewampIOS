@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,23 +24,34 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="DFV-CH-evV">
-                    <rect key="frame" x="0.0" y="167" width="393" height="651"/>
+                    <rect key="frame" x="0.0" y="158" width="393" height="660"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Pxq-bY-Gj4"/>
                         <outlet property="delegate" destination="-1" id="Lmz-DT-B7S"/>
                     </connections>
                 </tableView>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="WOf-iN-p5e">
-                    <rect key="frame" x="16" y="101" width="361" height="56"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhm-Tl-Ua5">
+                    <rect key="frame" x="0.0" y="102" width="393" height="56"/>
+                    <subviews>
+                        <searchBar contentMode="redraw" barStyle="blackTranslucent" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="WOf-iN-p5e">
+                            <rect key="frame" x="16" y="0.0" width="361" height="56"/>
+                            <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="LTe-dF-CUa"/>
+                            </connections>
+                        </searchBar>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="56" id="Des-oh-pUA"/>
+                        <constraint firstAttribute="bottom" secondItem="WOf-iN-p5e" secondAttribute="bottom" id="2Ne-Wn-XaQ"/>
+                        <constraint firstItem="WOf-iN-p5e" firstAttribute="top" secondItem="yhm-Tl-Ua5" secondAttribute="top" id="3wu-sb-aeb"/>
+                        <constraint firstItem="WOf-iN-p5e" firstAttribute="leading" secondItem="yhm-Tl-Ua5" secondAttribute="leading" constant="16" id="Hf6-Br-UFY"/>
+                        <constraint firstAttribute="trailing" secondItem="WOf-iN-p5e" secondAttribute="trailing" constant="16" id="m6N-nn-F3a"/>
+                        <constraint firstAttribute="height" constant="56" id="mF3-bQ-D5A"/>
                     </constraints>
-                    <textInputTraits key="textInputTraits"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="LTe-dF-CUa"/>
-                    </connections>
-                </searchBar>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgT-js-DNs">
                     <rect key="frame" x="16" y="59" width="75" height="35"/>
                     <constraints>
@@ -63,25 +75,28 @@
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="CgT-js-DNs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="2uN-XX-H93"/>
-                <constraint firstItem="WOf-iN-p5e" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="DjK-W1-2Mj"/>
+                <constraint firstItem="yhm-Tl-Ua5" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="3rV-r2-5xf"/>
+                <constraint firstItem="yhm-Tl-Ua5" firstAttribute="top" secondItem="CgT-js-DNs" secondAttribute="bottom" constant="8" id="6PY-h8-1iz"/>
                 <constraint firstItem="DFV-CH-evV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Iga-18-SuS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="DFV-CH-evV" secondAttribute="trailing" id="RXd-Ej-nRi"/>
                 <constraint firstItem="fWt-bp-UNa" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XLj-7C-bo1"/>
-                <constraint firstItem="DFV-CH-evV" firstAttribute="top" secondItem="WOf-iN-p5e" secondAttribute="bottom" constant="10" id="XSo-JI-Igb"/>
                 <constraint firstItem="fWt-bp-UNa" firstAttribute="centerY" secondItem="CgT-js-DNs" secondAttribute="centerY" id="cUO-Fn-RDZ"/>
-                <constraint firstItem="WOf-iN-p5e" firstAttribute="top" secondItem="fWt-bp-UNa" secondAttribute="bottom" constant="10" id="frj-LM-Rga"/>
+                <constraint firstItem="yhm-Tl-Ua5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="isR-f8-TNL"/>
                 <constraint firstItem="CgT-js-DNs" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="loq-10-w2J"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="DFV-CH-evV" secondAttribute="bottom" id="n9g-Iw-HEh"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="WOf-iN-p5e" secondAttribute="trailing" constant="16" id="sjd-uP-NTN"/>
+                <constraint firstItem="DFV-CH-evV" firstAttribute="top" secondItem="yhm-Tl-Ua5" secondAttribute="bottom" id="vPY-2d-ZhE"/>
             </constraints>
-            <point key="canvasLocation" x="923" y="-54"/>
+            <point key="canvasLocation" x="922.90076335877859" y="-54.225352112676056"/>
         </view>
     </objects>
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="95"/>
+        <namedColor name="ParentClr">
+            <color red="0.74509803921568629" green="0.68235294117647061" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

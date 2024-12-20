@@ -6,7 +6,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,7 +25,7 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hDl-9k-U6U">
-                            <rect key="frame" x="0.0" y="65" width="393" height="694"/>
+                            <rect key="frame" x="0.0" y="46" width="393" height="713"/>
                             <subviews>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="5Di-UL-sCz">
                                     <rect key="frame" x="15" y="10" width="363" height="56"/>
@@ -36,14 +35,14 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GDv-gG-9Ti">
-                                    <rect key="frame" x="0.0" y="76" width="91" height="599"/>
+                                    <rect key="frame" x="0.0" y="76" width="91" height="618"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="91" id="6CB-5N-vE8"/>
                                     </constraints>
                                 </tableView>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zp7-BQ-emi">
-                                    <rect key="frame" x="99" y="76" width="286" height="599"/>
+                                    <rect key="frame" x="99" y="76" width="286" height="618"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
                             </subviews>
@@ -61,19 +60,23 @@
                                 <constraint firstAttribute="trailing" secondItem="5Di-UL-sCz" secondAttribute="trailing" constant="15" id="ydH-6k-FWX"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NoticeBoard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Bc-Dk-pIj">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Test" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Bc-Dk-pIj">
                             <rect key="frame" x="85" y="10" width="222" height="26"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sWV-nx-gRa">
-                            <rect key="frame" x="8" y="6" width="75" height="35"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            <rect key="frame" x="7.9999999999999982" y="5.9999999999999982" width="25.333333333333329" height="20.333333333333329"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="arrow.left" catalog="system"/>
+                            <connections>
+                                <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="RQa-k8-jWL"/>
+                            </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" name="topBackgroundCLr"/>
+                    <color key="backgroundColor" name="ParentClr"/>
                     <constraints>
                         <constraint firstItem="hDl-9k-U6U" firstAttribute="leading" secondItem="DSX-uo-jP3" secondAttribute="leading" id="HC7-Xk-Ieh"/>
                         <constraint firstItem="sWV-nx-gRa" firstAttribute="leading" secondItem="DSX-uo-jP3" secondAttribute="leading" constant="8" id="I22-pX-19S"/>
@@ -81,14 +84,14 @@
                         <constraint firstItem="6Bc-Dk-pIj" firstAttribute="leading" secondItem="DSX-uo-jP3" secondAttribute="leading" constant="85" id="UD9-yD-0kV"/>
                         <constraint firstAttribute="trailing" secondItem="hDl-9k-U6U" secondAttribute="trailing" id="eCD-CN-tYL"/>
                         <constraint firstItem="6Bc-Dk-pIj" firstAttribute="top" secondItem="DSX-uo-jP3" secondAttribute="top" constant="10" id="nap-tP-lkg"/>
-                        <constraint firstItem="hDl-9k-U6U" firstAttribute="top" secondItem="6Bc-Dk-pIj" secondAttribute="bottom" constant="29" id="nvk-2t-EpI"/>
+                        <constraint firstItem="hDl-9k-U6U" firstAttribute="top" secondItem="6Bc-Dk-pIj" secondAttribute="bottom" constant="10" id="nvk-2t-EpI"/>
                         <constraint firstAttribute="trailing" secondItem="6Bc-Dk-pIj" secondAttribute="trailing" constant="86" id="rzm-iK-WAd"/>
                         <constraint firstAttribute="bottom" secondItem="hDl-9k-U6U" secondAttribute="bottom" id="x5k-JB-q7v"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="DSX-uo-jP3" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="4Y5-zq-7Kd"/>
                 <constraint firstItem="DSX-uo-jP3" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="JY5-qR-HzJ"/>
@@ -99,11 +102,9 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <namedColor name="ParentClr">
+            <color red="0.74509803921568629" green="0.68235294117647061" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

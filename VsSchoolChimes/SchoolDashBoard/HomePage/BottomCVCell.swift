@@ -85,11 +85,11 @@ class BottomCVCell: UICollectionViewCell {
           gradientLayer.frame = GradientView.bounds
           
           // Define the gradient colors (you can customize this)
-        gradientLayer.colors = [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor]
+        gradientLayer.colors = [UIColor.parentClr.cgColor,UIColor.priority.cgColor]
           
           // Optionally, define the gradient direction
-        gradientLayer.startPoint = CGPoint(x: 0.8, y: 0.8)  // Top-left
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)    // Bottom-right
+        gradientLayer.startPoint = CGPoint(x: 0.4, y: 0.4)  // Top-left
+        gradientLayer.endPoint = CGPoint(x: 0.9, y: 0.9)    // Bottom-right
 
           // Insert the gradient layer behind the image
         GradientView.layer.insertSublayer(gradientLayer, at: 0)

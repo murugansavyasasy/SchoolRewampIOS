@@ -26,7 +26,11 @@ class ExameMarVC: UIViewController {
 
 
  
-
+    @IBAction func backBtn(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
+    
 }
 
 extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{

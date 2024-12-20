@@ -25,7 +25,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     @IBOutlet weak var bottomCv: UICollectionView!
 
     var filteredItems: [String] = []
-    let menuName = MenuStringFile()
+   
     var getValue : Int!
     var searchItem = 0
 
@@ -225,11 +225,16 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     cell.MenuLbl.text = nil
     cell.MenuImgView.image  = nil
-    let label = MenuRedirect.receiverItems[indexPath.row]
-    let img = UIImage(named: MenuRedirect.receiverImageItems[indexPath.row])
+        let label = MenuRedirect.receiverItems[indexPath.row]
+     
+        let img = UIImage(named: MenuRedirect.receiverItems[indexPath.row])
+        let images = MenuRedirect.receiverItems[indexPath.row]
+      
     cell.MenuLbl.setFont(style: .body, size: 10)
     cell.MenuLbl.text = label
-    cell.MenuImgView.image  = img
+//        img.replacingCharacters(in: "/", with: "")
+//        images.replacingOccurrences(of: "/", with: "")
+        cell.MenuImgView.image  = img
     cell.applyGradient()
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -267,37 +272,55 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         let menuItem = MenuRedirect.receiverItems[indexPath.row]
 
     switch menuItem {
-    case menuName.Video:
+    case ReceiverMenuItems.Video:
         
     MenuRedirect.receiverVideoNavigate(from: self)
 
-    case MenuStringFile.Communication:
+    case ReceiverMenuItems.Communication:
     MenuRedirect.receiverCommunicationNavigate(from: self)
 
-    case menuName.ImagePdf:
+    case ReceiverMenuItems.ImagePdf:
         MenuRedirect.receiverImgPdfNavigate(from: self)
         MenuRedirect.receiverCertificateRequest(from: self)
 
-    case menuName.PTM:
+    case ReceiverMenuItems.PTM:
     MenuRedirect.receiverPtmNavigate(from: self)
 
-    case menuName.NoticeBoard,
-    menuName.Circulars:
-    MenuRedirect.receiverNoticeBoardNavigate(from: self)
-
-    case menuName.Assignment:
+    case ReceiverMenuItems.NoticeBoard:
+        MenuRedirect.receiverNoticeBoardNavigate(from: self)
+        
+    case ReceiverMenuItems.Assignment:
     MenuRedirect.receiverAssignmentNavigate(from: self)
 
-    case menuName.ScheduleExamTest:
+    case ReceiverMenuItems.ExamTest:
     MenuRedirect.receiverExamTestNavigate(from: self)
 
-    case menuName.LSRW:
+    case ReceiverMenuItems.LSRW:
     MenuRedirect.receiverLsrwNavigate(from: self)
-    case menuName.SchoolClassEvents:
-        MenuRedirect.ResiverEvent(from: self)
-    case menuName.LeaveRequests:
-        MenuRedirect.LeaveRquest(from: self)
-    case menuName.LessonPlan:
+    case ReceiverMenuItems.EventsHolidays:
+        MenuRedirect.receiverEvent(from: self)
+
+    case ReceiverMenuItems.RequestLeave:
+        ""
+    case ReceiverMenuItems.FeeDetails:
+        ""
+    case ReceiverMenuItems.InteractionWithStaff:
+        ""
+    case ReceiverMenuItems.InteractionWithStaff:
+        ""
+    case ReceiverMenuItems.OnlineMeeting:
+        ""
+    case ReceiverMenuItems.ClassTimetable:
+        MenuRedirect.receiverclassTimeTable(from: self)
+    case ReceiverMenuItems.Homework:
+        ""
+    case ReceiverMenuItems.CertificateRequest:
+        ""
+    case ReceiverMenuItems.ExamMarks:
+        
+        MenuRedirect.resiverExamMark(from: self)
+        
+  
     // Do nothing for these cases
     break
 

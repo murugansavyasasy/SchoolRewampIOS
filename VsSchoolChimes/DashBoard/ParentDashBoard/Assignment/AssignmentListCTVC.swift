@@ -78,6 +78,11 @@ class AssignmentListCTVC: UITableViewCell {
         didSelectDelegate?.select(index: 1, value:"\(sender.tag)",Img:[""],Pdf:"https://icseindia.org/document/sample.pdf",text:"sjedgwvfefjd xuvu dvs dhv sshgdvsg",type:"")
     }
     @IBAction func submitBtn(_ sender: UIButton) {
+        
+        
+        
+        
+        
     }
     
 }

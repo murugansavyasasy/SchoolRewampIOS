@@ -20,12 +20,12 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LbB-SJ-0xq">
                         <rect key="frame" x="10" y="10" width="247" height="107"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RealImage" translatesAutoresizingMaskIntoConstraints="NO" id="XJq-Xc-8RG">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RealImage" translatesAutoresizingMaskIntoConstraints="NO" id="XJq-Xc-8RG">
                                 <rect key="frame" x="5" y="5" width="237" height="97"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pdf" translatesAutoresizingMaskIntoConstraints="NO" id="LPe-64-d9n">
-                                <rect key="frame" x="219" y="77.333333333333329" width="28" height="29.333333333333329"/>
+                                <rect key="frame" x="219" y="78" width="28" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="28" id="Za2-7d-6Mf"/>
                                     <constraint firstAttribute="height" constant="29" id="n30-VD-mLI"/>
@@ -76,6 +76,6 @@
     </objects>
     <resources>
         <image name="RealImage" width="165" height="213.33332824707031"/>
-        <image name="pdf" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="pdf" width="100" height="100"/>
     </resources>
 </document>

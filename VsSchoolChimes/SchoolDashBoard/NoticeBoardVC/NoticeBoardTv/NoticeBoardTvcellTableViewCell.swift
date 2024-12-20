@@ -37,7 +37,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     var delegate : SelectNotice?
     var ishomework = false
 
-    let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795387749.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391797604035.png"]
+    let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847444562956042.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457714704978.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457742399850.png"]
     
 
     var countShimmer = 0
@@ -102,12 +102,12 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     func hiddenui(_ hide:Bool){
         
        // cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
-        pinImage.isHidden = hide
+//        pinImage.isHidden = hide
         datelbl.isHidden = hide
         dicriptContent.isHidden = hide
         TitleLbl.isHidden = hide
-        pinImage.isHidden = hide
-        Pinview.isHidden = hide
+//        pinImage.isHidden = hide
+//        Pinview.isHidden = hide
         collectionview.isHidden = hide
         pagecontroller.isHidden = hide
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white
@@ -120,7 +120,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             // Code to execute after delay
             self.cellview.animateView(enable:false)
             cellview.parentview.isHidden = true
-            pinImage.isHidden = false
+//            pinImage.isHidden = false
             
             if ishomework == true{
                 hideforHomework()

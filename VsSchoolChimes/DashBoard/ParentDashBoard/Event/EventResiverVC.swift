@@ -8,39 +8,65 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class EventResiverVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate{
+class EventResiverVC: UIViewController, SelectNotice{
     
+    @IBOutlet weak var searchbar: UISearchBar!
+    @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var outerView: UIStackView!
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
-    @IBOutlet weak var presentView: UIView! // Container view to embed the page view controller
+   
     
     @IBOutlet weak var TitleHederLbl: UILabel!
-    var pageViewController: UIPageViewController!
-    var pages: [UIViewController] = []
-    var page1 = UIViewController()
-    var page2 = UIViewController()
-    var titleLbl = ""
-    var button1 = "Create".translated()
-    var button2 = "History".translated()
+ 
+    var titleLbl = "Event"
+    var button1 = "Event".translated()
+    var button2 = "Holiday".translated()
+    var previousOffset: CGFloat = 0.0
+    var delegate : HistorySelectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        searchbar.placeholder = CommonStringFile.Search
+        searchbar.delegate = self
+        
+       
+        addDoneButton()
+      
         uiConficration()
-        setupPageViewController()
+        tabelViewRegister()
 //        pages = [page1, page2]
-        loadPages([page1, page2])
-        disableSwipeGesture()
+      
+    
         gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createEvent.setTitleColor(.white, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         historyBtn.setTitleColor(.black, for:.normal)
         // Set the initial page
-        if let firstPage = pages.first {
-            pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
-        }
+    
         
         
     }
+    
+    @IBAction func backbtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableview.reloadData()
+    }
+    
+    func tabelViewRegister() {
+        tableview.delegate = self
+        tableview.dataSource = self
+        
+        
+        let nib = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
+    }
+    
     func uiConficration(){
         TitleHederLbl.text = titleLbl
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
@@ -52,28 +78,7 @@ class EventResiverVC: UIViewController, UIPageViewControllerDelegate, UIPageView
         historyBtn.setTitle(button2, for: .normal)
         createEvent.setTitle(button1, for: .normal)
     }
-    private func setupPageViewController() {
-        // Initialize the page view controller
-        
-        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        pageViewController.delegate = self
-        pageViewController.dataSource = self
-
-        // Embed the page view controller in the container view (presentView)
-        addChild(pageViewController)
-        presentView.addSubview(pageViewController.view)
-        
-        // Constrain the page view controller to fill the container view
-        pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            pageViewController.view.topAnchor.constraint(equalTo: presentView.topAnchor),
-            pageViewController.view.leadingAnchor.constraint(equalTo: presentView.leadingAnchor),
-            pageViewController.view.trailingAnchor.constraint(equalTo: presentView.trailingAnchor),
-            pageViewController.view.bottomAnchor.constraint(equalTo: presentView.bottomAnchor)
-        ])
-        
-        pageViewController.didMove(toParent: self)
-    }
+   
     func gradientcolours(button : UIButton,colours : [CGColor]){
         
         
@@ -108,88 +113,130 @@ class EventResiverVC: UIViewController, UIPageViewControllerDelegate, UIPageView
             historyBtn.setTitleColor(.white, for:.normal)
         }
         
-        guard sender.tag >= 0 && sender.tag < pages.count else {
-            print("Index out of bounds")
-            return
-        }
+       
+    }
+    
+    
+ 
+}
+@available(iOS 14.0, *)
+extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+//        cell.contentView.backgroundColor = .backGroundClr
+        cell.SelectBtn.isHidden = true
+        cell.Pinview.isHidden = true
+        cell.pinImage.isHidden = true
+        cell.dicriptContent.attributedText = descript(for: "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.", expanded: false)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+        cell.delegate = self
+        cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
+        cell.dicriptContent.isUserInteractionEnabled = true
+        cell.dicriptContent.addGestureRecognizer(tapGesture)
         
-        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-        let direction: UIPageViewController.NavigationDirection = sender.tag > currentIndex ? .forward : .reverse
-
-        pageViewController.setViewControllers([pages[sender.tag]], direction: direction, animated: true, completion: nil)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     
-    func loadPages(_ CV:[UIViewController]) {
-        // Initialize view controllers for pages
-
-        if let page2 = CV[1] as? NoticeBoardVc {
-            page2.delegate = self
-         }
-            pages = CV
-
-    }
-
-    // MARK: - SelectedDelegate Method
-    func SelectedVC(index: Int) {
-        guard index >= 0 && index < pages.count else {
-            print("Index out of bounds")
-            return
-        }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentOffsetY = scrollView.contentOffset.y
         
-        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-        let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
-
-        pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
-    }
-
-    // MARK: - UIPageViewController Data Source Methods
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController), currentIndex > 0 else { return nil }
-        return pages[currentIndex - 1]
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = pages.firstIndex(of: viewController), currentIndex < pages.count - 1 else { return nil }
-        return pages[currentIndex + 1]
-    }
-    
-    // MARK: - Page Indicator (Optional)
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return pages.count
-    }
-    private func disableSwipeGesture() {
-         for view in pageViewController.view.subviews {
-             if let scrollView = view as? UIScrollView {
-                 scrollView.isScrollEnabled = false // Disable swipe gestures
-             }
-         }
-     }
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        guard let currentVC = pageViewController.viewControllers?.first,
-              let currentIndex = pages.firstIndex(of: currentVC) else {
-            return 0
+        // Check for scroll direction
+        if contentOffsetY > previousOffset && contentOffsetY > 0 {
         }
-        return currentIndex
+        previousOffset = contentOffsetY
     }
-    func select(Title:String,Description:String,Images:[UIImage],pdf:String) {
-        if let page1 = pages[0] as? SenderNoticeBoardVC {
-//            page1.selectedImages = Img
-            page1.Title = Title
-            page1.desript = Description
-            print(Description)
-            guard 1 >= 0 else {
-                print("Index out of bounds")
-                return
+    
+    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else { return }
+        let indexPath = IndexPath(row: label.tag, section: 0)
+        let fullDescription = "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances."
+        
+        // Toggle the label between expanded and collapsed states
+        let isExpanded = label.numberOfLines == 0
+        label.numberOfLines = isExpanded ? 3 : 0
+        
+        // Update the label text with the appropriate "See more" or "See less" state
+        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
+        
+        // Animate the cell height change
+        tableview.beginUpdates()
+        tableview.endUpdates()
+    }
+    
+    //MARK: TEXT ADD SEE MORE
+    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
+        // If expanded, show full text with "See less"
+        if expanded {
+            let fullString = fullDescription + CommonStringFile.seeLess
+            let attributedText = NSMutableAttributedString(string: fullString)
+            
+            // Set "See less" text to blue and underline it
+            let seeLessRange = (fullString as NSString).range(of: "See less")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
+            
+            return attributedText
+        } else {
+            var fullString = ""
+            // Otherwise, truncate and show "See more"
+            if fullDescription.count > 120{
+                let truncatedDescription = String(fullDescription.prefix(100))
+                fullString = truncatedDescription + CommonStringFile.seemore
+            }else{
+                fullString = fullDescription
             }
-            gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-            createEvent.setTitleColor(.white, for:.normal)
-            gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            historyBtn.setTitleColor(.black, for:.normal)
-            let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-            let direction: UIPageViewController.NavigationDirection = 1 > currentIndex ? .forward : .reverse
-
-            pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
-         }
+            let attributedText = NSMutableAttributedString(string: fullString)
+            
+            // Set "See more" text to blue and underline it
+            let seeMoreRange = (fullString as NSString).range(of: "See more")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
+            return attributedText
+        }
     }
+    
+    func didTapButton(title: String, content: String, items: [String]) {
+        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+        
+    }
+    //scrol
+}
+
+
+
+@available(iOS 14.0, *)
+extension EventResiverVC: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchbar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        searchbar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        searchbar.resignFirstResponder()
+    }
+    
 }

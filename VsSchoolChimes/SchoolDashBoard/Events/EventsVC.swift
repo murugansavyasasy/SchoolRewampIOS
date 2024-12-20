@@ -23,6 +23,13 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     
+    
+   
+    @IBOutlet weak var addItemView: UIStackView!
+    
+    @IBOutlet weak var visualEffectView: UIVisualEffectView!
+    
+    var effect:UIVisualEffect!
     @IBOutlet weak var eventTxt: UITextField!
     @IBOutlet weak var EventTtleLbl: UILabel!
     @IBOutlet weak var placeTxt: UITextField!
@@ -69,6 +76,9 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     let AlertMessage = AlertstringFile()
     override func viewDidLoad() {
         super.viewDidLoad()
+        effect = visualEffectView.effect
+//        visualEffectView.effect = nil
+//        addItemView.isHidden = true
         setupTimePicker()
         setupdatePicker()
         setInitialButtonTitles()
@@ -78,6 +88,36 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         imageSelection()
         
     }
+    
+    
+    
+//    func animateIn() {
+//        self.view.addSubview(addItemView)
+//        addItemView.center = self.view.center
+//        
+//        addItemView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+//        addItemView.alpha = 0
+//        
+//        UIView.animate(withDuration: 0.4) {
+//            self.visualEffectView.effect = self.effect
+//            self.addItemView.alpha = 1
+//            self.addItemView.transform = CGAffineTransform.identity
+//        }
+//        
+//    }
+//    
+//    
+//    func animateOut () {
+//        UIView.animate(withDuration: 0.3, animations: {
+//            self.addItemView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+//            self.addItemView.alpha = 0
+//            
+//            self.visualEffectView.effect = nil
+//            
+//        }) { (success:Bool) in
+//                self.addItemView.removeFromSuperview()
+//        }
+//    }
     func imageSelection(){
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
@@ -364,6 +404,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0{
+            
+            
             let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
@@ -393,6 +435,11 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
+            
+            
+            
+//            addItemView.isHidden = false
+            
             let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
             //
             // Camera option
@@ -422,6 +469,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             
             // Present the alert
             self.present(alertController, animated: true, completion: nil)
+            
+//            animateIn()
         }else{
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)

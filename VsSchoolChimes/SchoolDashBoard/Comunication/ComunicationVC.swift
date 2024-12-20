@@ -911,6 +911,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
             cell.descriptContent.addGestureRecognizer(tapGesture)
+            
             return cell
             
         }else{

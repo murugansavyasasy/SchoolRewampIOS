@@ -29,9 +29,15 @@ class MenuRedirectHandler {
     
     var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Text to Parents/Staff","School / Class Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
-    var receiverItems : [String] = [ "Communication".translated(),"Homework".translated() ,"Exam/Test".translated(),"Exam Marks".translated(),"Image/Pdf".translated(),"Video Upload".translated(),"Circulars".translated(),"Notice Board".translated(),"Assignment".translated(),"Online Meeting".translated(),"Attendance Report".translated(),"Events/Holidays".translated(),"Request Leave".translated(),"Fee Details".translated(),"Images".translated(),"Interaction with Staff".translated(),"Quiz Exam".translated(),"LSRW".translated(),"Class Timetable".translated(),"Certificate Request".translated(),"PTM".translated()]
+    var receiverItems : [String] = [ "Communication".translated(),"Homework".translated() ,"ExamTest".translated(),"Exam Marks".translated(),"ImagePdf".translated(),"Video".translated(),"Notice Board".translated(),"Resiverassignment".translated(),"Online  Meeting".translated(),"Attendance Report".translated(),"Events/Holidays".translated(),"Request Leave".translated(),"Fee Details".translated(),"Interaction with Staff".translated(),"Quiz Exam".translated(),"LSRW".translated(),"Class Timetable".translated(),"Certificate Request".translated(),"PTM".translated()]
     
-    var receiverImageItems : [String] = [ "Communication","Homework" ,"Exam/Test","Exam Marks","Image/Pdf","Video Upload","Circulars","Notice Board","Assignment","Online Meeting","Attendance Report","Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
+    
+    
+  
+    
+    var receiverImageItems : [String] = [ "Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","video","Resiverassignment","Notice Board","Resiverassignment","Online  Meeting","Attendance Report","Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
+    
+    
     
     
     func senderVideoNavigate(from viewController: UIViewController) {
@@ -170,6 +176,12 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
+    
+    
+    
+    //MARK: ResiverSideMenuViewContoller Starts 
+   
+    
     func receiverVideoNavigate(from viewController: UIViewController) {
         let vc = VideoVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -177,9 +189,10 @@ class MenuRedirectHandler {
     }
     
     func receiverCommunicationNavigate(from viewController: UIViewController) {
-        let vc = ComunicationVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+      
+        let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                viewController.present(vc, animated: true)
     }
     
     func receiverImgPdfNavigate(from viewController: UIViewController) {
@@ -196,7 +209,15 @@ class MenuRedirectHandler {
     
     @available(iOS 14.0, *)
     func receiverNoticeBoardNavigate(from viewController: UIViewController) {
-     
+//        let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
+        
+        let vc = ParentNoticeBoardVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+        
+        
     }
     
     func receiverAssignmentNavigate(from viewController: UIViewController) {
@@ -206,9 +227,7 @@ class MenuRedirectHandler {
     }
     
     func receiverLeaveRequestNavigate(from viewController: UIViewController) {
-        let vc = StudentHistryVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+      
     }
     
     func receiverExamTestNavigate(from viewController: UIViewController) {
@@ -230,16 +249,18 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
-    func AttendenceMark(from viewController: UIViewController){
-        let vc = StudentHistryVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+    func receiverAttendenceMark(from viewController: UIViewController){
+        
+        
+        
     }
-     func chat(from viewController: UIViewController){
+     func receiverchat(from viewController: UIViewController){
         let vc = ChatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
+ func receiverEvent(from viewController: UIViewController){
+     let vc = EventResiverVC(nibName: nil, bundle: nil)
     func LeaveRquest(from viewController: UIViewController){
         let vc = NavigationVC(nibName: nil, bundle: nil)
         vc.page1 = LeveCreateVC(nibName: nil, bundle: nil)
@@ -256,10 +277,14 @@ class MenuRedirectHandler {
      vc.titleLbl = "Events".translated()
      vc.modalPresentationStyle = .fullScreen
      viewController.present(vc, animated: true)
-     
        
     }
  
+    func resiverExamMark(from viewController: UIViewController){
+        let vc = ExameMarVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     func receiverCertificateRequest(from viewController: UIViewController){
        let vc = CertificateRequestViewController(nibName: nil, bundle: nil)
        vc.modalPresentationStyle = .fullScreen

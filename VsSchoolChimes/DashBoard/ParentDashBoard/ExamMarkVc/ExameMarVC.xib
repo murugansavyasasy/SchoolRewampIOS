@@ -4,8 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBN-7F-8Ax">
-                    <rect key="frame" x="0.0" y="99" width="393" height="719"/>
+                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="OXc-83-TMa">
                             <rect key="frame" x="15" y="10" width="363" height="56"/>
@@ -30,9 +30,8 @@
                             </constraints>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7by-2i-e2O">
-                            <rect key="frame" x="8" y="76" width="377" height="624"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7by-2i-e2O">
+                            <rect key="frame" x="8" y="76" width="377" height="614"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -53,8 +52,11 @@
                         <constraint firstAttribute="height" constant="35" id="YIa-7p-e0Z"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="arrow.left" catalog="system"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="arrow.left" catalog="system"/>
+                    <connections>
+                        <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="342-5x-Eoj"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Mark" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAh-K6-11C">
                     <rect key="frame" x="93" y="68" width="222" height="26"/>
@@ -64,25 +66,25 @@
                 </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="kAh-K6-11C" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="9" id="23c-TB-fMx"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kAh-K6-11C" secondAttribute="trailing" constant="78" id="4Iu-8m-xYd"/>
                 <constraint firstItem="o2h-l2-5CP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="5F5-Fg-YMt"/>
+                <constraint firstItem="VBN-7F-8Ax" firstAttribute="top" secondItem="kAh-K6-11C" secondAttribute="bottom" constant="15" id="CZS-Eo-uWP"/>
                 <constraint firstItem="kAh-K6-11C" firstAttribute="leading" secondItem="o2h-l2-5CP" secondAttribute="trailing" constant="8" id="ECY-o5-KKI"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="L9d-6y-Ecu"/>
                 <constraint firstItem="o2h-l2-5CP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="LsE-lg-zgA"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Xsl-v2-iWC"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="crT-Rd-iGv"/>
-                <constraint firstItem="VBN-7F-8Ax" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="40" id="kuK-h5-0cp"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
         </view>
     </objects>
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="ParentClr">
+            <color red="0.74509803921568629" green="0.68235294117647061" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

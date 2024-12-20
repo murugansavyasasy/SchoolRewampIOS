@@ -46,6 +46,10 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhQ-yd-Fgz">
                     <rect key="frame" x="0.0" y="114" width="393" height="704"/>
                     <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="I9k-Ak-zAB">
+                            <rect key="frame" x="0.0" y="86" width="393" height="618"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Image/Pdf" translatesAutoresizingMaskIntoConstraints="NO" id="pKh-VS-d3z">
                             <rect key="frame" x="15" y="20" width="363" height="56"/>
                             <constraints>
@@ -53,12 +57,8 @@
                             </constraints>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="I9k-Ak-zAB">
-                            <rect key="frame" x="0.0" y="86" width="393" height="618"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </tableView>
                     </subviews>
-                    <color key="backgroundColor" name="dashBoardClr"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="I9k-Ak-zAB" firstAttribute="leading" secondItem="zhQ-yd-Fgz" secondAttribute="leading" id="0OD-mM-sYc"/>
                         <constraint firstAttribute="bottom" secondItem="I9k-Ak-zAB" secondAttribute="bottom" id="4Am-Sj-c5a"/>
@@ -71,7 +71,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="topBackgroundCLr"/>
+            <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="Sld-qj-0Ab" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="09j-Lu-mdG"/>
                 <constraint firstItem="zhQ-yd-Fgz" firstAttribute="top" secondItem="Sld-qj-0Ab" secondAttribute="bottom" id="0Dx-jP-BBY"/>
@@ -88,11 +88,8 @@
     </objects>
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
-        <namedColor name="dashBoardClr">
-            <color red="0.9570000171661377" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ParentClr">
+            <color red="0.74509803921568629" green="0.68235294117647061" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

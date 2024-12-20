@@ -20,7 +20,7 @@ class ImagePdfTv: UITableViewCell {
     
     var countShimmer = 0
     var imageIterms = ["DemoImage","maths","RealHomeWorkimage","RealImage"]
-    let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795845263.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391795387749.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391797604035.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391799793266.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png"]
+    let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457742399850.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457714704978.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847444562956042.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391799793266.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-india/27-11-2024/File_vc_-5346401391801142838.png"]
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -37,6 +37,7 @@ class Colornames {
     static  var lesson1 =  UIColor(named: "lesson1")
     static  var lesson2 =  UIColor(named: "lesson2")
     static  var lesson3 =  UIColor(named: "lesson3")
+    static  var ParentClr =  UIColor(named: "ParentClr")
     static  var pending =  UIColor(named: "pending")
     static  var pendingClr =  UIColor(named: "pending")
     static  var AprovedClr =  UIColor(named: "Aproved")

@@ -57,6 +57,7 @@ class MenuStringFile{
     let PTM = "PTM".translated()
     let TextToParentsStaff = "Text to Parents/Staff".translated()
     let SchoolClassEvents = "School / Class Events".translated()
+    let EventsHolidays = "Events/Holidays".translated()
     let SchoolNeeds = "School Needs".translated()
     let VeryImportantInfo = "Very Important Info".translated()
     let AbsenteesReport = "Absentees Report".translated()
@@ -68,6 +69,33 @@ class MenuStringFile{
     let StaffWiseAttendanceReport = "Staff Wise Attendance Report".translated()
     let LSRW = "LSRW".translated()
 }
+
+
+
+struct ReceiverMenuItems {
+    static let Communication = "Communication".translated()
+    static let Homework = "Homework".translated()
+    static let ExamTest = "ExamTest".translated()
+    static let ExamMarks = "Exam Marks".translated()
+    static let ImagePdf = "ImagePdf".translated()
+    static let Video = "Video".translated()
+    static let NoticeBoard = "Notice Board".translated()
+    static let Assignment = "Resiverassignment".translated()
+    static let OnlineMeeting = "Online  Meeting".translated()
+    static let AttendanceReport = "Attendance Report".translated()
+    static let EventsHolidays = "Events/Holidays".translated()
+    static let RequestLeave = "Request Leave".translated()
+    static let FeeDetails = "Fee Details".translated()
+    static let Images = "Images".translated()
+    static let InteractionWithStaff = "Interaction with Staff".translated()
+    static let QuizExam = "Quiz Exam".translated()
+    static let LSRW = "LSRW".translated()
+    static let ClassTimetable = "Class Timetable".translated()
+    static let CertificateRequest = "Certificate Request".translated()
+    static let PTM = "PTM".translated()
+    
+}
+
 class AlertstringFile{
     
     static let title = "Confirm Action".translated()
@@ -148,6 +176,7 @@ struct MenuTapbar{
     static let Notifications = "Notifications".translated()
     static let ComposeNotifications = "Compose NoticeBoard".translated()
     static let Video = "Video".translated()
+    static let Assignment = "Assignment".translated()
     
     
     

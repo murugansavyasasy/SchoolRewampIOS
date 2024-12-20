@@ -18,6 +18,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     
+    @IBOutlet weak var selectImgPdfview: ImageSelection!
     @IBOutlet weak var DateBtn: UIButton!
     @IBOutlet weak var AddphotosLbl: UILabel!
     @IBOutlet weak var SubmissionDateLbl: UILabel!
@@ -41,7 +42,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     @IBOutlet weak var subDateLbl: UILabel!
     @IBOutlet weak var contentTextView: UITextView!
     
-    @IBOutlet weak var selectImgPdfview: ImageSelection!
+    
     
     @IBOutlet weak var AssignmentTypeview: UIView!
     

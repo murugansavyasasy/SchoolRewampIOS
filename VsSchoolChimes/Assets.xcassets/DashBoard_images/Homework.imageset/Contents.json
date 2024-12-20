@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "homework 2.png",
+      "filename" : "homework.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "homework 1.png",
+      "filename" : "homework 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "homework.png",
+      "filename" : "homework 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
