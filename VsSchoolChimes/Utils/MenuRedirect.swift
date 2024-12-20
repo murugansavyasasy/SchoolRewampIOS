@@ -259,8 +259,7 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
- func receiverEvent(from viewController: UIViewController){
-     let vc = EventResiverVC(nibName: nil, bundle: nil)
+    
     func LeaveRquest(from viewController: UIViewController){
         let vc = NavigationVC(nibName: nil, bundle: nil)
         vc.page1 = LeveCreateVC(nibName: nil, bundle: nil)
@@ -270,15 +269,12 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
- func ResiverEvent(from viewController: UIViewController){
-     let vc = EventPageVC(nibName: nil, bundle: nil)
-     vc.page1 = EventResiverVC(nibName: nil, bundle: nil)
-     vc.page2 = EventLeaveHistryVC(nibName: nil, bundle: nil)
-     vc.titleLbl = "Events".translated()
-     vc.modalPresentationStyle = .fullScreen
-     viewController.present(vc, animated: true)
-       
+    func receiverEvent(from viewController: UIViewController){
+        let vc = EventResiverVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
     }
+
  
     func resiverExamMark(from viewController: UIViewController){
         let vc = ExameMarVC(nibName: nil, bundle: nil)

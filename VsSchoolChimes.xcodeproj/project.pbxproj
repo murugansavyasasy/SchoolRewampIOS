@@ -425,6 +425,8 @@
 		84B57EC92D14A0A300E0EA29 /* ParentNoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EC62D14A0A300E0EA29 /* ParentNoticeBoardVc.swift */; };
 		84B57EE22D15533000E0EA29 /* submitVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EE12D15533000E0EA29 /* submitVC.xib */; };
 		84B57EE32D15533000E0EA29 /* submitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EE02D15533000E0EA29 /* submitVC.swift */; };
+		84B57F1D2D15A11400E0EA29 /* NavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57F1B2D15A11400E0EA29 /* NavigationVC.xib */; };
+		84B57F1E2D15A11400E0EA29 /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57F1A2D15A11400E0EA29 /* NavigationVC.swift */; };
 		84B5D0332D030C24003CFAAF /* AppStringFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B5D0322D030C24003CFAAF /* AppStringFile.swift */; };
 		84BB5EA72D11330E00AD0C87 /* ScheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */; };
 		84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */; };
@@ -439,11 +441,8 @@
 		84BDE6F92D142D2200F12277 /* LeveCreateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE6F72D142D2200F12277 /* LeveCreateVC.swift */; };
 		84BDE6FA2D142D2200F12277 /* LeveCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE6F82D142D2200F12277 /* LeveCreateVC.xib */; };
 		84BDE6FD2D142D3900F12277 /* LeveHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE6FB2D142D3900F12277 /* LeveHistoryVC.swift */; };
-		84BDE6FE2D142D3900F12277 /* LeveHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */; };
 		84BDE7192D142E8700F12277 /* LeveHistoryTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE7172D142E8700F12277 /* LeveHistoryTV.swift */; };
 		84BDE71A2D142E8700F12277 /* LeveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE7182D142E8700F12277 /* LeveHistoryTV.xib */; };
-		84BDE7362D14469700F12277 /* NavigationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84BDE7352D14469700F12277 /* NavigationVC.xib */; };
-		84BDE7372D14469700F12277 /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BDE7342D14469700F12277 /* NavigationVC.swift */; };
 		84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */; };
 		84C00E6E2CF6D7C500E34A83 /* TermsAndCondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */; };
 		84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84C00E702CF6DF9600E34A83 /* splashVc.xib */; };
@@ -989,6 +988,8 @@
 		84B57EC72D14A0A300E0EA29 /* ParentNoticeBoardVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentNoticeBoardVc.xib; sourceTree = "<group>"; };
 		84B57EE02D15533000E0EA29 /* submitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = submitVC.swift; sourceTree = "<group>"; };
 		84B57EE12D15533000E0EA29 /* submitVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = submitVC.xib; sourceTree = "<group>"; };
+		84B57F1A2D15A11400E0EA29 /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
+		84B57F1B2D15A11400E0EA29 /* NavigationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationVC.xib; sourceTree = "<group>"; };
 		84B5D0322D030C24003CFAAF /* AppStringFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStringFile.swift; sourceTree = "<group>"; };
 		84BB5EA52D11330E00AD0C87 /* ScheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleExamVC.swift; sourceTree = "<group>"; };
 		84BB5EA62D11330E00AD0C87 /* ScheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleExamVC.xib; sourceTree = "<group>"; };
@@ -1006,8 +1007,6 @@
 		84BDE6FC2D142D3900F12277 /* LeveHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveHistoryVC.xib; sourceTree = "<group>"; };
 		84BDE7172D142E8700F12277 /* LeveHistoryTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeveHistoryTV.swift; sourceTree = "<group>"; };
 		84BDE7182D142E8700F12277 /* LeveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveHistoryTV.xib; sourceTree = "<group>"; };
-		84BDE7342D14469700F12277 /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
-		84BDE7352D14469700F12277 /* NavigationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationVC.xib; sourceTree = "<group>"; };
 		84C00E6B2CF6D7C500E34A83 /* TermsAndCondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAndCondVC.swift; sourceTree = "<group>"; };
 		84C00E6C2CF6D7C500E34A83 /* TermsAndCondVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsAndCondVC.xib; sourceTree = "<group>"; };
 		84C00E6F2CF6DF9600E34A83 /* splashVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = splashVc.swift; sourceTree = "<group>"; };
@@ -2510,6 +2509,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84B57F1C2D15A11400E0EA29 /* PageNavigationVC */,
 				84B57EC52D14A00100E0EA29 /* NoticeBoard */,
 				84B57EC02D148BC800E0EA29 /* Communication */,
 				84B57EB72D142E2800E0EA29 /* Event */,
@@ -2658,6 +2658,15 @@
 			path = NoticeBoard;
 			sourceTree = "<group>";
 		};
+		84B57F1C2D15A11400E0EA29 /* PageNavigationVC */ = {
+			isa = PBXGroup;
+			children = (
+				84B57F1A2D15A11400E0EA29 /* NavigationVC.swift */,
+				84B57F1B2D15A11400E0EA29 /* NavigationVC.xib */,
+			);
+			path = PageNavigationVC;
+			sourceTree = "<group>";
+		};
 		84BB5EA42D1132CF00AD0C87 /* Schedule Exam */ = {
 			isa = PBXGroup;
 			children = (
@@ -2688,15 +2697,6 @@
 				84BDE7182D142E8700F12277 /* LeveHistoryTV.xib */,
 			);
 			path = LeaveRequest;
-			sourceTree = "<group>";
-		};
-		84BDE7332D14465D00F12277 /* PageNavigationVC */ = {
-			isa = PBXGroup;
-			children = (
-				84BDE7342D14469700F12277 /* NavigationVC.swift */,
-				84BDE7352D14469700F12277 /* NavigationVC.xib */,
-			);
-			path = PageNavigationVC;
 			sourceTree = "<group>";
 		};
 		84C00E6A2CF6D79000E34A83 /* TermsandCondVc */ = {
@@ -3178,7 +3178,6 @@
 				8442A86E2CDB787A0006068E /* StudentcardTvCell.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */,
-				84BDE7362D14469700F12277 /* NavigationVC.xib in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
 				84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */,
 				849E572C2C1FF633006119DA /* PirorityTableViewCell.xib in Resources */,
@@ -3208,6 +3207,7 @@
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
 				8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
+				84B57F1D2D15A11400E0EA29 /* NavigationVC.xib in Resources */,
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
 				84A271802CEDAB9F0033EB02 /* New.gif in Resources */,
 				84BDE71A2D142E8700F12277 /* LeveHistoryTV.xib in Resources */,
@@ -3529,7 +3529,6 @@
 				18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */,
 				18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */,
 				18D718572D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift in Sources */,
-				84BDE7372D14469700F12277 /* NavigationVC.swift in Sources */,
 				18D718582D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift in Sources */,
 				18D718592D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift in Sources */,
 				18D7185A2D0D471A00E9EDA3 /* DailycollResp.swift in Sources */,
@@ -3755,6 +3754,7 @@
 				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
 				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,
 				84C82A032D086A490024A46A /* FireworkSpark.swift in Sources */,
+				84B57F1E2D15A11400E0EA29 /* NavigationVC.swift in Sources */,
 				84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */,
 				84C82A052D086A490024A46A /* ClassicSparkTrajectoryFactoryProtocol.swift in Sources */,
 				84C82A062D086A490024A46A /* SparkView.swift in Sources */,

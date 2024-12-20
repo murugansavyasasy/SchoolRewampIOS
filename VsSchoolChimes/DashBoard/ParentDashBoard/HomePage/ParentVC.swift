@@ -301,7 +301,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         MenuRedirect.receiverEvent(from: self)
 
     case ReceiverMenuItems.RequestLeave:
-        ""
+        MenuRedirect.LeaveRquest(from: self)
     case ReceiverMenuItems.FeeDetails:
         ""
     case ReceiverMenuItems.InteractionWithStaff:
