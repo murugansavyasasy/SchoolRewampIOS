@@ -29,6 +29,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate {
     @IBOutlet weak var contentTxtView: UITextView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
+    var LeaveRequest:LeaveRequest?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupdatePicker()
@@ -70,7 +71,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate {
         let dateOnlyFormatter = DateFormatter()
         
         // Set the date format (e.g., "Tue 3 Dec 2024")
-        dateFormatter.dateFormat = "EEE d MMM yyyy"
+        dateFormatter.dateFormat = "dd MMM yy"
         dateOnlyFormatter.dateFormat = "EEE d"
         
         // Set the time format (e.g., "4:30 PM")
@@ -84,8 +85,18 @@ class LeveCreateVC: UIViewController,UITextViewDelegate {
         let formattedDate = dateFormatter.string(from: currentDate)   // "Tue 3 Dec 2024"
         let formattedTime = timeFormatter.string(from: nextHourTime)  // "4:30 PM"
         let dateOnly = dateOnlyFormatter.string(from: nextHourTime)   // "Tue 3"
-        todate.setTitle(formattedDate, for: .normal)
-        dateBtn.setTitle(formattedDate, for: .normal)
+//        LeaveRequest
+        if LeaveRequest?.toDate != nil{
+            todate.setTitle(LeaveRequest?.toDate, for: .normal)
+        }else{
+            todate.setTitle(formattedDate, for: .normal)
+        }
+        if LeaveRequest?.fromDate != nil{
+            dateBtn.setTitle(LeaveRequest?.fromDate, for: .normal)
+        }else{
+            dateBtn.setTitle(formattedDate, for: .normal)
+        }
+        
         // Set the date and time to the date button
         dateSet(formattedDate, dateOnly,dateOnly)
     }
@@ -173,11 +184,13 @@ class LeveCreateVC: UIViewController,UITextViewDelegate {
         // Calculate the size needed for the text
         if textView.text.isEmpty {
             // Set default height to 60
-            textViewHeightConstraint.constant = 60
+            textViewHeightConstraint.constant = 100
         } else {
             // Calculate the size needed for the text
             let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-            textViewHeightConstraint.constant = sizeThatFits.height
+            if sizeThatFits.height > 80{
+                textViewHeightConstraint.constant = sizeThatFits.height
+            }
         }
         textView.layoutIfNeeded() // Refresh the layout
     }
@@ -222,38 +235,39 @@ class LeveCreateVC: UIViewController,UITextViewDelegate {
     }
     
     
+
     @objc func doneButtonTapped() {
+        // Create a DateFormatter and set the desired format
         let dateFormatter = DateFormatter()
-        let dateOnlyFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE d MMM yyyy"
-        // Set the date-only format (e.g., "Tue 3")
-        dateOnlyFormatter.dateFormat = "EEE d"
-        // Get the selected date and time
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Locale to ensure consistent date format
+        dateFormatter.dateFormat = "dd MMM yy" // Format for "12 Sep 24"
+        
+        // Get the selected date from the datePicker
         let selectedDate = datePicker.date
+        
+        // Format the date as "12 Sep 24"
         let formattedDate = dateFormatter.string(from: selectedDate)
-        let dateOnly = dateOnlyFormatter.string(from: selectedDate)   // "Tue 3"
         
-        // Pass the formatted values to the dateSet method
-        dateSet(formattedDate, dateOnly,"")
+        // Call the dateSet method with the formatted date
+        dateSet(formattedDate, formattedDate, "")
         
+        // Hide datePicker, timePicker, and doneButton
         datePicker.isHidden = true
-        timePicker.isHidden = true
         doneButton.isHidden = true
+        
+        // Reset activeButton
         activeButton = nil
     }
+
     
     func showTimePicker(for button: UIButton, date: Bool) {
         activeButton = button // Track which button is being updated
         
         // Position the time picker or date picker below the button
         let buttonFrame = button.convert(button.bounds, to: self.view)
-        
-        if date {
             // Show the date picker
             datePicker.isHidden = false
             doneButton.isHidden = false
-            doneButton2.isHidden = true
-            timePicker.isHidden = true
             // Set the frame for the datePicker and make sure it’s within bounds
             let pickerYPosition = view.frame.minY + 110
             datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
@@ -272,32 +286,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate {
             // Add datePicker to the view (ensure it’s in the view hierarchy)
             self.view.addSubview(datePicker)
             self.view.addSubview(doneButton)
-        } else {
-            // Show the time picker
-            timePicker.isHidden = false
-            doneButton2.isHidden = false
-            datePicker.isHidden = true
-            doneButton.isHidden = true
-            // Set the frame for the timePicker
-            //            let pickerYPosition = buttonFrame.maxY + 10
-            let pickerYPosition = buttonFrame.minY - 210
-            timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
-            
-            // Set appearance for timePicker
-            timePicker.backgroundColor = .white
-            timePicker.layer.shadowColor = UIColor.black.cgColor
-            timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-            timePicker.layer.shadowRadius = 5
-            timePicker.layer.shadowOpacity = 0.3
-            timePicker.layer.cornerRadius = 20
-            
-            // Position the Done button at the bottom-right of the picker
-            doneButton2.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + timePicker.frame.height - 40, width: 70, height: 30)
-            
-            // Add timePicker to the view (ensure it’s in the view hierarchy)
-            self.view.addSubview(timePicker)
-            self.view.addSubview(doneButton2)
-        }
+        
     }
     
 }

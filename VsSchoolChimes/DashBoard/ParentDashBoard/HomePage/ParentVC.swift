@@ -294,9 +294,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     MenuRedirect.receiverLsrwNavigate(from: self)
     case menuName.SchoolClassEvents:
         MenuRedirect.ResiverEvent(from: self)
-
-    case menuName.LessonPlan,
-    menuName.LeaveRequests:
+    case menuName.LeaveRequests:
+        MenuRedirect.LeaveRquest(from: self)
+    case menuName.LessonPlan:
     // Do nothing for these cases
     break
 

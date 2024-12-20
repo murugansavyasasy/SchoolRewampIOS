@@ -37,6 +37,9 @@ class Colornames {
     static  var lesson1 =  UIColor(named: "lesson1")
     static  var lesson2 =  UIColor(named: "lesson2")
     static  var lesson3 =  UIColor(named: "lesson3")
+    static  var pending =  UIColor(named: "pending")
+    static  var pendingClr =  UIColor(named: "pending")
+    static  var AprovedClr =  UIColor(named: "Aproved")
 }
 class ImageName{
     static let PlayIcon = UIImage(named: "PlayIcon")
@@ -64,6 +67,8 @@ class ImageName{
     static let mail = UIImage(named: "mail")
     static  let checkedTick = UIImage(named: "checked_Tick")
     static let CheckCircle = UIImage(named: "CheckCircle")
+    static let Pending = UIImage(named: "Pending")
+    static let check = UIImage(named: "check")
     
     static let checkmark = UIImage(systemName: "checkmark.rectangle.portrait.fill")
     static let square = UIImage(systemName: "square")

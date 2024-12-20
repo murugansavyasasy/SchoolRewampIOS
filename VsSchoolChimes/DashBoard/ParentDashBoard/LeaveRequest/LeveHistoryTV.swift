@@ -6,17 +6,80 @@
 //
 
 import UIKit
-
+protocol UpdateDelegate{
+    func delete(index:Int,UpdateDetails:LeaveRequest,Updated:Bool)
+}
 class LeveHistoryTV: UITableViewCell {
 
+    @IBOutlet weak var resonBtn: UIButton!
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var fromDateLbl: UILabel!
     @IBOutlet weak var toDateLbl: UILabel!
     @IBOutlet weak var approvedBy: UILabel!
     @IBOutlet weak var aproverNameLbl: UILabel!
-    @IBOutlet weak var statusBtn: UIButton!
+    @IBOutlet weak var statusBtn: UIView!
+    @IBOutlet weak var aproveLbl: UILabel!
+    @IBOutlet weak var edit: UIButton!
+    @IBOutlet weak var satusImg: UIImageView!
+    @IBOutlet weak var botomSts: NSLayoutConstraint!
+    @IBOutlet weak var ShowPopup: UIView!
+    
+    @IBOutlet weak var editHeight: NSLayoutConstraint!
+    var leaverequest:LeaveRequest? = nil
+    var delegate:UpdateDelegate?
+    var reson = "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work."
+    
+    @IBOutlet weak var deltBtn: UIButton!
+    @IBOutlet weak var editBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        ShowPopup.isHidden = true
+        outerView.layer.cornerRadius = 10
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        outerView.layer.shadowRadius = 5
+        outerView.layer.shadowOpacity = 0.3
+        
+        ShowPopup.layer.cornerRadius = 10
+        ShowPopup.layer.shadowColor = UIColor.black.cgColor
+        ShowPopup.layer.shadowOffset = CGSize(width: 0, height: 2)
+        ShowPopup.layer.shadowRadius = 5
+        ShowPopup.layer.shadowOpacity = 0.3
+        statusBtn.layer.cornerRadius = 8
+        statusBtn.layer.shadowColor = UIColor.black.cgColor
+        statusBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
+        statusBtn.layer.shadowRadius = 5
+        statusBtn.layer.shadowOpacity = 0.3
+     
+        fromDateLbl.setFont(style:.body, size: FontSize.BodySize)
+        toDateLbl.setFont(style:.body, size: FontSize.BodySize)
+        aproveLbl.setFont(style:.body, size: FontSize.BodySize)
+        approvedBy.setFont(style:.body, size: FontSize.BodySize)
+
+//        approvedBy.text = ""
+    }
+
+    @IBAction func shoPopup(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        ShowPopup.isHidden = !sender.isSelected
+    }
+    @IBAction func deleteRequest(_ sender: UIButton) {
+        guard let leaveRequest = leaverequest else {
+            print("Leave request is nil")
+            return
+        }
+        delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: false)
+        ShowPopup.isHidden = true
+    }
+    @IBAction func edit(_ sender: UIButton) {
+        guard let leaveRequest = leaverequest else {
+            print("Leave request is nil")
+            return
+        }
+        delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: true)
+        ShowPopup.isHidden = true
     }
     
 }
