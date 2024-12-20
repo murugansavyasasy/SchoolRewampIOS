@@ -276,6 +276,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     case menuName.ImagePdf:
         MenuRedirect.receiverImgPdfNavigate(from: self)
+        MenuRedirect.receiverCertificateRequest(from: self)
 
     case menuName.PTM:
     MenuRedirect.receiverPtmNavigate(from: self)

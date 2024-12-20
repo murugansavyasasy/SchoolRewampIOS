@@ -115,6 +115,30 @@ class AlertstringFile{
     
     
 }
+
+struct classTimeTableStrings {
+    static let weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    static let subjects = ["Mathematics", "Science", "History", "English", "Geography", "Physics", "Chemistry", "Biology", "Computer Science", "Art"]
+
+    static var timeArr = ["8 AM", "10 AM",  "12 PM",  "2 PM",  "4 PM",  "6 PM",  "8 PM","10 PM"]
+    static var toTimeArr = [ "9 AM",  "11 AM", "1 PM",  "3 PM",  "5 PM",  "7 PM", "9 PM", "11 PM"]
+    static let timeGet = "10 AM"
+    
+    
+    static var timetable : [SubItem] = [
+        SubItem.init(subName: "Maths", subDuration: "30 minutes", techer: "Viji"),
+        SubItem.init(subName: "Science", subDuration: "45 minutes", techer: "Banumathi"),
+        SubItem.init(subName: "History", subDuration: "2 hours", techer: "Priya"),
+        SubItem.init(subName: "English", subDuration: "1 hour", techer: "Keerthana"),
+
+        SubItem.init(subName: "English", subDuration: "1 hour", techer: "Seetha"),
+        SubItem.init(subName: "PET", subDuration: "40 minutes", techer: "Padma"),
+        SubItem.init(subName: "Tamil", subDuration: "50 minutes", techer: "Thangam"),
+        SubItem.init(subName: "Physical Education", subDuration: "35 minutes", techer: "Suchithra")
+        ]
+        
+}
+
 struct MenuTapbar{
     static let FAQ = "FAQ".translated()
     static let Rate_Us = "Rate Us".translated()
@@ -237,6 +261,7 @@ class TexviewStringFile{
     
     static let Enter_video_Description = "Enter Video Description".translated()
     static let Enter_Chat_Description = "Type your message here...".translated()
+    static let certificateReason = "Reason for certificate".translated()
 }
 class textFieldStringFile{
     

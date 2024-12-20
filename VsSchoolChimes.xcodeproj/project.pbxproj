@@ -22,6 +22,10 @@
 		187CF4DC2D11A176001422CE /* ClassTimeTableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF4D92D11A176001422CE /* ClassTimeTableTableViewCell.swift */; };
 		187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5BE2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib */; };
 		187CF5C02D13F009001422CE /* WeekDaysNameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5BD2D13F009001422CE /* WeekDaysNameCollectionViewCell.swift */; };
+		187CF5DC2D142D06001422CE /* CertificateRequestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5DB2D142D06001422CE /* CertificateRequestViewController.xib */; };
+		187CF5DD2D142D06001422CE /* CertificateRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5DA2D142D06001422CE /* CertificateRequestViewController.swift */; };
+		187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */; };
+		187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */; };
 		18926C4D2D02DE81002BBB97 /* LsrwListShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C432D02DE81002BBB97 /* LsrwListShowTableViewCell.swift */; };
 		18926C4E2D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C492D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift */; };
 		18926C4F2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */; };
@@ -567,6 +571,10 @@
 		187CF4DA2D11A176001422CE /* ClassTimeTableTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClassTimeTableTableViewCell.xib; sourceTree = "<group>"; };
 		187CF5BD2D13F009001422CE /* WeekDaysNameCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDaysNameCollectionViewCell.swift; sourceTree = "<group>"; };
 		187CF5BE2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeekDaysNameCollectionViewCell.xib; sourceTree = "<group>"; };
+		187CF5DA2D142D06001422CE /* CertificateRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequestViewController.swift; sourceTree = "<group>"; };
+		187CF5DB2D142D06001422CE /* CertificateRequestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateRequestViewController.xib; sourceTree = "<group>"; };
+		187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateTableViewCell.swift; sourceTree = "<group>"; };
+		187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateTableViewCell.xib; sourceTree = "<group>"; };
 		18926C2D2D02DE81002BBB97 /* RestrictionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictionTableViewCell.swift; sourceTree = "<group>"; };
 		18926C2E2D02DE81002BBB97 /* RestrictionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestrictionTableViewCell.xib; sourceTree = "<group>"; };
 		18926C2F2D02DE81002BBB97 /* RestrictionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestrictionModal.swift; sourceTree = "<group>"; };
@@ -1192,6 +1200,25 @@
 				187CF5BE2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib */,
 			);
 			path = CvCell;
+			sourceTree = "<group>";
+		};
+		187CF5D92D142CE0001422CE /* CertificateRequest */ = {
+			isa = PBXGroup;
+			children = (
+				187CF5E22D1539AE001422CE /* Cell */,
+				187CF5DA2D142D06001422CE /* CertificateRequestViewController.swift */,
+				187CF5DB2D142D06001422CE /* CertificateRequestViewController.xib */,
+			);
+			path = CertificateRequest;
+			sourceTree = "<group>";
+		};
+		187CF5E22D1539AE001422CE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */,
+				187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		18926C312D02DE81002BBB97 /* RestrictionVc */ = {
@@ -2473,8 +2500,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
-				84BDE7332D14465D00F12277 /* PageNavigationVC */,
-				84B57EB72D142E2800E0EA29 /* Event */,
+				187CF5D92D142CE0001422CE /* CertificateRequest */,
 				187CF4D12D119C27001422CE /* ClassTimeTable */,
 				84395FC92D0D4C8B00FC3242 /* HomePage */,
 				84D2D5642CE463CD00606CE8 /* Video */,
@@ -3179,6 +3205,7 @@
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
 				8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */,
 				849E573A2C1FF6BD006119DA /* RobotoSlab-Regular.ttf in Resources */,
+				187CF5DC2D142D06001422CE /* CertificateRequestViewController.xib in Resources */,
 				84EFF9D32CCC7CD000C11C26 /* HomePageVc.xib in Resources */,
 				84BB5EAB2D11334400AD0C87 /* ScheduleExamsList.xib in Resources */,
 				18BAF4E22CEC555000517441 /* SenderAssignmentTextViewController.xib in Resources */,
@@ -3284,7 +3311,7 @@
 				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
-				84BDE6FE2D142D3900F12277 /* LeveHistoryVC.xib in Resources */,
+				187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */,
 				8476EE2A2D100A22006E1EA6 /* AttendenceReportTVCell.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
 				8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */,
@@ -3544,6 +3571,7 @@
 				18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */,
 				18D7189C2D0D477900E9EDA3 /* PunchHistryReq.swift in Sources */,
 				18D7189D2D0D477900E9EDA3 /* locationReq.swift in Sources */,
+				187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */,
 				18D7189E2D0D477900E9EDA3 /* PunchHistTableViewCell.swift in Sources */,
 				18D7189F2D0D477900E9EDA3 /* LocationViewController.swift in Sources */,
 				18D718A02D0D477900E9EDA3 /* HistoryResp.swift in Sources */,
@@ -3593,6 +3621,7 @@
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				18BAF4DE2CEB3CB200517441 /* SenderAssignmentViewController.swift in Sources */,
+				187CF5DD2D142D06001422CE /* CertificateRequestViewController.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,
 				8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */,

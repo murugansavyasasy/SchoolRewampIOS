@@ -17,29 +17,13 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var tv: UITableView!
     
-    var timeArr = ["8 AM", "10 AM",  "12 PM",  "2 PM",  "4 PM",  "6 PM",  "8 PM","10 PM"]
-    var toTimeArr = [ "9 AM",  "11 AM", "1 PM",  "3 PM",  "5 PM",  "7 PM", "9 PM", "11 PM"]
-    let timeGet = "10 AM"
+   
     var getTimes : String!
     var getCurrentDay : String!
-    let weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    let subjects = ["Mathematics", "Science", "History", "English", "Geography", "Physics", "Chemistry", "Biology", "Computer Science", "Art"]
-
-    
+   
     let dateFormatter1 = DateFormatter()
     
-    var timetable : [SubItem] = [
-        SubItem.init(subName: "Maths", subDuration: "30 minutes", techer: "Viji"),
-        SubItem.init(subName: "Science", subDuration: "45 minutes", techer: "Banumathi"),
-        SubItem.init(subName: "History", subDuration: "2 hours", techer: "Priya"),
-        SubItem.init(subName: "English", subDuration: "1 hour", techer: "Keerthana"),
-
-        SubItem.init(subName: "English", subDuration: "1 hour", techer: "Seetha"),
-        SubItem.init(subName: "PET", subDuration: "40 minutes", techer: "Padma"),
-        SubItem.init(subName: "Tamil", subDuration: "50 minutes", techer: "Thangam"),
-        SubItem.init(subName: "Physical Education", subDuration: "35 minutes", techer: "Suchithra")
-        ]
-        
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -74,16 +58,16 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return timeArr.count
+        return classTimeTableStrings.timeArr.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ClassTimeTableTableViewCell, for: indexPath) as! ClassTimeTableTableViewCell
-        cell.fromLbl.text = timeArr[indexPath.row]
-        cell.toLbl.text = toTimeArr[indexPath.row]
+        cell.fromLbl.text = classTimeTableStrings.timeArr[indexPath.row]
+        cell.toLbl.text = classTimeTableStrings.toTimeArr[indexPath.row]
         
-        timeArr.append(contentsOf: toTimeArr)
-        let item = timetable[indexPath.row]
+        classTimeTableStrings.timeArr.append(contentsOf: classTimeTableStrings.toTimeArr)
+        let item = classTimeTableStrings.timetable[indexPath.row]
         cell.staffNameLbl.text = item.techer
         cell.durationNameLbl.text  = item.subDuration
         cell.subNameLbl.text  = item.subName
@@ -94,7 +78,7 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
 
         let compareTime = convertToDate("11 AM")!
 
-        let filteredTimes = timeArr.filter { time in
+        let filteredTimes = classTimeTableStrings.timeArr.filter { time in
             if let timeDate = convertToDate(time) {
                 return timeDate < compareTime
             }
@@ -102,7 +86,7 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
         }
 
         var result = [String: String]()
-        for time in timeArr {
+        for time in classTimeTableStrings.timeArr {
             print("timtimeArre",time)
             if filteredTimes.contains(time) {
                 result[time] = "blue"
@@ -154,14 +138,14 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
 
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return weekDays.count
+        return classTimeTableStrings.weekDays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier:CellConfingName.WeekDaysNameCollectionViewCell , for: indexPath)as! WeekDaysNameCollectionViewCell
         
-        cell.weekDaysNameLbl.text = weekDays[indexPath.row]
-        if weekDays[indexPath.row] ==  getCurrentDay {
+        cell.weekDaysNameLbl.text = classTimeTableStrings.weekDays[indexPath.row]
+        if classTimeTableStrings.weekDays[indexPath.row] ==  getCurrentDay {
             cell.bgView.backgroundColor = UIColor(named: "priortitClr1")
         } else {
             cell.bgView.backgroundColor = UIColor(named: "PriorityClr2")

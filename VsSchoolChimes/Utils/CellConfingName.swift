@@ -9,7 +9,6 @@ import Foundation
 
 class CellConfingName {
     
-    
     static let HomePageBottomCell = "BottomCVCell"
     static let HomePageTopCell = "TopCVCell"
     static let ContactUsTVCell = "ContactUsTVCell"
@@ -81,8 +80,7 @@ class CellConfingName {
     static let  ChatTVCell = "ChatTVCell"
     static let  HomeworkreportTV = "HomeworkreportTV"
     static let  SubscriptionTVCell = "SubscriptionTVCell"
- 
-    
+    static let  CertificateTableViewCell = "CertificateTableViewCell"
     
     
 }
