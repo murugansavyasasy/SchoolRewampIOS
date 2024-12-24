@@ -35,6 +35,9 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     @IBOutlet weak var MeetingLinkLbl: UILabel!
     @IBOutlet weak var MeetingtypeLbl: UILabel!
     
+    @IBOutlet weak var customDateLbl: UILabel!
+    @IBOutlet weak var CustomDateBtn: HalfColorButton!
+    
     let eventStore = EKEventStore()
     var data = ["Parents meeting", "Google Meeting", "Annual day Discussion"]
     let assetColors: [String] = ["meetingcolour1", /*"priortitClr1",*/ "meetcolour2"]
@@ -44,6 +47,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     var doneButton : UIButton!
     var doneButton2 : UIButton!
     var dropDown = DropDown()
+    let customdate = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +96,12 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         SubmitBtn.layer.cornerRadius = 10
         DescriptTxtview.text = TexviewStringFile.Enter_Meeting_Description
         DescriptTxtview.textColor = .lightGray
+        CustomDateBtn.layer.cornerRadius = 10
+        CustomDateBtn.layer.borderWidth = 1
+        CustomDateBtn.layer.borderColor = UIColor.gray.cgColor
+        customdate.dateFormat = "EEE d"
+        let customdatestring = customdate.string(from: Date())
+        setcustomDate(attributedLbl: customdatestring)
         
         //MARK: Button Font Style
         SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -311,6 +321,9 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         
         DateBtn.setTitle(datelabel, for: .normal)
         
+        customdate.dateFormat = "EEE d"
+        let attributedLbl = customdate.string(from: datePicker.date)
+        setcustomDate(attributedLbl: attributedLbl)
         datePicker.isHidden = true
         doneButton.isHidden = true
     }
@@ -378,6 +391,9 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     }
     
     
+    @IBAction func CustomDateBtnAct(_ sender: Any) {
+        showDatepicker(button: sender as! UIButton)
+    }
     
     @IBAction func SelectdateAct(_ sender: Any) {
         
@@ -387,6 +403,32 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     @IBAction func SelectTimeAct(_ sender: Any) {
         
         showTimepicker(button: sender as! UIButton)
+    }
+    
+    func setcustomDate(attributedLbl : String){
+        
+        let words = attributedLbl.split(separator: " ")
+        
+        let attributedString = NSMutableAttributedString(string: attributedLbl)
+        
+        // Define the ranges for the two words
+        let firstWordRange = (attributedLbl as NSString).range(of: String(words[0]))
+        let secondWordRange = (attributedLbl as NSString).range(of: String(words[1]))
+        
+        let dayfont = UIFont(name: "Poppins-Medium", size: 14)
+        let datefont = UIFont(name: "Poppins-Bold", size: 14)
+        
+        // Apply color and font to the first word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)
+        attributedString.addAttribute(.font, value: dayfont, range: firstWordRange)
+        
+        // Apply  color and font to the second word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: secondWordRange)
+        attributedString.addAttribute(.font, value: datefont, range: secondWordRange)
+        
+        // Assign the attributed string to the label
+        customDateLbl.attributedText = attributedString
+        
     }
 }
 

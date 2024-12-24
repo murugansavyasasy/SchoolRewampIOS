@@ -43,6 +43,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     @IBOutlet weak var SectionLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
+    
+    @IBOutlet weak var CustomDateBtn: HalfColorButton!
+    @IBOutlet weak var customDateLbl: UILabel!
+   
     var selectedImages: [UIImage] = []
     var url : URL?
     let photoPickManager = PhotoPickerManager.shared
@@ -52,6 +56,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let SectionDropdown = DropDown()
     var image = "image/pdf"
     var delegate : HistorySelectDelegate?
+    let customdate = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,6 +105,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         StandardView.layer.cornerRadius = 10
         DetailsTxtview.text = TexviewStringFile.Enter_Homework_Description
         DetailsTxtview.textColor = .lightGray
+        CustomDateBtn.layer.cornerRadius = 10
+        CustomDateBtn.layer.borderWidth = 1
+        CustomDateBtn.layer.borderColor = UIColor.gray.cgColor
+        customdate.dateFormat = "EEE d"
+        let customdatestring = customdate.string(from: Date())
+        setcustomDate(attributedLbl: customdatestring)
         
         //MARK: set Gradient colours for Button
         gradientcolours(button: homeworkBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
@@ -168,7 +179,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         let label = formatter.string(from: sender.date)
         
-        calenderimgHeight.constant = 38
+       // calenderimgHeight.constant = 38
         //   DateViewheight.constant = 25
         calenderHeight.constant = 0
         CalendarView.isHidden = true
@@ -176,6 +187,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         dateBtn.setTitle(label, for: .normal)
         dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         // calenderHeight.constant = 260
+        customdate.dateFormat = "EEE d"
+        let attributedLbl = customdate.string(from: sender.date)
+        setcustomDate(attributedLbl: attributedLbl)
     }
     
     @IBAction func SelectStandard() {
@@ -308,6 +322,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         dismiss(animated: true)
     }
     
+    
+    @IBAction func CustomDateBtnAct(_ sender: Any) {
+    }
+    
     @IBAction func DateBtnAct(_ sender: Any) {
         
         if calenderHeight.constant == 0 {
@@ -319,6 +337,34 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             calenderHeight.constant = 0
             dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
+    }
+    
+    func setcustomDate(attributedLbl : String){
+        
+        let words = attributedLbl.split(separator: " ")
+        
+        let attributedString = NSMutableAttributedString(string: attributedLbl)
+        
+        // Define the ranges for the two words
+        let firstWordRange = (attributedLbl as NSString).range(of: String(words[0]))
+        let secondWordRange = (attributedLbl as NSString).range(of: String(words[1]))
+        
+        let dayfont = UIFont(name: "Poppins-Medium", size: 14.6)
+        let datefont = UIFont(name: "Poppins-Bold", size: 15)
+//        let dayfont =  UIFont.systemFont(ofSize: 10)
+//        let datefont =  UIFont.boldSystemFont(ofSize: 22)
+        
+        // Apply color and font to the first word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)
+        attributedString.addAttribute(.font, value: dayfont, range: firstWordRange)
+        
+        // Apply  color and font to the second word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: secondWordRange)
+        attributedString.addAttribute(.font, value: datefont, range: secondWordRange)
+        
+        // Assign the attributed string to the label
+        customDateLbl.attributedText = attributedString
+        
     }
     
     @IBAction func RecipentBtnAct(_ sender: Any) {
