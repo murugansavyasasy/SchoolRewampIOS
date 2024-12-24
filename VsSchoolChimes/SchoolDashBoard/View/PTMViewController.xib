@@ -228,7 +228,7 @@
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ejk-sa-4e4">
                                             <rect key="frame" x="10" y="12.999999999999998" width="20" height="14.33333333333333"/>
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="20" id="1P3-m0-qvq"/>
                                                 <constraint firstAttribute="width" constant="20" id="x55-YN-qR6"/>
@@ -242,18 +242,18 @@
                                         <constraint firstAttribute="width" constant="40" id="hvw-t8-Q7E"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent Teacher Meeting" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDf-RE-GjI">
-                                    <rect key="frame" x="60" y="9.9999999999999982" width="323" height="20.333333333333329"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent Teacher Meeting" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDf-RE-GjI">
+                                    <rect key="frame" x="60" y="9.9999999999999982" width="308" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" name="serach_color"/>
+                            <color key="backgroundColor" name="ParentClr"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="whc-Pb-qHu" secondAttribute="bottom" id="1RG-IW-JCY"/>
                                 <constraint firstItem="whc-Pb-qHu" firstAttribute="top" secondItem="UxW-t5-xhc" secondAttribute="top" id="JiI-nP-G01"/>
-                                <constraint firstAttribute="trailing" secondItem="eDf-RE-GjI" secondAttribute="trailing" constant="10" id="SS9-O4-cGE"/>
+                                <constraint firstAttribute="trailing" secondItem="eDf-RE-GjI" secondAttribute="trailing" constant="25" id="SS9-O4-cGE"/>
                                 <constraint firstItem="whc-Pb-qHu" firstAttribute="leading" secondItem="UxW-t5-xhc" secondAttribute="leading" id="XEF-RJ-ceD"/>
                                 <constraint firstItem="eDf-RE-GjI" firstAttribute="leading" secondItem="whc-Pb-qHu" secondAttribute="trailing" constant="20" id="aCB-si-HEY"/>
                                 <constraint firstAttribute="height" constant="40" id="cc2-yQ-bm6"/>
@@ -291,7 +291,7 @@
                 </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="serach_color"/>
+            <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="SQn-Rg-CGq" secondAttribute="trailing" constant="20" id="9Ym-wC-MMl"/>
                 <constraint firstAttribute="bottom" secondItem="SQn-Rg-CGq" secondAttribute="bottom" constant="50" id="C0M-OH-3Vm"/>
@@ -309,17 +309,17 @@
         <namedColor name="CheckBoxSelectColor">
             <color red="0.020999999716877937" green="0.52399998903274536" blue="0.45899999141693115" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="serach_color">
-            <color red="0.0" green="0.37599998712539673" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ParentClr">
+            <color red="0.74500000476837158" green="0.68199998140335083" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

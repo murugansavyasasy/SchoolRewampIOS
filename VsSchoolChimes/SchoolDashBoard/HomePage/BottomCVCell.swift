@@ -73,7 +73,7 @@ class BottomCVCell: UICollectionViewCell {
 //        MenuImgView.image = img
 //    }
     
-    func applyGradient() {
+    func applyGradient(colours: [CGColor],xstart:Double,ystart:Double) {
         if let existingGradientLayer = GradientView.layer.sublayers?.first(where: { $0 is CAGradientLayer }) {
               existingGradientLayer.removeFromSuperlayer()
           }
@@ -85,10 +85,10 @@ class BottomCVCell: UICollectionViewCell {
           gradientLayer.frame = GradientView.bounds
           
           // Define the gradient colors (you can customize this)
-        gradientLayer.colors = [UIColor.parentClr.cgColor,UIColor.priority.cgColor]
+        gradientLayer.colors = colours //[UIColor.parentClr.cgColor,UIColor.priority.cgColor]
           
           // Optionally, define the gradient direction
-        gradientLayer.startPoint = CGPoint(x: 0.4, y: 0.4)  // Top-left
+        gradientLayer.startPoint = CGPoint(x: xstart, y: ystart)  // Top-left
         gradientLayer.endPoint = CGPoint(x: 0.9, y: 0.9)    // Bottom-right
 
           // Insert the gradient layer behind the image

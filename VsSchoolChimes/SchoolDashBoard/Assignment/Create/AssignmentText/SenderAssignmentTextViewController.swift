@@ -17,8 +17,8 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
-    
-    @IBOutlet weak var selectImgPdfview: ImageSelection!
+    @IBOutlet weak var CustomDateLbl: UILabel!
+    @IBOutlet weak var customizedDateBtn: HalfColorButton!
     @IBOutlet weak var DateBtn: UIButton!
     @IBOutlet weak var AddphotosLbl: UILabel!
     @IBOutlet weak var SubmissionDateLbl: UILabel!
@@ -28,22 +28,15 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var addphotosheight: NSLayoutConstraint!
     @IBOutlet weak var CreateView: UIView!
-    
     @IBOutlet weak var AssignmenttypeLbl: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
-    @IBOutlet weak var fullTextView: UIView!
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var chooseImgBtn: UIButton!
     @IBOutlet weak var categoryDropDownLbl: UILabel!
     @IBOutlet weak var assignTitleTxtFld: UITextField!
     @IBOutlet weak var chooseRecipientsBtn: UIButton!
     @IBOutlet weak var categoryLbl: UILabel!
     @IBOutlet weak var categoryDropDownView: UIView!
-    @IBOutlet weak var subDateLbl: UILabel!
     @IBOutlet weak var contentTextView: UITextView!
-    
-    
-    
+    @IBOutlet weak var selectImgPdfview: ImageSelection!
     @IBOutlet weak var AssignmentTypeview: UIView!
     
     var selectedShow = ""
@@ -62,32 +55,80 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     let TypeDropDown = DropDown()
     var datePicker : UIDatePicker!
     var doneButton : UIButton!
-    
     var pdfData: Data?
+    let customdate = DateFormatter()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        if selectedShow == "Text" {
-//            imageSelectView.isHidden = true
-//            fullTextView.isHidden = false
-//            collectionView.isHidden = true
-//        }else if selectedShow == "Image" {
-//            imageSelectView.isHidden = false
-//            fullTextView.isHidden = true
-//            collectionView.isHidden = true
-//        }else if selectedShow == "Pdf" {
-//            imageSelectView.isHidden = true
-//            fullTextView.isHidden = true
-//            collectionView.isHidden = true
-//        }
         createDatepicker()
+        StyleAndTranslater()
+        
+        contentTextView.delegate = self
+        
+        customdate.dateFormat = "EEE d"
+        let customdatestring = customdate.string(from: Date())
+        setcustomDate(attributedLbl: customdatestring)
+        
+        let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
+        categoryDropDownView.addGestureRecognizer(categoryGesture)
+        
+        let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
+        AssignmentTypeview.addGestureRecognizer(typeGesture)
+        
+        selectImgPdfview.imageCollectionview.delegate = self
+        selectImgPdfview.imageCollectionview.dataSource = self
+        
+        //        MARK: Gallery Image
+        photoPickManager.onImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            // Handle selected images here
+            selectedImages.append(contentsOf: images)
+            for image in images {
+                print("Selected image: \(image)")
+                //                collectionView.isHidden = false
+                //                collectionView.delegate = self
+                //                collectionView.dataSource = self
+                //                photoPickManager.uploadAWS(image: image)
+                
+                selectImgPdfview.imageCollectionview.reloadData()
+            }
+        }
+        
+        //        MARK: Camera Image
+        photoPickManager.onCameraImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            
+            selectedImages.append(images)
+            //            for image in images {
+            print("Selected image: \(images)")
+            //                collectionView.isHidden = false
+            //                collectionView.delegate = self
+            //                collectionView.dataSource = self
+            photoPickManager.uploadAWS(image: images)
+            //            }
+        }
+        
+        //        MARK: PDF
+        photoPickManager.onPdfPicked = { [weak self] pdf in
+            print("Selectedpdf12 \(pdf)")
+            self!.photoPickManager.uploadPDFFileToAWS(pdfData: pdf)
+            guard let self = self else { return }
+            // Handle selected images here
+        }
+        photoPickManager.onPdfString = { [weak self] pdf in
+            print("Selectef12 \(pdf)")
+        }
+        
+    }
+    
+    func  StyleAndTranslater(){
+        //MARK: UI Update
         CreateView.layer.cornerRadius = 10
         CreateView.layer.shadowColor = UIColor.black.cgColor
         CreateView.layer.shadowOffset = CGSize(width: 0, height: 2)
         CreateView.layer.shadowRadius = 5
         CreateView.layer.shadowOpacity = 0.3
         CreateView.layer.cornerRadius = 10
-        
         AssignmentTypeview.layer.cornerRadius = 10
         categoryDropDownView.layer.cornerRadius = 10
         selectImgPdfview.layer.cornerRadius = 10
@@ -98,79 +139,23 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         chooseRecipientsBtn.layer.cornerRadius = 10
         collectionViewHeght.constant = 0
         addphotosheight.constant = 0
-        
-        StyleAndTranslater()
-        
-        
-//        collectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
-        
-//        datePicker.addTarget(self, action: #selector(datePickerValueChanged), for: .valueChanged)
-//        datePicker.datePickerMode = .date
-//        datePicker.minimumDate = Date()
- 
-//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-//        backView.addGestureRecognizer(backGesture)
-//        
-        let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
-        categoryDropDownView.addGestureRecognizer(categoryGesture)
-        
-        let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
-        AssignmentTypeview.addGestureRecognizer(typeGesture)
-        
-        selectImgPdfview.imageCollectionview.delegate = self
-        selectImgPdfview.imageCollectionview.dataSource = self
-        
-//        MARK: Gallery Image
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            selectedImages.append(contentsOf: images)
-            for image in images {
-                print("Selected image: \(image)")
-//                collectionView.isHidden = false
-//                collectionView.delegate = self
-//                collectionView.dataSource = self
-//                photoPickManager.uploadAWS(image: image)
-                
-                selectImgPdfview.imageCollectionview.reloadData()
-            }
-        }
-        
-//        MARK: Camera Image
-        photoPickManager.onCameraImagePicked = { [weak self] images in
-            guard let self = self else { return }
-           
-            selectedImages.append(images)
-//            for image in images {
-                print("Selected image: \(images)")
-//                collectionView.isHidden = false
-//                collectionView.delegate = self
-//                collectionView.dataSource = self
-                photoPickManager.uploadAWS(image: images)
-//            }
-        }
-        
-        
-        
-//        MARK: PDF
-        photoPickManager.onPdfPicked = { [weak self] pdf in
-            print("Selectedpdf12 \(pdf)")
-            self!.photoPickManager.uploadPDFFileToAWS(pdfData: pdf)
-                   guard let self = self else { return }
-                   // Handle selected images here
-               }
-        photoPickManager.onPdfString = { [weak self] pdf in
-            print("Selectef12 \(pdf)")
-        }
-    
-    }
-
-    func  StyleAndTranslater(){
+        categoryDropDownView.layer.borderWidth = 1
+        categoryDropDownView.layer.borderColor = UIColor.lightGray.cgColor
+        categoryDropDownView.backgroundColor = .white
+        AssignmentTypeview.layer.borderWidth = 1
+        AssignmentTypeview.layer.borderColor = UIColor.lightGray.cgColor
+        AssignmentTypeview.backgroundColor = .white
+        contentTextView.text = TexviewStringFile.Enter_Assignment_Description
+        contentTextView.textColor = .lightGray
+        customizedDateBtn.layer.cornerRadius = 10
+        customizedDateBtn.layer.borderWidth = 1
+        customizedDateBtn.layer.borderColor = UIColor.gray.cgColor
         
         //MARK: Button Font Style
         //chooseImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         chooseRecipientsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-
+        DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         //MARK: Label Font Style
         AddphotosLbl.setFont(style: .title, size: FontSize.TitleSize)
         SubmissionDateLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -182,7 +167,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         categoryDropDownLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryLbl.setFont(style: .title, size: FontSize.TitleSize)
         //subDateLbl.setFont(style: .title, size: FontSize.TitleSize)
-
+        
         
     }
     
@@ -190,12 +175,12 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         self.dismiss(animated: true, completion: nil)
         let selectedDate = sender.date
         print("Selected Date: \(selectedDate)")
-        }
+    }
     @IBAction func backVc() {
         
         dismiss(animated: true)
     }
-
+    
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
     }
     
@@ -207,12 +192,12 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         dropDown.direction = .bottom
         dropDown.show()
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-               print("Selected item: \(item) at index: \(index)")
-               // Update the label inside the UIView
+            print("Selected item: \(item) at index: \(index)")
+            // Update the label inside the UIView
             if let label = self?.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self!.categoryDropDownLbl.text = item
-               }
-           }
+            }
+        }
     }
     
     @IBAction  func typeDropdown (){
@@ -220,12 +205,12 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         self.view.layoutIfNeeded()
         TypeDropDown.width = AssignmentTypeview.bounds.width
         TypeDropDown.bottomOffset = CGPoint(x: 0, y: AssignmentTypeview.bounds.height - 220)
-       
+        
         TypeDropDown.direction = .bottom
         TypeDropDown.show()
         TypeDropDown.selectionAction = { [weak self] (index: Int, item: String) in
-               print("Selected item: \(item) at index: \(index)")
-               // Update the label inside the UIView
+            print("Selected item: \(item) at index: \(index)")
+            // Update the label inside the UIView
             if item == "TEXT"{
                 
                 self!.collectionViewHeght.constant = 0
@@ -237,8 +222,8 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             }
             if let label = self?.AssignmentTypeview.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self!.AssignmenttypeLbl.text = item
-               }
-           }
+            }
+        }
     }
     
     @IBAction func chooseImgBtnAction(_ sender: UIButton) {
@@ -248,7 +233,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     
     @IBAction func presentSelectionAlert() {
         let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-       
+        
         // Camera option
         let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
             openCamera()
@@ -258,12 +243,12 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         // Gallery option
         let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
             selectImages()
-                   }
+        }
         alertController.addAction(galleryAction)
         
         let pdfAction = UIAlertAction(title: "Pdf".translated(), style: .default) { [self] _ in
             selectPdf()
-                   }
+        }
         alertController.addAction(pdfAction)
         
         // Cancel action
@@ -274,37 +259,34 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         self.present(alertController, animated: true, completion: nil)
     }
     
-   
+    
     func selectImages() {
         photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
-
-
-       }
+    }
     
     func selectPdf() {
         photoPickManager.pickPDF(from: self)
-       }
-       
+    }
     
-    //    MARK: Handle Select Camera,Pdf,Image
+    // MARK: Handle Select Camera,Pdf,Image
     @IBAction func openCamera() {
         // Check if the camera is available
         photoPickManager.openCamera(from: self)
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            let imagePicker = UIImagePickerController()
-//            imagePicker.delegate = self
-//            imagePicker.sourceType = .camera
-//            imagePicker.allowsEditing = true // Allows editing of the captured image
-//            present(imagePicker, animated: true, completion: nil)
-//        } else {
-//            // Camera is not available, show an alert
-//            let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
-//            present(alert, animated: true, completion: nil)
-//        }
+        //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+        //            let imagePicker = UIImagePickerController()
+        //            imagePicker.delegate = self
+        //            imagePicker.sourceType = .camera
+        //            imagePicker.allowsEditing = true // Allows editing of the captured image
+        //            present(imagePicker, animated: true, completion: nil)
+        //        } else {
+        //            // Camera is not available, show an alert
+        //            let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
+        //            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
+        //            present(alert, animated: true, completion: nil)
+        //        }
     }
     
-   
+    
     // Handle the image once it has been captured
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.editedImage] as? UIImage {
@@ -325,6 +307,10 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     
+    @IBAction func CustomDateBtnAct(_ sender: Any) {
+        
+        showDatepicker(button: sender as! UIButton)
+    }
     
     @IBAction func DateBtnAct(_ sender: Any) {
         
@@ -332,10 +318,10 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     func createDatepicker(){
-          datePicker = UIDatePicker()
-          datePicker.datePickerMode = .date
-          datePicker.minimumDate = Date()
-          datePicker.backgroundColor = .white
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.minimumDate = Date()
+        datePicker.backgroundColor = .white
         
         if #available(iOS 14.0, *) {
             datePicker.preferredDatePickerStyle = .inline
@@ -354,7 +340,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
         self.view.addSubview(doneButton)
         
-      }
+    }
     
     func showDatepicker(button: UIButton) {
         datePicker.isHidden = false
@@ -363,7 +349,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         let buttonFrame = button.convert(button.bounds, to: self.view)
         
         // Set the frame for the datePicker
-        let pickerYPosition = buttonFrame.maxY + 10
+        let pickerYPosition = view.frame.minY + 110
         datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
         
         // Set appearance for datePicker
@@ -375,63 +361,90 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         datePicker.layer.cornerRadius = 20
         
         doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
-
+        
         // Add both datePicker and Done button to the view
         self.view.addSubview(datePicker)
         self.view.addSubview(doneButton)
     }
-
+    
     @IBAction func doneButtonTapped(){
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat =  "EEE d MMM yyyy"
         let datelabel = dateFormatter.string(from: datePicker.date)
-        
         DateBtn.setTitle(datelabel, for: .normal)
         
+        
+        customdate.dateFormat = "EEE d"
+        let attributedLbl = customdate.string(from: datePicker.date)
+        setcustomDate(attributedLbl: attributedLbl)
         datePicker.isHidden = true
         doneButton.isHidden = true
     }
     
+    func setcustomDate(attributedLbl : String){
+        
+        let words = attributedLbl.split(separator: " ")
+        
+        let attributedString = NSMutableAttributedString(string: attributedLbl)
+        
+        // Define the ranges for the two words
+        let firstWordRange = (attributedLbl as NSString).range(of: String(words[0]))
+        let secondWordRange = (attributedLbl as NSString).range(of: String(words[1]))
+        
+        let dayfont = UIFont(name: "Poppins-Medium", size: 14)
+        let datefont = UIFont(name: "Poppins-Bold", size: 14)
+        
+        // Apply color and font to the first word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)
+        attributedString.addAttribute(.font, value: dayfont, range: firstWordRange)
+        
+        // Apply  color and font to the second word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: secondWordRange)
+        attributedString.addAttribute(.font, value: datefont, range: secondWordRange)
+        
+        // Assign the attributed string to the label
+        CustomDateLbl.attributedText = attributedString
+        
+    }
     
-
 }
 
 
 @available(iOS 14.0, *)
 extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
-       // MARK: - UICollectionView DataSource
-//       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//           return selectedImages.count
-//       }
-//       
-//       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-//           cell.imageViews.image = selectedImages[indexPath.item]
-//           return cell
-//       }
-//       
-//       // MARK: - UICollectionView Delegate
-//       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//           // Delete the selected image
-//           selectedImages.remove(at: indexPath.item)
-//           collectionView.deleteItems(at: [indexPath])
-//       }
-//       
-//    
-//}
-//
-//@available(iOS 14.0, *)
-//extension SenderAssignmentTextViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-//        return CGSize(width: width, height: width)
-//    }
-//    
-//    
-//    
-//
+    // MARK: - UICollectionView DataSource
+    //       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    //           return selectedImages.count
+    //       }
+    //
+    //       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    //           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+    //           cell.imageViews.image = selectedImages[indexPath.item]
+    //           return cell
+    //       }
+    //
+    //       // MARK: - UICollectionView Delegate
+    //       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    //           // Delete the selected image
+    //           selectedImages.remove(at: indexPath.item)
+    //           collectionView.deleteItems(at: [indexPath])
+    //       }
+    //
+    //
+    //}
+    //
+    //@available(iOS 14.0, *)
+    //extension SenderAssignmentTextViewController: UICollectionViewDelegateFlowLayout {
+    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    //        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
+    //        return CGSize(width: width, height: width)
+    //    }
+    //
+    //
+    //
+    //
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -512,5 +525,25 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
             }
         }
     }
+    
+}
 
+@available(iOS 14.0, *)
+extension SenderAssignmentTextViewController : UITextViewDelegate{
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if contentTextView.text == TexviewStringFile.Enter_Assignment_Description {
+            
+            contentTextView.text = ""
+            contentTextView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if contentTextView.text == "" {
+            
+            contentTextView.text = TexviewStringFile.Enter_Assignment_Description
+            contentTextView.textColor = .lightGray
+        }
+    }
 }

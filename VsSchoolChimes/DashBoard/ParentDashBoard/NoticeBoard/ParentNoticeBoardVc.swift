@@ -27,7 +27,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         searchbar.placeholder = CommonStringFile.Search
         searchbar.delegate = self
         addDoneButton()
-        HeadingLabel.text = MenuTapbar.Notifications
+        HeadingLabel.text = MenuTapbar.Noticeboard
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         tabelViewRegister()
      

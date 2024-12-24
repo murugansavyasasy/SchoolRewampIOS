@@ -235,7 +235,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 //        img.replacingCharacters(in: "/", with: "")
 //        images.replacingOccurrences(of: "/", with: "")
         cell.MenuImgView.image  = img
-    cell.applyGradient()
+        cell.applyGradient(colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor],xstart: 0.4,ystart: 0.4)
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
     cell.GradientView.animateView(enable: false)
@@ -313,7 +313,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     case ReceiverMenuItems.ClassTimetable:
         MenuRedirect.receiverclassTimeTable(from: self)
     case ReceiverMenuItems.Homework:
-        ""
+        MenuRedirect.receiverHomework(from: self)
+    case ReceiverMenuItems.AttendanceReport:
+        MenuRedirect.receiverAttendancereport(from: self)
     case ReceiverMenuItems.CertificateRequest:
         ""
     case ReceiverMenuItems.ExamMarks:

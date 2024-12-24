@@ -23,7 +23,9 @@
                 <outlet property="RecipientBtn" destination="GxC-gB-dmJ" id="FUz-tZ-toI"/>
                 <outlet property="ReportBtn" destination="ISz-1y-ArR" id="4dZ-mV-omX"/>
                 <outlet property="ReportView" destination="hqQ-nr-ued" id="AOg-Wn-0pg"/>
+                <outlet property="SectionLbl" destination="AAD-9j-oj7" id="dCp-7Q-kWj"/>
                 <outlet property="SectionView" destination="TUP-0L-94o" id="wus-AP-i4D"/>
+                <outlet property="StandardLbl" destination="cDN-ps-gjh" id="c32-Jv-Fjd"/>
                 <outlet property="StandardView" destination="Nwm-Ws-PSb" id="ZV3-vT-mzP"/>
                 <outlet property="TV" destination="bJ7-qQ-k8X" id="2lk-0P-H09"/>
                 <outlet property="TitleTxtfield" destination="9Kb-gi-bvH" id="Cnu-dv-QuD"/>
@@ -74,8 +76,8 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pd7-DK-U3y">
                                     <rect key="frame" x="0.0" y="0.0" width="161" height="40"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Home Work"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Home Work"/>
                                     <connections>
                                         <action selector="HomeworkBtnAct:" destination="-1" eventType="touchUpInside" id="XMy-FB-taH"/>
                                     </connections>
@@ -83,8 +85,8 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISz-1y-ArR">
                                     <rect key="frame" x="162" y="0.0" width="161" height="40"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Reports"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Reports"/>
                                     <connections>
                                         <action selector="ReportsBtnAct:" destination="-1" eventType="touchUpInside" id="k93-AO-zdb"/>
                                     </connections>
@@ -164,11 +166,10 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="fvi-hY-op6"/>
                                     </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="TO STANDARD OR SECTIONS">
-                                        <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
-                                    </buttonConfiguration>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="TO STANDARD OR SECTIONS"/>
                                     <connections>
                                         <action selector="RecipentBtnAct:" destination="-1" eventType="touchUpInside" id="Pp5-gM-4Xq"/>
                                     </connections>

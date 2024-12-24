@@ -67,7 +67,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" name="menuIconColour"/>
+                            <color key="backgroundColor" name="ParentClr"/>
                             <constraints>
                                 <constraint firstItem="sle-hD-Z3Z" firstAttribute="leading" secondItem="3bc-5Z-uTf" secondAttribute="leading" id="3yT-gu-wpY"/>
                                 <constraint firstItem="huc-7B-M6D" firstAttribute="centerX" secondItem="3bc-5Z-uTf" secondAttribute="centerX" id="Fbr-eN-Ij7"/>
@@ -418,7 +418,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="menuIconColour"/>
+            <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="ODJ-pt-oir" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="QAJ-gY-uHf"/>
                 <constraint firstItem="ODJ-pt-oir" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="UfR-Mc-Tkr"/>
@@ -431,11 +431,11 @@
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="down-arrow" width="512" height="512"/>
+        <namedColor name="ParentClr">
+            <color red="0.74500000476837158" green="0.68199998140335083" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="meetingcolour1">
             <color red="0.3843137254901961" green="0.77647058823529413" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="menuIconColour">
-            <color red="0.25882352941176473" green="0.81176470588235294" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -444,10 +444,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

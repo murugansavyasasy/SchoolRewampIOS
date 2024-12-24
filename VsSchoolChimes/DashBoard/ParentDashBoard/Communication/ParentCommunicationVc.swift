@@ -66,20 +66,20 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     
     func ButtonStyle(){
         
-        voiceBtn.backgroundColor = .white
+        //voiceBtn.backgroundColor = .white
         voiceClickView.layer.cornerRadius = 8
         textClickView.layer.cornerRadius = 8
        
         voiceClickView.layer.cornerRadius = 8
-        voiceClickView.backgroundColor = tapColor
+        //voiceClickView.backgroundColor = tapColor
         voiceBtn.layer.cornerRadius = 20
         voiceBtn.layer.shadowColor = UIColor.black.cgColor
         voiceBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
         voiceBtn.layer.shadowRadius = 5
         voiceBtn.layer.shadowOpacity = 0.3
-        voiceBtn.tintColor = .white
-        clickVoiceLbl.textColor = .white
-        voiceBtn.backgroundColor = backgroundcolor
+       // voiceBtn.tintColor = .white
+       // clickVoiceLbl.textColor = .white
+        //voiceBtn.backgroundColor = backgroundcolor
         
         
         //MARK: TEXT BUTTON BACKGROUND
@@ -89,7 +89,29 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         textBtn.layer.shadowRadius = 5
         textBtn.layer.shadowOpacity = 0.3
         
+        gradientcolours(view: voiceClickView,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        clickVoiceLbl.textColor = .white
+        gradientcolours(view: textClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+    
+        //historyBtn.setTitleColor(.black, for:.normal)
     }
+    
+    func gradientcolours(view: UIView, colours: [CGColor]) {
+        // Remove any existing gradient layers to avoid duplication
+        view.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+        
+        // Create and configure the gradient layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colours
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
+        gradientLayer.frame = view.bounds
+        gradientLayer.cornerRadius = view.layer.cornerRadius
+        
+        // Insert the gradient layer into the view's layer
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true)
         

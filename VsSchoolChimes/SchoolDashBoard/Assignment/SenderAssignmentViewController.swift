@@ -38,15 +38,19 @@ class SenderAssignmentViewController: UIViewController {
         let createGesture = UITapGestureRecognizer(target: self, action: #selector(createSelecteAct))
         plusView.addGestureRecognizer(createGesture)
         
-
+//        let listShowGesture = UITapGestureRecognizer(target: self, action: #selector(viewSelecteAct))
+//        ViewSeg.addGestureRecognizer(listShowGesture)
         tv.isHidden = true
-        assTitlLbl.text =  MenuTapbar.Assignment.translated()
-
+        assTitlLbl.text = "Assignment".translated()
+//        viewLBl.text = "VIEW".translated()
         headingLBl.text = "Select the type in which you want to create the assignment".translated()
-
+//        createLbl.text = "CREATE".translated()
         
         listView.isHidden = false
         tv.isHidden = false
+       
+//        ViewSeg.backgroundColor = UIColor(named: "ButtonColor")
+//        createView.backgroundColor = .lightGray
         assignmentCreateView.isHidden = true
         
         tv.dataSource = self
@@ -72,7 +76,11 @@ class SenderAssignmentViewController: UIViewController {
     }
     
     @IBAction func createSelecteAct() {
+//        createView.backgroundColor = UIColor(named: "ButtonColor")
+//        listView.isHidden = true
+//        ViewSeg.backgroundColor = .lightGray
         assignmentCreateView.isHidden = false
+//        tv.isHidden = true
     }
     
     
