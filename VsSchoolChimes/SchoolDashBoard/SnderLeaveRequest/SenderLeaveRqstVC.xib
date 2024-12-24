@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderLeaveRqstVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="leaveRequestTable" destination="nxa-sv-jIe" id="WLU-Pw-fFF"/>
+                <outlet property="searchBar" destination="gCb-kQ-6B9" id="NgK-fa-wZM"/>
                 <outlet property="titleLbl" destination="P6x-h6-DNq" id="YwZ-wm-7k2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -25,8 +26,18 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21u-Ph-GdD">
                     <rect key="frame" x="0.0" y="104" width="393" height="714"/>
                     <subviews>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-kQ-6B9">
+                            <rect key="frame" x="10" y="0.0" width="373" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="7qV-On-Atx"/>
+                            </constraints>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="Wjb-YU-ufb"/>
+                            </connections>
+                        </searchBar>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-sv-jIe">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="714"/>
+                            <rect key="frame" x="0.0" y="60" width="393" height="654"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="uLW-kX-T7C"/>
@@ -38,8 +49,11 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="nxa-sv-jIe" secondAttribute="trailing" id="4wx-YF-1jT"/>
                         <constraint firstAttribute="bottom" secondItem="nxa-sv-jIe" secondAttribute="bottom" id="54v-C3-cXq"/>
-                        <constraint firstItem="nxa-sv-jIe" firstAttribute="top" secondItem="21u-Ph-GdD" secondAttribute="top" id="Ch5-kG-8yy"/>
                         <constraint firstItem="nxa-sv-jIe" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" id="EwH-Zg-RFx"/>
+                        <constraint firstAttribute="trailing" secondItem="gCb-kQ-6B9" secondAttribute="trailing" constant="10" id="IGk-qB-at3"/>
+                        <constraint firstItem="gCb-kQ-6B9" firstAttribute="top" secondItem="21u-Ph-GdD" secondAttribute="top" id="kSq-yl-YzR"/>
+                        <constraint firstItem="nxa-sv-jIe" firstAttribute="top" secondItem="gCb-kQ-6B9" secondAttribute="bottom" id="x20-jQ-N0c"/>
+                        <constraint firstItem="gCb-kQ-6B9" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" constant="10" id="yMB-44-FuD"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atx-K4-uC7">
