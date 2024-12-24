@@ -34,8 +34,9 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
 //        pages = [page1, page2]
         loadPages([page1, page2])
         disableSwipeGesture()
-        gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        createEvent.setTitleColor(.white, for:.normal)
+        
+        gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        createEvent.setTitleColor(.black, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         historyBtn.setTitleColor(.black, for:.normal)
         // Set the initial page
@@ -48,6 +49,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     func uiConficration(){
         TitleHederLbl.text = titleLbl
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        TitleHederLbl.text = CommonStringFile.CreateLeaveRequest
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
         createEvent.layer.cornerRadius = 20
@@ -101,15 +103,15 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     @IBAction func SelectionController(_ sender: UIButton) {
         
         if sender.tag == 0{
-            gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-            createEvent.setTitleColor(.white, for:.normal)
+            gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+            createEvent.setTitleColor(.black, for:.normal)
             gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             historyBtn.setTitleColor(.black, for:.normal)
         }else{
             gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             createEvent.setTitleColor(.black, for:.normal)
-            gradientcolours(button: historyBtn,colours:[UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-            historyBtn.setTitleColor(.white, for:.normal)
+            gradientcolours(button: historyBtn,colours:[UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+            historyBtn.setTitleColor(.black, for:.normal)
         }
         
         guard sender.tag >= 0 && sender.tag < pages.count else {
@@ -128,10 +130,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         if let page2 = CV[1] as? LeveHistoryVC {
             page2.navigatedelegate = self
          }
-        if let page2 = CV[0] as? LeveCreateVC {
-            page2.LeaveRequest = LeaveRequest
-            
-         }
+       
             pages = CV
 
     }
@@ -140,8 +139,12 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
             print("Index out of bounds")
             return
         }
-        LeaveRequest = leaveRequest
-        gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        if #available(iOS 14.0, *) {
+            if let page1 = pages[0] as? LeveCreateVC {
+                page1.LeaveRequest = leaveRequest
+            }
+        } 
+        gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
         createEvent.setTitleColor(.white, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         historyBtn.setTitleColor(.black, for:.normal)

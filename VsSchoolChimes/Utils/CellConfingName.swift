@@ -81,6 +81,7 @@ class CellConfingName {
     static let  HomeworkreportTV = "HomeworkreportTV"
     static let  SubscriptionTVCell = "SubscriptionTVCell"
     static let  CertificateTableViewCell = "CertificateTableViewCell"
+    static let  LeveHistoryTV = "LeveHistoryTV"
     
     
 }

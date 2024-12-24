@@ -235,3 +235,8 @@
 "selectDatesWithinMonth" = "คุณสามารถเลือกวันที่ภายในเดือนที่แสดงอยู่ในปัจจุบันเท่านั้น";
 //MARK: ScheduleExam
 "scheduleExam" = "กำหนดการสอบ";
+"Reasons" = "เหตุผล";
+"Day" = "วัน";
+"Days" = "วัน";
+"CreateLeaveRequest" = "สร้างคำขอลา";
+"LeaveRequestInfo" = "ข้อมูลคำขอลา";

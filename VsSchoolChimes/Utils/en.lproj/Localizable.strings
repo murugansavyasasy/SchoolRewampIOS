@@ -222,8 +222,11 @@
 "selectDatesWithinMonth" = "You can only select dates within the currently displayed month.";
 //MARK: ScheduleExam
 "scheduleExam" = "Schedule Exam";
-
-
+"Reasons" = "Reasons";
+"Days" = "Days";
+"Day" = "Day";
+"CreateLeaveRequest" = "Create Leave Request";
+"LeaveRequestInfo" = "Leave Request Info";
 
 
 

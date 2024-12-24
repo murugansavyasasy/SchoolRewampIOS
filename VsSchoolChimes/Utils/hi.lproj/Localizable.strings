@@ -234,3 +234,8 @@
 "selectDatesWithinMonth" = "आप केवल वर्तमान में प्रदर्शित माह के भीतर की तिथियों का चयन कर सकते हैं।";
 //MARK: ScheduleExam
 "scheduleExam" = "परीक्षा निर्धारित करें";
+//"Reasons" = "कारण"
+"Day" = "दिन";
+"Days" = "दिन";
+"CreateLeaveRequest" = "छुट्टी का अनुरोध बनाएं";
+"LeaveRequestInfo" = "छुट्टी अनुरोध जानकारी";

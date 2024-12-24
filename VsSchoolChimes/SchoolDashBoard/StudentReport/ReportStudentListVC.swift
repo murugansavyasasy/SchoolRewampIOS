@@ -42,7 +42,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     let menuName = MenuStringFile()
     override func viewDidLoad() {
         super.viewDidLoad()
-        pageTitle.text = menuName.StudentReport
+        pageTitle.text = MenuStringFile.StudentReport
         filterStudent = studentList
         sortedStudent = studentList
         uiConfic()

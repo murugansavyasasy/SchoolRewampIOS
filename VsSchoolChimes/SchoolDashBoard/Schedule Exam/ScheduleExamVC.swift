@@ -136,7 +136,7 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
     }
     
     @IBAction func sendAction(_ sender: UIButton) {
-        for i in 0..<(finalArray.count ?? 0){
+        for i in 0..<(finalArray.count){
             print(finalArray[i])
         }
     }

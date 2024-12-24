@@ -222,7 +222,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
        
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
-                let label = filteredItems[indexPath.row]
+            let label = filteredItems[indexPath.row].translated()
                 let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
@@ -259,71 +259,68 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
       
         
         if collectionView == bottomCv{
-            print("menuName",menuName)
-            print("getValue",getValue)
-           
                 
-                let menuItem = MenuRedirect.items[indexPath.row]
+            let menuItem = MenuRedirect.items[indexPath.row].translated()
                 
                 switch menuItem {
-                case menuName.VideoUpload:
+                case MenuStringFile.VideoUpload:
                     MenuRedirect.senderVideoNavigate(from: self)
                     
-                case MenuStringFile.Communication:
+                case MenuStringFile.Communication.translated():
                     MenuRedirect.senderCommunicationNavigate(from: self)
                     
-                case menuName.ImagePdf, menuName.ImagePdf.translated():
+                case MenuStringFile.ImagePdf, MenuStringFile.ImagePdf.translated():
                     MenuRedirect.senderImgPDfNavigate(from: self)
                     
-                case menuName.Circulars.translated():
+                case MenuStringFile.Circulars.translated():
                     MenuRedirect.senderEventNavigate(from: self)
                     
-                case menuName.NoticeBoard:
+                case MenuStringFile.NoticeBoard:
                     MenuRedirect.senderNoticeboardNavigate(from: self)
                     
-                case menuName.PTM:
+                case MenuStringFile.PTM:
                     MenuRedirect.senderPtmNavigate(from: self)
                     
-                case menuName.LeaveRequests:
+                case MenuStringFile.LeaveRequests:
                     MenuRedirect.senderStudentreportNavigate(from: self)
                     
-                case menuName.Assignment:
+                case MenuStringFile.Assignment:
                     MenuRedirect.senderAssignmentNavigate(from: self)
                     
-                case menuName.OnlineMeeting:
+                case MenuStringFile.OnlineMeeting:
                     MenuRedirect.senderOnlineNavigate(from: self)
                     
-                case menuName.Homework:
+                case MenuStringFile.Homework:
                     MenuRedirect.senderHomeWorkNavigate(from: self)
                     
-                case menuName.LessonPlan:
+                case MenuStringFile.LessonPlan:
                     MenuRedirect.senderLessonplanNavigate(from: self)
                     
-                case menuName.AbsenteesReport:
+                case MenuStringFile.AbsenteesReport:
                     MenuRedirect.senderAbsenteesNavigate(from: self)
                     
-                case menuName.FeePendingReport:
+                case MenuStringFile.FeePendingReport:
                     MenuRedirect.senderFeePendingNavigate(from: self)
                     
-                case menuName.StudentReport:
+                case MenuStringFile.StudentReport:
                     MenuRedirect.senderStudentreportNavigate(from: self)
                     
-                case menuName.VeryImportantInfo:
+                case MenuStringFile.VeryImportantInfo:
                     MenuRedirect.senderImportantInfoNavigate(from: self)
                     
-                case menuName.SchoolStrength:
+                case MenuStringFile.SchoolStrength:
                     MenuRedirect.senderSchoolStrength(from: self)
                     
-                case menuName.MarkYourAttendance:
+                case MenuStringFile.MarkYourAttendance:
                     MenuRedirect.senderMarkAttendanceNavigate(from: self)
                     
-                case menuName.InteractionWithStudent:
+                case MenuStringFile.InteractionWithStudent:
                     ""
 //                    MenuRedirect.chat(from: self)
                     
-                case menuName.ScheduleExamTest:
-                    MenuRedirect.ScheduleExamVCNavigat(from: self)   
-                case menuName.DailyCollection,"":
+                case MenuStringFile.ScheduleExamTest:
+                    MenuRedirect.ScheduleExamVCNavigat(from: self)
+                case MenuStringFile.DailyCollection,"":
                     break
                     
                 default:

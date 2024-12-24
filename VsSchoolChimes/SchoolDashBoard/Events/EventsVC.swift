@@ -74,11 +74,9 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var imageUrlArray = NSMutableArray()
     var pdfData : Data? = nil
     let AlertMessage = AlertstringFile()
+    var isKeyboardVisible = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        effect = visualEffectView.effect
-//        visualEffectView.effect = nil
-//        addItemView.isHidden = true
         setupTimePicker()
         setupdatePicker()
         setInitialButtonTitles()
@@ -86,38 +84,18 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         setupPlaceholder()
         keyboardDionebtn()
         imageSelection()
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(keyboardWillShow(_:)),
+//                                               name: UIResponder.keyboardWillShowNotification,
+//                                               object: nil)
+//        
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(keyboardWillHide(_:)),
+//                                               name: UIResponder.keyboardWillHideNotification,
+//                                               object: nil)
         
     }
-    
-    
-    
-//    func animateIn() {
-//        self.view.addSubview(addItemView)
-//        addItemView.center = self.view.center
-//        
-//        addItemView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
-//        addItemView.alpha = 0
-//        
-//        UIView.animate(withDuration: 0.4) {
-//            self.visualEffectView.effect = self.effect
-//            self.addItemView.alpha = 1
-//            self.addItemView.transform = CGAffineTransform.identity
-//        }
-//        
-//    }
-//    
-//    
-//    func animateOut () {
-//        UIView.animate(withDuration: 0.3, animations: {
-//            self.addItemView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
-//            self.addItemView.alpha = 0
-//            
-//            self.visualEffectView.effect = nil
-//            
-//        }) { (success:Bool) in
-//                self.addItemView.removeFromSuperview()
-//        }
-//    }
+ 
     func imageSelection(){
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
@@ -223,6 +201,27 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1, firstString: CommonStringFile.AddPhotos, secondString: CommonStringFile.Optional, color1: .black, color2: .lightGray)
         
     }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            isKeyboardVisible = true
+            UIView.animate(withDuration: 0.3) {
+                // Move outerView 20 points from the top
+                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
+        isKeyboardVisible = false
+        UIView.animate(withDuration: 0.3) {
+            self.outerView.transform = .identity // Reset position
+        }
+    }
+    
+    
     func dateSet(_ date: String, _ splitDate: String,_ currectndate:String) {
         
         

@@ -31,7 +31,6 @@ class LeveHistoryTV: UITableViewCell {
     
     @IBOutlet weak var deltBtn: UIButton!
     @IBOutlet weak var editBtn: UIButton!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -52,15 +51,31 @@ class LeveHistoryTV: UITableViewCell {
         statusBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
         statusBtn.layer.shadowRadius = 5
         statusBtn.layer.shadowOpacity = 0.3
+        
+        styleLabel(toDateLbl)
+        styleLabel(fromDateLbl)
      
         fromDateLbl.setFont(style:.body, size: FontSize.BodySize)
         toDateLbl.setFont(style:.body, size: FontSize.BodySize)
         aproveLbl.setFont(style:.body, size: FontSize.BodySize)
         approvedBy.setFont(style:.body, size: FontSize.BodySize)
-
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentViewTapped))
+        contentView.isUserInteractionEnabled = true // Ensure interaction is enabled
+        contentView.addGestureRecognizer(tapGesture)
 //        approvedBy.text = ""
     }
-
+    func styleLabel(_ label: UILabel) {
+        label.layer.cornerRadius = 8
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowOffset = CGSize(width: 0, height: 2)
+        label.layer.shadowRadius = 5
+        label.layer.shadowOpacity = 0.3
+        label.clipsToBounds = false // To ensure shadows are visible outside the label bounds
+    }
+    // Action to be triggered when the contentView is tapped
+    @objc func contentViewTapped() {
+        ShowPopup.isHidden = true
+    }
     @IBAction func shoPopup(_ sender: UIButton) {
         sender.isSelected.toggle()
         ShowPopup.isHidden = !sender.isSelected

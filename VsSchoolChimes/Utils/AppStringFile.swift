@@ -9,65 +9,65 @@ import Foundation
 
 class MenuStringFile{
     
-    //    let Communication = TranslationManager.shared.translate(key:"Communication");
-    //    let ImagePdf = TranslationManager.shared.translate(key:"Image/Pdf");
-    //    let VideoUpload = TranslationManager.shared.translate(key:"Video Upload");
-    //    let Circulars = TranslationManager.shared.translate(key:"Circulars");
-    //    let NoticeBoard = TranslationManager.shared.translate(key:"Notice Board");
-    //    let LeaveRequests = TranslationManager.shared.translate(key:"Leave Requests");
-    //    let Assignment = TranslationManager.shared.translate(key:"Assignment");
-    //    let OnlineMeeting = TranslationManager.shared.translate(key:"Online Meeting");
-    //    let Homework = TranslationManager.shared.translate(key:"Homework");
-    //    let ScheduleExamTest = TranslationManager.shared.translate(key:"Schedule Exam/Test");
-    //    let AttendanceMarking = TranslationManager.shared.translate(key:"Attendance marking");
-    //    let MessagesFromManagement = TranslationManager.shared.translate(key:"Messages from management");
-    //    let InteractionWithStudent = TranslationManager.shared.translate(key:"Interaction with student");
-    //    let LessonPlan = TranslationManager.shared.translate(key:"Lesson Plan");
-    //    let PTM = TranslationManager.shared.translate(key:"PTM");
-    //    let TextToParentsStaff = TranslationManager.shared.translate(key:"Text to Parents/Staff");
-    //    let SchoolClassEvents = TranslationManager.shared.translate(key:"School / Class Events");
-    //    let SchoolNeeds = TranslationManager.shared.translate(key:"School Needs");
-    //    let VeryImportantInfo = TranslationManager.shared.translate(key:"Very Important Info");
-    //    let AbsenteesReport = TranslationManager.shared.translate(key:"Absentees Report");
-    //    let SchoolStrength = TranslationManager.shared.translate(key:"School strength");
-    //    let DailyCollection = TranslationManager.shared.translate(key:"Daily Collection");
-    //    let StudentReport = TranslationManager.shared.translate(key:"Student Report");
-    //    let FeePendingReport = TranslationManager.shared.translate(key:"Fee Pending Report");
-    //    let MarkYourAttendance = TranslationManager.shared.translate(key:"Mark Your Attendance");
-    //    let StaffWiseAttendanceReport = TranslationManager.shared.translate(key:"Staff Wise Attendance Report");
-    //    let LSRW = TranslationManager.shared.translate(key:"LSRW");
+    static let Communication = TranslationManager.shared.translate(key:"Communication");
+    static let ImagePdf = TranslationManager.shared.translate(key:"Image/Pdf");
+    static let VideoUpload = TranslationManager.shared.translate(key:"Video Upload");
+    static let Circulars = TranslationManager.shared.translate(key:"Circulars");
+    static let NoticeBoard = TranslationManager.shared.translate(key:"Notice Board");
+    static let LeaveRequests = TranslationManager.shared.translate(key:"Leave Requests");
+    static let Assignment = TranslationManager.shared.translate(key:"Assignment");
+    static let OnlineMeeting = TranslationManager.shared.translate(key:"Online Meeting");
+    static let Homework = TranslationManager.shared.translate(key:"Homework");
+    static let ScheduleExamTest = TranslationManager.shared.translate(key:"Schedule Exam/Test");
+    static let AttendanceMarking = TranslationManager.shared.translate(key:"Attendance marking");
+    static let MessagesFromManagement = TranslationManager.shared.translate(key:"Messages from management");
+    static let InteractionWithStudent = TranslationManager.shared.translate(key:"Interaction with student");
+    static let LessonPlan = TranslationManager.shared.translate(key:"Lesson Plan");
+    static let PTM = TranslationManager.shared.translate(key:"PTM");
+    static let TextToParentsStaff = TranslationManager.shared.translate(key:"Text to Parents/Staff");
+    static let SchoolClassEvents = TranslationManager.shared.translate(key:"School / Class Events");
+    static let SchoolNeeds = TranslationManager.shared.translate(key:"School Needs");
+    static let VeryImportantInfo = TranslationManager.shared.translate(key:"Very Important Info");
+    static let AbsenteesReport = TranslationManager.shared.translate(key:"Absentees Report");
+    static let SchoolStrength = TranslationManager.shared.translate(key:"School strength");
+    static let DailyCollection = TranslationManager.shared.translate(key:"Daily Collection");
+    static let StudentReport = TranslationManager.shared.translate(key:"Student Report");
+    static let FeePendingReport = TranslationManager.shared.translate(key:"Fee Pending Report");
+    static let MarkYourAttendance = TranslationManager.shared.translate(key:"Mark Your Attendance");
+    static let StaffWiseAttendanceReport = TranslationManager.shared.translate(key:"Staff Wise Attendance Report");
+    static let LSRW = TranslationManager.shared.translate(key:"LSRW");
   
     
-    
-    static let Communication = "Communication".translated()
-    let ImagePdf = "Image/Pdf".translated()
-    let VideoUpload = "Video Upload".translated()
-    let Video = "Video".translated()
-    let Circulars = "Circulars".translated()
-    let NoticeBoard = "Notice Board".translated()
-    let LeaveRequests = "Leave Requests".translated()
-    let Assignment = "Assignment".translated()
-    let OnlineMeeting = "Online Meeting".translated()
-    let Homework = "Homework".translated()
-    let ScheduleExamTest = "Schedule Exam/Test".translated()
-    let AttendanceMarking = "Attendance marking".translated()
-    let MessagesFromManagement = "Messages from management".translated()
-    let InteractionWithStudent = "Interaction with student".translated()
-    let LessonPlan = "Lesson Plan".translated()
-    let PTM = "PTM".translated()
-    let TextToParentsStaff = "Text to Parents/Staff".translated()
-    let SchoolClassEvents = "School / Class Events".translated()
-    let EventsHolidays = "Events/Holidays".translated()
-    let SchoolNeeds = "School Needs".translated()
-    let VeryImportantInfo = "Very Important Info".translated()
-    let AbsenteesReport = "Absentees Report".translated()
-    let SchoolStrength = "School strength".translated()
-    let DailyCollection = "Daily Collection".translated()
-    let StudentReport = "Student Report".translated()
-    let FeePendingReport = "Fee Pending Report".translated()
-    let MarkYourAttendance = "Mark Your Attendance".translated()
-    let StaffWiseAttendanceReport = "Staff Wise Attendance Report".translated()
-    let LSRW = "LSRW".translated()
+//    
+//    static let Communication = "Communication".translated()
+//    static let ImagePdf = "Image/Pdf".translated()
+//    static let VideoUpload = "Video Upload".translated()
+//    static let Video = "Video".translated()
+//    static let Circulars = "Circulars".translated()
+//    static let NoticeBoard = "Notice Board".translated()
+//    static let LeaveRequests = "Leave Requests".translated()
+//    static let Assignment = "Assignment".translated()
+//    static let OnlineMeeting = "Online Meeting".translated()
+//    static let Homework = "Homework".translated()
+//    static let ScheduleExamTest = "Schedule Exam/Test".translated()
+//    static let AttendanceMarking = "Attendance marking".translated()
+//    static let MessagesFromManagement = "Messages from management".translated()
+//    static let InteractionWithStudent = "Interaction with student".translated()
+//    static let LessonPlan = "Lesson Plan".translated()
+//    static let PTM = "PTM".translated()
+//    static let TextToParentsStaff = "Text to Parents/Staff".translated()
+//    static let SchoolClassEvents = "School / Class Events".translated()
+//    static let EventsHolidays = "Events/Holidays".translated()
+//    static let SchoolNeeds = "School Needs".translated()
+//    static let VeryImportantInfo = "Very Important Info".translated()
+//    static let AbsenteesReport = "Absentees Report".translated()
+//    static let SchoolStrength = "School strength".translated()
+//    static let DailyCollection = "Daily Collection".translated()
+//    static let StudentReport = "Student Report".translated()
+//    static let FeePendingReport = "Fee Pending Report".translated()
+//    static let MarkYourAttendance = "Mark Your Attendance".translated()
+//    static let StaffWiseAttendanceReport = "Staff Wise Attendance Report".translated()
+//    static let LSRW = "LSRW".translated()
 }
 
 
@@ -258,6 +258,12 @@ class CommonStringFile{
     static let ContactSupport = "Contact Support".translated()
     static let TermsandConditions = "Terms and Conditions".translated()
     static let scheduleExam = "scheduleExam".translated()
+    static let From = "From".translated()
+    static let To = "To".translated()
+    static let Days = "Days".translated()
+    static let Day = "Day".translated()
+    static let CreateLeaveRequest = "CreateLeaveRequest".translated()
+    static let LeaveRequestInfo = "LeaveRequestInfo".translated()
 }
 
 
