@@ -282,7 +282,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     MenuRedirect.senderPtmNavigate(from: self)
                     
                 case MenuStringFile.LeaveRequests:
-                    MenuRedirect.senderStudentreportNavigate(from: self)
+                    MenuRedirect.senderLeaveRequestNavigate(from: self)
                     
                 case MenuStringFile.Assignment:
                     MenuRedirect.senderAssignmentNavigate(from: self)

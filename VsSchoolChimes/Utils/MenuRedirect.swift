@@ -91,7 +91,7 @@ class MenuRedirectHandler {
     }
     
     func senderLeaveRequestNavigate(from viewController: UIViewController) {
-        let vc = StudentHistryVC(nibName: nil, bundle: nil)
+        let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         
@@ -128,6 +128,14 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
+//    
+//    func senderLeaveRequestNavigate(from viewController: UIViewController) {
+//        let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
+//        
+//    }
+    
     
     func senderMarkAttendanceNavigate(from viewController: UIViewController) {
         let vc = MarkAttendenceVC(nibName: nil, bundle: nil)
