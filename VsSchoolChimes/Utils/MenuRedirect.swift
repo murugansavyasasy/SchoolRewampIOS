@@ -295,6 +295,15 @@ class MenuRedirectHandler {
        viewController.present(vc, animated: true)
    }
 
-    
+    func receiverHomework(from viewController: UIViewController){
+        let vc = ReciverHomeworkVC(nibName: nil, bundle: nil)
+       vc.modalPresentationStyle = .fullScreen
+       viewController.present(vc, animated: true)
+   }
+    func receiverAttendancereport(from viewController: UIViewController){
+        let vc = ReciverAttendanceReportVC(nibName: nil, bundle: nil)
+       vc.modalPresentationStyle = .fullScreen
+       viewController.present(vc, animated: true)
+   }
 }
 

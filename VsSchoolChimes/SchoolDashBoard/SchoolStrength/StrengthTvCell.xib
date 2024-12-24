@@ -12,15 +12,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="224" id="KGk-i7-Jjw" customClass="StrengthTvCell" customModule="VsSchoolChimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="224"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="244" id="KGk-i7-Jjw" customClass="StrengthTvCell" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="244"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="224"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="244"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fv7-Bq-GnT">
-                        <rect key="frame" x="10" y="10" width="300" height="204"/>
+                        <rect key="frame" x="10" y="10" width="300" height="224"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Thb-4o-aaR">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
@@ -78,11 +78,22 @@
                                     <constraint firstAttribute="height" constant="149" id="BOd-wq-ekO"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to see All classes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhL-09-YYT">
+                                <rect key="frame" x="10" y="201" width="280" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="yP8-rh-GJm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemGray5Color"/>
                         <constraints>
                             <constraint firstItem="9gm-in-hdv" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" id="2DQ-9m-KRy"/>
-                            <constraint firstAttribute="bottom" secondItem="9gm-in-hdv" secondAttribute="bottom" constant="5" id="ZzC-e1-1rp"/>
+                            <constraint firstItem="jhL-09-YYT" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" constant="10" id="5Ou-Ye-FeJ"/>
+                            <constraint firstItem="jhL-09-YYT" firstAttribute="top" secondItem="9gm-in-hdv" secondAttribute="bottom" constant="2" id="M1A-p8-PF4"/>
+                            <constraint firstAttribute="trailing" secondItem="jhL-09-YYT" secondAttribute="trailing" constant="10" id="VZO-4D-jKU"/>
+                            <constraint firstAttribute="bottom" secondItem="jhL-09-YYT" secondAttribute="bottom" constant="2" id="fZk-9L-3mF"/>
                             <constraint firstAttribute="trailing" secondItem="9gm-in-hdv" secondAttribute="trailing" id="gAD-Wq-Pv4"/>
                             <constraint firstItem="Thb-4o-aaR" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" id="jPB-o1-Q78"/>
                             <constraint firstAttribute="trailing" secondItem="Thb-4o-aaR" secondAttribute="trailing" id="r3r-qv-H5J"/>
@@ -100,6 +111,8 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="BottomLbl" destination="jhL-09-YYT" id="LMC-EX-la3"/>
+                <outlet property="BottomLblHeight" destination="yP8-rh-GJm" id="POS-B1-w3D"/>
                 <outlet property="StandardView" destination="Thb-4o-aaR" id="wLJ-bg-sct"/>
                 <outlet property="barChartView" destination="9gm-in-hdv" id="PTL-gE-EsE"/>
                 <outlet property="barchartHeight" destination="BOd-wq-ekO" id="LhO-5n-vel"/>
@@ -109,7 +122,7 @@
                 <outlet property="dropdownImgview" destination="qcz-6K-uOG" id="iGZ-1Q-MU4"/>
                 <outlet property="standardLbl" destination="gjX-nF-PU5" id="O5f-K1-1Mz"/>
             </connections>
-            <point key="canvasLocation" x="138.93129770992365" y="83.098591549295776"/>
+            <point key="canvasLocation" x="138.93129770992365" y="88.732394366197184"/>
         </tableViewCell>
     </objects>
     <resources>
@@ -120,8 +133,8 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

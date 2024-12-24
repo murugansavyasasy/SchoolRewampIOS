@@ -12,19 +12,15 @@ import DropDown
 @available(iOS 14.0, *)
 class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice {
     
-    
-    
     func deleteImage(index: Int) {
         selectedImages.remove(at: index)
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
     @IBOutlet weak var ReportView: UIView!
-    
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var SectionView: UIView!
     @IBOutlet weak var dateBtn: UIButton!
-    
     @IBOutlet weak var StandardView: UIView!
     @IBOutlet weak var CalendarView: UIView!
     @IBOutlet weak var homeworkBtn: UIButton!
@@ -45,6 +41,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var DateViewheight: NSLayoutConstraint!
     @IBOutlet weak var calenderHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var SectionLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
+    
+    @IBOutlet weak var CustomDateBtn: HalfColorButton!
+    @IBOutlet weak var customDateLbl: UILabel!
+   
     var selectedImages: [UIImage] = []
     var url : URL?
     let photoPickManager = PhotoPickerManager.shared
@@ -54,12 +56,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let SectionDropdown = DropDown()
     var image = "image/pdf"
     var delegate : HistorySelectDelegate?
+    let customdate = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
+        
+        DetailsTxtview.delegate = self
         
         let nib = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
         uploadAttachmentView.imageCollectionview.register(nib, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
@@ -78,36 +83,62 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
-        
         ReportView.isHidden = true
         ReportView.alpha = 0
         
-        CalendarView.layer.cornerRadius = 10
-        CalendarView.layer.borderWidth = 1
-        CalendarView.layer.borderColor = UIColor.lightGray.cgColor
-        
-        SectionView.layer.cornerRadius = 10
-        StandardView.layer.cornerRadius = 10
-        
+        imageSelection()
     }
     
     func StyleAndTranslater(){
-        
-       
-        
+        //MARK: UI Update
         Buttonstackview.layer.cornerRadius = 20
         homeworkBtn.layer.cornerRadius = 20
         ReportBtn.layer.cornerRadius = 20
         DetailsTxtview.layer.cornerRadius = 10
         DetailsTxtview.layer.borderWidth = 1
         DetailsTxtview.layer.borderColor = UIColor.lightGray.cgColor
-        
         RecipientBtn.layer.cornerRadius = 10
+        CalendarView.layer.cornerRadius = 10
+        CalendarView.layer.borderWidth = 1
+        CalendarView.layer.borderColor = UIColor.lightGray.cgColor
+        SectionView.layer.cornerRadius = 10
+        StandardView.layer.cornerRadius = 10
+        DetailsTxtview.text = TexviewStringFile.Enter_Homework_Description
+        DetailsTxtview.textColor = .lightGray
+        CustomDateBtn.layer.cornerRadius = 10
+        CustomDateBtn.layer.borderWidth = 1
+        CustomDateBtn.layer.borderColor = UIColor.gray.cgColor
+        customdate.dateFormat = "EEE d"
+        let customdatestring = customdate.string(from: Date())
+        setcustomDate(attributedLbl: customdatestring)
         
+        //MARK: set Gradient colours for Button
         gradientcolours(button: homeworkBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         
         gradientcolours(button: ReportBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ReportBtn.setTitleColor(UIColor.black, for: .normal)
+        
+        //MARK: Button Font Style
+        dateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        homeworkBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        ReportBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+
+        //MARK: Label Font Style
+        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DetailsLbl.setFont(style: .title, size: FontSize.TitleSize)
+        wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
+        StandardLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SectionLbl.setFont(style: .title, size: FontSize.TitleSize)
+
+        //MARK: Text Field Font Style
+        //TitleTxtfield.setFont(style: .body, size: FontSize.BodySize)
+
+        //MARK: Text View Font Style
+        //DetailsTxtview.setFont(style: .body, size: FontSize.BodySize)
+
     }
     
     func showDatepicker(){
@@ -115,21 +146,17 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Create a UIDatePicker
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
-        
         // Use inline display style for iOS 14+
         if #available(iOS 14.0, *) {
             datePicker.preferredDatePickerStyle = .inline
         }
-        
         // Set maximum date to today
         datePicker.maximumDate = Date()
-        
         // Calculate minimum date (30 days before today)
         let calendar = Calendar.current
         if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
             datePicker.minimumDate = thirtyDaysAgo
         }
-        
         
         // Scale down the entire calendar
         datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65) // Adjust scaling factors
@@ -141,11 +168,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Add the date picker to the container view
         CalendarView.addSubview(datePicker)
         
-        
         // Handle date selection
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
     }
-
+    
     @objc func dateChanged(_ sender: UIDatePicker) {
         
         formatter.dateFormat = "EEE d MMM yyyy"
@@ -153,17 +179,17 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         let label = formatter.string(from: sender.date)
         
-       
-            calenderimgHeight.constant = 38
-         //   DateViewheight.constant = 25
-            calenderHeight.constant = 0
-            CalendarView.isHidden = true
-            dateBtn.isHidden = false
-            dateBtn.setTitle(label, for: .normal)
-            dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-            // calenderHeight.constant = 260
-        
-        
+       // calenderimgHeight.constant = 38
+        //   DateViewheight.constant = 25
+        calenderHeight.constant = 0
+        CalendarView.isHidden = true
+        dateBtn.isHidden = false
+        dateBtn.setTitle(label, for: .normal)
+        dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        // calenderHeight.constant = 260
+        customdate.dateFormat = "EEE d"
+        let attributedLbl = customdate.string(from: sender.date)
+        setcustomDate(attributedLbl: attributedLbl)
     }
     
     @IBAction func SelectStandard() {
@@ -187,18 +213,18 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             }
             
             // Perform additional actions when ID == 1
-           
+            
             self.CalendarView.isHidden = true
-                self.calenderHeight.constant = 0
-                
-//                self.TV.isHidden = false
-//                self.TV.delegate = self
-//                self.TV.dataSource = self
-//                self.TV.reloadData()
+            self.calenderHeight.constant = 0
+            
+            //                self.TV.isHidden = false
+            //                self.TV.delegate = self
+            //                self.TV.dataSource = self
+            //                self.TV.reloadData()
             
         }
     }
-
+    
     @IBAction func SelectSection() {
         SectionDropdown.anchorView = SectionView
         SectionDropdown.dataSource = ["A", "B", "C", "D"]
@@ -214,14 +240,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 label.text = item
             }
             
-          
-                CalendarView.isHidden = true
-                calenderHeight.constant = 0
-                self.TV.isHidden = false
-                self.TV.delegate = self
-                self.TV.dataSource = self
-                self.TV.reloadData()
-            
+            CalendarView.isHidden = true
+            calenderHeight.constant = 0
+            self.TV.isHidden = false
+            self.TV.delegate = self
+            self.TV.dataSource = self
+            self.TV.reloadData()
         }
     }
     
@@ -234,10 +258,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 url = nil
             }
             selectedImages.append(contentsOf: images)
-                        for image in images {
-                            print("Selected image: \(image)")
-                           // photoPickManager.uploadAWS(image: image)
-                        }
+            for image in images {
+                print("Selected image: \(image)")
+                // photoPickManager.uploadAWS(image: image)
+            }
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         photoPickManager.pdfUrl = { [weak self] pdfurl in
@@ -265,14 +289,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBAction func HomeworkBtnAct(_ sender: Any) {
         
         gradientcolours(button: homeworkBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        
         homeworkBtn.setTitleColor(.white, for:.normal)
-        
         ReportBtn.backgroundColor = .clear
         
-        
         gradientcolours(button: ReportBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        
         ReportBtn.setTitleColor(.black, for:.normal)
         
         ReportView.isHidden = true
@@ -284,14 +304,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBAction func ReportsBtnAct(_ sender: Any) {
         
         gradientcolours(button: ReportBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        
         ReportBtn.setTitleColor(.white, for:.normal)
-        
         homeworkBtn.backgroundColor = .clear
         
-        
         gradientcolours(button: homeworkBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        
         homeworkBtn.setTitleColor(.black, for:.normal)
         
         ComposeHomeworkView.isHidden = true
@@ -302,9 +318,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
     }
     
-    
     @IBAction func backAction() {
         dismiss(animated: true)
+    }
+    
+    
+    @IBAction func CustomDateBtnAct(_ sender: Any) {
     }
     
     @IBAction func DateBtnAct(_ sender: Any) {
@@ -320,6 +339,34 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
     
+    func setcustomDate(attributedLbl : String){
+        
+        let words = attributedLbl.split(separator: " ")
+        
+        let attributedString = NSMutableAttributedString(string: attributedLbl)
+        
+        // Define the ranges for the two words
+        let firstWordRange = (attributedLbl as NSString).range(of: String(words[0]))
+        let secondWordRange = (attributedLbl as NSString).range(of: String(words[1]))
+        
+        let dayfont = UIFont(name: "Poppins-Medium", size: 14.6)
+        let datefont = UIFont(name: "Poppins-Bold", size: 15)
+//        let dayfont =  UIFont.systemFont(ofSize: 10)
+//        let datefont =  UIFont.boldSystemFont(ofSize: 22)
+        
+        // Apply color and font to the first word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)
+        attributedString.addAttribute(.font, value: dayfont, range: firstWordRange)
+        
+        // Apply  color and font to the second word
+        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: secondWordRange)
+        attributedString.addAttribute(.font, value: datefont, range: secondWordRange)
+        
+        // Assign the attributed string to the label
+        customDateLbl.attributedText = attributedString
+        
+    }
+    
     @IBAction func RecipentBtnAct(_ sender: Any) {
         
     }
@@ -327,24 +374,22 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     // MARK: Set gradient colours for Button
     func gradientcolours(button : UIButton,colours : [CGColor]) {
         
-    button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-
-    // Create and configure the gradient layer
-    let gradientLayer = CAGradientLayer()
-    gradientLayer.colors = colours
-    gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-    gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-    gradientLayer.frame = button.bounds
-    gradientLayer.cornerRadius = button.layer.cornerRadius
-
-    // Insert the gradient layer into the button's layer
-    button.layer.insertSublayer(gradientLayer, at: 0)
-
+        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+        
+        // Create and configure the gradient layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = colours
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
+        gradientLayer.frame = button.bounds
+        gradientLayer.cornerRadius = button.layer.cornerRadius
+        
+        // Insert the gradient layer into the button's layer
+        button.layer.insertSublayer(gradientLayer, at: 0)
+        
     }
     
-    
     // MARK: File Attachments Actions
-    
     func selectImages() {
         if selectedImages.count != 5{
             photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
@@ -372,11 +417,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)
-        
     }
     
 }
-    
+
 @available(iOS 14.0, *)
 extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -460,10 +504,10 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 //
                 present(vc, animated: true)
             }
-    
+            
         }
-       
-
+        
+        
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
             
             controller.dismiss(animated: true, completion: nil)
@@ -474,7 +518,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
     }
     
 }
- 
+
 @available(iOS 14.0, *)
 extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -486,26 +530,25 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         if indexPath.row == 0 {
             let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
             
-                cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
-                cell.ishomework = true
-                cell.CVHeight.constant = 120
-                cell.pagecontrollerheight.constant = 26
-//            cell.datelbl.isHidden = true
-//            cell.pinImage.isHidden = true
-//            cell.Pinview.isHidden = true
-//            cell.collectionview.isHidden = false
+            cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
+            cell.ishomework = true
+            cell.CVHeight.constant = 120
+            cell.pagecontrollerheight.constant = 26
+            //            cell.datelbl.isHidden = true
+            //            cell.pinImage.isHidden = true
+            //            cell.Pinview.isHidden = true
+            //            cell.collectionview.isHidden = false
             cell.pagecontroller.isHidden = false
             cell.SelectBtn.isHidden = true
             cell.HomeworkTitleLbl.text = "Write Assignment"
             cell.TitleLbl.text = "Tamil"
-//            cell.dicriptContent.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment."
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
             cell.delegate = self
             cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
             cell.dicriptContent.isUserInteractionEnabled = true
             cell.dicriptContent.addGestureRecognizer(tapGesture)
-           
+            
             return cell
         }
         else if indexPath.row == 1 {
@@ -523,7 +566,7 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             cell.ishomework = true
             cell.pagecontrollerheight.constant = 0
             cell.pagecontroller.isHidden = true
-
+            
             cell.datelbl.isHidden = true
             cell.pinImage.isHidden = true
             cell.Pinview.isHidden = true
@@ -590,5 +633,22 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
     
     func didTapButton(title: String, content: String, items: [String]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+    }
+}
+
+@available(iOS 14.0, *)
+extension SenderSideHomeWorkViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if DetailsTxtview.text == TexviewStringFile.Enter_Homework_Description {
+            DetailsTxtview.text = ""
+            DetailsTxtview.textColor = .black
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if DetailsTxtview.text == "" {
+            DetailsTxtview.text = TexviewStringFile.Enter_Homework_Description
+            DetailsTxtview.textColor = .gray
+        }
     }
 }

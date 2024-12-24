@@ -57,7 +57,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" name="meetingcolour1"/>
+                            <color key="backgroundColor" name="ParentClr"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="EPp-Op-YpG" secondAttribute="bottom" id="L6e-Uj-kfH"/>
                                 <constraint firstAttribute="height" constant="50" id="Oxh-RW-jYj"/>
@@ -132,7 +132,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="meetingcolour1"/>
+            <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="4h6-7q-dYm" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="N6d-Td-kIF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4h6-7q-dYm" secondAttribute="bottom" id="i2k-1z-xHD"/>
@@ -144,8 +144,8 @@
     </objects>
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
-        <namedColor name="meetingcolour1">
-            <color red="0.3843137254901961" green="0.77647058823529413" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ParentClr">
+            <color red="0.74500000476837158" green="0.68199998140335083" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

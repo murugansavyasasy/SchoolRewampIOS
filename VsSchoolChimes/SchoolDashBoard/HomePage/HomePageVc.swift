@@ -222,12 +222,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
        
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
-            let label = filteredItems[indexPath.row].translated()
+                let label = filteredItems[indexPath.row].translated()
                 let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
                 cell.MenuImgView.image  = img
-                cell.applyGradient()
+            cell.applyGradient(colours: [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor],xstart: 0.8,ystart: 0.8)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     cell.GradientView.animateView(enable: false)

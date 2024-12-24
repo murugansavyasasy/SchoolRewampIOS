@@ -11,7 +11,8 @@ import UIKit
 class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
    
     
-
+    @IBOutlet weak var bottomCvHeight: NSLayoutConstraint!
+    
     @IBOutlet weak var loginDetailView: UIView!
     @IBOutlet weak var Searchbar: UISearchBar!
     @IBOutlet weak var AddressLabel: UILabel!
@@ -40,12 +41,14 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     var currentPlaceholderIndex = 0
     var timer: Timer?
     let alert = CustomAlert()
-
+    var currentSelectedIndex = 0
     override func viewDidLoad() {
     super.viewDidLoad()
+        adjustCollectionViewHeight()
+        bottomCv.isScrollEnabled = false
     filteredItems = MenuRedirect.items
     setupSearchBar()
-    startAutoScroll()
+//    startAutoScroll()
     cellRegistration()
     startPlaceholderRotation()
     addDoneButton()
@@ -57,6 +60,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     searchHeightCon.constant = 0
     TopCv.delegate = self
     TopCv.dataSource = self
+        TopCv.collectionViewLayout = CardsCollectionFlowLayout()
     bottomCv.isPrefetchingEnabled = true
     Searchbar.delegate = self
     NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
@@ -88,7 +92,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     bottomCv.dataSource = self
     bottomCv.reloadData()
 
-    restartAnimations()
+//    restartAnimations()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -97,7 +101,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     bottomCv.delegate = self
     bottomCv.dataSource = self
-    restartAnimations()
+//    restartAnimations()
 
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -142,6 +146,30 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     deinit {
     timer?.invalidate()
     }
+    
+    
+    
+    func adjustCollectionViewHeight() {
+            let numberOfColumns: CGFloat = 4
+            let spacing: CGFloat = 10 // Adjust based on your collection view layout
+            
+            // Get layout attributes
+        guard let layout = bottomCv.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            
+            // Calculate item size
+            let totalSpacing = (numberOfColumns - 1) * layout.minimumInteritemSpacing + layout.sectionInset.left + layout.sectionInset.right
+            let itemWidth = (bottomCv.frame.width - totalSpacing) / numberOfColumns
+            let itemHeight = itemWidth // Assuming square items
+            
+            // Calculate rows
+            let numberOfRows = ceil(CGFloat(MenuRedirect.receiverItems.count) / numberOfColumns)
+            
+            // Update height constraint
+            bottomCvHeight.constant = (numberOfRows * itemHeight) + ((numberOfRows - 1) * layout.minimumLineSpacing) + layout.sectionInset.top + layout.sectionInset.bottom
+            
+            // Refresh layout
+        bottomCv.layoutIfNeeded()
+        }
 
 
 
@@ -228,14 +256,14 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         let label = MenuRedirect.receiverItems[indexPath.row]
      
         let img = UIImage(named: MenuRedirect.receiverItems[indexPath.row])
-        let images = MenuRedirect.receiverItems[indexPath.row]
+       
       
     cell.MenuLbl.setFont(style: .body, size: 10)
     cell.MenuLbl.text = label
 //        img.replacingCharacters(in: "/", with: "")
 //        images.replacingOccurrences(of: "/", with: "")
         cell.MenuImgView.image  = img
-    cell.applyGradient()
+        cell.applyGradient(colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor],xstart: 0.4,ystart: 0.4)
 
     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
     cell.GradientView.animateView(enable: false)
@@ -247,15 +275,23 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
         else{
 
-    if indexPath.row == 0 {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.PiechartCVCell , for: indexPath) as! PiechartCVCell
-    return cell
-    }
-    else{
+//    if indexPath.row == 0 {
+//    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.PiechartCVCell , for: indexPath) as! PiechartCVCell
+//    return cell
+//    }
+//    else{
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell , for: indexPath) as! TopCVCell
+            
+//            cell.applyGradient()
+            
+            
+            
+            if currentSelectedIndex == indexPath.row {
+                cell.transformToLarge()
+            }
 
     return cell
-    }
+//    }
 
     }
 
@@ -264,6 +300,68 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     }
 
 
+        
+//        func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+//           
+//            
+//            currentCell
+//            
+//        }
+        
+        func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+            
+            
+            print("scrollViewWillEndDraggingscrollViewWillEndDraggingscrollViewWillEndDragging")
+            
+            if scrollView == TopCv{
+                
+                guard scrollView == TopCv else {
+                    return
+                }
+                
+                targetContentOffset.pointee = scrollView.contentOffset
+                
+                let flowLayout = TopCv.collectionViewLayout as! CardsCollectionFlowLayout
+                let cellWidthIncludingSpacing = flowLayout.itemSize.width + flowLayout.minimumLineSpacing
+                let offset = targetContentOffset.pointee
+                let horizontalVelocity = velocity.x
+                
+                var selectedIndex = currentSelectedIndex
+                
+                switch horizontalVelocity {
+                    // On swiping
+                case _ where horizontalVelocity > 0 :
+                    selectedIndex = currentSelectedIndex + 1
+                case _ where horizontalVelocity < 0:
+                    selectedIndex = currentSelectedIndex - 1
+                    
+                    // On dragging
+                case _ where horizontalVelocity == 0:
+                    let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+                    let roundedIndex = round(index)
+                    
+                    selectedIndex = Int(roundedIndex)
+                default:
+                    print("Incorrect velocity for collection view")
+                }
+                
+                let safeIndex = max(0, min(selectedIndex, 5 - 1))
+                let selectedIndexPath = IndexPath(row: safeIndex, section: 0)
+                
+                flowLayout.collectionView!.scrollToItem(at: selectedIndexPath, at: .centeredHorizontally, animated: true)
+                
+                let previousSelectedIndex = IndexPath(row: Int(currentSelectedIndex), section: 0)
+                let previousSelectedCell = TopCv.cellForItem(at: previousSelectedIndex)
+                let nextSelectedCell = TopCv.cellForItem(at: selectedIndexPath)
+                
+                currentSelectedIndex = selectedIndexPath.row
+                
+                previousSelectedCell?.transformToStandard()
+                nextSelectedCell?.transformToLarge()
+            }
+        }
+        
+        
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
     if collectionView == bottomCv{
@@ -303,9 +401,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     case ReceiverMenuItems.RequestLeave:
         MenuRedirect.LeaveRquest(from: self)
     case ReceiverMenuItems.FeeDetails:
-        ""
+        MenuRedirect.receiverchat(from: self)
     case ReceiverMenuItems.InteractionWithStaff:
-        ""
+        MenuRedirect.receiverchat(from: self)
     case ReceiverMenuItems.InteractionWithStaff:
         ""
     case ReceiverMenuItems.OnlineMeeting:
@@ -313,7 +411,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     case ReceiverMenuItems.ClassTimetable:
         MenuRedirect.receiverclassTimeTable(from: self)
     case ReceiverMenuItems.Homework:
-        ""
+        MenuRedirect.receiverHomework(from: self)
+    case ReceiverMenuItems.AttendanceReport:
+        MenuRedirect.receiverAttendancereport(from: self)
     case ReceiverMenuItems.CertificateRequest:
         ""
     case ReceiverMenuItems.ExamMarks:
@@ -342,12 +442,19 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     if collectionView == bottomCv{
 
-    return CGSize(width: collectionView.frame.width/4, height: 130)
-
+        let numberOfColumns: CGFloat = 4
+                guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+                    return CGSize(width: 50, height: 50) // Default fallback
+                }
+                
+                let totalSpacing = (numberOfColumns - 1) * layout.minimumInteritemSpacing + layout.sectionInset.left + layout.sectionInset.right
+                let itemWidth = (collectionView.frame.width - totalSpacing) / numberOfColumns
+                return CGSize(width: itemWidth, height: itemWidth) // Assuming square items
+            
     }
     else{
 
-    return CGSize(width: 350, height: 140)
+    return CGSize(width: 250, height: 110)
 
     }
 
@@ -363,6 +470,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
 
     Searchbar.endEditing(true)
+        
+        let currentCell = TopCv.cellForItem(at: IndexPath(row: Int(currentSelectedIndex), section: 0))
+        currentCell?.transformToStandard()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -415,3 +525,25 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     }
 
     }
+
+
+
+
+extension UICollectionViewCell{
+    
+    
+    func transformToLarge() {
+        UIView.animate(withDuration: 0.2) {
+            self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }
+    }
+    
+    
+    func transformToStandard() {
+        UIView.animate(withDuration: 0.2) {
+            self.transform = CGAffineTransform.identity
+        }
+    }
+    
+    
+}

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReciverAttendanceReportVC" customModule="VsSchoolChimes" customModuleProvider="target">
+            <connections>
+                <outlet property="HeaderLbl" destination="Erx-O7-EGE" id="kLT-lz-OAo"/>
+                <outlet property="TV" destination="3lf-vv-7Re" id="i6y-IM-ymP"/>
+                <outlet property="searchBar" destination="cAn-d5-13C" id="HPO-Yj-kit"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqu-d0-EaJ">
+                    <rect key="frame" x="16" y="67" width="70" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="EJQ-gx-vuQ"/>
+                        <constraint firstAttribute="width" constant="70" id="aGx-Zx-CqT"/>
+                    </constraints>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="arrow.left" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="Hsq-mo-5Qt"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance Report" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Erx-O7-EGE">
+                    <rect key="frame" x="94" y="72.666666666666671" width="204" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bej-tn-ch4">
+                    <rect key="frame" x="0.0" y="117" width="393" height="701"/>
+                    <subviews>
+                        <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="cAn-d5-13C">
+                            <rect key="frame" x="10" y="15" width="373" height="56"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="HPD-ip-e3J"/>
+                            </connections>
+                        </searchBar>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3lf-vv-7Re">
+                            <rect key="frame" x="0.0" y="91" width="393" height="610"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="3lf-vv-7Re" secondAttribute="trailing" id="BRf-Mi-vIs"/>
+                        <constraint firstItem="cAn-d5-13C" firstAttribute="leading" secondItem="bej-tn-ch4" secondAttribute="leading" constant="10" id="DLZ-iu-OxY"/>
+                        <constraint firstAttribute="bottom" secondItem="3lf-vv-7Re" secondAttribute="bottom" id="UhM-SW-HBU"/>
+                        <constraint firstAttribute="trailing" secondItem="cAn-d5-13C" secondAttribute="trailing" constant="10" id="Ukb-pJ-LTb"/>
+                        <constraint firstItem="3lf-vv-7Re" firstAttribute="leading" secondItem="bej-tn-ch4" secondAttribute="leading" id="dDN-tX-GcB"/>
+                        <constraint firstItem="3lf-vv-7Re" firstAttribute="top" secondItem="cAn-d5-13C" secondAttribute="bottom" constant="20" id="e1Y-bb-52t"/>
+                        <constraint firstItem="cAn-d5-13C" firstAttribute="top" secondItem="bej-tn-ch4" secondAttribute="top" constant="15" id="yBo-UL-Nw8"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" name="ParentClr"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bej-tn-ch4" secondAttribute="bottom" id="28f-IE-aQm"/>
+                <constraint firstItem="kqu-d0-EaJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="2QM-vU-rVH"/>
+                <constraint firstItem="bej-tn-ch4" firstAttribute="top" secondItem="kqu-d0-EaJ" secondAttribute="bottom" constant="15" id="6Gt-sn-eoI"/>
+                <constraint firstItem="Erx-O7-EGE" firstAttribute="leading" secondItem="kqu-d0-EaJ" secondAttribute="trailing" constant="8" id="FFn-ZL-CSW"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Erx-O7-EGE" secondAttribute="trailing" constant="95" id="H4Z-YZ-lvf"/>
+                <constraint firstItem="Erx-O7-EGE" firstAttribute="centerY" secondItem="kqu-d0-EaJ" secondAttribute="centerY" id="cdC-cx-M6C"/>
+                <constraint firstItem="kqu-d0-EaJ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="jwL-n4-FMm"/>
+                <constraint firstItem="bej-tn-ch4" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="lPM-BG-8uT"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bej-tn-ch4" secondAttribute="trailing" id="nEw-2p-hUO"/>
+            </constraints>
+            <point key="canvasLocation" x="129.00763358778624" y="20.422535211267608"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <namedColor name="ParentClr">
+            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

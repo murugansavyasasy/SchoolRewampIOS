@@ -39,7 +39,7 @@ class EventResiverVC: UIViewController, SelectNotice{
 //        pages = [page1, page2]
       
     
-        gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
         createEvent.setTitleColor(.white, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         historyBtn.setTitleColor(.black, for:.normal)
@@ -102,14 +102,14 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBAction func SelectionController(_ sender: UIButton) {
         
         if sender.tag == 0{
-            gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+            gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
             createEvent.setTitleColor(.white, for:.normal)
             gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             historyBtn.setTitleColor(.black, for:.normal)
         }else{
             gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             createEvent.setTitleColor(.black, for:.normal)
-            gradientcolours(button: historyBtn,colours:[UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+            gradientcolours(button: historyBtn,colours:[UIColor.parentClr.cgColor,UIColor.priority.cgColor])
             historyBtn.setTitleColor(.white, for:.normal)
         }
         

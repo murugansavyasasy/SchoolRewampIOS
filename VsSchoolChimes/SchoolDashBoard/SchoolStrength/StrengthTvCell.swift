@@ -20,6 +20,9 @@ class StrengthTvCell: UITableViewCell {
     @IBOutlet weak var cellview: UIView!
     
     @IBOutlet weak var StandardView: UIView!
+    
+    @IBOutlet weak var BottomLblHeight: NSLayoutConstraint!
+    @IBOutlet weak var BottomLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -65,7 +68,7 @@ class StrengthTvCell: UITableViewCell {
         barChartView.legend.enabled = false
         
         // Adding custom labels (Axis Titles) inside the chart
-        addAxisLabels()
+       // addAxisLabels()
     }
     
     private func addAxisLabels() {

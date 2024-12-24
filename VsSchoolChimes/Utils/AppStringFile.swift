@@ -177,6 +177,7 @@ struct MenuTapbar{
     static let ComposeNotifications = "Compose NoticeBoard".translated()
     static let Video = "Video".translated()
     static let Assignment = "Assignment".translated()
+    static let Noticeboard = "Noticeboard".translated()
     
     
     
@@ -297,6 +298,9 @@ class TexviewStringFile{
     static let Enter_video_Description = "Enter Video Description".translated()
     static let Enter_Chat_Description = "Type your message here...".translated()
     static let certificateReason = "Reason for certificate".translated()
+    static let Enter_Meeting_Description = "Enter Meeting Description".translated()
+    static let Enter_Homework_Description = "Enter Homework Description".translated()
+    static let Enter_Assignment_Description = "Enter Assignment Description".translated()
 }
 class textFieldStringFile{
     

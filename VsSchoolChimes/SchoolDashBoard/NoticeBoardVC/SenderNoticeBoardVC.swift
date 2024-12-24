@@ -102,10 +102,23 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
                 url = nil
             }
             selectedImages.append(contentsOf: images)
+            
+            print("selectedImage", selectedImages)
+         /*   let images = images*/ // Array of images
+            let presignedURLs = ["https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/2024-12-24/6063/file%3A///private/var/mobile/Containers/Data/Application/00E089B8-D267-441E-AAD4-3E35A102A925/tmp/vc_-5851419880403543277.png?Content-Type=image&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2NK3YMVHFMO66GYP%2F20241224%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20241224T072154Z&X-Amz-Expires=90&X-Amz-Signature=786c9921f6135bf05cfd40390a3d62b43972895f224ac83c26dee7de1effce6a&X-Amz-SignedHeaders=host"] // Corresponding presigned URLs
+
+            photoPickManager.getImageURLUsingPresignedURL(images: images, presignedURLs: presignedURLs) { uploadedURLs in
+                print("Uploaded image URLs: \(uploadedURLs)")
+            }
+
+            
             //            for image in images {
             //                print("Selected image: \(image)")
-            //               // photoPickManager.uploadAWS(image: image)
+//                            photoPickManager.uploadAWS(image: image)
             //            }
+            
+            
+            
             costomView.imageCollectionview.reloadData()
         }
         photoPickManager.pdfUrl = { [weak self] pdfurl in

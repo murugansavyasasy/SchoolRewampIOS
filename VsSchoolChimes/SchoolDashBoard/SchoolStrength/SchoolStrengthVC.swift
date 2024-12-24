@@ -119,10 +119,14 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             cell.barchartHeight.constant = 150
             cell.barChartView.isHidden = false
             cell.barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
+            cell.BottomLblHeight.constant = 21
+            cell.BottomLbl.isHidden = false
         } else {
             
             cell.barchartHeight.constant = 0
             cell.barChartView.isHidden = true
+            cell.BottomLblHeight.constant = 0
+            cell.BottomLbl.isHidden = true
         }
         
         return cell
