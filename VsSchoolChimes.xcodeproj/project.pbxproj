@@ -227,6 +227,10 @@
 		84079FF82D15A7B000D6DF04 /* LeveHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84079FEF2D15A7B000D6DF04 /* LeveHistoryVC.xib */; };
 		84079FF92D15A7B000D6DF04 /* LeveHistoryTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84079FF12D15A7B000D6DF04 /* LeveHistoryTV.xib */; };
 		84079FFA2D15A7B000D6DF04 /* LeveCreateVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84079FED2D15A7B000D6DF04 /* LeveCreateVC.xib */; };
+		840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E44A32D1A85B000D561E8 /* SenderLeaveRqstVC.swift */; };
+		840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */; };
+		840E44A92D1A85EC00D561E8 /* SenderLeaveTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E44A72D1A85EC00D561E8 /* SenderLeaveTV.swift */; };
+		840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E44A82D1A85EC00D561E8 /* SenderLeaveTV.xib */; };
 		842FBABB2D0BEDBF007C0B51 /* ReportStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB72D0BEDBF007C0B51 /* ReportStudentTVC.xib */; };
 		842FBABC2D0BEDBF007C0B51 /* ReportStudentListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */; };
 		842FBABD2D0BEDBF007C0B51 /* StudentReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB92D0BEDBF007C0B51 /* StudentReportVC.xib */; };
@@ -781,6 +785,10 @@
 		84079FEF2D15A7B000D6DF04 /* LeveHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveHistoryVC.xib; sourceTree = "<group>"; };
 		84079FF02D15A7B000D6DF04 /* LeveHistoryTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeveHistoryTV.swift; sourceTree = "<group>"; };
 		84079FF12D15A7B000D6DF04 /* LeveHistoryTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeveHistoryTV.xib; sourceTree = "<group>"; };
+		840E44A32D1A85B000D561E8 /* SenderLeaveRqstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderLeaveRqstVC.swift; sourceTree = "<group>"; };
+		840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderLeaveRqstVC.xib; sourceTree = "<group>"; };
+		840E44A72D1A85EC00D561E8 /* SenderLeaveTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderLeaveTV.swift; sourceTree = "<group>"; };
+		840E44A82D1A85EC00D561E8 /* SenderLeaveTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderLeaveTV.xib; sourceTree = "<group>"; };
 		842FBAB42D0BEDBF007C0B51 /* ReportStudentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentListVC.swift; sourceTree = "<group>"; };
 		842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportStudentListVC.xib; sourceTree = "<group>"; };
 		842FBAB62D0BEDBF007C0B51 /* ReportStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentTVC.swift; sourceTree = "<group>"; };
@@ -1876,6 +1884,17 @@
 			path = LeaveRequest;
 			sourceTree = "<group>";
 		};
+		840E44A22D1A855400D561E8 /* SnderLeaveRequest */ = {
+			isa = PBXGroup;
+			children = (
+				840E44A32D1A85B000D561E8 /* SenderLeaveRqstVC.swift */,
+				840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */,
+				840E44A72D1A85EC00D561E8 /* SenderLeaveTV.swift */,
+				840E44A82D1A85EC00D561E8 /* SenderLeaveTV.xib */,
+			);
+			path = SnderLeaveRequest;
+			sourceTree = "<group>";
+		};
 		842FBABA2D0BEDBF007C0B51 /* StudentReport */ = {
 			isa = PBXGroup;
 			children = (
@@ -2498,6 +2517,7 @@
 		84A5BE812C19776600E32496 /* SchoolDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				840E44A22D1A855400D561E8 /* SnderLeaveRequest */,
 				84BB5EA42D1132CF00AD0C87 /* Schedule Exam */,
 				187CF48F2D113524001422CE /* MsgFrmManagement */,
 				84395FE62D10023200FC3242 /* Chat */,
@@ -3242,6 +3262,7 @@
 				84B57EC42D148C0A00E0EA29 /* ParentCommunicationVc.xib in Resources */,
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
 				844188872CC915FF006483C3 /* OTPVc.xib in Resources */,
+				840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */,
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
 				845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */,
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
@@ -3332,6 +3353,7 @@
 				842FBAF02D0BFE64007C0B51 /* SchoolStrengthVC.xib in Resources */,
 				842FBAF12D0BFE64007C0B51 /* StrengthTvCell.xib in Resources */,
 				842FBAF22D0BFE64007C0B51 /* LessonPlanTvCell.xib in Resources */,
+				840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */,
 				18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */,
 				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
 				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
@@ -3593,6 +3615,7 @@
 				84EFF9CF2CCC7A6000C11C26 /* PasswordVc.swift in Sources */,
 				844188882CC915FF006483C3 /* OTPVc.swift in Sources */,
 				84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */,
+				840E44A92D1A85EC00D561E8 /* SenderLeaveTV.swift in Sources */,
 				84A2717C2CEDAB9F0033EB02 /* ImagePdfVC.swift in Sources */,
 				84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */,
 				84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */,
@@ -3655,6 +3678,7 @@
 				8442A86B2CDB787A0006068E /* StudentcardTvCell.swift in Sources */,
 				18BAF4DE2CEB3CB200517441 /* SenderAssignmentViewController.swift in Sources */,
 				187CF5DD2D142D06001422CE /* CertificateRequestViewController.swift in Sources */,
+				840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,
 				8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */,
