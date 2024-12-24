@@ -6,27 +6,69 @@
 //
 
 import UIKit
-
-class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
-
+protocol ConfirmDelegate{
+    func confirm(index:Int,status:String)
+}
+class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSource, ConfirmDelegate {
+    func confirm(index: Int, status: String) {
+        print(index)
+        let alert = CustomAlert()
+        alert.showAlertCancel(title: "",
+                              message: "Are you sure you want to \(status) \("Chandhru") Leave Request",
+                              actionLbl1: "Confirm",
+                              actionLbl2: "Cancel",
+                              on: self) { [self] in
+            filterStudent?[index].status = status
+            filterStudent?[index].isExpanded = true
+            leaveRequestTable.reloadData()
+        } onNo: {
+            print("User canceled the action")
+        }
+        
+    }
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var leaveRequestTable: UITableView!
     var leaveResuest = [LeaveRequest(fromDate: "12 Sep 24", toDate: "13 Sep 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "11 Oct 24", toDate: "12 Oct 24", status: "Aproved", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "08 Nov 24", toDate: "10 Nov 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "12 Dec 24", toDate: "13 Dec 24", status: "Rejected", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false)]
+    var filterStudent: [LeaveRequest]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        filterStudent = leaveResuest
+        searchBar.placeholder = CommonStringFile.Search
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        leaveRequestTable.register(UINib(nibName: "SenderLeaveTV", bundle: nil), forCellReuseIdentifier: "SenderLeaveTV")
+        leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)
+        if #available(iOS 14.0, *) {
+            addDoneButton()
+            searchBar.delegate = self
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return leaveResuest.count
+        return filterStudent?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: "SenderLeaveTV", for: indexPath) as! SenderLeaveTV
-        cell.fromDate.text = leaveResuest[indexPath.row].fromDate
-        cell.toDate.text = leaveResuest[indexPath.row].toDate
-        cell.resonLbl.text = leaveResuest[indexPath.row].reson
+        let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.SenderLeaveTV, for: indexPath) as! SenderLeaveTV
+        cell.fromDate.text = filterStudent?[indexPath.row].fromDate
+        cell.toDate.text = filterStudent?[indexPath.row].toDate
+        cell.resonLbl.text = filterStudent?[indexPath.row].reson
+        cell.delegate = self
+        cell.aproveBtn.tag = indexPath.row
+        cell.rejectBtn.tag = indexPath.row
+        cell.statusLbl.isHidden = !filterStudent![indexPath.row].isExpanded
+        cell.statusLbl.text = filterStudent?[indexPath.row].status
+        cell.statusLbl.textColor = filterStudent?[indexPath.row].status == "Aproved" ? .aproved : .red
+        if filterStudent![indexPath.row].isExpanded{
+            cell.aproved.isHidden = true
+            cell.reject.isHidden = true
+            cell.height.constant = 0
+        }else{
+            cell.aproved.isHidden = false
+            cell.reject.isHidden = false
+            cell.height.constant = 40
+        }
+        
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -34,5 +76,37 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
+    }
+}
+@available(iOS 14.0, *)
+extension SenderLeaveRqstVC: UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            // Reset to full data when the search text is cleared
+            filterStudent = leaveResuest
+        } else {
+            // Filter data based on the search text
+            filterStudent = leaveResuest.filter { student in
+                student.fromDate!.lowercased().contains(searchText.lowercased())
+            }
+        }
+        leaveRequestTable.reloadData()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        searchBar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        searchBar.resignFirstResponder()
     }
 }

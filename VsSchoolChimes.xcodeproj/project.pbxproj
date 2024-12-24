@@ -277,6 +277,9 @@
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		8442A9F62CDF47C20006068E /* ChngLangFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F52CDF47C20006068E /* ChngLangFil.swift */; };
 		8442A9F82CDF47E40006068E /* ChngLangConsFil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */; };
+		8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */; };
+		844914872D01A8EF0007A875 /* MeetingsTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844914862D01A8EF0007A875 /* MeetingsTVcell.xib */; };
+		844914882D01A8EF0007A875 /* MeetingsTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844914852D01A8EF0007A875 /* MeetingsTVcell.swift */; };
 		845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FED3D2D129A0D0090296B /* ExamCreatVC.swift */; };
 		845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845FED3E2D129A0D0090296B /* ExamCreatVC.xib */; };
 		84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */; };
@@ -851,6 +854,9 @@
 		8442A9F52CDF47C20006068E /* ChngLangFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangFil.swift; sourceTree = "<group>"; };
 		8442A9F72CDF47E40006068E /* ChngLangConsFil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChngLangConsFil.swift; sourceTree = "<group>"; };
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		844914852D01A8EF0007A875 /* MeetingsTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsTVcell.swift; sourceTree = "<group>"; };
+		844914862D01A8EF0007A875 /* MeetingsTVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingsTVcell.xib; sourceTree = "<group>"; };
 		845FED3D2D129A0D0090296B /* ExamCreatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCreatVC.swift; sourceTree = "<group>"; };
 		845FED3E2D129A0D0090296B /* ExamCreatVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamCreatVC.xib; sourceTree = "<group>"; };
 		84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardTvcellTableViewCell.swift; sourceTree = "<group>"; };
@@ -2522,6 +2528,7 @@
 				84C829C02D0807CD0024A46A /* Confetti */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				8442A85D2CDB726A0006068E /* GoogleService-Info.plist */,
+				8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */,
 				84A5BE892C197B9F00E32496 /* Preferences.swift */,
 				84385F672CF842F60020E94D /* Fonts.swift */,
 				84A5BE8D2C197C3000E32496 /* Toast.swift */,
@@ -3630,6 +3637,7 @@
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
 				18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */,
 				18926C522D02DE81002BBB97 /* SubmitLsrwRequest.swift in Sources */,
+				8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */,
 				18926C532D02DE81002BBB97 /* LsrwListShowViewController.swift in Sources */,
 				18926C542D02DE81002BBB97 /* SubmitResponseForSkillModal.swift in Sources */,
 				18926C552D02DE81002BBB97 /* FileAttachmentTableViewCell.swift in Sources */,

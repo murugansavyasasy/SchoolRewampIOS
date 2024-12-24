@@ -52,6 +52,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
         var images = [UIImage]()
+        print("images",images)
         let dispatchGroup = DispatchGroup()
         for result in results {
             if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
@@ -69,6 +70,92 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
             self?.onImagePicked?(images)
         }
     }
+    
+    
+    
+    
+    
+//    import Foundation
+//    import UIKit
+
+    // Function to upload an image using a presigned URL
+    func uploadAWSUsingPresignedURL(image: UIImage, presignedURL: String, completion: @escaping (Result<String, Error>) -> Void) {
+        // Convert the UIImage to JPEG data
+        guard let imageData = image.jpegData(compressionQuality: 0.9),
+              let url = URL(string: presignedURL) else {
+            completion(.failure(NSError(domain: "InvalidInput", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid image or URL"])))
+            return
+        }
+
+        // Create a URLRequest for the presigned URL
+        var request = URLRequest(url: url)
+        request.httpMethod = "PUT"
+        request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
+
+        // Use URLSession to upload the image
+        let uploadTask = URLSession.shared.uploadTask(with: request, from: imageData) { data, response, error in
+            if let error = error {
+                print("Upload failed: \(error.localizedDescription)")
+                completion(.failure(error))
+                return
+            }
+
+            if let httpResponse = response as? HTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    print("Upload successful!")
+                    completion(.success(presignedURL)) // Returning the presigned URL as confirmation
+                } else {
+                    print("Upload failed with status code: \(httpResponse.statusCode)")
+                    let uploadError = NSError(domain: "UploadError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Failed with status code \(httpResponse.statusCode)"])
+                    completion(.failure(uploadError))
+                }
+            }
+        }
+
+        // Start the upload task
+        uploadTask.resume()
+    }
+
+    // Function to handle multiple image uploads
+    func getImageURLUsingPresignedURL(images: [UIImage], presignedURLs: [String], completion: @escaping ([String]) -> Void) {
+        guard images.count == presignedURLs.count else {
+            print("Mismatch between image count and presigned URLs count.")
+            completion([])
+            return
+        }
+
+        var uploadedImageURLs: [String] = []
+        var currentImageCount = 0
+
+        func uploadNext() {
+            if currentImageCount < images.count {
+                let image = images[currentImageCount]
+                let presignedURL = presignedURLs[currentImageCount]
+                
+                uploadAWSUsingPresignedURL(image: image, presignedURL: presignedURL) { result in
+                    switch result {
+                    case .success(let uploadedURL):
+                        uploadedImageURLs.append(uploadedURL)
+                        currentImageCount += 1
+                        uploadNext() // Continue with the next image
+                    case .failure(let error):
+                        print("Error uploading image: \(error.localizedDescription)")
+                        currentImageCount += 1
+                        uploadNext() // Continue with the next image even on failure
+                    }
+                }
+            } else {
+                // All uploads complete
+                completion(uploadedImageURLs)
+            }
+        }
+
+        // Start the upload process
+        uploadNext()
+    }
+
+    
+    
     
     func uploadAWS(image : UIImage){
         let S3BucketName = AwsCredentials.bucketNameIndia
@@ -94,6 +181,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPic
         uploadRequest?.body = imageURL
         uploadRequest?.key =   currentDate +  "/" + "File_" + ext
         uploadRequest?.bucket = S3BucketName
+        
         if getImagePdfType == "Image" {
             uploadRequest?.contentType = "image/png"
         } else{

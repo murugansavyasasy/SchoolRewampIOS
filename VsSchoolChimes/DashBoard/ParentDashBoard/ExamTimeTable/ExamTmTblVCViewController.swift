@@ -127,12 +127,7 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
         }
         
         else{
-            
-          
-            
-            
-            
-            
+     
         }
         
     }

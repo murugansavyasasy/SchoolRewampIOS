@@ -224,7 +224,7 @@ class LeveHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
 struct LeaveRequest{
     let fromDate:String?
     let toDate:String?
-    let status:String
+    var status:String
     let reson:String
     var isExpanded:Bool
 }
