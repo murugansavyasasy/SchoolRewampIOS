@@ -85,6 +85,9 @@ class CellConfingName {
     static let  SenderLeaveTV = "SenderLeaveTV"
     static let  ReciverAttendReportTV = "ReciverAttendReportTV"
     static let  ReciverHomeworkHeader = "ReciverHomeworkHeader"
+    static let  ExamMarkTV = "ExamMarkTV"
+    static let  ExammarkFooterView = "ExammarkFooterView"
+    static let  ExamMarkCV = "ExamMarkCV"
     
     
 }

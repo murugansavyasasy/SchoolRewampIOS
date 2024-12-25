@@ -9,26 +9,54 @@ import UIKit
 
 class ExameMarVC: UIViewController {
 
+    @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var tv: UITableView!
+    let marks = ["85 / 100","70 / 100","75 / 100","49 / 100","93 / 100"]
+    let status = [0.85,0.70,0.75,0.49,0.93]
+    let subject = ["Tamil","English","Maths","Science","Social Science"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        tv.isHidden = true
         
         tv.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
-      
-        let nib1 = UINib(nibName:"MarkTvCell", bundle: nil)
-        tv.register(nib1, forCellReuseIdentifier: "MarkTvCell")
+        tv.register(UINib(nibName: CellConfingName.ExammarkFooterView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.ExammarkFooterView)
         
-        tv.dataSource = self
-        tv.delegate = self
+        let cvnib = UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil)
+        cv.register(cvnib, forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
+      
+//        let nib1 = UINib(nibName:"MarkTvCell", bundle: nil)
+//        tv.register(nib1, forCellReuseIdentifier: "MarkTvCell")
+        let nib1 = UINib(nibName:CellConfingName.ExamMarkTV, bundle: nil)
+        tv.register(nib1, forCellReuseIdentifier: CellConfingName.ExamMarkTV)
+        
+        cv.dataSource = self
+        cv.delegate = self
     }
 
 
  
     @IBAction func backBtn(_ sender: Any) {
         
-        dismiss(animated: true)
+        if tv.isHidden == true{
+            dismiss(animated: true)
+        }
+        else{
+            tv.isHidden = true
+            cv.isHidden = false
+            cv.reloadData()
+        }
+       
+    }
+    
+    @IBAction func ViewMarks(_ sender: Any) {
+        
+        cv.isHidden = true
+        tv.isHidden = false
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
     }
     
 }
@@ -37,14 +65,16 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
         return 4
     }
   
    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier:CellConfingName.SettingHeaderView) as! SettingHeaderView
+        cell.headerLabel.text = "Exam Marks"
 //        cell.headerLabel.text = sections[section].title.translated()
-//        cell.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
+        cell.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
         
         return cell
     }
@@ -57,25 +87,82 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         
-        return 10
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        let  cell  = tableView.dequeueReusableCell(withIdentifier: "MarkTvCell" , for: indexPath) as! MarkTvCell
+//        let  cell  = tableView.dequeueReusableCell(withIdentifier: "MarkTvCell" , for: indexPath) as! MarkTvCell
+        let  cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ExamMarkTV , for: indexPath) as! ExamMarkTV
         
-        
+        cell.SubjectLbl.text = subject[indexPath.row]
+        cell.MarkLbl.text = marks[indexPath.row]
+        cell.progessBar.progress = Float(status[indexPath.row])
+        if #available(iOS 15.0, *) {
+            cell.progessBar.progressTintColor = .systemMint
+        } else {
+            // Fallback on earlier versions
+        }
         
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+        return UITableView.automaticDimension
         return 100
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let cell = tv.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.ExammarkFooterView) as! ExammarkFooterView
+        cell.footerview.layer.cornerRadius = 10
+        cell.TotalLbl.setFont(style: .title, size: FontSize.TitleSize)
+        cell.TotalMarkLbl.setFont(style: .title, size: FontSize.TitleSize)
+        cell.RankLbl.setFont(style: .title, size: FontSize.TitleSize)
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 100
+    }
+    
+}
+
+extension ExameMarVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = cv.dequeueReusableCell(withReuseIdentifier: CellConfingName.ExamMarkCV, for: indexPath) as! ExamMarkCV
+        
+        let markTap = UITapGestureRecognizer(target: self, action: #selector(ViewMarks))
+        cell.ViewMarkBtnview.addGestureRecognizer(markTap)
+        cell.ViewMarkBtnview.isUserInteractionEnabled = true
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = cv.frame.width / 2.2
+           return CGSize(width: width, height: 160)
+       }
+
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+           return 2 // No spacing between items
+       }
+
+       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+           return 10 // No spacing between rows
+       }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        
+//        cv.isHidden = true
+//        tv.isHidden = false
+//        tv.delegate = self
+//        tv.dataSource = self
+//        tv.reloadData()
+//    }
     
     
 }
