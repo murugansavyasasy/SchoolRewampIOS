@@ -43,7 +43,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         
     }
     func uiConficration(){
-        TitleHederLbl.text = titleLbl
+        TitleHederLbl.text = titleLbl.translated()
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20

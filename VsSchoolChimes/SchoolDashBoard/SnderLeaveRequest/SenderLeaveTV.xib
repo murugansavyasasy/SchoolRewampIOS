@@ -138,7 +138,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="30" id="DWT-Ey-BvZ"/>
                                                         </constraints>
-                                                        <inset key="imageEdgeInsets" minX="5" minY="7" maxX="5" maxY="7"/>
+                                                        <inset key="imageEdgeInsets" minX="5" minY="7" maxX="0.0" maxY="7"/>
                                                         <state key="normal" image="check"/>
                                                         <connections>
                                                             <action selector="aprovedBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="no5-SF-0dK"/>

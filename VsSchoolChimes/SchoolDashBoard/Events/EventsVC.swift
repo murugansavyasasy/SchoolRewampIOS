@@ -191,14 +191,14 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         calanderBtn.layer.cornerRadius = 10
         placeLbl.setFont(style:.body, size: FontSize.BodySize)
-        placeLbl.text = CommonStringFile.Venue
-        addPhotoLbl.text = CommonStringFile.AddPhotos
-        eventDeatail.text = CommonStringFile.EventDetails
-        EventTtleLbl.text = CommonStringFile.EventTitle
-        placeTxt.placeholder = CommonStringFile.egChennai
-        eventTxt.placeholder = CommonStringFile.egYogaEvent
+        placeLbl.text = CommonStringFile.Venue.translated()
+        addPhotoLbl.text = CommonStringFile.AddPhotos.translated()
+        eventDeatail.text = CommonStringFile.EventDetails.translated()
+        EventTtleLbl.text = CommonStringFile.EventTitle.translated()
+        placeTxt.placeholder = CommonStringFile.egChennai.translated()
+        eventTxt.placeholder = CommonStringFile.egYogaEvent.translated()
         
-        setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1, firstString: CommonStringFile.AddPhotos, secondString: CommonStringFile.Optional, color1: .black, color2: .lightGray)
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1.translated(), firstString: CommonStringFile.AddPhotos.translated(), secondString: CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         
     }
     
@@ -348,7 +348,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.EnterTextHere
+        placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()

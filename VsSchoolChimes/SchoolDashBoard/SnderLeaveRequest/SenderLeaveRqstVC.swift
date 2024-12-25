@@ -14,9 +14,9 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         print(index)
         let alert = CustomAlert()
         alert.showAlertCancel(title: "",
-                              message: "Are you sure you want to \(status) \("Chandhru") Leave Request",
-                              actionLbl1: "Confirm",
-                              actionLbl2: "Cancel",
+                              message: AlertstringFile.ConfirmLeave + status + " Chandhru" + AlertstringFile.LeaveRequest ,
+                              actionLbl1: AlertstringFile.Confirm,
+                              actionLbl2: AlertstringFile.Cancel,
                               on: self) { [self] in
             filterStudent?[index].status = status
             filterStudent?[index].isExpanded = true
@@ -35,7 +35,8 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
     override func viewDidLoad() {
         super.viewDidLoad()
         filterStudent = leaveResuest
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
+        titleLbl.text = MenuStringFile.LeaveRequests.translated()
         titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)
         if #available(iOS 14.0, *) {

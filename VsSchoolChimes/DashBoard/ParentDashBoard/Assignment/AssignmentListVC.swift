@@ -14,7 +14,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
         
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
-        searchview.placeholder = CommonStringFile.Search
+        searchview.placeholder = CommonStringFile.Search.translated()
         searchview.delegate = self
         searchview.layer.borderWidth = 0
         searchview.backgroundImage = UIImage()

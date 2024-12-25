@@ -35,7 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     print("Permission granted: \(granted)")
 
     }
-
+//        let languageCode = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? ""
+//        print("languageCode",languageCode)
+//        TranslationManager.shared.setLanguage(languageCode)
     application.registerForRemoteNotifications()
 
     Messaging.messaging().delegate = self

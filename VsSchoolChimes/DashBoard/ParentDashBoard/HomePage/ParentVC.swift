@@ -55,7 +55,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     let value = UserDefaults.standard.integer(forKey: "passvalue")
     getValue = value
     // Do any additional setup after loading the view.
-    Searchbar.placeholder = CommonStringFile.Search
+        Searchbar.placeholder = CommonStringFile.Search.translated()
     Searchbar.delegate = self
     searchHeightCon.constant = 0
     TopCv.delegate = self
@@ -129,7 +129,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     }
 
     func setupSearchBar() {
-    Searchbar.placeholder = CommonStringFile.Search  + MenuRedirect.items[currentPlaceholderIndex]
+        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
     }
 
     func startPlaceholderRotation() {
@@ -140,7 +140,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
     func updatePlaceholder() {
     currentPlaceholderIndex = (currentPlaceholderIndex + 1) % MenuRedirect.items.count
-    Searchbar.placeholder = CommonStringFile.Search  + MenuRedirect.items[currentPlaceholderIndex]
+        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
     }
 
     deinit {

@@ -34,7 +34,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tbE-om-2oh">
-                    <rect key="frame" x="0.0" y="99" width="393" height="719"/>
+                    <rect key="frame" x="0.0" y="104" width="393" height="714"/>
                     <subviews>
                         <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hOr-xV-ijW">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="70"/>
@@ -198,10 +198,10 @@
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ToU-Kp-IN0">
-                            <rect key="frame" x="0.0" y="291.66666666666674" width="393" height="427.33333333333326"/>
+                            <rect key="frame" x="0.0" y="291.66666666666674" width="393" height="422.33333333333326"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="m6e-1o-K5O">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="427.33333333333331"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="422.33333333333331"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="gdR-wf-HTS"/>
@@ -266,7 +266,7 @@
                 <constraint firstItem="Lwn-UU-yjl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bqC-XD-IAE"/>
                 <constraint firstItem="edw-zt-rUR" firstAttribute="centerY" secondItem="Lwn-UU-yjl" secondAttribute="centerY" id="d8b-FR-0cQ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tbE-om-2oh" secondAttribute="trailing" id="lwG-zp-pJc"/>
-                <constraint firstItem="tbE-om-2oh" firstAttribute="top" secondItem="Lwn-UU-yjl" secondAttribute="bottom" constant="5" id="s3R-lB-2Gi"/>
+                <constraint firstItem="tbE-om-2oh" firstAttribute="top" secondItem="Lwn-UU-yjl" secondAttribute="bottom" constant="10" id="s3R-lB-2Gi"/>
             </constraints>
             <point key="canvasLocation" x="-25" y="20"/>
         </view>

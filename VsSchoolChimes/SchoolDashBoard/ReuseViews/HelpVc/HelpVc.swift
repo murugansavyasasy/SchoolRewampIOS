@@ -13,7 +13,7 @@ class HelpVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        HelppageHeader.text = CommonStringFile.ContactSupport
+        HelppageHeader.text = CommonStringFile.ContactSupport.translated()
         HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize)
         // Do any additional setup after loading the view.
     }

@@ -18,7 +18,7 @@ class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
         // Initialization code
         
         textview.isHidden = true
-        textview.text = CommonStringFile.EnterTextHere
+        textview.text = CommonStringFile.EnterTextHere.translated()
         textview.textColor = UIColor.lightGray
         textview.isScrollEnabled = false
         textview.delegate = self
@@ -49,7 +49,7 @@ class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textview.text.isEmpty {
-            textview.text = CommonStringFile.EnterTextHere
+            textview.text = CommonStringFile.EnterTextHere.translated()
             textview.textColor = UIColor.lightGray
         }
     }

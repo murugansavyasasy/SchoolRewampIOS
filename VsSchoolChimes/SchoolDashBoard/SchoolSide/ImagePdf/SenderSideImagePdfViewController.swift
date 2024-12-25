@@ -55,14 +55,14 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         super.viewDidLoad()
         
         
-        stdSecBtn.setTitle(CommonStringFile.Standardorsection, for: .normal)
-        secStudBtn.setTitle(CommonStringFile.Sectionorstudent, for: .normal)
-        groupBtn.setTitle(CommonStringFile.Groups, for: .normal)
+        stdSecBtn.setTitle(CommonStringFile.Standardorsection.translated(), for: .normal)
+        secStudBtn.setTitle(CommonStringFile.Sectionorstudent.translated(), for: .normal)
+        groupBtn.setTitle(CommonStringFile.Groups.translated(), for: .normal)
         
         
-        uploadAttacLbl.text = CommonStringFile.UploadAttachment
-        titleLbl.text = CommonStringFile.UploadImagepdf
-        descTextField.placeholder = CommonStringFile.Description
+        uploadAttacLbl.text = CommonStringFile.UploadAttachment.translated()
+        titleLbl.text = CommonStringFile.UploadImagepdf.translated()
+        descTextField.placeholder = CommonStringFile.Description.translated()
         imgPdCollectionView.register(UINib(nibName: CellConfingName.ImageCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
         

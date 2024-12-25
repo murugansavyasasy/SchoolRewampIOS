@@ -116,8 +116,8 @@ class LessonPlanTvCell: UITableViewCell {
         pieChartView.notifyDataSetChanged()
         
         // Optional: Update the labels outside the chart
-        Greenlabel.text = CommonStringFile.completed
-        redLabel.text = CommonStringFile.pending
+        Greenlabel.text = CommonStringFile.completed.translated()
+        redLabel.text = CommonStringFile.pending.translated()
     }
     
     

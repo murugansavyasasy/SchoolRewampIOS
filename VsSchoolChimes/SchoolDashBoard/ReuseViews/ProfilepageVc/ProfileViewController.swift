@@ -78,18 +78,18 @@ class ProfileViewController: UIViewController {
         
         
         //MARK: Tranlater
-        Profile.text = CommonStringFile.Profile
-        aboutstudent.text = CommonStringFile.AboutStudent
-        contactdetails.text = CommonStringFile.Contactdetails
-        section.text = CommonStringFile.Section + ": A"
-        standard.text = CommonStringFile.Standard + ": XI"
-        RegisterNo.text = CommonStringFile.Registernumber + ": 476543"
-        Familydetails.text = CommonStringFile.FamilyDetails
-        Fathername.text = CommonStringFile.Fathername
-        FatherOccupation.text = CommonStringFile.Fatheroccupation
-        Mothername.text = CommonStringFile.Mothername
-        Motheroccupation.text = CommonStringFile.Motheroccupation
-        SeconadaryphoneNo.text = CommonStringFile.SecondaryPhoneno
+        Profile.text = CommonStringFile.Profile.translated()
+        aboutstudent.text = CommonStringFile.AboutStudent.translated()
+        contactdetails.text = CommonStringFile.Contactdetails.translated()
+        section.text = CommonStringFile.Section.translated() + ": A"
+        standard.text = CommonStringFile.Standard .translated() + ": XI"
+        RegisterNo.text = CommonStringFile.Registernumber.translated() + ": 476543"
+        Familydetails.text = CommonStringFile.FamilyDetails.translated()
+        Fathername.text = CommonStringFile.Fathername.translated()
+        FatherOccupation.text = CommonStringFile.Fatheroccupation.translated()
+        Mothername.text = CommonStringFile.Mothername.translated()
+        Motheroccupation.text = CommonStringFile.Motheroccupation.translated()
+        SeconadaryphoneNo.text = CommonStringFile.SecondaryPhoneno.translated()
 
         //MARK: Button Font Stye
         EditBtn.setTitleFont(style: .body, size: FontSize.BodySize)

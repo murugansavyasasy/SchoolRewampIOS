@@ -22,7 +22,7 @@
 "Report a bug" = "รายงานข้อบกพร่อง";
 "Send Feedback" = "ส่งคำติชม";
 "Logout" = "ออกจากระบบ";
-"General" = "ทั่วไป";
+"GENERAL" = "ทั่วไป";
 "Feedback" = "คำติชม";
 "Settings" = "การตั้งค่า";
 

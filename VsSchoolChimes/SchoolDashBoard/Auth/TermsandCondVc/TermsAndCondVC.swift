@@ -16,7 +16,7 @@ class TermsAndCondVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HeadingLabel.text = CommonStringFile.TermsandConditions
+        HeadingLabel.text = CommonStringFile.TermsandConditions.translated()
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
 
         if let pdfURL = URL(string: "https://schoolchimes.com/vs_web/terms_conditions/") {

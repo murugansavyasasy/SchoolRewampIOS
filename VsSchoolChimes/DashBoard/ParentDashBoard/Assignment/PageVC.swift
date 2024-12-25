@@ -11,7 +11,22 @@ protocol DidSelectDelegate: AnyObject { // Use `AnyObject` for class-only confor
     func select(index: Int, value: String?,Img:[String],Pdf:String?,text:String?,type:String)
 }
 
-class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, DidSelectDelegate {
+class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, DidSelectDelegate{
+    func backtohome() {
+        guard 0 >= 0 && 0 < pages.count else {
+            print("Index out of bounds")
+            return
+        }
+        let currentIndex = viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+        let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse
+
+        // Using UIView.animate to adjust the duration of the transition
+        UIView.animate(withDuration: 2.5, animations: {
+            // Set the target view controller with the desired animation
+            self.setViewControllers([self.pages[0]], direction: direction, animated: true, completion: nil)
+        })
+    }
+    
 
     var pages: [UIViewController] = []
     
@@ -70,7 +85,6 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
             targetVC.imageURL = imgs
             targetVC.type = Int(value) ?? 0
         }
-
         // Determine navigation direction based on current index
         let currentIndex = viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
         let direction: UIPageViewController.NavigationDirection = index > currentIndex ? .forward : .reverse
