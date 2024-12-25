@@ -8,7 +8,14 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class TapBarVC: UIViewController,UITabBarDelegate {
+class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
+    func backtohome() {
+        setupTabBar()
+        setupContainerView()
+        firstVC.getValue = passedValue
+        selectViewController(firstVC)
+    }
+    
     
     
     private let tabBar = UITabBar()
@@ -29,8 +36,8 @@ class TapBarVC: UIViewController,UITabBarDelegate {
         setupContainerView()
         
         
-        let userDefault = UserDefaults.standard
-        userDefault.set(languageCode, forKey: DefaultsKeys.Language)
+//        let userDefault = UserDefaults.standard
+//        userDefault.set(languageCode, forKey: DefaultsKeys.Language)
         
         if passedValue == 1{
             
@@ -94,7 +101,9 @@ class TapBarVC: UIViewController,UITabBarDelegate {
             child.view.removeFromSuperview()
             child.removeFromParent()
         }
-        
+        if let pageVC = viewController as? SettingsViewController {
+            pageVC.delegate = self
+            }
         // Add new child view controller
         addChild(viewController)
         viewController.view.frame = containerView.bounds

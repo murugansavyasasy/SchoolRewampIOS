@@ -22,7 +22,8 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     var url : URL?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        HeaderLabel.text = CommonStringFile.UploadImagepdf.translated()
+        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         SelectButton.layer.cornerRadius = 10
         imageSelection()
         UploadView.imageCollectionview.delegate = self

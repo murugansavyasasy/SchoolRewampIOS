@@ -25,8 +25,8 @@ class AttendenceTVC: UITableViewCell, Attendence {
         // Initialize and configure the custom switch
         custSwitch = CustomSwitch1()
         custSwitch.delegate = self
-        custSwitch.onText = CommonStringFile.Present
-        custSwitch.offText = CommonStringFile.Absent
+        custSwitch.onText = CommonStringFile.Present.translated()
+        custSwitch.offText = CommonStringFile.Absent.translated()
         rollNo.layer.backgroundColor = UIColor(red: 189/255, green: 230/255, blue: 254/255, alpha: 1).cgColor
         rollNo.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 18)
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -69,8 +69,8 @@ class CustomSwitch1: UIView {
         }
     }
     
-    var onText: String = CommonStringFile.Present
-    var offText: String = CommonStringFile.Absent
+    var onText: String = CommonStringFile.Present.translated()
+    var offText: String = CommonStringFile.Absent.translated()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

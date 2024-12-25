@@ -114,7 +114,7 @@ class ExamCreatVC: UIViewController, UITextViewDelegate {
     // MARK: - Placeholder Setup
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.EnterTextHere
+        placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()

@@ -50,7 +50,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
         // Do any additional setup after loading the view.
-        Searchbar.placeholder = CommonStringFile.Search
+        Searchbar.placeholder = CommonStringFile.Search.translated()
         Searchbar.delegate = self
         searchHeightCon.constant = 0
         TopCv.delegate = self
@@ -86,7 +86,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         bottomCv.delegate = self
         bottomCv.dataSource = self
         bottomCv.reloadData()
-        
+        filteredItems = MenuRedirect.items
         restartAnimations()
     }
     
@@ -124,7 +124,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     func setupSearchBar() {
-        Searchbar.placeholder = CommonStringFile.Search  + MenuRedirect.items[currentPlaceholderIndex]
+        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
     }
     
     func startPlaceholderRotation() {
@@ -135,7 +135,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     func updatePlaceholder() {
         currentPlaceholderIndex = (currentPlaceholderIndex + 1) % MenuRedirect.items.count
-        Searchbar.placeholder = CommonStringFile.Search  + MenuRedirect.items[currentPlaceholderIndex]
+        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
     }
     
     deinit {
@@ -218,8 +218,6 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if collectionView == bottomCv{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
-            
-       
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
                 let label = filteredItems[indexPath.row].translated()
@@ -263,62 +261,62 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             let menuItem = MenuRedirect.items[indexPath.row].translated()
                 
                 switch menuItem {
-                case MenuStringFile.VideoUpload:
+                case MenuStringFile.VideoUpload.translated():
                     MenuRedirect.senderVideoNavigate(from: self)
                     
                 case MenuStringFile.Communication.translated():
                     MenuRedirect.senderCommunicationNavigate(from: self)
                     
-                case MenuStringFile.ImagePdf, MenuStringFile.ImagePdf.translated():
+                case MenuStringFile.ImagePdf.translated():
                     MenuRedirect.senderImgPDfNavigate(from: self)
                     
                 case MenuStringFile.Circulars.translated():
                     MenuRedirect.senderEventNavigate(from: self)
                     
-                case MenuStringFile.NoticeBoard:
+                case MenuStringFile.NoticeBoard.translated():
                     MenuRedirect.senderNoticeboardNavigate(from: self)
                     
-                case MenuStringFile.PTM:
+                case MenuStringFile.PTM.translated():
                     MenuRedirect.senderPtmNavigate(from: self)
                     
-                case MenuStringFile.LeaveRequests:
+                case MenuStringFile.LeaveRequests.translated():
                     MenuRedirect.senderLeaveRequestNavigate(from: self)
                     
-                case MenuStringFile.Assignment:
+                case MenuStringFile.Assignment.translated():
                     MenuRedirect.senderAssignmentNavigate(from: self)
                     
-                case MenuStringFile.OnlineMeeting:
+                case MenuStringFile.OnlineMeeting.translated():
                     MenuRedirect.senderOnlineNavigate(from: self)
                     
-                case MenuStringFile.Homework:
+                case MenuStringFile.Homework.translated():
                     MenuRedirect.senderHomeWorkNavigate(from: self)
                     
-                case MenuStringFile.LessonPlan:
+                case MenuStringFile.LessonPlan.translated():
                     MenuRedirect.senderLessonplanNavigate(from: self)
                     
-                case MenuStringFile.AbsenteesReport:
+                case MenuStringFile.AbsenteesReport.translated():
                     MenuRedirect.senderAbsenteesNavigate(from: self)
                     
-                case MenuStringFile.FeePendingReport:
+                case MenuStringFile.FeePendingReport.translated():
                     MenuRedirect.senderFeePendingNavigate(from: self)
                     
-                case MenuStringFile.StudentReport:
+                case MenuStringFile.StudentReport.translated():
                     MenuRedirect.senderStudentreportNavigate(from: self)
                     
-                case MenuStringFile.VeryImportantInfo:
+                case MenuStringFile.VeryImportantInfo.translated():
                     MenuRedirect.senderImportantInfoNavigate(from: self)
                     
-                case MenuStringFile.SchoolStrength:
+                case MenuStringFile.SchoolStrength.translated():
                     MenuRedirect.senderSchoolStrength(from: self)
                     
-                case MenuStringFile.MarkYourAttendance:
+                case MenuStringFile.MarkYourAttendance.translated():
                     MenuRedirect.senderMarkAttendanceNavigate(from: self)
                     
-                case MenuStringFile.InteractionWithStudent:
+                case MenuStringFile.InteractionWithStudent.translated():
                     ""
 //                    MenuRedirect.chat(from: self)
                     
-                case MenuStringFile.ScheduleExamTest:
+                case MenuStringFile.ScheduleExamTest.translated():
                     MenuRedirect.ScheduleExamVCNavigat(from: self)
                 case MenuStringFile.DailyCollection,"":
                     break

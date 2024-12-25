@@ -50,11 +50,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var filterData : [Student]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        rollNoLbl.text = CommonStringFile.RollNo
-        nameLbl.text = CommonStringFile.Name
-        statusLbl.text = CommonStringFile.Status
-        HeaderLabel.text = CommonStringFile.Section
-        search.placeholder = CommonStringFile.Search
+        rollNoLbl.text = CommonStringFile.RollNo.translated()
+        nameLbl.text = CommonStringFile.Name.translated()
+        statusLbl.text = CommonStringFile.Status.translated()
+        HeaderLabel.text = CommonStringFile.Section.translated()
+        search.placeholder = CommonStringFile.Search.translated()
         filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -73,14 +73,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
     }
     @IBAction func fliter(_ sender: UIButton) {
-        dropDown.dataSource = [CommonStringFile.RollNoDESC,CommonStringFile.RollNoASC,CommonStringFile.NameASC,CommonStringFile.NameDESC, CommonStringFile.Absent,CommonStringFile.Present]
+        dropDown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated()]
         dropDown.bottomOffset = CGPoint(x: -90, y: (filterBtn.bounds.height - 110))
         
         dropDown.direction = .bottom
         
         dropDown.show()
         dropDown.selectionAction = { [self] (index: Int, item: String) in
-            self.filterBtn.setTitle(item, for: .normal)
+            self.filterBtn.setTitle(item.translated(), for: .normal)
             
             switch item{
             case CommonStringFile.RollNoASC:

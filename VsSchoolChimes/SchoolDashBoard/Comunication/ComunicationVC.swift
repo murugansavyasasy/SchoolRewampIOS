@@ -125,13 +125,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func StyleAndTranslater() {
         
         //MARK: Translate
-        fromDateLbl.text = CommonStringFile.FromTime
-        ScheduleLbl.text = CommonStringFile.Schedule
-        ToDateLbl.text = CommonStringFile.ToTime
-        EnableCallLbl.text = CommonStringFile.Emergencyvoicemessages
-        clickVoiceLbl.text = CommonStringFile.VoiceMessage
-        clickTextView.text = CommonStringFile.TextMessage
-        clickSchedule.text = CommonStringFile.ScheduleCall
+        fromDateLbl.text = CommonStringFile.FromTime.translated()
+        ScheduleLbl.text = CommonStringFile.Schedule.translated()
+        ToDateLbl.text = CommonStringFile.ToTime.translated()
+        EnableCallLbl.text = CommonStringFile.Emergencyvoicemessages.translated()
+        clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
+        clickTextView.text = CommonStringFile.TextMessage.translated()
+        clickSchedule.text = CommonStringFile.ScheduleCall.translated()
         
         
         //MARK: Label font style
@@ -183,7 +183,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         calanderOuter.layer.shadowRadius = 5
         calanderOuter.layer.shadowOpacity = 0.3
         DateSelection.appearance.weekdayTextColor = .red
-        TitleLbl.text = MenuStringFile.Communication
+        TitleLbl.text = MenuStringFile.Communication.translated()
         DateSelection.appearance.todayColor = .orange
         DateSelection.appearance.eventDefaultColor = .purple
         DateSelection.allowsMultipleSelection = true
@@ -445,7 +445,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textmessageview.isHidden = true
         historyview.isHidden = true
         addfile.isHidden = false
-        tittlemessage.text = CommonStringFile.VoiceMessage
+        tittlemessage.text = CommonStringFile.VoiceMessage.translated()
 //        radio1.setImage(UIImage(systemName: "button.programmable"), for: .normal)
 //        radio2.setImage(UIImage(systemName: "circle"), for: .normal)
         //        emengencyCall.isHidden = false
@@ -472,7 +472,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         historyview.isHidden = true
         textmessageview.isHidden = false
         voiceview.isHidden = true
-        tittlemessage.text = CommonStringFile.TextMessage
+        tittlemessage.text = CommonStringFile.TextMessage.translated()
         historytable.reloadData()
         scheduleBtn.backgroundColor = UIColor.white
         scheduleClick = true
@@ -495,15 +495,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textmessageview.isHidden = true
         radio1.setImage(ImageName.circle, for: .normal)
         calanderOuter.isHidden = true
-        if tittlemessage.text == CommonStringFile.TextMessage{
-            let title = CommonStringFile.BacktoTextMessage
+        if tittlemessage.text == CommonStringFile.TextMessage.translated(){
+            let title = CommonStringFile.BacktoTextMessage.translated()
             let attributedTitle = NSAttributedString(string: title, attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue
             ])
             
             historyBtn.setAttributedTitle(attributedTitle, for: .normal)
         }else{
-            let title = CommonStringFile.VoiceMessage
+            let title = CommonStringFile.VoiceMessage.translated()
             let attributedTitle = NSAttributedString(string: title, attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue
             ])
@@ -718,7 +718,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func backToHome(_ sender: UIButton) {
-        if tittlemessage.text == CommonStringFile.TextMessage{
+        if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             showTextMessageView()
             
         }else{
@@ -745,7 +745,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textmessageview.isHidden = true
         historyview.isHidden = true
         addfile.isHidden = false
-        tittlemessage.text = CommonStringFile.VoiceMessage
+        tittlemessage.text = CommonStringFile.VoiceMessage.translated()
         clickVoiceLbl.textColor = .white
         clickTextView.textColor = .black
         clickSchedule.textColor = .black
@@ -813,7 +813,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         historytable.reloadData()
         textBtn.backgroundColor = UIColor.white
         voiceBtn.backgroundColor = UIColor.white
-        tittlemessage.text = CommonStringFile.ScheduleCall
+        tittlemessage.text = CommonStringFile.ScheduleCall.translated()
         clickVoiceLbl.textColor = .black
         clickTextView.textColor = .black
         clickSchedule.textColor = .white
@@ -900,7 +900,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tittlemessage.text == CommonStringFile.TextMessage{
+        if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
             
@@ -957,7 +957,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
         // If expanded, show full text with "See less"
         if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess
+            let fullString = fullDescription + CommonStringFile.seeLess.translated()
             let attributedText = NSMutableAttributedString(string: fullString)
             // Set "See less" text to blue and underline it
             let seeLessRange = (fullString as NSString).range(of: "See less")
@@ -969,7 +969,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             // Otherwise, truncate and show "See more"
             if fullDescription.count > 120{
                 let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + CommonStringFile.seemore
+                fullString = truncatedDescription + CommonStringFile.seemore.translated()
             }else{
                 fullString = fullDescription
             }

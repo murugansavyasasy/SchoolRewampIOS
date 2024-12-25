@@ -140,7 +140,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         selectedType.setTitleFont(style: .body, size: FontSize.BodySize)
-        searchBar.placeholder = CommonStringFile.Search
+        searchBar.placeholder = CommonStringFile.Search.translated()
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -148,7 +148,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
-        classDropdown.dataSource = [CommonStringFile.RollNoDESC,CommonStringFile.RollNoASC,CommonStringFile.NameASC,CommonStringFile.NameDESC, CommonStringFile.getAllStudent]
+        classDropdown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.getAllStudent.translated()]
         classDropdown.anchorView = filterView
         classDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
         
@@ -156,7 +156,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         
         classDropdown.show()
         classDropdown.selectionAction = { [self] (index: Int, item: String) in
-            self.filterBtn.setTitle(item, for: .normal)
+            self.filterBtn.setTitle(item.translated(), for: .normal)
             
             switch item{
             case CommonStringFile.RollNoASC:

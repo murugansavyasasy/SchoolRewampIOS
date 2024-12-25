@@ -38,7 +38,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
         ModuleDropDown.layer.borderColor = UIColor.lightGray.cgColor
         
         BugsTextview.delegate = self
-        BugsTextview.text = CommonStringFile.Enterbugs
+        BugsTextview.text = CommonStringFile.Enterbugs.translated()
         BugsTextview.textColor = UIColor.lightGray
         
         textViewStack.layer.cornerRadius = Colornames.CORadius10
@@ -98,7 +98,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if BugsTextview.text.isEmpty{
             
-            BugsTextview.text = CommonStringFile.Enterbugs
+            BugsTextview.text = CommonStringFile.Enterbugs.translated()
             BugsTextview.textColor = UIColor.lightGray
         }
     }

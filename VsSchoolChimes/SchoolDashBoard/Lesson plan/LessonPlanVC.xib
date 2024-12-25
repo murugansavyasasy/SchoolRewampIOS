@@ -25,14 +25,14 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzj-UU-EHL">
-                    <rect key="frame" x="16" y="67" width="75" height="34.333333333333343"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzj-UU-EHL">
+                    <rect key="frame" x="10" y="67" width="75" height="34.333333333333343"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="XfQ-tQ-szH"/>
                         <constraint firstAttribute="height" constant="34.333333333333343" id="qLL-A5-rTi"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="arrow.backward" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
@@ -124,7 +124,7 @@
                 <constraint firstItem="PVT-5w-vrA" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="7cg-bX-vTs"/>
                 <constraint firstItem="wzj-UU-EHL" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="7fg-r6-1CG"/>
                 <constraint firstItem="PVT-5w-vrA" firstAttribute="top" secondItem="wzj-UU-EHL" secondAttribute="bottom" constant="10" id="J54-ys-bEh"/>
-                <constraint firstItem="wzj-UU-EHL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="KMd-W1-Wew"/>
+                <constraint firstItem="wzj-UU-EHL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="KMd-W1-Wew"/>
                 <constraint firstItem="PVT-5w-vrA" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="KUx-21-Xmv"/>
                 <constraint firstItem="PVT-5w-vrA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="SRp-kJ-xtN"/>
                 <constraint firstItem="UvA-c7-ggo" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZkC-2b-2bB"/>

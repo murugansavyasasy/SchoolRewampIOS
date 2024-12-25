@@ -304,13 +304,13 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     
     func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
         if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess
+            let fullString = fullDescription + CommonStringFile.seeLess.translated()
             let attributedText = NSMutableAttributedString(string: fullString)
             let seeLessRange = (fullString as NSString).range(of: "See less")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
             return attributedText
         } else {
-            let truncatedDescription = String(fullDescription.prefix(100)) + CommonStringFile.seemore
+            let truncatedDescription = String(fullDescription.prefix(100)) + CommonStringFile.seemore.translated()
             let attributedText = NSMutableAttributedString(string: truncatedDescription)
             let seeMoreRange = (truncatedDescription as NSString).range(of: "See more")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)

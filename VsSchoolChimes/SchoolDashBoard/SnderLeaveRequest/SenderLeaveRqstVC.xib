@@ -57,7 +57,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atx-K4-uC7">
-                    <rect key="frame" x="16" y="59" width="75" height="35"/>
+                    <rect key="frame" x="10" y="59" width="75" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="69T-qe-iVg"/>
                         <constraint firstAttribute="width" constant="75" id="jR7-vb-UWa"/>
@@ -72,7 +72,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave Request" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6x-h6-DNq">
-                    <rect key="frame" x="101" y="66" width="207" height="21"/>
+                    <rect key="frame" x="95" y="66" width="213" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -84,7 +84,7 @@
                 <constraint firstItem="P6x-h6-DNq" firstAttribute="centerY" secondItem="atx-K4-uC7" secondAttribute="centerY" id="2w8-1K-0op"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="atx-K4-uC7" secondAttribute="top" id="BxO-bN-67X"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="21u-Ph-GdD" secondAttribute="trailing" id="QP2-lE-DWC"/>
-                <constraint firstItem="atx-K4-uC7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ZXK-tT-cjV"/>
+                <constraint firstItem="atx-K4-uC7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="ZXK-tT-cjV"/>
                 <constraint firstItem="P6x-h6-DNq" firstAttribute="leading" secondItem="atx-K4-uC7" secondAttribute="trailing" constant="10" id="cmk-4j-6Tz"/>
                 <constraint firstItem="21u-Ph-GdD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eBI-Xt-Dfo"/>
                 <constraint firstItem="21u-Ph-GdD" firstAttribute="top" secondItem="atx-K4-uC7" secondAttribute="bottom" constant="10" id="rgz-GV-2we"/>

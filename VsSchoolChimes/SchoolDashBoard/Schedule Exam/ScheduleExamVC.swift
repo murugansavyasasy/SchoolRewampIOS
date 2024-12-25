@@ -22,8 +22,8 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
         filterData = examArray
         subjectListCollection.register(UINib(nibName: CellConfingName.ExamsListCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ExamsListCVCell)
         tilteLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        tilteLbl.text = CommonStringFile.scheduleExam
-        searchBar.placeholder = CommonStringFile.Search
+        tilteLbl.text = CommonStringFile.scheduleExam.translated()
+        searchBar.placeholder = CommonStringFile.Search.translated()
     }
     func keyboardDionebtn(){
         let toolbar = UIToolbar()

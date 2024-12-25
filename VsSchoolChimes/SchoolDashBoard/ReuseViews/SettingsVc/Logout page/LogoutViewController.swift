@@ -23,7 +23,7 @@ class LogoutViewController: UIViewController {
         DescribeLabel.setFont(style: .title, size: FontSize.TitleSize)
         Cancellabel.setFont(style: .body, size: FontSize.BodySize)
         LogoutButtonView.setTitleFont(style: .body, size: FontSize.BodySize)
-        LogoutButtonView.setTitle(CommonStringFile.Logout, for: .normal)
+        LogoutButtonView.setTitle(CommonStringFile.Logout.translated(), for: .normal)
         LogoutButtonView.titleLabel?.adjustsFontSizeToFitWidth = true
         overallview.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         LogoutView.layer.cornerRadius = Colornames.CORadius10

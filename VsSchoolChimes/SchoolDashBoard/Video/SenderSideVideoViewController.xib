@@ -205,13 +205,13 @@
                     </constraints>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ma6-jA-spZ">
-                    <rect key="frame" x="16" y="67" width="75" height="35"/>
+                    <rect key="frame" x="10" y="67" width="75" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="89g-ny-njD"/>
                         <constraint firstAttribute="width" constant="75" id="V6p-Yy-e4o"/>
                     </constraints>
                     <color key="tintColor" systemColor="darkTextColor"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="arrow.left" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
@@ -220,7 +220,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmT-xI-5BQ">
-                    <rect key="frame" x="64" y="67" width="288" height="28.666666666666671"/>
+                    <rect key="frame" x="64" y="70.333333333333329" width="265" height="28.666666666666671"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -234,10 +234,10 @@
                 <constraint firstItem="ma6-jA-spZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="EOH-r6-HnU"/>
                 <constraint firstItem="xmT-xI-5BQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="64" id="Jp3-nf-QJr"/>
                 <constraint firstItem="RYh-YE-HTo" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="W39-BD-HUZ"/>
-                <constraint firstItem="ma6-jA-spZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="e2d-mm-aPv"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xmT-xI-5BQ" secondAttribute="trailing" constant="41" id="g1d-hU-ndM"/>
-                <constraint firstItem="xmT-xI-5BQ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="8" id="jMB-E5-24f"/>
+                <constraint firstItem="ma6-jA-spZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="e2d-mm-aPv"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xmT-xI-5BQ" secondAttribute="trailing" constant="64" id="g1d-hU-ndM"/>
                 <constraint firstItem="RYh-YE-HTo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jVD-jV-Uar"/>
+                <constraint firstItem="xmT-xI-5BQ" firstAttribute="centerY" secondItem="ma6-jA-spZ" secondAttribute="centerY" id="wT8-yE-ce5"/>
             </constraints>
             <point key="canvasLocation" x="138.1679389312977" y="20.422535211267608"/>
         </view>
@@ -263,7 +263,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -44,7 +44,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SSG-LK-jgM">
-                    <rect key="frame" x="0.0" y="104.33333333333331" width="393" height="713.66666666666674"/>
+                    <rect key="frame" x="0.0" y="106.33333333333331" width="393" height="711.66666666666674"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="99e-j7-Po5">
                             <rect key="frame" x="0.0" y="0.0" width="394" height="703"/>
@@ -346,13 +346,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfB-rH-Y3w">
-                    <rect key="frame" x="16" y="62" width="75" height="34.333333333333343"/>
+                    <rect key="frame" x="10" y="62" width="75" height="34.333333333333343"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="75" id="9IS-SE-Fis"/>
                         <constraint firstAttribute="height" constant="34.333333333333343" id="eAH-Sf-BKs"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="imageEdgeInsets" minX="12" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal">
                         <imageReference key="image" image="arrow.backward" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
@@ -370,12 +370,12 @@
                 <constraint firstItem="SSG-LK-jgM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="GlL-VD-icp"/>
                 <constraint firstItem="SSG-LK-jgM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Oz8-Yf-zvV"/>
                 <constraint firstItem="yfB-rH-Y3w" firstAttribute="centerY" secondItem="XMo-Da-bsh" secondAttribute="centerY" id="Yod-Id-F1T"/>
-                <constraint firstItem="SSG-LK-jgM" firstAttribute="top" secondItem="yfB-rH-Y3w" secondAttribute="bottom" constant="8" id="eER-6i-wg9"/>
+                <constraint firstItem="SSG-LK-jgM" firstAttribute="top" secondItem="yfB-rH-Y3w" secondAttribute="bottom" constant="10" id="eER-6i-wg9"/>
                 <constraint firstItem="XMo-Da-bsh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="61" id="ebD-yh-uho"/>
                 <constraint firstItem="99e-j7-Po5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jmu-lc-A6E"/>
                 <constraint firstItem="SSG-LK-jgM" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="oqS-DF-DIG"/>
                 <constraint firstItem="99e-j7-Po5" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="1" id="uU4-F6-wdL"/>
-                <constraint firstItem="yfB-rH-Y3w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="vdA-9J-I3n"/>
+                <constraint firstItem="yfB-rH-Y3w" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="vdA-9J-I3n"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
         </view>
@@ -401,7 +401,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

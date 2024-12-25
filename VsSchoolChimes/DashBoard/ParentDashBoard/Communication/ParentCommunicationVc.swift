@@ -229,7 +229,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
         // If expanded, show full text with "See less"
         if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess
+            let fullString = fullDescription + CommonStringFile.seeLess.translated()
             let attributedText = NSMutableAttributedString(string: fullString)
             // Set "See less" text to blue and underline it
             let seeLessRange = (fullString as NSString).range(of: "See less")
@@ -241,7 +241,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             // Otherwise, truncate and show "See more"
             if fullDescription.count > 120{
                 let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + CommonStringFile.seemore
+                fullString = truncatedDescription + CommonStringFile.seemore.translated()
             }else{
                 fullString = fullDescription
             }

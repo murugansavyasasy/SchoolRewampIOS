@@ -118,16 +118,16 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
         
         
         ToLbl.setFont(style:.body, size: FontSize.BodySize)
-        ToLbl.text = CommonStringFile.To
+        ToLbl.text = CommonStringFile.To.translated()
         headerTitle.setFont(style:.body, size: FontSize.BodySize)
-        headerTitle.text = CommonStringFile.CreateLeaveRequest
+        headerTitle.text = CommonStringFile.CreateLeaveRequest.translated()
         ReasonLbl.setFont(style:.body, size: FontSize.BodySize)
         fromLbl.setFont(style:.body, size: FontSize.BodySize)
-        fromLbl.text = CommonStringFile.From
+        fromLbl.text = CommonStringFile.From.translated()
         dayCount.setFont(style:.header, size: FontSize.BodySize)
         dateBtn.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
-        contentTxtView.text = LeaveRequest?.reson
+        contentTxtView.text = LeaveRequest?.reson.translated()
         contentCount.text = LeaveRequest?.reson != nil ? "\(LeaveRequest?.reson.count ?? 0) of 500" : "0 of 500"
         if LeaveRequest?.reson != nil{
             placeholderLabel.isHidden = true
@@ -293,7 +293,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.EnterTextHere
+        placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -343,7 +343,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
             let dateDifference = calendar.dateComponents([.day], from: startDate, to: endDate)
             
             if let daysBetween = dateDifference.day {
-                dateCount = daysBetween < 1 ? "\(daysBetween + 1) \(CommonStringFile.Day)" : "\(daysBetween + 1) \(CommonStringFile.Days)"
+                dateCount = daysBetween < 1 ? "\(daysBetween + 1) \(CommonStringFile.Day.translated())" : "\(daysBetween + 1) \(CommonStringFile.Days.translated())"
                return dateCount
             }
         }

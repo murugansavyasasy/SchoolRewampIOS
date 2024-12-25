@@ -27,13 +27,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i53-CR-u6U">
-                    <rect key="frame" x="5" y="59" width="75" height="35"/>
+                    <rect key="frame" x="10" y="59" width="75" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="SUi-jS-8Ur"/>
                         <constraint firstAttribute="width" constant="75" id="Wnj-2g-dby"/>
                     </constraints>
                     <color key="tintColor" systemColor="darkTextColor"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" image="arrow.left" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
@@ -156,7 +156,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mQQ-9i-ZOl" secondAttribute="trailing" id="Pkq-0B-AeF"/>
                 <constraint firstItem="i53-CR-u6U" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="eui-ma-UMj"/>
                 <constraint firstItem="DLJ-8W-XVV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="3" id="hE6-LQ-66f"/>
-                <constraint firstItem="i53-CR-u6U" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="5" id="hda-ND-KhG"/>
+                <constraint firstItem="i53-CR-u6U" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="hda-ND-KhG"/>
                 <constraint firstItem="mQQ-9i-ZOl" firstAttribute="top" secondItem="i53-CR-u6U" secondAttribute="bottom" constant="10" id="koe-tj-PqT"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-12.67605633802817"/>

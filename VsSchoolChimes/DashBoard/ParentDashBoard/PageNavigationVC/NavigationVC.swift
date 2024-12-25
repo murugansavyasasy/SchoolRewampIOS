@@ -49,7 +49,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     func uiConficration(){
         TitleHederLbl.text = titleLbl
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        TitleHederLbl.text = CommonStringFile.CreateLeaveRequest
+        TitleHederLbl.text = CommonStringFile.CreateLeaveRequest.translated()
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
         createEvent.layer.cornerRadius = 20

@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+protocol BaktoHome{
+    func backtohome()
+}
 @available(iOS 14.0, *)
 class LanguageVc: UIViewController {
     
@@ -17,7 +19,7 @@ class LanguageVc: UIViewController {
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     var languageCode = "en"
-    
+    var delegate:BaktoHome?
     @IBOutlet weak var baseview: UIView!
     var selectedLanguage: String?
     
@@ -82,23 +84,24 @@ class LanguageVc: UIViewController {
         let userDefault = UserDefaults.standard
         userDefault.set(languageCode, forKey: DefaultsKeys.Language)
         
-        print("languageCode",DefaultsKeys.Language)
+        print("languageCode",languageCode)
         TranslationManager.shared.setLanguage(languageCode)
         
         // Apply the language immediately
         userDefault.synchronize()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         
-//        LanguageManager.shared.setLanguage(languageCode)
+        LanguageManager.shared.setLanguage(languageCode)
 //                
 //                // Reload UI
 //        reloadApplication(value: value)
-       
-        let vc = TapBarVC(nibName: nil, bundle: nil)
-        vc.passedValue = value
-        vc.languageCode = languageCode
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        delegate?.backtohome()
+        dismiss(animated: true)
+//        let vc = TapBarVC(nibName: nil, bundle: nil)
+//        vc.passedValue = value
+//        vc.languageCode = languageCode
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
         
     }
     

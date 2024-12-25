@@ -227,7 +227,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.EnterTextHere
+        placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
         placeholderLabel.font = textview.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -288,12 +288,12 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
         todateBtn.setTitleFont(style: .body, size: 12)
         fromdateBtn.setTitleFont(style: .body, size: 12)
-        addPhotoLbl.text = CommonStringFile.AddPhotos
+        addPhotoLbl.text = CommonStringFile.AddPhotos.translated()
         
-        setTitle.text = CommonStringFile.EventTitle
-        eventTxt.placeholder = CommonStringFile.egYogaEvent
-        enterDetails.text = CommonStringFile.EventDetails
-        setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1, firstString: CommonStringFile.AddPhotos, secondString:CommonStringFile.Optional, color1: .black, color2: .lightGray)
+        setTitle.text = CommonStringFile.EventTitle.translated()
+        eventTxt.placeholder = CommonStringFile.egYogaEvent.translated()
+        enterDetails.text = CommonStringFile.EventDetails.translated()
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1.translated(), firstString: CommonStringFile.AddPhotos.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         
     }
     
@@ -395,7 +395,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func textViewDidEndEditing(_ textView: UITextView) {
         
         if textview.text.isEmpty == true{
-            textview.text = CommonStringFile.EnterTextHere
+            textview.text = CommonStringFile.EnterTextHere.translated()
             textview.textColor = .lightGray
         }
     }
