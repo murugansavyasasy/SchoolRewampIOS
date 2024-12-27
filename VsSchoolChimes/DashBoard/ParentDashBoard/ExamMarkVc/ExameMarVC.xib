@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,6 +13,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExameMarVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="HeaderLbl" destination="kAh-K6-11C" id="c4J-B3-E91"/>
+                <outlet property="SearchBar" destination="OXc-83-TMa" id="auM-Uj-fsd"/>
                 <outlet property="cv" destination="mH4-ng-0SF" id="1sI-ki-OG8"/>
                 <outlet property="tv" destination="7by-2i-e2O" id="j5t-wd-kmT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -67,9 +70,13 @@
                         <constraint firstAttribute="width" constant="75" id="VAb-5r-jIh"/>
                         <constraint firstAttribute="height" constant="35" id="YIa-7p-e0Z"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.left" catalog="system"/>
+                    <state key="normal">
+                        <imageReference key="image" image="arrow.left" catalog="system" symbolScale="large"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
                     <connections>
                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="342-5x-Eoj"/>
                     </connections>

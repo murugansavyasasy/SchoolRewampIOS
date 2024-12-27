@@ -9,6 +9,8 @@ import UIKit
 
 class ExammarkFooterView: UITableViewHeaderFooterView {
 
+    @IBOutlet weak var RankNumLbl: UILabel!
+    @IBOutlet weak var medalImagView: UIImageView!
     @IBOutlet weak var TotalProgressBar: UIProgressView!
     @IBOutlet weak var TotalMarkLbl: UILabel!
     @IBOutlet weak var footerview: UIView!

@@ -9,6 +9,8 @@ import UIKit
 
 class ExameMarVC: UIViewController {
 
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var tv: UITableView!
     let marks = ["85 / 100","70 / 100","75 / 100","49 / 100","93 / 100"]
@@ -16,6 +18,8 @@ class ExameMarVC: UIViewController {
     let subject = ["Tamil","English","Maths","Science","Social Science"]
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
 
         // Do any additional setup after loading the view.
         tv.isHidden = true
@@ -95,7 +99,6 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
         
 //        let  cell  = tableView.dequeueReusableCell(withIdentifier: "MarkTvCell" , for: indexPath) as! MarkTvCell
         let  cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ExamMarkTV , for: indexPath) as! ExamMarkTV
-        
         cell.SubjectLbl.text = subject[indexPath.row]
         cell.MarkLbl.text = marks[indexPath.row]
         cell.progessBar.progress = Float(status[indexPath.row])
@@ -104,7 +107,9 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
         } else {
             // Fallback on earlier versions
         }
-        
+//        cell.TheoryLbl.isHidden = true
+//        cell.PracticalLbl.isHidden = true
+      
         return cell
         
     }
@@ -120,11 +125,41 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
         cell.TotalLbl.setFont(style: .title, size: FontSize.TitleSize)
         cell.TotalMarkLbl.setFont(style: .title, size: FontSize.TitleSize)
         cell.RankLbl.setFont(style: .title, size: FontSize.TitleSize)
+        cell.RankNumLbl.setFont(style: .title, size: FontSize.TitleSize)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 100
+        return 150
     }
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let cell = tv.cellForRow(at: indexPath) as! ExamMarkTV
+//        cell.TheoryLbl.isHidden = false
+//        cell.PracticalLbl.isHidden = false
+//        tv.reloadRows(at: [indexPath], with: .automatic)
+//    }
+//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        let cell = tv.cellForRow(at: indexPath) as! ExamMarkTV
+//        cell.TheoryLbl.isHidden = true
+//        cell.PracticalLbl.isHidden = true
+//        tv.reloadRows(at: [indexPath], with: .automatic)
+//    }
+    
+    // MARK: Updated didSelectRowAt Implementation
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? ExamMarkTV {
+            // Toggle the visibility of TheoryLbl and PracticalLbl
+            let shouldExpand = cell.TheoryLbl.isHidden
+            cell.TheoryLbl.isHidden = !shouldExpand
+            cell.PracticalLbl.isHidden = !shouldExpand
+
+            // Use beginUpdates and endUpdates to refresh the row height without reloading the cell
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
+
+
     
 }
 
