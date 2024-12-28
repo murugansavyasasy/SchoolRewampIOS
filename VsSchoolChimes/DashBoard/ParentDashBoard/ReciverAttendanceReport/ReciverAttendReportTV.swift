@@ -44,6 +44,8 @@ class ReciverAttendReportTV: UITableViewCell {
         statusLbl.setFont(style: .title, size: FontSize.TitleSize)
         TakenLbl.setFont(style: .title, size: FontSize.TitleSize)
         
+        showPopUpEffect()
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -51,5 +53,16 @@ class ReciverAttendReportTV: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    func showPopUpEffect() {
+        Cellview.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) // Start smaller
+        Cellview.alpha = 0 // Start invisible
+
+        UIView.animate(withDuration: 2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+            self.Cellview.transform = CGAffineTransform.identity // Restore to original size
+            self.Cellview.alpha = 1 // Make it visible
+        })
+    }
+
     
 }

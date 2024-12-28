@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ExammarkFooterView" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="129"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VRK-My-bb1">
+                    <rect key="frame" x="15" y="5" width="363" height="119"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PkC-S7-rX3">
+                            <rect key="frame" x="12.000000000000004" y="14" width="40.333333333333343" height="14"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" text="Rank : 8" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oo0-Ox-Ahi">
+                            <rect key="frame" x="12" y="75.666666666666671" width="281" height="21"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.73999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="gDt-1n-4UV">
+                            <rect key="frame" x="12" y="38" width="314" height="8"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="8" id="RRK-Z0-lkK"/>
+                            </constraints>
+                        </progressView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="372 / 500" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zA3-uq-OhL">
+                            <rect key="frame" x="275" y="13.999999999999998" width="78" height="20.333333333333329"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="medalImg" translatesAutoresizingMaskIntoConstraints="NO" id="xvU-qY-ird">
+                            <rect key="frame" x="305" y="61" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="L20-3E-U7U"/>
+                                <constraint firstAttribute="width" constant="50" id="kn1-t0-uRJ"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hiA-vi-F5e">
+                            <rect key="frame" x="320" y="68.666666666666671" width="21" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="hiA-vi-F5e" firstAttribute="trailing" secondItem="xvU-qY-ird" secondAttribute="trailing" constant="-14" id="2g4-S8-wBW"/>
+                        <constraint firstItem="PkC-S7-rX3" firstAttribute="leading" secondItem="VRK-My-bb1" secondAttribute="leading" constant="12" id="8hz-12-YCg"/>
+                        <constraint firstItem="zA3-uq-OhL" firstAttribute="top" secondItem="VRK-My-bb1" secondAttribute="top" constant="14" id="C9M-jS-ll7"/>
+                        <constraint firstItem="gDt-1n-4UV" firstAttribute="leading" secondItem="VRK-My-bb1" secondAttribute="leading" constant="12" id="H7h-AA-Wae"/>
+                        <constraint firstItem="Oo0-Ox-Ahi" firstAttribute="centerY" secondItem="xvU-qY-ird" secondAttribute="centerY" id="Ptq-EN-tUD"/>
+                        <constraint firstItem="gDt-1n-4UV" firstAttribute="top" secondItem="PkC-S7-rX3" secondAttribute="bottom" constant="10" id="QPy-xP-GiU"/>
+                        <constraint firstItem="xvU-qY-ird" firstAttribute="leading" secondItem="Oo0-Ox-Ahi" secondAttribute="trailing" constant="12" id="SQi-AQ-MPZ"/>
+                        <constraint firstItem="hiA-vi-F5e" firstAttribute="leading" secondItem="xvU-qY-ird" secondAttribute="leading" constant="15" id="XcM-Vu-rJy"/>
+                        <constraint firstAttribute="trailing" secondItem="zA3-uq-OhL" secondAttribute="trailing" constant="10" id="dJr-og-8wV"/>
+                        <constraint firstAttribute="trailing" secondItem="xvU-qY-ird" secondAttribute="trailing" constant="8" id="dqv-G1-Nq4"/>
+                        <constraint firstItem="hiA-vi-F5e" firstAttribute="bottom" secondItem="xvU-qY-ird" secondAttribute="bottom" constant="-21.333333333333329" id="e1c-Yy-D11"/>
+                        <constraint firstAttribute="trailing" secondItem="gDt-1n-4UV" secondAttribute="trailing" constant="37" id="ffT-35-1Ld"/>
+                        <constraint firstItem="hiA-vi-F5e" firstAttribute="top" secondItem="xvU-qY-ird" secondAttribute="top" constant="7.6666666666666714" id="gpV-zp-RrE"/>
+                        <constraint firstItem="PkC-S7-rX3" firstAttribute="top" secondItem="VRK-My-bb1" secondAttribute="top" constant="14" id="hon-KZ-KmD"/>
+                        <constraint firstItem="xvU-qY-ird" firstAttribute="top" secondItem="gDt-1n-4UV" secondAttribute="bottom" constant="15" id="nC1-kk-6Ck"/>
+                        <constraint firstItem="Oo0-Ox-Ahi" firstAttribute="leading" secondItem="VRK-My-bb1" secondAttribute="leading" constant="12" id="xaZ-bZ-xGs"/>
+                        <constraint firstAttribute="bottom" secondItem="xvU-qY-ird" secondAttribute="bottom" constant="8" id="y8Q-5W-yqR"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="VRK-My-bb1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="9tk-zA-vqa"/>
+                <constraint firstItem="VRK-My-bb1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="gDV-O4-qhO"/>
+                <constraint firstAttribute="bottom" secondItem="VRK-My-bb1" secondAttribute="bottom" constant="5" id="sSr-vb-ybD"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VRK-My-bb1" secondAttribute="trailing" constant="15" id="yAq-Rg-xKB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="RankLbl" destination="Oo0-Ox-Ahi" id="t7g-rd-Lam"/>
+                <outlet property="RankNumLbl" destination="hiA-vi-F5e" id="oF7-CO-iov"/>
+                <outlet property="TotalLbl" destination="PkC-S7-rX3" id="iSQ-fo-8YD"/>
+                <outlet property="TotalMarkLbl" destination="zA3-uq-OhL" id="YbB-bC-izU"/>
+                <outlet property="TotalProgressBar" destination="gDt-1n-4UV" id="Ih6-FT-8nK"/>
+                <outlet property="footerview" destination="VRK-My-bb1" id="Wld-gH-fhf"/>
+                <outlet property="medalImagView" destination="xvU-qY-ird" id="7rO-4q-hz3"/>
+            </connections>
+            <point key="canvasLocation" x="136.64122137404578" y="268.66197183098592"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="medalImg" width="500" height="500"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
