@@ -23,7 +23,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     @IBOutlet weak var nodataView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var backBtn: UIButton!
     
     @IBOutlet weak var tv: UITableView!
     var currentImageCount = 0
@@ -58,25 +58,15 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         
         
         let userDefaults = UserDefaults.standard
-//        instituteId = userDefaults.integer(forKey: DefaultsKeys.SchoolD)
-//        studentId = userDefaults.string(forKey: DefaultsKeys.chilId)!
-
-        
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        backView.addGestureRecognizer(backGesture)
-        
+        backBtn.setTitle(ReceiverMenuItems.LSRW.translated(), for: .normal)
+//
         nodataView.isHidden = true
         nodataLbl.isHidden = true
         
         tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
-        
-        
-//        viewAllSkillByStudent()
-        // Do any additional setup after loading the view.
     }
     
-    
-    @IBAction func backVc() {
+    @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
     

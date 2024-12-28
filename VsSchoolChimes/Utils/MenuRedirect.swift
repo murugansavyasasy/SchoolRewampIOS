@@ -29,7 +29,7 @@ class MenuRedirectHandler {
     
     var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Text to Parents/Staff","School / Class Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
-    var receiverItems : [String] = [ "Communication".translated(),"Homework".translated() ,"ExamTest".translated(),"Exam Marks".translated(),"ImagePdf".translated(),"Video".translated(),"Notice Board".translated(),"Resiverassignment".translated(),"Online  Meeting".translated(),"Attendance Report".translated(),"Events/Holidays".translated(),"Request Leave".translated(),"Fee Details".translated(),"Interaction with Staff".translated(),"Quiz Exam".translated(),"LSRW".translated(),"Class Timetable".translated(),"Certificate Request".translated(),"PTM".translated()]
+    var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,MenuStringFile.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,"Resiverassignment".translated(),ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM]
     
     
     
@@ -272,7 +272,7 @@ class MenuRedirectHandler {
         let vc = NavigationVC(nibName: nil, bundle: nil)
         vc.page1 = LeveCreateVC(nibName: nil, bundle: nil)
         vc.page2 = LeveHistoryVC(nibName: nil, bundle: nil)
-        vc.titleLbl = "Leve Request".translated()
+        vc.titleLbl = ReceiverMenuItems.RequestLeave.translated()
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
         

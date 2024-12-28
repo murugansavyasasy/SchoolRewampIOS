@@ -257,11 +257,8 @@
                                                                 <action selector="scheduleCall:" destination="-1" eventType="touchUpInside" id="TfF-IG-HeA"/>
                                                             </connections>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Schedule Call" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PF-xm-F5V">
-                                                            <rect key="frame" x="0.0" y="50" width="120.33333333333333" height="15.666666666666671"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="15.666666666666671" id="8cB-HR-WJC"/>
-                                                            </constraints>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Schedule Call" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PF-xm-F5V">
+                                                            <rect key="frame" x="0.0" y="50" width="120.33333333333333" height="20"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -274,6 +271,7 @@
                                                         <constraint firstItem="5AT-7V-iyE" firstAttribute="top" secondItem="yCb-5M-2dV" secondAttribute="top" constant="5" id="59p-le-XVE"/>
                                                         <constraint firstAttribute="trailing" secondItem="t2a-a8-ckt" secondAttribute="trailing" id="Dme-aM-4R4"/>
                                                         <constraint firstItem="7PF-xm-F5V" firstAttribute="top" secondItem="5AT-7V-iyE" secondAttribute="bottom" constant="5" id="bOM-JX-nNd"/>
+                                                        <constraint firstAttribute="bottom" secondItem="7PF-xm-F5V" secondAttribute="bottom" constant="10" id="ceJ-Kj-fwq"/>
                                                         <constraint firstAttribute="trailing" secondItem="7PF-xm-F5V" secondAttribute="trailing" id="gLQ-lQ-TLJ"/>
                                                         <constraint firstItem="7PF-xm-F5V" firstAttribute="leading" secondItem="yCb-5M-2dV" secondAttribute="leading" id="jZw-SO-NxU"/>
                                                         <constraint firstItem="t2a-a8-ckt" firstAttribute="top" secondItem="yCb-5M-2dV" secondAttribute="top" id="yKA-ZK-9SQ"/>
@@ -330,9 +328,6 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="oa8-8b-wLj"/>
-                                            </constraints>
                                         </stackView>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

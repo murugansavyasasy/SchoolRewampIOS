@@ -11,6 +11,7 @@ import UIKit
 class ParentNoticeBoardVc: UIViewController, SelectNotice {
 
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeadingLabel: UILabel!
   
     @IBOutlet weak var tableview: UITableView!
@@ -27,7 +28,8 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
         addDoneButton()
-        HeadingLabel.text = MenuTapbar.Noticeboard
+        backBtn.setTitle(MenuTapbar.Noticeboard.translated(), for: .normal)
+//        HeadingLabel.text = MenuTapbar.Noticeboard
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         tabelViewRegister()
      

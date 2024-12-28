@@ -158,17 +158,17 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         classDropdown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
             
-            switch item{
-            case CommonStringFile.RollNoASC:
+            switch item.translated(){
+            case CommonStringFile.RollNoASC.translated():
                 let sortedByRollNumber = sortedStudent!.sorted { $0.AdmissionId < $1.AdmissionId }
                 filterStudent = sortedByRollNumber
-            case CommonStringFile.RollNoDESC:
+            case CommonStringFile.RollNoDESC.translated():
                 let sortedByName = sortedStudent?.sorted { $0.AdmissionId > $1.AdmissionId }
                 filterStudent = sortedByName
-            case CommonStringFile.NameASC:
+            case CommonStringFile.NameASC.translated():
                 let sortedByName = sortedStudent!.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
                 filterStudent = sortedByName
-            case CommonStringFile.NameDESC:
+            case CommonStringFile.NameDESC.translated():
                 let sortedByName = sortedStudent!.sorted { $0.name > $1.name }
                 filterStudent = sortedByName
                 

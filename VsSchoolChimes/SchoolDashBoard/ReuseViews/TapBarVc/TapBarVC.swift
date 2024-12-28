@@ -12,8 +12,15 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     func backtohome() {
         setupTabBar()
         setupContainerView()
-        firstVC.getValue = passedValue
-        selectViewController(firstVC)
+        if passedValue == 1{
+            
+            firstVC.getValue = passedValue
+            selectViewController(firstVC)
+            
+        }else if passedValue == 2{
+            Parent.getValue = passedValue
+            selectViewController(Parent)
+        }
     }
     
     
@@ -47,6 +54,19 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         }else if passedValue == 2{
             Parent.getValue = passedValue
             selectViewController(Parent)
+            let gradientColor = createGradientColor(
+                colors: [
+                    UIColor(hex: "#7ed957"),  // First color
+                    UIColor(hex: "#0097b2")   // Second color
+                ],
+                size: CGSize(width: 400, height: 400),
+                startPoint: CGPoint(x: 1, y: 0.5), // Start from the right
+                endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
+            )
+            
+            // Apply the gradient as a background image for the tabBar
+            tabBar.backgroundImage = gradientColor
+            tabBar.tintColor = .white
         }
         
     }
@@ -58,12 +78,9 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         let secondItem = UITabBarItem(title: StringsName.Help.translated(), image: UIImage(systemName: "questionmark.circle.fill"), tag: 1)
         let thirdItem = UITabBarItem(title : StringsName.Settings.translated(), image: UIImage(systemName: "gearshape.fill"), tag: 2)
         let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
-        
-        
-//      q  tabBar.backgroundColor = Colornames.ParentClr
-        tabBar.tintColor = UIColor.systemPurple
-//        tabBar.barStyle = .black
-//        tabBar.isTranslucent = false
+        // Create the gradient color for tab bar
+     
+        tabBar.tintColor = .purple
         tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
         tabBar.delegate = self
         tabBar.selectedItem = firstItem
@@ -82,7 +99,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             tabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor
                                             )])
     }
-    
+ 
     private func setupContainerView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
@@ -138,5 +155,65 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         }
     }
     
-}
+    
+    func createGradientColor(colors: [UIColor], size: CGSize, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> UIImage? {
+        // Adjust the alpha of the colors to make them less opaque
+        let adjustedColors = colors.map { color -> UIColor in
+            return color.withAlphaComponent(0.7) // Reduce alpha to 70% (you can change this value)
+        }
+        
+        // Create a gradient layer with adjusted colors
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = adjustedColors.map { $0.cgColor }
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.frame = CGRect(origin: .zero, size: size)
+        
+        // Render the gradient to a UIImage
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
+        gradientLayer.render(in: context)
+        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return gradientImage
+    }
 
+    
+}
+//extension UIColor {
+//    // Convert hex string to UIColor
+//    convenience init(hex: String) {
+//        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+//        if hexSanitized.hasPrefix("#") {
+//            hexSanitized.removeFirst()
+//        }
+//
+//        var rgb: UInt64 = 0
+//        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+//
+//        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+//        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+//        let blue = CGFloat(rgb & 0x0000FF) / 255.0
+//
+//        self.init(red: red, green: green, blue: blue, alpha: 1.0)
+//    }
+//}
+extension UIColor {
+    // Convert hex string to UIColor
+    convenience init(hex: String) {
+        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        if hexSanitized.hasPrefix("#") {
+            hexSanitized.removeFirst()
+        }
+        
+        var rgb: UInt64 = 0
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+        
+        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+        let blue = CGFloat(rgb & 0x0000FF) / 255.0
+        
+        self.init(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+}

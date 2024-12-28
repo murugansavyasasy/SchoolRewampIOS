@@ -11,6 +11,11 @@
 "Help" = "मदद";
 "Settings" = "सेटिंग्स";
 "Profile" = "प्रोफाइल";
+"ChooseYourRole" = "अपनी भूमिका चुनें";
+"LoginAsTeacherOrParent" = "शिक्षक या माता-पिता के रूप में लॉगिन करें";
+"Principal" = "प्रधानाचार्य";
+"Parent" = "माता-पिता";
+"Proceed" = "आगे बढ़ें";
 
 // MARK: Settings page
 "Notifications" = "सूचनाएं";
@@ -232,6 +237,10 @@
 "selectedText" = "चयनित पाठ";
 "invalidSelection" = "अमान्य चयन";
 "selectDatesWithinMonth" = "आप केवल वर्तमान में प्रदर्शित माह के भीतर की तिथियों का चयन कर सकते हैं।";
+"text" = "पाठ";
+"voice" = "आवाज़";
+"schedule_a_call" = "कॉल शेड्यूल करें";
+
 //MARK: ScheduleExam
 "scheduleExam" = "परीक्षा निर्धारित करें";
 //"Reasons" = "कारण"

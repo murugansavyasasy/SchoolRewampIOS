@@ -13,18 +13,24 @@ class StudentHistryTVC: UITableViewCell {
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var phnBtn: UIButton!
     @IBOutlet weak var rollNomber: UILabel!
+    @IBOutlet weak var AdmisNomber: UILabel!
+    @IBOutlet weak var clsLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
-    @IBOutlet weak var stdImage: UIImageView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        uiConfic()
+    }
+    func uiConfic(){
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
+        nameLbl.setFont(style: .body, size: FontSize.BodySize)
+        AdmisNomber.setFont(style: .body, size: FontSize.BodySize)
+        rollNomber.setFont(style: .body, size: FontSize.BodySize)
     }
 
     @IBAction func callAction(_ sender: UIButton) {

@@ -11,6 +11,7 @@ class ExamTmTblVCViewController: UIViewController {
 
     @IBOutlet weak var sideTv: UITableView!
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     
     var SideItemArry = ["QuatalyExamQuatalyExam","SSlC ExamQuatalyExam","Hsc ExamQuatalyExam","HalfYearExamQuatalyExam"]
@@ -23,7 +24,7 @@ class ExamTmTblVCViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        
+        backBtn.setTitle(ReceiverMenuItems.ExamTest.translated(), for: .normal)
         let nib = UINib(nibName:CellConfingName.SideTvcell, bundle: nil)
         sideTv.register(nib, forCellReuseIdentifier: CellConfingName.SideTvcell)
         

@@ -26,12 +26,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
         ""
     }
-    
-   
-    
-    
-
-    
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var clickTextView: UILabel!
     @IBOutlet weak var clickVoiceLbl: UILabel!
     @IBOutlet weak var textBtn: UIButton!
@@ -47,9 +42,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     var AudioPlayUrl: String?
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-       
+        clickTextView.text = CommonStringFile.TextMessage.translated()
+        backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
+        clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
         ButtonStyle()
         // Do any additional setup after loading the view.
         let nib = UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil)
@@ -68,8 +63,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
         //voiceBtn.backgroundColor = .white
         voiceClickView.layer.cornerRadius = 8
-        textClickView.layer.cornerRadius = 8
-       
         voiceClickView.layer.cornerRadius = 8
         //voiceClickView.backgroundColor = tapColor
         voiceBtn.layer.cornerRadius = 20
@@ -77,23 +70,19 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         voiceBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
         voiceBtn.layer.shadowRadius = 5
         voiceBtn.layer.shadowOpacity = 0.3
-       // voiceBtn.tintColor = .white
-       // clickVoiceLbl.textColor = .white
-        //voiceBtn.backgroundColor = backgroundcolor
-        
-        
+        gradientcolours(view: voiceClickView,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        gradientcolours(view: textClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+    }
+    func textButtonStyle(){
         //MARK: TEXT BUTTON BACKGROUND
         textBtn.layer.cornerRadius = 20
         textBtn.layer.shadowColor = UIColor.black.cgColor
         textBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
         textBtn.layer.shadowRadius = 5
         textBtn.layer.shadowOpacity = 0.3
-        
-        gradientcolours(view: voiceClickView,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
-        clickVoiceLbl.textColor = .white
-        gradientcolours(view: textClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-    
-        //historyBtn.setTitleColor(.black, for:.normal)
+        textClickView.layer.cornerRadius = 8
+        gradientcolours(view: textClickView,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        gradientcolours(view: voiceClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
     }
     
     func gradientcolours(view: UIView, colours: [CGColor]) {
@@ -117,30 +106,30 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
     }
     @IBAction func voiceMessgBtn(_ sender: Any) {
-        BtnId = 0
-        voiceBtn.backgroundColor = backgroundcolor
+        BtnId = 1
         textClickView.backgroundColor = .white
-        voiceClickView.backgroundColor = tapColor
         textBtn.backgroundColor = UIColor.white
-        clickVoiceLbl.textColor = .white
+        clickVoiceLbl.textColor = .black
         clickTextView.textColor = .black
-        voiceBtn.tintColor = .white
+        
+//        voiceBtn.tintColor = .white
         textBtn.tintColor = .black
         tv.reloadData()
+        ButtonStyle()
     }
     
     
     
     @IBAction func TextMessageBtn(_ sender: Any) {
         
-        BtnId = 1
-        
-      
+        BtnId = 0
+        textButtonStyle()
         textClickView.backgroundColor = backgroundcolor
         voiceClickView.backgroundColor = .white
         textBtn.backgroundColor = UIColor.white
         clickVoiceLbl.textColor = .black
-        clickTextView.textColor = .white
+       
+        clickTextView.textColor = .black
 //        voiceBtn.tintColor = tapColor
         textBtn.tintColor = .black
         tv.reloadData()

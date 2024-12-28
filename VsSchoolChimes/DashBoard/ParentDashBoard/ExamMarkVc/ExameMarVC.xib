@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExameMarVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="backBtn" destination="o2h-l2-5CP" id="VqF-S2-fYg"/>
                 <outlet property="tv" destination="7by-2i-e2O" id="j5t-wd-kmT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -46,45 +47,69 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2h-l2-5CP">
-                    <rect key="frame" x="10" y="64" width="75" height="35"/>
+                    <rect key="frame" x="16" y="64" width="209" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="75" id="VAb-5r-jIh"/>
                         <constraint firstAttribute="height" constant="35" id="YIa-7p-e0Z"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.left" catalog="system"/>
+                    <state key="normal" title="Exam Mark" image="chevron.left" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
                     <connections>
                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="342-5x-Eoj"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exam Mark" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAh-K6-11C">
-                    <rect key="frame" x="93" y="68" width="222" height="26"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAh-K6-11C">
+                    <rect key="frame" x="225" y="68" width="0.0" height="26"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="rkb-LN-U4C">
+                    <rect key="frame" x="225" y="59" width="163" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEo-yV-vF7">
+                            <rect key="frame" x="0.0" y="0.0" width="163" height="20.333333333333332"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EVY-rI-f8B">
+                            <rect key="frame" x="0.0" y="25.333333333333329" width="163" height="19.666666666666671"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19.666666666666671" id="FKn-fd-H8D"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="kAh-K6-11C" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="9" id="23c-TB-fMx"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kAh-K6-11C" secondAttribute="trailing" constant="78" id="4Iu-8m-xYd"/>
-                <constraint firstItem="o2h-l2-5CP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="5F5-Fg-YMt"/>
+                <constraint firstItem="VBN-7F-8Ax" firstAttribute="top" secondItem="rkb-LN-U4C" secondAttribute="bottom" constant="5" id="34l-WB-cX6"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="top" secondItem="kAh-K6-11C" secondAttribute="bottom" constant="15" id="CZS-Eo-uWP"/>
-                <constraint firstItem="kAh-K6-11C" firstAttribute="leading" secondItem="o2h-l2-5CP" secondAttribute="trailing" constant="8" id="ECY-o5-KKI"/>
+                <constraint firstItem="kAh-K6-11C" firstAttribute="leading" secondItem="o2h-l2-5CP" secondAttribute="trailing" id="ECY-o5-KKI"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="L9d-6y-Ecu"/>
-                <constraint firstItem="o2h-l2-5CP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="LsE-lg-zgA"/>
+                <constraint firstItem="o2h-l2-5CP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="LsE-lg-zgA"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rkb-LN-U4C" secondAttribute="trailing" constant="5" id="WW9-Fc-Mxx"/>
+                <constraint firstItem="o2h-l2-5CP" firstAttribute="centerY" secondItem="rkb-LN-U4C" secondAttribute="centerY" id="WnA-de-f1q"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Xsl-v2-iWC"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="crT-Rd-iGv"/>
+                <constraint firstItem="rkb-LN-U4C" firstAttribute="leading" secondItem="kAh-K6-11C" secondAttribute="trailing" id="eFD-h3-XI1"/>
+                <constraint firstItem="rkb-LN-U4C" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="gyG-uU-pJ8"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="ParentClr">
-            <color red="0.74509803921568629" green="0.68235294117647061" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

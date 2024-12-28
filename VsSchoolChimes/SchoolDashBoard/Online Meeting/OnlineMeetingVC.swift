@@ -94,7 +94,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         LinkTxtfld.layer.borderWidth = 1
         LinkTxtfld.layer.borderColor = UIColor.gray.cgColor
         SubmitBtn.layer.cornerRadius = 10
-        DescriptTxtview.text = TexviewStringFile.Enter_Meeting_Description
+        DescriptTxtview.text = TexviewStringFile.Enter_Meeting_Description.translated()
         DescriptTxtview.textColor = .lightGray
         CustomDateBtn.layer.cornerRadius = 10
         CustomDateBtn.layer.borderWidth = 1

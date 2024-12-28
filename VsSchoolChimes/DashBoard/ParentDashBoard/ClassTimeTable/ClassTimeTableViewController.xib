@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ClassTimeTableViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="backView" destination="EPp-Op-YpG" id="Ui2-Ra-tLv"/>
+                <outlet property="backBtn" destination="A9X-vZ-3nR" id="wlR-RR-URf"/>
                 <outlet property="cv" destination="hKd-yG-qqU" id="yE7-FB-zPl"/>
                 <outlet property="dateLBl" destination="160-Qu-MUg" id="idm-9k-SC7"/>
                 <outlet property="dayLbl" destination="8yN-YL-tHc" id="hTp-Pp-7Dl"/>
@@ -31,54 +31,69 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qan-a5-OQD">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                             <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EPp-Op-YpG">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A9X-vZ-3nR">
+                                    <rect key="frame" x="16" y="10.999999999999998" width="153" height="23.333333333333329"/>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Class Time Table" image="chevron.backward" catalog="system">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="back:" destination="-1" eventType="touchUpInside" id="PS2-Bt-gQY"/>
+                                    </connections>
+                                </button>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Vjz-F9-GSe">
+                                    <rect key="frame" x="225" y="0.0" width="163" height="45"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="B78-QS-qzF">
-                                            <rect key="frame" x="15" y="18" width="20" height="14.333333333333329"/>
-                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MBF-9e-ndq">
+                                            <rect key="frame" x="0.0" y="0.0" width="163" height="20.333333333333332"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zgu-F5-xnr">
+                                            <rect key="frame" x="0.0" y="25.333333333333329" width="163" height="19.666666666666671"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="20" id="nAg-mL-mzR"/>
-                                                <constraint firstAttribute="height" constant="20" id="xa6-GD-3B7"/>
+                                                <constraint firstAttribute="height" constant="19.666666666666671" id="4Cu-FX-U5W"/>
                                             </constraints>
-                                        </imageView>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstItem="B78-QS-qzF" firstAttribute="centerX" secondItem="EPp-Op-YpG" secondAttribute="centerX" id="5D6-1w-jem"/>
-                                        <constraint firstAttribute="width" constant="50" id="DKl-jE-AET"/>
-                                        <constraint firstItem="B78-QS-qzF" firstAttribute="centerY" secondItem="EPp-Op-YpG" secondAttribute="centerY" id="HzO-nR-d1Q"/>
-                                    </constraints>
-                                </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class Time Table" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1N3-Fy-YR2">
-                                    <rect key="frame" x="110" y="15" width="129" height="20"/>
+                                </stackView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1N3-Fy-YR2">
+                                    <rect key="frame" x="169" y="10" width="0.0" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                             <color key="backgroundColor" name="ParentClr"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="EPp-Op-YpG" secondAttribute="bottom" id="L6e-Uj-kfH"/>
+                                <constraint firstItem="Vjz-F9-GSe" firstAttribute="top" secondItem="qan-a5-OQD" secondAttribute="top" id="1TK-Y0-yrc"/>
+                                <constraint firstItem="A9X-vZ-3nR" firstAttribute="centerY" secondItem="Vjz-F9-GSe" secondAttribute="centerY" id="8LB-j8-rZO"/>
+                                <constraint firstItem="1N3-Fy-YR2" firstAttribute="leading" secondItem="A9X-vZ-3nR" secondAttribute="trailing" id="Gyx-37-Tss"/>
+                                <constraint firstItem="A9X-vZ-3nR" firstAttribute="leading" secondItem="qan-a5-OQD" secondAttribute="leading" constant="16" id="Ngj-xA-beu"/>
+                                <constraint firstAttribute="trailing" secondItem="Vjz-F9-GSe" secondAttribute="trailing" constant="5" id="Nuf-EQ-7OS"/>
                                 <constraint firstAttribute="height" constant="50" id="Oxh-RW-jYj"/>
                                 <constraint firstItem="1N3-Fy-YR2" firstAttribute="centerY" secondItem="qan-a5-OQD" secondAttribute="centerY" id="Uuy-jo-6UQ"/>
-                                <constraint firstItem="1N3-Fy-YR2" firstAttribute="leading" secondItem="EPp-Op-YpG" secondAttribute="trailing" constant="60" id="krQ-h5-IRJ"/>
-                                <constraint firstItem="EPp-Op-YpG" firstAttribute="leading" secondItem="qan-a5-OQD" secondAttribute="leading" id="mO0-Iq-faJ"/>
-                                <constraint firstItem="EPp-Op-YpG" firstAttribute="top" secondItem="qan-a5-OQD" secondAttribute="top" id="pZ7-3p-ZWL"/>
-                                <constraint firstItem="1N3-Fy-YR2" firstAttribute="top" secondItem="qan-a5-OQD" secondAttribute="top" constant="15" id="y2k-Gb-Uk6"/>
+                                <constraint firstAttribute="bottom" secondItem="Vjz-F9-GSe" secondAttribute="bottom" constant="5" id="eaO-81-U0n"/>
+                                <constraint firstItem="1N3-Fy-YR2" firstAttribute="top" secondItem="qan-a5-OQD" secondAttribute="top" constant="10" id="y2k-Gb-Uk6"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmT-LP-u9T">
                             <rect key="frame" x="0.0" y="120" width="393" height="40"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yN-YL-tHc">
-                                    <rect key="frame" x="10" y="10" width="42" height="20"/>
+                                    <rect key="frame" x="10" y="10" width="41.333333333333336" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="160-Qu-MUg">
-                                    <rect key="frame" x="62" y="10" width="42" height="20"/>
+                                    <rect key="frame" x="61.333333333333329" y="10" width="41.333333333333329" height="20"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -143,9 +158,9 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <namedColor name="ParentClr">
-            <color red="0.74500000476837158" green="0.68199998140335083" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

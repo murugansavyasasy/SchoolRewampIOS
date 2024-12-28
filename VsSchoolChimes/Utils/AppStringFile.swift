@@ -231,9 +231,9 @@ class CommonStringFile{
     static let Schedule = "Schedule"
     static let ToTime = "To Time"
     static let Emergencyvoicemessages = "Emergency voice messages"
-    static let VoiceMessage = "Voice Message"
-    static let TextMessage = "Text Message"
-    static let ScheduleCall = "Schedule Call"
+    static let VoiceMessage = "voice"
+    static let TextMessage = "text"
+    static let ScheduleCall = "schedule_a_call"
     static let EnterTextHere = "Enter TextHere"
     static let BacktoTextMessage = "BackToTextMessage"
     static let BackToVoiceMessage = "BackToVoiceMessage"
@@ -267,6 +267,11 @@ class CommonStringFile{
     static let Day = "Day"
     static let CreateLeaveRequest = "CreateLeaveRequest"
     static let LeaveRequestInfo = "LeaveRequestInfo"
+    static let Parent = "Parent"
+    static let Principal = "Principal"
+    static let LoginAsTeacherOrParent = "LoginAsTeacherOrParent"
+    static let ChooseYourRole = "ChooseYourRole"
+    static let Proceed = "Proceed"
 }
 
 

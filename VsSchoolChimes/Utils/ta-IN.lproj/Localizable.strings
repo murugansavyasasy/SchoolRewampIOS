@@ -11,6 +11,11 @@
 "Help" = "உதவி";
 "Settings" = "அமைப்புகள்";
 "Profile" = "சுயவிவரம";
+"ChooseYourRole" = "உங்கள் பாத்திரத்தை தேர்வுசெய்க";
+"LoginAsTeacherOrParent" = "ஆசிரியர் அல்லது பெற்றோர் என்ற வகையில் உள்நுழைக";
+"Principal" = "தலைமை ஆசிரியர்";
+"Parent" = "பெற்றோர்";
+"Proceed" = "தொடரவும்";
 
 // MARK: Settings page
 "Notifications" = "அறிவிப்புகள்";
@@ -245,6 +250,10 @@
 "selectedText" = "தேர்ந்தெடுக்கப்பட்ட உரை";
 "invalidSelection" = "தவறான தேர்வு";
 "selectDatesWithinMonth" = "நடப்பு மாதத்தில் காட்சிப்படுத்தப்படும் தேதிகளுக்குள் மட்டுமே நீங்கள் தேதிகளை தேர்வு செய்யலாம்.";
+"text" = "உரை";
+"voice" = "குரல்";
+"schedule_a_call" = "ஒரு அழைப்பை திட்டமிடுங்கள்";
+
 //MARK: ScheduleExam
 "scheduleExam" = "தேர்வு அட்டவணை அமைக்கவும்";
 "Reasons" = "காரணங்கள்";

@@ -18,7 +18,7 @@ class VideoVC: UIViewController {
     
     
     @IBOutlet weak var HeaderLabel: UILabel!
-    
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchview: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
     //    var truncatedDescription = ""
@@ -36,8 +36,7 @@ class VideoVC: UIViewController {
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        HeaderLabel.text = "Video".translated()
+        backBtn.setTitle(ReceiverMenuItems.Video.translated(), for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
         keyboardDionebtn()
@@ -50,10 +49,8 @@ class VideoVC: UIViewController {
                         self.filteredData[i].img = image
                      
                         if i == data.count-1{
-//                            self.hideLoading()
                             tableview.reloadData()
                         }
-//                        OuterView.animateView(enable: false)
                        
                     }
                 }
@@ -78,10 +75,6 @@ class VideoVC: UIViewController {
         activityIndicator.center = view.center  // Position it at the center of the view
         activityIndicator.hidesWhenStopped = true // Hide it when stopped
         view.addSubview(activityIndicator)
-//        self.showLoading()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//            self.hideLoading()  // Hide the loader after 2 seconds
-//        }
     }
     func keyboardDionebtn(){
         let toolbar = UIToolbar()

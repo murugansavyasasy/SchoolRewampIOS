@@ -13,7 +13,7 @@ class ImagePdfVC: UIViewController {
     @IBOutlet weak var headinglabel: UILabel!
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var tv: UITableView!
-    
+    @IBOutlet weak var backBtn: UIButton!
     var data = [
         Video(name: "Introduction to Swift4rt4jkrtrbktuerbtttbgkejbtgetbgkebkgbetbgketbgbestgkbetskgkje", url: "https://www.w3schools.com/tags/mov_bbb.mp4", description: "A beginner's guide to Swift programming language. A beginner's guide to Swift programming language. A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.A beginner's guide to Swift programming languagejfknevjfnjkvknernfvnrjaekfnjkafkjnjkafjkjkafnakfkjsfnjnksfkjlglsfnjklsfnkjksfnnsfnjksfjnkvsjkfnvjklnsfnvfndjknfjlkglnsfklgnsfnkjkjfnkjnfjkglnksfjkjlsfnkjnsfkjnksnfknkfsnkjlsfnjkasnfkjnafsnkjfsankjafsnkjnfkjsnnfsnsfnnfasnnlaf", readed: false, hasAnimated: true, img: nil),
         Video(name: "Advanced iOS Animations", url: "https://videos.pexels.com/video-files/3205789/3205789-hd_1080_1920_25fps.mp4", description: "Learn how to implement complex animations in iOS.", readed: false,hasAnimated: true, img: nil),
@@ -28,8 +28,8 @@ class ImagePdfVC: UIViewController {
         search.placeholder = "Search".translated()
         search.delegate = self
         addDoneButton()
-
-        headinglabel.text = "Image/Pdf".translated()
+        backBtn.setTitle(ReceiverMenuItems.ImagePdf.translated(), for: .normal)
+//        headinglabel.text = "Image/Pdf".translated()
         headinglabel.setFont(style: .header, size: FontSize.HeaderSize)
         // Do any additional setup after loading the view.
         

@@ -15,7 +15,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBOutlet weak var outerView: UIStackView!
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
-   
+    @IBOutlet weak var backBtn: UIButton!
     
     @IBOutlet weak var TitleHederLbl: UILabel!
  
@@ -27,7 +27,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        backBtn.setTitle(button1.translated(), for: .normal)
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
         
@@ -68,7 +68,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     }
     
     func uiConficration(){
-        TitleHederLbl.text = titleLbl
+//        TitleHederLbl.text = titleLbl
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20

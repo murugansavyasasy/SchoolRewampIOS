@@ -13,6 +13,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
   
     
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var outerView: UIStackView!
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
@@ -47,9 +48,9 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         
     }
     func uiConficration(){
-        TitleHederLbl.text = titleLbl
+        backBtn.setTitle(titleLbl, for: .normal)
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        TitleHederLbl.text = CommonStringFile.CreateLeaveRequest.translated()
+//        TitleHederLbl.text = ReceiverMenuItems.RequestLeave.translated()
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
         createEvent.layer.cornerRadius = 20

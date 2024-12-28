@@ -9,12 +9,13 @@ import UIKit
 
 class ExameMarVC: UIViewController {
 
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
         tv.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
       
         let nib1 = UINib(nibName:"MarkTvCell", bundle: nil)

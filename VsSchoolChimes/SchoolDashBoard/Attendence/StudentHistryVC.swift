@@ -11,8 +11,9 @@ import DropDown
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func statusUpdate(status: Bool,index:Int) {
         studentData[index].isAbsent = status
+        filterData?[index].isAbsent = status
         // Calculate the total count of present students
-        totalcount = studentData.filter { $0.isAbsent }.count
+        totalcount = studentData.filter { $0.isAbsent == true }.count
         if totalcount == 0 {
             // All students are absent
             selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
@@ -22,6 +23,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }
     }
     
+    @IBOutlet weak var studentCollection: UICollectionView!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var search: UISearchBar!
@@ -32,19 +34,19 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     @IBOutlet weak var filterBtn: UIButton!
     @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var historyTable: UITableView!
-    
+    var switchCell = 1
     var dropDown = DropDown()
-    var studentData:[Student] = [Student(name: "viswah", isAbsent: true, rollnumber: "76979871", phoneNo: "9087654321"),
-                                 Student(name: "chandhru", isAbsent: true, rollnumber: "76979871", phoneNo: "9597296160"),
-                                 Student(name: "kothai", isAbsent: true, rollnumber: "76979872", phoneNo: "9360183031"),
-                                 Student(name: "shiyam", isAbsent: true, rollnumber: "76979873", phoneNo: "98762356335"),
-                                 Student(name: "Navin", isAbsent: true, rollnumber: "76979874", phoneNo: "7456792347"),
-                                 Student(name: "Nicolash", isAbsent: true, rollnumber: "76979875", phoneNo: "9835546472"),
-                                 Student(name: "sharmila", isAbsent: true, rollnumber: "76979876", phoneNo: "89873456543"),
-                                 Student(name: "sharmila", isAbsent: true, rollnumber: "76979877", phoneNo: "89873456543"),
-                                 Student(name: "Navin", isAbsent: true, rollnumber: "76979878", phoneNo: "7456792347"),
-                                 Student(name: "kothai", isAbsent: true, rollnumber: "76979879", phoneNo: "9360183031"),
-                                 Student(name: "kothai", isAbsent: true, rollnumber: "769798710", phoneNo: "9360183031")]
+    var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
+                                 Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
+                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
+                                 Student(name: "shiyam", isAbsent: false, rollnumber: "76979873", phoneNo: "98762356335"),
+                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979874", phoneNo: "7456792347"),
+                                 Student(name: "Nicolash", isAbsent: false, rollnumber: "76979875", phoneNo: "9835546472"),
+                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979876", phoneNo: "89873456543"),
+                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979877", phoneNo: "89873456543"),
+                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979878", phoneNo: "7456792347"),
+                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979879", phoneNo: "9360183031"),
+                                 Student(name: "kothai", isAbsent: false, rollnumber: "769798710", phoneNo: "9360183031")]
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [Student]?
@@ -74,7 +76,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     @IBAction func fliter(_ sender: UIButton) {
         dropDown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated()]
-        dropDown.bottomOffset = CGPoint(x: -90, y: (filterBtn.bounds.height - 110))
+        dropDown.anchorView = filterBtn
+        dropDown.bottomOffset = CGPoint(x: 0, y: (filterBtn.bounds.height))
         
         dropDown.direction = .bottom
         
@@ -118,6 +121,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     func registerCell(){
         historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
+        historyTable.register(UINib(nibName: CellConfingName.StudentHistryTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.StudentHistryTVC)
+        historyTable.register(UINib(nibName: "MarkAtendenceTV", bundle: nil), forCellReuseIdentifier: "MarkAtendenceTV")
+        studentCollection.register(UINib(nibName: "MarkAttendenceCV", bundle: nil), forCellWithReuseIdentifier: "MarkAttendenceCV")
     }
     @IBAction func selectAllStd(_ sender: UIButton) {
         sender.isSelected.toggle()
@@ -126,16 +132,16 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         let isSelectingAll = sender.isSelected
         for i in 0..<studentData.count {
             studentData[i].isAbsent = !isSelectingAll // If selecting all, students are not absent
+            filterData?[i].isAbsent = !isSelectingAll
             
             // Properly access the cell using indexPath, not historyTable.cell
             let indexPath = IndexPath(row: i, section: 0)
             if let customCell = historyTable.cellForRow(at: indexPath) as? AttendenceTVC {
-                customCell.custSwitch.isOn = !isSelectingAll // Correct logic for switch
-                print(i)
+                customCell.custSwitch.isOn = isSelectingAll
+                customCell.hideLbl(isAbsent: isSelectingAll)
             }
             
         }
-        
         // Update select all button image and total count
         if isSelectingAll {
             selectAllBtn.setImage(ImageName.checkmark, for: .normal)
@@ -157,15 +163,42 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
-        cell.nameLbl.text = filterData?[indexPath.row].name
-        cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
-        cell.index = indexPath.row
-        cell.isAbsent = filterData?[indexPath.row].isAbsent ?? true
-        
-        cell.delegate = self
-        
-        return cell
+        if switchCell == 0{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StudentHistryTVC, for: indexPath) as! StudentHistryTVC
+            cell.nameLbl.text = filterData?[indexPath.row].name
+            cell.AdmisNomber.text = filterData?[indexPath.row].phoneNo
+            cell.rollNomber.text = filterData?[indexPath.row].rollnumber
+            let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
+            cell.statusBtn.setImage(img, for: .normal)
+            cell.outerView.layer.borderColor = filterData?[indexPath.row].isAbsent ?? false ? UIColor.red.cgColor : Colornames.AprovedClr?.cgColor
+            cell.outerView.layer.borderWidth = 1
+            
+            return cell
+        }else if switchCell == 1{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
+            cell.nameLbl.text = filterData?[indexPath.row].name
+            cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
+            cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
+            cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
+            cell.phnBtn.tag = indexPath.row
+            cell.phnBtn.setTitle(filterData?[indexPath.row].phoneNo, for: .normal)
+            cell.custSwitch.index = indexPath.row
+            cell.delegate = self
+            return cell
+        }else{
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MarkAtendenceTV", for: indexPath) as! MarkAtendenceTV
+            cell.nameLbl.text = filterData?[indexPath.row].name
+            cell.addmisionLbl.text = filterData?[indexPath.row].phoneNo
+            cell.rollNoLbl.text = filterData?[indexPath.row].rollnumber
+            let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
+            cell.btnView.backgroundColor = filterData?[indexPath.row].isAbsent  ?? false ? UIColor.red : Colornames.AprovedClr
+            let name = filterData?[indexPath.row].isAbsent  ?? false ? "Absent" : "Present"
+            cell.btnView.layer.cornerRadius = 20
+           
+            cell.stsBtn.setTitle(name, for: .normal)
+            return cell
+        }
     }
     
     
@@ -174,21 +207,20 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? StudentHistryTVC
-        studentData[indexPath.row].isAbsent.toggle()
+        //        studentData[indexPath.row].isAbsent.toggle()
         // Ensure the cell exists before performing animation
         guard let cell = cell else { return }
-        if studentData[indexPath.row].isAbsent == false{
+        if studentData[indexPath.row].isAbsent == true{
             // Create the flip animation
             UIView.transition(with: cell.outerView,
                               duration: 0.3,
                               options: [.transitionFlipFromTop],  // Change direction as needed
                               animations: {
                 // Change background color to red
-                cell.outerView.layer.borderColor = UIColor.red.cgColor
+                cell.outerView.layer.borderColor = Colornames.AprovedClr?.cgColor
                 cell.outerView.layer.borderWidth = 1
-                
-                
-                cell.statusBtn.setImage(ImageName.apsent, for: .normal)
+                self.studentData[indexPath.row].isAbsent = false
+                cell.statusBtn.setImage(ImageName.present, for: .normal)
             },
                               completion: nil)
             totalcount += 1
@@ -198,8 +230,9 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                               options: [.transitionFlipFromBottom],  // Change direction as needed
                               animations: {
                 // Change background color to red
-                cell.outerView.layer.borderColor = UIColor.clear.cgColor
-                cell.statusBtn.setImage(ImageName.present, for: .normal)
+                cell.outerView.layer.borderColor = UIColor.red.cgColor
+                cell.statusBtn.setImage(ImageName.apsent, for: .normal)
+                self.studentData[indexPath.row].isAbsent = true
             },
                               completion: nil)
             totalcount -= 1
@@ -225,6 +258,33 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         searchBar.resignFirstResponder() // Dismiss the keyboard
     }
 }
+extension StudentHistryVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return filterData?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = studentCollection.dequeueReusableCell(withReuseIdentifier: "MarkAttendenceCV", for: indexPath) as! MarkAttendenceCV
+        cell.nameLbl.text = "Name :\(filterData?[indexPath.item].name ?? "")"
+        cell.admissionLbl.text = "ADMIS No :\(filterData?[indexPath.item].phoneNo ?? "")"
+        cell.rollNoLbl.text = "Roll No:\(filterData?[indexPath.item].rollnumber ?? "")"
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let cellWidth = (studentCollection.frame.width - 40) / 2
+        return CGSize(width: cellWidth, height: 220)
+    }
+    func calculateLabelHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = text.boundingRect(with: constraintRect,
+                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                            attributes: [NSAttributedString.Key.font: font],
+                                            context: nil)
+        return ceil(boundingBox.height)
+    }
+}
+
 struct Student {
     var name: String
     var isAbsent: Bool

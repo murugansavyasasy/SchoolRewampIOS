@@ -11,6 +11,12 @@
  "Help" = "Help";
  "Settings" = "Settings";
  "Profile" = "Profile";
+"ChooseYourRole" = "Choose your role";
+"LoginAsTeacherOrParent" = "Login as a teacher or parent";
+"Principal" = "Principal";
+"Parent" = "Parent";
+"Proceed" = "Proceed"; 
+
 
 // MARK: Settings page
 "Notifications" = "Notifications";
@@ -220,6 +226,10 @@
 "selectedText" = "Selected Text";
 "invalidSelection" = "Invalid Selection";
 "selectDatesWithinMonth" = "You can only select dates within the currently displayed month.";
+"text" = "Text";
+"voice" = "Voice";
+"schedule_a_call" = "Schedule a Call";
+
 //MARK: ScheduleExam
 "scheduleExam" = "Schedule Exam";
 "Reasons" = "Reasons";
