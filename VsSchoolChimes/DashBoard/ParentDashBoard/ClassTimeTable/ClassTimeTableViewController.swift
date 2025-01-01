@@ -14,10 +14,9 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var dayLbl: UILabel!
     @IBOutlet weak var dateLBl: UILabel!
-    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
-   
+    @IBOutlet weak var bgView: UIView!
     var getTimes : String!
     var getCurrentDay : String!
    
@@ -26,7 +25,8 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         tv.dataSource = self
         tv.delegate = self
         cv.dataSource = self

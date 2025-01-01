@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LsrwListShowViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="backBtn" destination="C3T-wS-ckn" id="Bu9-Xu-n9X"/>
+                <outlet property="bgView" destination="qjc-ha-zjw" id="uTP-JQ-BjA"/>
                 <outlet property="nodataLbl" destination="4mR-26-aIA" id="PqX-9S-w9x"/>
                 <outlet property="nodataView" destination="SmC-eB-MVa" id="3T5-CM-zsU"/>
                 <outlet property="searchBar" destination="O0a-CO-gv6" id="8Hg-T6-2t1"/>
@@ -44,7 +45,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2Jk-Qx-ee2">
                                             <rect key="frame" x="225" y="5" width="163" height="50"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiL-Gs-IkH">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiL-Gs-IkH">
                                                     <rect key="frame" x="0.0" y="0.0" width="163" height="25.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -67,7 +68,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3T-wS-ckn">
-                                            <rect key="frame" x="16" y="18.333333333333329" width="151.33333333333334" height="23.333333333333329"/>
+                                            <rect key="frame" x="16" y="18.333333333333329" width="209" height="23.333333333333329"/>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" title="LSRW" image="chevron.left" catalog="system">
@@ -86,7 +87,7 @@
                                         <constraint firstAttribute="height" constant="60" id="Jl0-AL-mWk"/>
                                         <constraint firstAttribute="bottom" secondItem="2Jk-Qx-ee2" secondAttribute="bottom" constant="5" id="RbQ-Ms-C51"/>
                                         <constraint firstItem="C3T-wS-ckn" firstAttribute="leading" secondItem="qjc-ha-zjw" secondAttribute="leading" constant="16" id="kcM-s2-yvG"/>
-                                        <constraint firstItem="p8B-57-lGS" firstAttribute="leading" secondItem="C3T-wS-ckn" secondAttribute="trailing" constant="57.666666666666657" id="owO-Va-Teo"/>
+                                        <constraint firstItem="p8B-57-lGS" firstAttribute="leading" secondItem="C3T-wS-ckn" secondAttribute="trailing" id="owO-Va-Teo"/>
                                         <constraint firstItem="2Jk-Qx-ee2" firstAttribute="top" secondItem="qjc-ha-zjw" secondAttribute="top" constant="5" id="qkp-fS-045"/>
                                         <constraint firstItem="2Jk-Qx-ee2" firstAttribute="leading" secondItem="p8B-57-lGS" secondAttribute="trailing" id="w7O-of-B0t"/>
                                         <constraint firstItem="C3T-wS-ckn" firstAttribute="centerY" secondItem="2Jk-Qx-ee2" secondAttribute="centerY" id="yzg-Ri-E7D"/>

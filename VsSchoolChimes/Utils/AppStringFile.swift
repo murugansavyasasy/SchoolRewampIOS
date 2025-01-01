@@ -73,14 +73,14 @@ class MenuStringFile{
 struct ReceiverMenuItems {
     static let Communication = "Communication"
     static let Homework = "Homework"
-    static let ExamTest = "ExamTest"
-    static let ExamMarks = "Exam Marks"
+    static let ExamTest = "exam_test"
+    static let ExamMarks = "exam_marks"
     static let ImagePdf = "ImagePdf"
     static let Video = "Video"
     static let NoticeBoard = "Notice Board"
-    static let Assignment = "Resiverassignment"
-    static let OnlineMeeting = "Online  Meeting"
-    static let AttendanceReport = "Attendance Report"
+    static let Assignment = "receiver_assignment"
+    static let OnlineMeeting = "online_meeting"
+    static let AttendanceReport = "attendance_report"
     static let EventsHolidays = "Events/Holidays"
     static let RequestLeave = "Request Leave"
     static let FeeDetails = "Fee Details"
@@ -234,7 +234,7 @@ class CommonStringFile{
     static let VoiceMessage = "voice"
     static let TextMessage = "text"
     static let ScheduleCall = "schedule_a_call"
-    static let EnterTextHere = "Enter TextHere"
+    static let EnterTextHere = "EnterTextHere"
     static let BacktoTextMessage = "BackToTextMessage"
     static let BackToVoiceMessage = "BackToVoiceMessage"
     static let Venue = "Venue"
@@ -272,6 +272,7 @@ class CommonStringFile{
     static let LoginAsTeacherOrParent = "LoginAsTeacherOrParent"
     static let ChooseYourRole = "ChooseYourRole"
     static let Proceed = "Proceed"
+    static let CreateEvent = "CreateEvent"
 }
 
 

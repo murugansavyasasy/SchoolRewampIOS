@@ -23,7 +23,7 @@ class ExamTmTblVCViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         backBtn.setTitle(ReceiverMenuItems.ExamTest.translated(), for: .normal)
         let nib = UINib(nibName:CellConfingName.SideTvcell, bundle: nil)
         sideTv.register(nib, forCellReuseIdentifier: CellConfingName.SideTvcell)

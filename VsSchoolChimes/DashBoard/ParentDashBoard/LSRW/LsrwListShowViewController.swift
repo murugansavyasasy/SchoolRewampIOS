@@ -22,7 +22,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var nodataView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var backBtn: UIButton!
     
     @IBOutlet weak var tv: UITableView!
@@ -55,11 +55,15 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         super.viewDidLoad()
         
         searchBar.delegate = self
-        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         
         let userDefaults = UserDefaults.standard
-        backBtn.setTitle(ReceiverMenuItems.LSRW.translated(), for: .normal)
-//
+       
+        let formattedText = breakIntoLines(text: ReceiverMenuItems.LSRW.translated(), maxCharactersPerLine: 15)
+        backBtn.setTitle(formattedText, for: .normal)
+        backBtn.titleLabel?.numberOfLines = 0
+        backBtn.titleLabel?.lineBreakMode = .byWordWrapping
         nodataView.isHidden = true
         nodataLbl.isHidden = true
         
@@ -269,6 +273,34 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         tv.reloadData()
         //        }
     }
+    
+     func breakIntoLines(text: String, maxCharactersPerLine: Int) -> String {
+           var result = ""
+           var currentLine = ""
+
+           for word in text.split(separator: " ") {
+               if currentLine.count + word.count + 1 <= maxCharactersPerLine {
+                   currentLine += (currentLine.isEmpty ? "" : " ") + word
+               } else if word.count > maxCharactersPerLine {
+                   if !currentLine.isEmpty {
+                       result += currentLine + "\n"
+                       currentLine = ""
+                   }
+                   var startIndex = word.startIndex
+                   while startIndex < word.endIndex {
+                       let endIndex = word.index(startIndex, offsetBy: maxCharactersPerLine, limitedBy: word.endIndex) ?? word.endIndex
+                       result += word[startIndex..<endIndex] + "\n"
+                       startIndex = endIndex
+                   }
+               } else {
+                   result += currentLine + "\n"
+                   currentLine = String(word)
+               }
+           }
+           result += currentLine // Add the last line
+
+           return result
+       }
     
 }
 

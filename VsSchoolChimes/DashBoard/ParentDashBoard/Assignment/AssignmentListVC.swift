@@ -12,6 +12,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
     var filteredData :[Assigment]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data

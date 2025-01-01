@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="TitleHederLbl" destination="qpN-Yo-u0B" id="YBx-YL-PqB"/>
                 <outlet property="backBtn" destination="cCk-JC-1iU" id="Mka-1g-pxG"/>
+                <outlet property="bgView" destination="ple-Yb-ohd" id="hdY-oD-ZP6"/>
                 <outlet property="createEvent" destination="ywX-D1-9oy" id="dE6-bl-3gu"/>
                 <outlet property="historyBtn" destination="1Rc-nn-I47" id="E03-XC-vVA"/>
                 <outlet property="outerView" destination="00C-wf-VES" id="kSM-Wm-4iD"/>
@@ -39,7 +40,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="KN8-Rt-FY5">
                                             <rect key="frame" x="225" y="0.0" width="163" height="55"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrD-2D-RLJ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrD-2D-RLJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="163" height="30.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

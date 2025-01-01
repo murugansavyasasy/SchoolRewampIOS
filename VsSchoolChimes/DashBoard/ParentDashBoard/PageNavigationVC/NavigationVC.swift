@@ -19,6 +19,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     @IBOutlet weak var createEvent: UIButton!
     @IBOutlet weak var presentView: UIView! // Container view to embed the page view controller
     
+    
     @IBOutlet weak var TitleHederLbl: UILabel!
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
@@ -35,8 +36,15 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
 //        pages = [page1, page2]
         loadPages([page1, page2])
         disableSwipeGesture()
-        
-        gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        gradientcolours(
+            button: createEvent,
+            colours: [
+                UIColor(hex: "7ED957").cgColor,
+                UIColor(hex: "0097B2").cgColor
+            ]
+        )
+
         createEvent.setTitleColor(.black, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         historyBtn.setTitleColor(.black, for:.normal)
@@ -50,7 +58,6 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     func uiConficration(){
         backBtn.setTitle(titleLbl, for: .normal)
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
-//        TitleHederLbl.text = ReceiverMenuItems.RequestLeave.translated()
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
         createEvent.layer.cornerRadius = 20
@@ -104,14 +111,24 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     @IBAction func SelectionController(_ sender: UIButton) {
         
         if sender.tag == 0{
-            gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+            gradientcolours(
+                button: createEvent,
+                colours: [
+                    UIColor(hex: "7ED957").cgColor,
+                    UIColor(hex: "0097B2").cgColor
+                ])
             createEvent.setTitleColor(.black, for:.normal)
             gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             historyBtn.setTitleColor(.black, for:.normal)
         }else{
             gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             createEvent.setTitleColor(.black, for:.normal)
-            gradientcolours(button: historyBtn,colours:[UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+            gradientcolours(
+                button: historyBtn,
+                colours: [
+                    UIColor(hex: "7ED957").cgColor,
+                    UIColor(hex: "0097B2").cgColor
+                ])
             historyBtn.setTitleColor(.black, for:.normal)
         }
         

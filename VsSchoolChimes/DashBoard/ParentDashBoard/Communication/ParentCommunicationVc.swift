@@ -21,9 +21,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         playIndex = (playIndex == index) ? nil : index
         tv.reloadData()
     }
-    
     func deleteDelegate(index: Int) {
-        
         ""
     }
     @IBOutlet weak var backBtn: UIButton!
@@ -32,16 +30,19 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     @IBOutlet weak var textBtn: UIButton!
     @IBOutlet weak var voiceClickView: UIView!
     
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var textClickView: UIView!
     @IBOutlet weak var voiceBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
-    var BtnId = 0
+    var BtnId = 1
     let backgroundcolor = Colornames.topBackgroundCLr
     let tapColor = Colornames.topBackgroundCLr1
     var playIndex :Int?
     var AudioPlayUrl: String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        buttons()
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         clickTextView.text = CommonStringFile.TextMessage.translated()
         backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
@@ -60,7 +61,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
 
     
     func ButtonStyle(){
-        
+        textClickView.backgroundColor = .white
+        textBtn.backgroundColor = UIColor.white
+        clickVoiceLbl.textColor = .black
+        clickTextView.textColor = .black
+        textBtn.tintColor = .black
         //voiceBtn.backgroundColor = .white
         voiceClickView.layer.cornerRadius = 8
         voiceClickView.layer.cornerRadius = 8
@@ -70,10 +75,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         voiceBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
         voiceBtn.layer.shadowRadius = 5
         voiceBtn.layer.shadowOpacity = 0.3
-        gradientcolours(view: voiceClickView,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        gradientcolours(view: voiceClickView,colours:[
+            UIColor(hex: "7ED957").cgColor,
+            UIColor(hex: "0097B2").cgColor
+        ])
+        
         gradientcolours(view: textClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
     }
-    func textButtonStyle(){
+    func buttons(){
         //MARK: TEXT BUTTON BACKGROUND
         textBtn.layer.cornerRadius = 20
         textBtn.layer.shadowColor = UIColor.black.cgColor
@@ -81,7 +90,37 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         textBtn.layer.shadowRadius = 5
         textBtn.layer.shadowOpacity = 0.3
         textClickView.layer.cornerRadius = 8
-        gradientcolours(view: textClickView,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        textClickView.backgroundColor = backgroundcolor
+        voiceClickView.backgroundColor = .white
+        textBtn.backgroundColor = UIColor.white
+        clickVoiceLbl.textColor = .black
+       
+        clickTextView.textColor = .black
+//        voiceBtn.tintColor = tapColor
+        textBtn.tintColor = .black
+        
+    }
+    func textButtonStyle(){
+        textClickView.backgroundColor = backgroundcolor
+        voiceClickView.backgroundColor = .white
+        textBtn.backgroundColor = UIColor.white
+        clickVoiceLbl.textColor = .black
+       
+        clickTextView.textColor = .black
+//        voiceBtn.tintColor = tapColor
+        textBtn.tintColor = .black
+        
+        //MARK: TEXT BUTTON BACKGROUND
+        textBtn.layer.cornerRadius = 20
+        textBtn.layer.shadowColor = UIColor.black.cgColor
+        textBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
+        textBtn.layer.shadowRadius = 5
+        textBtn.layer.shadowOpacity = 0.3
+        textClickView.layer.cornerRadius = 8
+        gradientcolours(view: textClickView,colours: [
+            UIColor(hex: "7ED957").cgColor,
+            UIColor(hex: "0097B2").cgColor
+        ])
         gradientcolours(view: voiceClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
     }
     
@@ -107,15 +146,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     }
     @IBAction func voiceMessgBtn(_ sender: Any) {
         BtnId = 1
-        textClickView.backgroundColor = .white
-        textBtn.backgroundColor = UIColor.white
-        clickVoiceLbl.textColor = .black
-        clickTextView.textColor = .black
-        
-//        voiceBtn.tintColor = .white
-        textBtn.tintColor = .black
-        tv.reloadData()
         ButtonStyle()
+        
+        tv.reloadData()
+        
     }
     
     
@@ -124,14 +158,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
         BtnId = 0
         textButtonStyle()
-        textClickView.backgroundColor = backgroundcolor
-        voiceClickView.backgroundColor = .white
-        textBtn.backgroundColor = UIColor.white
-        clickVoiceLbl.textColor = .black
-       
-        clickTextView.textColor = .black
-//        voiceBtn.tintColor = tapColor
-        textBtn.tintColor = .black
+        
         tv.reloadData()
         
     }
@@ -158,7 +185,9 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         if BtnId == 0{
             
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-            
+            cell.sendBtnheight.constant = 0
+            cell.sendBtnWidth.constant = 0
+            cell.DateLabel.textAlignment = .right
             cell.sendBtn.isHidden = true
             cell.descriptContent.attributedText = descript(for:"Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.", expanded: false)
 //            cell.delegate = self
@@ -171,10 +200,11 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         }else{
             
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+            cell.sentBtnHeight.constant = 0
             cell.sendbtn.isHidden = true
-            
+            cell.sentBtnWidth.constant = 0
             cell.playBtn.tag = indexPath.row
-            
+            cell.datelbl.textAlignment = .right
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
             // Update play state
             let isPlaying = (playIndex == indexPath.row)

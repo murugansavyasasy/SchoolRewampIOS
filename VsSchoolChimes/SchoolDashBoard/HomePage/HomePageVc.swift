@@ -318,7 +318,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                 case MenuStringFile.ScheduleExamTest.translated():
                     MenuRedirect.ScheduleExamVCNavigat(from: self)
-                case MenuStringFile.DailyCollection,"":
+                case MenuStringFile.DailyCollection:
+                    MenuRedirect.RecipientNavigat(from: self)
                     break
                     
                 default:

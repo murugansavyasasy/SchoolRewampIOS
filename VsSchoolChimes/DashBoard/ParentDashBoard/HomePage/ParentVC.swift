@@ -6,10 +6,15 @@
 //
 
 import UIKit
+import AVFoundation
 
 @available(iOS 14.0, *)
 class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var lowBottomCv: UICollectionView!
+    @IBOutlet weak var reportView: UIView!
+    @IBOutlet weak var templateview: UIView!
+    @IBOutlet weak var profileFullview: UIView!
     @IBOutlet weak var bottomCvHeight: NSLayoutConstraint!
     @IBOutlet weak var loginDetailView: UIView!
     @IBOutlet weak var Searchbar: UISearchBar!
@@ -28,7 +33,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     var searchItem = 0
     var currentIndex = 0
     var autoScrollTimer: Timer?
-    private let tabBar = UITabBar()
+    
     private var containerView = UIView()
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
@@ -38,25 +43,66 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     var timer: Timer?
     let alert = CustomAlert()
     var currentSelectedIndex = 0
+    var isShowingAll = false
+    private var firstArray: [String] = []
+    private var secondArray: [String] = []
+    let advertisements = [
+        "Ad 1: Special Offer",
+        "Ad 2: Final Sale",
+        "Ad 3: New Arrivals",
+        "Ad 4: Discount Up to 50%"
+    ]
+    var displayedCategories: [String] = []
+    var indexNo = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        adjustCollectionViewHeight()
-        bottomCv.isScrollEnabled = false
+        //        adjustCollectionViewHeight()
+        //        bottomCv.isScrollEnabled = false
+        displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
+        
         filteredItems = MenuRedirect.items
         setupSearchBar()
         //    startAutoScroll()
         cellRegistration()
         startPlaceholderRotation()
         addDoneButton()
+        
+        templateview.roundTopCorners(radius: 10)
+        
+        let midIndex = MenuRedirect.receiverItems.count / 2
+        firstArray = Array(MenuRedirect.receiverItems.prefix(midIndex))  // First half
+        secondArray = Array(MenuRedirect.receiverItems.suffix(from: midIndex))  // Second half
+        
+        reportView.layer.cornerRadius = 5
+        reportView.layer.shadowColor = UIColor.black.cgColor
+        reportView.layer.shadowOpacity = 0.5
+        reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        reportView.layer.shadowRadius = 3
+        reportView.layer.masksToBounds = false
+        
+        //
+        profileFullview.layer.cornerRadius =  30
+        loginDetailView.layer.cornerRadius =  30
+        
+        
+        view.applyGradient(
+            colors: [
+                UIColor(hex: "#7ed957"),  // Green
+                UIColor(hex: "#0097b2")   // Blue
+            ],
+            startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
+            endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
+        )
+        
+        setupVideoBackground()
+        
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
         // Do any additional setup after loading the view.
         Searchbar.placeholder = CommonStringFile.Search.translated()
         Searchbar.delegate = self
         searchHeightCon.constant = 0
-        TopCv.delegate = self
-        TopCv.dataSource = self
-        TopCv.collectionViewLayout = CardsCollectionFlowLayout()
+        
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
@@ -77,16 +123,35 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         loginDetailView.addGestureRecognizer(redirectGesture)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
+        view.applyGradient(
+            colors: [
+                UIColor(hex: "#7ed957"),  // Green
+                UIColor(hex: "#0097b2")   // Blue
+            ],
+            startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
+            endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
+        )
+    }
+//    func updateCollectionViewHeight() {
+//        // Calculate the height of the collection view content
+//        let contentHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+//        
+//        // Update the height constraint
+//        bottomCvHeight.constant = 900
+//        
+//        // Notify layout to update
+//        self.templateview.layoutIfNeeded()
+//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("viewWillAppear - View is about to appear.")
-        
-        TopCv.reloadData()
-        TopCv.delegate = self
-        TopCv.dataSource = self
         bottomCv.delegate = self
         bottomCv.dataSource = self
         bottomCv.reloadData()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -95,6 +160,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
         bottomCv.delegate = self
         bottomCv.dataSource = self
+        
         
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -114,11 +180,56 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
     }
     
+    
+    func setupVideoBackground() {
+        guard let path = Bundle.main.path(forResource: "Mathematics", ofType: "mp4") else { return }
+        let url = URL(fileURLWithPath: path)
+        let player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        playerLayer.frame = profileFullview.bounds
+        playerLayer.opacity = 0.1
+        playerLayer.videoGravity = .resizeAspectFill
+        profileFullview.layer.addSublayer(playerLayer)
+        
+        player.play()
+    }
+    
+    
+    func applyGradient(colours: [CGColor],xstart:Double,ystart:Double) {
+        if let existingGradientLayer = profileFullview.layer.sublayers?.first(where: { $0 is CAGradientLayer }) {
+            existingGradientLayer.removeFromSuperlayer()
+        }
+        
+        // Create a new gradient layer
+        let gradientLayer = CAGradientLayer()
+        
+        // Set the gradient layer's frame to the bounds of the UIImageView
+        gradientLayer.frame = profileFullview.bounds
+        
+        // Define the gradient colors (you can customize this)
+        gradientLayer.colors = colours //[UIColor.parentClr.cgColor,UIColor.priority.cgColor]
+        
+        // Optionally, define the gradient direction
+        gradientLayer.startPoint = CGPoint(x: xstart, y: ystart)  // Top-left
+        gradientLayer.endPoint = CGPoint(x: 0.9, y: 0.9)    // Bottom-right
+        
+        // Insert the gradient layer behind the image
+        profileFullview.layer.insertSublayer(gradientLayer, at: 0)
+        
+        // Make sure the image is not hidden behind the gradient layer
+        profileFullview.layer.masksToBounds = true
+        
+        
+        
+        
+        
+    }
+    
     func cellRegistration(){
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
-        TopCv.register(UINib(nibName: CellConfingName.HomePageTopCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageTopCell)
+        bottomCv.register(UINib(nibName: "seeMore", bundle: nil), forCellWithReuseIdentifier: "seeMore")
         
-        TopCv.register(UINib(nibName: CellConfingName.PiechartCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PiechartCVCell)
     }
     
     func setupSearchBar() {
@@ -138,58 +249,6 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     
     deinit {
         timer?.invalidate()
-    }
-    
-    
-    
-    func adjustCollectionViewHeight() {
-        let numberOfColumns: CGFloat = 4
-        let spacing: CGFloat = 10 // Adjust based on your collection view layout
-        
-        // Get layout attributes
-        guard let layout = bottomCv.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-        
-        // Calculate item size
-        let totalSpacing = (numberOfColumns - 1) * layout.minimumInteritemSpacing + layout.sectionInset.left + layout.sectionInset.right
-        let itemWidth = (bottomCv.frame.width - totalSpacing) / numberOfColumns
-        let itemHeight = itemWidth // Assuming square items
-        
-        // Calculate rows
-        let numberOfRows = ceil(CGFloat(MenuRedirect.receiverItems.count) / numberOfColumns)
-        
-        // Update height constraint
-        bottomCvHeight.constant = (numberOfRows * itemHeight) + ((numberOfRows - 1) * layout.minimumLineSpacing) + layout.sectionInset.top + layout.sectionInset.bottom
-        
-        // Refresh layout
-        bottomCv.layoutIfNeeded()
-    }
-    
-    
-    
-    func restartAnimations() {
-        // Assuming you have shimmer animations or other animations that need to be reset
-        
-        
-        if let cell = TopCv.cellForItem(at: IndexPath(row: 0, section: 0)) as? PiechartCVCell {
-            // Reset shimmer view or any other animations
-            cell.pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
-        }
-        
-        for cell in bottomCv.visibleCells as! [BottomCVCell] {
-            // Reset shimmer view or any other animations
-            cell.shimmersViewss.parentview.isHidden = false
-            cell.shimmersViewss.animateView(enable: true)
-            cell.MenuLbl.isHidden = true
-            cell.GradientView.isHidden = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-                cell.shimmersViewss.animateView(enable: false)
-                cell.MenuLbl.isHidden = false
-                cell.GradientView.isHidden = false
-                cell.shimmersViewss.parentview.isHidden = true
-            }
-            
-        }
-        
     }
     
     func startAutoScroll() {
@@ -224,170 +283,125 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == bottomCv{
-            
-            return MenuRedirect.receiverItems.count
-            
-        }else{
-            return 5
-        }
+        return displayedCategories.count + 1 // Ensure ItemnCount matches your data source
     }
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("Row: \(indexPath.row)")
         
-        if collectionView == bottomCv{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
+        if indexPath.row == 6 {
+            // Handle the "seeMore" cell
+            let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
+            adCell.advertisements = advertisements // Pass advertisement data to the ad cell
+            adCell.adCollectionView.reloadData() // Refresh the embedded collection view
+            adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
+            adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
+            return adCell
+        } else {
+            // Handle regular cells
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell, for: indexPath) as! BottomCVCell
             cell.MenuLbl.text = nil
-            cell.MenuImgView.image  = nil
-            let label = MenuRedirect.receiverItems[indexPath.row].translated()
-            let img = UIImage(named: MenuRedirect.receiverItems[indexPath.row])
+            cell.MenuImgView.image = nil
+            
+            // Calculate the correct index for `receiverItems`
+            let indexNo: Int
+            if indexPath.row > 6 {
+                indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
+            } else {
+                indexNo = indexPath.row
+            }
+            
+            guard indexNo < MenuRedirect.receiverItems.count else {
+                fatalError("Index out of range: indexNo = \(indexNo), count = \(MenuRedirect.receiverItems.count)")
+            }
+            
+            let label = MenuRedirect.receiverItems[indexNo].translated()
+            let img = UIImage(named: MenuRedirect.receiverItems[indexNo])
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
-            cell.MenuImgView.image  = img
-            cell.applyGradient(colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor],xstart: 0.4,ystart: 0.4)
+            cell.MenuImgView.image = img
+            cell.MenuImgView.tintColor = .systemIndigo
+            cell.GradientView.backgroundColor = .clr
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 cell.GradientView.animateView(enable: false)
-                
             }
             
             return cell
         }
-        
-        else{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell , for: indexPath) as! TopCVCell
-            if currentSelectedIndex == indexPath.row {
-                cell.transformToLarge()
-            }
-            
-            return cell
-            //    }
-            
-        }
-        
-        
-        
     }
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        
-        if scrollView == TopCv{
-            
-            guard scrollView == TopCv else {
-                return
-            }
-            
-            targetContentOffset.pointee = scrollView.contentOffset
-            
-            let flowLayout = TopCv.collectionViewLayout as! CardsCollectionFlowLayout
-            let cellWidthIncludingSpacing = flowLayout.itemSize.width + flowLayout.minimumLineSpacing
-            let offset = targetContentOffset.pointee
-            let horizontalVelocity = velocity.x
-            
-            var selectedIndex = currentSelectedIndex
-            
-            switch horizontalVelocity {
-                // On swiping
-            case _ where horizontalVelocity > 0 :
-                selectedIndex = currentSelectedIndex + 1
-            case _ where horizontalVelocity < 0:
-                selectedIndex = currentSelectedIndex - 1
-                
-                // On dragging
-            case _ where horizontalVelocity == 0:
-                let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-                let roundedIndex = round(index)
-                
-                selectedIndex = Int(roundedIndex)
-            default:
-                print("Incorrect velocity for collection view")
-            }
-            
-            let safeIndex = max(0, min(selectedIndex, 5 - 1))
-            let selectedIndexPath = IndexPath(row: safeIndex, section: 0)
-            
-            flowLayout.collectionView!.scrollToItem(at: selectedIndexPath, at: .centeredHorizontally, animated: true)
-            
-            let previousSelectedIndex = IndexPath(row: Int(currentSelectedIndex), section: 0)
-            let previousSelectedCell = TopCv.cellForItem(at: previousSelectedIndex)
-            let nextSelectedCell = TopCv.cellForItem(at: selectedIndexPath)
-            
-            currentSelectedIndex = selectedIndexPath.row
-            
-            previousSelectedCell?.transformToStandard()
-            nextSelectedCell?.transformToLarge()
-        }
-    }
+
     
+    @objc func seeAllButtonTapped() {
+        if isShowingAll {
+            // Collapse back to show only the first 6 items
+            displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
+        } else {
+            // Expand to show all items
+            displayedCategories = MenuRedirect.receiverItems
+        }
+        
+        isShowingAll.toggle() // Toggle the state
+        bottomCv.reloadData() // Refresh the collection view
+//        updateCollectionViewHeight()
+    }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Ignore taps on the "seeMore" cell (indexPath.row == 6)
+        if indexPath.row == 6 {
+            return
+        }
         
-        if collectionView == bottomCv{
-            let menuItem = MenuRedirect.receiverItems[indexPath.row].translated()
+        if indexPath.row < MenuRedirect.receiverItems.count {
+            let indexNo: Int
+            if indexPath.row > 6 {
+                indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
+            } else {
+                indexNo = indexPath.row
+            }
+            
+            let menuItem = MenuRedirect.receiverItems[indexNo].translated()
             
             switch menuItem {
             case ReceiverMenuItems.Video.translated():
-                
                 MenuRedirect.receiverVideoNavigate(from: self)
-                
             case ReceiverMenuItems.Communication.translated():
                 MenuRedirect.receiverCommunicationNavigate(from: self)
-                
             case ReceiverMenuItems.ImagePdf.translated():
                 MenuRedirect.receiverImgPdfNavigate(from: self)
                 MenuRedirect.receiverCertificateRequest(from: self)
-                
             case ReceiverMenuItems.PTM.translated():
                 MenuRedirect.receiverPtmNavigate(from: self)
-                
             case ReceiverMenuItems.NoticeBoard.translated():
                 MenuRedirect.receiverNoticeBoardNavigate(from: self)
-                
             case ReceiverMenuItems.Assignment.translated():
                 MenuRedirect.receiverAssignmentNavigate(from: self)
-                
             case ReceiverMenuItems.ExamTest.translated():
                 MenuRedirect.receiverExamTestNavigate(from: self)
-                
             case ReceiverMenuItems.LSRW.translated():
                 MenuRedirect.receiverLsrwNavigate(from: self)
             case ReceiverMenuItems.EventsHolidays.translated():
                 MenuRedirect.receiverEvent(from: self)
-                
             case ReceiverMenuItems.RequestLeave.translated():
                 MenuRedirect.LeaveRquest(from: self)
             case ReceiverMenuItems.FeeDetails.translated():
                 MenuRedirect.receiverchat(from: self)
             case ReceiverMenuItems.InteractionWithStaff.translated():
                 MenuRedirect.receiverchat(from: self)
-            case ReceiverMenuItems.InteractionWithStaff.translated():
-                ""
-            case ReceiverMenuItems.OnlineMeeting.translated():
-                ""
             case ReceiverMenuItems.ClassTimetable.translated():
                 MenuRedirect.receiverclassTimeTable(from: self)
             case ReceiverMenuItems.Homework.translated():
                 MenuRedirect.receiverHomework(from: self)
             case ReceiverMenuItems.AttendanceReport.translated():
                 MenuRedirect.receiverAttendancereport(from: self)
-            case ReceiverMenuItems.CertificateRequest.translated():
-                ""
             case ReceiverMenuItems.ExamMarks.translated():
-                
                 MenuRedirect.resiverExamMark(from: self)
-                
-                
-                // Do nothing for these cases
-                break
-                
             default:
-                // Handle unknown menu items if needed
                 break
             }
-            
         }
     }
-    
+
 }
 
 @available(iOS 14.0, *)
@@ -395,21 +409,14 @@ extension ParentVC: UICollectionViewDelegateFlowLayout {
     
     // Set item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if collectionView == bottomCv{
-            
-            let numberOfColumns: CGFloat = 4
-            guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
-                return CGSize(width: 50, height: 50) // Default fallback
-            }
-            let totalSpacing = (numberOfColumns - 1) * layout.minimumInteritemSpacing + layout.sectionInset.left + layout.sectionInset.right
-            let itemWidth = (collectionView.frame.width - totalSpacing) / numberOfColumns
-            return CGSize(width: itemWidth, height: itemWidth) // Assuming square items
+        if indexPath.row == 6{
+            return CGSize(width: collectionView.frame.width, height: 150)
         }
-        else{
-            return CGSize(width: 250, height: 110)
-            
-        }
+        //        if indexPath.row < MenuRedirect.receiverItems.count {
+        // Category Cell Size
+        let width = (collectionView.frame.width) / 3
+        return CGSize(width: width, height: width - 10)
+        //               }
         
     }
     
@@ -422,8 +429,8 @@ extension ParentVC: UISearchBarDelegate{
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         Searchbar.endEditing(true)
-        let currentCell = TopCv.cellForItem(at: IndexPath(row: Int(currentSelectedIndex), section: 0))
-        currentCell?.transformToStandard()
+        //        let currentCell = TopCv.cellForItem(at: IndexPath(row: Int(currentSelectedIndex), section: 0))
+        //        currentCell?.transformToStandard()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -484,3 +491,61 @@ extension UICollectionViewCell{
         }
     }
 }
+
+
+
+extension UIView {
+    /// Apply a gradient color to the view
+    /// - Parameters:
+    ///   - colors: Array of `UIColor` for the gradient
+    ///   - startPoint: The start point of the gradient (default is top-center)
+    ///   - endPoint: The end point of the gradient (default is bottom-center)
+    func applyGradient(colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) {
+        // Adjust the alpha of the colors to make them less opaque
+        let adjustedColors = colors.map { $0.withAlphaComponent(0.7) }
+        
+        // Create a gradient layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = adjustedColors.map { $0.cgColor }
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.frame = self.bounds
+        
+        // Remove any existing gradient layers to avoid stacking
+        self.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+        
+        // Add the new gradient layer
+        self.layer.insertSublayer(gradientLayer, at: 0)
+    }
+}
+
+// MARK: - UIColor Extension for Hex Support
+extension UIColor {
+    /// Initialize UIColor with a hex string
+    convenience init(hexs: String) {
+        var hexSanitized = hexs.trimmingCharacters(in: .whitespacesAndNewlines)
+        if hexSanitized.hasPrefix("#") {
+            hexSanitized.removeFirst()
+        }
+        
+        var rgb: UInt64 = 0
+        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+        
+        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+        let blue = CGFloat(rgb & 0x0000FF) / 255.0
+        
+        self.init(red: red, green: green, blue: blue, alpha: 1.0)
+    }
+}
+extension UIView {
+    func roundTopCorners(radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: self.bounds,
+                                byRoundingCorners: [.topLeft, .topRight],
+                                cornerRadii: CGSize(width: radius, height: radius))
+        let mask = CAShapeLayer()
+        mask.path = path.cgPath
+        self.layer.mask = mask
+    }
+}
+

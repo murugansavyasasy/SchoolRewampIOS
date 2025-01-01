@@ -16,6 +16,13 @@
 "Principal" = "Principal";
 "Parent" = "Parent";
 "Proceed" = "Proceed"; 
+"exam_test" = "ExamTest";
+"exam_marks" = "Exam Marks";
+"attendance" = "Attendance";
+"receiver_assignment" = "Receiver Assignment";
+"online_meeting" = "Online Meeting";
+"attendance_report" = "Attendance Report";
+
 
 
 // MARK: Settings page

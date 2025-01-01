@@ -16,7 +16,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
     @IBOutlet weak var backBtn: UIButton!
-    
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var TitleHederLbl: UILabel!
  
     var titleLbl = "Event"
@@ -30,15 +30,12 @@ class EventResiverVC: UIViewController, SelectNotice{
         backBtn.setTitle(button1.translated(), for: .normal)
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
-        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
        
         addDoneButton()
-      
         uiConficration()
         tabelViewRegister()
-//        pages = [page1, page2]
-      
-    
         gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
         createEvent.setTitleColor(.white, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
@@ -68,7 +65,6 @@ class EventResiverVC: UIViewController, SelectNotice{
     }
     
     func uiConficration(){
-//        TitleHederLbl.text = titleLbl
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20

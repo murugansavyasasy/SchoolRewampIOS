@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="HeadingLabel" destination="dzL-u0-OpH" id="m3j-9I-CH6"/>
                 <outlet property="backBtn" destination="RAF-MZ-6Sl" id="q8F-pi-5dS"/>
+                <outlet property="bgView" destination="NQG-kl-22B" id="P15-GF-jpw"/>
                 <outlet property="searchbar" destination="jyY-Ez-Rga" id="uIR-Gn-gzZ"/>
                 <outlet property="tableview" destination="gm3-Zn-cGt" id="Wqf-EF-qnc"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -28,15 +29,15 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1R2-PP-tjx">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="770"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="760"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NQG-kl-22B">
-                                    <rect key="frame" x="0.0" y="10" width="393" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2eF-yX-4YS">
                                             <rect key="frame" x="225" y="0.0" width="163" height="45"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R17-G6-HYv">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R17-G6-HYv">
                                                     <rect key="frame" x="0.0" y="0.0" width="163" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -92,7 +93,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8aq-nA-CeI">
-                                    <rect key="frame" x="0.0" y="60" width="393" height="710"/>
+                                    <rect key="frame" x="0.0" y="50" width="393" height="710"/>
                                     <subviews>
                                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search NoticeBoard" translatesAutoresizingMaskIntoConstraints="NO" id="jyY-Ez-Rga">
                                             <rect key="frame" x="0.0" y="10" width="393" height="56"/>
@@ -123,7 +124,7 @@
                                 <constraint firstAttribute="trailing" secondItem="8aq-nA-CeI" secondAttribute="trailing" id="4Ho-Ls-yPZ"/>
                                 <constraint firstItem="NQG-kl-22B" firstAttribute="leading" secondItem="1R2-PP-tjx" secondAttribute="leading" id="5cQ-4u-kDz"/>
                                 <constraint firstAttribute="bottom" secondItem="8aq-nA-CeI" secondAttribute="bottom" id="5j8-FA-PX5"/>
-                                <constraint firstItem="NQG-kl-22B" firstAttribute="top" secondItem="1R2-PP-tjx" secondAttribute="top" constant="10" id="68s-p7-usS"/>
+                                <constraint firstItem="NQG-kl-22B" firstAttribute="top" secondItem="1R2-PP-tjx" secondAttribute="top" id="68s-p7-usS"/>
                                 <constraint firstAttribute="bottom" secondItem="NQG-kl-22B" secondAttribute="bottom" constant="710" id="Xjn-81-xHn"/>
                                 <constraint firstAttribute="trailing" secondItem="NQG-kl-22B" secondAttribute="trailing" id="eZB-xv-MZP"/>
                                 <constraint firstItem="8aq-nA-CeI" firstAttribute="top" secondItem="NQG-kl-22B" secondAttribute="bottom" id="iKV-ya-pqt"/>

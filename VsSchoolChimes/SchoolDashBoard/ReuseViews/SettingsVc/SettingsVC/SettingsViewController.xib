@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,28 +21,25 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmb-ks-a5d">
+                    <rect key="frame" x="16" y="69" width="361" height="26.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bhR-GM-v6F">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="105.33333333333331" width="393" height="712.66666666666674"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmb-ks-a5d">
-                            <rect key="frame" x="22" y="20" width="361" height="26.333333333333329"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Qp6-JA-yzn">
-                            <rect key="frame" x="0.0" y="71.333333333333314" width="393" height="687.66666666666674"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="712.66666666666663"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="Xmb-ks-a5d" secondAttribute="trailing" constant="10" id="5Fm-Od-2oM"/>
+                        <constraint firstItem="Qp6-JA-yzn" firstAttribute="top" secondItem="bhR-GM-v6F" secondAttribute="top" id="7xZ-xJ-r3W"/>
                         <constraint firstAttribute="bottom" secondItem="Qp6-JA-yzn" secondAttribute="bottom" id="HFK-sF-ikU"/>
-                        <constraint firstItem="Xmb-ks-a5d" firstAttribute="top" secondItem="bhR-GM-v6F" secondAttribute="top" constant="20" id="Wba-qh-WBl"/>
                         <constraint firstItem="Qp6-JA-yzn" firstAttribute="leading" secondItem="bhR-GM-v6F" secondAttribute="leading" id="eyK-iI-Tfw"/>
-                        <constraint firstItem="Xmb-ks-a5d" firstAttribute="leading" secondItem="bhR-GM-v6F" secondAttribute="leading" constant="22" id="fhp-Qn-l9B"/>
                         <constraint firstAttribute="trailing" secondItem="Qp6-JA-yzn" secondAttribute="trailing" id="j7q-sL-1dP"/>
-                        <constraint firstItem="Qp6-JA-yzn" firstAttribute="top" secondItem="Xmb-ks-a5d" secondAttribute="bottom" constant="25" id="rL0-XA-eGd"/>
                     </constraints>
                 </view>
             </subviews>
@@ -50,16 +47,19 @@
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bhR-GM-v6F" secondAttribute="trailing" id="Mhv-G5-6qW"/>
-                <constraint firstItem="bhR-GM-v6F" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="QSG-Nb-sH9"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="bhR-GM-v6F" secondAttribute="bottom" id="XOg-wa-ahp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Xmb-ks-a5d" secondAttribute="trailing" constant="16" id="bxx-3b-DpT"/>
                 <constraint firstItem="bhR-GM-v6F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="c2Z-h4-NBv"/>
+                <constraint firstItem="Xmb-ks-a5d" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="ePN-Nc-odr"/>
+                <constraint firstItem="bhR-GM-v6F" firstAttribute="top" secondItem="Xmb-ks-a5d" secondAttribute="bottom" constant="10" id="juf-Ce-glq"/>
+                <constraint firstItem="Xmb-ks-a5d" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="vHd-Gn-rpA"/>
             </constraints>
             <point key="canvasLocation" x="101.5267175572519" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.81999999284744263" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

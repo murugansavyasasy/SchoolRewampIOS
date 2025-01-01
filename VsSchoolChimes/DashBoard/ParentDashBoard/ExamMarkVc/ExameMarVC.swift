@@ -9,21 +9,21 @@ import UIKit
 
 class ExameMarVC: UIViewController {
 
-    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var backBtn: UIButton!
     let marks = ["85 / 100","70 / 100","75 / 100","49 / 100","93 / 100"]
     let status = [0.85,0.70,0.75,0.49,0.93]
     let subject = ["Tamil","English","Maths","Science","Social Science"]
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
         HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
 
         // Do any additional setup after loading the view.
-        backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
         tv.isHidden = true
         
         tv.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)

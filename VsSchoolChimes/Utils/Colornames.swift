@@ -41,6 +41,10 @@ class Colornames {
     static  var pending =  UIColor(named: "pending")
     static  var pendingClr =  UIColor(named: "pending")
     static  var AprovedClr =  UIColor(named: "Aproved")
+    static  var gradientBlue1 =  UIColor(named: "gradientBlue1")
+    static  var gradientgreen1 =  UIColor(named: "gradientgreen1")
+    static  var gradientBlue =  UIColor(hex: "#7ed957")
+    static  var gradientgreen =  UIColor(hex: "#0097b2")
 }
 class ImageName{
     static let PlayIcon = UIImage(named: "PlayIcon")

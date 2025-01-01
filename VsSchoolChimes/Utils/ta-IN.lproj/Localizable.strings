@@ -16,6 +16,13 @@
 "Principal" = "தலைமை ஆசிரியர்";
 "Parent" = "பெற்றோர்";
 "Proceed" = "தொடரவும்";
+"exam_test" = "தேர்வு சோதனை";
+"exam_marks" = "தேர்வு மதிப்பெண்கள்";
+"attendance" = "வருகை";
+"receiver_assignment" = "பெறுநர் பணிப்பு";
+"online_meeting" = "நிகழ்நிலை கூட்டம்";
+"attendance_report" = "வருகை அறிக்கை";
+
 
 // MARK: Settings page
 "Notifications" = "அறிவிப்புகள்";

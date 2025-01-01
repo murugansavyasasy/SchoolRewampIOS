@@ -16,6 +16,13 @@
 "Principal" = "प्रधानाचार्य";
 "Parent" = "माता-पिता";
 "Proceed" = "आगे बढ़ें";
+"exam_test" = "परीक्षा परीक्षण";
+"exam_marks" = "परीक्षा अंक";
+"attendance" = "उपस्थिति";
+"receiver_assignment" = "प्राप्तकर्ता असाइनमेंट";
+"online_meeting" = "ऑनलाइन मीटिंग";
+"attendance_report" = "उपस्थिति रिपोर्ट";
+
 
 // MARK: Settings page
 "Notifications" = "सूचनाएं";

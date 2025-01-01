@@ -284,6 +284,7 @@
                             </constraints>
                         </view>
                     </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="A14-oE-5fW" firstAttribute="top" secondItem="cRB-N6-kn9" secondAttribute="top" constant="16" id="AwC-6m-aDX"/>
                         <constraint firstAttribute="bottom" secondItem="A14-oE-5fW" secondAttribute="bottom" id="FvL-sB-PzU"/>

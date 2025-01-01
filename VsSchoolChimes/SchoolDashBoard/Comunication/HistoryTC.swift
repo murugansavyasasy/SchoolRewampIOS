@@ -19,6 +19,8 @@ class HistoryTC: UITableViewCell {
     var lastPlayingduration = "00:00"
     var audioRecorder: AVAudioRecorder?
     var delegate : reloadDelegate?
+    @IBOutlet weak var sentBtnWidth: NSLayoutConstraint!
+    @IBOutlet weak var sentBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var datelbl: UILabel!
     @IBOutlet weak var contentlbl: UILabel!
     @IBOutlet weak var sendedTime: UILabel!
@@ -37,7 +39,7 @@ class HistoryTC: UITableViewCell {
         outerview.layer.cornerRadius = 20
         sendbtn.layer.cornerRadius = 4
         
-        datelbl.setFont(style: .title, size: FontSize.TitleSize)
+        datelbl.setFont(style: .body, size: FontSize.BodySize)
         contentlbl.setFont(style: .body, size: FontSize.BodySize)
         sendedTime.setFont(style: .body, size: FontSize.BodySize)
         totaltime.setFont(style: .body, size: FontSize.BodySize)
@@ -165,9 +167,6 @@ class HistoryTC: UITableViewCell {
                     totaltime.text = "\(lastPlayingduration) / \(totalDurationFormatted)"
                 }
             }
-        }else{
-            var count = 0
-            print(count += 1)
         }
     }
 }

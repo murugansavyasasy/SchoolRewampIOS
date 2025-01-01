@@ -18,7 +18,7 @@ class ReciverAttendanceReportVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         let nib = UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
         
@@ -51,12 +51,12 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
             
             cell.Cellview.layer.borderWidth = 1
             cell.Cellview.layer.borderColor = UIColor.green.cgColor
-            cell.statusLbl.text = "Present"
+            cell.statusLbl.text = CommonStringFile.Present.translated()
             cell.StatusView.backgroundColor = .systemGreen
         }else{
             cell.Cellview.layer.borderWidth = 1
             cell.Cellview.layer.borderColor = UIColor.red.cgColor
-            cell.statusLbl.text = "Absent"
+            cell.statusLbl.text = CommonStringFile.Absent.translated()
             cell.StatusView.backgroundColor = .systemRed
         }
         

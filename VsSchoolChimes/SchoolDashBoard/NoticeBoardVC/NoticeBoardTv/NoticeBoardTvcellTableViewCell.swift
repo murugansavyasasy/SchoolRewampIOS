@@ -46,7 +46,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         super.awakeFromNib()
         // Initialization code
         
-        datelbl.setFont(style: .title, size: FontSize.TitleSize)
+        datelbl.setFont(style: .body, size: FontSize.BodySize)
         dicriptContent.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         HomeworkTitleLbl.isHidden = true

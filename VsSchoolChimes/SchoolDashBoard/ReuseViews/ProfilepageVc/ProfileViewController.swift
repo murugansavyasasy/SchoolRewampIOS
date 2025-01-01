@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var bloodimg: UIImageView!
     @IBOutlet weak var familyDetailsView: UIView!
     
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var fullview: UIView!
     
     @IBOutlet weak var Profile: UILabel!
@@ -41,14 +42,27 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var Motheroccupation: UILabel!
     @IBOutlet weak var SeconadaryphoneNo: UILabel!
     
+    @IBOutlet weak var topview: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = Colornames.topBackgroundCLr
-        fullview.backgroundColor = Colornames.topBackgroundCLr
+//        view.backgroundColor = Colornames.topBackgroundCLr
+//        fullview.backgroundColor = Colornames.topBackgroundCLr
         
         bottomFullview.backgroundColor = Colornames.bottomClr
+        
+//        fullview.applyGradient(
+//                   colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+//                   startPoint: CGPoint(x: 1, y: 0.5),
+//                   endPoint: CGPoint(x: 0, y: 0.5)
+//               )
+               topview.applyGradient(
+                   colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                   startPoint: CGPoint(x: 1, y: 0.5),
+                   endPoint: CGPoint(x: 0, y: 0.5)
+               )
+      
         
         SaveBtnHeight.constant = 0
         
@@ -92,7 +106,7 @@ class ProfileViewController: UIViewController {
         SeconadaryphoneNo.text = CommonStringFile.SecondaryPhoneno.translated()
 
         //MARK: Button Font Stye
-        EditBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+//        EditBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
         saveBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Label Font Stye

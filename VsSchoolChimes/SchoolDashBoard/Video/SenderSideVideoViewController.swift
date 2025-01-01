@@ -237,9 +237,6 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     
     func createVimeoUploadURL(authToken: String, videoFilePath: URL, completion: @escaping (UploadResult) -> Void) {
         
-        
-        
-        
         guard let fileSize = getFileSize(at: videoFilePath) else {
             completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get file size"])))
             return

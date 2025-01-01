@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="seeMore" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EBE-Lw-61S">
+                        <rect key="frame" x="0.0" y="10" width="320" height="100"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="okX-uL-BE2">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="61"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Jpy-m6-xR5">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BSX-El-xVR">
+                                <rect key="frame" x="258" y="71" width="46" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="Lpv-F3-ofy"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" systemColor="systemIndigoColor"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="095-Sy-jwl">
+                                <rect key="frame" x="258" y="89" width="46" height="1"/>
+                                <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="bMs-gC-o8K"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="BSX-El-xVR" secondAttribute="bottom" constant="11" id="0sZ-uz-tLy"/>
+                            <constraint firstAttribute="trailing" secondItem="BSX-El-xVR" secondAttribute="trailing" constant="16" id="FXZ-l3-gcK"/>
+                            <constraint firstAttribute="bottom" secondItem="095-Sy-jwl" secondAttribute="bottom" constant="10" id="c48-EV-2iT"/>
+                            <constraint firstItem="095-Sy-jwl" firstAttribute="trailing" secondItem="BSX-El-xVR" secondAttribute="trailing" id="h3X-z0-FGH"/>
+                            <constraint firstItem="okX-uL-BE2" firstAttribute="top" secondItem="EBE-Lw-61S" secondAttribute="top" id="l37-kw-PcV"/>
+                            <constraint firstItem="okX-uL-BE2" firstAttribute="leading" secondItem="EBE-Lw-61S" secondAttribute="leading" id="l4S-St-BsB"/>
+                            <constraint firstItem="095-Sy-jwl" firstAttribute="leading" secondItem="BSX-El-xVR" secondAttribute="leading" id="qE9-Io-TZT"/>
+                            <constraint firstItem="BSX-El-xVR" firstAttribute="top" secondItem="okX-uL-BE2" secondAttribute="bottom" constant="10" id="rjk-J4-BcM"/>
+                            <constraint firstAttribute="trailing" secondItem="okX-uL-BE2" secondAttribute="trailing" id="zL0-4j-47T"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="EBE-Lw-61S" secondAttribute="trailing" id="8Aq-UV-cEM"/>
+                <constraint firstItem="EBE-Lw-61S" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="9k8-eA-q6R"/>
+                <constraint firstAttribute="bottom" secondItem="EBE-Lw-61S" secondAttribute="bottom" constant="10" id="BZL-K5-jLn"/>
+                <constraint firstItem="EBE-Lw-61S" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="agM-Z6-JAz"/>
+            </constraints>
+            <size key="customSize" width="121" height="40"/>
+            <connections>
+                <outlet property="adCollectionView" destination="okX-uL-BE2" id="kyx-4N-8Ce"/>
+                <outlet property="seeAllButton" destination="BSX-El-xVR" id="Jhb-PF-z9L"/>
+            </connections>
+            <point key="canvasLocation" x="213.74045801526717" y="-2.1126760563380285"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
