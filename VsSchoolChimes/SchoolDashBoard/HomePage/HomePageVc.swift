@@ -105,10 +105,99 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
-        homeworkBtn.layer.cornerRadius = 10
-        assignmentkBtn.layer.cornerRadius = 10
-        onlineMeetingBtn.layer.cornerRadius = 10
+        configureButton(
+            homeworkBtn,
+            title: MenuStringFile.Homework.translated(),
+            imageName: UIImage(named: "Homework"),
+            gradientColors:[UIColor.green,UIColor.blue],
+            opacity: 0.4, // 70% opacity
+            lightenFactor: 0.8// 40% lighter
+        )
+        
+        // Configure assignmentkBtn
+        configureButton(
+            assignmentkBtn,
+            title: MenuStringFile.Assignment.translated(),
+            imageName: UIImage(named: "Schedule ExamTest"),
+            gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
+            lightenFactor: 0.7 // 40% lighter
+        )
+        configureButton(
+            onlineMeetingBtn,
+            title: MenuStringFile.OnlineMeeting.translated(),
+            imageName: UIImage(named: "Online  Meeting"),
+            gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
+            lightenFactor: 0.8// 40% lighter
+        )
     }
+    // Helper function to configure the button
+    func configureButton(
+        _ button: UIButton,
+        title: String,
+        imageName: UIImage?,
+        gradientColors: [UIColor],
+        cornerRadius: CGFloat = 10,
+        imageSize: CGSize = CGSize(width: 40, height: 40),
+        spacing: CGFloat = 8.0,
+        opacity: CGFloat = 0.5, // Opacity for the gradient
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+    ) {
+        // Set corner radius
+        button.layer.cornerRadius = cornerRadius
+        button.layer.masksToBounds = true
+        
+        // Adjust colors for lightening and opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+        }
+        
+        // Apply gradient
+        button.applyGradient(
+            colors: adjustedColors,
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        button.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        // Set title and image
+        button.setTitle(title, for: .normal)
+        if let image = imageName {
+            let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
+                image.draw(in: CGRect(origin: .zero, size: imageSize))
+            }
+            button.setImage(resizedImage, for: .normal)
+        }
+        
+        // Align image and title
+        button.contentHorizontalAlignment = .center  // Ensure horizontal alignment
+        if let imageSize = button.imageView?.frame.size,
+           let titleSize = button.titleLabel?.intrinsicContentSize {
+            let totalHeight = imageSize.height + titleSize.height + spacing
+            
+            button.imageEdgeInsets = UIEdgeInsets(
+                top: -(totalHeight - imageSize.height),  // Move image to the top
+                left: 0,
+                bottom: 0,
+                right: -titleSize.width // Center align horizontally
+            )
+            
+            button.titleEdgeInsets = UIEdgeInsets(
+                top: 0,  // No padding at the top
+                left: -imageSize.width,  // Center align horizontally
+                bottom: -(totalHeight - titleSize.height),  // Move title below the image
+                right: 0
+            )
+            
+            button.contentEdgeInsets = UIEdgeInsets(
+                top: 0,
+                left: 0,
+                bottom: spacing,
+                right: 0
+            )
+        }
+    }
+
+    
     func setupVideoBackground() {
         guard let path = Bundle.main.path(forResource: "Mathematics", ofType: "mp4") else { return }
         let url = URL(fileURLWithPath: path)

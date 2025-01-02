@@ -165,7 +165,9 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="114.66666666666667" height="105"/>
                                                             <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.31911940799999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="Notice Board"/>
+                                                            <state key="normal" image="Notice Board">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="assignment:" destination="-1" eventType="touchUpInside" id="fxy-XK-5OH"/>
                                                             </connections>
@@ -174,7 +176,9 @@
                                                             <rect key="frame" x="124.66666666666666" y="0.0" width="114.66666666666666" height="105"/>
                                                             <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.31911940799999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="0.0"/>
-                                                            <state key="normal" image="Online  Meeting"/>
+                                                            <state key="normal" image="Online  Meeting">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="onlineMeeting:" destination="-1" eventType="touchUpInside" id="IaY-iz-zfd"/>
                                                             </connections>
@@ -183,7 +187,9 @@
                                                             <rect key="frame" x="249.33333333333329" y="0.0" width="114.66666666666666" height="105"/>
                                                             <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.31911940799999999" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
-                                                            <state key="normal" image="Homework"/>
+                                                            <state key="normal" image="Homework">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="homeWork:" destination="-1" eventType="touchUpInside" id="ql2-F8-SU3"/>
                                                             </connections>

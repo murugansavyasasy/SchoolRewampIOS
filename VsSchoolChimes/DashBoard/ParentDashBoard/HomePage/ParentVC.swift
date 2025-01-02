@@ -129,6 +129,35 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         loginDetailView.addGestureRecognizer(redirectGesture)
+        
+        
+       
+        configureButton(
+            homeworkBtn,
+            title: "Online  Meeting",
+            imageName: UIImage(named: "Online  Meeting"),
+            gradientColors:[UIColor.green,UIColor.purple],
+            opacity: 0.4, // 70% opacity
+            lightenFactor: 0.8// 40% lighter
+        )
+        
+        // Configure assignmentkBtn
+        configureButton(
+            assignmentkBtn,
+            title: "Notice Board",
+            imageName: UIImage(named: "Notice Board"),
+            gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
+            lightenFactor: 0.6 // 40% lighter
+        )
+        
+        // Configure onlineMeetingBtn
+        configureButton(
+            onlineMeetingBtn,
+            title: "Assignment",
+            imageName: UIImage(named: "Resiverassignment"),
+            gradientColors:[UIColor.yellow,UIColor.red],opacity: 0.4, // 70% opacity
+            lightenFactor: 0.8// 40% lighter
+        )
     }
     
     override func viewDidLayoutSubviews() {
@@ -161,7 +190,75 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         bottomCv.reloadData()
         
     }
-    
+    // Helper function to configure the button
+    func configureButton(
+        _ button: UIButton,
+        title: String,
+        imageName: UIImage?,
+        gradientColors: [UIColor],
+        cornerRadius: CGFloat = 10,
+        imageSize: CGSize = CGSize(width: 40, height: 40),
+        spacing: CGFloat = 8.0,
+        opacity: CGFloat = 0.5, // Opacity for the gradient
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+    ) {
+        // Set corner radius
+        button.layer.cornerRadius = cornerRadius
+        button.layer.masksToBounds = true
+        
+        // Adjust colors for lightening and opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+        }
+        
+        // Apply gradient
+        button.applyGradient(
+            colors: adjustedColors,
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        button.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        // Set title and image
+        button.setTitle(title, for: .normal)
+        if let image = imageName {
+            let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
+                image.draw(in: CGRect(origin: .zero, size: imageSize))
+            }
+            button.setImage(resizedImage, for: .normal)
+        }
+        
+        // Align image and title
+        button.contentHorizontalAlignment = .center  // Ensure horizontal alignment
+        if let imageSize = button.imageView?.frame.size,
+           let titleSize = button.titleLabel?.intrinsicContentSize {
+            let totalHeight = imageSize.height + titleSize.height + spacing
+            
+            button.imageEdgeInsets = UIEdgeInsets(
+                top: -(totalHeight - imageSize.height),  // Move image to the top
+                left: 0,
+                bottom: 0,
+                right: -titleSize.width // Center align horizontally
+            )
+            
+            button.titleEdgeInsets = UIEdgeInsets(
+                top: 0,  // No padding at the top
+                left: -imageSize.width,  // Center align horizontally
+                bottom: -(totalHeight - titleSize.height),  // Move title below the image
+                right: 0
+            )
+            
+            button.contentEdgeInsets = UIEdgeInsets(
+                top: 0,
+                left: 0,
+                bottom: spacing,
+                right: 0
+            )
+        }
+    }
+
+
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("viewDidAppear - View has appeared on the screen.")
@@ -418,11 +515,13 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         MenuRedirect.receiverNoticeBoardNavigate(from: self)
     }
     @IBAction func onlineMeeting(_ sender: UIButton) {
-        MenuRedirect.senderOnlineNavigate(from: self)
+        
+        MenuRedirect.receiverAssignmentNavigate(from: self)
     }
     
     @IBAction func homeWork(_ sender: UIButton) {
-        MenuRedirect.receiverHomework(from: self)
+//        MenuRedirect.receiverHomework(from: self)
+        MenuRedirect.senderOnlineNavigate(from: self)
     }
 
 }
@@ -565,6 +664,20 @@ extension UIView {
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         self.layer.mask = mask
+    }
+}
+extension UIColor {
+    func blendedWithWhite(factor: CGFloat) -> UIColor {
+        let factor = max(0.0, min(1.0, factor)) // Clamp factor between 0 and 1
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        return UIColor(
+            red: red + (1.0 - red) * factor,
+            green: green + (1.0 - green) * factor,
+            blue: blue + (1.0 - blue) * factor,
+            alpha: alpha
+        )
     }
 }
 

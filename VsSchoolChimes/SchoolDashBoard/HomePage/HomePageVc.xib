@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -169,7 +168,9 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="114.66666666666667" height="113"/>
                                                             <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.32383478904257013" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="Schedule ExamTest"/>
+                                                            <state key="normal" image="Schedule ExamTest">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="assignment:" destination="-1" eventType="touchUpInside" id="HBw-99-geQ"/>
                                                             </connections>
@@ -178,7 +179,9 @@
                                                             <rect key="frame" x="124.66666666666666" y="0.0" width="114.66666666666666" height="113"/>
                                                             <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.33224622246359481" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="0.0"/>
-                                                            <state key="normal" image="Online  Meeting"/>
+                                                            <state key="normal" image="Online  Meeting">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="onlineMeeting:" destination="-1" eventType="touchUpInside" id="F18-22-znM"/>
                                                             </connections>
@@ -187,7 +190,9 @@
                                                             <rect key="frame" x="249.33333333333329" y="0.0" width="114.66666666666666" height="113"/>
                                                             <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.31911940801711308" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
-                                                            <state key="normal" image="Homework"/>
+                                                            <state key="normal" image="Homework">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
                                                             <connections>
                                                                 <action selector="homeWork:" destination="-1" eventType="touchUpInside" id="6oL-bo-Gg9"/>
                                                             </connections>
@@ -255,7 +260,7 @@
                                     </constraints>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" name="topBackgroundCLr"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="qY0-wP-4yk" firstAttribute="leading" secondItem="Rcg-qL-89H" secondAttribute="leading" constant="20" symbolic="YES" id="9jj-yF-0Nm"/>
                                 <constraint firstAttribute="bottom" secondItem="tKQ-VJ-U8L" secondAttribute="bottom" id="Ci9-85-tuY"/>
@@ -304,9 +309,6 @@
         <image name="bell" catalog="system" width="125" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="shiyam" width="440" height="567"/>
-        <namedColor name="topBackgroundCLr">
-            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
