@@ -51,7 +51,11 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     var playerurl: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         chooseVideoBtn.isHidden = true
         StyleAndTranslater()
         descTxtView.delegate = self

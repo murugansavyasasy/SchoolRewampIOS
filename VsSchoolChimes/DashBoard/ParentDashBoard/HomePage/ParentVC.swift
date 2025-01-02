@@ -28,6 +28,12 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
     
+    @IBOutlet weak var collectionBtn: UIView!
+    @IBOutlet weak var homeworkBtn: UIButton!
+    @IBOutlet weak var assignmentkBtn: UIButton!
+    @IBOutlet weak var onlineMeetingBtn: UIButton!
+    @IBOutlet weak var heightStackview: NSLayoutConstraint!
+    
     var filteredItems: [String] = []
     var getValue : Int!
     var searchItem = 0
@@ -83,7 +89,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         //
         profileFullview.layer.cornerRadius =  30
         loginDetailView.layer.cornerRadius =  30
-        
+        homeworkBtn.layer.cornerRadius = 10
+        assignmentkBtn.layer.cornerRadius = 10
+        onlineMeetingBtn.layer.cornerRadius = 10
         
         view.applyGradient(
             colors: [
@@ -336,9 +344,13 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if isShowingAll {
             // Collapse back to show only the first 6 items
             displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
+            heightStackview.constant = 110
+            collectionBtn.isHidden = false
         } else {
             // Expand to show all items
             displayedCategories = MenuRedirect.receiverItems
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
         }
         
         isShowingAll.toggle() // Toggle the state
@@ -401,6 +413,17 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
             }
         }
     }
+    @IBAction func assignment(_ sender: UIButton) {
+        
+        MenuRedirect.receiverNoticeBoardNavigate(from: self)
+    }
+    @IBAction func onlineMeeting(_ sender: UIButton) {
+        MenuRedirect.senderOnlineNavigate(from: self)
+    }
+    
+    @IBAction func homeWork(_ sender: UIButton) {
+        MenuRedirect.receiverHomework(from: self)
+    }
 
 }
 
@@ -412,12 +435,8 @@ extension ParentVC: UICollectionViewDelegateFlowLayout {
         if indexPath.row == 6{
             return CGSize(width: collectionView.frame.width, height: 150)
         }
-        //        if indexPath.row < MenuRedirect.receiverItems.count {
-        // Category Cell Size
         let width = (collectionView.frame.width) / 3
         return CGSize(width: width, height: width - 10)
-        //               }
-        
     }
     
     

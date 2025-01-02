@@ -21,7 +21,11 @@ class NoticeBoardVc: UIViewController, SelectNotice {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
         addDoneButton()

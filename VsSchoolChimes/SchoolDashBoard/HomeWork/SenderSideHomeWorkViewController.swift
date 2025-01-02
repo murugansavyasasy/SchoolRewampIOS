@@ -60,6 +60,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        
         StyleAndTranslater()
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
@@ -351,8 +357,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         let dayfont = UIFont(name: "Poppins-Medium", size: 14.6)
         let datefont = UIFont(name: "Poppins-Bold", size: 15)
-//        let dayfont =  UIFont.systemFont(ofSize: 10)
-//        let datefont =  UIFont.boldSystemFont(ofSize: 22)
         
         // Apply color and font to the first word
         attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)

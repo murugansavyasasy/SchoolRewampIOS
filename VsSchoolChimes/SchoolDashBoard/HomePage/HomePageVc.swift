@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
@@ -18,10 +19,19 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
+    
+    @IBOutlet weak var heightStackview: NSLayoutConstraint!
+    @IBOutlet weak var homeworkBtn: UIButton!
+    @IBOutlet weak var assignmentkBtn: UIButton!
+    @IBOutlet weak var onlineMeetingBtn: UIButton!
+    @IBOutlet weak var collectionBtn: UIView!
+    
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var TopCv: UICollectionView!
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
-    
+    var advertisements: [String] = []
     var filteredItems: [String] = []
     let menuName = MenuStringFile()
     var getValue : Int!
@@ -34,14 +44,24 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
+    @IBOutlet weak var userView: UIView!
     let MenuRedirect = MenuRedirectHandler.shared
     var currentPlaceholderIndex = 0
     var timer: Timer?
     let alert = CustomAlert()
-    
+    var isShowingAll = false
+    var displayedCategories: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        advertisements = [
+            "Ad 1: Special Offer",
+            "Ad 2: Final Sale",
+            "Ad 3: New Arrivals",
+            "Ad 4: Discount Up to 50%"
+        ]
+        setupVideoBackground()
         filteredItems = MenuRedirect.items
+        displayedCategories = Array(filteredItems.prefix(6))
         setupSearchBar()
         startAutoScroll()
         cellRegistration()
@@ -73,9 +93,35 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         loginDetailView.addGestureRecognizer(redirectGesture)
-   
+        bottomView.roundTopCorners(radius: 10)
+        reportView.layer.cornerRadius = 5
+        reportView.layer.shadowColor = UIColor.black.cgColor
+        reportView.layer.shadowOpacity = 0.5
+        reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        reportView.layer.shadowRadius = 3
+        reportView.layer.masksToBounds = false
+        loginDetailView.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        homeworkBtn.layer.cornerRadius = 10
+        assignmentkBtn.layer.cornerRadius = 10
+        onlineMeetingBtn.layer.cornerRadius = 10
     }
-    
+    func setupVideoBackground() {
+        guard let path = Bundle.main.path(forResource: "Mathematics", ofType: "mp4") else { return }
+        let url = URL(fileURLWithPath: path)
+        let player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        playerLayer.frame = loginDetailView.bounds
+        playerLayer.opacity = 0.1
+        playerLayer.videoGravity = .resizeAspectFill
+        loginDetailView.layer.addSublayer(playerLayer)
+        
+        player.play()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear - View is about to appear.")
@@ -118,6 +164,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     func cellRegistration(){
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
+        bottomCv.register(UINib(nibName: "seeMore", bundle: nil), forCellWithReuseIdentifier: "seeMore")
         TopCv.register(UINib(nibName: CellConfingName.HomePageTopCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageTopCell)
         
         TopCv.register(UINib(nibName: CellConfingName.PiechartCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PiechartCVCell)
@@ -152,25 +199,55 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             // Reset shimmer view or any other animations
             cell.pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
         }
+//        
+//        for cell in bottomCv.visibleCells as! [BottomCVCell] {
+//            // Reset shimmer view or any other animations
+//            cell.shimmersViewss.parentview.isHidden = false
+//            cell.shimmersViewss.animateView(enable: true)
+//            cell.MenuLbl.isHidden = true
+//            cell.GradientView.isHidden = true
+//            
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
+//                cell.shimmersViewss.animateView(enable: false)
+//                cell.MenuLbl.isHidden = false
+//                cell.GradientView.isHidden = false
+//                cell.shimmersViewss.parentview.isHidden = true
+//            }
+//            
+//        }
         
-        for cell in bottomCv.visibleCells as! [BottomCVCell] {
-            // Reset shimmer view or any other animations
-            cell.shimmersViewss.parentview.isHidden = false
-            cell.shimmersViewss.animateView(enable: true)
-            cell.MenuLbl.isHidden = true
-            cell.GradientView.isHidden = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-                cell.shimmersViewss.animateView(enable: false)
-                cell.MenuLbl.isHidden = false
-                cell.GradientView.isHidden = false
-                cell.shimmersViewss.parentview.isHidden = true
-            }
-            
-        }
+        
+        
         
     }
+    @IBAction func assignment(_ sender: UIButton) {
+        
+        MenuRedirect.senderAssignmentNavigate(from: self)
+    }
+    @IBAction func onlineMeeting(_ sender: UIButton) {
+        MenuRedirect.senderOnlineNavigate(from: self)
+    }
     
+    @IBAction func homeWork(_ sender: UIButton) {
+        MenuRedirect.senderHomeWorkNavigate(from: self)
+    }
+    @objc func seeAllButtonTapped() {
+        if isShowingAll {
+            // Collapse back to show only the first 6 items
+            displayedCategories = Array(filteredItems.prefix(6))
+            heightStackview.constant = 120
+            collectionBtn.isHidden = false
+        } else {
+            // Expand to show all items
+            displayedCategories = filteredItems
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
+        }
+        
+        isShowingAll.toggle() // Toggle the state
+        bottomCv.reloadData() // Refresh the collection view
+//        updateCollectionViewHeight()
+    }
     func startAutoScroll() {
         autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
     }
@@ -206,7 +283,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
            
-                return filteredItems.count
+            return displayedCategories.count + 1
             
         }else{
             return 5
@@ -217,22 +294,43 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if collectionView == bottomCv{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
-                cell.MenuLbl.text = nil
-                cell.MenuImgView.image  = nil
-                let label = filteredItems[indexPath.row].translated()
-                let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
-                cell.MenuLbl.setFont(style: .body, size: 10)
-                cell.MenuLbl.text = label
-                cell.MenuImgView.image  = img
-            cell.applyGradient(colours: [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor],xstart: 0.8,ystart: 0.8)
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    cell.GradientView.animateView(enable: false)
+            if indexPath.row == 6 {
+                let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
+                adCell.advertisements = advertisements // Pass advertisement data to the ad cell
+                adCell.adCollectionView.reloadData() // Refresh the embedded collection view
+                adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
+                adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
+                return adCell
+            }else{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
+                    cell.MenuLbl.text = nil
+                    cell.MenuImgView.image  = nil
+                let indexNo: Int
+                if indexPath.row > 6 {
+                    indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
+                } else {
+                    indexNo = indexPath.row
                 }
-   
+                
+                guard indexNo < filteredItems.count else {
+                    fatalError("Index out of range: indexNo = \(indexNo), count = \(filteredItems.count)")
+                }
+                
+                    let label = filteredItems[indexNo].translated()
+                    let img = UIImage(named: MenuRedirect.Imgitems[indexNo])
+                    cell.MenuLbl.setFont(style: .body, size: 10)
+                    cell.MenuLbl.text = label
+                    cell.MenuImgView.image  = img
+                cell.applyGradient(colours: [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor],xstart: 0.8,ystart: 0.8)
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        cell.GradientView.animateView(enable: false)
+                    }
+       
+                
+                return cell
+            }
             
-            return cell
         }else{
             
             if indexPath.row == 0 {
@@ -253,12 +351,22 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 6 {
+            return
+        }
         
+        if indexPath.row < filteredItems.count {
+            let indexNo: Int
+            if indexPath.row > 6 {
+                indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
+            } else {
+                indexNo = indexPath.row
+            }
       
         
-        if collectionView == bottomCv{
+            if collectionView == bottomCv{
                 
-            let menuItem = MenuRedirect.items[indexPath.row].translated()
+                let menuItem = MenuRedirect.items[indexNo].translated()
                 
                 switch menuItem {
                 case MenuStringFile.VideoUpload.translated():
@@ -291,6 +399,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 case MenuStringFile.Homework.translated():
                     MenuRedirect.senderHomeWorkNavigate(from: self)
                     
+                    
                 case MenuStringFile.LessonPlan.translated():
                     MenuRedirect.senderLessonplanNavigate(from: self)
                     
@@ -314,7 +423,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     
                 case MenuStringFile.InteractionWithStudent.translated():
                     ""
-//                    MenuRedirect.chat(from: self)
+                    //                    MenuRedirect.chat(from: self)
                     
                 case MenuStringFile.ScheduleExamTest.translated():
                     MenuRedirect.ScheduleExamVCNavigat(from: self)
@@ -327,7 +436,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                     break
                 }
                 
-            
+            }
             
         }
     }
@@ -336,22 +445,28 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
 @available(iOS 14.0, *)
 extension HomePageVc: UICollectionViewDelegateFlowLayout {
     
-    // Set item size
+//    // Set item size
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        
+//        if collectionView == bottomCv{
+//            
+//            return CGSize(width: collectionView.frame.width/4, height: 130)
+//            
+//        }
+//        else{
+//            
+//            return CGSize(width: 350, height: 140)
+//            
+//        }
+//        
+//    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if collectionView == bottomCv{
-            
-            return CGSize(width: collectionView.frame.width/4, height: 130)
-            
+        if indexPath.row == 6{
+            return CGSize(width: collectionView.frame.width, height: 200)
         }
-        else{
-            
-            return CGSize(width: 350, height: 140)
-            
-        }
-        
+        let width = (collectionView.frame.width) / 3
+        return CGSize(width: width, height: width - 10)
     }
-    
     
 }
 

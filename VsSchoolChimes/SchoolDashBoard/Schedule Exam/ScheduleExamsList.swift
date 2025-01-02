@@ -13,6 +13,11 @@ class ScheduleExamsList: UIViewController,UITableViewDataSource,UITableViewDeleg
     @IBOutlet weak var examListTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         examListTable.register(UINib(nibName: CellConfingName.ExamsListTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ExamsListTVCell)
     }
     

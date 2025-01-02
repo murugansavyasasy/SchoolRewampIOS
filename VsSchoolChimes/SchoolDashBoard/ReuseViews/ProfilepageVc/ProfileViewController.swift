@@ -8,7 +8,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     @IBOutlet weak var ScrollviewBottom: NSLayoutConstraint!
     @IBOutlet weak var SaveBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var EditBtn: UIButton!
@@ -43,33 +43,34 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var SeconadaryphoneNo: UILabel!
     
     @IBOutlet weak var topview: UIView!
-    
+    var passvalue = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        view.backgroundColor = Colornames.topBackgroundCLr
-//        fullview.backgroundColor = Colornames.topBackgroundCLr
+        
+        //        view.backgroundColor = Colornames.topBackgroundCLr
+        //        fullview.backgroundColor = Colornames.topBackgroundCLr
         
         bottomFullview.backgroundColor = Colornames.bottomClr
-        
-//        fullview.applyGradient(
-//                   colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-//                   startPoint: CGPoint(x: 1, y: 0.5),
-//                   endPoint: CGPoint(x: 0, y: 0.5)
-//               )
-               topview.applyGradient(
-                   colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                   startPoint: CGPoint(x: 1, y: 0.5),
-                   endPoint: CGPoint(x: 0, y: 0.5)
-               )
-      
+        if passvalue == 2{
+            topview.applyGradient(
+                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }else{
+            topview.applyGradient(
+                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }
         
         SaveBtnHeight.constant = 0
         
         StyleAndTranslater()
-      
+        
     }
-
+    
     
     
     
@@ -104,9 +105,9 @@ class ProfileViewController: UIViewController {
         Mothername.text = CommonStringFile.Mothername.translated()
         Motheroccupation.text = CommonStringFile.Motheroccupation.translated()
         SeconadaryphoneNo.text = CommonStringFile.SecondaryPhoneno.translated()
-
+        
         //MARK: Button Font Stye
-//        EditBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
+        //        EditBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
         saveBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Label Font Stye
@@ -131,7 +132,7 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func EditBtnAct(_ sender: Any) {
-       // ScrollviewBottom.constant = 70
+        // ScrollviewBottom.constant = 70
         if EditBtn.titleLabel!.text == "Edit" {
             SaveBtnHeight.constant = 40
             saveBtn.isHidden = false
@@ -146,6 +147,6 @@ class ProfileViewController: UIViewController {
         }
         
     }
-   
+    
 }
 

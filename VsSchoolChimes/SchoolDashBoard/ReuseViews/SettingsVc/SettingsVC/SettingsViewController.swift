@@ -12,17 +12,11 @@ class SettingsViewController: UIViewController, BaktoHome {
     func backtohome() {
         delegate?.backtohome()
         tableview.reloadData()
-//       let name = TranslationManager.shared.translate(key:menuname.feedback)
-//        print(name)
     }
     
-    
-    
     @IBOutlet weak var SettingspageHeading: UILabel!
-    
     @IBOutlet weak var tableview: UITableView!
-    
-    
+    @IBOutlet weak var topView: UIView!
     var menuname = SettingStringFile()
     lazy var sections: [Section] = [
         Section(title: menuname.general, items: [menuname.notifications, menuname.faq, menuname.contactUs, menuname.termsAndConditions,menuname.changeAppLanguage]),
@@ -36,9 +30,22 @@ class SettingsViewController: UIViewController, BaktoHome {
     
     var imagesArray: [UIImage] = []
     var delegate:BaktoHome?
-    
+    var passVale = 1
     override func viewDidLoad() {
         super.viewDidLoad()
+        if passVale == 2{
+            topView.applyGradient(
+                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }else{
+            topView.applyGradient(
+                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }
         section = sections
         SettingspageHeading.text = MenuTapbar.Settings
         SettingspageHeading.setFont(style: .header, size: 20)

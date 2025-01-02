@@ -111,7 +111,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" name="topBackgroundCLr"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="JWN-8r-k6A" firstAttribute="leading" secondItem="yw8-eh-l9F" secondAttribute="trailing" id="2j0-cx-fN2"/>
                                         <constraint firstItem="JWN-8r-k6A" firstAttribute="leading" secondItem="yw8-eh-l9F" secondAttribute="trailing" id="7yk-pH-5Vb"/>
@@ -854,7 +854,7 @@
                                     </constraints>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" name="topBackgroundCLr"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="Y1P-9s-UZf" firstAttribute="top" secondItem="41Y-xH-ZcM" secondAttribute="top" id="1O8-cW-mLE"/>
                                 <constraint firstAttribute="trailing" secondItem="7aB-zl-X3n" secondAttribute="trailing" id="1l7-p4-ZWY"/>
@@ -897,7 +897,7 @@
                     </constraints>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdr-6F-LLo">
-                    <rect key="frame" x="20" y="150.66666666666663" width="353" height="280"/>
+                    <rect key="frame" x="20" y="345" width="353" height="280"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-4A-iyx" customClass="FSCalendar">
                             <rect key="frame" x="0.0" y="45" width="353" height="225"/>

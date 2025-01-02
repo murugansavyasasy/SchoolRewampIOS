@@ -52,6 +52,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var filterData : [Student]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        
         rollNoLbl.text = CommonStringFile.RollNo.translated()
         nameLbl.text = CommonStringFile.Name.translated()
         statusLbl.text = CommonStringFile.Status.translated()

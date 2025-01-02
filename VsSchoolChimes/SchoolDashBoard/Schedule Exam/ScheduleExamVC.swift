@@ -18,6 +18,11 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
     var finalArray = [ExamsSchedule]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         keyboardDionebtn()
         filterData = examArray
         subjectListCollection.register(UINib(nibName: CellConfingName.ExamsListCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ExamsListCVCell)

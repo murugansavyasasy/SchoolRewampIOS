@@ -16,9 +16,14 @@
                 <outlet property="BellImage" destination="JOz-t8-GNd" id="yi3-6D-YAD"/>
                 <outlet property="SchoolNameLabel" destination="qsY-ha-l6P" id="Y0v-FH-jeo"/>
                 <outlet property="Searchbar" destination="ObW-ZB-51q" id="5g8-wN-ZJO"/>
+                <outlet property="assignmentkBtn" destination="KtY-gu-fAj" id="nnc-KJ-Tia"/>
                 <outlet property="bottomCv" destination="8f2-pd-DRo" id="5q1-RE-qFO"/>
                 <outlet property="bottomCvHeight" destination="Ukw-Tp-oEp" id="se6-Yn-mMi"/>
+                <outlet property="collectionBtn" destination="VV0-se-OyB" id="5Em-7o-GMA"/>
+                <outlet property="heightStackview" destination="hVo-OX-Vh3" id="lCd-jh-2qh"/>
+                <outlet property="homeworkBtn" destination="cW0-fe-fdm" id="z38-72-bNz"/>
                 <outlet property="loginDetailView" destination="jAO-gM-RBK" id="kLv-xz-Km1"/>
+                <outlet property="onlineMeetingBtn" destination="G14-6d-8hm" id="wpK-Rf-tRo"/>
                 <outlet property="profileFullview" destination="hgc-ku-39b" id="MuF-Dv-ghv"/>
                 <outlet property="reportView" destination="lRJ-aJ-Ooj" id="cdN-VV-1ua"/>
                 <outlet property="searchHeightCon" destination="BLN-6X-34U" id="e7A-Mz-6qd"/>
@@ -150,11 +155,59 @@
                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             </collectionViewFlowLayout>
                                         </collectionView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VV0-se-OyB">
+                                            <rect key="frame" x="10" y="404.66666666666663" width="373" height="110"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dQU-KP-Xwc">
+                                                    <rect key="frame" x="10" y="5" width="364" height="105"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KtY-gu-fAj">
+                                                            <rect key="frame" x="0.0" y="0.0" width="114.66666666666667" height="105"/>
+                                                            <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.31911940799999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="Notice Board"/>
+                                                            <connections>
+                                                                <action selector="assignment:" destination="-1" eventType="touchUpInside" id="fxy-XK-5OH"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G14-6d-8hm">
+                                                            <rect key="frame" x="124.66666666666666" y="0.0" width="114.66666666666666" height="105"/>
+                                                            <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.31911940799999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="0.0"/>
+                                                            <state key="normal" image="Online  Meeting"/>
+                                                            <connections>
+                                                                <action selector="onlineMeeting:" destination="-1" eventType="touchUpInside" id="IaY-iz-zfd"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cW0-fe-fdm">
+                                                            <rect key="frame" x="249.33333333333329" y="0.0" width="114.66666666666666" height="105"/>
+                                                            <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.31911940799999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                                                            <state key="normal" image="Homework"/>
+                                                            <connections>
+                                                                <action selector="homeWork:" destination="-1" eventType="touchUpInside" id="ql2-F8-SU3"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="dQU-KP-Xwc" secondAttribute="trailing" constant="-1" id="Tvt-7B-GEh"/>
+                                                <constraint firstItem="dQU-KP-Xwc" firstAttribute="top" secondItem="VV0-se-OyB" secondAttribute="top" constant="5" id="eMm-FC-dFF"/>
+                                                <constraint firstAttribute="height" constant="110" id="hVo-OX-Vh3"/>
+                                                <constraint firstItem="dQU-KP-Xwc" firstAttribute="leading" secondItem="VV0-se-OyB" secondAttribute="leading" constant="10" id="nPo-td-QqU"/>
+                                                <constraint firstAttribute="bottom" secondItem="dQU-KP-Xwc" secondAttribute="bottom" id="nkx-bP-tEQ"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="VV0-se-OyB" firstAttribute="leading" secondItem="60R-Rm-JBk" secondAttribute="leading" constant="10" id="Baq-Ua-iGM"/>
                                         <constraint firstItem="ueU-tK-BZN" firstAttribute="leading" secondItem="60R-Rm-JBk" secondAttribute="leading" constant="15" id="Koy-P9-vyk"/>
+                                        <constraint firstAttribute="bottom" secondItem="VV0-se-OyB" secondAttribute="bottom" constant="10" id="OTE-3D-2OL"/>
                                         <constraint firstAttribute="trailing" secondItem="8f2-pd-DRo" secondAttribute="trailing" constant="8" id="RSd-jt-4bQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="VV0-se-OyB" secondAttribute="trailing" constant="10" id="fe0-nR-D24"/>
                                         <constraint firstItem="8f2-pd-DRo" firstAttribute="leading" secondItem="60R-Rm-JBk" secondAttribute="leading" constant="19" id="fxz-tT-eHa"/>
                                         <constraint firstItem="8f2-pd-DRo" firstAttribute="top" secondItem="ueU-tK-BZN" secondAttribute="bottom" constant="10" id="hfc-FV-yWX"/>
                                         <constraint firstItem="ueU-tK-BZN" firstAttribute="top" secondItem="60R-Rm-JBk" secondAttribute="top" constant="20" id="jmt-tN-i68"/>
@@ -261,6 +314,9 @@
         </view>
     </objects>
     <resources>
+        <image name="Homework" width="512" height="512"/>
+        <image name="Notice Board" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="Online  Meeting" width="66" height="66"/>
         <image name="bell" catalog="system" width="125" height="128"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="shiyam" width="440" height="567"/>

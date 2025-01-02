@@ -19,8 +19,10 @@ class MarkAttendenceCV: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         uiConfi()
+        
     }
     func uiConfi(){
+        
         // Configure btnView
         btnView.layer.cornerRadius = 10
         btnView.layer.shadowColor = UIColor.black.cgColor
