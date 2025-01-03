@@ -60,12 +60,11 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     ]
     var displayedCategories: [String] = []
     var indexNo = 0
+    let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        adjustCollectionViewHeight()
-        //        bottomCv.isScrollEnabled = false
         displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
-        
+        displayedCategories.insert(newString, at: 5)
         filteredItems = MenuRedirect.items
         setupSearchBar()
         //    startAutoScroll()
@@ -173,16 +172,6 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
             endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
         )
     }
-//    func updateCollectionViewHeight() {
-//        // Calculate the height of the collection view content
-//        let contentHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
-//        
-//        // Update the height constraint
-//        bottomCvHeight.constant = 900
-//        
-//        // Notify layout to update
-//        self.templateview.layoutIfNeeded()
-//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         bottomCv.delegate = self
@@ -388,7 +377,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return displayedCategories.count + 1 // Ensure ItemnCount matches your data source
+        return displayedCategories.count // Ensure ItemnCount matches your data source
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -407,21 +396,10 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell, for: indexPath) as! BottomCVCell
             cell.MenuLbl.text = nil
             cell.MenuImgView.image = nil
+          
             
-            // Calculate the correct index for `receiverItems`
-            let indexNo: Int
-            if indexPath.row > 6 {
-                indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
-            } else {
-                indexNo = indexPath.row
-            }
-            
-            guard indexNo < MenuRedirect.receiverItems.count else {
-                fatalError("Index out of range: indexNo = \(indexNo), count = \(MenuRedirect.receiverItems.count)")
-            }
-            
-            let label = MenuRedirect.receiverItems[indexNo].translated()
-            let img = UIImage(named: MenuRedirect.receiverItems[indexNo])
+            let label = MenuRedirect.receiverItems[indexPath.row].translated()
+            let img = UIImage(named: MenuRedirect.receiverItems[indexPath.row])
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
             cell.MenuImgView.image = img
@@ -441,7 +419,8 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if isShowingAll {
             // Collapse back to show only the first 6 items
             displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
-            heightStackview.constant = 110
+            displayedCategories.insert(newString, at: 5)
+            heightStackview.constant = 90
             collectionBtn.isHidden = false
         } else {
             // Expand to show all items
@@ -462,13 +441,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         if indexPath.row < MenuRedirect.receiverItems.count {
-            let indexNo: Int
-            if indexPath.row > 6 {
-                indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
-            } else {
-                indexNo = indexPath.row
-            }
-            
+          
             let menuItem = MenuRedirect.receiverItems[indexNo].translated()
             
             switch menuItem {
@@ -532,7 +505,7 @@ extension ParentVC: UICollectionViewDelegateFlowLayout {
     // Set item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.row == 6{
-            return CGSize(width: collectionView.frame.width, height: 150)
+            return CGSize(width: collectionView.frame.width, height: 160)
         }
         let width = (collectionView.frame.width) / 3
         return CGSize(width: width, height: width - 10)
@@ -562,8 +535,11 @@ extension ParentVC: UISearchBarDelegate{
         searchItem = 1
         if searchText.isEmpty {
             filteredItems = MenuRedirect.items // Show all items if no search text
+            displayedCategories = Array(filteredItems.prefix(6))
+            displayedCategories.insert(newString, at: 5)
         } else {
             filteredItems = MenuRedirect.items.filter { $0.lowercased().contains(searchText.lowercased()) }
+            displayedCategories = filteredItems
         }
         bottomCv.reloadData()
     }
@@ -572,9 +548,12 @@ extension ParentVC: UISearchBarDelegate{
     //MARK: Searchview Hide
     @objc func SearchViewHidden() {
         if searchHeightCon.constant == 0{
-            
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
             searchHeightCon.constant = 56
         }else{
+            heightStackview.constant = 90
+            collectionBtn.isHidden = false
             searchHeightCon.constant = 0
             
         }

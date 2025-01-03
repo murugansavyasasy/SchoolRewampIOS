@@ -51,6 +51,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     let alert = CustomAlert()
     var isShowingAll = false
     var displayedCategories: [String] = []
+    let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
         advertisements = [
@@ -62,6 +63,8 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         setupVideoBackground()
         filteredItems = MenuRedirect.items
         displayedCategories = Array(filteredItems.prefix(6))
+        
+        displayedCategories.insert(newString, at: 5)
         setupSearchBar()
         startAutoScroll()
         cellRegistration()
@@ -281,31 +284,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     
     func restartAnimations() {
-        // Assuming you have shimmer animations or other animations that need to be reset
-        
         
         if let cell = TopCv.cellForItem(at: IndexPath(row: 0, section: 0)) as? PiechartCVCell {
             // Reset shimmer view or any other animations
             cell.pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
         }
-//        
-//        for cell in bottomCv.visibleCells as! [BottomCVCell] {
-//            // Reset shimmer view or any other animations
-//            cell.shimmersViewss.parentview.isHidden = false
-//            cell.shimmersViewss.animateView(enable: true)
-//            cell.MenuLbl.isHidden = true
-//            cell.GradientView.isHidden = true
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-//                cell.shimmersViewss.animateView(enable: false)
-//                cell.MenuLbl.isHidden = false
-//                cell.GradientView.isHidden = false
-//                cell.shimmersViewss.parentview.isHidden = true
-//            }
-//            
-//        }
-        
-        
+
         
         
     }
@@ -324,7 +308,8 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         if isShowingAll {
             // Collapse back to show only the first 6 items
             displayedCategories = Array(filteredItems.prefix(6))
-            heightStackview.constant = 120
+            displayedCategories.insert(newString, at: 5)
+            heightStackview.constant = 110
             collectionBtn.isHidden = false
         } else {
             // Expand to show all items
@@ -372,7 +357,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
            
-            return displayedCategories.count + 1
+            return displayedCategories.count
             
         }else{
             return 5
@@ -394,19 +379,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
                     cell.MenuLbl.text = nil
                     cell.MenuImgView.image  = nil
-                let indexNo: Int
-                if indexPath.row > 6 {
-                    indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
-                } else {
-                    indexNo = indexPath.row
-                }
                 
-                guard indexNo < filteredItems.count else {
-                    fatalError("Index out of range: indexNo = \(indexNo), count = \(filteredItems.count)")
-                }
-                
-                    let label = filteredItems[indexNo].translated()
-                    let img = UIImage(named: MenuRedirect.Imgitems[indexNo])
+                    let label = filteredItems[indexPath.row].translated()
+                    let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
                     cell.MenuLbl.setFont(style: .body, size: 10)
                     cell.MenuLbl.text = label
                     cell.MenuImgView.image  = img
@@ -444,18 +419,11 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             return
         }
         
-        if indexPath.row < filteredItems.count {
-            let indexNo: Int
-            if indexPath.row > 6 {
-                indexNo = indexPath.row - 1 // Adjust for the "seeMore" cell
-            } else {
-                indexNo = indexPath.row
-            }
       
         
             if collectionView == bottomCv{
                 
-                let menuItem = MenuRedirect.items[indexNo].translated()
+                let menuItem = MenuRedirect.items[indexPath.row].translated()
                 
                 switch menuItem {
                 case MenuStringFile.VideoUpload.translated():
@@ -527,31 +495,16 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
             }
             
-        }
+        
     }
 }
 
 @available(iOS 14.0, *)
 extension HomePageVc: UICollectionViewDelegateFlowLayout {
-    
-//    // Set item size
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        
-//        if collectionView == bottomCv{
-//            
-//            return CGSize(width: collectionView.frame.width/4, height: 130)
-//            
-//        }
-//        else{
-//            
-//            return CGSize(width: 350, height: 140)
-//            
-//        }
-//        
-//    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.row == 6{
-            return CGSize(width: collectionView.frame.width, height: 200)
+            return CGSize(width: collectionView.frame.width, height: 180)
         }
         let width = (collectionView.frame.width) / 3
         return CGSize(width: width, height: width - 10)
@@ -578,9 +531,13 @@ extension HomePageVc: UISearchBarDelegate{
         
         searchItem = 1
         if searchText.isEmpty {
+            
             filteredItems = MenuRedirect.items // Show all items if no search text
+            displayedCategories = Array(filteredItems.prefix(6))
+            displayedCategories.insert(newString, at: 5)
         } else {
             filteredItems = MenuRedirect.items.filter { $0.lowercased().contains(searchText.lowercased()) }
+            displayedCategories = filteredItems
         }
         bottomCv.reloadData()
     }
@@ -588,10 +545,20 @@ extension HomePageVc: UISearchBarDelegate{
     
     //MARK: Searchview Hide
     @objc func SearchViewHidden() {
+//        if searchHeightCon.constant == 0{
+//            
+//            searchHeightCon.constant = 56
+//        }else{
+//            searchHeightCon.constant = 0
+//            
+//        }
         if searchHeightCon.constant == 0{
-            
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
             searchHeightCon.constant = 56
         }else{
+            heightStackview.constant = 110
+            collectionBtn.isHidden = false
             searchHeightCon.constant = 0
             
         }
