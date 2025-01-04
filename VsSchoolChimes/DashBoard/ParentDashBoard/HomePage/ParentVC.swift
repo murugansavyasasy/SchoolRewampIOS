@@ -112,8 +112,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
+   
         
         let searchImage  = UITapGestureRecognizer(target: self, action:#selector(SearchViewHidden))
         searchImgView.addGestureRecognizer(searchImage)
@@ -341,27 +340,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
     }
     
-    deinit {
-        timer?.invalidate()
-    }
-    
-    func startAutoScroll() {
-        autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
-    }
-    
-    @objc func autoScroll() {
-        let nextIndex = (currentIndex + 1) % 5
-        let nextIndexPath = IndexPath(item: nextIndex, section: 0)
-        TopCv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
-        currentIndex = nextIndex
-        pageContorler.currentPage = currentIndex
-        
-    }
-    
-    @objc func stopAutoScroll() {
-        autoScrollTimer?.invalidate()
-        autoScrollTimer = nil
-    }
+   
     
     @IBAction func openNotification(){
         let vc = NotificationViewController(nibName: nil, bundle: nil)

@@ -199,7 +199,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             )
         }
     }
-
+    
     
     func setupVideoBackground() {
         guard let path = Bundle.main.path(forResource: "Mathematics", ofType: "mp4") else { return }
@@ -289,7 +289,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             // Reset shimmer view or any other animations
             cell.pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
         }
-
+        
         
         
     }
@@ -320,7 +320,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         isShowingAll.toggle() // Toggle the state
         bottomCv.reloadData() // Refresh the collection view
-//        updateCollectionViewHeight()
+        //        updateCollectionViewHeight()
     }
     func startAutoScroll() {
         autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
@@ -356,7 +356,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
-           
+            
             return displayedCategories.count
             
         }else{
@@ -370,27 +370,26 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         if collectionView == bottomCv{
             if indexPath.row == 6 {
                 let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
-                adCell.advertisements = advertisements // Pass advertisement data to the ad cell
-                adCell.adCollectionView.reloadData() // Refresh the embedded collection view
+                adCell.advertisements = advertisements
                 adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
                 adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
                 return adCell
             }else{
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
-                    cell.MenuLbl.text = nil
-                    cell.MenuImgView.image  = nil
+                cell.MenuLbl.text = nil
+                cell.MenuImgView.image  = nil
                 
-                    let label = filteredItems[indexPath.row].translated()
-                    let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
-                    cell.MenuLbl.setFont(style: .body, size: 10)
-                    cell.MenuLbl.text = label
-                    cell.MenuImgView.image  = img
+                let label = filteredItems[indexPath.row].translated()
+                let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
+                cell.MenuLbl.setFont(style: .body, size: 10)
+                cell.MenuLbl.text = label
+                cell.MenuImgView.image  = img
                 cell.applyGradient(colours: [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor],xstart: 0.8,ystart: 0.8)
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        cell.GradientView.animateView(enable: false)
-                    }
-       
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    cell.GradientView.animateView(enable: false)
+                }
+                
                 
                 return cell
             }
@@ -419,89 +418,89 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             return
         }
         
-      
         
-            if collectionView == bottomCv{
+        
+        if collectionView == bottomCv{
+            
+            let menuItem = MenuRedirect.items[indexPath.row].translated()
+            
+            switch menuItem {
+            case MenuStringFile.VideoUpload.translated():
+                MenuRedirect.senderVideoNavigate(from: self)
                 
-                let menuItem = MenuRedirect.items[indexPath.row].translated()
+            case MenuStringFile.Communication.translated():
+                MenuRedirect.senderCommunicationNavigate(from: self)
                 
-                switch menuItem {
-                case MenuStringFile.VideoUpload.translated():
-                    MenuRedirect.senderVideoNavigate(from: self)
-                    
-                case MenuStringFile.Communication.translated():
-                    MenuRedirect.senderCommunicationNavigate(from: self)
-                    
-                case MenuStringFile.ImagePdf.translated():
-                    MenuRedirect.senderImgPDfNavigate(from: self)
-                    
-                case MenuStringFile.Circulars.translated():
-                    MenuRedirect.senderEventNavigate(from: self)
-                    
-                case MenuStringFile.NoticeBoard.translated():
-                    MenuRedirect.senderNoticeboardNavigate(from: self)
-                    
-                case MenuStringFile.PTM.translated():
-                    MenuRedirect.senderPtmNavigate(from: self)
-                    
-                case MenuStringFile.LeaveRequests.translated():
-                    MenuRedirect.senderLeaveRequestNavigate(from: self)
-                    
-                case MenuStringFile.Assignment.translated():
-                    MenuRedirect.senderAssignmentNavigate(from: self)
-                    
-                case MenuStringFile.OnlineMeeting.translated():
-                    MenuRedirect.senderOnlineNavigate(from: self)
-                    
-                case MenuStringFile.Homework.translated():
-                    MenuRedirect.senderHomeWorkNavigate(from: self)
-                    
-                    
-                case MenuStringFile.LessonPlan.translated():
-                    MenuRedirect.senderLessonplanNavigate(from: self)
-                    
-                case MenuStringFile.AbsenteesReport.translated():
-                    MenuRedirect.senderAbsenteesNavigate(from: self)
-                    
-                case MenuStringFile.FeePendingReport.translated():
-                    MenuRedirect.senderFeePendingNavigate(from: self)
-                    
-                case MenuStringFile.StudentReport.translated():
-                    MenuRedirect.senderStudentreportNavigate(from: self)
-                    
-                case MenuStringFile.VeryImportantInfo.translated():
-                    MenuRedirect.senderImportantInfoNavigate(from: self)
-                    
-                case MenuStringFile.SchoolStrength.translated():
-                    MenuRedirect.senderSchoolStrength(from: self)
-                    
-                case MenuStringFile.MarkYourAttendance.translated():
-                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
-                    
-                case MenuStringFile.InteractionWithStudent.translated():
-                    ""
-                    //                    MenuRedirect.chat(from: self)
-                    
-                case MenuStringFile.ScheduleExamTest.translated():
-                    MenuRedirect.ScheduleExamVCNavigat(from: self)
-                case MenuStringFile.DailyCollection:
-                    MenuRedirect.RecipientNavigat(from: self)
-                    break
-                    
-                default:
-                    // Handle unknown menu items if needed
-                    break
-                }
+            case MenuStringFile.ImagePdf.translated():
+                MenuRedirect.senderImgPDfNavigate(from: self)
                 
+            case MenuStringFile.Circulars.translated():
+                MenuRedirect.senderEventNavigate(from: self)
+                
+            case MenuStringFile.NoticeBoard.translated():
+                MenuRedirect.senderNoticeboardNavigate(from: self)
+                
+            case MenuStringFile.PTM.translated():
+                MenuRedirect.senderPtmNavigate(from: self)
+                
+            case MenuStringFile.LeaveRequests.translated():
+                MenuRedirect.senderLeaveRequestNavigate(from: self)
+                
+            case MenuStringFile.Assignment.translated():
+                MenuRedirect.senderAssignmentNavigate(from: self)
+                
+            case MenuStringFile.OnlineMeeting.translated():
+                MenuRedirect.senderOnlineNavigate(from: self)
+                
+            case MenuStringFile.Homework.translated():
+                MenuRedirect.senderHomeWorkNavigate(from: self)
+                
+                
+            case MenuStringFile.LessonPlan.translated():
+                MenuRedirect.senderLessonplanNavigate(from: self)
+                
+            case MenuStringFile.AbsenteesReport.translated():
+                MenuRedirect.senderAbsenteesNavigate(from: self)
+                
+            case MenuStringFile.FeePendingReport.translated():
+                MenuRedirect.senderFeePendingNavigate(from: self)
+                
+            case MenuStringFile.StudentReport.translated():
+                MenuRedirect.senderStudentreportNavigate(from: self)
+                
+            case MenuStringFile.VeryImportantInfo.translated():
+                MenuRedirect.senderImportantInfoNavigate(from: self)
+                
+            case MenuStringFile.SchoolStrength.translated():
+                MenuRedirect.senderSchoolStrength(from: self)
+                
+            case MenuStringFile.MarkYourAttendance.translated():
+                MenuRedirect.senderMarkAttendanceNavigate(from: self)
+                
+            case MenuStringFile.InteractionWithStudent.translated():
+                ""
+                //                    MenuRedirect.chat(from: self)
+                
+            case MenuStringFile.ScheduleExamTest.translated():
+                MenuRedirect.ScheduleExamVCNavigat(from: self)
+            case MenuStringFile.DailyCollection:
+                MenuRedirect.RecipientNavigat(from: self)
+                break
+                
+            default:
+                // Handle unknown menu items if needed
+                break
             }
             
+        }
+        
         
     }
 }
 
 @available(iOS 14.0, *)
 extension HomePageVc: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.row == 6{
             return CGSize(width: collectionView.frame.width, height: 180)
@@ -545,13 +544,7 @@ extension HomePageVc: UISearchBarDelegate{
     
     //MARK: Searchview Hide
     @objc func SearchViewHidden() {
-//        if searchHeightCon.constant == 0{
-//            
-//            searchHeightCon.constant = 56
-//        }else{
-//            searchHeightCon.constant = 0
-//            
-//        }
+        
         if searchHeightCon.constant == 0{
             heightStackview.constant = 0
             collectionBtn.isHidden = true
