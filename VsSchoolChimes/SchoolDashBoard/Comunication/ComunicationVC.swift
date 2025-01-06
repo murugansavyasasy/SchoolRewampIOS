@@ -513,9 +513,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         historyview.isHidden = true
         addfile.isHidden = false
         tittlemessage.text = CommonStringFile.VoiceMessage.translated()
-//        radio1.setImage(UIImage(systemName: "button.programmable"), for: .normal)
-//        radio2.setImage(UIImage(systemName: "circle"), for: .normal)
-        //        emengencyCall.isHidden = false
     }
     
     //MARK: TEXT MESSAGE VIEW

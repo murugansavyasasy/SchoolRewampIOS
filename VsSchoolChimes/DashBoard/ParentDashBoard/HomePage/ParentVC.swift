@@ -93,10 +93,8 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         onlineMeetingBtn.layer.cornerRadius = 10
         
         view.applyGradient(
-            colors: [
-                UIColor(hex: "#7ed957"),  // Green
-                UIColor(hex: "#0097b2")   // Blue
-            ],
+            colors: [Colornames.gradientBlue,  // Green
+                     Colornames.gradientgreen],
             startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
             endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
         )
@@ -321,7 +319,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     
     func cellRegistration(){
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
-        bottomCv.register(UINib(nibName: "seeMore", bundle: nil), forCellWithReuseIdentifier: "seeMore")
+        bottomCv.register(UINib(nibName: CellConfingName.seeMore, bundle: nil), forCellWithReuseIdentifier: CellConfingName.seeMore)
         
     }
     
@@ -364,7 +362,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if indexPath.row == 6 {
             // Handle the "seeMore" cell
-            let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
+            let adCell = collectionView.dequeueReusableCell(withReuseIdentifier:CellConfingName.seeMore, for: indexPath) as! seeMore
             adCell.advertisements = advertisements // Pass advertisement data to the ad cell
             adCell.adCollectionView.reloadData() // Refresh the embedded collection view
             adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
@@ -449,6 +447,8 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.receiverchat(from: self)
             case ReceiverMenuItems.InteractionWithStaff.translated():
                 MenuRedirect.receiverchat(from: self)
+                print(getValue)
+                MenuRedirect.getValue = getValue
             case ReceiverMenuItems.ClassTimetable.translated():
                 MenuRedirect.receiverclassTimeTable(from: self)
             case ReceiverMenuItems.Homework.translated():
@@ -496,7 +496,7 @@ extension ParentVC: UICollectionViewDelegateFlowLayout {
         let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
 
         let height = max(textHeight + padding * 2, width - 10)
-        return CGSize(width: width, height: height + 10)
+        return CGSize(width: width, height: height)
     }
     
     

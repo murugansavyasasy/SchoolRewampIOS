@@ -256,7 +256,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     func cellRegistration(){
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
-        bottomCv.register(UINib(nibName: "seeMore", bundle: nil), forCellWithReuseIdentifier: "seeMore")
+        bottomCv.register(UINib(nibName:CellConfingName.seeMore, bundle: nil), forCellWithReuseIdentifier: CellConfingName.seeMore)
         TopCv.register(UINib(nibName: CellConfingName.HomePageTopCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageTopCell)
         
         TopCv.register(UINib(nibName: CellConfingName.PiechartCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PiechartCVCell)
@@ -369,7 +369,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if collectionView == bottomCv{
             if indexPath.row == 6 {
-                let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
+                let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.seeMore, for: indexPath) as! seeMore
                 adCell.advertisements = advertisements
                 adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
                 adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
@@ -471,6 +471,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             case MenuStringFile.VeryImportantInfo.translated():
                 MenuRedirect.senderImportantInfoNavigate(from: self)
                 
+            case MenuStringFile.SchoolClassEvents.translated():
+                MenuRedirect.senderEventNavigate(from: self)
             case MenuStringFile.SchoolStrength.translated():
                 MenuRedirect.senderSchoolStrength(from: self)
                 
@@ -478,9 +480,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 
             case MenuStringFile.InteractionWithStudent.translated():
-                ""
-                //                    MenuRedirect.chat(from: self)
-                
+                MenuRedirect.receiverchat(from: self)
+                MenuRedirect.getValue = getValue
             case MenuStringFile.ScheduleExamTest.translated():
                 MenuRedirect.ScheduleExamVCNavigat(from: self)
             case MenuStringFile.DailyCollection:
@@ -503,10 +504,20 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.row == 6{
-            return CGSize(width: collectionView.frame.width, height: 180)
+            return CGSize(width: collectionView.frame.width, height: 160)
         }
-        let width = (collectionView.frame.width) / 3
-        return CGSize(width: width, height: width - 10)
+        
+             let width = (collectionView.frame.width) / 3
+             let padding: CGFloat = 10
+             let maxTextWidth = width - padding * 2
+
+             let label = filteredItems[indexPath.row].translated()
+             let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
+             let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
+
+             let height = max(textHeight + padding * 2, width - 10)
+             return CGSize(width: width, height: height + 10)
+        
     }
     
 }
