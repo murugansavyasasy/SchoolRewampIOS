@@ -10,6 +10,7 @@ import DropDown
 
 class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var requestCertificateView: UIView!
     @IBOutlet weak var reqCertView: UIView!
     
@@ -52,6 +53,7 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        topBarView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         backBtn.setTitle(ReceiverMenuItems.CertificateRequest.translated(), for: .normal)
         filteredTimetable = timetable
         requestBtn.layer.cornerRadius = 20

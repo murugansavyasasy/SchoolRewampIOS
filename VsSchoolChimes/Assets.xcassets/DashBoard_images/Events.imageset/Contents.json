@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "school-event (1).svg",
+      "filename" : "event.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "school-event (1) 1.svg",
+      "filename" : "event 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "school-event (1) 2.svg",
+      "filename" : "event 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

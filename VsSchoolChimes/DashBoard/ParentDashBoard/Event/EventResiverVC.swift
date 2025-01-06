@@ -230,6 +230,12 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
+            cell.TakenLbl.text = "Tamilar Thirunaal"
+            cell.MonthView.backgroundColor =  UIColor(named: "Red")
+            cell.DateView.backgroundColor =  .white
+            cell.DateView.layer.borderWidth = 0.5
+            cell.monthLbl.text = "JAN"
+            cell.DateLbl.text = "14"
             cell.StatusView.isHidden = true
             return cell
         }

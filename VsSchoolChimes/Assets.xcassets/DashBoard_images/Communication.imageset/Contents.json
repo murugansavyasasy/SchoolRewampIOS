@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "card-payment.svg",
+      "filename" : "voice-mail.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "voice-mail 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "voice-mail 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

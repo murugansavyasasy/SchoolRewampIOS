@@ -24,6 +24,7 @@
                 <outlet property="selectCertificateView" destination="Tyc-of-cDj" id="xBI-5R-Hfo"/>
                 <outlet property="statusShowLbl" destination="39B-1F-Dc3" id="tLK-OX-6eU"/>
                 <outlet property="statusShowView" destination="3C3-0E-AfN" id="mpw-Gh-eCo"/>
+                <outlet property="topBarView" destination="3bc-5Z-uTf" id="lYs-Zy-fuu"/>
                 <outlet property="tv" destination="Gif-9n-qj2" id="XlK-ES-U9R"/>
                 <outlet property="tvInsideView" destination="wgP-XA-VGA" id="Izm-63-rcG"/>
                 <outlet property="urgencyLevelLbl" destination="zQA-nr-1c8" id="kNH-ZU-uly"/>
@@ -80,7 +81,7 @@
                                     </subviews>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" name="ParentClr"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="huc-7B-M6D" firstAttribute="leading" secondItem="vux-Nj-12l" secondAttribute="trailing" id="244-ks-puq"/>
                                 <constraint firstAttribute="bottom" secondItem="dyg-zZ-vOC" secondAttribute="bottom" constant="5" id="EKM-Vt-B9H"/>
