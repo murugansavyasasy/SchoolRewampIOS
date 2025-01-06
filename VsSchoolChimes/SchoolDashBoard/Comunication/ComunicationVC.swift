@@ -9,11 +9,11 @@ protocol reloadDelegate{
     func reload(index: Int,playToggle:Bool)
     func deleteDelegate(index:Int)
 }
-class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate{
+class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate{
     
     
     
-    
+    var isKeyboardVisible = false
     var selectedDates: [Date] = [] // Store selected dates
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
@@ -35,7 +35,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var scheduleClick = false
     let backgroundcolor = Colornames.topBackgroundCLr
     let tapColor = Colornames.topBackgroundCLr1
-    
+    var placeholderLabel: UILabel!
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
     @IBOutlet weak var TextMsgTitle: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
@@ -80,6 +80,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var voiceTitleeTxt: UITextField!
     @IBOutlet weak var nextMontBtn: UIButton!
     
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var monthLbl: UILabel!
     @IBOutlet weak var TxtTitle: UITextField!
     
@@ -99,12 +100,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var TextMsgTittle: UITextField!
     @IBOutlet weak var TextMsgContent: UILabel!
     @IBOutlet weak var EnableCallLbl: UILabel!
+    
+    @IBOutlet weak var textViewOuter: UIView!
+    @IBOutlet weak var textCountLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        
         check_record_permission()
         printCurrentMonth()
         hideCalendarHeader()
         uiUUpdate()
+        setupPlaceholder()
         setupAudioSession()
         CellRegistre()
         setupWaveBars()
@@ -117,7 +128,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         historytable.dataSource = self
         DateSelection.delegate = self
         DateSelection.dataSource = self
+        NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(keyboardWillShow(_:)),
+                                                       name: UIResponder.keyboardWillShowNotification,
+                                                       object: nil)
         
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(keyboardWillHide(_:)),
+                                                       name: UIResponder.keyboardWillHideNotification,
+                                                       object: nil)
         
     }
     
@@ -172,6 +191,53 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         TxtMsgSendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 
     }
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
+        placeholderLabel.font = informationcontent.font
+        placeholderLabel.textColor = .lightGray
+        placeholderLabel.sizeToFit()
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        informationcontent.addSubview(placeholderLabel)
+        placeholderLabel.isHidden = !informationcontent.text.isEmpty // Hide if text exists
+    }
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            isKeyboardVisible = true
+            UIView.animate(withDuration: 0.3) {
+                // Move outerView 20 points from the top
+                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
+        isKeyboardVisible = false
+        UIView.animate(withDuration: 0.3) {
+            self.outerView.transform = .identity // Reset position
+        }
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Calculate the new length of the text
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        if updatedText.count <= 500 {
+            textCountLbl.text = "\(updatedText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //            contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
     
     func uiUUpdate(){
         //MARK: FSCalander View
@@ -255,9 +321,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         playerview.layer.cornerRadius = 8
         voiceStackview.isHidden = true
         dltbtn.isHidden = true
-        informationcontent.layer.cornerRadius = 10
-        informationcontent.layer.borderWidth = 1
-        informationcontent.layer.borderColor = UIColor.black.cgColor
+        informationcontent.delegate = self
+        textViewOuter.layer.cornerRadius = 10
+        textViewOuter.layer.borderWidth = 1
+        textViewOuter.layer.borderColor = UIColor.black.cgColor
         emengencyCall.isOn = false
         addfile.layer.cornerRadius = 4
         dateSelectedViewHeight.constant = 0
@@ -692,7 +759,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             // Get average power for channel 0
             let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
-            let normalizedPower = max(0, (averagePower + 160) / 160)
+            let normalizedPower = max(0, (0) / 160)
             
             // Update wave view with the normalized power level
             waveView.updateWithLevel(CGFloat(normalizedPower))

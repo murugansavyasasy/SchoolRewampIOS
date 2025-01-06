@@ -15,8 +15,8 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBOutlet weak var outerView: UIStackView!
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
-   
-    
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var TitleHederLbl: UILabel!
  
     var titleLbl = "Event"
@@ -24,22 +24,29 @@ class EventResiverVC: UIViewController, SelectNotice{
     var button2 = "Holiday".translated()
     var previousOffset: CGFloat = 0.0
     var delegate : HistorySelectDelegate?
+    let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
+    var section = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        backBtn.setTitle(button1.translated(), for: .normal)
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
-        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
        
         addDoneButton()
-      
         uiConficration()
         tabelViewRegister()
-//        pages = [page1, page2]
-      
-    
-        gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+        configureButton(
+            createEvent,
+            title: button1,
+            imageName: nil,
+            gradientColors:[UIColor.green,UIColor.blue],
+            opacity: 0.8, // 70% opacity
+            lightenFactor: 0.6// 40% lighter
+        )
+        
         createEvent.setTitleColor(.white, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         historyBtn.setTitleColor(.black, for:.normal)
@@ -65,10 +72,11 @@ class EventResiverVC: UIViewController, SelectNotice{
         
         let nib = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
+        let nib2 = UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil)
+        tableview.register(nib2, forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
     }
     
     func uiConficration(){
-        TitleHederLbl.text = titleLbl
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
@@ -100,22 +108,102 @@ class EventResiverVC: UIViewController, SelectNotice{
         dismiss(animated: true)
     }
     @IBAction func SelectionController(_ sender: UIButton) {
-        
+        section = sender.tag
         if sender.tag == 0{
-            gradientcolours(button: createEvent,colours: [UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+            configureButton(
+                createEvent,
+                title: button1,
+                imageName: nil,
+                gradientColors:[UIColor.green,UIColor.blue],
+                opacity: 0.8, // 70% opacity
+                lightenFactor: 0.6// 40% lighter
+            )
             createEvent.setTitleColor(.white, for:.normal)
             gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             historyBtn.setTitleColor(.black, for:.normal)
         }else{
             gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             createEvent.setTitleColor(.black, for:.normal)
-            gradientcolours(button: historyBtn,colours:[UIColor.parentClr.cgColor,UIColor.priority.cgColor])
+            configureButton(
+                historyBtn,
+                title: button2,
+                imageName: nil,
+                gradientColors:[UIColor.green,UIColor.blue],
+                opacity: 0.8, // 70% opacity
+                lightenFactor: 0.6// 40% lighter
+            )
             historyBtn.setTitleColor(.white, for:.normal)
         }
         
        
     }
-    
+    // Helper function to configure the button
+    func configureButton(
+        _ button: UIButton,
+        title: String,
+        imageName: UIImage?,
+        gradientColors: [UIColor],
+        cornerRadius: CGFloat = 20,
+        imageSize: CGSize = CGSize(width: 40, height: 40),
+        spacing: CGFloat = 8.0,
+        opacity: CGFloat = 0.5, // Opacity for the gradient
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+    ) {
+        // Set corner radius
+        button.layer.cornerRadius = cornerRadius
+        button.layer.masksToBounds = true
+        
+        // Adjust colors for lightening and opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+        }
+        
+        // Apply gradient
+        button.applyGradient(
+            colors: adjustedColors,
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        button.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        // Set title and image
+        button.setTitle(title, for: .normal)
+        if let image = imageName {
+            let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
+                image.draw(in: CGRect(origin: .zero, size: imageSize))
+            }
+            button.setImage(resizedImage, for: .normal)
+        }
+        
+        // Align image and title
+        button.contentHorizontalAlignment = .center  // Ensure horizontal alignment
+        if let imageSize = button.imageView?.frame.size,
+           let titleSize = button.titleLabel?.intrinsicContentSize {
+            let totalHeight = imageSize.height + titleSize.height + spacing
+            
+            button.imageEdgeInsets = UIEdgeInsets(
+                top: -(totalHeight - imageSize.height),  // Move image to the top
+                left: 0,
+                bottom: 0,
+                right: -titleSize.width // Center align horizontally
+            )
+            
+            button.titleEdgeInsets = UIEdgeInsets(
+                top: 0,  // No padding at the top
+                left: -imageSize.width,  // Center align horizontally
+                bottom: -(totalHeight - titleSize.height),  // Move title below the image
+                right: 0
+            )
+            
+            button.contentEdgeInsets = UIEdgeInsets(
+                top: 0,
+                left: 0,
+                bottom: spacing,
+                right: 0
+            )
+        }
+    }
+
     
  
 }
@@ -126,19 +214,25 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-//        cell.contentView.backgroundColor = .backGroundClr
-        cell.SelectBtn.isHidden = true
-        cell.Pinview.isHidden = true
-        cell.pinImage.isHidden = true
-        cell.dicriptContent.attributedText = descript(for: "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.", expanded: false)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-        cell.delegate = self
-        cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
-        cell.dicriptContent.isUserInteractionEnabled = true
-        cell.dicriptContent.addGestureRecognizer(tapGesture)
-        
-        return cell
+        if section == 0{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+            //        cell.contentView.backgroundColor = .backGroundClr
+            cell.SelectBtn.isHidden = true
+            cell.Pinview.isHidden = true
+            cell.pinImage.isHidden = true
+            cell.dicriptContent.attributedText = descript(for: "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.", expanded: false)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+            cell.delegate = self
+            cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
+            cell.dicriptContent.isUserInteractionEnabled = true
+            cell.dicriptContent.addGestureRecognizer(tapGesture)
+            
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
+            cell.StatusView.isHidden = true
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

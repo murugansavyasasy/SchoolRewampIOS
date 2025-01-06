@@ -44,7 +44,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
     override func viewDidLoad() {
         super.viewDidLoad()
         contentTxtView.delegate = self
-        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
         imageSelection()

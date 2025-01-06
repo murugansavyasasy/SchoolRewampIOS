@@ -45,8 +45,8 @@ class CountryVc: UIViewController {
         indiabutton.layer.cornerRadius = indiabutton.frame.width/2
         Usa.layer.cornerRadius = Usa.frame.width/2
         Singapore.layer.cornerRadius = Singapore.frame.width/2
-        thailand.transform = CGAffineTransform(rotationAngle: .pi / 4) // Rotate 45 degrees
-        thailand.titleLabel?.transform = CGAffineTransform(rotationAngle: -.pi / 4)
+//        thailand.transform = CGAffineTransform(rotationAngle: .pi / 4) // Rotate 45 degrees
+//        thailand.titleLabel?.transform = CGAffineTransform(rotationAngle: -.pi / 4)
         thailand.layer.cornerRadius = 20
         China.transform = CGAffineTransform(rotationAngle: .pi / 4) // Rotate 45 degrees
         China.titleLabel?.transform = CGAffineTransform(rotationAngle: -.pi / 4)
@@ -70,7 +70,7 @@ class CountryVc: UIViewController {
         //MARK: Label font
         canadaLabel.setFont(style: .body, size: FontSize.BodySize)
         IndonasiaLabel.setFont(style: .body, size: FontSize.BodySize)
-        ThaiLabel.setFont(style: .body, size: FontSize.BodySize)
+//        ThaiLabel.setFont(style: .body, size: FontSize.BodySize)
         CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -83,8 +83,44 @@ class CountryVc: UIViewController {
         Usa.setTitleFont(style: .body, size: FontSize.BodySize)
         thailand.setTitleFont(style: .body, size: FontSize.BodySize)
         indiabutton.setTitleFont(style: .body, size: FontSize.BodySize)
-
+//        configureButton(
+//            ,
+//            imageName: UIImage(named: ""),
+//            gradientColors:[UIColor.yellow,UIColor.red],lightenFactor: 0.8, opacity: 0.4// 40% lighter
+//        )
+        if let image = UIImage(named: "india1") {
+            configureButton(
+                indiabutton,
+                imageName: image,
+                cornerRadius: 15
+            )
+        }
+        if let image = UIImage(named: "thailand") {
+            configureButton(
+                thailand,
+                imageName: image,
+                cornerRadius: 15
+            )
+        }
     }
+    func configureButton(
+        _ button: UIButton,
+        imageName: UIImage?,
+        cornerRadius: CGFloat = 10
+    ) {
+        // Set corner radius
+        button.layer.cornerRadius = cornerRadius
+        button.layer.masksToBounds = true
+
+        // Set only the image
+        if let image = imageName {
+            button.setImage(image, for: .normal)
+            button.contentHorizontalAlignment = .fill
+            button.contentVerticalAlignment = .fill
+            button.imageView?.contentMode = .scaleAspectFill // Ensure the image scales to fit the button
+        }
+    }
+
 
     @IBAction  func GotoTermsVc(){
         

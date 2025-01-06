@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import AVFoundation
+import ImageIO
 
 class VideoTVCell: UITableViewCell {
 
@@ -18,6 +19,7 @@ class VideoTVCell: UITableViewCell {
     @IBOutlet weak var datelbl: UILabel!
     @IBOutlet weak var videoName: UILabel!
 
+    @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var thumimg: UIImageView!
     @IBOutlet weak var videoloadview: WKWebView!
     @IBOutlet weak var playbtl: UIButton!
@@ -30,7 +32,7 @@ class VideoTVCell: UITableViewCell {
         // Set up shadowView for shadow
         
         datelbl.setFont(style: .title, size: FontSize.TitleSize)
-        videoName.setFont(style: .title, size: FontSize.TitleSize)
+        videoName.setFont(style: .body, size: FontSize.BodySize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         
         hiddenui(true)
@@ -42,12 +44,11 @@ class VideoTVCell: UITableViewCell {
         OuterView.layer.shadowOpacity = 0.3
         OuterView.layer.cornerRadius = 20  // Optional for rounded shadow
         Sentbtn.transform = CGAffineTransform(rotationAngle: .pi / 2)
-        Unreadview.layer.cornerRadius = Unreadview.frame.size.height/2
-        
-
         playbtl.layer.cornerRadius = playbtl.frame.height/2
 
     }
+
+
     func hiddenui(_ hide:Bool){
         OuterView.changeHeightAndAnimate(40, 110, 21, 30, top: 5)
         descriptContent.isHidden = hide

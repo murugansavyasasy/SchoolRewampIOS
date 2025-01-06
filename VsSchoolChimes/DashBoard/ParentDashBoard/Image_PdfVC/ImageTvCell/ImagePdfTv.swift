@@ -32,9 +32,9 @@ class ImagePdfTv: UITableViewCell {
         animationview()
         hiddenui(true)
         GifImage.isHidden = true
-        let gifImage = UIImage.gifImageWithName("New")
-                //
-        GifImage.image = gifImage
+//        let gifImage = UIImage.gifImageWithName("New")
+//                //
+//        GifImage.image = gifImage
         fullView.layer.shadowColor = UIColor.black.cgColor
         fullView.layer.shadowOpacity = 0.5
         fullView.layer.shadowOffset = CGSize(width: 4, height: 4)

@@ -26,6 +26,7 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
     @IBOutlet weak var viewBack: UIView!
     @IBOutlet weak var certificatesBtn: UIButton!
     @IBOutlet weak var requestBtn: UIButton!
+    @IBOutlet weak var backBtn: UIButton!
     
     var urgentItems = ["Urgent", "Not Urgent"]
     var statusItems = ["Complete","Under Review", "Reject"]
@@ -50,8 +51,8 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        backBtn.setTitle(ReceiverMenuItems.CertificateRequest.translated(), for: .normal)
         filteredTimetable = timetable
         requestBtn.layer.cornerRadius = 20
         reqCertView.layer.cornerRadius = 20

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
@@ -18,10 +19,19 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
+    
+    @IBOutlet weak var heightStackview: NSLayoutConstraint!
+    @IBOutlet weak var homeworkBtn: UIButton!
+    @IBOutlet weak var assignmentkBtn: UIButton!
+    @IBOutlet weak var onlineMeetingBtn: UIButton!
+    @IBOutlet weak var collectionBtn: UIView!
+    
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var TopCv: UICollectionView!
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
-    
+    var advertisements: [String] = []
     var filteredItems: [String] = []
     let menuName = MenuStringFile()
     var getValue : Int!
@@ -34,14 +44,27 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
+    @IBOutlet weak var userView: UIView!
     let MenuRedirect = MenuRedirectHandler.shared
     var currentPlaceholderIndex = 0
     var timer: Timer?
     let alert = CustomAlert()
-    
+    var isShowingAll = false
+    var displayedCategories: [String] = []
+    let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
+        advertisements = [
+            "Ad 1: Special Offer",
+            "Ad 2: Final Sale",
+            "Ad 3: New Arrivals",
+            "Ad 4: Discount Up to 50%"
+        ]
+        setupVideoBackground()
         filteredItems = MenuRedirect.items
+        displayedCategories = Array(filteredItems.prefix(6))
+        
+        displayedCategories.insert(newString, at: 5)
         setupSearchBar()
         startAutoScroll()
         cellRegistration()
@@ -73,9 +96,124 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         loginDetailView.addGestureRecognizer(redirectGesture)
-   
+        bottomView.roundTopCorners(radius: 10)
+        reportView.layer.cornerRadius = 5
+        reportView.layer.shadowColor = UIColor.black.cgColor
+        reportView.layer.shadowOpacity = 0.5
+        reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        reportView.layer.shadowRadius = 3
+        reportView.layer.masksToBounds = false
+        loginDetailView.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        configureButton(
+            homeworkBtn,
+            title: MenuStringFile.Homework.translated(),
+            imageName: UIImage(named: "Homework"),
+            gradientColors:[UIColor.green,UIColor.blue],
+            opacity: 0.4, // 70% opacity
+            lightenFactor: 0.8// 40% lighter
+        )
+        
+        // Configure assignmentkBtn
+        configureButton(
+            assignmentkBtn,
+            title: MenuStringFile.Assignment.translated(),
+            imageName: UIImage(named: "Schedule ExamTest"),
+            gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
+            lightenFactor: 0.7 // 40% lighter
+        )
+        configureButton(
+            onlineMeetingBtn,
+            title: MenuStringFile.OnlineMeeting.translated(),
+            imageName: UIImage(named: "Online  Meeting"),
+            gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
+            lightenFactor: 0.8// 40% lighter
+        )
+    }
+    // Helper function to configure the button
+    func configureButton(
+        _ button: UIButton,
+        title: String,
+        imageName: UIImage?,
+        gradientColors: [UIColor],
+        cornerRadius: CGFloat = 10,
+        imageSize: CGSize = CGSize(width: 40, height: 40),
+        spacing: CGFloat = 8.0,
+        opacity: CGFloat = 0.5, // Opacity for the gradient
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+    ) {
+        // Set corner radius
+        button.layer.cornerRadius = cornerRadius
+        button.layer.masksToBounds = true
+        
+        // Adjust colors for lightening and opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+        }
+        
+        // Apply gradient
+        button.applyGradient(
+            colors: adjustedColors,
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        button.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        // Set title and image
+        button.setTitle(title, for: .normal)
+        if let image = imageName {
+            let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
+                image.draw(in: CGRect(origin: .zero, size: imageSize))
+            }
+            button.setImage(resizedImage, for: .normal)
+        }
+        
+        // Align image and title
+        button.contentHorizontalAlignment = .center  // Ensure horizontal alignment
+        if let imageSize = button.imageView?.frame.size,
+           let titleSize = button.titleLabel?.intrinsicContentSize {
+            let totalHeight = imageSize.height + titleSize.height + spacing
+            
+            button.imageEdgeInsets = UIEdgeInsets(
+                top: -(totalHeight - imageSize.height),  // Move image to the top
+                left: 0,
+                bottom: 0,
+                right: -titleSize.width // Center align horizontally
+            )
+            
+            button.titleEdgeInsets = UIEdgeInsets(
+                top: 0,  // No padding at the top
+                left: -imageSize.width,  // Center align horizontally
+                bottom: -(totalHeight - titleSize.height),  // Move title below the image
+                right: 0
+            )
+            
+            button.contentEdgeInsets = UIEdgeInsets(
+                top: 0,
+                left: 0,
+                bottom: spacing,
+                right: 0
+            )
+        }
     }
     
+    
+    func setupVideoBackground() {
+        guard let path = Bundle.main.path(forResource: "Mathematics", ofType: "mp4") else { return }
+        let url = URL(fileURLWithPath: path)
+        let player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        playerLayer.frame = loginDetailView.bounds
+        playerLayer.opacity = 0.1
+        playerLayer.videoGravity = .resizeAspectFill
+        loginDetailView.layer.addSublayer(playerLayer)
+        
+        player.play()
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear - View is about to appear.")
@@ -118,6 +256,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     func cellRegistration(){
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
+        bottomCv.register(UINib(nibName: "seeMore", bundle: nil), forCellWithReuseIdentifier: "seeMore")
         TopCv.register(UINib(nibName: CellConfingName.HomePageTopCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageTopCell)
         
         TopCv.register(UINib(nibName: CellConfingName.PiechartCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PiechartCVCell)
@@ -145,32 +284,44 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     
     func restartAnimations() {
-        // Assuming you have shimmer animations or other animations that need to be reset
-        
         
         if let cell = TopCv.cellForItem(at: IndexPath(row: 0, section: 0)) as? PiechartCVCell {
             // Reset shimmer view or any other animations
             cell.pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
         }
         
-        for cell in bottomCv.visibleCells as! [BottomCVCell] {
-            // Reset shimmer view or any other animations
-            cell.shimmersViewss.parentview.isHidden = false
-            cell.shimmersViewss.animateView(enable: true)
-            cell.MenuLbl.isHidden = true
-            cell.GradientView.isHidden = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) {
-                cell.shimmersViewss.animateView(enable: false)
-                cell.MenuLbl.isHidden = false
-                cell.GradientView.isHidden = false
-                cell.shimmersViewss.parentview.isHidden = true
-            }
-            
-        }
+        
         
     }
+    @IBAction func assignment(_ sender: UIButton) {
+        
+        MenuRedirect.senderAssignmentNavigate(from: self)
+    }
+    @IBAction func onlineMeeting(_ sender: UIButton) {
+        MenuRedirect.senderOnlineNavigate(from: self)
+    }
     
+    @IBAction func homeWork(_ sender: UIButton) {
+        MenuRedirect.senderHomeWorkNavigate(from: self)
+    }
+    @objc func seeAllButtonTapped() {
+        if isShowingAll {
+            // Collapse back to show only the first 6 items
+            displayedCategories = Array(filteredItems.prefix(6))
+            displayedCategories.insert(newString, at: 5)
+            heightStackview.constant = 110
+            collectionBtn.isHidden = false
+        } else {
+            // Expand to show all items
+            displayedCategories = filteredItems
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
+        }
+        
+        isShowingAll.toggle() // Toggle the state
+        bottomCv.reloadData() // Refresh the collection view
+        //        updateCollectionViewHeight()
+    }
     func startAutoScroll() {
         autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
     }
@@ -205,8 +356,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
-           
-                return filteredItems.count
+            
+            return displayedCategories.count
             
         }else{
             return 5
@@ -217,22 +368,32 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if collectionView == bottomCv{
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
+            if indexPath.row == 6 {
+                let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
+                adCell.advertisements = advertisements
+                adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
+                adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
+                return adCell
+            }else{
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
+                
                 let label = filteredItems[indexPath.row].translated()
                 let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
                 cell.MenuImgView.image  = img
-            cell.applyGradient(colours: [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor],xstart: 0.8,ystart: 0.8)
+                cell.applyGradient(colours: [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor],xstart: 0.8,ystart: 0.8)
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     cell.GradientView.animateView(enable: false)
                 }
-   
+                
+                
+                return cell
+            }
             
-            return cell
         }else{
             
             if indexPath.row == 0 {
@@ -253,104 +414,100 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 6 {
+            return
+        }
         
-      
+        
         
         if collectionView == bottomCv{
-                
-            let menuItem = MenuRedirect.items[indexPath.row].translated()
-                
-                switch menuItem {
-                case MenuStringFile.VideoUpload.translated():
-                    MenuRedirect.senderVideoNavigate(from: self)
-                    
-                case MenuStringFile.Communication.translated():
-                    MenuRedirect.senderCommunicationNavigate(from: self)
-                    
-                case MenuStringFile.ImagePdf.translated():
-                    MenuRedirect.senderImgPDfNavigate(from: self)
-                    
-                case MenuStringFile.Circulars.translated():
-                    MenuRedirect.senderEventNavigate(from: self)
-                    
-                case MenuStringFile.NoticeBoard.translated():
-                    MenuRedirect.senderNoticeboardNavigate(from: self)
-                    
-                case MenuStringFile.PTM.translated():
-                    MenuRedirect.senderPtmNavigate(from: self)
-                    
-                case MenuStringFile.LeaveRequests.translated():
-                    MenuRedirect.senderLeaveRequestNavigate(from: self)
-                    
-                case MenuStringFile.Assignment.translated():
-                    MenuRedirect.senderAssignmentNavigate(from: self)
-                    
-                case MenuStringFile.OnlineMeeting.translated():
-                    MenuRedirect.senderOnlineNavigate(from: self)
-                    
-                case MenuStringFile.Homework.translated():
-                    MenuRedirect.senderHomeWorkNavigate(from: self)
-                    
-                case MenuStringFile.LessonPlan.translated():
-                    MenuRedirect.senderLessonplanNavigate(from: self)
-                    
-                case MenuStringFile.AbsenteesReport.translated():
-                    MenuRedirect.senderAbsenteesNavigate(from: self)
-                    
-                case MenuStringFile.FeePendingReport.translated():
-                    MenuRedirect.senderFeePendingNavigate(from: self)
-                    
-                case MenuStringFile.StudentReport.translated():
-                    MenuRedirect.senderStudentreportNavigate(from: self)
-                    
-                case MenuStringFile.VeryImportantInfo.translated():
-                    MenuRedirect.senderImportantInfoNavigate(from: self)
-                    
-                case MenuStringFile.SchoolStrength.translated():
-                    MenuRedirect.senderSchoolStrength(from: self)
-                    
-                case MenuStringFile.MarkYourAttendance.translated():
-                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
-                    
-                case MenuStringFile.InteractionWithStudent.translated():
-                    ""
-//                    MenuRedirect.chat(from: self)
-                    
-                case MenuStringFile.ScheduleExamTest.translated():
-                    MenuRedirect.ScheduleExamVCNavigat(from: self)
-                case MenuStringFile.DailyCollection,"":
-                    break
-                    
-                default:
-                    // Handle unknown menu items if needed
-                    break
-                }
-                
             
+            let menuItem = MenuRedirect.items[indexPath.row].translated()
+            
+            switch menuItem {
+            case MenuStringFile.VideoUpload.translated():
+                MenuRedirect.senderVideoNavigate(from: self)
+                
+            case MenuStringFile.Communication.translated():
+                MenuRedirect.senderCommunicationNavigate(from: self)
+                
+            case MenuStringFile.ImagePdf.translated():
+                MenuRedirect.senderImgPDfNavigate(from: self)
+                
+            case MenuStringFile.Circulars.translated():
+                MenuRedirect.senderEventNavigate(from: self)
+                
+            case MenuStringFile.NoticeBoard.translated():
+                MenuRedirect.senderNoticeboardNavigate(from: self)
+                
+            case MenuStringFile.PTM.translated():
+                MenuRedirect.senderPtmNavigate(from: self)
+                
+            case MenuStringFile.LeaveRequests.translated():
+                MenuRedirect.senderLeaveRequestNavigate(from: self)
+                
+            case MenuStringFile.Assignment.translated():
+                MenuRedirect.senderAssignmentNavigate(from: self)
+                
+            case MenuStringFile.OnlineMeeting.translated():
+                MenuRedirect.senderOnlineNavigate(from: self)
+                
+            case MenuStringFile.Homework.translated():
+                MenuRedirect.senderHomeWorkNavigate(from: self)
+                
+                
+            case MenuStringFile.LessonPlan.translated():
+                MenuRedirect.senderLessonplanNavigate(from: self)
+                
+            case MenuStringFile.AbsenteesReport.translated():
+                MenuRedirect.senderAbsenteesNavigate(from: self)
+                
+            case MenuStringFile.FeePendingReport.translated():
+                MenuRedirect.senderFeePendingNavigate(from: self)
+                
+            case MenuStringFile.StudentReport.translated():
+                MenuRedirect.senderStudentreportNavigate(from: self)
+                
+            case MenuStringFile.VeryImportantInfo.translated():
+                MenuRedirect.senderImportantInfoNavigate(from: self)
+                
+            case MenuStringFile.SchoolStrength.translated():
+                MenuRedirect.senderSchoolStrength(from: self)
+                
+            case MenuStringFile.MarkYourAttendance.translated():
+                MenuRedirect.senderMarkAttendanceNavigate(from: self)
+                
+            case MenuStringFile.InteractionWithStudent.translated():
+                ""
+                //                    MenuRedirect.chat(from: self)
+                
+            case MenuStringFile.ScheduleExamTest.translated():
+                MenuRedirect.ScheduleExamVCNavigat(from: self)
+            case MenuStringFile.DailyCollection:
+                MenuRedirect.RecipientNavigat(from: self)
+                break
+                
+            default:
+                // Handle unknown menu items if needed
+                break
+            }
             
         }
+        
+        
     }
 }
 
 @available(iOS 14.0, *)
 extension HomePageVc: UICollectionViewDelegateFlowLayout {
     
-    // Set item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        if collectionView == bottomCv{
-            
-            return CGSize(width: collectionView.frame.width/4, height: 130)
-            
+        if indexPath.row == 6{
+            return CGSize(width: collectionView.frame.width, height: 180)
         }
-        else{
-            
-            return CGSize(width: 350, height: 140)
-            
-        }
-        
+        let width = (collectionView.frame.width) / 3
+        return CGSize(width: width, height: width - 10)
     }
-    
     
 }
 
@@ -373,9 +530,13 @@ extension HomePageVc: UISearchBarDelegate{
         
         searchItem = 1
         if searchText.isEmpty {
+            
             filteredItems = MenuRedirect.items // Show all items if no search text
+            displayedCategories = Array(filteredItems.prefix(6))
+            displayedCategories.insert(newString, at: 5)
         } else {
             filteredItems = MenuRedirect.items.filter { $0.lowercased().contains(searchText.lowercased()) }
+            displayedCategories = filteredItems
         }
         bottomCv.reloadData()
     }
@@ -383,10 +544,14 @@ extension HomePageVc: UISearchBarDelegate{
     
     //MARK: Searchview Hide
     @objc func SearchViewHidden() {
+        
         if searchHeightCon.constant == 0{
-            
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
             searchHeightCon.constant = 56
         }else{
+            heightStackview.constant = 110
+            collectionBtn.isHidden = false
             searchHeightCon.constant = 0
             
         }

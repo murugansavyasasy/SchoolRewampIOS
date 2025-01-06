@@ -8,25 +8,24 @@ class AttendenceTVC: UITableViewCell, Attendence {
     
     func statusUpdate(status: Bool, index: Int) {
         delegate?.statusUpdate(status: status, index: index)
+        hideLbl(isAbsent: status)
     }
     
+    @IBOutlet weak var phnBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var customSwitchContainer: UIView!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var rollNo: UIButton!
-    
+    @IBOutlet weak var presentLbl: UILabel!
+    @IBOutlet weak var absentLbl: UILabel!
     var custSwitch: CustomSwitch1!
     var delegate: Attendence?
-    var index = 0
-    var isAbsent = true
     override func awakeFromNib() {
         super.awakeFromNib()
         
         // Initialize and configure the custom switch
         custSwitch = CustomSwitch1()
         custSwitch.delegate = self
-        custSwitch.onText = CommonStringFile.Present.translated()
-        custSwitch.offText = CommonStringFile.Absent.translated()
         rollNo.layer.backgroundColor = UIColor(red: 189/255, green: 230/255, blue: 254/255, alpha: 1).cgColor
         rollNo.titleLabel?.font = UIFont(name: "Poppins-Medium", size: 18)
         nameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -36,31 +35,47 @@ class AttendenceTVC: UITableViewCell, Attendence {
         rollNo.titleLabel?.numberOfLines = 1
         rollNo.titleLabel?.lineBreakMode = .byClipping
         rollNo.layer.cornerRadius = 8
-        
-        // Set the switch state based on the student's attendance status
-        custSwitch.isOn = isAbsent
-        custSwitch.index = index
+        presentLbl.setFont(style: .body, size: FontSize.BodySize)
+        absentLbl.setFont(style: .body, size: FontSize.BodySize)
+        rollNo.setTitleFont(style: .body, size: FontSize.BodySize)
+        phnBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        absentLbl.text = CommonStringFile.Absent.translated()
+        presentLbl.text = CommonStringFile.Present.translated()
+        presentLbl.textColor = Colornames.AprovedClr
+        absentLbl.textColor = .red
+        rollNo.titleLabel?.numberOfLines = 0
+        rollNo.titleLabel?.textAlignment = .center
+
         // Add the custom switch to the container view
         customSwitchContainer.addSubview(custSwitch)
         
         
     }
-    
+    func hideLbl(isAbsent:Bool){
+            absentLbl.isHidden = isAbsent
+            presentLbl.isHidden = !isAbsent
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         
         // Dynamically set the frame of the custom switch to match the container view
         custSwitch.frame = customSwitchContainer.bounds
     }
-    
+    @IBAction func phnBtn(_ sender: UIButton) {
+        let phoneNumber = sender.titleLabel?.text ?? "1234567890" // Replace with the phone number you want
+        if let phoneURL = URL(string: "tel://\(phoneNumber)"),
+           UIApplication.shared.canOpenURL(phoneURL) {
+            UIApplication.shared.open(phoneURL, options: [:], completionHandler: nil)
+        } else {
+            print("Phone app is not available on this device or invalid phone number.")
+        }
+    }
 }
 
 class CustomSwitch1: UIView {
     
     private let backgroundView = UIView()
     private let thumbView = UIView()
-    private let label = UILabel()
-    
     var delegate: Attendence?
     var index: Int?
     var isOn: Bool = true {
@@ -68,9 +83,6 @@ class CustomSwitch1: UIView {
             updateSwitchAppearance()
         }
     }
-    
-    var onText: String = CommonStringFile.Present.translated()
-    var offText: String = CommonStringFile.Absent.translated()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -94,13 +106,6 @@ class CustomSwitch1: UIView {
         thumbView.layer.shadowOpacity = 0.3
         thumbView.layer.shadowOffset = CGSize(width: 0, height: 2)
         addSubview(thumbView)
-        
-        // Set up the label
-        label.text = offText
-        label.textColor = isOn ? UIColor(ciColor: CIColor(red: 73/255, green: 149/255, blue: 76/255,alpha: 1)) : .red
-        label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        addSubview(label)
         
         // Add gesture recognizer for toggling
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSwitch))
@@ -129,18 +134,11 @@ class CustomSwitch1: UIView {
             width: thumbSize,
             height: thumbSize
         )
-        label.textColor = isOn ? UIColor(ciColor: CIColor(red: 73/255, green: 149/255, blue: 76/255,alpha: 1)) : .red
         thumbView.backgroundColor = isOn ? UIColor(ciColor: CIColor(red: 73/255, green: 149/255, blue: 76/255,alpha: 1)) : .red
-        
-        // Layout the label
-        label.frame = backgroundView.bounds
     }
     
     @objc private func toggleSwitch() {
         isOn.toggle()
-        
-        // Notify delegate to update the student's status
-        print(isOn)
         delegate?.statusUpdate(status: isOn, index: index ?? 0)
     }
     
@@ -153,8 +151,6 @@ class CustomSwitch1: UIView {
         UIView.animate(withDuration: 0.25) {
             self.updateLayout()
         }
-        
-        // Update the label text
-        label.text = isOn ? onText.translated() : offText.translated()
     }
+  
 }

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImagePdfVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="backBtn" destination="Sld-qj-0Ab" id="8da-jE-ghi"/>
                 <outlet property="headinglabel" destination="zc3-JZ-Z97" id="0Bw-8g-W17"/>
                 <outlet property="search" destination="pKh-VS-d3z" id="oum-eg-Oey"/>
                 <outlet property="tv" destination="I9k-Ak-zAB" id="t3w-LZ-FSD"/>
@@ -23,31 +24,25 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sld-qj-0Ab">
-                    <rect key="frame" x="10" y="79" width="75" height="35"/>
+                    <rect key="frame" x="16" y="64" width="147.66666666666666" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="75" id="4ZA-Z6-uiX"/>
                         <constraint firstAttribute="height" constant="35" id="aB8-hs-VWL"/>
                     </constraints>
                     <color key="tintColor" systemColor="darkTextColor"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.left" catalog="system">
+                    <state key="normal" title="Image/Pdf" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="aEJ-B5-PEN"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image/Pdf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc3-JZ-Z97">
-                    <rect key="frame" x="62" y="83" width="268" height="26.333333333333329"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhQ-yd-Fgz">
-                    <rect key="frame" x="0.0" y="114" width="393" height="704"/>
+                    <rect key="frame" x="0.0" y="111" width="393" height="707"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="I9k-Ak-zAB">
-                            <rect key="frame" x="0.0" y="86" width="393" height="618"/>
+                            <rect key="frame" x="0.0" y="86" width="393" height="621"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search Image/Pdf" translatesAutoresizingMaskIntoConstraints="NO" id="pKh-VS-d3z">
@@ -69,27 +64,55 @@
                         <constraint firstItem="pKh-VS-d3z" firstAttribute="leading" secondItem="zhQ-yd-Fgz" secondAttribute="leading" constant="15" id="yzI-fM-guQ"/>
                     </constraints>
                 </view>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nJc-YK-UOV">
+                    <rect key="frame" x="225" y="59" width="163" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XWx-y4-ymU">
+                            <rect key="frame" x="0.0" y="0.0" width="163" height="20.333333333333332"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B19-sW-eD7">
+                            <rect key="frame" x="0.0" y="25.333333333333329" width="163" height="19.666666666666671"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19.666666666666671" id="ouA-Of-M9G"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zc3-JZ-Z97">
+                    <rect key="frame" x="163.66666666666666" y="81.666666666666671" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="ParentClr"/>
             <constraints>
-                <constraint firstItem="Sld-qj-0Ab" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="09j-Lu-mdG"/>
-                <constraint firstItem="zhQ-yd-Fgz" firstAttribute="top" secondItem="Sld-qj-0Ab" secondAttribute="bottom" id="0Dx-jP-BBY"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zc3-JZ-Z97" secondAttribute="trailing" constant="63" id="3Pt-mc-Ip2"/>
+                <constraint firstItem="nJc-YK-UOV" firstAttribute="leading" secondItem="zc3-JZ-Z97" secondAttribute="trailing" constant="61.333333333333314" id="8jT-5v-IRp"/>
+                <constraint firstItem="zc3-JZ-Z97" firstAttribute="leading" secondItem="Sld-qj-0Ab" secondAttribute="trailing" id="A1I-E7-UZm"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zhQ-yd-Fgz" secondAttribute="bottom" id="OTa-bc-9lc"/>
+                <constraint firstItem="zc3-JZ-Z97" firstAttribute="centerY" secondItem="Sld-qj-0Ab" secondAttribute="centerY" id="ScV-rv-MkY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zhQ-yd-Fgz" secondAttribute="trailing" id="Sgs-Wd-P1E"/>
-                <constraint firstItem="zc3-JZ-Z97" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="62" id="YX5-Yw-1sU"/>
-                <constraint firstItem="Sld-qj-0Ab" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="dzB-g3-4ad"/>
-                <constraint firstItem="zc3-JZ-Z97" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="uby-Hg-icy"/>
+                <constraint firstItem="Sld-qj-0Ab" firstAttribute="centerY" secondItem="nJc-YK-UOV" secondAttribute="centerY" id="SvG-th-onh"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nJc-YK-UOV" secondAttribute="trailing" constant="5" id="bg7-KY-rLj"/>
+                <constraint firstItem="Sld-qj-0Ab" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="dzB-g3-4ad"/>
+                <constraint firstItem="nJc-YK-UOV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="kNi-h5-L5f"/>
                 <constraint firstItem="zhQ-yd-Fgz" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wcF-74-7Ge"/>
+                <constraint firstItem="zhQ-yd-Fgz" firstAttribute="top" secondItem="nJc-YK-UOV" secondAttribute="bottom" constant="7" id="xbE-cr-T2d"/>
             </constraints>
             <point key="canvasLocation" x="132" y="-12"/>
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="ParentClr">
-            <color red="0.74509803921568629" green="0.68235294117647061" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

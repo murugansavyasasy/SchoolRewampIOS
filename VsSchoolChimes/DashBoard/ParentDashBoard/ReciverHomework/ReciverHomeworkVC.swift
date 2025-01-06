@@ -13,7 +13,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
     
-
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var HeaderLbl: UILabel!
@@ -22,7 +22,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     var delegate : HistorySelectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        backBtn.setTitle(MenuStringFile.Homework.translated(), for: .normal)
         let nib = UINib(nibName: CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
         
@@ -43,142 +44,6 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     }
 }
 
-//@available(iOS 14.0, *)
-//extension ReciverHomeworkVC : UITableViewDelegate,UITableViewDataSource{
-//    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return sections.count
-//    }
-//    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier:CellConfingName.ReciverHomeworkHeader) as! ReciverHomeworkHeader
-//        cell.HeaderLbl.text = sections[section]
-//        cell.HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
-//        
-//        return cell
-//    }
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 40
-//    }
-//    
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        
-//        return 3
-//        
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        
-//        let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-//        
-//        if indexPath.row == 0 {
-//            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-//            
-//                cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
-//                cell.ishomework = true
-//                cell.CVHeight.constant = 120
-//                cell.pagecontrollerheight.constant = 26
-////            cell.datelbl.isHidden = true
-////            cell.pinImage.isHidden = true
-////            cell.Pinview.isHidden = true
-////            cell.collectionview.isHidden = false
-//            cell.pagecontroller.isHidden = false
-//            cell.SelectBtn.isHidden = true
-//            cell.HomeworkTitleLbl.text = "Write Assignment"
-//            cell.TitleLbl.text = "Tamil"
-//            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
-//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-//            cell.delegate = self
-//            cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
-//            cell.dicriptContent.isUserInteractionEnabled = true
-//            cell.dicriptContent.addGestureRecognizer(tapGesture)
-//           
-//            return cell
-//        }
-//        else if indexPath.row == 1 {
-//            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.HomeworkreportTV, for: indexPath) as! HomeworkreportTV
-//            
-//            cell.HomeworkTitleLbl.text = "Write Assignment"
-//            cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
-//            cell.SubjectLbl.text = "Tamil"
-//            return cell
-//        }
-//        else {
-//            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-//            
-//            cell.cellview.changeHeightAndAnimate(40,0, 31, 80, top: 5)
-//            cell.ishomework = true
-//            cell.pagecontrollerheight.constant = 0
-//            cell.pagecontroller.isHidden = true
-//
-//            cell.datelbl.isHidden = true
-//            cell.pinImage.isHidden = true
-//            cell.Pinview.isHidden = true
-//            cell.SelectBtn.isHidden = true
-//            cell.CVHeight.constant = 0
-//            cell.HomeworkTitleLbl.text = "Write Assignment"
-//            cell.TitleLbl.text = "Tamil"
-//            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
-//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-//            cell.delegate = self
-//            cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
-//            cell.dicriptContent.isUserInteractionEnabled = true
-//            cell.dicriptContent.addGestureRecognizer(tapGesture)
-//            return cell
-//        }
-//        
-//    }
-//    
-//    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
-//        guard let label = sender.view as? UILabel else { return }
-//        let indexPath = IndexPath(row: label.tag, section: 0)
-//        let fullDescription = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment."
-//        
-//        // Toggle the label between expanded and collapsed states
-//        let isExpanded = label.numberOfLines == 0
-//        label.numberOfLines = isExpanded ? 3 : 0
-//        
-//        // Update the label text with the appropriate "See more" or "See less" state
-//        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
-//        
-//        // Animate the cell height change
-//        TV.beginUpdates()
-//        TV.endUpdates()
-//    }
-//    
-//    //MARK: TEXT ADD SEE MORE
-//    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-//        // If expanded, show full text with "See less"
-//        if expanded {
-//            let fullString = fullDescription + CommonStringFile.seeLess
-//            let attributedText = NSMutableAttributedString(string: fullString)
-//            
-//            // Set "See less" text to blue and underline it
-//            let seeLessRange = (fullString as NSString).range(of: "See less")
-//            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-//            
-//            return attributedText
-//        } else {
-//            var fullString = ""
-//            // Otherwise, truncate and show "See more"
-//            if fullDescription.count > 120{
-//                let truncatedDescription = String(fullDescription.prefix(100))
-//                fullString = truncatedDescription + CommonStringFile.seemore
-//            }else{
-//                fullString = fullDescription
-//            }
-//            let attributedText = NSMutableAttributedString(string: fullString)
-//            
-//            // Set "See more" text to blue and underline it
-//            let seeMoreRange = (fullString as NSString).range(of: "See more")
-//            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-//            return attributedText
-//        }
-//    }
-//    
-//   
-//    
-//}
 
 @available(iOS 14.0, *)
 extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {

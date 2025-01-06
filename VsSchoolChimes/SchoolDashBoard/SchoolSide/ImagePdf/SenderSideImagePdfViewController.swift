@@ -54,7 +54,11 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         stdSecBtn.setTitle(CommonStringFile.Standardorsection.translated(), for: .normal)
         secStudBtn.setTitle(CommonStringFile.Sectionorstudent.translated(), for: .normal)
         groupBtn.setTitle(CommonStringFile.Groups.translated(), for: .normal)

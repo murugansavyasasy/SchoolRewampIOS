@@ -15,6 +15,7 @@
                 <outlet property="AddphotosLbl" destination="Fvy-8I-U0T" id="8WM-qw-tSj"/>
                 <outlet property="DescriptionLbl" destination="8qp-Mg-yeP" id="She-d9-Rmy"/>
                 <outlet property="HeaderLbl" destination="D5p-uu-pGk" id="B9E-DQ-7pe"/>
+                <outlet property="backBtn" destination="zYK-Bq-qP7" id="n3U-6q-pgc"/>
                 <outlet property="collectionViewHeght" destination="Jhu-Pn-Yac" id="gAZ-iC-h3m"/>
                 <outlet property="letterscountLbl" destination="8nm-bK-03t" id="jbH-Ft-rhF"/>
                 <outlet property="selectImgPdfview" destination="zLF-vX-MTh" id="Reo-SM-Pdo"/>
@@ -187,20 +188,19 @@
                         <constraint firstItem="UEg-XI-Ylm" firstAttribute="top" secondItem="PVs-FQ-7Yr" secondAttribute="top" constant="15" id="x0L-Yg-dZ0"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zYK-Bq-qP7">
-                    <rect key="frame" x="10" y="59" width="70" height="35"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zYK-Bq-qP7">
+                    <rect key="frame" x="10" y="59" width="189.33333333333334" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="dVH-IN-Ksr"/>
-                        <constraint firstAttribute="width" constant="70" id="mcJ-Qc-lhU"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.left" catalog="system">
+                    <state key="normal" title="Submission" image="chevron.left" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submission" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5p-uu-pGk">
-                    <rect key="frame" x="137" y="67" width="119.33333333333331" height="26.333333333333329"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5p-uu-pGk">
+                    <rect key="frame" x="256.33333333333331" y="67" width="0.0" height="0.0"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -223,14 +223,14 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="camera.fill" catalog="system" width="128" height="93"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ParentClr">
-            <color red="0.74500000476837158" green="0.68199998140335083" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -239,10 +239,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -18,7 +18,7 @@ class VideoVC: UIViewController {
     
     
     @IBOutlet weak var HeaderLabel: UILabel!
-    
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchview: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
     //    var truncatedDescription = ""
@@ -26,18 +26,19 @@ class VideoVC: UIViewController {
     var activityIndicator: UIActivityIndicatorView!
     var filteredData: [Video] = []
     var data = [
-        Video(name: "Introduction to Swift", url: "https://www.w3schools.com/tags/mov_bbb.mp4", description: "A beginner's guide to Swift programming language. A beginner's guide to Swift programming language. A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.", readed: false, hasAnimated: true, img: nil),
-        Video(name: "Advanced iOS Animations", url: "https://videos.pexels.com/video-files/3205789/3205789-hd_1080_1920_25fps.mp4", description: "Learn how to implement complex animations in iOS.", readed: false,hasAnimated: true, img: nil),
-        Video(name: "Swift UI Basics", url: "https://videos.pexels.com/video-files/5512609/5512609-hd_1080_1920_25fps.mp4", description: "Introduction to building user interfaces with Swift UI.", readed: false,hasAnimated: true, img: nil),
-        Video(name: "Networking in iOS", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", description: "Explore how to make network requests in iOS apps.", readed: false,hasAnimated: true, img: nil),
-        Video(name: "Data Persistence", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", description: "Techniques for saving data locally in an iOS app.", readed: false,hasAnimated: true, img: nil),
-        Video(name: "Debugging in Xcode", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", description: "Tips and tricks for efficient debugging in Xcode.", readed: false,hasAnimated: true, img: nil),
-        Video(name: "Publishing to App Store", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", description: "Step-by-step guide to publishing an app on the App Store.", readed: false,hasAnimated: true, img: nil)
+        Video(id: "1", name: "Introduction to Swift", url: "https://www.w3schools.com/tags/mov_bbb.mp4", description: "A beginner's guide to Swift programming language. A beginner's guide to Swift programming language. A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.", readed: false, hasAnimated: true, img: nil),
+        Video(id:"2", name: "Advanced iOS Animations", url: "https://videos.pexels.com/video-files/3205789/3205789-hd_1080_1920_25fps.mp4", description: "Learn how to implement complex animations in iOS.", readed: false,hasAnimated: true, img: nil),
+        Video(id: "3", name: "Swift UI Basics", url: "https://videos.pexels.com/video-files/5512609/5512609-hd_1080_1920_25fps.mp4", description: "Introduction to building user interfaces with Swift UI.", readed: false,hasAnimated: true, img: nil),
+        Video(id: "4", name: "Networking in iOS", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", description: "Explore how to make network requests in iOS apps.", readed: false,hasAnimated: true, img: nil),
+        Video(id: "5", name: "Data Persistence", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4", description: "Techniques for saving data locally in an iOS app.", readed: false,hasAnimated: true, img: nil),
+        Video(id: "6", name: "Debugging in Xcode", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", description: "Tips and tricks for efficient debugging in Xcode.", readed: false,hasAnimated: true, img: nil),
+        Video(id: "7", name: "Publishing to App Store", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", description: "Step-by-step guide to publishing an app on the App Store.", readed: false,hasAnimated: true, img: nil)
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         
-        HeaderLabel.text = "Video".translated()
+        backBtn.setTitle(ReceiverMenuItems.Video.translated(), for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
         keyboardDionebtn()
@@ -50,16 +51,27 @@ class VideoVC: UIViewController {
                         self.filteredData[i].img = image
                      
                         if i == data.count-1{
-//                            self.hideLoading()
                             tableview.reloadData()
                         }
-//                        OuterView.animateView(enable: false)
                        
                     }
                 }
             }
         }
-        
+        scrollToVideo(withId: "4")
+    }
+    // Function to scroll to a specific Video by ID
+    func scrollToVideo(withId id: String) {
+        if let rowIndex = data.firstIndex(where: { $0.id == id }) {
+            let indexPath = IndexPath(row: rowIndex, section: 0)
+            if tableview.numberOfRows(inSection: 0) > rowIndex {
+                tableview.scrollToRow(at: indexPath, at: .top, animated: true)
+            } else {
+                print("Row index \(rowIndex) is out of bounds for the table view.")
+            }
+        } else {
+            print("Video with ID \(id) not found.")
+        }
     }
     func uiupdate(){
         searchview.placeholder = "Search Videos..."
@@ -78,10 +90,6 @@ class VideoVC: UIViewController {
         activityIndicator.center = view.center  // Position it at the center of the view
         activityIndicator.hidesWhenStopped = true // Hide it when stopped
         view.addSubview(activityIndicator)
-//        self.showLoading()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//            self.hideLoading()  // Hide the loader after 2 seconds
-//        }
     }
     func keyboardDionebtn(){
         let toolbar = UIToolbar()
@@ -94,13 +102,6 @@ class VideoVC: UIViewController {
     @objc func doneButtonTapped() {
         view.endEditing(true)  // Dismiss the keyboard
     }
-//    func showLoading() {
-//        activityIndicator.startAnimating() // Start the loading animation
-//    }
-//    
-//    func hideLoading() {
-//        activityIndicator.stopAnimating() // Stop the loading animation
-//    }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         // Automatically show the keyboard when search bar is clicked
         searchBar.becomeFirstResponder()
@@ -130,7 +131,7 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-        cell.videoName.text = filteredData[indexPath.row].name
+        cell.datelbl.text = filteredData[indexPath.row].name
         cell.playbtl.tag = indexPath.row
         cell.descriptContent.attributedText = descript(for: filteredData[indexPath.row].description ?? "", expanded: false)
         
@@ -294,6 +295,7 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
     
 }
 struct Video{
+    let id:String
     let name :String
     let url : String?
     let description : String?

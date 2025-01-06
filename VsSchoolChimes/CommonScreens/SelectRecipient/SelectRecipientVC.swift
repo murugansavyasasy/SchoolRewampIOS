@@ -10,6 +10,7 @@ import DropDown
 
 class SelectRecipientVC: UIViewController {
 
+    @IBOutlet weak var TapBarLbl: UILabel!
     @IBOutlet weak var Headerview: UIView!
     
     @IBOutlet weak var SelectSchool: UIView!
@@ -26,6 +27,7 @@ class SelectRecipientVC: UIViewController {
     
     @IBOutlet weak var SelectSchoolLabel: UILabel!
     
+    @IBOutlet weak var specificStudentBtn: UIButton!
     var flag = 0
     
     var Group: [Section] = [
@@ -50,6 +52,8 @@ class SelectRecipientVC: UIViewController {
         
         SendButton.layer.cornerRadius = Colornames.CORadius10
         SendButton.isHidden = true
+        specificStudentBtn.isHidden = true
+        
 
         dropDowViewSetup()
 //        SelectSchool.layer.transform = UIColor.blue.cgColor as! CATransform3D
@@ -82,6 +86,14 @@ class SelectRecipientVC: UIViewController {
     
     
     
+    @IBAction func specificBtn(_ sender: Any) {
+        
+        let vc = StudentHistryVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+        
+    }
     func dropDowViewSetup(){
         
         
@@ -119,7 +131,7 @@ class SelectRecipientVC: UIViewController {
     }
     
     @IBAction func selectStdGrp(){
-        
+        TapBarLbl.text = "School Name : " + (SelectSchoolLabel.text ?? "Select Recipient")
         flag = 1
         SelectSchool.isHidden = true
         sendAllview.isHidden = true
@@ -140,13 +152,14 @@ class SelectRecipientVC: UIViewController {
     
     @IBAction func selectStdSec(){
         
-      
+        TapBarLbl.text = "School Name : " + (SelectSchoolLabel.text ?? "Select Recipient")
         flag = 2
         SelectSchool.isHidden = true
         sendAllview.isHidden = true
         stdorgrp.isHidden = true
         SendButton.isHidden = false
         tableview.isHidden = true
+        specificStudentBtn.isHidden = false
         
         setupStdDropdown ()
         
@@ -244,6 +257,9 @@ class SelectRecipientVC: UIViewController {
             tableview.isHidden = true
             SelectSchoolLabel.text = "Select your school"
             SelectSchool.isHidden = false
+            SendButton.isHidden = true
+            TapBarLbl.text = "Select Recipient"
+            specificStudentBtn.isHidden = true
         }
     }
     
@@ -255,10 +271,10 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if flag == 1 {
-            return    Group.count
+            return Group.count
         }
         else if flag == 2{
-            return  sections.count
+            return sections.count
         }
         return 0
     }
@@ -298,11 +314,11 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
         
         if flag == 1{
             cell.checkboxImg.isUserInteractionEnabled = true
-            cell.cellLabel.text = Group[indexPath.section].items[indexPath.row]
-            let checkClick = checkClick(target: self, action: #selector(CheckBoxclick))
-            checkClick.index = indexPath.row
-            checkClick.indexs = indexPath
-            cell.checkboxImg.addGestureRecognizer(checkClick)
+//            cell.cellLabel.text = Group[indexPath.section].items[indexPath.row]
+//            let checkClick = checkClick(target: self, action: #selector(CheckBoxclick))
+//            checkClick.index = indexPath.row
+//            checkClick.indexs = indexPath
+//            cell.checkboxImg.addGestureRecognizer(checkClick)
             
         }
         else{

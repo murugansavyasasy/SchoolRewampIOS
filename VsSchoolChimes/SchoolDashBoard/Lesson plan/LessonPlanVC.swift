@@ -22,7 +22,11 @@ class LessonPlanVC: UIViewController {
     var id  = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         ButtonStackview.layer.cornerRadius = 20
         createBtn.layer.cornerRadius = 20
         viewBtn.layer.cornerRadius = 20

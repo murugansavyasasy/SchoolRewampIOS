@@ -48,7 +48,7 @@ class BottomCVCell: UICollectionViewCell {
         shimmersViewss.parentview.isHidden = false
         shimmersViewss.animateView(enable:true)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             // Code to execute after delay
             self.shimmersViewss.animateView(enable:false)
             shimmersViewss.parentview.isHidden = true

@@ -46,7 +46,11 @@ class MarkAttendenceVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         ButtonStackview.layer.cornerRadius = 20
         AttendRecordBtn.layer.cornerRadius = 20
         MarkAttendBtn.layer.cornerRadius = 20

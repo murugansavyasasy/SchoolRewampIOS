@@ -11,6 +11,18 @@
 "Help" = "ช่วยเหลือ";
 "Settings" = "การตั้งค่า";
 "Profile" = "โปรไฟล์";
+"ChooseYourRole" = "เลือกบทบาทของคุณ";
+"LoginAsTeacherOrParent" = "เข้าสู่ระบบในฐานะครูหรือผู้ปกครอง";
+"Principal" = "ครูใหญ่";
+"Parent" = "ผู้ปกครอง";
+"Proceed" = "ดำเนินการต่อ";
+"exam_test" = "การทดสอบสอบ";
+"exam_marks" = "คะแนนสอบ";
+"attendance" = "การเข้าร่วม";
+"receiver_assignment" = "งานที่ได้รับมอบหมาย";
+"online_meeting" = "การประชุมออนไลน์";
+"attendance_report" = "รายงานการเข้าร่วม";
+
 
 // MARK: settings page
 "Notifications" = "การแจ้งเตือน";
@@ -233,6 +245,10 @@
 "selectedText" = "ข้อความที่เลือก";
 "invalidSelection" = "การเลือกไม่ถูกต้อง";
 "selectDatesWithinMonth" = "คุณสามารถเลือกวันที่ภายในเดือนที่แสดงอยู่ในปัจจุบันเท่านั้น";
+"text" = "ข้อความ";
+"voice" = "เสียง";
+"schedule_a_call" = "นัดหมายการโทร";
+
 //MARK: ScheduleExam
 "scheduleExam" = "กำหนดการสอบ";
 "Reasons" = "เหตุผล";

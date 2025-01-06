@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HeaderLabel" destination="fWt-bp-UNa" id="qhn-Ld-pXW"/>
+                <outlet property="backBtn" destination="CgT-js-DNs" id="Trt-Y7-zCN"/>
                 <outlet property="searchview" destination="WOf-iN-p5e" id="4CJ-1x-fHI"/>
                 <outlet property="tableview" destination="DFV-CH-evV" id="YIw-7I-2lp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -24,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="DFV-CH-evV">
-                    <rect key="frame" x="0.0" y="158" width="393" height="660"/>
+                    <rect key="frame" x="0.0" y="160" width="393" height="658"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Pxq-bY-Gj4"/>
@@ -32,7 +33,7 @@
                     </connections>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yhm-Tl-Ua5">
-                    <rect key="frame" x="0.0" y="102" width="393" height="56"/>
+                    <rect key="frame" x="0.0" y="104" width="393" height="56"/>
                     <subviews>
                         <searchBar contentMode="redraw" barStyle="blackTranslucent" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="WOf-iN-p5e">
                             <rect key="frame" x="16" y="0.0" width="361" height="56"/>
@@ -53,49 +54,72 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CgT-js-DNs">
-                    <rect key="frame" x="16" y="59" width="75" height="35"/>
+                    <rect key="frame" x="16" y="59" width="209" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="75" id="IqM-ZC-AgC"/>
                         <constraint firstAttribute="height" constant="35" id="rWg-Rp-Zl3"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.backward" catalog="system">
+                    <state key="normal" title="Video" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="Lx6-fg-7Su"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWt-bp-UNa">
-                    <rect key="frame" x="165" y="62.333333333333336" width="63" height="28.666666666666664"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWt-bp-UNa">
+                    <rect key="frame" x="225" y="76.666666666666671" width="0.0" height="0.0"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VYH-vW-rPv">
+                    <rect key="frame" x="225" y="54" width="163" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6F-Bn-4TI">
+                            <rect key="frame" x="0.0" y="0.0" width="163" height="20.333333333333332"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bi8-Nh-ge4">
+                            <rect key="frame" x="0.0" y="25.333333333333329" width="163" height="19.666666666666671"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19.666666666666671" id="iqv-4j-Sgh"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="CgT-js-DNs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="2uN-XX-H93"/>
                 <constraint firstItem="yhm-Tl-Ua5" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="3rV-r2-5xf"/>
-                <constraint firstItem="yhm-Tl-Ua5" firstAttribute="top" secondItem="CgT-js-DNs" secondAttribute="bottom" constant="8" id="6PY-h8-1iz"/>
+                <constraint firstItem="VYH-vW-rPv" firstAttribute="leading" secondItem="fWt-bp-UNa" secondAttribute="trailing" id="6c2-Kd-pqd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VYH-vW-rPv" secondAttribute="trailing" constant="5" id="BHh-PB-miL"/>
                 <constraint firstItem="DFV-CH-evV" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Iga-18-SuS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="DFV-CH-evV" secondAttribute="trailing" id="RXd-Ej-nRi"/>
-                <constraint firstItem="fWt-bp-UNa" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XLj-7C-bo1"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="VYH-vW-rPv" secondAttribute="top" constant="5" id="XEW-pH-ed4"/>
                 <constraint firstItem="fWt-bp-UNa" firstAttribute="centerY" secondItem="CgT-js-DNs" secondAttribute="centerY" id="cUO-Fn-RDZ"/>
+                <constraint firstItem="yhm-Tl-Ua5" firstAttribute="top" secondItem="VYH-vW-rPv" secondAttribute="bottom" constant="5" id="gR6-5T-tZ7"/>
                 <constraint firstItem="yhm-Tl-Ua5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="isR-f8-TNL"/>
                 <constraint firstItem="CgT-js-DNs" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="loq-10-w2J"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="DFV-CH-evV" secondAttribute="bottom" id="n9g-Iw-HEh"/>
+                <constraint firstItem="fWt-bp-UNa" firstAttribute="leading" secondItem="CgT-js-DNs" secondAttribute="trailing" id="rIu-jc-8NH"/>
                 <constraint firstItem="DFV-CH-evV" firstAttribute="top" secondItem="yhm-Tl-Ua5" secondAttribute="bottom" id="vPY-2d-ZhE"/>
             </constraints>
             <point key="canvasLocation" x="922.90076335877859" y="-54.225352112676056"/>
         </view>
     </objects>
     <resources>
-        <image name="arrow.backward" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="ParentClr">
-            <color red="0.74509803921568629" green="0.68235294117647061" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

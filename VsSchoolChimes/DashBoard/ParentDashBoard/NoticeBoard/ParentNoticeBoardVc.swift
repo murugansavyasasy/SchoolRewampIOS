@@ -11,23 +11,26 @@ import UIKit
 class ParentNoticeBoardVc: UIViewController, SelectNotice {
 
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeadingLabel: UILabel!
   
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
-    
+    @IBOutlet weak var bgView: UIView!
     var images : [UIImage] = []
     var previousOffset: CGFloat = 0.0
     var delegate : HistorySelectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         // Do any additional setup after loading the view.
         
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
         addDoneButton()
-        HeadingLabel.text = MenuTapbar.Noticeboard
+        backBtn.setTitle(MenuStringFile.NoticeBoard.translated(), for: .normal)
+//        HeadingLabel.text = MenuTapbar.Noticeboard
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         tabelViewRegister()
      
@@ -66,7 +69,6 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-//        cell.contentView.backgroundColor = .backGroundClr
         cell.SelectBtn.isHidden = true
         cell.dicriptContent.attributedText = descript(for: "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.", expanded: false)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))

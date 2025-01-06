@@ -17,8 +17,8 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     var selectedImages: [UIImage] = []
     let photoPickManager = PhotoPickerManager.shared
-   
-    
+ 
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var DescriptionLbl: UILabel!
@@ -45,7 +45,7 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         //MARK: Button Font Style
         //chooseImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-
+        backBtn.setTitle("Submission", for: .normal)
         //MARK: Label Font Style
         AddphotosLbl.setFont(style: .title, size: FontSize.TitleSize)
     

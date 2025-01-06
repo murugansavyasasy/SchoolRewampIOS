@@ -11,6 +11,8 @@ protocol SelectedTextDelegate{
 }
 class TextHistoryTVCell: UITableViewCell {
     
+    @IBOutlet weak var sendBtnheight: NSLayoutConstraint!
+    @IBOutlet weak var sendBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var DateLabel: UILabel!
     @IBOutlet weak var MessageTitle: UILabel!
     @IBOutlet weak var descriptContent: UILabel!
@@ -28,7 +30,7 @@ class TextHistoryTVCell: UITableViewCell {
         outerview.layer.cornerRadius = 20
         sendBtn.layer.cornerRadius = 4
         
-        DateLabel.setFont(style: .title, size: FontSize.TitleSize)
+        DateLabel.setFont(style: .body, size: FontSize.BodySize)
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         

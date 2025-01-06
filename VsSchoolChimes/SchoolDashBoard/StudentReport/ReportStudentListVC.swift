@@ -42,6 +42,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     let menuName = MenuStringFile()
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         pageTitle.text = MenuStringFile.StudentReport
         filterStudent = studentList
         sortedStudent = studentList
@@ -158,17 +163,17 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         classDropdown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
             
-            switch item{
-            case CommonStringFile.RollNoASC:
+            switch item.translated(){
+            case CommonStringFile.RollNoASC.translated():
                 let sortedByRollNumber = sortedStudent!.sorted { $0.AdmissionId < $1.AdmissionId }
                 filterStudent = sortedByRollNumber
-            case CommonStringFile.RollNoDESC:
+            case CommonStringFile.RollNoDESC.translated():
                 let sortedByName = sortedStudent?.sorted { $0.AdmissionId > $1.AdmissionId }
                 filterStudent = sortedByName
-            case CommonStringFile.NameASC:
+            case CommonStringFile.NameASC.translated():
                 let sortedByName = sortedStudent!.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
                 filterStudent = sortedByName
-            case CommonStringFile.NameDESC:
+            case CommonStringFile.NameDESC.translated():
                 let sortedByName = sortedStudent!.sorted { $0.name > $1.name }
                 filterStudent = sortedByName
                 

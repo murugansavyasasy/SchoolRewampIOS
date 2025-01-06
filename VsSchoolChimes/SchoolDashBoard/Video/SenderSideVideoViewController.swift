@@ -51,7 +51,11 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     var playerurl: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         chooseVideoBtn.isHidden = true
         StyleAndTranslater()
         descTxtView.delegate = self
@@ -236,9 +240,6 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     }
     
     func createVimeoUploadURL(authToken: String, videoFilePath: URL, completion: @escaping (UploadResult) -> Void) {
-        
-        
-        
         
         guard let fileSize = getFileSize(at: videoFilePath) else {
             completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get file size"])))

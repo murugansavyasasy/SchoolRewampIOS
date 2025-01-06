@@ -3,6 +3,7 @@ import UIKit
 class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
     
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
@@ -11,7 +12,8 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
     var filteredData :[Assigment]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
         searchview.placeholder = CommonStringFile.Search.translated()

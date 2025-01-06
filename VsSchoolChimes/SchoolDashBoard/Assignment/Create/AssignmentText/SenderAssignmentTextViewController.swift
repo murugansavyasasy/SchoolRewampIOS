@@ -62,7 +62,11 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         super.viewDidLoad()
         createDatepicker()
         StyleAndTranslater()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         contentTextView.delegate = self
         
         customdate.dateFormat = "EEE d"
