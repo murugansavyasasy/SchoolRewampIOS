@@ -233,7 +233,7 @@ class CommonStringFile{
     static let Emergencyvoicemessages = "Emergency voice messages"
     static let VoiceMessage = "voice"
     static let TextMessage = "text"
-    static let ScheduleCall = "schedule_a_call"
+    static let ScheduleCall = "Schedule a Call"
     static let EnterTextHere = "EnterTextHere"
     static let BacktoTextMessage = "BackToTextMessage"
     static let BackToVoiceMessage = "BackToVoiceMessage"

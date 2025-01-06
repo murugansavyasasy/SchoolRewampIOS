@@ -68,8 +68,8 @@ class CountryVc: UIViewController {
     func StyleAndTranslater(){
         
         //MARK: Label font
-        canadaLabel.setFont(style: .body, size: FontSize.BodySize)
-        IndonasiaLabel.setFont(style: .body, size: FontSize.BodySize)
+//        canadaLabel.setFont(style: .body, size: FontSize.BodySize)
+//        IndonasiaLabel.setFont(style: .body, size: FontSize.BodySize)
 //        ThaiLabel.setFont(style: .body, size: FontSize.BodySize)
         CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -102,6 +102,35 @@ class CountryVc: UIViewController {
                 cornerRadius: 15
             )
         }
+        if let image = UIImage(named: "USA") {
+            configureButton(
+                Usa,
+                imageName: image,
+                cornerRadius: 15
+            )
+        }
+        if let image = UIImage(named: "indonesia") {
+            configureButton(
+                China,
+                imageName: image,
+                cornerRadius: 15
+            )
+        }
+        if let image = UIImage(named: "uganda") {
+            configureButton(
+                Singapore,
+                imageName: image,
+                cornerRadius: 15
+            )
+        }
+        if let image = UIImage(named: "canada") {
+            configureButton(
+                Canada,
+                imageName: image,
+                cornerRadius: 15
+            )
+        }
+        
     }
     func configureButton(
         _ button: UIButton,
