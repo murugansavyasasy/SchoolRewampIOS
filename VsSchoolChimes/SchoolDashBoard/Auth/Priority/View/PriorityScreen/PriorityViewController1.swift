@@ -148,6 +148,8 @@ class PriorityViewController1: UIViewController {
         let vc = TapBarVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         vc.passedValue = passedValue
+        print(vc.passedValue)
+        print(passedValue)
         present(vc, animated: true)
     }
     

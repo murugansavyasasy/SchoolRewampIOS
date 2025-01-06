@@ -326,6 +326,13 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func next(_ sender: UIButton) {
+        
+        let vc = SelectRecipientVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // Dismiss the keyboard
         return true

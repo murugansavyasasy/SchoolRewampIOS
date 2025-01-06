@@ -285,6 +285,9 @@
                                                     <color key="backgroundColor" name="ButtonColor"/>
                                                 </backgroundConfiguration>
                                             </buttonConfiguration>
+                                            <connections>
+                                                <action selector="next:" destination="-1" eventType="touchUpInside" id="fuF-FD-GP2"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
