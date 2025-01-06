@@ -15,7 +15,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
     @IBOutlet weak var ReplyTextFild: UITextField!
     @IBOutlet weak var messageHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
-       
+       var getValue = 1
        private var messages: [(text: String, isSender: Bool)] = [
            ("Hello!", true),
            ("Hi there! How are you?jksfvnjkjkzbvuibskvbkdbvkbdkvbkdbkjvbjkbjvkzjkbvbjksbcvjkbjkcvbjkabvkjbkjdbvkjadbfkvbkdbvjksbdjkvbakdbvkbzdkjbvkjzdbjkvbkzdbvkdzbkbkzdbvkx", false),
@@ -25,8 +25,15 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
        
        override func viewDidLoad() {
            super.viewDidLoad()
-           view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-           
+           if getValue == 1{
+               view.applyGradient(
+                   colors: [Colornames.stafGradient, Colornames.stafGradient1],
+                   startPoint: CGPoint(x: 1, y: 0.5),
+                   endPoint: CGPoint(x: 0, y: 0.5)
+               ) 
+           }else{
+               view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+           }
            addDoneButtonToTextView()
            let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
            tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "chat (1).svg",
+      "filename" : "chat (4).svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "chat (1) 1.svg",
+      "filename" : "chat (4) 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "chat (1) 2.svg",
+      "filename" : "chat (4) 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,5 +19,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "template-rendering-intent" : "template"
   }
 }

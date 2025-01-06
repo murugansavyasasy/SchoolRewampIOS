@@ -235,7 +235,7 @@
 "selectDatesWithinMonth" = "You can only select dates within the currently displayed month.";
 "text" = "Text";
 "voice" = "Voice";
-"schedule_a_call" = "Schedule a Call";
+"Schedule a Call" = "Schedule a Call";
 
 //MARK: ScheduleExam
 "scheduleExam" = "Schedule Exam";

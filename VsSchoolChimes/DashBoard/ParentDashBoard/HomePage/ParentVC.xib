@@ -44,37 +44,39 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="749.66666666666663"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jAO-gM-RBK">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="156"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="175.66666666666666"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hgc-ku-39b">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="148"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="167.66666666666666"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shiyam" translatesAutoresizingMaskIntoConstraints="NO" id="toa-Zv-cCd" customClass="UIImageViewX" customModule="VsSchoolChimes" customModuleProvider="target">
-                                                    <rect key="frame" x="15" y="35" width="54" height="45"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloads" translatesAutoresizingMaskIntoConstraints="NO" id="toa-Zv-cCd" customClass="UIImageViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                                                    <rect key="frame" x="19" y="27.666666666666671" width="45" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="mqy-PQ-KSf"/>
-                                                        <constraint firstAttribute="width" constant="54" id="u05-bY-iqe"/>
+                                                        <constraint firstAttribute="width" constant="45" id="u05-bY-iqe"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                             <color key="value" name="ParentClr"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="19.5"/>
+                                                            <real key="value" value="20"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                             <real key="value" value="0.0"/>
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, Saran" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSF-Fv-apV">
-                                                    <rect key="frame" x="81" y="23" width="246" height="28.333333333333329"/>
-                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="23"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, SaranRaj Shanmugam" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qSF-Fv-apV">
+                                                    <rect key="frame" x="72" y="23" width="255" height="54"/>
+                                                    <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="22"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="shadowColor" systemColor="labelColor"/>
+                                                    <size key="shadowOffset" width="1" height="0.0"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="WrC-Wb-4Ff">
-                                                    <rect key="frame" x="81" y="53" width="269" height="42.666666666666657"/>
+                                                    <rect key="frame" x="72" y="85" width="269" height="36.666666666666657"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Savyasay schools Parent" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qsY-ha-l6P">
                                                             <rect key="frame" x="0.0" y="0.0" width="269" height="18"/>
@@ -83,7 +85,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Savyasasy school, chennai - 600002" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8r8-qH-Ple">
-                                                            <rect key="frame" x="0.0" y="27.000000000000004" width="269" height="15.666666666666668"/>
+                                                            <rect key="frame" x="0.0" y="21" width="269" height="15.666666666666664"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -94,25 +96,25 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="qSF-Fv-apV" secondAttribute="trailing" constant="66" id="1lw-GB-w6a"/>
-                                                <constraint firstAttribute="bottom" secondItem="WrC-Wb-4Ff" secondAttribute="bottom" constant="52.333333333333343" id="7AZ-et-RLU"/>
-                                                <constraint firstItem="toa-Zv-cCd" firstAttribute="leading" secondItem="hgc-ku-39b" secondAttribute="leading" constant="15" id="Drm-as-h8S"/>
-                                                <constraint firstItem="toa-Zv-cCd" firstAttribute="centerY" secondItem="hgc-ku-39b" secondAttribute="centerY" constant="-16.5" id="Nli-1r-J4o"/>
-                                                <constraint firstItem="qSF-Fv-apV" firstAttribute="leading" secondItem="toa-Zv-cCd" secondAttribute="trailing" constant="12" id="crZ-kp-OLy"/>
+                                                <constraint firstAttribute="bottom" secondItem="WrC-Wb-4Ff" secondAttribute="bottom" constant="46" id="7AZ-et-RLU"/>
+                                                <constraint firstItem="toa-Zv-cCd" firstAttribute="leading" secondItem="hgc-ku-39b" secondAttribute="leading" constant="19" id="Drm-as-h8S"/>
+                                                <constraint firstItem="toa-Zv-cCd" firstAttribute="centerY" secondItem="hgc-ku-39b" secondAttribute="centerY" constant="-33.666666666666671" id="Nli-1r-J4o"/>
+                                                <constraint firstItem="qSF-Fv-apV" firstAttribute="leading" secondItem="toa-Zv-cCd" secondAttribute="trailing" constant="8" id="crZ-kp-OLy"/>
                                                 <constraint firstItem="qSF-Fv-apV" firstAttribute="top" secondItem="hgc-ku-39b" secondAttribute="top" constant="23" id="ibM-DX-2rk"/>
-                                                <constraint firstItem="WrC-Wb-4Ff" firstAttribute="top" secondItem="qSF-Fv-apV" secondAttribute="bottom" constant="1.6666666666666714" id="mw5-AD-A4n"/>
-                                                <constraint firstAttribute="trailing" secondItem="WrC-Wb-4Ff" secondAttribute="trailing" constant="43" id="rfP-a1-aje"/>
-                                                <constraint firstItem="WrC-Wb-4Ff" firstAttribute="leading" secondItem="hgc-ku-39b" secondAttribute="leading" constant="81" id="zuM-cd-gT2"/>
+                                                <constraint firstItem="WrC-Wb-4Ff" firstAttribute="top" secondItem="qSF-Fv-apV" secondAttribute="bottom" constant="8" id="mw5-AD-A4n"/>
+                                                <constraint firstAttribute="trailing" secondItem="WrC-Wb-4Ff" secondAttribute="trailing" constant="52" id="rfP-a1-aje"/>
+                                                <constraint firstItem="WrC-Wb-4Ff" firstAttribute="leading" secondItem="hgc-ku-39b" secondAttribute="leading" constant="72" id="zuM-cd-gT2"/>
                                             </constraints>
                                         </view>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Hag-oC-cPi">
-                                            <rect key="frame" x="336" y="36" width="30" height="18.666666666666671"/>
+                                            <rect key="frame" x="328" y="36" width="30" height="38.333333333333329"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="VMs-bo-Hxp"/>
                                             </constraints>
                                         </imageView>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bell" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="JOz-t8-GNd">
-                                            <rect key="frame" x="363" y="37.666666666666664" width="30" height="19.333333333333329"/>
+                                            <rect key="frame" x="363" y="37.666666666666664" width="30" height="38.999999999999993"/>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="30" id="Uou-mV-1Cg"/>
@@ -122,7 +124,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="hgc-ku-39b" firstAttribute="top" secondItem="jAO-gM-RBK" secondAttribute="top" id="CNi-UL-tuO"/>
-                                        <constraint firstAttribute="trailing" secondItem="Hag-oC-cPi" secondAttribute="trailing" constant="27" id="Kso-xY-6x1"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hag-oC-cPi" secondAttribute="trailing" constant="35" id="Kso-xY-6x1"/>
                                         <constraint firstItem="Hag-oC-cPi" firstAttribute="centerY" secondItem="jAO-gM-RBK" secondAttribute="centerY" constant="-32.833333333333329" id="Lkf-pw-QnG"/>
                                         <constraint firstItem="Hag-oC-cPi" firstAttribute="top" secondItem="jAO-gM-RBK" secondAttribute="top" constant="35" id="TY2-Jv-tlf"/>
                                         <constraint firstItem="hgc-ku-39b" firstAttribute="leading" secondItem="jAO-gM-RBK" secondAttribute="leading" id="UrW-q2-NAJ"/>
@@ -241,9 +243,8 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lRJ-aJ-Ooj">
                                     <rect key="frame" x="20" y="125" width="353" height="70"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Attendance Report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbn-9b-TIi">
-                                            <rect key="frame" x="8" y="0.0" width="141" height="19"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance Report" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbn-9b-TIi">
+                                            <rect key="frame" x="8" y="5" width="141" height="18.333333333333332"/>
                                             <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -255,10 +256,32 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D0i-Pf-dfZ">
+                                            <rect key="frame" x="245" y="18" width="83" height="34"/>
+                                            <color key="tintColor" systemColor="linkColor"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Button">
+                                                <attributedString key="attributedTitle">
+                                                    <fragment content="View Details">
+                                                        <attributes>
+                                                            <color key="NSColor" red="0.1647058874" green="0.37647059560000001" blue="0.77254903320000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <font key="NSFont" size="15" name="Helvetica"/>
+                                                            <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                                            <integer key="NSUnderline" value="1"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                            </state>
+                                        </button>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="D0i-Pf-dfZ" secondAttribute="trailing" constant="25" id="KlY-XV-G0d"/>
                                         <constraint firstAttribute="height" constant="70" id="XTY-2M-xx0"/>
+                                        <constraint firstItem="Zbn-9b-TIi" firstAttribute="top" secondItem="lRJ-aJ-Ooj" secondAttribute="top" constant="5" id="Z7x-98-2xZ"/>
+                                        <constraint firstItem="Zbn-9b-TIi" firstAttribute="leading" secondItem="lRJ-aJ-Ooj" secondAttribute="leading" constant="8" id="ZLs-lL-9oA"/>
+                                        <constraint firstItem="D0i-Pf-dfZ" firstAttribute="centerY" secondItem="lRJ-aJ-Ooj" secondAttribute="centerY" id="h8Q-fs-oX6"/>
+                                        <constraint firstItem="D0i-Pf-dfZ" firstAttribute="top" secondItem="lRJ-aJ-Ooj" secondAttribute="top" constant="18" id="mVc-5K-J7O"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -324,18 +347,24 @@
         </view>
     </objects>
     <resources>
-        <image name="Homework" width="512" height="512"/>
-        <image name="Notice Board" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="Homework" width="66" height="66"/>
+        <image name="Notice Board" width="66" height="66"/>
         <image name="Online  Meeting" width="66" height="66"/>
         <image name="bell" catalog="system" width="125" height="128"/>
+        <image name="downloads" width="100" height="100"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
-        <image name="shiyam" width="440" height="567"/>
         <namedColor name="ClickClr">
             <color red="0.76099997758865356" green="0.90600001811981201" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ParentClr">
             <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

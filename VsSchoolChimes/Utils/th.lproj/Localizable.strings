@@ -247,7 +247,7 @@
 "selectDatesWithinMonth" = "คุณสามารถเลือกวันที่ภายในเดือนที่แสดงอยู่ในปัจจุบันเท่านั้น";
 "text" = "ข้อความ";
 "voice" = "เสียง";
-"schedule_a_call" = "นัดหมายการโทร";
+"Schedule a Call" = "นัดหมายการโทร";
 
 //MARK: ScheduleExam
 "scheduleExam" = "กำหนดการสอบ";
