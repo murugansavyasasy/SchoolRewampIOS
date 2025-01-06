@@ -292,29 +292,14 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
             existingGradientLayer.removeFromSuperlayer()
         }
         
-        // Create a new gradient layer
         let gradientLayer = CAGradientLayer()
-        
-        // Set the gradient layer's frame to the bounds of the UIImageView
         gradientLayer.frame = profileFullview.bounds
-        
-        // Define the gradient colors (you can customize this)
         gradientLayer.colors = colours //[UIColor.parentClr.cgColor,UIColor.priority.cgColor]
-        
-        // Optionally, define the gradient direction
         gradientLayer.startPoint = CGPoint(x: xstart, y: ystart)  // Top-left
         gradientLayer.endPoint = CGPoint(x: 0.9, y: 0.9)    // Bottom-right
-        
-        // Insert the gradient layer behind the image
         profileFullview.layer.insertSublayer(gradientLayer, at: 0)
-        
-        // Make sure the image is not hidden behind the gradient layer
         profileFullview.layer.masksToBounds = true
-        
-        
-        
-        
-        
+  
     }
     
     func cellRegistration(){
@@ -380,7 +365,6 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
             cell.MenuImgView.image = img
-            cell.MenuImgView.tintColor = .systemIndigo
             cell.GradientView.backgroundColor = .clr
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -428,7 +412,6 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.receiverCommunicationNavigate(from: self)
             case ReceiverMenuItems.ImagePdf.translated():
                 MenuRedirect.receiverImgPdfNavigate(from: self)
-                MenuRedirect.receiverCertificateRequest(from: self)
             case ReceiverMenuItems.PTM.translated():
                 MenuRedirect.receiverPtmNavigate(from: self)
             case ReceiverMenuItems.NoticeBoard.translated():
