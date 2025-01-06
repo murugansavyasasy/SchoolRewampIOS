@@ -119,28 +119,67 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
         let cell = Tv.dequeueReusableCell(withIdentifier: CellConfingName.StrengthTvCell, for: indexPath) as! StrengthTvCell
         cell.standardLbl.text = classes[indexPath.row]
         
-        if isBarChartVisible[indexPath.row] {
-            cell.barchartHeight.constant = 150
-            cell.barChartView.isHidden = false
-            cell.barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
-            cell.BottomLblHeight.constant = 21
-            cell.BottomLbl.isHidden = false
-        } else {
-            
-            cell.barchartHeight.constant = 0
-            cell.barChartView.isHidden = true
-            cell.BottomLblHeight.constant = 0
-            cell.BottomLbl.isHidden = true
-        }
+//        if isBarChartVisible[indexPath.row] {
+//            cell.barchartHeight.constant = 150
+//            cell.barChartView.isHidden = false
+//            cell.barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
+//            cell.BottomLblHeight.constant = 21
+//            cell.BottomLbl.isHidden = false
+//        } else {
+//            
+//            cell.barchartHeight.constant = 0
+//            cell.barChartView.isHidden = true
+//            cell.BottomLblHeight.constant = 0
+//            cell.BottomLbl.isHidden = true
+//        }
         
         return cell
     }
     
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        // Toggle the state for the selected row
+//        isBarChartVisible[indexPath.row] = !isBarChartVisible[indexPath.row]
+//        
+//        // Reload the specific row to reflect the change
+//        tableView.reloadRows(at: [indexPath], with: .none)
+//    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Toggle the state for the selected row
-        isBarChartVisible[indexPath.row] = !isBarChartVisible[indexPath.row]
-        
-        // Reload the specific row to reflect the change
-        tableView.reloadRows(at: [indexPath], with: .none)
+        // Safely unwrap the cell
+        if let cell = tableView.cellForRow(at: indexPath) as? StrengthTvCell {
+            // Update UI elements
+            if cell.barChartView.isHidden == true{
+                cell.barchartHeight.constant = 150
+                cell.barChartView.isHidden = false
+                cell.barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
+                cell.BottomLblHeight.constant = 21
+                cell.BottomLbl.isHidden = false
+            }else{
+                cell.barchartHeight.constant = 0
+                cell.barChartView.isHidden = true
+                cell.BottomLblHeight.constant = 0
+                cell.BottomLbl.isHidden = true
+            }
+            // Animate layout changes
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
     }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        // Safely unwrap the cell
+        if let cell = tableView.cellForRow(at: indexPath) as? StrengthTvCell {
+            // Reset UI elements
+            cell.barchartHeight.constant = 0
+            cell.barChartView.isHidden = true
+            cell.BottomLblHeight.constant = 0
+            cell.BottomLbl.isHidden = true
+            
+            // Animate layout changes
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
+    }
+
+
+
 }
