@@ -35,7 +35,7 @@ class MenuRedirectHandler {
     
   
     
-    var receiverImageItems : [String] = [ "Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","video","Resiverassignment","Notice Board","Resiverassignment","Online  Meeting","Attendance Report","Events/Holidays","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
+    var receiverImageItems : [String] = [ "Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","video","Resiverassignment","Notice Board","Resiverassignment","Online  Meeting","Attendance Report","Events","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
     
     
     
