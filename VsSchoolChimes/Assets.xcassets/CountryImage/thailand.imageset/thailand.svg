@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" id="thailand">
+  <path d="m375.734 48-240 .309L96 117.334h319.883L375.734 48z" style="fill:#e32d3c;fill-opacity:1;stroke:none"></path>
+  <path d="m96 117.334-39.912 69.332h399.941l-40.146-69.332H96z" style="fill:#fff;fill-opacity:1;stroke:none"></path>
+  <path d="M56.088 186.666 16 256.306l39.97 69.028h399.94L496 255.691l-39.97-69.025H56.087z" style="fill:#2b4896;fill-opacity:1;stroke:none"></path>
+  <path d="M96.117 394.666 136.266 464l240-.309L416 394.666H96.117z" style="fill:#e32d3c;fill-opacity:1;stroke:none"></path>
+  <path d="m55.97 325.334 40.147 69.332H416l39.91-69.332H55.97z" style="fill:#fff;fill-opacity:1;stroke:none"></path>
+</svg>

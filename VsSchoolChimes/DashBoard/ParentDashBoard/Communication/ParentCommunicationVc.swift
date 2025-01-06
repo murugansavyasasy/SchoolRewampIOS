@@ -76,8 +76,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         voiceBtn.layer.shadowRadius = 5
         voiceBtn.layer.shadowOpacity = 0.3
         gradientcolours(view: voiceClickView,colours:[
-            UIColor(hex: "7ED957").cgColor,
-            UIColor(hex: "0097B2").cgColor
+            UIColor(hex: "7ED957").withAlphaComponent(0.5).cgColor,
+            UIColor(hex: "0097B2").withAlphaComponent(0.5).cgColor
         ])
         
         gradientcolours(view: textClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
@@ -118,8 +118,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         textBtn.layer.shadowOpacity = 0.3
         textClickView.layer.cornerRadius = 8
         gradientcolours(view: textClickView,colours: [
-            UIColor(hex: "7ED957").cgColor,
-            UIColor(hex: "0097B2").cgColor
+            UIColor(hex: "7ED957").withAlphaComponent(0.5).cgColor,
+            UIColor(hex: "0097B2").withAlphaComponent(0.5).cgColor
         ])
         gradientcolours(view: voiceClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
     }

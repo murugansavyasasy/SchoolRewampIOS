@@ -421,7 +421,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if indexPath.row < MenuRedirect.receiverItems.count {
           
-            let menuItem = MenuRedirect.receiverItems[indexNo].translated()
+            let menuItem = MenuRedirect.receiverItems[indexPath.row].translated()
             
             switch menuItem {
             case ReceiverMenuItems.Video.translated():
@@ -486,13 +486,28 @@ extension ParentVC: UICollectionViewDelegateFlowLayout {
         if indexPath.row == 6{
             return CGSize(width: collectionView.frame.width, height: 160)
         }
+   
         let width = (collectionView.frame.width) / 3
-        return CGSize(width: width, height: width - 10)
+        let padding: CGFloat = 10
+        let maxTextWidth = width - padding * 2
+
+        let label = MenuRedirect.receiverItems[indexPath.row].translated()
+        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
+        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
+
+        let height = max(textHeight + padding * 2, width - 10)
+        return CGSize(width: width, height: height + 10)
     }
     
     
 }
-
+extension String {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil)
+        return ceil(boundingBox.height)
+    }
+}
 
 @available(iOS 14.0, *)
 extension ParentVC: UISearchBarDelegate{

@@ -17,7 +17,9 @@
                 <outlet property="SelectSchoolLabel" destination="G3j-2A-5Zy" id="E4p-kC-S2d"/>
                 <outlet property="SendButton" destination="N7c-iW-8ze" id="bK0-zx-9sA"/>
                 <outlet property="StdorSec" destination="gMg-bz-AMA" id="UVj-ZE-5E7"/>
+                <outlet property="TapBarLbl" destination="iWy-HB-Kt7" id="mVX-tE-IDX"/>
                 <outlet property="sendAllview" destination="Pjr-Gj-UJL" id="B2Z-Fq-hK6"/>
+                <outlet property="specificStudentBtn" destination="dmk-kE-6LW" id="UN8-Kj-LFk"/>
                 <outlet property="stdorgrp" destination="aOG-Tr-wZ3" id="JoX-Ho-phP"/>
                 <outlet property="tableview" destination="LBK-B4-ZW5" id="JEp-g3-lch"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -176,7 +178,7 @@
                             </subviews>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="LBK-B4-ZW5">
-                            <rect key="frame" x="8" y="346" width="377" height="333"/>
+                            <rect key="frame" x="8" y="346" width="377" height="351"/>
                         </tableView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cyr-0V-9Aq">
                             <rect key="frame" x="8" y="3" width="50" height="40"/>
@@ -194,31 +196,49 @@
                                 <action selector="BackClk:" destination="-1" eventType="touchUpInside" id="SZO-R5-t0b"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Recipient" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWy-HB-Kt7">
-                            <rect key="frame" x="132.33333333333337" y="12.999999999999998" width="128.66666666666663" height="20.333333333333329"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Recipient" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iWy-HB-Kt7">
+                            <rect key="frame" x="68" y="12.999999999999998" width="257" height="20.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N7c-iW-8ze">
-                            <rect key="frame" x="100" y="705" width="193" height="40"/>
+                            <rect key="frame" x="43" y="711" width="149" height="40"/>
                             <color key="backgroundColor" name="ButtonColor"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" imagePlacement="trailing" title="Send"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dmk-kE-6LW">
+                            <rect key="frame" x="214" y="711" width="149" height="40"/>
+                            <color key="backgroundColor" name="ButtonColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="qIA-kT-mdn"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Spefic Student"/>
+                            <connections>
+                                <action selector="specificBtn:" destination="-1" eventType="touchUpInside" id="aun-3h-kh5"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" name="dashBoardClr"/>
                     <constraints>
                         <constraint firstItem="cyr-0V-9Aq" firstAttribute="top" secondItem="53a-Xe-ofg" secondAttribute="top" constant="3" id="8tX-H4-FAl"/>
-                        <constraint firstItem="N7c-iW-8ze" firstAttribute="leading" secondItem="53a-Xe-ofg" secondAttribute="leading" constant="100" id="CJW-9H-kX9"/>
+                        <constraint firstItem="N7c-iW-8ze" firstAttribute="leading" secondItem="53a-Xe-ofg" secondAttribute="leading" constant="43" id="CJW-9H-kX9"/>
                         <constraint firstItem="cyr-0V-9Aq" firstAttribute="leading" secondItem="53a-Xe-ofg" secondAttribute="leading" constant="8" id="EIG-VH-rTX"/>
-                        <constraint firstAttribute="bottom" secondItem="LBK-B4-ZW5" secondAttribute="bottom" constant="80" id="Hc2-nq-gD2"/>
+                        <constraint firstAttribute="bottom" secondItem="LBK-B4-ZW5" secondAttribute="bottom" constant="62" id="Hc2-nq-gD2"/>
                         <constraint firstItem="LBK-B4-ZW5" firstAttribute="leading" secondItem="53a-Xe-ofg" secondAttribute="leading" constant="8" id="JvP-hK-EXh"/>
-                        <constraint firstItem="N7c-iW-8ze" firstAttribute="top" secondItem="LBK-B4-ZW5" secondAttribute="bottom" constant="26" id="M8T-Em-wsT"/>
+                        <constraint firstItem="dmk-kE-6LW" firstAttribute="leading" secondItem="53a-Xe-ofg" secondAttribute="leading" constant="214" id="K9E-K0-CRG"/>
+                        <constraint firstItem="N7c-iW-8ze" firstAttribute="top" secondItem="LBK-B4-ZW5" secondAttribute="bottom" constant="14" id="M8T-Em-wsT"/>
                         <constraint firstItem="LBK-B4-ZW5" firstAttribute="top" secondItem="TPZ-Tz-WaR" secondAttribute="bottom" constant="15" id="MRc-Hw-khN"/>
                         <constraint firstItem="iWy-HB-Kt7" firstAttribute="centerX" secondItem="53a-Xe-ofg" secondAttribute="centerX" id="PxD-xB-Bf2"/>
-                        <constraint firstAttribute="trailing" secondItem="N7c-iW-8ze" secondAttribute="trailing" constant="100" id="RcG-fc-xVo"/>
-                        <constraint firstAttribute="bottom" secondItem="N7c-iW-8ze" secondAttribute="bottom" constant="14" id="Vvg-fT-xK0"/>
+                        <constraint firstAttribute="trailing" secondItem="N7c-iW-8ze" secondAttribute="trailing" constant="201" id="RcG-fc-xVo"/>
+                        <constraint firstAttribute="trailing" secondItem="dmk-kE-6LW" secondAttribute="trailing" constant="30" id="UcE-0b-ElG"/>
+                        <constraint firstAttribute="bottom" secondItem="N7c-iW-8ze" secondAttribute="bottom" constant="8" id="Vvg-fT-xK0"/>
+                        <constraint firstItem="iWy-HB-Kt7" firstAttribute="leading" secondItem="cyr-0V-9Aq" secondAttribute="trailing" constant="10" id="cSW-sd-ngp"/>
+                        <constraint firstAttribute="bottom" secondItem="dmk-kE-6LW" secondAttribute="bottom" constant="8" id="d8E-qQ-m4s"/>
                         <constraint firstAttribute="trailing" secondItem="LBK-B4-ZW5" secondAttribute="trailing" constant="8" id="eoc-Nv-mes"/>
                         <constraint firstItem="TPZ-Tz-WaR" firstAttribute="top" secondItem="cyr-0V-9Aq" secondAttribute="bottom" constant="20" id="gRZ-yi-UCI"/>
                         <constraint firstItem="TPZ-Tz-WaR" firstAttribute="leading" secondItem="53a-Xe-ofg" secondAttribute="leading" constant="30" id="iGJ-Oh-HSU"/>
@@ -228,7 +248,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="dashBoardClr"/>
+            <color key="backgroundColor" name="topBackgroundCLr 1"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="53a-Xe-ofg" secondAttribute="bottom" id="BtV-PL-YyN"/>
                 <constraint firstItem="53a-Xe-ofg" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="OZa-MG-zrB"/>
@@ -241,6 +261,7 @@
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="down-arrow" width="512" height="512"/>
+        <image name="paperplane" catalog="system" width="128" height="119"/>
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -249,6 +270,9 @@
         </namedColor>
         <namedColor name="dashBoardClr">
             <color red="0.9570000171661377" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="topBackgroundCLr 1">
+            <color red="0.4779999852180481" green="0.77600002288818359" blue="0.86299997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

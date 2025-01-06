@@ -18,7 +18,7 @@
                 <outlet property="Searchbar" destination="ObW-ZB-51q" id="5g8-wN-ZJO"/>
                 <outlet property="assignmentkBtn" destination="KtY-gu-fAj" id="nnc-KJ-Tia"/>
                 <outlet property="bottomCv" destination="8f2-pd-DRo" id="5q1-RE-qFO"/>
-                <outlet property="bottomCvHeight" destination="Ukw-Tp-oEp" id="se6-Yn-mMi"/>
+                <outlet property="bottomCvHeight" destination="Zcy-1q-CWf" id="uar-8O-SrI"/>
                 <outlet property="collectionBtn" destination="VV0-se-OyB" id="5Em-7o-GMA"/>
                 <outlet property="heightStackview" destination="hVo-OX-Vh3" id="lCd-jh-2qh"/>
                 <outlet property="homeworkBtn" destination="cW0-fe-fdm" id="z38-72-bNz"/>
@@ -161,7 +161,7 @@
                                             <rect key="frame" x="19" y="86.666666666666714" width="366" height="465.33333333333326"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="465.32999999999998" id="Ukw-Tp-oEp"/>
+                                                <constraint firstAttribute="height" constant="465.33333333333326" id="Zcy-1q-CWf"/>
                                             </constraints>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="6ie-xK-CgB">
                                                 <size key="itemSize" width="128" height="128"/>
@@ -230,10 +230,10 @@
                                         <constraint firstAttribute="bottom" secondItem="VV0-se-OyB" secondAttribute="bottom" constant="10" id="OTE-3D-2OL"/>
                                         <constraint firstAttribute="trailing" secondItem="8f2-pd-DRo" secondAttribute="trailing" constant="8" id="RSd-jt-4bQ"/>
                                         <constraint firstItem="ObW-ZB-51q" firstAttribute="leading" secondItem="60R-Rm-JBk" secondAttribute="leading" constant="16" id="XN7-fz-RP8"/>
+                                        <constraint firstItem="8f2-pd-DRo" firstAttribute="top" secondItem="ueU-tK-BZN" secondAttribute="bottom" id="d6M-AC-Edh"/>
                                         <constraint firstAttribute="trailing" secondItem="VV0-se-OyB" secondAttribute="trailing" constant="10" id="fe0-nR-D24"/>
                                         <constraint firstItem="8f2-pd-DRo" firstAttribute="leading" secondItem="60R-Rm-JBk" secondAttribute="leading" constant="19" id="fxz-tT-eHa"/>
                                         <constraint firstItem="ObW-ZB-51q" firstAttribute="top" secondItem="60R-Rm-JBk" secondAttribute="top" constant="10" id="g9e-Hn-cbS"/>
-                                        <constraint firstItem="8f2-pd-DRo" firstAttribute="top" secondItem="ueU-tK-BZN" secondAttribute="bottom" id="hfc-FV-yWX"/>
                                         <constraint firstAttribute="trailing" secondItem="ObW-ZB-51q" secondAttribute="trailing" constant="16" id="l8t-9E-Unx"/>
                                         <constraint firstAttribute="bottom" secondItem="8f2-pd-DRo" secondAttribute="bottom" constant="7.6699999999999999" id="uyu-pA-bzE"/>
                                     </constraints>
