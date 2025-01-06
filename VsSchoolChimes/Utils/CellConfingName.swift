@@ -89,6 +89,9 @@ class CellConfingName {
     static let  ExammarkFooterView = "ExammarkFooterView"
     static let  ExamMarkCV = "ExamMarkCV"
     static let  MarkTvCell = "MarkTvCell"
+    static let  addCvCell = "addCvCell"
+    static let  seeMore = "seeMore"
+    
     
     
 }

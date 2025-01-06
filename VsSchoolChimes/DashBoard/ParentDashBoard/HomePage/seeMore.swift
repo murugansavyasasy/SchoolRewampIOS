@@ -26,7 +26,7 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
         adCollectionView.dataSource = self
         
         
-        adCollectionView.register(UINib(nibName: "addCvCell", bundle: nil), forCellWithReuseIdentifier: "addCvCell")
+        adCollectionView.register(UINib(nibName: CellConfingName.addCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.addCvCell)
         
         startAutoScroll()
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
@@ -56,7 +56,7 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "addCvCell", for: indexPath) as! addCvCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.addCvCell, for: indexPath) as! addCvCell
       
         return cell
     }

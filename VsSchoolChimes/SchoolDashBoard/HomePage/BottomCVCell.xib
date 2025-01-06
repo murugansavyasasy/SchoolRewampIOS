@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,25 +23,25 @@
                         <rect key="frame" x="10" y="10" width="120" height="115"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SM6-YI-4ac" customClass="ShimmerView" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="32.666666666666664" y="8" width="54.999999999999993" height="55"/>
+                                <rect key="frame" x="40" y="8" width="40" height="40"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scale" translatesAutoresizingMaskIntoConstraints="NO" id="KTI-hm-DIW">
-                                        <rect key="frame" x="10" y="10" width="35" height="35"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <rect key="frame" x="5" y="5" width="30" height="30"/>
+                                        <color key="tintColor" name="menuImgColor"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="KTI-hm-DIW" firstAttribute="leading" secondItem="SM6-YI-4ac" secondAttribute="leading" constant="10" id="8Wd-1m-CnB"/>
-                                    <constraint firstItem="KTI-hm-DIW" firstAttribute="top" secondItem="SM6-YI-4ac" secondAttribute="top" constant="10" id="RLx-iu-6Js"/>
-                                    <constraint firstAttribute="height" constant="55" id="Zu4-BY-dlX"/>
-                                    <constraint firstAttribute="trailing" secondItem="KTI-hm-DIW" secondAttribute="trailing" constant="10" id="n60-fo-ZgR"/>
-                                    <constraint firstAttribute="bottom" secondItem="KTI-hm-DIW" secondAttribute="bottom" constant="10" id="o7Z-Os-7Jd"/>
-                                    <constraint firstAttribute="width" constant="55" id="rOy-FG-kg9"/>
+                                    <constraint firstItem="KTI-hm-DIW" firstAttribute="leading" secondItem="SM6-YI-4ac" secondAttribute="leading" constant="5" id="8Wd-1m-CnB"/>
+                                    <constraint firstItem="KTI-hm-DIW" firstAttribute="top" secondItem="SM6-YI-4ac" secondAttribute="top" constant="5" id="RLx-iu-6Js"/>
+                                    <constraint firstAttribute="height" constant="40" id="Zu4-BY-dlX"/>
+                                    <constraint firstAttribute="trailing" secondItem="KTI-hm-DIW" secondAttribute="trailing" constant="5" id="n60-fo-ZgR"/>
+                                    <constraint firstAttribute="bottom" secondItem="KTI-hm-DIW" secondAttribute="bottom" constant="5" id="o7Z-Os-7Jd"/>
+                                    <constraint firstAttribute="width" constant="40" id="rOy-FG-kg9"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W9h-ek-HJc" customClass="ShimmerView" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="5" y="75" width="110" height="14.333333333333329"/>
+                                <rect key="frame" x="5" y="60.000000000000007" width="110" height="14.333333333333336"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lFN-A5-5Ml">
                                         <rect key="frame" x="0.0" y="0.0" width="110" height="14.333333333333334"/>
@@ -88,6 +89,9 @@
     </objects>
     <resources>
         <image name="scale" width="42.666667938232422" height="42.666667938232422"/>
+        <namedColor name="menuImgColor">
+            <color red="0.48600000143051147" green="0.74900001287460327" blue="0.77999997138977051" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

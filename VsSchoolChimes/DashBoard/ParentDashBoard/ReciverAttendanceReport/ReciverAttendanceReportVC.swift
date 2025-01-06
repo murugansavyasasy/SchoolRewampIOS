@@ -48,14 +48,9 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
         
         cell.statusLbl.textColor = .white
         if present[indexPath.row] == true {
-            
-            cell.Cellview.layer.borderWidth = 1
-            cell.Cellview.layer.borderColor = UIColor.green.cgColor
             cell.statusLbl.text = CommonStringFile.Present.translated()
             cell.StatusView.backgroundColor = .systemGreen
         }else{
-            cell.Cellview.layer.borderWidth = 1
-            cell.Cellview.layer.borderColor = UIColor.red.cgColor
             cell.statusLbl.text = CommonStringFile.Absent.translated()
             cell.StatusView.backgroundColor = .systemRed
         }

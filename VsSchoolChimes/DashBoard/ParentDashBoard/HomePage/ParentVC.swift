@@ -294,34 +294,19 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
             existingGradientLayer.removeFromSuperlayer()
         }
         
-        // Create a new gradient layer
         let gradientLayer = CAGradientLayer()
-        
-        // Set the gradient layer's frame to the bounds of the UIImageView
         gradientLayer.frame = profileFullview.bounds
-        
-        // Define the gradient colors (you can customize this)
         gradientLayer.colors = colours //[UIColor.parentClr.cgColor,UIColor.priority.cgColor]
-        
-        // Optionally, define the gradient direction
         gradientLayer.startPoint = CGPoint(x: xstart, y: ystart)  // Top-left
         gradientLayer.endPoint = CGPoint(x: 0.9, y: 0.9)    // Bottom-right
-        
-        // Insert the gradient layer behind the image
         profileFullview.layer.insertSublayer(gradientLayer, at: 0)
-        
-        // Make sure the image is not hidden behind the gradient layer
         profileFullview.layer.masksToBounds = true
-        
-        
-        
-        
-        
+  
     }
     
     func cellRegistration(){
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
-        bottomCv.register(UINib(nibName: "seeMore", bundle: nil), forCellWithReuseIdentifier: "seeMore")
+        bottomCv.register(UINib(nibName: CellConfingName.seeMore, bundle: nil), forCellWithReuseIdentifier: CellConfingName.seeMore)
         
     }
     
@@ -364,7 +349,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if indexPath.row == 6 {
             // Handle the "seeMore" cell
-            let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
+            let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.seeMore, for: indexPath) as! seeMore
             adCell.advertisements = advertisements // Pass advertisement data to the ad cell
             adCell.adCollectionView.reloadData() // Refresh the embedded collection view
             adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
@@ -382,7 +367,6 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
             cell.MenuImgView.image = img
-            cell.MenuImgView.tintColor = .systemIndigo
             cell.GradientView.backgroundColor = .clr
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -430,7 +414,6 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.receiverCommunicationNavigate(from: self)
             case ReceiverMenuItems.ImagePdf.translated():
                 MenuRedirect.receiverImgPdfNavigate(from: self)
-                MenuRedirect.receiverCertificateRequest(from: self)
             case ReceiverMenuItems.PTM.translated():
                 MenuRedirect.receiverPtmNavigate(from: self)
             case ReceiverMenuItems.NoticeBoard.translated():

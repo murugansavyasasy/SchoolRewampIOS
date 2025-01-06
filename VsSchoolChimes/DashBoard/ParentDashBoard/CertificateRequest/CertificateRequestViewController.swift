@@ -65,8 +65,6 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
         tv.delegate = self
         tv.register(UINib(nibName: CellConfingName.CertificateTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.CertificateTableViewCell)
         
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        viewBack.addGestureRecognizer(backGesture)
         let certificateGesture = UITapGestureRecognizer(target: self, action: #selector(selectCertificateClick))
         selectCertificateView.addGestureRecognizer(certificateGesture)
         let levelGesture = UITapGestureRecognizer(target: self, action: #selector(selectLevelClick))
@@ -88,6 +86,10 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
                }
            }
     
+    @IBAction func backBtn(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
     @IBAction func backVc() {
         dismiss(animated: true)
     }
