@@ -25,15 +25,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
        
        override func viewDidLoad() {
            super.viewDidLoad()
-           if getValue == 1{
-               view.applyGradient(
-                   colors: [Colornames.stafGradient, Colornames.stafGradient1],
-                   startPoint: CGPoint(x: 1, y: 0.5),
-                   endPoint: CGPoint(x: 0, y: 0.5)
-               ) 
-           }else{
-               view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-           }
+          
            addDoneButtonToTextView()
            let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
            tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
@@ -65,7 +57,18 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
           
        }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if getValue == 1{
+            view.applyGradient(
+                colors: [Colornames.stafGradient, Colornames.stafGradient1],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }else{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
+    }
     private func addDoneButtonToTextView() {
            let toolbar = UIToolbar()
            toolbar.sizeToFit()

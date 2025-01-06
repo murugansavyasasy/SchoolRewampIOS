@@ -25,15 +25,15 @@ class MenuRedirectHandler {
         
     }
     var getValue = 1
-    var items : [String] = [ MenuStringFile.Communication,MenuStringFile.ImagePdf,MenuStringFile.VideoUpload,MenuStringFile.Circulars,MenuStringFile.NoticeBoard,MenuStringFile.LeaveRequests,MenuStringFile.Assignment,MenuStringFile.OnlineMeeting,MenuStringFile.Homework,MenuStringFile.ScheduleExamTest,MenuStringFile.AttendanceMarking,MenuStringFile.MessagesFromManagement,MenuStringFile.InteractionWithStudent,MenuStringFile.LessonPlan,MenuStringFile.PTM, MenuStringFile.TextToParentsStaff,MenuStringFile.SchoolClassEvents,MenuStringFile.SchoolNeeds,MenuStringFile.VeryImportantInfo,MenuStringFile.AbsenteesReport,MenuStringFile.SchoolStrength,MenuStringFile.DailyCollection,MenuStringFile.StudentReport,MenuStringFile.FeePendingReport,MenuStringFile.MarkYourAttendance,MenuStringFile.StaffWiseAttendanceReport]
+    var items : [String] = [ MenuStringFile.Communication,MenuStringFile.ImagePdf,MenuStringFile.VideoUpload,MenuStringFile.NoticeBoard,MenuStringFile.LeaveRequests,MenuStringFile.Assignment,MenuStringFile.OnlineMeeting,MenuStringFile.Homework,MenuStringFile.ScheduleExamTest,MenuStringFile.AttendanceMarking,MenuStringFile.MessagesFromManagement,MenuStringFile.InteractionWithStudent,MenuStringFile.LessonPlan,MenuStringFile.PTM,MenuStringFile.SchoolClassEvents,MenuStringFile.SchoolNeeds,MenuStringFile.VeryImportantInfo,MenuStringFile.AbsenteesReport,MenuStringFile.SchoolStrength,MenuStringFile.DailyCollection,MenuStringFile.StudentReport,MenuStringFile.FeePendingReport,MenuStringFile.MarkYourAttendance,MenuStringFile.StaffWiseAttendanceReport]
     
-    var Imgitems : [String] = [ "Communication","ImagePdf","Video Upload","Circulars","Notice Board","Leave Requests","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Text to Parents/Staff","School / Class Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+    var Imgitems : [String] = [ "Communication","ImagePdf","Upload Video","Notice Board","Request Leave","Assignment","Online Meeting","Homework","Schedule ExamTest","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM]
     
     
     
-  
+    
     
     var receiverImageItems : [String] = [ "Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","video","Resiverassignment","Notice Board","Resiverassignment","Online  Meeting","Attendance Report","Events","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
     
@@ -110,7 +110,7 @@ class MenuRedirectHandler {
         let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
-      
+        
     }
     
     func senderOnlineNavigate(from viewController: UIViewController) {
@@ -133,13 +133,13 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
         
     }
-//    
-//    func senderLeaveRequestNavigate(from viewController: UIViewController) {
-//        let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-//        
-//    }
+    //
+    //    func senderLeaveRequestNavigate(from viewController: UIViewController) {
+    //        let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
+    //        vc.modalPresentationStyle = .fullScreen
+    //        viewController.present(vc, animated: true)
+    //
+    //    }
     
     
     func senderMarkAttendanceNavigate(from viewController: UIViewController) {
@@ -192,8 +192,8 @@ class MenuRedirectHandler {
     
     
     
-    //MARK: ResiverSideMenuViewContoller Starts 
-   
+    //MARK: ResiverSideMenuViewContoller Starts
+    
     
     func receiverVideoNavigate(from viewController: UIViewController) {
         let vc = VideoVC(nibName: nil, bundle: nil)
@@ -202,10 +202,10 @@ class MenuRedirectHandler {
     }
     
     func receiverCommunicationNavigate(from viewController: UIViewController) {
-      
+        
         let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                viewController.present(vc, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
     }
     
     func receiverImgPdfNavigate(from viewController: UIViewController) {
@@ -222,15 +222,9 @@ class MenuRedirectHandler {
     
     @available(iOS 14.0, *)
     func receiverNoticeBoardNavigate(from viewController: UIViewController) {
-//        let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        viewController.present(vc, animated: true)
-        
         let vc = ParentNoticeBoardVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
-        
-        
     }
     
     func receiverAssignmentNavigate(from viewController: UIViewController) {
@@ -240,7 +234,7 @@ class MenuRedirectHandler {
     }
     
     func receiverLeaveRequestNavigate(from viewController: UIViewController) {
-      
+        
     }
     
     func receiverExamTestNavigate(from viewController: UIViewController) {
@@ -267,10 +261,10 @@ class MenuRedirectHandler {
         
         
     }
-     func receiverchat(from viewController: UIViewController){
+    func receiverchat(from viewController: UIViewController){
         let vc = ChatVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-         vc.getValue = getValue
+        vc.getValue = getValue
         viewController.present(vc, animated: true)
     }
     
@@ -288,28 +282,28 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-
- 
+    
+    
     func resiverExamMark(from viewController: UIViewController){
         let vc = ExameMarVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
     func receiverCertificateRequest(from viewController: UIViewController){
-       let vc = CertificateRequestViewController(nibName: nil, bundle: nil)
-       vc.modalPresentationStyle = .fullScreen
-       viewController.present(vc, animated: true)
-   }
-
+        let vc = CertificateRequestViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
     func receiverHomework(from viewController: UIViewController){
         let vc = ReciverHomeworkVC(nibName: nil, bundle: nil)
-       vc.modalPresentationStyle = .fullScreen
-       viewController.present(vc, animated: true)
-   }
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     func receiverAttendancereport(from viewController: UIViewController){
         let vc = ReciverAttendanceReportVC(nibName: nil, bundle: nil)
-       vc.modalPresentationStyle = .fullScreen
-       viewController.present(vc, animated: true)
-   }
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
 }
 

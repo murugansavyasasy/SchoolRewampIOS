@@ -139,6 +139,12 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         } else if let profileVC = viewController as? ProfileViewController, passedValue == 2 {
             profileVC.passvalue = passedValue
 //
+        }else if let profileVC = viewController as? ParentVC, passedValue == 2 {
+            profileVC.getValue = passedValue
+            
+        }else if let HelpVc = viewController as? HelpVc, passedValue == 2 {
+            HelpVc.passVale = passedValue
+            
         }
 
         // Add the new child view controller

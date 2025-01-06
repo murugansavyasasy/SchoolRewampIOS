@@ -26,7 +26,10 @@ class StrengthTvCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        barchartHeight.constant = 0
+        barChartView.isHidden = true
+        BottomLblHeight.constant = 0
+        BottomLbl.isHidden = true
         countLbl.setFont(style: .body, size: FontSize.BodySize)
         standardLbl.setFont(style: .title, size: FontSize.TitleSize)
         StandardView.layer.cornerRadius = 10
@@ -34,7 +37,7 @@ class StrengthTvCell: UITableViewCell {
         countView.layer.cornerRadius = 10
         setupBarChart()
         
-        let shortLabels = ["Aqwertyuertyuiyuitg", "B", "C", "D", "E"]
+        let shortLabels = ["Mahatma Gandhi", "B", "Abdul Kalam", "D", "E"]
         let shortSectionCounts = [10, 20, 30, 40, 50]
         setBarChartData(withLabels: shortLabels, sectionCounts: shortSectionCounts)
 //        let longLabels = ["Abdulkalamqwertyudrftg", "Mahatma Gandhi", "Nikola Tesla", "Albert Einstein"]

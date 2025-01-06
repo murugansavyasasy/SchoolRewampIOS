@@ -20,7 +20,7 @@ class SettingsViewController: UIViewController, BaktoHome {
     var menuname = SettingStringFile()
     lazy var sections: [Section] = [
         Section(title: menuname.general, items: [menuname.notifications, menuname.faq, menuname.contactUs, menuname.termsAndConditions,menuname.changeAppLanguage]),
-        Section(title: menuname.feedback, items: [menuname.reportABug, menuname.sendFeedback, menuname.logout])
+        Section(title: menuname.feedback, items: [menuname.reportABug, menuname.feedback, menuname.logout])
     ]
     var section:[Section]?
     let Images: [Image] = [
@@ -111,8 +111,9 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SettingsTableViewCell, for: indexPath) as! SettingsTableViewCell
         cell.nameLbl.text = sections[indexPath.section].items[indexPath.row].translated()
-        
+        cell.nameLbl.textColor = sections[indexPath.section].items[indexPath.row].translated() == menuname.logout ? .red : .black
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
+        cell.imgView.tintColor =  Images[indexPath.section].uiImages[indexPath.row] == UIImage(named: "iphone.and.arrow.forward") ? .red : .black
         cell.selectionStyle = .none
         
         return cell
@@ -139,7 +140,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
-        }else if  sections[indexPath.section].items[indexPath.row] == menuname.sendFeedback{
+        }else if  sections[indexPath.section].items[indexPath.row] == menuname.feedback{
             
             let vc = RateUsViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
