@@ -176,7 +176,7 @@ class MenuTapbar{
     static let Contact_Us = "Contact Us".translated()
     static let Notifications = "Notifications".translated()
     static let ComposeNotifications = "Compose NoticeBoard".translated()
-    static let Video = "Video".translated()
+    static let Video = "Video"//.translated()
     static let Assignment = "Assignment".translated()
     static let Noticeboard = "Noticeboard".translated()
     

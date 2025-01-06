@@ -71,7 +71,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         chooseVideoBtn.layer.cornerRadius = Colornames.CORadius10
         
         //MARK: Translate
-        HeaderLabel.text = MenuTapbar.Video
+        HeaderLabel.text = MenuTapbar.Video.translated()
         uploadVideoTitleLbl.text = textFieldStringFile.Upload_Video
         chooseVideoLabel.text = textFieldStringFile.Click_To_Choose_video
         titleTxtFld.placeholder = textFieldStringFile.Enter_Video_Title
