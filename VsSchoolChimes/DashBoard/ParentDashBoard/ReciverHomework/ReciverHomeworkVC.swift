@@ -69,8 +69,11 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
         cell.tag = section
         cell.addGestureRecognizer(tapGesture)
+        
+        
         if expandedSections.contains(section){
             cell.ArrowImgview.image = UIImage(named: "arrow_up")
+            
         }else{
             cell.ArrowImgview.image = UIImage(named: "arrow_down")
         }
@@ -141,19 +144,42 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+//    @objc func toggleSection(_ sender: UITapGestureRecognizer) {
+//        guard let headerView = sender.view else { return }
+//        let section = headerView.tag
+//        
+//        if expandedSections.contains(section){
+//            expandedSections.remove(section)
+//            TV.reloadSections(IndexSet(integer: section), with: .automatic)
+//        }
+//        else if expandedSections.isEmpty == false {
+//            expandedSections.removeFirst()
+//            TV.reloadSections(IndexSet(integer: 0), with: .automatic)
+//        }
+//        else{
+//            expandedSections.insert(section)
+//            TV.reloadSections(IndexSet(integer: section), with: .automatic)
+//        }
+//    }
     @objc func toggleSection(_ sender: UITapGestureRecognizer) {
         guard let headerView = sender.view else { return }
         let section = headerView.tag
         
         if expandedSections.contains(section) {
             expandedSections.remove(section)
+            TV.reloadSections(IndexSet(integer: section), with: .automatic)
         } else {
+        //MARK: if let only works when the expandedSections.first is not nil
+            if let previousSection = expandedSections.first {
+                expandedSections.remove(previousSection)
+                TV.reloadSections(IndexSet(integer: previousSection), with: .automatic)
+            }
+            
             expandedSections.insert(section)
+            TV.reloadSections(IndexSet(integer: section), with: .automatic)
         }
-        
-        // Reload the section with animation
-        TV.reloadSections(IndexSet(integer: section), with: .automatic)
     }
+
     
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
