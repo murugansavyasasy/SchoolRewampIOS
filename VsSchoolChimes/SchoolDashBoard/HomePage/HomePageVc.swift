@@ -487,6 +487,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.ScheduleExamVCNavigat(from: self)
             case MenuStringFile.DailyCollection:
                 MenuRedirect.RecipientNavigat(from: self)
+                
+            case MenuStringFile.AttendanceMarking:
+                MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 break
                 
             default:

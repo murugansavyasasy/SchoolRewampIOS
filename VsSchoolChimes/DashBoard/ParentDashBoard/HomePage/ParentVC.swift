@@ -131,7 +131,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         configureButton(
             homeworkBtn,
             title: MenuStringFile.OnlineMeeting,
-            imageName: UIImage(named: "Online  Meeting"),
+            imageName: UIImage(named: "online_meeting"),
             gradientColors:[UIColor.green,UIColor.purple],
             opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
@@ -150,7 +150,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         configureButton(
             onlineMeetingBtn,
             title: MenuStringFile.Assignment,
-            imageName: UIImage(named: "Resiverassignment"),
+            imageName: UIImage(named: "Assignment"),
             gradientColors:[UIColor.yellow,UIColor.red],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )

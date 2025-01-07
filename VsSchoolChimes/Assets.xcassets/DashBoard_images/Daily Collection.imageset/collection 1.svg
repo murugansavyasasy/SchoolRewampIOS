@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" id="Collection">
+  <path fill="#6676ff" d="M47,26c-6.09,18.27-5,15.16-6,18H1L7,26Z" class="colorffcc66 svgShape"></path>
+  <path fill="#7684ff" d="M47,26,41.67,42H21.86A12.16,12.16,0,0,1,10.33,26Z" class="colorffde76 svgShape"></path>
+  <polygon fill="#5567ff" points="11 11 11 26 7 26 1 44 1 11 11 11" class="colorffba55 svgShape"></polygon>
+  <path fill="#6676ff" d="M9,11V21.68A2.32,2.32,0,0,1,6.68,24a2.33,2.33,0,0,0-2.21,1.59L1,36V11Z" class="colorffcc66 svgShape"></path>
+  <polygon fill="#d7d8e5" points="41 10 41 26 17 26 17 4 35 4 41 10" class="colordad7e5 svgShape"></polygon>
+  <polygon fill="#ebecf2" points="41 10 35 10 35 4 41 10" class="coloredebf2 svgShape"></polygon>
+  <path fill="#ebecf2" d="M41,11V24C27.87,24,20,14.29,20,4H34v6a1,1,0,0,0,1,1Z" class="coloredebf2 svgShape"></path>
+  <rect width="6" height="19" x="11" y="7" fill="#5b6bf5" class="color6fabe6 svgShape"></rect>
+  <path fill="#828ef4" d="M15,7c0,17.84-.1,17,0,17a4,4,0,0,1-4-4V7Z" class="color82bcf4 svgShape"></path>
+  <polygon fill="#828ef4" points="41 10 35 10 35 4 41 10" class="color82bcf4 svgShape"></polygon>
+  <path d="M48,26a1.13,1.13,0,0,0-.68-.95C47.1,25,46.22,25,42,25c0-16.27.12-15.29-.29-15.71C35.42,3,35.59,3,35,3H17a1,1,0,0,0-1,1V6H11a1,1,0,0,0-1,1v3H1a1,1,0,0,0-1,1C0,46.6-.34,44.56.65,44.93c.27.1,40.36.13,40.7,0a1,1,0,0,0,.52-.47C42,44.31,48,26.3,48,26ZM40.28,43H2.39L7.72,27H45.61ZM36,6.41,38.59,9H36ZM18,5H34v5a1,1,0,0,0,1,1h5V25H18ZM12,8h4V25H12Zm-2,4V25c-3.12,0-3.66-.18-3.95.68L2,37.84V12Z" fill="#000000" class="color000000 svgShape"></path>
+  <path d="M21 15H31a1 1 0 0 0 0-2H21A1 1 0 0 0 21 15zM21 19h6a1 1 0 0 0 0-2H21A1 1 0 0 0 21 19z" fill="#000000" class="color000000 svgShape"></path>
+</svg>

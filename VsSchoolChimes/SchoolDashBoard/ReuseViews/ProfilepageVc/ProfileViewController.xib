@@ -92,6 +92,7 @@
                         <constraint firstAttribute="trailing" secondItem="sdY-kb-C3z" secondAttribute="trailing" constant="68" id="ddL-ya-fRe"/>
                         <constraint firstItem="vao-if-KYe" firstAttribute="top" secondItem="ia6-TG-BZg" secondAttribute="bottom" id="kuN-sw-yUG"/>
                         <constraint firstItem="sdY-kb-C3z" firstAttribute="leading" secondItem="P0N-qG-11D" secondAttribute="leading" constant="68" id="zcm-hK-xd9"/>
+                        <constraint firstItem="ia6-TG-BZg" firstAttribute="top" secondItem="P0N-qG-11D" secondAttribute="top" id="zyF-Iv-ARr"/>
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8PE-Os-Ini">
@@ -100,7 +101,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="slk-NT-5mS">
                             <rect key="frame" x="25" y="36.999999999999986" width="343" height="211.33333333333331"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sathish" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZd-d6-c6N">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SaranRaj Shanmugam" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZd-d6-c6N">
                                     <rect key="frame" x="10" y="133.00000000000003" width="323" height="22.333333333333343"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22.333333333333343" id="LQD-MF-dLS"/>
@@ -118,7 +119,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="stuentimg 1" translatesAutoresizingMaskIntoConstraints="NO" id="GFe-bo-GI4">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downloads" translatesAutoresizingMaskIntoConstraints="NO" id="GFe-bo-GI4">
                                     <rect key="frame" x="121.66666666666666" y="17" width="100" height="100"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="100" id="hHM-MK-ak0"/>
@@ -505,7 +506,6 @@
                 <constraint firstItem="vao-if-KYe" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="200" id="cos-w6-sBd"/>
                 <constraint firstItem="ia6-TG-BZg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="d1A-KF-mNc"/>
                 <constraint firstItem="8PE-Os-Ini" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="kdb-cM-vhb"/>
-                <constraint firstItem="ia6-TG-BZg" firstAttribute="top" secondItem="P0N-qG-11D" secondAttribute="top" id="zyF-Iv-ARr"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-12.67605633802817"/>
         </view>
@@ -515,9 +515,9 @@
         <image name="Location" width="16" height="16"/>
         <image name="Phone" width="24" height="24"/>
         <image name="bloodgroup" width="24" height="24"/>
+        <image name="downloads" width="100" height="100"/>
         <image name="mail" width="26" height="26"/>
         <image name="pencil" catalog="system" width="128" height="113"/>
-        <image name="stuentimg 1" width="1062" height="1600"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -531,7 +531,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
