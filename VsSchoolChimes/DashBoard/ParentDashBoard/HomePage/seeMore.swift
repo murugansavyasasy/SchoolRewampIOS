@@ -17,11 +17,12 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
     var currentIndex = 0
     var autoScrollTimer: Timer?
     var timer: Timer?
+    var imageItems = ["Download2","sale-banner-templates","Download3"]
     override func awakeFromNib() {
         super.awakeFromNib()
 
         
-       
+        adCollectionView.layer.cornerRadius = 10
         adCollectionView.delegate = self
         adCollectionView.dataSource = self
         
@@ -33,6 +34,12 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+      
+    adCollectionView.layer.cornerRadius = 10
+        
+    }
     func startAutoScroll() {
         autoScrollTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
     }
@@ -57,7 +64,8 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.addCvCell, for: indexPath) as! addCvCell
-      
+        cell.imageView.image = UIImage(named: imageItems[indexPath.row])
+        cell.imageView.layer.cornerRadius = 5
         return cell
     }
     
