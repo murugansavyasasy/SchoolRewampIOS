@@ -6,7 +6,9 @@
 //
 
 import UIKit
-
+protocol SumitionDelegate{
+    func sumition(index:Int)
+}
 class AssignmentListCTVC: UITableViewCell {
     
     
@@ -33,6 +35,7 @@ class AssignmentListCTVC: UITableViewCell {
     @IBOutlet weak var CreatedTime: UILabel!
     
     var didSelectDelegate : DidSelectDelegate?
+    var Delegate : SumitionDelegate?
     
        override func awakeFromNib() {
            super.awakeFromNib()
@@ -78,11 +81,7 @@ class AssignmentListCTVC: UITableViewCell {
         didSelectDelegate?.select(index: 1, value:"\(sender.tag)",Img:[""],Pdf:"https://icseindia.org/document/sample.pdf",text:"sjedgwvfefjd xuvu dvs dhv sshgdvsg",type:"")
     }
     @IBAction func submitBtn(_ sender: UIButton) {
-        
-        
-        
-        
-        
+        Delegate?.sumition(index: sender.tag)
     }
     
 }
