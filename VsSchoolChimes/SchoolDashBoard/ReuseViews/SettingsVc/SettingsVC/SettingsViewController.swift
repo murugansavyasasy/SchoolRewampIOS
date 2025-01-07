@@ -113,7 +113,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         cell.nameLbl.text = sections[indexPath.section].items[indexPath.row].translated()
         cell.nameLbl.textColor = sections[indexPath.section].items[indexPath.row].translated() == menuname.logout ? .red : .black
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
-        cell.imgView.tintColor =  Images[indexPath.section].uiImages[indexPath.row] == UIImage(named: "iphone.and.arrow.forward") ? .red : .black
+        cell.imgView.tintColor =  Images[indexPath.section].uiImages[indexPath.row] == UIImage(systemName: "iphone.and.arrow.forward") ? .red : .black
         cell.selectionStyle = .none
         
         return cell
@@ -125,11 +125,13 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         
         if  sections[indexPath.section].items[indexPath.row] == menuname.contactUs{
             let vc = ContactUsVc(nibName: nil, bundle: nil)
+            vc.passValue = passVale
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }else if  sections[indexPath.section].items[indexPath.row] == menuname.notifications{
             
             let vc = NotificationViewController(nibName: nil, bundle: nil)
+            vc.passValue = passVale
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
@@ -138,11 +140,13 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
             let vc = ReportBugVcViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
+            vc.passValue = passVale
             present(vc, animated: true)
             
         }else if  sections[indexPath.section].items[indexPath.row] == menuname.feedback{
             
             let vc = RateUsViewController(nibName: nil, bundle: nil)
+            vc.passValue = passVale
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
@@ -161,6 +165,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
             
             let vc = FAQViewController(nibName: nil, bundle: nil)
+            vc.passValue = passVale
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
@@ -176,6 +181,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }else if sections[indexPath.section].items[indexPath.row] == menuname.termsAndConditions{
             
             let vc = TermsAndCondVC(nibName: nil, bundle: nil)
+            vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
         }

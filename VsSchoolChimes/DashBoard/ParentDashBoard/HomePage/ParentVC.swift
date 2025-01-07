@@ -110,7 +110,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
-   
+        
         
         let searchImage  = UITapGestureRecognizer(target: self, action:#selector(SearchViewHidden))
         searchImgView.addGestureRecognizer(searchImage)
@@ -127,11 +127,11 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         loginDetailView.addGestureRecognizer(redirectGesture)
         
         
-       
+        
         configureButton(
             homeworkBtn,
-            title: "Online  Meeting",
-            imageName: UIImage(named: "Online  Meeting"),
+            title: MenuStringFile.OnlineMeeting,
+            imageName: UIImage(named: "online_meeting"),
             gradientColors:[UIColor.green,UIColor.purple],
             opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
@@ -140,7 +140,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         // Configure assignmentkBtn
         configureButton(
             assignmentkBtn,
-            title: "Notice Board",
+            title: MenuStringFile.NoticeBoard,
             imageName: UIImage(named: "Notice Board"),
             gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
             lightenFactor: 0.6 // 40% lighter
@@ -149,8 +149,8 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         // Configure onlineMeetingBtn
         configureButton(
             onlineMeetingBtn,
-            title: "Assignment",
-            imageName: UIImage(named: "Resiverassignment"),
+            title: MenuStringFile.Assignment,
+            imageName: UIImage(named: "Assignment"),
             gradientColors:[UIColor.yellow,UIColor.red],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
@@ -162,8 +162,8 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
         view.applyGradient(
             colors: [
-                UIColor(hex: "#7ed957"),  // Green
-                UIColor(hex: "#0097b2")   // Blue
+                Colornames.gradientBlue,  // Green
+                Colornames.gradientgreen   // Blue
             ],
             startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
             endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
@@ -242,9 +242,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
             )
         }
     }
-
-
-
+    
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("viewDidAppear - View has appeared on the screen.")
@@ -299,7 +299,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         gradientLayer.endPoint = CGPoint(x: 0.9, y: 0.9)    // Bottom-right
         profileFullview.layer.insertSublayer(gradientLayer, at: 0)
         profileFullview.layer.masksToBounds = true
-  
+        
     }
     
     func cellRegistration(){
@@ -323,7 +323,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
     }
     
-   
+    
     
     @IBAction func openNotification(){
         let vc = NotificationViewController(nibName: nil, bundle: nil)
@@ -341,7 +341,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return displayedCategories.count // Ensure ItemnCount matches your data source
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("Row: \(indexPath.row)")
         
@@ -358,7 +358,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell, for: indexPath) as! BottomCVCell
             cell.MenuLbl.text = nil
             cell.MenuImgView.image = nil
-          
+            
             
             let label = MenuRedirect.receiverItems[indexPath.row].translated()
             let img = UIImage(named: MenuRedirect.receiverItems[indexPath.row])
@@ -374,7 +374,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         }
     }
-
+    
     
     @objc func seeAllButtonTapped() {
         if isShowingAll {
@@ -392,7 +392,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         isShowingAll.toggle() // Toggle the state
         bottomCv.reloadData() // Refresh the collection view
-//        updateCollectionViewHeight()
+        //        updateCollectionViewHeight()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -402,7 +402,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         if indexPath.row < MenuRedirect.receiverItems.count {
-          
+            
             let menuItem = MenuRedirect.receiverItems[indexPath.row].translated()
             
             switch menuItem {
@@ -440,6 +440,8 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.receiverAttendancereport(from: self)
             case ReceiverMenuItems.ExamMarks.translated():
                 MenuRedirect.resiverExamMark(from: self)
+            case ReceiverMenuItems.CertificateRequest.translated():
+                MenuRedirect.receiverCertificateRequest(from: self)
             default:
                 break
             }
@@ -455,10 +457,10 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     @IBAction func homeWork(_ sender: UIButton) {
-//        MenuRedirect.receiverHomework(from: self)
+        
         MenuRedirect.senderOnlineNavigate(from: self)
     }
-
+    
 }
 
 @available(iOS 14.0, *)
@@ -469,15 +471,15 @@ extension ParentVC: UICollectionViewDelegateFlowLayout {
         if indexPath.row == 6{
             return CGSize(width: collectionView.frame.width, height: 160)
         }
-   
+        
         let width = (collectionView.frame.width) / 3
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
-
+        
         let label = MenuRedirect.receiverItems[indexPath.row].translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
         let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
-
+        
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height)
     }
@@ -497,8 +499,6 @@ extension ParentVC: UISearchBarDelegate{
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         Searchbar.endEditing(true)
-        //        let currentCell = TopCv.cellForItem(at: IndexPath(row: Int(currentSelectedIndex), section: 0))
-        //        currentCell?.transformToStandard()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -569,11 +569,7 @@ extension UICollectionViewCell{
 
 
 extension UIView {
-    /// Apply a gradient color to the view
-    /// - Parameters:
-    ///   - colors: Array of `UIColor` for the gradient
-    ///   - startPoint: The start point of the gradient (default is top-center)
-    ///   - endPoint: The end point of the gradient (default is bottom-center)
+    
     func applyGradient(colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) {
         // Adjust the alpha of the colors to make them less opaque
         let adjustedColors = colors.map { $0.withAlphaComponent(0.7) }

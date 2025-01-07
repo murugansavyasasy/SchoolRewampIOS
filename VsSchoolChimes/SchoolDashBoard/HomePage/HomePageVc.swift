@@ -385,8 +385,6 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.MenuLbl.text = label
                 cell.MenuImgView.image  = img
                 cell.GradientView.backgroundColor = .clr
-//                cell.applyGradient(colours: [UIColor.topBackgroundCLr.cgColor,UIColor.systemGreen.cgColor],xstart: 0.8,ystart: 0.8)
-//                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     cell.GradientView.animateView(enable: false)
                 }
@@ -487,6 +485,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.ScheduleExamVCNavigat(from: self)
             case MenuStringFile.DailyCollection:
                 MenuRedirect.RecipientNavigat(from: self)
+                
+            case MenuStringFile.AttendanceMarking:
+                MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 break
                 
             default:

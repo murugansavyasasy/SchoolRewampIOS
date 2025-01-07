@@ -16,9 +16,9 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         selectImgPdfview.imageCollectionview.reloadData()
     }
     var selectedImages: [UIImage] = []
+    @IBOutlet weak var outerView: UIView!
     let photoPickManager = PhotoPickerManager.shared
  
-    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var DescriptionLbl: UILabel!
@@ -33,9 +33,22 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
-       
+        selectImgPdfview.imageCollectionview.delegate = self
+        selectImgPdfview.imageCollectionview.dataSource = self
+        outerView.layer.cornerRadius = 10
+        outerView.layer.shadowColor = UIColor.black.cgColor
+        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        outerView.layer.shadowRadius = 5
+        outerView.layer.shadowOpacity = 0.3
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
+        view.addGestureRecognizer(tapGesture)
     }
-
+    // Action for tap gesture
+      @objc func viewTapped(_ sender: UITapGestureRecognizer) {
+          if sender.view != outerView {
+//              dismiss(animated: true)
+          }
+      }
 
     
     
@@ -45,7 +58,6 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         //MARK: Button Font Style
         //chooseImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        backBtn.setTitle("Submission", for: .normal)
         //MARK: Label Font Style
         AddphotosLbl.setFont(style: .title, size: FontSize.TitleSize)
     
@@ -107,18 +119,6 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBAction func openCamera() {
         // Check if the camera is available
         photoPickManager.openCamera(from: self)
-    //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-    //            let imagePicker = UIImagePickerController()
-    //            imagePicker.delegate = self
-    //            imagePicker.sourceType = .camera
-    //            imagePicker.allowsEditing = true // Allows editing of the captured image
-    //            present(imagePicker, animated: true, completion: nil)
-    //        } else {
-    //            // Camera is not available, show an alert
-    //            let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
-    //            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
-    //            present(alert, animated: true, completion: nil)
-    //        }
     }
 
 
@@ -144,13 +144,6 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
   
 
 }
-
-
-
-
-
-
-
 
 @available(iOS 14.0, *)
 extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{

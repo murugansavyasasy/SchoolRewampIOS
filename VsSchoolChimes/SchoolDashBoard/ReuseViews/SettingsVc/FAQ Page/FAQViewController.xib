@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FAQViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="FaqPageHeading" destination="uV4-3v-ddw" id="ady-wS-NkX"/>
+                <outlet property="outerView" destination="MHi-tq-4Ur" id="qrc-ZJ-3hI"/>
                 <outlet property="submitbutton" destination="uYF-IK-vRR" id="CHv-ja-Gcz"/>
                 <outlet property="tableview" destination="0q4-N6-E91" id="RUH-qS-fkd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -53,7 +54,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" name="topBackgroundCLr"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="0hU-CL-pSR" secondAttribute="bottom" constant="16" id="44d-p0-gXb"/>
                                 <constraint firstItem="0hU-CL-pSR" firstAttribute="top" secondItem="SrV-0t-SSK" secondAttribute="top" constant="15" id="4GD-6I-i32"/>
@@ -111,7 +112,7 @@
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -120,7 +121,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RateUsViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="RateusHeading" destination="dff-Fo-XsG" id="6wy-8H-eGv"/>
+                <outlet property="outerView" destination="Swq-u5-oa5" id="Xoi-Dt-uSN"/>
                 <outlet property="tableview" destination="33x-KJ-bEt" id="x9c-lN-hV3"/>
                 <outlet property="view" destination="sRa-T6-K2T" id="3Qn-FS-0Fx"/>
             </connections>
@@ -85,7 +86,7 @@
     <resources>
         <image name="arrow.backward" catalog="system" width="128" height="95"/>
         <namedColor name="topBackgroundCLr">
-            <color red="0.65100002288818359" green="0.85600000619888306" blue="0.875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

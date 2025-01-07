@@ -81,7 +81,7 @@ struct ReceiverMenuItems {
     static let Assignment = "receiver_assignment"
     static let OnlineMeeting = "online_meeting"
     static let AttendanceReport = "attendance_report"
-    static let EventsHolidays = "Events/Holidays"
+    static let EventsHolidays = "Events"
     static let RequestLeave = "Request Leave"
     static let FeeDetails = "Fee Details"
     static let Images = "Images"

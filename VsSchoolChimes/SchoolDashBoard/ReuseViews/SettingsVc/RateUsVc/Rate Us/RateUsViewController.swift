@@ -12,15 +12,23 @@ protocol RatingDelegate{
 }
 class RateUsViewController: UIViewController{
     
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var RateusHeading: UILabel!
     @IBOutlet weak var tableview: UITableView!
     var isSelected:Bool = false
+    var passValue = 1
     override func viewDidLoad() {
         super.viewDidLoad()
+        if passValue == 1{
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }else{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
         
         RateusHeading.text = MenuTapbar.Rate_Us.translated()
         RateusHeading.setFont(style: .header, size: 20)
-        
         UiUpdate()
         
     }
