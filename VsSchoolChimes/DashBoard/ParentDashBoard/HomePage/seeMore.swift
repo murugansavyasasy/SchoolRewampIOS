@@ -66,7 +66,7 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
         return CGSize(width: adCollectionView.frame.width, height: adCollectionView.frame.height+50)
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-       print(indexPath.row)
+       
             currentIndex = indexPath.row
             self.pageContorler.currentPage = indexPath.row
         

@@ -48,7 +48,7 @@ class LanguageVc: UIViewController {
         baseview.layer.cornerRadius = Colornames.CORadius15
         
         ConfirmBtn.layer.cornerRadius = Colornames.CORadius10
-        
+        ConfirmBtn.backgroundColor = .lightGray
         
         
         ConfirmBtn.setTitle(Buttontext[index], for: .normal) // Use setTitle(_:for:) here
@@ -80,29 +80,43 @@ class LanguageVc: UIViewController {
     }
     
     @IBAction func ConfirmClick(_ sender: Any) {
-        UserDefaults.standard.set(index, forKey: "index")
-        let userDefault = UserDefaults.standard
-        userDefault.set(languageCode, forKey: DefaultsKeys.Language)
-        
-        print("languageCode",languageCode)
-        TranslationManager.shared.setLanguage(languageCode)
-        
-        // Apply the language immediately
-        userDefault.synchronize()
-        let value = UserDefaults.standard.integer(forKey: "passvalue")
-        
-        LanguageManager.shared.setLanguage(languageCode)
-//                
-//                // Reload UI
-//        reloadApplication(value: value)
-        delegate?.backtohome()
-        dismiss(animated: true)
-//        let vc = TapBarVC(nibName: nil, bundle: nil)
-//        vc.passedValue = value
-//        vc.languageCode = languageCode
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-        
+        if ConfirmBtn.backgroundColor == .button{
+            UserDefaults.standard.set(index, forKey: "index")
+            let userDefault = UserDefaults.standard
+            userDefault.set(languageCode, forKey: DefaultsKeys.Language)
+            
+            print("languageCode",languageCode)
+            TranslationManager.shared.setLanguage(languageCode)
+            
+            // Apply the language immediately
+            userDefault.synchronize()
+            let value = UserDefaults.standard.integer(forKey: "passvalue")
+            
+            LanguageManager.shared.setLanguage(languageCode)
+            //
+            //                // Reload UI
+            //        reloadApplication(value: value)
+//            delegate?.backtohome()
+//            dismiss(animated: true)
+            //        let vc = TapBarVC(nibName: nil, bundle: nil)
+            //        vc.passedValue = value
+            //        vc.languageCode = languageCode
+            //        vc.modalPresentationStyle = .fullScreen
+            //        present(vc, animated: true)
+            // Reload the entire application
+                       guard let window = UIApplication.shared.keyWindow else { return }
+                       let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
+                       let initialViewController = storyboard.instantiateInitialViewController()
+                       window.rootViewController = initialViewController
+                       window.makeKeyAndVisible()
+
+                       // Optional: Add a transition animation
+                       UIView.transition(with: window,
+                                         duration: 0.3,
+                                         options: .transitionCrossDissolve,
+                                         animations: nil,
+                                         completion: nil)
+        }
     }
     
     // Reload the application to apply the new language
@@ -165,6 +179,7 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        ConfirmBtn.backgroundColor = UIColor.button
         
         selectedLanguage = Items[indexPath.row].language
         Items[indexPath.row].selected = true

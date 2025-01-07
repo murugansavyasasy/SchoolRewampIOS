@@ -52,6 +52,7 @@ class SelectRecipientVC: UIViewController {
         
         SendButton.layer.cornerRadius = Colornames.CORadius10
         SendButton.isHidden = true
+        specificStudentBtn.layer.cornerRadius = Colornames.CORadius10
         specificStudentBtn.isHidden = true
         
 
@@ -133,7 +134,7 @@ class SelectRecipientVC: UIViewController {
     @IBAction func selectStdGrp(){
         TapBarLbl.text = "School Name : " + (SelectSchoolLabel.text ?? "Select Recipient")
         flag = 1
-        SelectSchool.isHidden = true
+        //SelectSchool.isHidden = true
         sendAllview.isHidden = true
         StdorSec.isHidden = true
         SendButton.isHidden = false
@@ -154,7 +155,7 @@ class SelectRecipientVC: UIViewController {
         
         TapBarLbl.text = "School Name : " + (SelectSchoolLabel.text ?? "Select Recipient")
         flag = 2
-        SelectSchool.isHidden = true
+      //  SelectSchool.isHidden = true
         sendAllview.isHidden = true
         stdorgrp.isHidden = true
         SendButton.isHidden = false
