@@ -1,6 +1,16 @@
 import UIKit
 
-class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate{
+class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate, SumitionDelegate{
+    func sumition(index: Int) {
+        if #available(iOS 14.0, *) {
+            let vc = submitVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            self.present(vc, animated: false)
+        }
+       
+    }
+    
     
     
     @IBOutlet weak var backBtn: UIButton!
@@ -90,6 +100,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         cell.CreaterdDate.text = filteredData?[indexPath.row].date
         cell.viewBtn.tag = indexPath.row
         cell.didSelectDelegate = self
+        cell.Delegate = self
         return cell
     }
     

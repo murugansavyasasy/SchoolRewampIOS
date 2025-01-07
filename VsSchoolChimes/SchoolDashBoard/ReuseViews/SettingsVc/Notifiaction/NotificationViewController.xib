@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NotificationViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="NotificationpageHeader" destination="H3W-XM-cgS" id="wTd-CA-Omk"/>
+                <outlet property="outerView" destination="9od-LZ-gxA" id="KSp-ma-Z7i"/>
                 <outlet property="searchbar" destination="9ed-UR-7vR" id="efi-CM-BeT"/>
                 <outlet property="tableview" destination="pvA-xg-oDV" id="1l7-J9-Yqn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -54,7 +55,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" name="topBackgroundCLr"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="H3W-XM-cgS" firstAttribute="centerY" secondItem="GOa-gl-bqa" secondAttribute="centerY" id="LBf-Av-FXg"/>
                                 <constraint firstItem="H3W-XM-cgS" firstAttribute="centerX" secondItem="GOa-gl-bqa" secondAttribute="centerX" id="QFS-vj-J4a"/>
