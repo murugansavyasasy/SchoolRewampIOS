@@ -172,7 +172,7 @@ class MenuTapbar{
     static let FAQ = "FAQ".translated()
     static let Rate_Us = "Rate Us".translated()
     static let Report_a_bug = "Report a bug".translated()
-    static let Settings = "Settings".translated()
+    static let Settings = "Settings"
     static let Contact_Us = "Contact Us".translated()
     static let Notifications = "Notifications".translated()
     static let ComposeNotifications = "Compose NoticeBoard".translated()

@@ -502,6 +502,8 @@
 		84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F02D086A490024A46A /* SparkViewFactory.swift */; };
 		84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F32D086A490024A46A /* CircleColorSparkViewFactory.swift */; };
 		84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E02D086A490024A46A /* ClassicFireworkController.swift */; };
+		84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */; };
+		84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */; };
 		84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */; };
 		84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */; };
 		84EFF4962CE388B800E39BEA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */; };
@@ -1095,6 +1097,8 @@
 		84C829F42D086A490024A46A /* ImageSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkView.swift; sourceTree = "<group>"; };
 		84C829F52D086A490024A46A /* ImageSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkViewFactory.swift; sourceTree = "<group>"; };
 		84C829F72D086A490024A46A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificStudentTvcell.swift; sourceTree = "<group>"; };
+		84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecificStudentTvcell.xib; sourceTree = "<group>"; };
 		84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiechartCVCell.swift; sourceTree = "<group>"; };
 		84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PiechartCVCell.xib; sourceTree = "<group>"; };
 		84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -2114,6 +2118,8 @@
 				849757062D2BA575006A27FD /* RecipientTvCell.xib */,
 				849757072D2BA575006A27FD /* Std_Grp_header.swift */,
 				849757082D2BA575006A27FD /* Std_Grp_header.xib */,
+				84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */,
+				84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */,
 			);
 			path = selectRecipientTvCell;
 			sourceTree = "<group>";
@@ -3444,6 +3450,7 @@
 				840A7CEB2D24FDAA0061EAEA /* ExammarkFooterView.xib in Resources */,
 				84395FEA2D10026100FC3242 /* ChatVC.xib in Resources */,
 				84C00E712CF6DF9600E34A83 /* splashVc.xib in Resources */,
+				84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */,
 				84A5BE492C19719700E32496 /* Base in Resources */,
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
@@ -3898,6 +3905,7 @@
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
 				84C829FD2D086A490024A46A /* ImageSparkView.swift in Sources */,
 				84C829FE2D086A490024A46A /* CGPoint+Extensions.swift in Sources */,
+				84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */,
 				84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */,
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
 				849F4C7E2D24012E00C9F4BF /* ParentVC.swift in Sources */,

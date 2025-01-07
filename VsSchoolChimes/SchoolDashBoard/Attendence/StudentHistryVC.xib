@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StudentHistryVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HeaderLabel" destination="Ia6-uU-gnj" id="qRo-Pa-HUP"/>
+                <outlet property="HeaderviewHeight" destination="s6D-AA-NXl" id="p8z-qZ-UOK"/>
                 <outlet property="categoryDropDownView" destination="LWT-sJ-Kft" id="Aw2-Bh-Sia"/>
                 <outlet property="filterBtn" destination="trk-rO-gYS" id="KvH-Lq-bLr"/>
                 <outlet property="headerView" destination="GN1-gS-A5g" id="X5M-qX-G4s"/>

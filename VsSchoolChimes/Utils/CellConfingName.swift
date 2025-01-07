@@ -91,6 +91,7 @@ class CellConfingName {
     static let  MarkTvCell = "MarkTvCell"
     static let  addCvCell = "addCvCell"
     static let  seeMore = "seeMore"
+    static let  SpecificStudentTvcell = "SpecificStudentTvcell"
     
     
     

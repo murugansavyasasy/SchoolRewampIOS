@@ -57,6 +57,8 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("classTimeTableStrings.timeArr.count",classTimeTableStrings.timeArr.count)
+        print("classTimeTableStrings.TotimeArr.count",classTimeTableStrings.toTimeArr.count)
         return classTimeTableStrings.timeArr.count
     }
     
