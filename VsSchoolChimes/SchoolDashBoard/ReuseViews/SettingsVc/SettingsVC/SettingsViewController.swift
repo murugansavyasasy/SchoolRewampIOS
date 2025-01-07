@@ -143,6 +143,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         }else if  sections[indexPath.section].items[indexPath.row] == menuname.feedback{
             
             let vc = RateUsViewController(nibName: nil, bundle: nil)
+            vc.passValue = passVale
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
             
