@@ -101,11 +101,11 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTr-vv-kNc">
-                                                    <rect key="frame" x="305.66666666666669" y="4.9999999999999991" width="83.333333333333314" height="14.666666666666664"/>
+                                                    <rect key="frame" x="313" y="4.9999999999999991" width="76" height="14.666666666666664"/>
                                                     <attributedString key="attributedText">
-                                                        <fragment content="Change Roll &gt;&gt;">
+                                                        <fragment content="Change Roll &gt;">
                                                             <attributes>
-                                                                <color key="NSColor" red="0.42352938649999999" green="0.58039218189999997" blue="0.78039217000000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                 <font key="NSFont" metaFont="system"/>
                                                                 <integer key="NSUnderline" value="1"/>
                                                             </attributes>
