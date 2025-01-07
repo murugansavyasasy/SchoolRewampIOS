@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "attendance 1.png",
+      "filename" : "appointment.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "attendance 2.png",
+      "filename" : "appointment 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "attendance 3.png",
+      "filename" : "appointment 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

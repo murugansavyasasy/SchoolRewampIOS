@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "competition.svg",
+      "filename" : "quiz (1).svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "competition 1.svg",
+      "filename" : "quiz (1) 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "competition 2.svg",
+      "filename" : "quiz (1) 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

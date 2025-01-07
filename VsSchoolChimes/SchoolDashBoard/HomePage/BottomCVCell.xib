@@ -27,7 +27,7 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scale" translatesAutoresizingMaskIntoConstraints="NO" id="KTI-hm-DIW">
                                         <rect key="frame" x="5" y="5" width="30" height="30"/>
-                                        <color key="tintColor" name="menuImgColor"/>
+                                        <color key="tintColor" name="gradientBlue1"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -89,8 +89,8 @@
     </objects>
     <resources>
         <image name="scale" width="42.666667938232422" height="42.666667938232422"/>
-        <namedColor name="menuImgColor">
-            <color red="0.48600000143051147" green="0.74900001287460327" blue="0.77999997138977051" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        <namedColor name="gradientBlue1">
+            <color red="0.0" green="0.59200000762939453" blue="0.69800001382827759" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
