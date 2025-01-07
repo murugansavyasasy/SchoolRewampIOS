@@ -22,7 +22,7 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
         super.awakeFromNib()
 
         
-        adCollectionView.layer.cornerRadius = 10
+//        adCollectionView.layer.cornerRadius = 10
         adCollectionView.delegate = self
         adCollectionView.dataSource = self
         
@@ -37,7 +37,7 @@ class seeMore: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDa
     override func layoutSubviews() {
         super.layoutSubviews()
       
-    adCollectionView.layer.cornerRadius = 10
+//    adCollectionView.layer.cornerRadius = 10
         
     }
     func startAutoScroll() {
