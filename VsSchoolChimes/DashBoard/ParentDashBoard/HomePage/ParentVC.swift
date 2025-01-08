@@ -11,6 +11,7 @@ import AVFoundation
 @available(iOS 14.0, *)
 class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var changeRollLbl: UILabel!
     @IBOutlet weak var lowBottomCv: UICollectionView!
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var templateview: UIView!
@@ -63,6 +64,8 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
+        changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
+        changeRollLbl.textColor = .link
         displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
         displayedCategories.insert(newString, at: 5)
         filteredItems = MenuRedirect.items
@@ -123,8 +126,10 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
+        
+      
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
-        loginDetailView.addGestureRecognizer(redirectGesture)
+        changeRollLbl.addGestureRecognizer(redirectGesture)
         
         
         
@@ -156,6 +161,14 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         )
     }
     
+    
+    
+    @IBAction func ViewDetailsBtn(_ sender: Any) {
+        
+        print("clikcHappen")
+        MenuRedirect.receiverAttendancereport(from: self)
+        
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -348,9 +361,10 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if indexPath.row == 6 {
             // Handle the "seeMore" cell
             let adCell = collectionView.dequeueReusableCell(withReuseIdentifier:CellConfingName.seeMore, for: indexPath) as! seeMore
+          
             adCell.advertisements = advertisements // Pass advertisement data to the ad cell
             adCell.adCollectionView.reloadData() // Refresh the embedded collection view
-            adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
+            adCell.seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
             adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
             return adCell
         } else {

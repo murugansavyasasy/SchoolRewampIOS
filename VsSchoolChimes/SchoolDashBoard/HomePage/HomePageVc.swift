@@ -371,7 +371,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             if indexPath.row == 6 {
                 let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.seeMore, for: indexPath) as! seeMore
                 adCell.advertisements = advertisements
-                adCell.seeAllButton.setTitle(isShowingAll ? "Show Less" : "See All", for: .normal)
+                adCell.seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
                 adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
                 return adCell
             }else{
@@ -575,7 +575,7 @@ extension HomePageVc: UISearchBarDelegate{
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         

@@ -126,20 +126,20 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         if  sections[indexPath.section].items[indexPath.row] == menuname.contactUs{
             let vc = ContactUsVc(nibName: nil, bundle: nil)
             vc.passValue = passVale
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
         }else if  sections[indexPath.section].items[indexPath.row] == menuname.notifications{
             
             let vc = NotificationViewController(nibName: nil, bundle: nil)
             vc.passValue = passVale
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
         }
         else if  sections[indexPath.section].items[indexPath.row] == menuname.reportABug{
             
             let vc = ReportBugVcViewController(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
             vc.passValue = passVale
             present(vc, animated: true)
             
@@ -147,7 +147,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
             let vc = RateUsViewController(nibName: nil, bundle: nil)
             vc.passValue = passVale
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
             
         }
@@ -166,7 +166,7 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
             
             let vc = FAQViewController(nibName: nil, bundle: nil)
             vc.passValue = passVale
-            vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .overFullScreen
             present(vc, animated: true)
         }
         

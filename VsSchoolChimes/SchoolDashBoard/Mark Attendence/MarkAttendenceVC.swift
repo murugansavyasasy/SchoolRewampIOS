@@ -403,6 +403,7 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
             cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
             cell.statusView.backgroundColor = .systemRed
             cell.statusLbl.text = "Absent"
+           
            // cell.Imgview.image = UIImage(named: "Absent")
         }
         
