@@ -17,12 +17,20 @@ class SpecificStudentTvcell: UITableViewCell {
     @IBOutlet weak var alphabetLbl: UILabel!
     @IBOutlet weak var AlphabetView: UIView!
     @IBOutlet weak var cellView: UIView!
+    var tapAction: (() -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
-        AlphabetView.layer.cornerRadius = AlphabetView.frame.width/2
-//        AdmisionNoLbl.isHidden = true
-//        RollNoLbl.isHidden = true
         
+        alphabetLbl.setFont(style: .title, size: FontSize.TitleSize)
+        NameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        RollNoLbl.setFont(style: .body, size: FontSize.BodySize)
+        AdmisionNoLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        AlphabetView.layer.cornerRadius = AlphabetView.frame.width/2
+        CheckBoxImgview.image = UIImage(named:"CheckCircle")
+        let dropdowntap = UITapGestureRecognizer(target: self, action: #selector(showadmision_and_rollno))
+        DropdownImg.addGestureRecognizer(dropdowntap)
+        DropdownImg.isUserInteractionEnabled = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -30,5 +38,14 @@ class SpecificStudentTvcell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+    @IBAction func showadmision_and_rollno(){
+        print("hideandshow123")
+//        if hideandshow == true{
+//            hideandshow = false
+//        }else{
+//            hideandshow = true
+//        }
+//        historyTable.reloadData()
+        tapAction?()
+    }
 }

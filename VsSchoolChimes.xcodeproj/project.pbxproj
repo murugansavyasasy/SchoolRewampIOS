@@ -1559,6 +1559,7 @@
 		18926D252D04140B002BBB97 /* PendingFeeReport */ = {
 			isa = PBXGroup;
 			children = (
+				84F0466C2D1D5ED600C686BD /* MarkAttendenceCV.swift */,
 				18926D202D04140B002BBB97 /* Cell */,
 				18926D212D04140B002BBB97 /* PendingFeeReportViewController.swift */,
 				18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */,
@@ -2180,7 +2181,6 @@
 				849978412CEF1FE5007D45BA /* StudentHistryVC.xib */,
 				84F046682D1D3FE300C686BD /* MarkAtendenceTV.swift */,
 				84F046692D1D3FE300C686BD /* MarkAtendenceTV.xib */,
-				84F0466C2D1D5ED600C686BD /* MarkAttendenceCV.swift */,
 				84F0466D2D1D5ED600C686BD /* MarkAttendenceCV.xib */,
 			);
 			path = Attendence;

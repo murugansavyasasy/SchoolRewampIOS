@@ -10,6 +10,10 @@ import DropDown
 
 class MarkAttendenceVC: UIViewController {
 
+    @IBOutlet weak var HalfdayImgview: UIImageView!
+    @IBOutlet weak var FulldayImgview: UIImageView!
+    @IBOutlet weak var HalfdayView: UIView!
+    @IBOutlet weak var FulldayView: UIView!
     @IBOutlet weak var AttendTypeLbl: UILabel!
     @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var standardLbl: UILabel!
@@ -51,11 +55,16 @@ class MarkAttendenceVC: UIViewController {
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        calenderview.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         ButtonStackview.layer.cornerRadius = 20
         AttendRecordBtn.layer.cornerRadius = 20
         MarkAttendBtn.layer.cornerRadius = 20
         MarkAbsentiesBtn.layer.cornerRadius = 10
-        AttendenceTypeView.layer.cornerRadius = 10
+       // AttendenceTypeView.layer.cornerRadius = 10
         standardView.layer.cornerRadius = 10
         SectionView.layer.cornerRadius = 10
         markAllPresentBtn.layer.cornerRadius = 10
@@ -84,10 +93,16 @@ class MarkAttendenceVC: UIViewController {
         SectionView.addGestureRecognizer(sectionTap)
         
         let AttendenceTap = UITapGestureRecognizer(target: self, action: #selector(SelectType))
-        AttendenceTypeView.addGestureRecognizer(AttendenceTap)
+      //  AttendenceTypeView.addGestureRecognizer(AttendenceTap)
         
         let SessionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSession))
         sessionView.addGestureRecognizer(SessionTap)
+        
+        let fulltap = UITapGestureRecognizer(target: self, action: #selector(fulldayAction))
+        FulldayView.addGestureRecognizer(fulltap)
+        
+        let halftap = UITapGestureRecognizer(target: self, action: #selector(HalfdayAction))
+        HalfdayView.addGestureRecognizer(halftap)
         
         let nib = UINib(nibName: CellConfingName.AttendenceReportTVCell, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.AttendenceReportTVCell)
@@ -151,6 +166,14 @@ class MarkAttendenceVC: UIViewController {
             // calenderHeight.constant = 260
         }
         
+    }
+    @objc func fulldayAction(){
+        FulldayImgview.image = UIImage(named: "checked_Tick")
+        HalfdayImgview.image = UIImage(named: "CheckCircle")
+    }
+    @objc func HalfdayAction(){
+        HalfdayImgview.image = UIImage(named: "checked_Tick")
+        FulldayImgview.image = UIImage(named: "CheckCircle")
     }
     
     @IBAction func SelectStandard() {
@@ -290,7 +313,7 @@ class MarkAttendenceVC: UIViewController {
         gradientcolours(button: AttendRecordBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
         
-        AttendenceTypeView.isHidden = false
+       // AttendenceTypeView.isHidden = false
         MarkAbsentiesBtn.isHidden = false
         markAllPresentBtn.isHidden = false
         stackview.isHidden = false
@@ -318,7 +341,7 @@ class MarkAttendenceVC: UIViewController {
         
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         MarkAttendBtn.setTitleColor(UIColor.black, for: .normal)
-        AttendenceTypeView.isHidden = true
+      //  AttendenceTypeView.isHidden = true
         MarkAbsentiesBtn.isHidden = true
         markAllPresentBtn.isHidden = true
         stackview.isHidden = true
@@ -336,6 +359,7 @@ class MarkAttendenceVC: UIViewController {
     @IBAction func MarkAbsentAct(_ sender: Any) {
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
+        vc.id = 2
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
