@@ -109,7 +109,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         CalendarView.layer.borderColor = UIColor.lightGray.cgColor
         SectionView.layer.cornerRadius = 10
         StandardView.layer.cornerRadius = 10
-        DetailsTxtview.text = TexviewStringFile.Enter_Homework_Description
+        DetailsTxtview.text = CommonStringFile.Description
         DetailsTxtview.textColor = .lightGray
         CustomDateBtn.layer.cornerRadius = 10
         CustomDateBtn.layer.borderWidth = 1
@@ -544,7 +544,7 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             //            cell.collectionview.isHidden = false
             cell.pagecontroller.isHidden = false
             cell.SelectBtn.isHidden = true
-            cell.HomeworkTitleLbl.text = "Write Assignment"
+            cell.HomeworkSubjectLbl.text = "Write Assignment"
             cell.TitleLbl.text = "Tamil"
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
@@ -571,12 +571,12 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             cell.pagecontrollerheight.constant = 0
             cell.pagecontroller.isHidden = true
             
-            cell.datelbl.isHidden = true
+           // cell.datelbl.isHidden = true
             cell.pinImage.isHidden = true
             cell.Pinview.isHidden = true
             cell.SelectBtn.isHidden = true
             cell.CVHeight.constant = 0
-            cell.HomeworkTitleLbl.text = "Write Assignment"
+            cell.HomeworkSubjectLbl.text = "Write Assignment"
             cell.TitleLbl.text = "Tamil"
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
@@ -644,14 +644,14 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
 extension SenderSideHomeWorkViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if DetailsTxtview.text == TexviewStringFile.Enter_Homework_Description {
+        if DetailsTxtview.text == CommonStringFile.Description {
             DetailsTxtview.text = ""
             DetailsTxtview.textColor = .black
         }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if DetailsTxtview.text == "" {
-            DetailsTxtview.text = TexviewStringFile.Enter_Homework_Description
+            DetailsTxtview.text = CommonStringFile.Description
             DetailsTxtview.textColor = .gray
         }
     }

@@ -38,27 +38,27 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="KN8-Rt-FY5">
-                                            <rect key="frame" x="225" y="0.0" width="163" height="55"/>
+                                            <rect key="frame" x="220.66666666666663" y="0.0" width="167.33333333333337" height="55"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VrD-2D-RLJ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="163" height="30.333333333333332"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="30.333333333333332"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3Y-8Z-JSi">
-                                                    <rect key="frame" x="0.0" y="35.333333333333329" width="163" height="19.666666666666671"/>
+                                                    <rect key="frame" x="0.0" y="35.333333333333329" width="167.33333333333334" height="19.666666666666671"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="19.666666666666671" id="iSv-bt-JqN"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </stackView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cCk-JC-1iU">
-                                            <rect key="frame" x="10" y="12.666666666666671" width="206.33333333333334" height="35"/>
+                                            <rect key="frame" x="10" y="12.666666666666671" width="202" height="35"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="ap7-xp-ITL"/>
                                             </constraints>
@@ -74,7 +74,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpN-Yo-u0B">
-                                            <rect key="frame" x="216.33333333333334" y="0.0" width="0.0" height="60"/>
+                                            <rect key="frame" x="212" y="0.0" width="0.0" height="60"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>

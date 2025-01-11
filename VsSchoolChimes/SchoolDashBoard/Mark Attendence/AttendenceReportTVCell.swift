@@ -11,7 +11,6 @@ class AttendenceReportTVCell: UITableViewCell {
 
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var statusView: UIView!
-    @IBOutlet weak var Imgview: UIImageView!
     @IBOutlet weak var AdmisionNOLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var cellView: UIView!

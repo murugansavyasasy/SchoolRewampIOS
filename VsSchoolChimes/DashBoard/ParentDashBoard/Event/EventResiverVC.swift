@@ -217,9 +217,10 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
         if section == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
             //        cell.contentView.backgroundColor = .backGroundClr
-            cell.SelectBtn.isHidden = true
-            cell.Pinview.isHidden = true
-            cell.pinImage.isHidden = true
+//            cell.SelectBtn.isHidden = true
+//            cell.Pinview.isHidden = true
+//            cell.pinImage.isHidden = true
+            cell.ishomework = true
             cell.dicriptContent.attributedText = descript(for: "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.", expanded: false)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
             cell.delegate = self

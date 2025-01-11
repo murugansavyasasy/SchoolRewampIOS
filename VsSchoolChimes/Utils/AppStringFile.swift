@@ -73,9 +73,9 @@ class MenuStringFile{
 struct ReceiverMenuItems {
     static let Communication = "Communication"
     static let Homework = "Homework"
-    static let ExamTest = "exam_test"
+    static let ExamTest = "Exam Test"
     static let ExamMarks = "exam_marks"
-    static let ImagePdf = "ImagePdf"
+    static let ImagePdf = "Image Pdf"
     static let Video = "Video"
     static let NoticeBoard = "Notice Board"
     static let Assignment = "receiver_assignment"
@@ -163,7 +163,7 @@ struct classTimeTableStrings {
         SubItem.init(subName: "English", subDuration: "1 hour", techer: "Seetha"),
         SubItem.init(subName: "PET", subDuration: "40 minutes", techer: "Padma"),
         SubItem.init(subName: "Tamil", subDuration: "50 minutes", techer: "Thangam"),
-        SubItem.init(subName: "Physical Education", subDuration: "35 minutes", techer: "Suchithra")
+        SubItem.init(subName: "Social Science", subDuration: "35 minutes", techer: "Suchithra")
         ]
         
 }
@@ -223,6 +223,7 @@ class CommonStringFile{
     static let Filter = "Filter"
     static let UploadAttachment = "Upload Attachment"
     static let UploadImagepdf = "Upload Image/Pdf"
+    static let UploadImagepdfoptional = "Upload Image/Pdf (Optional?)"
     static let Description = "Description"
     static let Groups = "Groups"
     static let Sectionorstudent = "Section or student"
@@ -273,6 +274,10 @@ class CommonStringFile{
     static let ChooseYourRole = "ChooseYourRole"
     static let Proceed = "Proceed"
     static let CreateEvent = "CreateEvent"
+    static let Title = "Title"
+    static let AddPdfoptional = "Add Pdf (Optional?)"
+    static let AddPdf = "Add Pdf"
+
 }
 
 

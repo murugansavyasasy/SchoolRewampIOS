@@ -99,7 +99,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.pagecontrollerheight.constant = 26
             cell.pagecontroller.isHidden = false
             cell.SelectBtn.isHidden = true
-            cell.HomeworkTitleLbl.text = "Write Assignment"
+            cell.HomeworkSubjectLbl.text = "Write Assignment"
             cell.TitleLbl.text = "Tamil"
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality.", expanded: false)
             
@@ -129,8 +129,9 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.pinImage.isHidden = true
             cell.Pinview.isHidden = true
             cell.SelectBtn.isHidden = true
+            cell.SelectBtnHeight.constant = 0
             cell.CVHeight.constant = 0
-            cell.HomeworkTitleLbl.text = "Write Assignment"
+            cell.HomeworkSubjectLbl.text = "Write Assignment"
             cell.TitleLbl.text = "Tamil"
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality.", expanded: false)
             

@@ -56,6 +56,13 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_down" translatesAutoresizingMaskIntoConstraints="NO" id="SpF-nT-Jan">
+                                <rect key="frame" x="285" y="29" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="7RX-bQ-ReL"/>
+                                    <constraint firstAttribute="width" constant="20" id="Tcm-sS-Rm3"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -68,9 +75,13 @@
                             <constraint firstItem="4dH-ld-XgV" firstAttribute="top" secondItem="ay3-3V-aa3" secondAttribute="bottom" constant="10" id="TEH-5d-ByT"/>
                             <constraint firstItem="Bd5-b6-RhC" firstAttribute="leading" secondItem="Jey-1x-np0" secondAttribute="leading" constant="8" id="VWW-h5-vs0"/>
                             <constraint firstItem="ziB-FH-8j8" firstAttribute="leading" secondItem="Jey-1x-np0" secondAttribute="leading" constant="8" id="auc-nD-L7Q"/>
+                            <constraint firstItem="SpF-nT-Jan" firstAttribute="top" secondItem="ay3-3V-aa3" secondAttribute="bottom" constant="3.6699999999999999" id="bDR-q0-1Jt"/>
                             <constraint firstItem="Bd5-b6-RhC" firstAttribute="top" secondItem="4dH-ld-XgV" secondAttribute="bottom" constant="8" id="hEY-TA-e18"/>
                             <constraint firstAttribute="bottom" secondItem="Bd5-b6-RhC" secondAttribute="bottom" constant="5" id="iNa-tC-qGv"/>
                             <constraint firstItem="4dH-ld-XgV" firstAttribute="top" secondItem="ziB-FH-8j8" secondAttribute="bottom" constant="10" id="k4f-GV-YGW"/>
+                            <constraint firstItem="Bd5-b6-RhC" firstAttribute="top" secondItem="SpF-nT-Jan" secondAttribute="bottom" constant="2.3300000000000001" id="lI9-8o-100"/>
+                            <constraint firstAttribute="trailing" secondItem="SpF-nT-Jan" secondAttribute="trailing" constant="5" id="rCe-6n-DLb"/>
+                            <constraint firstItem="SpF-nT-Jan" firstAttribute="leading" secondItem="4dH-ld-XgV" secondAttribute="trailing" constant="12" id="wRE-f4-c5p"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -95,6 +106,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="arrow_down" width="48" height="48"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

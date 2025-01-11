@@ -111,10 +111,10 @@
             <connections>
                 <outlet property="DescriptionLbl" destination="Oyt-FV-avZ" id="KyO-9y-MjY"/>
                 <outlet property="DurationLbl" destination="ebe-6q-lwb" id="tZL-rr-WqN"/>
-                <outlet property="HomeworkTitleLbl" destination="CsG-li-MD5" id="EZJ-ff-BSo"/>
+                <outlet property="HomeworkTitleLbl" destination="pFG-yU-54p" id="8Wi-Nd-hNM"/>
                 <outlet property="PlayBtn" destination="ERO-dj-UYt" id="D2h-FK-ZLz"/>
                 <outlet property="PlayerView" destination="MEI-Ow-1Yx" id="Gqf-dK-NHB"/>
-                <outlet property="SubjectLbl" destination="pFG-yU-54p" id="keo-dd-GQw"/>
+                <outlet property="SubjectLbl" destination="CsG-li-MD5" id="B09-UB-xba"/>
                 <outlet property="cellview" destination="U2t-Pf-jV7" id="U09-rX-mbC"/>
             </connections>
             <point key="canvasLocation" x="188.54961832061068" y="126.7605633802817"/>

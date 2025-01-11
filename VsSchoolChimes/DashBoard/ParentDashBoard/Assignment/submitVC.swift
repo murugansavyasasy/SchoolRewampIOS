@@ -19,6 +19,7 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var outerView: UIView!
     let photoPickManager = PhotoPickerManager.shared
  
+    @IBOutlet weak var DescriptionTextview: UITextView!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var DescriptionLbl: UILabel!
@@ -55,6 +56,10 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     
     func  StyleAndTranslater(){
         
+        DescriptionTextview.layer.cornerRadius = 10
+        DescriptionTextview.layer.borderWidth = 1
+        DescriptionTextview.layer.borderColor = UIColor.gray.cgColor
+        submitBtn.layer.cornerRadius = 10
         //MARK: Button Font Style
         //chooseImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -74,7 +79,10 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         presentSelectionAlert()
     }
 
-
+    @IBAction func CancelBtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
     @IBAction func presentSelectionAlert() {
         let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
        

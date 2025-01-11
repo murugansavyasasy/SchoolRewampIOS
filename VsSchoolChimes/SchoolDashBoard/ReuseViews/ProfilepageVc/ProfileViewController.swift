@@ -126,6 +126,10 @@ class ProfileViewController: UIViewController {
         
     }
     
+    @IBAction func BackAct(_ sender: Any) {
+        print("back Button pressed")
+        dismiss(animated: true)
+    }
     @IBAction func SaveAct(_ sender: Any) {
         let alert = CustomAlert()
         alert.showAlert(title:"" , message: "Save changes", on: self)

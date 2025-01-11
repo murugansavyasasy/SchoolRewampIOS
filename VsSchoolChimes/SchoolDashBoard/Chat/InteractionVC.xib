@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InteractionVC" customModule="VsSchoolChimes" customModuleProvider="target">
+            <connections>
+                <outlet property="CV" destination="QAE-2i-M8B" id="7j1-Wj-jld"/>
+                <outlet property="HeaderLbl" destination="OtL-fn-kTf" id="FlI-jM-adN"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akq-jb-C1F">
+                    <rect key="frame" x="0.0" y="115" width="393" height="703"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="interactionBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Kql-6k-JrS">
+                            <rect key="frame" x="10" y="8" width="373" height="687"/>
+                        </imageView>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="QAE-2i-M8B">
+                            <rect key="frame" x="15" y="10" width="363" height="693"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Z6a-oi-Pxy">
+                                <size key="itemSize" width="128" height="128"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Kql-6k-JrS" firstAttribute="top" secondItem="akq-jb-C1F" secondAttribute="top" constant="8" id="RR6-fa-8tv"/>
+                        <constraint firstAttribute="bottom" secondItem="QAE-2i-M8B" secondAttribute="bottom" id="ZTj-LI-umx"/>
+                        <constraint firstItem="QAE-2i-M8B" firstAttribute="leading" secondItem="akq-jb-C1F" secondAttribute="leading" constant="15" id="e4l-o7-Zce"/>
+                        <constraint firstItem="Kql-6k-JrS" firstAttribute="leading" secondItem="akq-jb-C1F" secondAttribute="leading" constant="10" id="hYD-Kt-d71"/>
+                        <constraint firstAttribute="trailing" secondItem="Kql-6k-JrS" secondAttribute="trailing" constant="10" id="hdO-kj-b9J"/>
+                        <constraint firstAttribute="bottom" secondItem="Kql-6k-JrS" secondAttribute="bottom" constant="8" id="lSI-Ol-zm1"/>
+                        <constraint firstItem="QAE-2i-M8B" firstAttribute="top" secondItem="akq-jb-C1F" secondAttribute="top" constant="10" id="qWi-fh-9rS"/>
+                        <constraint firstAttribute="trailing" secondItem="QAE-2i-M8B" secondAttribute="trailing" constant="15" id="r86-dy-RLv"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-Fx-yTM">
+                    <rect key="frame" x="8" y="59" width="62" height="41"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="62" id="7OE-Ci-J5H"/>
+                        <constraint firstAttribute="height" constant="41" id="agg-GC-Rpc"/>
+                    </constraints>
+                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal">
+                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                    </state>
+                    <connections>
+                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="k43-jK-oxo"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interact With Staff" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtL-fn-kTf">
+                    <rect key="frame" x="78" y="69" width="230" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="rLm-Fx-yTM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="AY8-ty-ddm"/>
+                <constraint firstItem="akq-jb-C1F" firstAttribute="top" secondItem="rLm-Fx-yTM" secondAttribute="bottom" constant="15" id="BM0-zt-1DC"/>
+                <constraint firstItem="OtL-fn-kTf" firstAttribute="leading" secondItem="rLm-Fx-yTM" secondAttribute="trailing" constant="8" id="BkX-7y-qdu"/>
+                <constraint firstItem="akq-jb-C1F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JhD-9X-6ho"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="akq-jb-C1F" secondAttribute="bottom" id="g8q-C2-Dru"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="akq-jb-C1F" secondAttribute="trailing" id="rAR-RJ-mCy"/>
+                <constraint firstItem="OtL-fn-kTf" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="sqk-XI-TQ7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OtL-fn-kTf" secondAttribute="trailing" constant="85" id="ue1-AM-gBE"/>
+                <constraint firstItem="rLm-Fx-yTM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="yzP-7U-fK0"/>
+            </constraints>
+            <point key="canvasLocation" x="35.877862595419849" y="-12.67605633802817"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="interactionBackground" width="2000" height="2000"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

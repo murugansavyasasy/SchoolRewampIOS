@@ -40,8 +40,8 @@ class HistoryTC: UITableViewCell {
         sendbtn.layer.cornerRadius = 4
         
         datelbl.setFont(style: .body, size: FontSize.BodySize)
-        contentlbl.setFont(style: .body, size: FontSize.BodySize)
-        sendedTime.setFont(style: .body, size: FontSize.BodySize)
+        contentlbl.setFont(style: .title, size: FontSize.TitleSize)
+        //sendedTime.setFont(style: .body, size: FontSize.BodySize)
         totaltime.setFont(style: .body, size: FontSize.BodySize)
         
         

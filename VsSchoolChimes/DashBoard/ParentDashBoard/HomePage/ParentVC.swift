@@ -11,6 +11,7 @@ import AVFoundation
 @available(iOS 14.0, *)
 class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var Profileimage: UIImageViewX!
     @IBOutlet weak var changeRollLbl: UILabel!
     @IBOutlet weak var lowBottomCv: UICollectionView!
     @IBOutlet weak var reportView: UIView!
@@ -131,7 +132,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         changeRollLbl.addGestureRecognizer(redirectGesture)
         
-        
+        let profiletap = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
+        Profileimage.addGestureRecognizer(profiletap)
+        Profileimage.isUserInteractionEnabled = true
         
         configureButton(
             homeworkBtn,
@@ -283,7 +286,12 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         dismiss(animated: true)
         
     }
-    
+    @IBAction func gotoProfile() {
+        let vc = ProfileViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        
+    }
     
     func setupVideoBackground() {
         guard let path = Bundle.main.path(forResource: "Mathematics", ofType: "mp4") else { return }

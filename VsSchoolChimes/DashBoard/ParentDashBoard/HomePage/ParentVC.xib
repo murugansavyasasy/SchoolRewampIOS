@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="AddressLabel" destination="8r8-qH-Ple" id="2bb-gj-WU7"/>
                 <outlet property="BellImage" destination="JOz-t8-GNd" id="yi3-6D-YAD"/>
+                <outlet property="Profileimage" destination="toa-Zv-cCd" id="zTR-zI-CMI"/>
                 <outlet property="SchoolNameLabel" destination="qsY-ha-l6P" id="Y0v-FH-jeo"/>
                 <outlet property="Searchbar" destination="ObW-ZB-51q" id="5g8-wN-ZJO"/>
                 <outlet property="assignmentkBtn" destination="KtY-gu-fAj" id="nnc-KJ-Tia"/>
@@ -101,7 +102,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NTr-vv-kNc">
-                                                    <rect key="frame" x="313" y="4.9999999999999991" width="76" height="14.666666666666664"/>
+                                                    <rect key="frame" x="304.66666666666669" y="4.9999999999999991" width="84.333333333333314" height="15.666666666666664"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Change Roll &gt;">
                                                             <attributes>

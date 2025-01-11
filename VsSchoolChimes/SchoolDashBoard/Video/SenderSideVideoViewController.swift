@@ -78,8 +78,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         HeaderLabel.text = MenuTapbar.Video.translated()
         uploadVideoTitleLbl.text = textFieldStringFile.Upload_Video
         chooseVideoLabel.text = textFieldStringFile.Click_To_Choose_video
-        titleTxtFld.placeholder = textFieldStringFile.Enter_Video_Title
-        descTxtView.text = TexviewStringFile.Enter_video_Description
+        titleTxtFld.placeholder = CommonStringFile.Title.translated()
+        descTxtView.text = CommonStringFile.Description.translated()
         descTxtView.textColor = .lightGray
         changeVideoBtn.setTitle("Change Video".translated(), for: .normal)
         chooseVideoBtn.setTitle("Choose Video".translated(), for: .normal)
@@ -425,7 +425,7 @@ extension SenderSideVideoViewController : UITextViewDelegate{
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         
-        if descTxtView.text == TexviewStringFile.Enter_video_Description{
+        if descTxtView.text == CommonStringFile.Description.translated(){
             descTxtView.text = ""
             descTxtView.textColor = .black
         }
@@ -433,7 +433,7 @@ extension SenderSideVideoViewController : UITextViewDelegate{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if descTxtView.text.isEmpty{
-            descTxtView.text = TexviewStringFile.Enter_video_Description
+            descTxtView.text = CommonStringFile.Description.translated()
             descTxtView.textColor = .lightGray
         }
     }

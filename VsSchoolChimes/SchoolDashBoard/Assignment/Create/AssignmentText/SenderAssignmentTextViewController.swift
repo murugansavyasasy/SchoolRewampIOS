@@ -149,7 +149,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         AssignmentTypeview.layer.borderWidth = 1
         AssignmentTypeview.layer.borderColor = UIColor.lightGray.cgColor
         AssignmentTypeview.backgroundColor = .white
-        contentTextView.text = TexviewStringFile.Enter_Assignment_Description
+        contentTextView.text = CommonStringFile.Description.translated()
         contentTextView.textColor = .lightGray
         customizedDateBtn.layer.cornerRadius = 10
         customizedDateBtn.layer.borderWidth = 1
@@ -220,9 +220,15 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
                 self!.collectionViewHeght.constant = 0
                 self!.addphotosheight.constant = 0
             }
+            else if item == "PDF"{
+                self!.collectionViewHeght.constant = 120
+                self!.addphotosheight.constant = 20
+                self!.AddphotosLbl.text = CommonStringFile.AddPdf.translated()
+            }
             else{
                 self!.collectionViewHeght.constant = 120
                 self!.addphotosheight.constant = 20
+                self!.AddphotosLbl.text = CommonStringFile.AddPhotos.translated()
             }
             if let label = self?.AssignmentTypeview.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self!.AssignmenttypeLbl.text = item
@@ -536,7 +542,7 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
 extension SenderAssignmentTextViewController : UITextViewDelegate{
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if contentTextView.text == TexviewStringFile.Enter_Assignment_Description {
+        if contentTextView.text == CommonStringFile.Description.translated() {
             
             contentTextView.text = ""
             contentTextView.textColor = .black
@@ -546,7 +552,7 @@ extension SenderAssignmentTextViewController : UITextViewDelegate{
     func textViewDidEndEditing(_ textView: UITextView) {
         if contentTextView.text == "" {
             
-            contentTextView.text = TexviewStringFile.Enter_Assignment_Description
+            contentTextView.text = CommonStringFile.Description
             contentTextView.textColor = .lightGray
         }
     }

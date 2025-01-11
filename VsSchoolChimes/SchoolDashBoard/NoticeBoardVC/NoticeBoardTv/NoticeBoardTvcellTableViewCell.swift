@@ -16,7 +16,8 @@ protocol SelectNotice: AnyObject {
 @available(iOS 14.0, *)
 class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
-    @IBOutlet weak var HomeworkTitleLbl: UILabel!
+    @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
+    @IBOutlet weak var HomeworkSubjectLbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
     
     @IBOutlet weak var dicriptContent: UILabel!
@@ -36,6 +37,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var SelectBtn: UIButton!
     var delegate : SelectNotice?
     var ishomework = false
+    var isreciver = false
+    var issenderEvent = false
 
     let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847444562956042.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457714704978.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457742399850.png"]
     
@@ -49,7 +52,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         datelbl.setFont(style: .body, size: FontSize.BodySize)
         dicriptContent.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        HomeworkTitleLbl.isHidden = true
+        HomeworkSubjectLbl.isHidden = true
         CVHeight.constant = 0  // set this to 120 when you need
         pagecontrollerheight.constant = 0  // set this to 26 when you need
         pagecontroller.isHidden = true
@@ -89,6 +92,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
                 }
         collectionview.reloadData()
         countShimmer = 1
+        print("printing in awaken from nib")
     }
     
     @IBAction func Select(_ sender: UIButton) {
@@ -102,12 +106,13 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     func hiddenui(_ hide:Bool){
         
        // cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
-//        pinImage.isHidden = hide
+        pinImage.isHidden = hide
+        SelectBtn.isHidden = hide
         datelbl.isHidden = hide
         dicriptContent.isHidden = hide
         TitleLbl.isHidden = hide
 //        pinImage.isHidden = hide
-//        Pinview.isHidden = hide
+        Pinview.isHidden = hide
         collectionview.isHidden = hide
         pagecontroller.isHidden = hide
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white
@@ -124,9 +129,15 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             
             if ishomework == true{
                 hideforHomework()
+                print("ENTERED HOMEWORK")
+            }else if isreciver == true{
+                hideforReciverNotice()
+            }else if issenderEvent == true{
+                print("ENTERED event")
+                hideforsenderEvent()
             }else{
-                
                 hiddenui(false)
+                print("ENTERED Elsepart")
             }
             
         }
@@ -134,14 +145,41 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     }
     
     func hideforHomework(){
-        HomeworkTitleLbl.isHidden = false
+        HomeworkSubjectLbl.isHidden = false
         pinImage.isHidden = true
-        datelbl.isHidden = true
+        datelbl.isHidden = false
+        SelectBtnHeight.constant=0
         Pinview.isHidden = true
         dicriptContent.isHidden = false
         TitleLbl.isHidden = false
         collectionview.isHidden = false
        // pagecontroller.isHidden = false
+        let color = true == true ? UIColor.dashBoardClr : UIColor.white
+        cellview.backgroundColor = color
+    }
+    func hideforReciverNotice(){
+        HomeworkSubjectLbl.isHidden = false
+//        pinImage.isHidden = true
+        datelbl.isHidden = false
+        SelectBtnHeight.constant=0
+//        Pinview.isHidden = true
+        dicriptContent.isHidden = false
+        TitleLbl.isHidden = false
+        collectionview.isHidden = false
+       // pagecontroller.isHidden = false
+        let color = true == true ? UIColor.dashBoardClr : UIColor.white
+        cellview.backgroundColor = color
+    }
+    func hideforsenderEvent(){
+        HomeworkSubjectLbl.isHidden = false
+        pinImage.isHidden = true
+        datelbl.isHidden = false
+        SelectBtnHeight.constant=0
+        //Pinview.isHidden = true
+        dicriptContent.isHidden = false
+        TitleLbl.isHidden = false
+        collectionview.isHidden = false
+        pagecontroller.isHidden = false
         let color = true == true ? UIColor.dashBoardClr : UIColor.white
         cellview.backgroundColor = color
     }

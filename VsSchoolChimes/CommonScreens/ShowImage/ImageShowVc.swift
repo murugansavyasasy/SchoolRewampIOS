@@ -15,6 +15,7 @@ class ImageShowVc: UIViewController {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var cv: UICollectionView!
     
+    @IBOutlet weak var TitleLbl: UILabel!
     
     var imageIterms : [String] = []
     var imageURL : [String] = []
@@ -31,6 +32,7 @@ class ImageShowVc: UIViewController {
         cv.dataSource = self
         
         cv.register(UINib(nibName: CellConfingName.ImageShowCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageShowCVCell)
+        TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     override func viewWillAppear(_ animated: Bool) {
         uiUpdate(type: type)

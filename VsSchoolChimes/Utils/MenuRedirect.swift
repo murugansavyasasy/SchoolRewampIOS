@@ -258,9 +258,12 @@ class MenuRedirectHandler {
         
     }
     func receiverchat(from viewController: UIViewController){
-        let vc = ChatVC(nibName: nil, bundle: nil)
+//        let vc = ChatVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        vc.getValue = getValue
+//        viewController.present(vc, animated: true)
+        let vc = InteractionVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        vc.getValue = getValue
         viewController.present(vc, animated: true)
     }
     

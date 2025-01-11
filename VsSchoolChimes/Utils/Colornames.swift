@@ -78,7 +78,7 @@ class ImageName{
     static let Pending = UIImage(named: "Pending")
     static let check = UIImage(named: "check")
     
-    static let checkmark = UIImage(systemName: "checkmark.rectangle.portrait.fill")
+    static let checkmark = UIImage(systemName: "checkmark.square.fill")
     static let square = UIImage(systemName: "square")
     static let circle = UIImage(systemName: "circle")
     static let house = UIImage(systemName: "house.fill")

@@ -10,36 +10,49 @@ import DropDown
 
 class MarkAttendenceVC: UIViewController {
 
+    @IBOutlet weak var attendtypeStackToAttendmarkStackBottom: NSLayoutConstraint!
+    @IBOutlet weak var AttendStackToStandardTop: NSLayoutConstraint!
+    @IBOutlet weak var SessionviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var AttendTypeHeight: NSLayoutConstraint!
+    @IBOutlet weak var AttendancetypeView: UIView!
+    @IBOutlet weak var SessionView: UIView!
+    @IBOutlet weak var secondHalfCheckImg: UIImageView!
+    @IBOutlet weak var FirsthalfCheckImg: UIImageView!
+    @IBOutlet weak var SecondHalfView: UIView!
+    @IBOutlet weak var FirstHalfView: UIView!
+    @IBOutlet weak var SelectSessionDefaultLbl: UILabel!
+    @IBOutlet weak var SelectAttendanceTypeLbl: UILabel!
+    @IBOutlet weak var selectStandardandSectionDefaultLbl: UILabel!
+    @IBOutlet weak var selectDateDefautLbl: UILabel!
+   
+    @IBOutlet weak var CustumDateBtn: UIButton!
+    @IBOutlet weak var CustomDateLbl: UILabel!
     @IBOutlet weak var HalfdayImgview: UIImageView!
     @IBOutlet weak var FulldayImgview: UIImageView!
     @IBOutlet weak var HalfdayView: UIView!
     @IBOutlet weak var FulldayView: UIView!
-    @IBOutlet weak var AttendTypeLbl: UILabel!
     @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var standardLbl: UILabel!
     @IBOutlet weak var stackview: UIStackView!
     @IBOutlet weak var orLabel: UILabel!
     @IBOutlet weak var markAllPresentBtn: UIButton!
-    @IBOutlet weak var calenderimgHeight: NSLayoutConstraint!
-    @IBOutlet weak var DateViewheight: NSLayoutConstraint!
-    @IBOutlet weak var calenderHeight: NSLayoutConstraint!
     @IBOutlet weak var MarkAbsentiesBtn: UIButton!
-    @IBOutlet weak var AttendenceTypeView: UIView!
     @IBOutlet weak var SectionView: UIView!
     @IBOutlet weak var standardView: UIView!
     @IBOutlet weak var AttendRecordBtn: UIButton!
     @IBOutlet weak var MarkAttendBtn: UIButton!
     @IBOutlet weak var ButtonStackview: UIStackView!
     @IBOutlet weak var TV: UITableView!
-    @IBOutlet weak var calenderview: UIView!
     
     @IBOutlet weak var DateBtn: UIButton!
     
+    @IBOutlet weak var AttendTypeStackView: UIStackView!
     
-    @IBOutlet weak var sessionLbl: UILabel!
-    @IBOutlet weak var sessionView: UIView!
-    
+    var activeButton: UIButton?
+    var datePicker: UIDatePicker!
+    var doneButton: UIButton!
     let formatter = DateFormatter()
+    let customdate = DateFormatter()
     let status = [true,true,false,true,false,false]
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
@@ -51,15 +64,20 @@ class MarkAttendenceVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
-        calenderview.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+        createDatepicker()
+        markAllPresentBtn.backgroundColor = .systemGray3
+        MarkAbsentiesBtn.backgroundColor = .lightGray
+        //applyVerticalGradientToButton(button: CustumDateBtn)
+//        calenderview.applyGradient(
+//            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
+        orLabel.setFont(style: .body, size: FontSize.BodySize)
         ButtonStackview.layer.cornerRadius = 20
         AttendRecordBtn.layer.cornerRadius = 20
         MarkAttendBtn.layer.cornerRadius = 20
@@ -67,24 +85,52 @@ class MarkAttendenceVC: UIViewController {
        // AttendenceTypeView.layer.cornerRadius = 10
         standardView.layer.cornerRadius = 10
         SectionView.layer.cornerRadius = 10
+        standardView.layer.borderWidth = 1
+        standardView.layer.borderColor = UIColor.lightGray.cgColor
+        SectionView.layer.borderWidth = 1
+        SectionView.layer.borderColor = UIColor.lightGray.cgColor
+        
+//        CustumDateBtn.layer.borderWidth = 1 // Border width
+//        CustumDateBtn.layer.borderColor = UIColor.gray.cgColor
+        
         markAllPresentBtn.layer.cornerRadius = 10
-        
-        calenderimgHeight.constant = 0
-        DateViewheight.constant = 0
-        DateBtn.isHidden = true
-        
+        markAllPresentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        MarkAbsentiesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        MarkAttendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        AttendRecordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        selectDateDefautLbl.setFont(style: .title, size: FontSize.TitleSize)
+        selectStandardandSectionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SelectSessionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SelectAttendanceTypeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        standardLbl.setFont(style: .title, size: FontSize.TitleSize)
+        sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
+       // setInitialButtonTitles()
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         MarkAttendBtn.setTitleColor(UIColor.white, for: .normal)
         
         gradientcolours(button: AttendRecordBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
         
-        calenderview.layer.cornerRadius = 10
-        calenderview.layer.borderWidth = 1
-        calenderview.layer.borderColor = UIColor.lightGray.cgColor
+        SessionView.isHidden = true
 
-        showDatepicker()
+       // setupdatePicker()
         
+        FulldayView.layer.borderWidth = 1
+        FulldayView.layer.borderColor = UIColor.lightGray.cgColor
+        FulldayView.layer.cornerRadius = 10
+        
+        HalfdayView.layer.borderWidth = 1
+        HalfdayView.layer.borderColor = UIColor.lightGray.cgColor
+        HalfdayView.layer.cornerRadius = 10
+        
+        FirstHalfView.layer.borderWidth = 1
+        FirstHalfView.layer.borderColor = UIColor.lightGray.cgColor
+        FirstHalfView.layer.cornerRadius = 10
+        
+        SecondHalfView.layer.borderWidth = 1
+        SecondHalfView.layer.borderColor = UIColor.lightGray.cgColor
+        SecondHalfView.layer.cornerRadius = 10
         
         let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
         standardView.addGestureRecognizer(standardTap)
@@ -92,89 +138,55 @@ class MarkAttendenceVC: UIViewController {
         let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
         SectionView.addGestureRecognizer(sectionTap)
         
-        let AttendenceTap = UITapGestureRecognizer(target: self, action: #selector(SelectType))
-      //  AttendenceTypeView.addGestureRecognizer(AttendenceTap)
-        
-        let SessionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSession))
-        sessionView.addGestureRecognizer(SessionTap)
-        
         let fulltap = UITapGestureRecognizer(target: self, action: #selector(fulldayAction))
         FulldayView.addGestureRecognizer(fulltap)
         
         let halftap = UITapGestureRecognizer(target: self, action: #selector(HalfdayAction))
         HalfdayView.addGestureRecognizer(halftap)
+        HalfdayView.isUserInteractionEnabled = true
+        
+        let firstTap = UITapGestureRecognizer(target: self, action: #selector(FirsthalfAct))
+        FirstHalfView.addGestureRecognizer(firstTap)
+        
+        let SecondTap = UITapGestureRecognizer(target: self, action: #selector(SecondhalfAct))
+        SecondHalfView.addGestureRecognizer(SecondTap)
         
         let nib = UINib(nibName: CellConfingName.AttendenceReportTVCell, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.AttendenceReportTVCell)
         
-//        TV.delegate = self
-//        TV.dataSource = self
-        
     }
     
-    func showDatepicker(){
-        
-        // Create a UIDatePicker
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        
-        // Use inline display style for iOS 14+
-        if #available(iOS 14.0, *) {
-            datePicker.preferredDatePickerStyle = .inline
-        }
-        
-        // Set maximum date to today
-        datePicker.maximumDate = Date()
-        
-        // Calculate minimum date (30 days before today)
-        let calendar = Calendar.current
-        if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
-            datePicker.minimumDate = thirtyDaysAgo
-        }
-        
-        
-        // Scale down the entire calendar
-        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65) // Adjust scaling factors
-        
-        // Set frame and center it in the container view
-        datePicker.frame = calenderview.bounds
-        datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        // Add the date picker to the container view
-        calenderview.addSubview(datePicker)
-        
-        
-        // Handle date selection
-        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-    }
-
-    @objc func dateChanged(_ sender: UIDatePicker) {
-        
-        formatter.dateFormat = "EEE d MMM yyyy"
-        print("Selected date: \(formatter.string(from: sender.date))")
-        
-        let label = formatter.string(from: sender.date)
-        
-        if id == 1 {
-            calenderimgHeight.constant = 38
-            DateViewheight.constant = 25
-            calenderHeight.constant = 0
-            calenderview.isHidden = true
-            DateBtn.isHidden = false
-            DateBtn.setTitle(label, for: .normal)
-            DateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-            // calenderHeight.constant = 260
-        }
-        
-    }
     @objc func fulldayAction(){
-        FulldayImgview.image = UIImage(named: "checked_Tick")
+        //FulldayImgview.image = UIImage(named: "checked_Tick")
+        FulldayImgview.image = UIImage(named: "RadioCheck")
         HalfdayImgview.image = UIImage(named: "CheckCircle")
+        SessionView.isHidden = true
+        markAllPresentBtn.backgroundColor = .systemGreen
+        MarkAbsentiesBtn.backgroundColor = .systemRed
     }
     @objc func HalfdayAction(){
-        HalfdayImgview.image = UIImage(named: "checked_Tick")
+        //HalfdayImgview.image = UIImage(named: "checked_Tick")
+        HalfdayImgview.image = UIImage(named: "RadioCheck")
         FulldayImgview.image = UIImage(named: "CheckCircle")
+        SessionView.isHidden = false
+        markAllPresentBtn.backgroundColor = .systemGray3
+        MarkAbsentiesBtn.backgroundColor = .lightGray
+        FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
+        secondHalfCheckImg.image = UIImage(named: "CheckCircle")
     }
+    @objc func FirsthalfAct(){
+        FirsthalfCheckImg.image = UIImage(named: "RadioCheck")
+        secondHalfCheckImg.image = UIImage(named: "CheckCircle")
+        markAllPresentBtn.backgroundColor = .systemGreen
+        MarkAbsentiesBtn.backgroundColor = .systemRed
+    }
+    @objc func SecondhalfAct(){
+        secondHalfCheckImg.image = UIImage(named: "RadioCheck")
+        FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
+        markAllPresentBtn.backgroundColor = .systemGreen
+        MarkAbsentiesBtn.backgroundColor = .systemRed
+    }
+    
     
     @IBAction func SelectStandard() {
         // Setup dropdown anchor and data source
@@ -198,8 +210,8 @@ class MarkAttendenceVC: UIViewController {
             
             // Perform additional actions when ID == 1
             if self.id == 1 {
-                self.calenderview.isHidden = true
-                self.calenderHeight.constant = 0
+//                self.calenderview.isHidden = true
+//                self.calenderHeight.constant = 0
                 
                 self.TV.isHidden = false
                 self.TV.delegate = self
@@ -225,8 +237,8 @@ class MarkAttendenceVC: UIViewController {
             }
             
             if self.id == 1 { // Explicit use of 'self' here
-                calenderview.isHidden = true
-                calenderHeight.constant = 0
+//                calenderview.isHidden = true
+//                calenderHeight.constant = 0
                 self.TV.isHidden = false
                 self.TV.delegate = self
                 self.TV.dataSource = self
@@ -234,48 +246,104 @@ class MarkAttendenceVC: UIViewController {
             }
         }
     }
+    
+    @IBAction func DateBtnAct(_ sender: Any) {
+        showDatepicker(button: sender as! UIButton)
+    }
+    func createDatepicker(){
+        datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.minimumDate = Date()
+        datePicker.backgroundColor = .white
+        
+        if #available(iOS 14.0, *) {
+            datePicker.preferredDatePickerStyle = .inline
+        }
+        
+        datePicker.isHidden = true
+        self.view.addSubview(datePicker!)
+        
+        // Initialize and configure Done button
+        doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.isHidden = true
+        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.layer.cornerRadius = 8
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        self.view.addSubview(doneButton)
+        
+    }
+    
+    func showDatepicker(button: UIButton) {
+        datePicker.isHidden = false
+        doneButton.isHidden = false
+        
+        let buttonFrame = button.convert(button.bounds, to: self.view)
+        
+        // Set the frame for the datePicker
+        let pickerYPosition = view.frame.minY + 230
+        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 350)
+        
+        // Set appearance for datePicker
+        datePicker.backgroundColor = .white
+        datePicker.layer.shadowColor = UIColor.black.cgColor
+        datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+        datePicker.layer.shadowRadius = 5
+        datePicker.layer.shadowOpacity = 0.3
+        datePicker.layer.cornerRadius = 20
+        
+        doneButton.frame = CGRect(x: datePicker.frame.maxX - 70, y: pickerYPosition + datePicker.frame.height - 25, width: 70, height: 25)
+        
+        // Add both datePicker and Done button to the view
+        self.view.addSubview(datePicker)
+        self.view.addSubview(doneButton)
+    }
+    
+    @IBAction func doneButtonTapped(){
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat =  "EEE d MMM yyyy"
+        let datelabel = dateFormatter.string(from: datePicker.date)
+        DateBtn.setTitle(datelabel, for: .normal)
+        
+        
+        customdate.dateFormat = "EEE d"
+        let attributedLbl = customdate.string(from: datePicker.date)
+        //setcustomDate(attributedLbl: attributedLbl)
+        datePicker.isHidden = true
+        doneButton.isHidden = true
+    }
+    
+    func applyVerticalGradientToButton(button: UIButton) {
+            // Create a gradient layer
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.frame = button.bounds
+            
+            // Define the colors for the top and bottom halves
+//            gradientLayer.colors = [
+//                UIColor.red.cgColor,    // Top half color
+//                UIColor.blue.cgColor    // Bottom half color
+//            ]
+        gradientLayer.colors = [
+            UIColor.white.cgColor,   // Top half color
+            UIColor.systemBlue.cgColor    // Bottom half color
+        ]
+            
+            // Set the gradient direction (vertical)
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // Top-center
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.5)   // Bottom-center
 
-    @IBAction func SelectType(){
-        TypeDropdown.anchorView = AttendenceTypeView
-        TypeDropdown.dataSource = ["Full Day", "Half Day"]
-        TypeDropdown.show()
-        TypeDropdown.bottomOffset = CGPoint(x: 0, y: AttendenceTypeView.bounds.height)
-        
-        TypeDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            
-            // Update the label inside the UIView
-            if let label = self?.AttendenceTypeView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = item
-            }
-            
-            if self!.AttendTypeLbl.text == "Half Day"{
-                self?.sessionView.isHidden = false
-            }
-            else{
-                self?.sessionView.isHidden = true
-            }
+            // Apply the gradient to the button
+            button.layer.insertSublayer(gradientLayer, at: 0)
         }
-    }
-    
-    @IBAction func SelectSession(){
-        
-        SessionDropdown.anchorView = sessionView
-        SessionDropdown.dataSource = ["First Half", "Second Half"]
-        SessionDropdown.show()
-        SessionDropdown.bottomOffset = CGPoint(x: 0, y: sessionView.bounds.height)
-        
-        SessionDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            
-            // Update the label inside the UIView
-            if let label = self?.sessionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = item
-            }
-        }
-    }
-        
-    
+
+//        override func viewDidLayoutSubviews() {
+//            super.viewDidLayoutSubviews()
+//            // Ensure the gradient resizes with the button
+//            CustumDateBtn.layer.sublayers?.first?.frame = CustumDateBtn.bounds
+//        }
+
     func gradientcolours(button : UIButton,colours : [CGColor]){
         
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
@@ -301,11 +369,11 @@ class MarkAttendenceVC: UIViewController {
         
         id = 0
         TV.isHidden = true
-        calenderimgHeight.constant = 0
-        DateViewheight.constant = 0
-        DateBtn.isHidden = true
-        calenderview.isHidden = false
-        calenderHeight.constant = 260
+//        calenderimgHeight.constant = 0
+//        DateViewheight.constant = 0
+//        DateBtn.isHidden = true
+       // calenderview.isHidden = false
+       // calenderHeight.constant = 260
         
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         MarkAttendBtn.setTitleColor(UIColor.white, for: .normal)
@@ -317,20 +385,26 @@ class MarkAttendenceVC: UIViewController {
         MarkAbsentiesBtn.isHidden = false
         markAllPresentBtn.isHidden = false
         stackview.isHidden = false
-        
+        AttendancetypeView.isHidden = false
+        AttendTypeStackView.isHidden = false
+        AttendStackToStandardTop.constant = 20
+        attendtypeStackToAttendmarkStackBottom.constant = 15
+        if HalfdayImgview.image == UIImage(named:"RadioCheck"){
+            SessionView.isHidden = false
+        }
     }
     
     @IBAction func ReportBtnAct(_ sender: Any) {
         id = 1
-        calenderview.isHidden = true
-        calenderimgHeight.constant = 38
-        DateViewheight.constant = 25
-        DateBtn.isHidden = false
+//        calenderview.isHidden = true
+//        calenderimgHeight.constant = 38
+//        DateViewheight.constant = 25
+//        DateBtn.isHidden = false
         formatter.dateFormat = "EEE d MMM yyyy"
         let datelabel = formatter.string(from: Date())
-        DateBtn.setTitle(datelabel, for: .normal)
-        calenderview.isHidden = true
-        calenderHeight.constant = 0
+//        DateBtn.setTitle(datelabel, for: .normal)
+//        calenderview.isHidden = true
+//        calenderHeight.constant = 0
         TV.isHidden = false
         TV.delegate = self
         TV.dataSource = self
@@ -345,14 +419,16 @@ class MarkAttendenceVC: UIViewController {
         MarkAbsentiesBtn.isHidden = true
         markAllPresentBtn.isHidden = true
         stackview.isHidden = true
+        SessionView.isHidden = true
+        AttendancetypeView.isHidden = true
+        AttendTypeStackView.isHidden = true
+        AttendStackToStandardTop.constant = 0
+        attendtypeStackToAttendmarkStackBottom.constant = 0
     }
     
     
     @IBAction func AllPresentAct(_ sender: Any) {
-        if standardLbl.text == "STANDARD" || sectionLbl.text == "SECTION" || AttendTypeLbl.text == "SELECT ATTENDANCE TYPE" {
-            
-            
-        }
+        
         let alert = CustomAlert()
         alert.showAlertCancel(title: "", message: AlertstringFile.Mark_All_as_Present, actionLbl1: "Ok", actionLbl2: "Cancel", on: self, onOk: {print("Attendance marked")} , onNo: {print("Canceled")})
     }
@@ -362,18 +438,6 @@ class MarkAttendenceVC: UIViewController {
         vc.id = 2
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
-    }
-    
-    @IBAction func dateBtnAct(_ sender: Any) {
-        if calenderHeight.constant == 0 {
-            calenderview.isHidden = false
-            calenderHeight.constant = 260
-            DateBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-        }else{
-            calenderview.isHidden = true
-            calenderHeight.constant = 0
-            DateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        }
     }
     
 }

@@ -131,6 +131,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             selectedImages.removeAll()
             url = pdfurl.absoluteURL
             selectedImages.append(ImageName.pdf!)
+//            setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPdfoptional.translated(), firstString: CommonStringFile.AddPdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
             //            url = URL(string:pdfurl)
             //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()
@@ -232,7 +233,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
+        placeholderLabel.text = CommonStringFile.Description.translated()
         placeholderLabel.font = textview.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -293,12 +294,12 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         
         todateBtn.setTitleFont(style: .body, size: 12)
         fromdateBtn.setTitleFont(style: .body, size: 12)
-        addPhotoLbl.text = CommonStringFile.AddPhotos.translated()
+        addPhotoLbl.text = CommonStringFile.UploadImagepdf.translated()
         
         setTitle.text = CommonStringFile.EventTitle.translated()
-        eventTxt.placeholder = CommonStringFile.egYogaEvent.translated()
+        eventTxt.placeholder = CommonStringFile.Title.translated()
         enterDetails.text = CommonStringFile.EventDetails.translated()
-        setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPhotos1.translated(), firstString: CommonStringFile.AddPhotos.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
+        setAttributedText(for: addPhotoLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
         
     }
     
@@ -407,7 +408,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     func textViewDidEndEditing(_ textView: UITextView) {
         
         if textview.text.isEmpty == true{
-            textview.text = CommonStringFile.EnterTextHere.translated()
+            textview.text = CommonStringFile.Description.translated()
             textview.textColor = .lightGray
         }
     }

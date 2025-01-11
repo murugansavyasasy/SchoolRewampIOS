@@ -136,7 +136,7 @@ class LeveHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
         let attributedText = NSMutableAttributedString(string: fullString)
         let actionRange = (fullString as NSString).range(of: actionText)
         attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: actionRange)
-        attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: actionRange)
+//        attributedText.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: actionRange)
         return attributedText
     }
 

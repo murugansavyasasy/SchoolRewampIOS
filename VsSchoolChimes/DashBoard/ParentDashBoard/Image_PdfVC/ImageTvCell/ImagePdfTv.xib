@@ -39,7 +39,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small" weight="regular"/>
                                 </buttonConfiguration>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat, Sept 8, 2024" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSl-c0-RgN">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSl-c0-RgN">
                                 <rect key="frame" x="16" y="40" width="427" height="20.333333333333329"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20.333333333333329" id="DO3-kU-wj2"/>
@@ -48,7 +48,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat, Sept 8, 2024" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KaZ-Lk-8cI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat, Sept 8, 2024" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KaZ-Lk-8cI">
                                 <rect key="frame" x="16" y="328" width="406" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="2Nw-ZD-usd"/>
@@ -77,9 +77,9 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="ICy-LG-eIA">
-                                <rect key="frame" x="368" y="-3" width="100" height="30"/>
+                                <rect key="frame" x="388" y="-3" width="80" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="8XM-RR-ael"/>
+                                    <constraint firstAttribute="width" constant="80" id="8XM-RR-ael"/>
                                     <constraint firstAttribute="height" constant="30" id="XOV-DY-mP4"/>
                                 </constraints>
                             </imageView>
@@ -124,10 +124,10 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="DateLbl" destination="RSl-c0-RgN" id="dwI-HF-IBU"/>
+                <outlet property="DateLbl" destination="KaZ-Lk-8cI" id="OP9-0o-pFa"/>
                 <outlet property="DescriptionLbl" destination="nWw-Eq-5zX" id="oW5-w4-4T1"/>
                 <outlet property="GifImage" destination="ICy-LG-eIA" id="Vq6-Wh-rPf"/>
-                <outlet property="TitleLbl" destination="KaZ-Lk-8cI" id="nsA-l9-Azv"/>
+                <outlet property="TitleLbl" destination="RSl-c0-RgN" id="eUq-5q-76m"/>
                 <outlet property="cv" destination="wNa-pM-QYm" id="hd8-a7-Jul"/>
                 <outlet property="fullView" destination="x7e-qG-QRb" id="N6M-Ch-SyR"/>
                 <outlet property="pageControll" destination="Ef2-i7-IYK" id="sIW-IV-hND"/>
@@ -145,7 +145,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="underPageBackgroundColor">
             <color red="0.70980392156862748" green="0.71764705882352942" blue="0.74117647058823533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

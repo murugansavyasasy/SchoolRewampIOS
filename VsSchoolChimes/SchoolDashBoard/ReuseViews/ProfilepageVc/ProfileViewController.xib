@@ -55,7 +55,28 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ia6-TG-BZg">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="259"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CZh-40-eqX">
+                                    <rect key="frame" x="8" y="61" width="36" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="36" id="D8Q-hy-xvy"/>
+                                        <constraint firstAttribute="height" constant="35" id="MEe-ST-N1C"/>
+                                    </constraints>
+                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" image="chevron.backward" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="f4G-Et-wRi"/>
+                                    </connections>
+                                </button>
+                            </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="CZh-40-eqX" firstAttribute="top" secondItem="ia6-TG-BZg" secondAttribute="top" constant="61" id="j7m-o2-Eaz"/>
+                                <constraint firstItem="CZh-40-eqX" firstAttribute="leading" secondItem="ia6-TG-BZg" secondAttribute="leading" constant="8" id="rqT-TB-smj"/>
+                            </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="profile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sdY-kb-C3z">
                             <rect key="frame" x="68" y="69" width="257" height="21.666666666666671"/>
@@ -515,6 +536,7 @@
         <image name="Location" width="16" height="16"/>
         <image name="Phone" width="24" height="24"/>
         <image name="bloodgroup" width="24" height="24"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="downloads" width="100" height="100"/>
         <image name="mail" width="26" height="26"/>
         <image name="pencil" catalog="system" width="128" height="113"/>

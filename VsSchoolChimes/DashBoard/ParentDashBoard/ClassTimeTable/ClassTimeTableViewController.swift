@@ -67,7 +67,7 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
         cell.fromLbl.text = classTimeTableStrings.timeArr[indexPath.row]
         cell.toLbl.text = classTimeTableStrings.toTimeArr[indexPath.row]
         
-        classTimeTableStrings.timeArr.append(contentsOf: classTimeTableStrings.toTimeArr)
+//        classTimeTableStrings.timeArr.append(contentsOf: classTimeTableStrings.toTimeArr)
         let item = classTimeTableStrings.timetable[indexPath.row]
         cell.staffNameLbl.text = item.techer
         cell.durationNameLbl.text  = item.subDuration
