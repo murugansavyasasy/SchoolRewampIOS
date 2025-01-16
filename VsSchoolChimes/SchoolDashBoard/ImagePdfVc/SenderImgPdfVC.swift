@@ -34,6 +34,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        keyboardDonebtn()
     }
     
     func imageSelection(){
@@ -131,6 +132,18 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     @IBAction func BackBtnAct(_ sender: Any) {
         
         dismiss(animated: true)
+    }
+    
+    func keyboardDonebtn(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        textfield.inputAccessoryView = toolbar
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)  // Dismiss the keyboard
     }
 }
 

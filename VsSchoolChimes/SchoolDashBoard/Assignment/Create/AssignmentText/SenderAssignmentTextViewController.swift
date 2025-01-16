@@ -67,6 +67,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        keyboardDonebtn()
         contentTextView.delegate = self
         
         customdate.dateFormat = "EEE d"
@@ -556,4 +557,18 @@ extension SenderAssignmentTextViewController : UITextViewDelegate{
             contentTextView.textColor = .lightGray
         }
     }
+    
+    func keyboardDonebtn(){
+           let toolbar = UIToolbar()
+           toolbar.sizeToFit()
+           let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+           let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+           toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        contentTextView.inputAccessoryView = toolbar
+        assignTitleTxtFld.inputAccessoryView = toolbar
+          
+       }
+       @objc func doneKeyboard() {
+           view.endEditing(true)  // Dismiss the keyboard
+       }
 }

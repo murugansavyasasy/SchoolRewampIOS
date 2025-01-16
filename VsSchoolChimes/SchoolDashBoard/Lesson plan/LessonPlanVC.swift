@@ -32,6 +32,7 @@ class LessonPlanVC: UIViewController {
         viewBtn.layer.cornerRadius = 20
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
+        addDoneButton()
         let nib1 = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
         tableview.register(nib1, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
         let nib = UINib(nibName: CellConfingName.LessonDetailsTVcell, bundle: nil)
@@ -125,4 +126,33 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
             cell.animatePopUpEffect()
         }
     }
+}
+
+extension LessonPlanVC: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        searchBar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        searchBar.resignFirstResponder()
+    }
+
 }

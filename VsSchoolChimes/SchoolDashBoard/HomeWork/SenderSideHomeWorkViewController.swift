@@ -65,7 +65,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
-        
+        keyboardDonebtn()
         StyleAndTranslater()
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
@@ -655,4 +655,18 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
             DetailsTxtview.textColor = .gray
         }
     }
+    
+    func keyboardDonebtn(){
+           let toolbar = UIToolbar()
+           toolbar.sizeToFit()
+           let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+           let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+           toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        DetailsTxtview.inputAccessoryView = toolbar
+        TitleTxtfield.inputAccessoryView = toolbar
+          
+       }
+       @objc func doneKeyboard() {
+           view.endEditing(true)  // Dismiss the keyboard
+       }
 }
