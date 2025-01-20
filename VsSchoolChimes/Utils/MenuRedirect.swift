@@ -247,7 +247,8 @@ class MenuRedirectHandler {
     
     
     func receiverclassTimeTable(from viewController: UIViewController) {
-        let vc = ClassTimeTableViewController(nibName: nil, bundle: nil)
+        //let vc = ClassTimeTableViewController(nibName: nil, bundle: nil)
+        let vc = TimetableVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
@@ -301,6 +302,11 @@ class MenuRedirectHandler {
     }
     func receiverAttendancereport(from viewController: UIViewController){
         let vc = ReciverAttendanceReportVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    func QuizExam(from viewController: UIViewController){
+        let vc = QuizVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

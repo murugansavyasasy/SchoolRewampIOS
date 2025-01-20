@@ -24,6 +24,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         super.viewDidLoad()
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         backBtn.setTitle(MenuStringFile.Homework.translated(), for: .normal)
+        searchBar.placeholder = CommonStringFile.Search.translated()
         addDoneButton()
         let nib = UINib(nibName: CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)

@@ -47,6 +47,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
         BugsTextview.delegate = self
         BugsTextview.text = CommonStringFile.Enterbugs.translated()
         BugsTextview.textColor = UIColor.lightGray
+        keyboardDonebtn()
         
         textViewStack.layer.cornerRadius = Colornames.CORadius10
         textViewStack.layer.borderWidth = 0.5
@@ -110,6 +111,18 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    func keyboardDonebtn(){
+            let toolbar = UIToolbar()
+            toolbar.sizeToFit()
+            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            toolbar.setItems([flexibleSpace, doneButton], animated: false)
+            BugsTextview.inputAccessoryView = toolbar
+        }
+        @objc func doneKeyboard() {
+            view.endEditing(true)  // Dismiss the keyboard
+        }
+
 }
 
 @available(iOS 14.0, *)

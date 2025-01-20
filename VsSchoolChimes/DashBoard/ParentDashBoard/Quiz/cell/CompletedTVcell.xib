@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="337" id="KGk-i7-Jjw" customClass="CompletedTVcell" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="337"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="337"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67n-jS-dhQ">
+                        <rect key="frame" x="10" y="10" width="300" height="317"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qv7-7f-aES">
+                                <rect key="frame" x="15" y="10" width="270" height="80.666666666666671"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Which state is the capital of india?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9H3-FX-4yo">
+                                        <rect key="frame" x="20" y="19.999999999999996" width="230" height="40.666666666666657"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="ClickClr"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="9H3-FX-4yo" secondAttribute="bottom" constant="20" id="7Ye-wa-k2g"/>
+                                    <constraint firstItem="9H3-FX-4yo" firstAttribute="top" secondItem="qv7-7f-aES" secondAttribute="top" constant="20" id="KTi-6e-Lbf"/>
+                                    <constraint firstAttribute="trailing" secondItem="9H3-FX-4yo" secondAttribute="trailing" constant="20" id="enH-Ko-9rg"/>
+                                    <constraint firstItem="9H3-FX-4yo" firstAttribute="leading" secondItem="qv7-7f-aES" secondAttribute="leading" constant="20" id="wgb-rk-Ade"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cDc-yR-QFU">
+                                <rect key="frame" x="15" y="105.66666666666667" width="270" height="196.33333333333331"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykA-jO-gZf">
+                                        <rect key="frame" x="0.0" y="0.0" width="270" height="41.666666666666664"/>
+                                        <color key="backgroundColor" name="Clr"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhp-KW-z2l">
+                                        <rect key="frame" x="0.0" y="51.666666666666671" width="270" height="41.666666666666671"/>
+                                        <color key="backgroundColor" name="Clr"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M1w-Da-PLN">
+                                        <rect key="frame" x="0.0" y="103.33333333333333" width="270" height="41.333333333333329"/>
+                                        <color key="backgroundColor" name="Clr"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDL-X5-1nD">
+                                        <rect key="frame" x="0.0" y="154.66666666666663" width="270" height="41.666666666666657"/>
+                                        <color key="backgroundColor" name="Clr"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Button"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qv7-7f-aES" secondAttribute="trailing" constant="15" id="BQd-RL-50f"/>
+                            <constraint firstAttribute="trailing" secondItem="cDc-yR-QFU" secondAttribute="trailing" constant="15" id="JAr-Rp-WvJ"/>
+                            <constraint firstItem="cDc-yR-QFU" firstAttribute="leading" secondItem="67n-jS-dhQ" secondAttribute="leading" constant="15" id="Wvj-Tw-2KD"/>
+                            <constraint firstItem="qv7-7f-aES" firstAttribute="top" secondItem="67n-jS-dhQ" secondAttribute="top" constant="10" id="X7g-g9-JZ0"/>
+                            <constraint firstItem="qv7-7f-aES" firstAttribute="leading" secondItem="67n-jS-dhQ" secondAttribute="leading" constant="15" id="ZZk-Gk-MB0"/>
+                            <constraint firstAttribute="bottom" secondItem="cDc-yR-QFU" secondAttribute="bottom" constant="15" id="lC3-AM-xCj"/>
+                            <constraint firstItem="cDc-yR-QFU" firstAttribute="top" secondItem="qv7-7f-aES" secondAttribute="bottom" constant="15" id="z6i-Cp-9jT"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="67n-jS-dhQ" secondAttribute="trailing" constant="10" id="Mhc-qE-zug"/>
+                    <constraint firstAttribute="bottom" secondItem="67n-jS-dhQ" secondAttribute="bottom" constant="10" id="cgy-Gh-yNS"/>
+                    <constraint firstItem="67n-jS-dhQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="nK5-bw-2YR"/>
+                    <constraint firstItem="67n-jS-dhQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="wA9-ro-BsK"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="Button1" destination="ykA-jO-gZf" id="R6l-RK-EMd"/>
+                <outlet property="Button2" destination="Qhp-KW-z2l" id="EpH-kd-rm9"/>
+                <outlet property="Button3" destination="M1w-Da-PLN" id="idh-UU-v2u"/>
+                <outlet property="Button4" destination="JDL-X5-1nD" id="MLc-VL-xZq"/>
+                <outlet property="ButtonStackView" destination="cDc-yR-QFU" id="ZLP-p4-3I6"/>
+                <outlet property="QuestionLbl" destination="9H3-FX-4yo" id="D7I-sI-O2U"/>
+                <outlet property="QuestionView" destination="qv7-7f-aES" id="juD-lA-imF"/>
+                <outlet property="cellView" destination="67n-jS-dhQ" id="cXq-pZ-d9P"/>
+            </connections>
+            <point key="canvasLocation" x="138.93129770992365" y="121.47887323943662"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="ClickClr">
+            <color red="0.76099997758865356" green="0.90600001811981201" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Clr">
+            <color red="0.92900002002716064" green="0.92900002002716064" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

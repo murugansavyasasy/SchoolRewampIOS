@@ -147,6 +147,7 @@ class AlertstringFile{
 
 struct classTimeTableStrings {
     static let weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    static let weekDaysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat","Sun"]
     static let subjects = ["Mathematics", "Science", "History", "English", "Geography", "Physics", "Chemistry", "Biology", "Computer Science", "Art"]
 
     static var timeArr = ["8 AM", "10 AM",  "12 PM",  "2 PM",  "4 PM",  "6 PM",  "8 PM","10 PM"]

@@ -464,6 +464,8 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.resiverExamMark(from: self)
             case ReceiverMenuItems.CertificateRequest.translated():
                 MenuRedirect.receiverCertificateRequest(from: self)
+            case ReceiverMenuItems.QuizExam.translated():
+                MenuRedirect.QuizExam(from: self)
             default:
                 break
             }

@@ -1,0 +1,256 @@
+//
+//  PlayQuizVc.swift
+//  VsSchoolChimes
+//
+//  Created by Admin on 17/01/25.
+//
+
+import UIKit
+
+class PlayQuizVc: UIViewController {
+    
+    @IBOutlet weak var sectionLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var BaseView: UIView!
+    @IBOutlet weak var ButtonStackview: UIStackView!
+    @IBOutlet weak var QuestionLbl: UILabel!
+    @IBOutlet weak var QuestionView: UIView!
+    @IBOutlet weak var QuestionCountLbl: UILabel!
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var Button1: UIButton!
+    @IBOutlet weak var Button2: UIButton!
+    @IBOutlet weak var Button3: UIButton!
+    @IBOutlet weak var Button4: UIButton!
+    @IBOutlet weak var NextBtn: UIButton!
+    @IBOutlet weak var PreviousImgView: UIImageView!
+    @IBOutlet weak var CompletedView: UIView!
+    @IBOutlet weak var ContinueBtn: UIButton!
+    @IBOutlet weak var CompletedImg: UIImageView!
+    @IBOutlet weak var CompletedLbl: UILabel!
+    
+    @IBOutlet weak var CompTotalQuestionDefLbl: UILabel!
+    
+    @IBOutlet weak var CompTotalQuestionNoLbl: UILabel!
+    
+    @IBOutlet weak var CompCorretAnsDefLbl: UILabel!
+    
+    @IBOutlet weak var CompCorrectAnsCountLbl: UILabel!
+    
+    @IBOutlet weak var CompInccorectCountLbl: UILabel!
+    @IBOutlet weak var CompInCorretAnsDefLbl: UILabel!
+    
+    @IBOutlet weak var CompTotalMarkDefLbl: UILabel!
+    
+    @IBOutlet weak var CompTotalmarkLbl: UILabel!
+    var questions: [Question] = [
+        Question(text: "What is the capital of Germany?", options: ["Berlin", "Munich", "Frankfurt", "Hamburg"], correctOptionIndex: 0),
+        Question(text: "What is the square root of 64?", options: ["6", "7", "8", "9"], correctOptionIndex: 2),
+        Question(text: "Which planet is the largest in the Solar System?", options: ["Earth", "Mars", "Jupiter", "Saturn"], correctOptionIndex: 2),
+        Question(text: "Who wrote 'Romeo and Juliet'?", options: ["Charles Dickens", "Mark Twain", "William Shakespeare", "Jane Austen"], correctOptionIndex: 2),
+        Question(text: "Which is the smallest prime number?", options: ["0", "1", "2", "3"], correctOptionIndex: 2),
+        Question(text: "What is the chemical symbol for water?", options: ["H2O", "CO2", "NaCl", "O2"], correctOptionIndex: 0),
+        Question(text: "Which country is known as the Land of the Rising Sun?", options: ["India", "China", "Japan", "Thailand"], correctOptionIndex: 2),
+        Question(text: "What is the fastest land animal?", options: ["Cheetah", "Lion", "Horse", "Leopard"], correctOptionIndex: 0),
+        Question(text: "Which ocean is the largest by area?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correctOptionIndex: 3),
+        Question(text: "Who discovered penicillin?", options: ["Marie Curie", "Alexander Fleming", "Isaac Newton", "Louis Pasteur"], correctOptionIndex: 1)
+    ]
+    
+    var currentQuestionIndex = 0
+    var buttons: [UIButton] = []
+    var selectedOptionIndex: Int? = nil
+    var selectedOptions: [Int?] = []
+    let gifImages = UIImage.gifImageWithName("Successful")
+    var correctOption: [Int] = []
+    var correctAnswers = ""
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
+        
+        QuestionView.layer.cornerRadius = 10
+        
+        CompletedView.layer.cornerRadius = 10
+        ContinueBtn.layer.cornerRadius = 10
+        CompletedImg.image = gifImages
+        CompletedView.isHidden = true
+        
+        buttons = [Button1,Button2,Button3,Button4]
+        let tap = UITapGestureRecognizer(target: self, action: #selector(previousQuesAct))
+        PreviousImgView.addGestureRecognizer(tap)
+        PreviousImgView.isUserInteractionEnabled = true
+        
+        Button1.layer.cornerRadius = 15
+        Button2.layer.cornerRadius = 15
+        Button3.layer.cornerRadius = 15
+        Button4.layer.cornerRadius = 15
+        
+        selectedOptions = Array(repeating: nil, count: questions.count)
+        loadQuestion()
+        StyleAndTranslate()
+    }
+    
+    //    func loadQuestion() {
+    //            let currentQuestion = questions[currentQuestionIndex]
+    //        QuestionLbl.text = currentQuestion.text
+    //        Button1.setTitle(currentQuestion.options[0], for: .normal)
+    //        Button2.setTitle(currentQuestion.options[1], for: .normal)
+    //        Button3.setTitle(currentQuestion.options[2], for: .normal)
+    //        Button4.setTitle(currentQuestion.options[3], for: .normal)
+    //
+    //        selectedOptionIndex = nil
+    //        }
+    
+    func StyleAndTranslate() {
+        backBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
+        NameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
+        QuestionLbl.setFont(style: .title, size: FontSize.TitleSize)
+        QuestionCountLbl.setFont(style: .title, size: FontSize.TitleSize)
+        Button1.setTitleFont(style: .body, size: FontSize.BodySize)
+        Button2.setTitleFont(style: .body, size: FontSize.BodySize)
+        Button3.setTitleFont(style: .body, size: FontSize.BodySize)
+        Button4.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        NextBtn.layer.cornerRadius = 10
+        NextBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        CompletedLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        CompTotalmarkLbl.setFont(style: .title, size: FontSize.TitleSize)
+        CompTotalMarkDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        CompTotalQuestionDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        CompTotalQuestionNoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        CompCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        CompCorrectAnsCountLbl.setFont(style: .title, size: FontSize.TitleSize)
+        CompInCorretAnsDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        CompInccorectCountLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
+        ContinueBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+    }
+    
+    func loadQuestion() {
+        let currentQuestion = questions[currentQuestionIndex]
+        QuestionLbl.text = currentQuestion.text
+        
+        for (index, button) in buttons.enumerated() {
+            button.setTitle(currentQuestion.options[index], for: .normal)
+            button.setTitleFont(style: .body, size: FontSize.BodySize)
+            button.tag = index // Set button tag to match option index
+            resetButtonStyle(button)
+            
+            // Highlight the previously selected option, if any
+            if let selectedOption = selectedOptions[currentQuestionIndex], selectedOption == index {
+                button.backgroundColor = .systemBlue
+                button.setTitleColor(.white, for: .normal)
+            }
+        }
+        
+        // Update progress bar and question count
+        progressBar.progress = Float(currentQuestionIndex + 1) / Float(questions.count)
+        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(questions.count)"
+    }
+    
+    
+    @IBAction func NextAct(_ sender: Any) {
+        
+        if currentQuestionIndex < questions.count - 1 {
+            currentQuestionIndex += 1
+            loadQuestion()
+            if currentQuestionIndex == questions.count - 1 {
+                NextBtn.setTitle("Submit", for: .normal)
+            }
+               
+        } else if currentQuestionIndex == questions.count - 1 {
+            
+            // Calculate the score and show the result after the last question
+            var score = 0
+            
+            for (index, question) in questions.enumerated() {
+                if selectedOptions[index] == question.correctOptionIndex {
+                    score += 1 // Increment score for correct answers
+                }
+            }
+            
+            // Show the result to the user
+            //                let alert = UIAlertController(
+            //                    title: "Quiz Completed",
+            //                    message: "You scored \(score) out of \(questions.count) correct answers!",
+            //                    preferredStyle: .alert
+            //                )
+            //                alert.addAction(UIAlertAction(title: "OK", style: .default))
+            //                present(alert, animated: true)
+            view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            BaseView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            QuestionView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+            CompCorrectAnsCountLbl.text = String (score)
+            CompInccorectCountLbl.text = String (questions.count - score)
+            CompTotalmarkLbl.text = " \(score) out of \(questions.count)"
+            CompletedView.isHidden = false
+            correctAnswers = String (score)
+        }
+    }
+    @IBAction func previousQuesAct(){
+        if currentQuestionIndex > 0 {
+            currentQuestionIndex -= 1
+            NextBtn.setTitle("Next", for: .normal)
+            loadQuestion()
+        }
+    }
+    
+    @IBAction func optionSelected(_ sender: UIButton) {
+        // Update selected option for the current question
+        selectedOptions[currentQuestionIndex] = sender.tag
+        print("sender.tag",sender.tag)
+        for i in selectedOptions{
+            print("SelectedOptions",i)
+        }
+        // Reset all button styles
+        for button in buttons {
+            resetButtonStyle(button)
+        }
+        
+        // Highlight the selected button
+        sender.backgroundColor = .systemBlue
+        sender.setTitleColor(.white, for: .normal)
+    }
+    
+    func resetButtonStyle(_ button: UIButton) {
+        button.backgroundColor = .clear
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.systemBlue.cgColor
+        button.setTitleFont(style: .body, size: FontSize.BodySize)
+    }
+    
+    
+    @IBAction func BackAct(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    @IBAction func ContinueAct(_ sender: Any) {
+        var correctOption: [Int] = []
+        for question in questions {
+            correctOption.append(question.correctOptionIndex)
+        }
+       
+                let vc = QuizVC(nibName: nil, bundle: nil)
+                vc.correctoption = correctOption
+        vc.questions = questions
+        for i in selectedOptions {
+            vc.selectedOption.append(i ?? 0)
+        }
+        vc.correctAnswers = correctAnswers
+                //vc.selectedOption = selectedOptions
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+    }
+
+}
+
+struct Question {
+    let text: String
+    let options: [String]
+    let correctOptionIndex: Int
+}

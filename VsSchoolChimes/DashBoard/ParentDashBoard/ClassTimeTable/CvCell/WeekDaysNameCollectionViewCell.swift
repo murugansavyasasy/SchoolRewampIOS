@@ -13,6 +13,10 @@ class WeekDaysNameCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var weekDaysNameLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        bgView.layer.cornerRadius = 10
+        bgView.layer.borderWidth = 0.5
+        bgView.layer.borderColor = UIColor.gray.cgColor
     }
 
 }

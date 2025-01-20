@@ -54,7 +54,9 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
+        addDoneButton()
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         
@@ -307,4 +309,29 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
 
 class LsrwListShowGesture : UITapGestureRecognizer {
     var getSkillId : String!
+}
+
+extension LsrwListShowViewController{
+    
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        searchBar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        searchBar.resignFirstResponder()
+    }
+
 }

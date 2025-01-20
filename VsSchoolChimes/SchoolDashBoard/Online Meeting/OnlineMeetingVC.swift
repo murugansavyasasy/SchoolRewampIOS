@@ -62,6 +62,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         StyleAndTranslater()
         createDatepicker()
         setupTimePicker()
+        keyboardDonebtn()
         
         DescriptTxtview.delegate = self
         
@@ -141,6 +142,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
             print("Selected item: \(item) at index: \(index)")
             // Update the label inside the UIView
             if let label = self?.selectMeetingView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.numberOfLines = 0
                 label.text = item
             }
         }
@@ -479,4 +481,18 @@ extension OnlineMeetingVC : UITextViewDelegate {
             DescriptTxtview.textColor = .lightGray
         }
     }
+    
+    func keyboardDonebtn(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        titleTxtfld.inputAccessoryView = toolbar
+        DescriptTxtview.inputAccessoryView = toolbar
+        
+    }
+        @objc func doneKeyboard() {
+            view.endEditing(true)  // Dismiss the keyboard
+        }
 }

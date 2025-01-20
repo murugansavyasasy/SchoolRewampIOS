@@ -9,6 +9,7 @@ import UIKit
 
 class ExamTmTblVCViewController: UIViewController {
 
+    @IBOutlet weak var Searchbar: UISearchBar!
     @IBOutlet weak var sideTv: UITableView!
     
     @IBOutlet weak var backBtn: UIButton!
@@ -25,6 +26,9 @@ class ExamTmTblVCViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         backBtn.setTitle(ReceiverMenuItems.ExamTest.translated(), for: .normal)
+        Searchbar.placeholder = CommonStringFile.Search.translated()
+        addDoneButton()
+        
         let nib = UINib(nibName:CellConfingName.SideTvcell, bundle: nil)
         sideTv.register(nib, forCellReuseIdentifier: CellConfingName.SideTvcell)
         
@@ -145,4 +149,33 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
             
         }
     }
+}
+
+extension ExamTmTblVCViewController: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        Searchbar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        Searchbar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        Searchbar.resignFirstResponder()
+    }
+
 }

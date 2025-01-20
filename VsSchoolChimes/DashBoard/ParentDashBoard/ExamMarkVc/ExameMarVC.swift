@@ -22,6 +22,8 @@ class ExameMarVC: UIViewController {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
         HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        SearchBar.placeholder = CommonStringFile.Search.translated()
+        addDoneButton()
 
         // Do any additional setup after loading the view.
         tv.isHidden = true
@@ -202,4 +204,33 @@ extension ExameMarVC : UICollectionViewDelegate,UICollectionViewDataSource,UICol
 //    }
     
     
+}
+
+extension ExameMarVC: UISearchBarDelegate{
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        SearchBar.resignFirstResponder()
+    }
+    
+    func addDoneButton(){
+        
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+            
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
+        
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+
+
+        toolbar.setItems([flexibleSpace,doneButton], animated: false)
+        
+        SearchBar.inputAccessoryView = toolbar
+    }
+    
+    @IBAction func DoneBtnAct(){
+        
+        SearchBar.resignFirstResponder()
+    }
+
 }
