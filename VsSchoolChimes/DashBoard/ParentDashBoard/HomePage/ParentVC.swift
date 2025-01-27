@@ -70,10 +70,10 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
         displayedCategories.insert(newString, at: 5)
         filteredItems = MenuRedirect.items
-        setupSearchBar()
+       // setupSearchBar()
         //    startAutoScroll()
         cellRegistration()
-        startPlaceholderRotation()
+        //startPlaceholderRotation()
         addDoneButton()
         
         templateview.roundTopCorners(radius: 10)
@@ -329,20 +329,20 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         
     }
     
-    func setupSearchBar() {
-        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
-    }
-    
-    func startPlaceholderRotation() {
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-            self?.updatePlaceholder()
-        }
-    }
-    
-    func updatePlaceholder() {
-        currentPlaceholderIndex = (currentPlaceholderIndex + 1) % MenuRedirect.items.count
-        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
-    }
+//    func setupSearchBar() {
+//        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
+//    }
+//    
+//    func startPlaceholderRotation() {
+//        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
+//            self?.updatePlaceholder()
+//        }
+//    }
+//    
+//    func updatePlaceholder() {
+//        currentPlaceholderIndex = (currentPlaceholderIndex + 1) % MenuRedirect.items.count
+//        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
+//    }
     
     
     
@@ -383,7 +383,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             
             let label = MenuRedirect.receiverItems[indexPath.row].translated()
-            let img = UIImage(named: MenuRedirect.receiverItems[indexPath.row])
+            let img = UIImage(named: MenuRedirect.receiverImageItems[indexPath.row])
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
             cell.MenuImgView.image = img
@@ -466,6 +466,8 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.receiverCertificateRequest(from: self)
             case ReceiverMenuItems.QuizExam.translated():
                 MenuRedirect.QuizExam(from: self)
+            case ReceiverMenuItems.OnlineMeeting.translated():
+                MenuRedirect.receiverOnlineNavigate(from: self)
             default:
                 break
             }
@@ -482,7 +484,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBAction func homeWork(_ sender: UIButton) {
         
-        MenuRedirect.senderOnlineNavigate(from: self)
+        MenuRedirect.receiverOnlineNavigate(from: self)
     }
     
 }

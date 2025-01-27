@@ -78,7 +78,7 @@ struct ReceiverMenuItems {
     static let ImagePdf = "Image Pdf"
     static let Video = "Video"
     static let NoticeBoard = "Notice Board"
-    static let Assignment = "receiver_assignment"
+    static let Assignment = "Assignment"
     static let OnlineMeeting = "online_meeting"
     static let AttendanceReport = "attendance_report"
     static let EventsHolidays = "Events"

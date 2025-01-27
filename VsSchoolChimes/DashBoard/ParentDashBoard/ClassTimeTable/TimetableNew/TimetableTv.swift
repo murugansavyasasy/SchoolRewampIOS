@@ -29,7 +29,7 @@ class TimetableTv: UITableViewCell {
         DetailsView.layer.cornerRadius = 10
         DetailsView.layer.borderWidth = 0.5
         DetailsView.layer.borderColor = UIColor.gray.cgColor
-        ProgrssviewHeight.constant = 0
+       // ProgrssviewHeight.constant = 0
         ProgressView.backgroundColor = .systemGreen
         
         TimeLbl.setFont(style: .title, size: FontSize.TitleSize)

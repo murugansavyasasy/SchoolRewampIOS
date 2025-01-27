@@ -69,6 +69,11 @@ class MarkAttendenceVC: UIViewController {
             endPoint: CGPoint(x: 0, y: 0.5)
         )
         createDatepicker()
+        
+        customdate.dateFormat = "EEE d"
+        let customdatestring = customdate.string(from: Date())
+        setcustomDate(attributedLbl: customdatestring)
+        
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
         //applyVerticalGradientToButton(button: CustumDateBtn)
@@ -90,8 +95,8 @@ class MarkAttendenceVC: UIViewController {
         SectionView.layer.borderWidth = 1
         SectionView.layer.borderColor = UIColor.lightGray.cgColor
         
-//        CustumDateBtn.layer.borderWidth = 1 // Border width
-//        CustumDateBtn.layer.borderColor = UIColor.gray.cgColor
+        CustumDateBtn.layer.borderWidth = 1 // Border width
+        CustumDateBtn.layer.borderColor = UIColor.gray.cgColor
         
         markAllPresentBtn.layer.cornerRadius = 10
         markAllPresentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -310,9 +315,47 @@ class MarkAttendenceVC: UIViewController {
         
         customdate.dateFormat = "EEE d"
         let attributedLbl = customdate.string(from: datePicker.date)
-        //setcustomDate(attributedLbl: attributedLbl)
+        setcustomDate(attributedLbl: attributedLbl)
         datePicker.isHidden = true
         doneButton.isHidden = true
+    }
+    
+    func setcustomDate(attributedLbl: String) {
+        // Split the input string into weekday and day components
+        let components = attributedLbl.split(separator: " ")
+        guard components.count == 2,
+              let weekday = components.first,
+              let day = components.last else {
+            print("Error: Invalid format for attributedLbl. Expected 'EEE d', got: \(attributedLbl)")
+            return
+        }
+        
+        // Fonts for different parts
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day
+        
+        // Create an attributed string
+        let attributedString = NSMutableAttributedString()
+        
+        // Add the weekday (e.g., "Mon")
+        attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
+            .font: weekdayFont,
+            .foregroundColor: UIColor.gray
+        ]))
+        
+        // Add the day (e.g., "23")
+        attributedString.append(NSAttributedString(string: "\(day)", attributes: [
+            .font: dayFont,
+            .foregroundColor: UIColor.black
+        ]))
+        
+        // Set paragraph style for centered alignment
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
+        
+        // Assign the attributed string to the label
+        CustomDateLbl.attributedText = attributedString
     }
     
     func applyVerticalGradientToButton(button: UIButton) {

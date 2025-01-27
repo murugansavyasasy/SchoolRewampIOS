@@ -87,11 +87,12 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             )
             tabBar.backgroundImage = gradientColor
         }else if passedValue == 1{
+            tabBar.backgroundColor = .topBackgroundCLr
             firstVC.getValue = passedValue
             selectViewController(firstVC)
             let width = UIScreen.main.bounds.width
             let gradientColor = createGradientColor(
-                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+                colors: [Colornames.stafGradient, Colornames.stafGradient1],
               
                 size: CGSize(width: width, height: 400),
                 startPoint: CGPoint(x: 1, y: 0.5), // Start from the right

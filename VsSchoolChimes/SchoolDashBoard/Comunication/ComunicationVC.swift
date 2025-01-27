@@ -143,6 +143,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     func StyleAndTranslater() {
         
+        
+//        informationcontent.textContainer.lineFragmentPadding = 10 // Adjusts padding inside text container
+//        informationcontent.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) // Controls overall padding
+
         //MARK: Translate
         fromDateLbl.text = CommonStringFile.FromTime.translated()
         ScheduleLbl.text = CommonStringFile.Schedule.translated()

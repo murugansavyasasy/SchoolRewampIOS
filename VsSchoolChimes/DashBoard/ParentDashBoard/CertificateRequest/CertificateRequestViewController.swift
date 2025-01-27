@@ -264,8 +264,8 @@ func gradientcolours(button : UIButton,colours : [CGColor]){
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.CertificateTableViewCell, for: indexPath)as! CertificateTableViewCell
         
         cell.dateLbl.text = filteredTimetable[indexPath.row].subDuration
-        cell.cetificateNameLbl.text = filteredTimetable[indexPath.row].subName
-        cell.resonLbl.text = filteredTimetable[indexPath.row].techer
+        cell.certificateNameLbl.text = filteredTimetable[indexPath.row].subName
+        cell.reasonLbl.text = filteredTimetable[indexPath.row].techer
         
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
         cell.linkUrlLbl.isUserInteractionEnabled = true

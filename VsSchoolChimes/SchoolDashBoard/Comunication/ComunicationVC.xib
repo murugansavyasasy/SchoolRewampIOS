@@ -90,22 +90,22 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="35"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yw8-eh-l9F">
-                                            <rect key="frame" x="10" y="0.0" width="65" height="35"/>
+                                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="65" id="Wkf-W5-dxJ"/>
+                                                <constraint firstAttribute="width" constant="30" id="Wkf-W5-dxJ"/>
                                                 <constraint firstAttribute="height" constant="35" id="uJP-Ok-Oas"/>
                                             </constraints>
                                             <color key="tintColor" systemColor="darkTextColor"/>
                                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" image="arrow.left" catalog="system">
+                                            <state key="normal" image="chevron.left" catalog="system">
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                             </state>
                                             <connections>
                                                 <action selector="back:" destination="-1" eventType="touchUpInside" id="pwe-1v-Qbl"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Communication" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWN-8r-k6A">
-                                            <rect key="frame" x="75" y="0.0" width="248" height="35"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Communication" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWN-8r-k6A">
+                                            <rect key="frame" x="40" y="0.0" width="283" height="35"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -114,7 +114,6 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="JWN-8r-k6A" firstAttribute="leading" secondItem="yw8-eh-l9F" secondAttribute="trailing" id="2j0-cx-fN2"/>
-                                        <constraint firstItem="JWN-8r-k6A" firstAttribute="leading" secondItem="yw8-eh-l9F" secondAttribute="trailing" id="7yk-pH-5Vb"/>
                                         <constraint firstItem="yw8-eh-l9F" firstAttribute="leading" secondItem="Xmq-BW-8lK" secondAttribute="leading" constant="10" id="T5h-cX-3ia"/>
                                         <constraint firstAttribute="bottom" secondItem="JWN-8r-k6A" secondAttribute="bottom" id="gEL-gh-v3l"/>
                                         <constraint firstAttribute="height" constant="35" id="jEt-vV-Eq4"/>
@@ -992,7 +991,6 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="arrowshape.backward.circle" catalog="system" width="128" height="123"/>
         <image name="arrowshape.backward.fill" catalog="system" width="128" height="104"/>
         <image name="arrowshape.right.fill" catalog="system" width="128" height="104"/>
@@ -1001,6 +999,7 @@
         <image name="call-schedule" width="128" height="128"/>
         <image name="capital-text" width="128" height="128"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="circle" catalog="system" width="128" height="123"/>
         <image name="mic 1" width="26" height="26"/>
         <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>

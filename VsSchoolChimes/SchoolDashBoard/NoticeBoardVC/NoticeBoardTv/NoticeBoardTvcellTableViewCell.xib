@@ -59,11 +59,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dRZ-ZP-W8D">
-                                <rect key="frame" x="177.66666666666666" y="10" width="20" height="20"/>
+                                <rect key="frame" x="180" y="10" width="15" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="4Fg-oK-PjM"/>
-                                    <constraint firstAttribute="width" constant="20" id="7l8-pb-018"/>
+                                    <constraint firstAttribute="height" constant="15" id="4Fg-oK-PjM"/>
+                                    <constraint firstAttribute="width" constant="15" id="7l8-pb-018"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15 Nov 2024" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZlO-yr-9O1">
@@ -85,10 +85,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoticePin" translatesAutoresizingMaskIntoConstraints="NO" id="0ta-Ym-h3a">
-                                <rect key="frame" x="182.66666666666666" y="-15" width="40" height="40"/>
+                                <rect key="frame" x="185" y="-15" width="35" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="6bW-9v-mcF"/>
-                                    <constraint firstAttribute="width" constant="40" id="LQ0-K2-Mv1"/>
+                                    <constraint firstAttribute="height" constant="35" id="6bW-9v-mcF"/>
+                                    <constraint firstAttribute="width" constant="35" id="LQ0-K2-Mv1"/>
                                 </constraints>
                             </imageView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="3fk-V0-e47">

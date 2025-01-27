@@ -10,6 +10,8 @@ import UIKit
 //import ObjectMapper
 class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
 
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var createView: UIView!
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var nodatalabl: UILabel!
@@ -35,6 +37,11 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -49,15 +56,15 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let formattedDate1 = dateFormatter1.string(from: date1)
             dateLbl.text = formattedDate1
         }
-        todaSlotView.backgroundColor = Colornames.CustomOrange
+        todaSlotView.backgroundColor = .systemOrange
         print("SchoolId",SchoolId)
         print("staffIdstaffId",staffId)
         tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
         let rownib2 = UINib(nibName: CellConfingName.SlotHeader, bundle: nil)
         tv.register(rownib2, forHeaderFooterViewReuseIdentifier: CellConfingName.SlotHeader)
         nodatalabl.isHidden = true
-        let back = UITapGestureRecognizer(target: self , action:#selector(backVC) )
-        backView.addGestureRecognizer(back)
+//        let back = UITapGestureRecognizer(target: self , action:#selector(backVC) )
+//        backView.addGestureRecognizer(back)
         let todaySlot  = UITapGestureRecognizer(target: self , action:#selector(TodaySlotVC) )
         todaSlotView.addGestureRecognizer(todaySlot)
         let Slot  = UITapGestureRecognizer(target: self , action:#selector(SlotVC) )
@@ -86,13 +93,13 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         createView.isHidden = false
         dateLbl.text = "--- Select Date ---"
         slotView.backgroundColor = .lightGray
-        todaSlotView.backgroundColor = Colornames.CustomOrange
+        todaSlotView.backgroundColor = .systemOrange
     }
     
     @IBAction func  SlotVC (){
         createView.isHidden = true
         todaSlotView.backgroundColor = .lightGray
-        slotView.backgroundColor = UIColor(named: CustomOrange)
+        slotView.backgroundColor = .systemOrange
         dateLbl.text = "--- Select Date ---"
         display_date = "ALL"
     }
@@ -100,23 +107,23 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func numberOfSections(in tableView: UITableView) -> Int {
         if  slotView.backgroundColor == UIColor(named: CustomOrange){
             return 1
-        }else if todaSlotView.backgroundColor == UIColor(named: CustomOrange){
+        }else if todaSlotView.backgroundColor == .systemOrange{
             return 1
         }
           return 0
       }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if  slotView.backgroundColor == UIColor(named: CustomOrange){
+        if  slotView.backgroundColor == .systemOrange{
             return UITableView.automaticDimension
-        }else  if  todaSlotView.backgroundColor == UIColor(named: CustomOrange){
+        }else  if  todaSlotView.backgroundColor == .systemOrange{
             return 0
         }
         return 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if  slotView.backgroundColor == Colornames.CustomOrange{
+        if  slotView.backgroundColor == .systemOrange{
             return 1
         }else{
             return 1

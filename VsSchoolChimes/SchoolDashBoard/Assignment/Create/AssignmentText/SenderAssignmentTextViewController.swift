@@ -17,6 +17,9 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var CustomDateLbl: UILabel!
     @IBOutlet weak var customizedDateBtn: HalfColorButton!
     @IBOutlet weak var DateBtn: UIButton!
@@ -57,6 +60,8 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     var doneButton : UIButton!
     var pdfData: Data?
     let customdate = DateFormatter()
+    let initialHeight: CGFloat = 60
+    let maxHeight: CGFloat = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +72,21 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        
+        // Add observers for keyboard notifications
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+        
         keyboardDonebtn()
         contentTextView.delegate = self
         
@@ -99,7 +119,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             }
         }
         
-        //        MARK: Camera Image
+        //MARK: Camera Image
         photoPickManager.onCameraImagePicked = { [weak self] images in
             guard let self = self else { return }
             
@@ -126,7 +146,14 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         
     }
     
+    deinit {
+        // Remove observers
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func  StyleAndTranslater(){
+        
+        TextviewHeight.constant = initialHeight
         //MARK: UI Update
         CreateView.layer.cornerRadius = 10
         CreateView.layer.shadowColor = UIColor.black.cgColor
@@ -393,31 +420,44 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         doneButton.isHidden = true
     }
     
-    func setcustomDate(attributedLbl : String){
+    func setcustomDate(attributedLbl: String) {
+        // Split the input string into weekday and day components
+        let components = attributedLbl.split(separator: " ")
+        guard components.count == 2,
+              let weekday = components.first,
+              let day = components.last else {
+            print("Error: Invalid format for attributedLbl. Expected 'EEE d', got: \(attributedLbl)")
+            return
+        }
         
-        let words = attributedLbl.split(separator: " ")
+        // Fonts for different parts
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day
         
-        let attributedString = NSMutableAttributedString(string: attributedLbl)
+        // Create an attributed string
+        let attributedString = NSMutableAttributedString()
         
-        // Define the ranges for the two words
-        let firstWordRange = (attributedLbl as NSString).range(of: String(words[0]))
-        let secondWordRange = (attributedLbl as NSString).range(of: String(words[1]))
+        // Add the weekday (e.g., "Mon")
+        attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
+            .font: weekdayFont,
+            .foregroundColor: UIColor.gray
+        ]))
         
-        let dayfont = UIFont(name: "Poppins-Medium", size: 14)
-        let datefont = UIFont(name: "Poppins-Bold", size: 14)
+        // Add the day (e.g., "23")
+        attributedString.append(NSAttributedString(string: "\(day)", attributes: [
+            .font: dayFont,
+            .foregroundColor: UIColor.black
+        ]))
         
-        // Apply color and font to the first word
-        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)
-        attributedString.addAttribute(.font, value: dayfont, range: firstWordRange)
-        
-        // Apply  color and font to the second word
-        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: secondWordRange)
-        attributedString.addAttribute(.font, value: datefont, range: secondWordRange)
+        // Set paragraph style for centered alignment
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
         // Assign the attributed string to the label
         CustomDateLbl.attributedText = attributedString
-        
     }
+    
     
 }
 
@@ -559,16 +599,90 @@ extension SenderAssignmentTextViewController : UITextViewDelegate{
     }
     
     func keyboardDonebtn(){
-           let toolbar = UIToolbar()
-           toolbar.sizeToFit()
-           let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-           let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-           toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        contentTextView.inputAccessoryView = toolbar
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
         assignTitleTxtFld.inputAccessoryView = toolbar
-          
-       }
-       @objc func doneKeyboard() {
-           view.endEditing(true)  // Dismiss the keyboard
-       }
+        contentTextView.inputAccessoryView = toolbar
+        
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)  // Dismiss the keyboard
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Current text in the UITextView
+        let currentText = textView.text ?? ""
+        
+        // Compute the new text length
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if newText.count <= 500 {
+            letterscountLbl.text = "\(newText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            
+            // Adjust the scroll view content inset
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
+            scrollView.scrollIndicatorInsets = scrollView.contentInset
+            
+            // Ensure the UITextView is visible
+            scrollToView(contentTextView)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // Reset the scroll view content inset
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
+    
+    // UITextViewDelegate Method: Adjust the height of the UITextView dynamically
+    func textViewDidChange(_ textView: UITextView) {
+        let size = textView.contentSize
+        
+        // Check if the content exceeds the initial height
+        if size.height > initialHeight {
+            // Update the height constraint based on content size
+            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
+            TextviewHeight.constant = newHeight
+            // Execute function when text exceeds boundary
+            executeFunctionWhenTextExceeds()
+        }
+        
+        // Animate the change for smoother UI
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+        
+        // Scroll to make the UITextView visible
+        scrollToView(textView)
+    }
+    
+    // Helper Method: Scroll to a specific view inside the UIScrollView
+    func scrollToView(_ view: UIView) {
+        // Calculate the frame of the view relative to the UIScrollView
+        let rect = view.convert(view.bounds, to: scrollView)
+        scrollView.scrollRectToVisible(rect, animated: true)
+    }
+    
+    // The function you want to execute when the text exceeds the boundary
+    func executeFunctionWhenTextExceeds() {
+        // Your custom logic here, e.g., log a message, trigger an event, etc.
+        print("TextView content has exceeded the initial height.")
+    }
+    
+    
 }

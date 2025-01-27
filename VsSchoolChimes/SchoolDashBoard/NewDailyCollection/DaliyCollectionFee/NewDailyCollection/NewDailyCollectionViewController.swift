@@ -12,6 +12,8 @@ import DropDown
 
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var caleView: UIView!
     @IBOutlet weak var dateViewHeight: NSLayoutConstraint!
@@ -44,7 +46,11 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         norecordLbl.isHidden = true
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd,yyyy"
@@ -60,8 +66,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         tv.register(UINib(nibName: CellConfingName.PaymentListTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentListTableViewCell)
         tv.register(UINib(nibName:CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
         
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
-        backView.addGestureRecognizer(backGesture)
+//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
+//        backView.addGestureRecognizer(backGesture)
         caleView.isHidden = true
         
         let classWiseGuesture = UITapGestureRecognizer(target: self, action: #selector(classAction))
@@ -174,7 +180,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         tv.isHidden = true
         classWiseView.backgroundColor = .lightGray
         modeView.backgroundColor = .lightGray
-        categoryWiseView.backgroundColor = UIColor(named: "CustomOrange")
+        categoryWiseView.backgroundColor = .systemOrange
         ClickId = "1"
         dashBoardList()
     }
@@ -188,7 +194,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         categoryWiseView.backgroundColor = .lightGray
         modeView.backgroundColor = .lightGray
         categoryWiseView.backgroundColor = .lightGray
-        classWiseView.backgroundColor = UIColor(named: "CustomOrange")
+        classWiseView.backgroundColor = .systemOrange
     }
     
     @IBAction func modeAction() {
@@ -199,11 +205,11 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         PaymentMode()
         tv.isHidden = true
         categoryWiseView.backgroundColor = .lightGray
-        modeView.backgroundColor = UIColor(named: "CustomOrange")
+        modeView.backgroundColor = .systemOrange
         classWiseView.backgroundColor = .lightGray
     }
     
-    @IBAction func backVC() {
+    @IBAction func backAct() {
         dismiss(animated: true)
     }
     

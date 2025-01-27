@@ -23,13 +23,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="akq-jb-C1F">
-                    <rect key="frame" x="0.0" y="115" width="393" height="703"/>
+                    <rect key="frame" x="0.0" y="114" width="393" height="704"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.25" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="interactionBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Kql-6k-JrS">
-                            <rect key="frame" x="10" y="8" width="373" height="687"/>
+                            <rect key="frame" x="10" y="8" width="373" height="688"/>
                         </imageView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="QAE-2i-M8B">
-                            <rect key="frame" x="15" y="10" width="363" height="693"/>
+                            <rect key="frame" x="15" y="10" width="363" height="694"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Z6a-oi-Pxy">
                                 <size key="itemSize" width="128" height="128"/>
@@ -52,10 +52,10 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rLm-Fx-yTM">
-                    <rect key="frame" x="8" y="59" width="62" height="41"/>
+                    <rect key="frame" x="10" y="64" width="30" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="62" id="7OE-Ci-J5H"/>
-                        <constraint firstAttribute="height" constant="41" id="agg-GC-Rpc"/>
+                        <constraint firstAttribute="width" constant="30" id="7OE-Ci-J5H"/>
+                        <constraint firstAttribute="height" constant="35" id="agg-GC-Rpc"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -67,8 +67,8 @@
                         <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="k43-jK-oxo"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interact With Staff" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtL-fn-kTf">
-                    <rect key="frame" x="78" y="69" width="230" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interact With Staff" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtL-fn-kTf">
+                    <rect key="frame" x="40" y="71" width="343" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -77,15 +77,15 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="rLm-Fx-yTM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="AY8-ty-ddm"/>
+                <constraint firstItem="rLm-Fx-yTM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="AY8-ty-ddm"/>
                 <constraint firstItem="akq-jb-C1F" firstAttribute="top" secondItem="rLm-Fx-yTM" secondAttribute="bottom" constant="15" id="BM0-zt-1DC"/>
-                <constraint firstItem="OtL-fn-kTf" firstAttribute="leading" secondItem="rLm-Fx-yTM" secondAttribute="trailing" constant="8" id="BkX-7y-qdu"/>
+                <constraint firstItem="OtL-fn-kTf" firstAttribute="leading" secondItem="rLm-Fx-yTM" secondAttribute="trailing" id="BkX-7y-qdu"/>
                 <constraint firstItem="akq-jb-C1F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JhD-9X-6ho"/>
+                <constraint firstItem="OtL-fn-kTf" firstAttribute="centerY" secondItem="rLm-Fx-yTM" secondAttribute="centerY" id="cfc-Qt-DaJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="akq-jb-C1F" secondAttribute="bottom" id="g8q-C2-Dru"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="akq-jb-C1F" secondAttribute="trailing" id="rAR-RJ-mCy"/>
-                <constraint firstItem="OtL-fn-kTf" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="sqk-XI-TQ7"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OtL-fn-kTf" secondAttribute="trailing" constant="85" id="ue1-AM-gBE"/>
-                <constraint firstItem="rLm-Fx-yTM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="yzP-7U-fK0"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OtL-fn-kTf" secondAttribute="trailing" constant="10" id="ue1-AM-gBE"/>
+                <constraint firstItem="rLm-Fx-yTM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="yzP-7U-fK0"/>
             </constraints>
             <point key="canvasLocation" x="35.877862595419849" y="-12.67605633802817"/>
         </view>

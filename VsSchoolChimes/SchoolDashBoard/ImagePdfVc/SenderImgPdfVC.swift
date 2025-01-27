@@ -10,21 +10,34 @@ import UIKit
 @available(iOS 14.0, *)
 class SenderImgPdfVC: UIViewController, DeleteImge {
     
+    @IBOutlet weak var outerView: UIView!
+    @IBOutlet weak var TextViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var CharCountLbl: UILabel!
+    @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var collectionview: UICollectionView!
-    @IBOutlet weak var textfield: UITextField!
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var UploadView: ImageSelection!
     @IBOutlet weak var SelectButton: UIButton!
     
     var selectedImages:[UIImage] = []
     let photoPickManager = PhotoPickerManager.shared
     var url : URL?
+    var initialHeight : CGFloat = 60
+    var maxHeight : CGFloat = 300
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         HeaderLabel.text = CommonStringFile.UploadImagepdf.translated()
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        textfield.placeholder = CommonStringFile.Title.translated()
+        textView.text = CommonStringFile.Description.translated()
+        textView.textColor = .gray
+        textView.layer.cornerRadius = 10
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.gray.cgColor
+        textView.delegate = self
+        TextViewHeight.constant = initialHeight
         SelectButton.layer.cornerRadius = 10
         imageSelection()
         UploadView.imageCollectionview.delegate = self
@@ -34,9 +47,26 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        // Add observers for keyboard notifications
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(keyboardWillShow),
+                    name: UIResponder.keyboardWillShowNotification,
+                    object: nil
+                )
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(keyboardWillHide),
+                    name: UIResponder.keyboardWillHideNotification,
+                    object: nil
+                )
+        
         keyboardDonebtn()
     }
-    
+    deinit {
+        // Remove observers
+        NotificationCenter.default.removeObserver(self)
+    }
     func imageSelection(){
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
@@ -140,7 +170,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        textfield.inputAccessoryView = toolbar
+        textView.inputAccessoryView = toolbar
     }
     @objc func doneKeyboard() {
         view.endEditing(true)  // Dismiss the keyboard
@@ -234,5 +264,95 @@ extension SenderImgPdfVC : UICollectionViewDelegate,UICollectionViewDataSource,U
     
 }
 
+@available(iOS 14.0, *)
+extension SenderImgPdfVC : UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == CommonStringFile.Description.translated() {
+            
+            textView.text = ""
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            
+            textView.text = CommonStringFile.Description
+            textView.textColor = .lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+            let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+            let newHeight = min(max(size.height, initialHeight), maxHeight)
 
+            // Update height constraint and scrolling
+        TextViewHeight.constant = newHeight
+        textView.isScrollEnabled = size.height > maxHeight
+
+            // Ensure layout updates
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+
+            // Adjust view position with keyboard
+            if textView.isFirstResponder {
+                self.adjustForKeyboardHeight()
+            }
+        }
+
+        // Helper to adjust outerView position dynamically
+        private func adjustForKeyboardHeight() {
+            guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
+            let availableSpace = self.view.frame.height - keyboardFrame.height
+            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+
+            if textViewBottom > availableSpace {
+                let overlap = textViewBottom - availableSpace + 20 // Add some padding
+                UIView.animate(withDuration: 0.3) {
+                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+                }
+            }
+        }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Current text in the UITextView
+        let currentText = textView.text ?? ""
+        
+        // Compute the new text length
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if newText.count <= 500 {
+            CharCountLbl.text = "\(newText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+//        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+//        
+//        // Calculate new position considering the dynamic height
+//        let availableSpace = self.view.frame.height - keyboardFrame.height
+//        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+//        
+//        if textViewBottom > availableSpace {
+//            let overlap = textViewBottom - availableSpace + 20 // Add some padding
+//            UIView.animate(withDuration: 0.3) {
+//                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+//            }
+//        }
+    }
+    
+    // Reset view when keyboard hides
+    @objc func keyboardWillHide(notification: Notification) {
+        UIView.animate(withDuration: 0.3) {
+            self.outerView.transform = .identity
+        }
+    }
+}
 

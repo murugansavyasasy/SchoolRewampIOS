@@ -31,7 +31,7 @@ class MenuRedirectHandler {
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM]
     
-    var receiverImageItems : [String] = [ "Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","video","Resiverassignment","Notice Board","Resiverassignment","Online  Meeting","Attendance Report","Events","Request Leave","Fee Details","Images","Interaction with Staff","Quiz Exam","LSRW","Class Timetable","Certificate Request","PTM"]
+    var receiverImageItems : [String] = ["Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM"]
     
     
     
@@ -111,11 +111,17 @@ class MenuRedirectHandler {
     
     func senderOnlineNavigate(from viewController: UIViewController) {
         let vc = OnlineMeetingVC(nibName: nil, bundle: nil)
+        vc.passvalue = 1
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
-        
     }
     
+    func Senderchat(from viewController: UIViewController){
+        let vc = InteractionVC(nibName: nil, bundle: nil)
+        vc.passvalue = 2
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     
     func senderLessonplanNavigate(from viewController: UIViewController) {
         let vc = LessonPlanVC(nibName: nil, bundle: nil)
@@ -184,7 +190,11 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    
+    func dailyCollectionNavigate(from viewController: UIViewController) {
+        let vc = NewDailyCollectionViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     
     
     
@@ -264,6 +274,7 @@ class MenuRedirectHandler {
 //        vc.getValue = getValue
 //        viewController.present(vc, animated: true)
         let vc = InteractionVC(nibName: nil, bundle: nil)
+        vc.passvalue = 1
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
@@ -283,6 +294,12 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
+    func receiverOnlineNavigate(from viewController: UIViewController) {
+        let vc = OnlineMeetingVC(nibName: nil, bundle: nil)
+        vc.passvalue = 2
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     
     func resiverExamMark(from viewController: UIViewController){
         let vc = ExameMarVC(nibName: nil, bundle: nil)
@@ -290,7 +307,8 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func receiverCertificateRequest(from viewController: UIViewController){
-        let vc = CertificateRequestViewController(nibName: nil, bundle: nil)
+        //let vc = CertificateRequestViewController(nibName: nil, bundle: nil)
+        let vc = CertificateRequestVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

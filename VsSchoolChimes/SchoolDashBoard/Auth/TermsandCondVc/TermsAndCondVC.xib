@@ -26,14 +26,14 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pYC-cU-X4S">
-                            <rect key="frame" x="0.0" y="0.0" width="75" height="35"/>
+                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="75" id="rHz-iL-IvO"/>
+                                <constraint firstAttribute="width" constant="30" id="rHz-iL-IvO"/>
                                 <constraint firstAttribute="height" constant="35" id="uMl-vS-upZ"/>
                             </constraints>
                             <color key="tintColor" systemColor="darkTextColor"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="arrow.left" catalog="system">
+                            <state key="normal" image="chevron.backward" catalog="system">
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
@@ -48,8 +48,8 @@
                                 <wkPreferences key="preferences"/>
                             </wkWebViewConfiguration>
                         </wkWebView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms &amp; Conditions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOW-oI-tYT">
-                            <rect key="frame" x="110" y="6" width="173" height="23"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms &amp; Conditions" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bOW-oI-tYT">
+                            <rect key="frame" x="40" y="6" width="343" height="23"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -59,11 +59,12 @@
                     <constraints>
                         <constraint firstItem="bYm-At-cav" firstAttribute="leading" secondItem="ErB-Et-4YM" secondAttribute="leading" id="8TS-CT-s4Y"/>
                         <constraint firstAttribute="trailing" secondItem="bYm-At-cav" secondAttribute="trailing" id="EKc-9d-hXy"/>
+                        <constraint firstItem="bOW-oI-tYT" firstAttribute="leading" secondItem="pYC-cU-X4S" secondAttribute="trailing" id="Het-gc-NZi"/>
                         <constraint firstItem="bYm-At-cav" firstAttribute="top" secondItem="pYC-cU-X4S" secondAttribute="bottom" constant="8" id="WwV-ks-d0R"/>
+                        <constraint firstAttribute="trailing" secondItem="bOW-oI-tYT" secondAttribute="trailing" constant="10" id="dbH-ch-rR3"/>
                         <constraint firstItem="pYC-cU-X4S" firstAttribute="top" secondItem="ErB-Et-4YM" secondAttribute="top" id="djj-Sj-PMc"/>
-                        <constraint firstItem="bOW-oI-tYT" firstAttribute="centerX" secondItem="ErB-Et-4YM" secondAttribute="centerX" id="fwM-jq-ahJ"/>
                         <constraint firstAttribute="bottom" secondItem="bYm-At-cav" secondAttribute="bottom" id="gTj-dj-Ifj"/>
-                        <constraint firstItem="pYC-cU-X4S" firstAttribute="leading" secondItem="ErB-Et-4YM" secondAttribute="leading" id="xYk-v3-Hlz"/>
+                        <constraint firstItem="pYC-cU-X4S" firstAttribute="leading" secondItem="ErB-Et-4YM" secondAttribute="leading" constant="10" id="xYk-v3-Hlz"/>
                         <constraint firstItem="bOW-oI-tYT" firstAttribute="centerY" secondItem="pYC-cU-X4S" secondAttribute="centerY" id="zvn-3S-9Az"/>
                     </constraints>
                 </view>
@@ -80,7 +81,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <namedColor name="topBackgroundCLr 1">
             <color red="0.4779999852180481" green="0.77600002288818359" blue="0.86299997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

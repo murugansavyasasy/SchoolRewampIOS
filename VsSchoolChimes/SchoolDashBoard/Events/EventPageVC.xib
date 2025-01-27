@@ -26,7 +26,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpr-Lv-zOq">
-                    <rect key="frame" x="0.0" y="103.33333333333331" width="393" height="714.66666666666674"/>
+                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="1dg-g2-rGC">
                             <rect key="frame" x="50" y="10" width="293" height="40"/>
@@ -55,7 +55,7 @@
                             </constraints>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAv-wd-i7x">
-                            <rect key="frame" x="0.0" y="58" width="393" height="656.66666666666663"/>
+                            <rect key="frame" x="0.0" y="58" width="393" height="651"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                     </subviews>
@@ -71,14 +71,14 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygH-X9-gex">
-                    <rect key="frame" x="10" y="59" width="40" height="34.333333333333343"/>
+                    <rect key="frame" x="10" y="64" width="30" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="40" id="7nv-8Z-YmK"/>
-                        <constraint firstAttribute="height" constant="34.333333333333343" id="ysK-TG-rQT"/>
+                        <constraint firstAttribute="width" constant="30" id="7nv-8Z-YmK"/>
+                        <constraint firstAttribute="height" constant="35" id="ysK-TG-rQT"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.backward" catalog="system">
+                    <state key="normal" image="chevron.left" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -86,7 +86,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Event" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZf-FC-Yxc">
-                    <rect key="frame" x="50.000000000000007" y="64.333333333333329" width="117.66666666666669" height="24"/>
+                    <rect key="frame" x="40.000000000000007" y="69.666666666666671" width="117.66666666666669" height="24"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -99,7 +99,7 @@
                 <constraint firstItem="ygH-X9-gex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="56p-G6-Zjd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xpr-Lv-zOq" secondAttribute="bottom" id="6up-77-vcY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xpr-Lv-zOq" secondAttribute="trailing" id="Fp4-p4-ZgJ"/>
-                <constraint firstItem="ygH-X9-gex" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="KSe-Sg-aMa"/>
+                <constraint firstItem="ygH-X9-gex" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="KSe-Sg-aMa"/>
                 <constraint firstItem="xpr-Lv-zOq" firstAttribute="top" secondItem="ygH-X9-gex" secondAttribute="bottom" constant="10" id="Prk-rU-PIs"/>
                 <constraint firstItem="aZf-FC-Yxc" firstAttribute="leading" secondItem="ygH-X9-gex" secondAttribute="trailing" id="ppj-Ea-18F"/>
                 <constraint firstItem="xpr-Lv-zOq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wmq-4W-gbK"/>
@@ -108,7 +108,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.backward" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="gradient1">
             <color red="0.49803921568627452" green="0.81960784313725488" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

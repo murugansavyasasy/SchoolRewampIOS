@@ -81,7 +81,7 @@ extension TimetableVC : UITableViewDelegate,UITableViewDataSource {
         cell.TimeLbl.text = time[indexPath.row]
         cell.SubjectLbl.text = subject[indexPath.row]
         cell.DetailsView.backgroundColor = UIColor(named: colours[colour])
-        cell.animateProgressVertically()
+        //cell.animateProgressVertically()
         //cell.animated = tableanimate
 //        if cell.animated == false {
 //            cell.animated = true

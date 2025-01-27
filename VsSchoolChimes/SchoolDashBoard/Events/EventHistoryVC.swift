@@ -15,6 +15,11 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
         historyTable.register(UINib(nibName: CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
+        
+        historyTable.delegate = self
+        historyTable.dataSource = self
+        historyTable.reloadData()
+        
         // Do any additional setup after loading the view.
     }
     

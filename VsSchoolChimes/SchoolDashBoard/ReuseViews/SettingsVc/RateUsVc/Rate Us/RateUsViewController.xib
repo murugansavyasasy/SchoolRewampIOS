@@ -28,15 +28,15 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBy-au-fC9">
-                            <rect key="frame" x="5" y="10" width="40" height="35"/>
+                            <rect key="frame" x="10" y="10" width="30" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="DqC-7d-RIe"/>
-                                <constraint firstAttribute="width" constant="40" id="GQJ-8M-04H"/>
+                                <constraint firstAttribute="width" constant="30" id="GQJ-8M-04H"/>
                             </constraints>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="12" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal">
-                                <imageReference key="image" image="arrow.backward" catalog="system" symbolScale="large"/>
+                                <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="large"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
                             </state>
                             <connections>
@@ -51,8 +51,8 @@
                                 <outlet property="delegate" destination="-1" id="0nJ-z6-ASI"/>
                             </connections>
                         </tableView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate us" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dff-Fo-XsG">
-                            <rect key="frame" x="65" y="14.999999999999998" width="308" height="25.333333333333329"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate us" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dff-Fo-XsG">
+                            <rect key="frame" x="42" y="14.999999999999998" width="331" height="25.333333333333329"/>
                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -60,9 +60,9 @@
                     </subviews>
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
-                        <constraint firstItem="dff-Fo-XsG" firstAttribute="leading" secondItem="pBy-au-fC9" secondAttribute="trailing" constant="20" id="13L-qP-xOy"/>
-                        <constraint firstItem="pBy-au-fC9" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" constant="5" id="Q1o-FW-twh"/>
-                        <constraint firstItem="dff-Fo-XsG" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" constant="15" id="VSN-Wz-t0u"/>
+                        <constraint firstItem="dff-Fo-XsG" firstAttribute="leading" secondItem="pBy-au-fC9" secondAttribute="trailing" constant="2" id="3rH-a4-HAI"/>
+                        <constraint firstItem="dff-Fo-XsG" firstAttribute="centerY" secondItem="pBy-au-fC9" secondAttribute="centerY" id="8MB-fa-5sr"/>
+                        <constraint firstItem="pBy-au-fC9" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" constant="10" id="Q1o-FW-twh"/>
                         <constraint firstAttribute="trailing" secondItem="dff-Fo-XsG" secondAttribute="trailing" constant="20" id="c8k-FY-e8z"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" id="cJG-zF-iwT"/>
                         <constraint firstItem="pBy-au-fC9" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" constant="10" id="eUv-y8-DnF"/>
@@ -84,7 +84,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.backward" catalog="system" width="128" height="95"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

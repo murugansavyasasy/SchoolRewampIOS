@@ -66,11 +66,11 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2h-l2-5CP">
-                    <rect key="frame" x="10" y="64" width="202.66666666666666" height="35"/>
+                    <rect key="frame" x="15" y="64" width="197.66666666666666" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="YIa-7p-e0Z"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Exam Mark">
@@ -116,7 +116,7 @@
                 <constraint firstItem="kAh-K6-11C" firstAttribute="leading" secondItem="o2h-l2-5CP" secondAttribute="trailing" constant="8" id="ECY-o5-KKI"/>
                 <constraint firstItem="9p6-w1-bgo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="KPa-uq-GQ2"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="L9d-6y-Ecu"/>
-                <constraint firstItem="o2h-l2-5CP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="LsE-lg-zgA"/>
+                <constraint firstItem="o2h-l2-5CP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="LsE-lg-zgA"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Xsl-v2-iWC"/>
                 <constraint firstItem="9p6-w1-bgo" firstAttribute="leading" secondItem="kAh-K6-11C" secondAttribute="trailing" id="Ycl-p7-Iwx"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="crT-Rd-iGv"/>

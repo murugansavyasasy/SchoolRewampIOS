@@ -19,6 +19,9 @@ struct Item {
 
 class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     
+    @IBOutlet weak var StandardLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var bookSlotBtn: UIButton!
     @IBOutlet weak var tvLeading: NSLayoutConstraint!
     @IBOutlet weak var tvTralling: NSLayoutConstraint!
@@ -91,6 +94,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         bookSlotBtn.layer.cornerRadius = 5
         tvLeading.constant = 0
         tvTralling.constant = 0
@@ -108,8 +112,8 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         segment1.backgroundColor = Colornames.CheckBoxSelectColor
         noRecordsView.isHidden = true
         noRecordsLbl.isHidden =  true
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        viewBack.addGestureRecognizer(backGesture)
+//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
+//        viewBack.addGestureRecognizer(backGesture)
         let dropDownGesture = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
         subView.addGestureRecognizer(dropDownGesture)
         cv.register(UINib(nibName: CellConfingName.CalendarCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CalendarCollectionViewCell)
@@ -153,7 +157,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         drop_down.show()
     }
     
-    @IBAction func backVc(){
+    @IBAction func backAct(){
         dismiss(animated: true)
     }
 

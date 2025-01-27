@@ -74,7 +74,7 @@ class VideoVC: UIViewController {
         }
     }
     func uiupdate(){
-        searchview.placeholder = "Search Videos..."
+        searchview.placeholder = "Search"
         searchview.delegate = self
         searchview.layer.borderWidth = 0
         searchview.backgroundImage = UIImage()

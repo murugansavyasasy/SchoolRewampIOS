@@ -10,6 +10,9 @@ import Charts
 
 class StrengthTvCell: UITableViewCell {
     
+    @IBOutlet weak var SideBtn: UIButton!
+    
+    @IBOutlet weak var SideBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var dropdownImgview: UIImageView!
     @IBOutlet weak var countLbl: UILabel!
     @IBOutlet weak var countView: UIView!
@@ -35,6 +38,7 @@ class StrengthTvCell: UITableViewCell {
         StandardView.layer.cornerRadius = 10
         cellview.layer.cornerRadius = 10
         countView.layer.cornerRadius = 10
+        SideBtn.isHidden = true
         setupBarChart()
         
         let shortLabels = ["Mahatma Gandhi", "B", "Abdul Kalam", "D", "E"]

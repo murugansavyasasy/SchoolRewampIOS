@@ -12,11 +12,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderImgPdfVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="CharCountLbl" destination="adF-do-gS9" id="hhX-Gs-knN"/>
+                <outlet property="DescriptionLbl" destination="jHg-ZT-OxC" id="Icy-8u-NzV"/>
                 <outlet property="HeaderLabel" destination="K1a-sQ-TbS" id="Mlu-MU-QB4"/>
                 <outlet property="SelectButton" destination="HNV-7i-BCH" id="i7C-76-zgR"/>
+                <outlet property="TextViewHeight" destination="cEB-Vp-c3e" id="6xz-EQ-IuW"/>
                 <outlet property="UploadView" destination="sse-JX-kDl" id="dXF-bm-3Tb"/>
                 <outlet property="collectionHeight" destination="S8h-3s-wPX" id="8NY-NG-L3X"/>
-                <outlet property="textfield" destination="dpP-j7-TB5" id="74i-9L-hi4"/>
+                <outlet property="outerView" destination="Um9-NA-C5Z" id="sAe-ge-TAY"/>
+                <outlet property="textView" destination="poS-nD-D6h" id="3nd-cB-rYU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,18 +30,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Um9-NA-C5Z">
-                    <rect key="frame" x="0.0" y="94.333333333333314" width="393" height="723.66666666666674"/>
+                    <rect key="frame" x="0.0" y="100.33333333333331" width="393" height="717.66666666666674"/>
                     <subviews>
-                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dpP-j7-TB5">
-                            <rect key="frame" x="8" y="30" width="377" height="50"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="50" id="lC7-kr-OiF"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sse-JX-kDl" customClass="ImageSelection" customModule="VsSchoolChimes" customModuleProvider="target">
-                            <rect key="frame" x="15" y="100" width="363" height="100"/>
+                            <rect key="frame" x="15" y="134" width="363" height="100"/>
                             <subviews>
                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="77K-bm-WQZ">
                                     <rect key="frame" x="20" y="12" width="45" height="25"/>
@@ -74,7 +70,7 @@
                             </userDefinedRuntimeAttributes>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HNV-7i-BCH">
-                            <rect key="frame" x="20" y="250" width="353" height="40"/>
+                            <rect key="frame" x="20" y="284" width="353" height="40"/>
                             <color key="backgroundColor" name="ButtonColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="s7r-Xe-aiV"/>
@@ -86,35 +82,64 @@
                                 <action selector="SelectBtnAct:" destination="-1" eventType="touchUpInside" id="GoP-d8-eNu"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHg-ZT-OxC">
+                            <rect key="frame" x="15" y="15" width="363" height="21"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="poS-nD-D6h">
+                            <rect key="frame" x="15" y="44.000000000000014" width="363" height="60"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="cEB-Vp-c3e"/>
+                            </constraints>
+                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 of 500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="adF-do-gS9">
+                            <rect key="frame" x="20" y="109.00000000000001" width="358" height="20.999999999999986"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="sse-JX-kDl" secondAttribute="trailing" constant="15" id="1jz-GK-M9a"/>
                         <constraint firstAttribute="trailing" secondItem="HNV-7i-BCH" secondAttribute="trailing" constant="20" id="35T-6f-fCO"/>
-                        <constraint firstItem="dpP-j7-TB5" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="8" id="C23-a7-rMl"/>
-                        <constraint firstAttribute="trailing" secondItem="dpP-j7-TB5" secondAttribute="trailing" constant="8" id="FV2-Qa-UQb"/>
+                        <constraint firstItem="jHg-ZT-OxC" firstAttribute="top" secondItem="Um9-NA-C5Z" secondAttribute="top" constant="15" id="Agy-5f-Bmz"/>
                         <constraint firstItem="sse-JX-kDl" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="15" id="IGi-lh-xnG"/>
                         <constraint firstItem="HNV-7i-BCH" firstAttribute="top" secondItem="sse-JX-kDl" secondAttribute="bottom" constant="50" id="Jwm-AV-nYg"/>
+                        <constraint firstItem="poS-nD-D6h" firstAttribute="top" secondItem="jHg-ZT-OxC" secondAttribute="bottom" constant="8" id="Zca-1D-YbY"/>
+                        <constraint firstAttribute="trailing" secondItem="poS-nD-D6h" secondAttribute="trailing" constant="15" id="a88-0Q-15N"/>
+                        <constraint firstItem="jHg-ZT-OxC" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="15" id="bka-IC-mnP"/>
+                        <constraint firstItem="adF-do-gS9" firstAttribute="top" secondItem="poS-nD-D6h" secondAttribute="bottom" constant="5" id="du0-RO-Vo3"/>
                         <constraint firstItem="HNV-7i-BCH" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="20" id="gAf-HM-h3a"/>
-                        <constraint firstItem="sse-JX-kDl" firstAttribute="top" secondItem="dpP-j7-TB5" secondAttribute="bottom" constant="20" id="h30-jb-YrN"/>
-                        <constraint firstItem="dpP-j7-TB5" firstAttribute="top" secondItem="Um9-NA-C5Z" secondAttribute="top" constant="30" id="sKm-Nd-GUe"/>
+                        <constraint firstItem="sse-JX-kDl" firstAttribute="top" secondItem="poS-nD-D6h" secondAttribute="bottom" constant="30" id="mlJ-Up-CfR"/>
+                        <constraint firstAttribute="trailing" secondItem="jHg-ZT-OxC" secondAttribute="trailing" constant="15" id="pE7-VT-zo1"/>
+                        <constraint firstItem="adF-do-gS9" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="20" id="r5w-Tw-riv"/>
+                        <constraint firstAttribute="trailing" secondItem="adF-do-gS9" secondAttribute="trailing" constant="15" id="vPG-Id-yf1"/>
+                        <constraint firstItem="poS-nD-D6h" firstAttribute="leading" secondItem="Um9-NA-C5Z" secondAttribute="leading" constant="15" id="wHB-RT-o7W"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Image / Pdf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1a-sQ-TbS">
-                    <rect key="frame" x="124" y="64" width="145" height="20.333333333333329"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Image / Pdf" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1a-sQ-TbS">
+                    <rect key="frame" x="40" y="64" width="343" height="26.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkS-Fo-wiL">
-                    <rect key="frame" x="10" y="63.333333333333343" width="75" height="22"/>
+                    <rect key="frame" x="10" y="59.666666666666657" width="30" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="75" id="5QS-Ig-fFD"/>
-                        <constraint firstAttribute="height" constant="22" id="C5r-GP-WQN"/>
+                        <constraint firstAttribute="width" constant="30" id="5QS-Ig-fFD"/>
+                        <constraint firstAttribute="height" constant="35" id="C5r-GP-WQN"/>
                     </constraints>
                     <color key="tintColor" systemColor="darkTextColor"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.left" catalog="system">
+                    <state key="normal" image="chevron.left" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -126,19 +151,20 @@
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
                 <constraint firstItem="K1a-sQ-TbS" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="2tB-7e-ZS4"/>
-                <constraint firstItem="K1a-sQ-TbS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="JLE-zG-9h8"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="K1a-sQ-TbS" secondAttribute="trailing" constant="10" id="MLy-ld-eva"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Um9-NA-C5Z" secondAttribute="trailing" id="Sn9-bn-Pcw"/>
                 <constraint firstItem="Um9-NA-C5Z" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="YpV-dW-onc"/>
                 <constraint firstItem="K1a-sQ-TbS" firstAttribute="centerY" secondItem="VkS-Fo-wiL" secondAttribute="centerY" id="dC5-tF-emN"/>
                 <constraint firstItem="Um9-NA-C5Z" firstAttribute="top" secondItem="K1a-sQ-TbS" secondAttribute="bottom" constant="10" id="mKU-et-DgS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Um9-NA-C5Z" secondAttribute="bottom" id="qvT-cE-MM1"/>
+                <constraint firstItem="K1a-sQ-TbS" firstAttribute="leading" secondItem="VkS-Fo-wiL" secondAttribute="trailing" id="wnX-0B-RBe"/>
                 <constraint firstItem="VkS-Fo-wiL" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="xKC-lT-Pd4"/>
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="upload" width="24" height="24"/>
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -150,6 +176,9 @@
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">

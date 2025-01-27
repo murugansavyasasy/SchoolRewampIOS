@@ -11,6 +11,8 @@ import AVFoundation
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
+    @IBOutlet weak var TopGradientView: UIView!
+    @IBOutlet weak var changeRollLbl: UILabel!
     @IBOutlet weak var loginDetailView: UIView!
     @IBOutlet weak var Searchbar: UISearchBar!
     @IBOutlet weak var AddressLabel: UILabel!
@@ -54,6 +56,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        TopGradientView.applyGradient(
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         advertisements = [
             "Ad 1: Special Offer",
             "Ad 2: Final Sale",
@@ -65,10 +73,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         displayedCategories = Array(filteredItems.prefix(6))
         
         displayedCategories.insert(newString, at: 5)
-        setupSearchBar()
+//        setupSearchBar()
+//        startPlaceholderRotation()
+        changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
+        changeRollLbl.textColor = .link
         startAutoScroll()
         cellRegistration()
-        startPlaceholderRotation()
         addDoneButton()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
@@ -92,10 +102,16 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         BellImage.addGestureRecognizer(tap)
         BellImage.isUserInteractionEnabled = true
         
+        let changerollTap = UITapGestureRecognizer(target: self, action: #selector(redirectAct))
+        changeRollLbl.addGestureRecognizer(changerollTap)
+        changeRollLbl.isUserInteractionEnabled = true
+        
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-        let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
-        loginDetailView.addGestureRecognizer(redirectGesture)
+       let profileTap =  UITapGestureRecognizer(target: self, action: #selector(OpenProfile))
+        schoolLogoImg.addGestureRecognizer(profileTap)
+        schoolLogoImg.isUserInteractionEnabled = true
+        
         bottomView.roundTopCorners(radius: 10)
         reportView.layer.cornerRadius = 5
         reportView.layer.shadowColor = UIColor.black.cgColor
@@ -252,6 +268,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBAction func redirectAct() {
         dismiss(animated: true)
         
+    }
+    @IBAction func OpenProfile() {
+        
+        let vc = ProfileViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func cellRegistration(){
@@ -479,12 +501,12 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 
             case MenuStringFile.InteractionWithStudent.translated():
-                MenuRedirect.receiverchat(from: self)
+                MenuRedirect.Senderchat(from: self)
                 MenuRedirect.getValue = getValue
             case MenuStringFile.ScheduleExamTest.translated():
                 MenuRedirect.ScheduleExamVCNavigat(from: self)
             case MenuStringFile.DailyCollection:
-                MenuRedirect.RecipientNavigat(from: self)
+                MenuRedirect.dailyCollectionNavigate(from: self)
                 
             case MenuStringFile.AttendanceMarking:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
@@ -506,7 +528,7 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.row == 6{
-            return CGSize(width: collectionView.frame.width, height: 160)
+            return CGSize(width: collectionView.frame.width, height: 170)
         }
         
              let width = (collectionView.frame.width) / 3

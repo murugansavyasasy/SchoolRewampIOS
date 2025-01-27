@@ -19,6 +19,11 @@ enum UploadResult {
 class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     
+    @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var CharCountLbl: UILabel!
+    @IBOutlet weak var outerView: UIView!
+    
     @IBOutlet weak var chooseVideoLabel: UILabel!
     @IBOutlet weak var scrollview: UIScrollView!
     @IBOutlet weak var HeaderLabel: UILabel!
@@ -44,6 +49,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     var videoEmbdUrl : String!
     var iframeLink : String!
     var videoSucessId = 0
+    let initialHeight: CGFloat = 120
+    let maxHeight: CGFloat = 300
     
     
     var player: AVPlayer?
@@ -56,6 +63,21 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        
+        // Add observers for keyboard notifications
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(keyboardWillShow),
+                    name: UIResponder.keyboardWillShowNotification,
+                    object: nil
+                )
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(keyboardWillHide),
+                    name: UIResponder.keyboardWillHideNotification,
+                    object: nil
+                )
+        
         chooseVideoBtn.isHidden = true
         StyleAndTranslater()
         descTxtView.delegate = self
@@ -64,8 +86,16 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         keyboardDonebtn()
     }
     
+    
+    deinit {
+        // Remove observers
+        NotificationCenter.default.removeObserver(self)
+    }
+
+   
+    
     func StyleAndTranslater(){
-        
+        TextviewHeight.constant = initialHeight
         BaseView.layer.cornerRadius = 10
         VideoPlayer.layer.cornerRadius = 10
         descTxtView.layer.cornerRadius = Colornames.CORadius10
@@ -452,4 +482,77 @@ extension SenderSideVideoViewController : UITextViewDelegate{
        @objc func doneKeyboard() {
            view.endEditing(true)  // Dismiss the keyboard
        }
+    
+    func textViewDidChange(_ textView: UITextView) {
+            let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+            let newHeight = min(max(size.height, initialHeight), maxHeight)
+
+            // Update height constraint and scrolling
+            TextviewHeight.constant = newHeight
+            descTxtView.isScrollEnabled = size.height > maxHeight
+
+            // Ensure layout updates
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+
+            // Adjust view position with keyboard
+            if descTxtView.isFirstResponder {
+                self.adjustForKeyboardHeight()
+            }
+        }
+
+        // Helper to adjust outerView position dynamically
+        private func adjustForKeyboardHeight() {
+            guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
+            let availableSpace = self.view.frame.height - keyboardFrame.height
+            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+
+            if textViewBottom > availableSpace {
+                let overlap = textViewBottom - availableSpace + 20 // Add some padding
+                UIView.animate(withDuration: 0.3) {
+                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+                }
+            }
+        }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Current text in the UITextView
+        let currentText = textView.text ?? ""
+        
+        // Compute the new text length
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if newText.count <= 500 {
+            CharCountLbl.text = "\(newText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        
+        // Calculate new position considering the dynamic height
+        let availableSpace = self.view.frame.height - keyboardFrame.height
+        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+        
+        if textViewBottom > availableSpace {
+            let overlap = textViewBottom - availableSpace + 20 // Add some padding
+            UIView.animate(withDuration: 0.3) {
+                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+            }
+        }
+    }
+    
+    // Reset view when keyboard hides
+    @objc func keyboardWillHide(notification: Notification) {
+        UIView.animate(withDuration: 0.3) {
+            self.outerView.transform = .identity
+        }
+    }
 }

@@ -17,6 +17,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var ReportView: UIView!
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var SectionView: UIView!
@@ -38,7 +39,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var calenderimgHeight: NSLayoutConstraint!
-    @IBOutlet weak var DateViewheight: NSLayoutConstraint!
+    @IBOutlet weak var TextViewheight: NSLayoutConstraint!
     @IBOutlet weak var calenderHeight: NSLayoutConstraint!
     
     @IBOutlet weak var SectionLbl: UILabel!
@@ -57,6 +58,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var image = "image/pdf"
     var delegate : HistorySelectDelegate?
     let customdate = DateFormatter()
+    let initialHeight: CGFloat = 60
+    let maxHeight: CGFloat = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +68,34 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        
+        // Add observers for keyboard notifications
+        // Add observers for keyboard events
+
+                NotificationCenter.default.addObserver(
+
+                    self,
+
+                    selector: #selector(keyboardWillShow),
+
+                    name: UIResponder.keyboardWillShowNotification,
+
+                    object: nil
+
+                )
+
+                NotificationCenter.default.addObserver(
+
+                    self,
+
+                    selector: #selector(keyboardWillHide),
+
+                    name: UIResponder.keyboardWillHideNotification,
+
+                    object: nil
+
+                )
+        
         keyboardDonebtn()
         StyleAndTranslater()
         uploadAttachmentView.imageCollectionview.delegate = self
@@ -95,8 +126,19 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         imageSelection()
     }
     
+    deinit {
+        // Remove observers
+//        NotificationCenter.default.removeObserver(self)
+        
+        
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     func StyleAndTranslater(){
         //MARK: UI Update
+        TextViewheight.constant = initialHeight
         Buttonstackview.layer.cornerRadius = 20
         homeworkBtn.layer.cornerRadius = 20
         ReportBtn.layer.cornerRadius = 20
@@ -345,30 +387,44 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
     
-    func setcustomDate(attributedLbl : String){
+    func setcustomDate(attributedLbl: String) {
+        // Split the input string into weekday and day components
+        let components = attributedLbl.split(separator: " ")
+        guard components.count == 2,
+              let weekday = components.first,
+              let day = components.last else {
+            print("Error: Invalid format for attributedLbl. Expected 'EEE d', got: \(attributedLbl)")
+            return
+        }
         
-        let words = attributedLbl.split(separator: " ")
+        // Fonts for different parts
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        //let weekdayFont =  UIFont(name: "Poppins-Medium", size: 12)
+        //let dayFont =  UIFont(name: "Poppins-Medium", size: 22)
+        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for date ex : 24
         
-        let attributedString = NSMutableAttributedString(string: attributedLbl)
+        // Create an attributed string
+        let attributedString = NSMutableAttributedString()
         
-        // Define the ranges for the two words
-        let firstWordRange = (attributedLbl as NSString).range(of: String(words[0]))
-        let secondWordRange = (attributedLbl as NSString).range(of: String(words[1]))
+        // Add the weekday (e.g., "Mon")
+        attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
+            .font: weekdayFont,
+            .foregroundColor: UIColor.gray
+        ]))
         
-        let dayfont = UIFont(name: "Poppins-Medium", size: 14.6)
-        let datefont = UIFont(name: "Poppins-Bold", size: 15)
+        // Add the day (e.g., "23")
+        attributedString.append(NSAttributedString(string: "\(day)", attributes: [
+            .font: dayFont,
+            .foregroundColor: UIColor.black
+        ]))
         
-        // Apply color and font to the first word
-        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)
-        attributedString.addAttribute(.font, value: dayfont, range: firstWordRange)
-        
-        // Apply  color and font to the second word
-        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: secondWordRange)
-        attributedString.addAttribute(.font, value: datefont, range: secondWordRange)
+        // Set paragraph style for centered alignment
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
         // Assign the attributed string to the label
         customDateLbl.attributedText = attributedString
-        
     }
     
     @IBAction func RecipentBtnAct(_ sender: Any) {
@@ -669,4 +725,160 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
        @objc func doneKeyboard() {
            view.endEditing(true)  // Dismiss the keyboard
        }
+    
+    func textViewDidChange(_ textView: UITextView) {
+            let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+            let newHeight = min(max(size.height, initialHeight), maxHeight)
+
+            // Update height constraint and scrolling
+        TextViewheight.constant = newHeight
+        DetailsTxtview.isScrollEnabled = size.height > maxHeight
+
+            // Ensure layout updates
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+
+            // Adjust view position with keyboard
+            if DetailsTxtview.isFirstResponder {
+                self.adjustForKeyboardHeight()
+            }
+        }
+
+        // Helper to adjust outerView position dynamically
+        private func adjustForKeyboardHeight() {
+            guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
+            let availableSpace = self.view.frame.height - keyboardFrame.height
+            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+
+            if textViewBottom > availableSpace {
+                let overlap = textViewBottom - availableSpace + 20 // Add some padding
+                UIView.animate(withDuration: 0.3) {
+                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+                }
+            }
+        }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Current text in the UITextView
+        let currentText = textView.text ?? ""
+        
+        // Compute the new text length
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if newText.count <= 500 {
+            wordsCountLbl.text = "\(newText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
+//    @objc func keyboardWillShow(notification: Notification) {
+//        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+//        
+//        // Calculate new position considering the dynamic height
+//        let availableSpace = self.view.frame.height - keyboardFrame.height
+//        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+//        
+//        if textViewBottom > availableSpace {
+//            let overlap = textViewBottom - availableSpace - 200 // Add some padding
+//            UIView.animate(withDuration: 0.3) {
+//                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+//            }
+//        }
+////        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+////            UIView.animate(withDuration: 0.3) {
+////                // Move outerView 20 points from the top
+////                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 400)
+////            }
+////        }
+//    }
+//    
+//    // Reset view when keyboard hides
+//    @objc func keyboardWillHide(notification: Notification) {
+//        UIView.animate(withDuration: 0.3) {
+//            self.outerView.transform = .identity
+//        }
+//    }
+    
+    
+    @objc func keyboardWillShow(notification: Notification) {
+
+            guard let userInfo = notification.userInfo,
+
+                  let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+
+                  let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+
+
+
+            // Calculate the available space after keyboard shows
+
+            let keyboardHeight = keyboardFrame.height
+
+            let safeAreaBottom = self.view.safeAreaInsets.bottom
+
+            let adjustedKeyboardHeight = keyboardHeight - safeAreaBottom
+
+
+
+            // Get the bottom position of the outerView
+
+            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+
+
+
+            // Calculate the overlap
+
+            let overlap = textViewBottom - (self.view.frame.height - adjustedKeyboardHeight)
+
+
+
+            if overlap > 0 {
+
+                UIView.animate(withDuration: animationDuration) {
+
+                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap - 16) // Add padding
+
+                }
+
+            }
+
+        }
+
+
+
+        @objc func keyboardWillHide(notification: Notification) {
+
+            guard let userInfo = notification.userInfo,
+
+                  let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+
+
+
+            // Reset the outerView position
+
+            UIView.animate(withDuration: animationDuration) {
+
+                self.outerView.transform = .identity
+
+            }
+
+        }
+
+
+
+//        deinit {
+//
+//            // Remove observers when the view controller is deinitialized
+//
+//            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//
+//            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//
+//        }
 }

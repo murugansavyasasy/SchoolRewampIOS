@@ -62,6 +62,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="35" id="ap7-xp-ITL"/>
                                             </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="tintColor" systemColor="darkTextColor"/>
                                             <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>

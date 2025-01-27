@@ -175,7 +175,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         pinImage.isHidden = true
         datelbl.isHidden = false
         SelectBtnHeight.constant=0
-        //Pinview.isHidden = true
+        Pinview.isHidden = true
         dicriptContent.isHidden = false
         TitleLbl.isHidden = false
         collectionview.isHidden = false

@@ -12,6 +12,8 @@ import DropDown
 import FSCalendar
 class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, UITextFieldDelegate {
     
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var enterDuratonTextFld: UITextField!
     @IBOutlet weak var linkTextFiledHeight: NSLayoutConstraint!
     @IBOutlet weak var eventLinkTextField: UITextField!
@@ -63,6 +65,12 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         linkTextFiledHeight.constant = 0
         timeArry.removeAll()
         holeFsCalandeView.isHidden = true
@@ -90,9 +98,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
         let fromTime = UITapGestureRecognizer(target: self, action: #selector(Fromtime))
         fromTimeView.addGestureRecognizer(fromTime) 
         let toTime = UITapGestureRecognizer(target: self, action: #selector(Totime))
-        toTimeView.addGestureRecognizer(toTime)    
-        let backViess = UITapGestureRecognizer(target: self, action: #selector(BackVC))
-        backview.addGestureRecognizer(backViess)
+        toTimeView.addGestureRecognizer(toTime)
         let selectDate = UITapGestureRecognizer(target: self, action: #selector(DateSelectionVc))
         selectDateView.addGestureRecognizer(selectDate)   
         
@@ -241,7 +247,7 @@ class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICo
         holeFsCalandeView.isHidden = true
             }
     
-    @IBAction  func BackVC(){
+    @IBAction  func BackAct(){
         dismiss(animated: true)
     }
     

@@ -9,6 +9,25 @@ import UIKit
 
 @available(iOS 14.0, *)
 class ReciverHomeworkVC: UIViewController, SelectNotice {
+//    func reload(index: Int?, playToggle: Bool) {
+//        
+//        // Stop playback in the currently playing cell (if any)
+//        if let currentIndex = playIndex, currentIndex != index {
+//            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+//            if let previousCell = TV.cellForRow(at: previousIndexPath) as? HistoryTC {
+//                previousCell.updatePlayState(isPlaying: false, url: previousCell.AudioPlayUrl)
+//            }
+//        }
+//        
+//        // Update the currently playing index and reload the table view
+//        playIndex = (playIndex == index) ? nil : index
+//        TV.reloadData()
+//    }
+//    
+//    func deleteDelegate(index: Int) {
+//        ""
+//    }
+    
     func didTapButton(title: String, content: String, items: [String]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
@@ -20,6 +39,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     var expandedSections: Set<Int> = [] // Tracks expanded sections
     let sections = ["11 Dec 2024","12 Dec 2024","13 Dec 2024","14 Dec 2024"]
     var delegate : HistorySelectDelegate?
+    var playIndex : Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
@@ -118,6 +138,11 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.HomeworkTitleLbl.text = "Write Assignment"
             cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
             cell.SubjectLbl.text = "Tamil"
+            let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
+            let isPlaying = (playIndex == indexPath.row)
+            cell.updatePlayState(isPlaying: isPlaying, url: "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav")
+            //cell.delegate = self
+            cell.PlayBtn.setImage(image, for: .normal)
             return cell
         } else {
             let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell

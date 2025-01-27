@@ -11,6 +11,10 @@ import DropDown
 
 class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     
+    @IBOutlet weak var ReciverviewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ButtonStackHeight: NSLayoutConstraint!
+    @IBOutlet weak var TextViewheight: NSLayoutConstraint!
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var Gradientview: UIStackView!
     @IBOutlet weak var receiverView: UIView!
     @IBOutlet weak var createView: UIView!
@@ -48,16 +52,51 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     var doneButton2 : UIButton!
     var dropDown = DropDown()
     let customdate = DateFormatter()
+    let initialHeight: CGFloat = 60
+    let maxHeight: CGFloat = 300
+    var passvalue = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-        receiverView.isHidden = true
-        createView.isHidden = false
+       
+       
+        
+        // Add observers for keyboard notifications
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(keyboardWillShow),
+                    name: UIResponder.keyboardWillShowNotification,
+                    object: nil
+                )
+                NotificationCenter.default.addObserver(
+                    self,
+                    selector: #selector(keyboardWillHide),
+                    name: UIResponder.keyboardWillHideNotification,
+                    object: nil
+                )
+        
+        if passvalue == 2 {
+            view.applyGradient(
+                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+            Gradientview.isHidden = true
+            ButtonStackHeight.constant = 0
+            createView.isHidden = true
+            receiverView.isHidden = false
+            receiverView.alpha = 1
+            ReciverviewTopConstraint.constant = 0
+           
+        }else {
+            view.applyGradient(
+                colors: [Colornames.stafGradient, Colornames.stafGradient1],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+            receiverView.isHidden = true
+            createView.isHidden = false
+        }
         
         StyleAndTranslater()
         createDatepicker()
@@ -78,9 +117,15 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         tableview.dataSource = self
     }
     
+    deinit {
+        // Remove observers
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     func StyleAndTranslater() {
         
         //MARK: UI Update
+        TextViewheight.constant = initialHeight
         createView.layer.cornerRadius = 10
         createView.layer.shadowColor = UIColor.black.cgColor
         createView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -411,31 +456,44 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         showTimepicker(button: sender as! UIButton)
     }
     
-    func setcustomDate(attributedLbl : String){
+    func setcustomDate(attributedLbl: String) {
+        // Split the input string into weekday and day components
+        let components = attributedLbl.split(separator: " ")
+        guard components.count == 2,
+              let weekday = components.first,
+              let day = components.last else {
+            print("Error: Invalid format for attributedLbl. Expected 'EEE d', got: \(attributedLbl)")
+            return
+        }
         
-        let words = attributedLbl.split(separator: " ")
+        // Fonts for different parts
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day
         
-        let attributedString = NSMutableAttributedString(string: attributedLbl)
+        // Create an attributed string
+        let attributedString = NSMutableAttributedString()
         
-        // Define the ranges for the two words
-        let firstWordRange = (attributedLbl as NSString).range(of: String(words[0]))
-        let secondWordRange = (attributedLbl as NSString).range(of: String(words[1]))
+        // Add the weekday (e.g., "Mon")
+        attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
+            .font: weekdayFont,
+            .foregroundColor: UIColor.gray
+        ]))
         
-        let dayfont = UIFont(name: "Poppins-Medium", size: 14)
-        let datefont = UIFont(name: "Poppins-Bold", size: 14)
+        // Add the day (e.g., "23")
+        attributedString.append(NSAttributedString(string: "\(day)", attributes: [
+            .font: dayFont,
+            .foregroundColor: UIColor.black
+        ]))
         
-        // Apply color and font to the first word
-        attributedString.addAttribute(.foregroundColor, value: UIColor.gray, range: firstWordRange)
-        attributedString.addAttribute(.font, value: dayfont, range: firstWordRange)
-        
-        // Apply  color and font to the second word
-        attributedString.addAttribute(.foregroundColor, value: UIColor.black, range: secondWordRange)
-        attributedString.addAttribute(.font, value: datefont, range: secondWordRange)
+        // Set paragraph style for centered alignment
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
         
         // Assign the attributed string to the label
         customDateLbl.attributedText = attributedString
-        
     }
+
 }
 
 extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
@@ -495,4 +553,83 @@ extension OnlineMeetingVC : UITextViewDelegate {
         @objc func doneKeyboard() {
             view.endEditing(true)  // Dismiss the keyboard
         }
+    
+    func textViewDidChange(_ textView: UITextView) {
+            let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+            let newHeight = min(max(size.height, initialHeight), maxHeight)
+
+            // Update height constraint and scrolling
+        TextViewheight.constant = newHeight
+        DescriptTxtview.isScrollEnabled = size.height > maxHeight
+
+            // Ensure layout updates
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+
+            // Adjust view position with keyboard
+            if DescriptTxtview.isFirstResponder {
+                self.adjustForKeyboardHeight()
+            }
+        }
+
+        // Helper to adjust outerView position dynamically
+        private func adjustForKeyboardHeight() {
+            guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
+            let availableSpace = self.view.frame.height - keyboardFrame.height
+            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+
+            if textViewBottom > availableSpace {
+                let overlap = textViewBottom - availableSpace + 20 // Add some padding
+                UIView.animate(withDuration: 0.3) {
+                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+                }
+            }
+        }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Current text in the UITextView
+        let currentText = textView.text ?? ""
+        
+        // Compute the new text length
+        let newText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if newText.count <= 500 {
+            LettercountLbl.text = "\(newText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
+    @objc func keyboardWillShow(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        
+        // Calculate new position considering the dynamic height
+        let availableSpace = self.view.frame.height - keyboardFrame.height
+        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+        
+        if textViewBottom > availableSpace {
+            let overlap = textViewBottom - availableSpace - 200 // Add some padding
+            UIView.animate(withDuration: 0.3) {
+                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
+            }
+        }
+//        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+//            UIView.animate(withDuration: 0.3) {
+//                // Move outerView 20 points from the top
+//                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 400)
+//            }
+//        }
+    }
+    
+    // Reset view when keyboard hides
+    @objc func keyboardWillHide(notification: Notification) {
+        UIView.animate(withDuration: 0.3) {
+            self.outerView.transform = .identity
+        }
+    }
 }

@@ -29,27 +29,27 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GOa-gl-bqa">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="46"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="51"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZUH-7j-Gnk">
-                                    <rect key="frame" x="8" y="8" width="44" height="30"/>
+                                    <rect key="frame" x="8" y="8" width="30" height="35"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="44" id="Mu3-qi-2Qv"/>
-                                        <constraint firstAttribute="height" constant="30" id="ucf-sx-e0w"/>
+                                        <constraint firstAttribute="width" constant="30" id="Mu3-qi-2Qv"/>
+                                        <constraint firstAttribute="height" constant="35" id="ucf-sx-e0w"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                     <color key="tintColor" systemColor="labelColor"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="7" maxY="0.0"/>
                                     <state key="normal">
-                                        <imageReference key="image" image="arrow.left" catalog="system" symbolScale="large"/>
-                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                     </state>
                                     <connections>
                                         <action selector="BackAct:" destination="-1" eventType="touchUpInside" id="kUp-be-2rn"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3W-XM-cgS">
-                                    <rect key="frame" x="137" y="10.333333333333327" width="119.33333333333331" height="25.333333333333329"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3W-XM-cgS">
+                                    <rect key="frame" x="38" y="12.999999999999998" width="345" height="25.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -57,19 +57,20 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="H3W-XM-cgS" secondAttribute="trailing" constant="10" id="HKg-Yc-qlP"/>
                                 <constraint firstItem="H3W-XM-cgS" firstAttribute="centerY" secondItem="GOa-gl-bqa" secondAttribute="centerY" id="LBf-Av-FXg"/>
-                                <constraint firstItem="H3W-XM-cgS" firstAttribute="centerX" secondItem="GOa-gl-bqa" secondAttribute="centerX" id="QFS-vj-J4a"/>
                                 <constraint firstItem="ZUH-7j-Gnk" firstAttribute="leading" secondItem="GOa-gl-bqa" secondAttribute="leading" constant="8" id="TSx-Ux-Pag"/>
                                 <constraint firstAttribute="bottom" secondItem="ZUH-7j-Gnk" secondAttribute="bottom" constant="8" id="bNR-QJ-qdr"/>
                                 <constraint firstItem="ZUH-7j-Gnk" firstAttribute="top" secondItem="GOa-gl-bqa" secondAttribute="top" constant="8" id="uhN-GC-oUo"/>
+                                <constraint firstItem="H3W-XM-cgS" firstAttribute="leading" secondItem="ZUH-7j-Gnk" secondAttribute="trailing" id="yon-A1-bJi"/>
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pvA-xg-oDV">
-                            <rect key="frame" x="0.0" y="112" width="393" height="647"/>
+                            <rect key="frame" x="0.0" y="117" width="393" height="642"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
                         <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="9ed-UR-7vR">
-                            <rect key="frame" x="0.0" y="56" width="393" height="56"/>
+                            <rect key="frame" x="0.0" y="61" width="393" height="56"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="ZI0-i5-1Ai"/>
@@ -107,7 +108,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

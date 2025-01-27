@@ -72,7 +72,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-in-hdv" customClass="BarChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="50" width="300" height="149"/>
+                                <rect key="frame" x="0.0" y="50" width="279" height="149"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="149" id="BOd-wq-ekO"/>
@@ -87,15 +87,26 @@
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Lv-KJ-pgx">
+                                <rect key="frame" x="281" y="101" width="17" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="22" id="Jdv-8v-lsb"/>
+                                    <constraint firstAttribute="width" constant="17" id="hhi-MY-cnA"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="chevron.forward" catalog="system"/>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="9gm-in-hdv" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" id="2DQ-9m-KRy"/>
                             <constraint firstItem="jhL-09-YYT" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" constant="10" id="5Ou-Ye-FeJ"/>
                             <constraint firstItem="jhL-09-YYT" firstAttribute="top" secondItem="9gm-in-hdv" secondAttribute="bottom" constant="2" id="M1A-p8-PF4"/>
                             <constraint firstAttribute="trailing" secondItem="jhL-09-YYT" secondAttribute="trailing" constant="10" id="VZO-4D-jKU"/>
+                            <constraint firstItem="4Lv-KJ-pgx" firstAttribute="leading" secondItem="9gm-in-hdv" secondAttribute="trailing" constant="2" id="e4m-Xq-Mb2"/>
+                            <constraint firstAttribute="trailing" secondItem="4Lv-KJ-pgx" secondAttribute="trailing" constant="2" id="eVr-sI-PGh"/>
                             <constraint firstAttribute="bottom" secondItem="jhL-09-YYT" secondAttribute="bottom" constant="2" id="fZk-9L-3mF"/>
-                            <constraint firstAttribute="trailing" secondItem="9gm-in-hdv" secondAttribute="trailing" id="gAD-Wq-Pv4"/>
                             <constraint firstItem="Thb-4o-aaR" firstAttribute="leading" secondItem="Fv7-Bq-GnT" secondAttribute="leading" id="jPB-o1-Q78"/>
+                            <constraint firstItem="4Lv-KJ-pgx" firstAttribute="centerY" secondItem="Fv7-Bq-GnT" secondAttribute="centerY" id="lqQ-qs-4ta"/>
                             <constraint firstAttribute="trailing" secondItem="Thb-4o-aaR" secondAttribute="trailing" id="r3r-qv-H5J"/>
                             <constraint firstItem="Thb-4o-aaR" firstAttribute="top" secondItem="Fv7-Bq-GnT" secondAttribute="top" id="se1-uu-FIK"/>
                             <constraint firstItem="9gm-in-hdv" firstAttribute="top" secondItem="Thb-4o-aaR" secondAttribute="bottom" id="xdx-QJ-ZMF"/>
@@ -113,6 +124,8 @@
             <connections>
                 <outlet property="BottomLbl" destination="jhL-09-YYT" id="LMC-EX-la3"/>
                 <outlet property="BottomLblHeight" destination="yP8-rh-GJm" id="POS-B1-w3D"/>
+                <outlet property="SideBtn" destination="4Lv-KJ-pgx" id="AWP-0c-KXA"/>
+                <outlet property="SideBtnWidth" destination="hhi-MY-cnA" id="tCW-Rt-eaj"/>
                 <outlet property="StandardView" destination="Thb-4o-aaR" id="wLJ-bg-sct"/>
                 <outlet property="barChartView" destination="9gm-in-hdv" id="PTL-gE-EsE"/>
                 <outlet property="barchartHeight" destination="BOd-wq-ekO" id="LhO-5n-vel"/>
@@ -126,6 +139,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="chevron.forward" catalog="system" width="97" height="128"/>
         <image name="down-arrow" width="512" height="512"/>
         <namedColor name="ClickClr">
             <color red="0.76099997758865356" green="0.90600001811981201" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -42,7 +42,7 @@ class QuizVC: UIViewController {
         
         UpcomingBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         CompletedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.setTitleFont(style: .body, size: 20)
         CompletedBtn.tintColor = .lightGray
         IncorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
         CorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -107,7 +107,11 @@ class QuizVC: UIViewController {
         tv.reloadData()
     }
     
+    @available(iOS 14.0, *)
     @IBAction func BackAct(_ sender: Any) {
+//        let vc = HomePageVc(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
         dismiss(animated: true)
     }
 }

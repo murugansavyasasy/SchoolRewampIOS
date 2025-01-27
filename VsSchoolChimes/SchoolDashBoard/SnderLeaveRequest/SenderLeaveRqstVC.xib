@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="21u-Ph-GdD">
-                    <rect key="frame" x="0.0" y="104" width="393" height="714"/>
+                    <rect key="frame" x="0.0" y="99" width="393" height="719"/>
                     <subviews>
                         <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-kQ-6B9">
                             <rect key="frame" x="10" y="0.0" width="373" height="60"/>
@@ -37,7 +37,7 @@
                             </connections>
                         </searchBar>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-sv-jIe">
-                            <rect key="frame" x="0.0" y="60" width="393" height="654"/>
+                            <rect key="frame" x="0.0" y="60" width="393" height="659"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="uLW-kX-T7C"/>
@@ -57,23 +57,23 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atx-K4-uC7">
-                    <rect key="frame" x="10" y="59" width="75" height="35"/>
+                    <rect key="frame" x="10" y="54" width="30" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="69T-qe-iVg"/>
-                        <constraint firstAttribute="width" constant="75" id="jR7-vb-UWa"/>
+                        <constraint firstAttribute="width" constant="30" id="jR7-vb-UWa"/>
                     </constraints>
                     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="arrow.left" catalog="system">
+                    <state key="normal" image="chevron.left" catalog="system">
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="WcZ-MM-XZM"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave Request" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6x-h6-DNq">
-                    <rect key="frame" x="95" y="66" width="213" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave Request" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6x-h6-DNq">
+                    <rect key="frame" x="40" y="59.000000000000007" width="268" height="25.333333333333336"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -82,10 +82,10 @@
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
                 <constraint firstItem="P6x-h6-DNq" firstAttribute="centerY" secondItem="atx-K4-uC7" secondAttribute="centerY" id="2w8-1K-0op"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="atx-K4-uC7" secondAttribute="top" id="BxO-bN-67X"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="atx-K4-uC7" secondAttribute="top" constant="5" id="BxO-bN-67X"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="21u-Ph-GdD" secondAttribute="trailing" id="QP2-lE-DWC"/>
                 <constraint firstItem="atx-K4-uC7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="ZXK-tT-cjV"/>
-                <constraint firstItem="P6x-h6-DNq" firstAttribute="leading" secondItem="atx-K4-uC7" secondAttribute="trailing" constant="10" id="cmk-4j-6Tz"/>
+                <constraint firstItem="P6x-h6-DNq" firstAttribute="leading" secondItem="atx-K4-uC7" secondAttribute="trailing" id="cmk-4j-6Tz"/>
                 <constraint firstItem="21u-Ph-GdD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eBI-Xt-Dfo"/>
                 <constraint firstItem="21u-Ph-GdD" firstAttribute="top" secondItem="atx-K4-uC7" secondAttribute="bottom" constant="10" id="rgz-GV-2we"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="21u-Ph-GdD" secondAttribute="bottom" id="wiS-zx-tzv"/>
@@ -95,7 +95,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -11,10 +11,32 @@ import UIKit
 
 class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var cvIcon: UICollectionView!
     
+    // Data for classDetails
+    let classDetailsData = [
+        classDetails(Standard: "10th Grade", date: "21 Jan 2024", AbsentCount: "3"),
+        classDetails(Standard: "9th Grade", date: "20 Jan 2024", AbsentCount: "2"),
+        classDetails(Standard: "8th Grade", date: "19 Jan 2024", AbsentCount: "5"),
+        classDetails(Standard: "7th Grade", date: "18 Jan 2024", AbsentCount: "1"),
+        classDetails(Standard: "6th Grade", date: "17 Jan 2024", AbsentCount: "0")
+    ]
+
+    // Data for studentData
+    let studentDataList = [
+        studentData(Name: "John Doe", StandandAndSection: "10th A", AdmissionNo: "AD1234"),
+        studentData(Name: "Jane Smith", StandandAndSection: "9th B", AdmissionNo: "AD1235"),
+        studentData(Name: "Emily Johnson", StandandAndSection: "8th C", AdmissionNo: "AD1236"),
+        studentData(Name: "Michael Brown", StandandAndSection: "7th A", AdmissionNo: "AD1237"),
+        studentData(Name: "Sarah Davis", StandandAndSection: "6th D", AdmissionNo: "AD1238")
+    ]
+    
+    var days = ["Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"]
+
    
     var DateRef = ""
     var absenton = ""
@@ -24,30 +46,49 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        
         Id = "1"
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
-        let back = UITapGestureRecognizer(target: self, action: #selector(BackVc))
-        backView.addGestureRecognizer(back)
+//        let back = UITapGestureRecognizer(target: self, action: #selector(BackVc))
+//        backView.addGestureRecognizer(back)
         let rowNib = UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil)
         Tv.register(rowNib, forCellReuseIdentifier: CellConfingName.ClassTableViewCell)
+        
+        cvIcon.dataSource = self
+        cvIcon.delegate = self
+        cvIcon.reloadData()
+        
+        Tv.dataSource = self
+        Tv.delegate = self
     }
     
-    @IBAction func BackVc() {
+    @IBAction func BackAct() {
         dismiss(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if Id == "1"{
-            return 2
-        }else{
-            return 2
-        }
-        return 0
+//        if Id == "1"{
+//            return 2
+//        }else{
+//            return 2
+//        }
+        
+        classDetailsData.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ClassTableViewCell, for: indexPath) as!
         ClassTableViewCell
+        cell.classNameLbl.text = classDetailsData[indexPath.row].Standard
+        cell.absentCountlbl.text = classDetailsData[indexPath.row].AbsentCount
+        cell.dateLbl.text = classDetailsData[indexPath.row].date
         return cell
     }
     
@@ -56,12 +97,17 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 5
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CVIconCollectionViewCell, for: indexPath) as! CVIconCollectionViewCell
+        
+        cell.MnthLbl.text = "January"
+        
         if ClickID == indexPath.row {
+            cell.dateLbl.text = String (20 + indexPath.row)
+            cell.dayLbl.text = days[indexPath.row]
             cell.dateFulView.backgroundColor = .systemOrange
             cell.dayLbl.textColor = .white
             cell.dateLbl.textColor = .white
@@ -72,6 +118,14 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
             cell.dateLbl.textColor = .black
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = Tv.cellForRow(at: indexPath) as! ClassTableViewCell
+        
+        let vc = SectionViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     @IBAction func clikVc(ges:DateClik){
@@ -249,3 +303,24 @@ class  DateClik : UITapGestureRecognizer{
  //    }
  
  */
+
+struct classDetails {
+    
+    var Standard : String
+    var date : String
+    var AbsentCount : String
+}
+
+struct studentData {
+    
+    var Name : String
+    var StandandAndSection : String
+    var AdmissionNo : String
+}
+struct studentData2 {
+    
+    var Name : String
+    var StandandAndSection : String
+    var AdmissionNo : String
+    var MobileNo : String
+}

@@ -36,26 +36,20 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="771"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0GI-RM-qsb">
-                                    <rect key="frame" x="8" y="5" width="56" height="47"/>
+                                    <rect key="frame" x="10" y="5" width="30" height="35"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="56" id="FgL-Pd-jel"/>
-                                        <constraint firstAttribute="height" constant="47" id="LPv-v0-Dhw"/>
+                                        <constraint firstAttribute="width" constant="30" id="FgL-Pd-jel"/>
+                                        <constraint firstAttribute="height" constant="35" id="LPv-v0-Dhw"/>
                                     </constraints>
                                     <color key="tintColor" systemColor="labelColor"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" image="arrow.left" catalog="system">
-                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                                    <state key="normal" image="chevron.left" catalog="system">
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                     </state>
                                     <connections>
                                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="zbF-OA-UAd"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a bug" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gr-Jo-h5w">
-                                    <rect key="frame" x="63" y="15.999999999999998" width="128" height="26.333333333333321"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A1v-sh-WI5">
                                     <rect key="frame" x="0.0" y="60" width="393" height="711"/>
                                     <subviews>
@@ -193,19 +187,26 @@
                                         <imageReference key="image" image="paperplane.fill" catalog="system" symbolScale="default"/>
                                     </state>
                                 </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a bug" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gr-Jo-h5w">
+                                    <rect key="frame" x="39.999999999999986" y="9.3333333333333268" width="238.66666666666663" height="26.333333333333329"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" name="topBackgroundCLr"/>
                             <constraints>
-                                <constraint firstItem="6Gr-Jo-h5w" firstAttribute="top" secondItem="saK-iD-kGY" secondAttribute="top" constant="16" id="1rX-qN-aB1"/>
                                 <constraint firstAttribute="trailing" secondItem="l7M-L4-UsU" secondAttribute="trailing" constant="20" id="4pt-v1-SGr"/>
                                 <constraint firstItem="A1v-sh-WI5" firstAttribute="top" secondItem="l7M-L4-UsU" secondAttribute="bottom" constant="5" id="JHP-wR-ZvG"/>
                                 <constraint firstItem="l7M-L4-UsU" firstAttribute="top" secondItem="saK-iD-kGY" secondAttribute="top" constant="20" id="Mxp-yK-Mf9"/>
+                                <constraint firstItem="l7M-L4-UsU" firstAttribute="leading" secondItem="6Gr-Jo-h5w" secondAttribute="trailing" constant="10" id="OW4-My-0kg"/>
                                 <constraint firstAttribute="height" constant="771" id="UaU-ix-8bS"/>
                                 <constraint firstItem="A1v-sh-WI5" firstAttribute="leading" secondItem="saK-iD-kGY" secondAttribute="leading" id="XnT-jF-kXt"/>
                                 <constraint firstAttribute="bottom" secondItem="A1v-sh-WI5" secondAttribute="bottom" id="hjM-57-bb1"/>
-                                <constraint firstItem="0GI-RM-qsb" firstAttribute="leading" secondItem="saK-iD-kGY" secondAttribute="leading" constant="8" id="mJf-vm-wQ3"/>
-                                <constraint firstItem="6Gr-Jo-h5w" firstAttribute="leading" secondItem="0GI-RM-qsb" secondAttribute="trailing" constant="-1" id="nWS-XQ-Mqh"/>
+                                <constraint firstItem="0GI-RM-qsb" firstAttribute="leading" secondItem="saK-iD-kGY" secondAttribute="leading" constant="10" id="mJf-vm-wQ3"/>
+                                <constraint firstItem="6Gr-Jo-h5w" firstAttribute="centerY" secondItem="0GI-RM-qsb" secondAttribute="centerY" id="sAh-38-x9r"/>
                                 <constraint firstItem="0GI-RM-qsb" firstAttribute="top" secondItem="saK-iD-kGY" secondAttribute="top" constant="5" id="t3I-2U-yOX"/>
+                                <constraint firstItem="6Gr-Jo-h5w" firstAttribute="leading" secondItem="0GI-RM-qsb" secondAttribute="trailing" id="yS4-Fa-wjr"/>
                                 <constraint firstAttribute="trailing" secondItem="A1v-sh-WI5" secondAttribute="trailing" id="yq5-Er-5ef"/>
                             </constraints>
                         </view>
@@ -231,7 +232,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="paperplane.fill" catalog="system" width="128" height="119"/>
         <image name="upload" width="24" height="24"/>
         <namedColor name="lineView">

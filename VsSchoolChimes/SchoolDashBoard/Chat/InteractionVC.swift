@@ -11,12 +11,17 @@ class InteractionVC: UIViewController {
 
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var CV: UICollectionView!
+    var passvalue = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        //bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-
+        if passvalue == 1{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
+        else if passvalue == 2{
+            HeaderLbl.text = "Interact With Student"
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
         HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
         let nib = UINib(nibName: CellConfingName.ChatCvcell, bundle: nil)
         CV.register(nib, forCellWithReuseIdentifier: CellConfingName.ChatCvcell)

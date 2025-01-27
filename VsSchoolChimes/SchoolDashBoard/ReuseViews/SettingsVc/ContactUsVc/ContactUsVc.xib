@@ -27,29 +27,29 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekg-kT-j4Y">
-                            <rect key="frame" x="0.0" y="5" width="44" height="30"/>
+                            <rect key="frame" x="10" y="5" width="30" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="44" id="ICG-Ey-jFG"/>
-                                <constraint firstAttribute="height" constant="30" id="ZEv-WE-oRz"/>
+                                <constraint firstAttribute="width" constant="30" id="ICG-Ey-jFG"/>
+                                <constraint firstAttribute="height" constant="35" id="ZEv-WE-oRz"/>
                             </constraints>
                             <color key="tintColor" systemColor="labelColor"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="arrow.left" catalog="system">
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                            <state key="normal" image="chevron.backward" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
                                 <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="VMl-yF-act"/>
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UJm-2A-EbX">
-                            <rect key="frame" x="0.0" y="43" width="393" height="716"/>
+                            <rect key="frame" x="0.0" y="48" width="393" height="711"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7kc-bm-Mjt">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="216"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="211"/>
                                     <color key="backgroundColor" name="BackGroundClr"/>
                                 </tableView>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contactusBanner" translatesAutoresizingMaskIntoConstraints="NO" id="J7b-Cf-fJm">
-                                    <rect key="frame" x="0.0" y="216" width="393" height="500"/>
+                                    <rect key="frame" x="0.0" y="211" width="393" height="500"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -64,8 +64,8 @@
                                 <constraint firstAttribute="trailing" secondItem="7kc-bm-Mjt" secondAttribute="trailing" id="hiF-Zf-YQN"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Us" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yl-d3-L7t">
-                            <rect key="frame" x="143" y="5" width="107" height="30"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Us" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yl-d3-L7t">
+                            <rect key="frame" x="40" y="5" width="343" height="35"/>
                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -74,14 +74,15 @@
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
                         <constraint firstItem="UJm-2A-EbX" firstAttribute="top" secondItem="ekg-kT-j4Y" secondAttribute="bottom" constant="8" id="7Tl-9z-WAb"/>
-                        <constraint firstItem="9yl-d3-L7t" firstAttribute="centerX" secondItem="NsT-mS-rkx" secondAttribute="centerX" id="B1L-sb-DGu"/>
                         <constraint firstItem="UJm-2A-EbX" firstAttribute="leading" secondItem="NsT-mS-rkx" secondAttribute="leading" id="ES5-lc-8G8"/>
                         <constraint firstItem="9yl-d3-L7t" firstAttribute="centerY" secondItem="ekg-kT-j4Y" secondAttribute="centerY" id="Vh9-dp-Z2f"/>
-                        <constraint firstItem="ekg-kT-j4Y" firstAttribute="leading" secondItem="NsT-mS-rkx" secondAttribute="leading" id="ee8-yZ-YHD"/>
+                        <constraint firstItem="ekg-kT-j4Y" firstAttribute="leading" secondItem="NsT-mS-rkx" secondAttribute="leading" constant="10" id="ee8-yZ-YHD"/>
                         <constraint firstItem="9yl-d3-L7t" firstAttribute="top" secondItem="NsT-mS-rkx" secondAttribute="top" constant="5" id="faI-Tk-MbM"/>
                         <constraint firstItem="ekg-kT-j4Y" firstAttribute="top" secondItem="NsT-mS-rkx" secondAttribute="top" constant="5" id="gHR-iH-DYH"/>
+                        <constraint firstAttribute="trailing" secondItem="9yl-d3-L7t" secondAttribute="trailing" constant="10" id="iOl-5W-doL"/>
                         <constraint firstAttribute="trailing" secondItem="UJm-2A-EbX" secondAttribute="trailing" id="o88-1F-gUE"/>
                         <constraint firstAttribute="bottom" secondItem="UJm-2A-EbX" secondAttribute="bottom" id="rjq-jt-dyW"/>
+                        <constraint firstItem="9yl-d3-L7t" firstAttribute="leading" secondItem="ekg-kT-j4Y" secondAttribute="trailing" id="znv-IF-PuA"/>
                     </constraints>
                 </view>
             </subviews>
@@ -97,7 +98,7 @@
         </view>
     </objects>
     <resources>
-        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="contactusBanner" width="2000" height="2000"/>
         <namedColor name="BackGroundClr">
             <color red="0.9570000171661377" green="0.96100002527236938" blue="0.97600001096725464" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

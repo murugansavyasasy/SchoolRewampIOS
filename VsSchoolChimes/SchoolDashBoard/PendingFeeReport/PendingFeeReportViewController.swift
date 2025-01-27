@@ -12,6 +12,8 @@ import DropDown
 
 class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var noRecordsView: UIView!
@@ -38,7 +40,11 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
         let userDefaults = UserDefaults.standard
         
         nodataLbl.isHidden = true
@@ -49,8 +55,8 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         tv.isHidden = true
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
-        backView.addGestureRecognizer(backGesture)
+//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
+//        backView.addGestureRecognizer(backGesture)
         let dropDown = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
         AcadamidropDown.addGestureRecognizer(dropDown)
         let classWiseGuesture = UITapGestureRecognizer(target: self, action: #selector(classAction))
@@ -81,17 +87,17 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         tv.isHidden = true
         ClickId = "1"
         classWiseView.backgroundColor = .lightGray
-        categoryWiseView.backgroundColor = Colornames.CustomOrange
+        categoryWiseView.backgroundColor = .systemOrange
     }
     
     @IBAction func classAction() {
         ClickId = "2"
         tv.isHidden = true
         categoryWiseView.backgroundColor = .lightGray
-        classWiseView.backgroundColor = Colornames.CheckBoxSelectColor
+        classWiseView.backgroundColor = .systemOrange
     }
     
-    @IBAction func backVC() {
+    @IBAction func backAct() {
         dismiss(animated: true)
     }
     

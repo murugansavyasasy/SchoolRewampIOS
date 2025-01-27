@@ -14,11 +14,26 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backView: UIView!
+    
+    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     var classNAme = ""
     var SchoolId  = String()
     var SectionName = ""
     var ClickID = 0
     var DateRef : String!
+    
+    var section = ["8th A","8th B","8th C","8th D","8th E"]
+    var absentcount = ["3","8","2","6","3"]
+    // Data for studentData
+    let studentDataList = [
+        studentData2(Name: "John Doe", StandandAndSection: "10th A", AdmissionNo: "AD1234", MobileNo: "9876543210"),
+        studentData2(Name: "Jane Smith", StandandAndSection: "9th B", AdmissionNo: "AD1235", MobileNo: "8765432109"),
+        studentData2(Name: "Emily Johnson", StandandAndSection: "8th C", AdmissionNo: "AD1236", MobileNo: "7654321098"),
+        studentData2(Name: "Michael Brown", StandandAndSection: "7th A", AdmissionNo: "AD1237", MobileNo: "6543210987"),
+        studentData2(Name: "Sarah Davis", StandandAndSection: "6th D", AdmissionNo: "AD1238", MobileNo: "5432109876")
+    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         cv.register(UINib(nibName: CellConfingName.SectionCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SectionCollectionViewCell)
@@ -26,24 +41,31 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         cv.delegate = self
         noRecordView.isHidden = true
         noRecordLbl.isHidden = true
-        let backViews = UITapGestureRecognizer(target: self, action: #selector(BackVc))
-        backView.addGestureRecognizer(backViews)
+//        let backViews = UITapGestureRecognizer(target: self, action: #selector(BackVc))
+//        backView.addGestureRecognizer(backViews)
         let rowNib = UINib(nibName: CellConfingName.SectionTvTableViewCell, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: CellConfingName.SectionTvTableViewCell)
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
     }
     
-    @IBAction func BackVc(){
+    @IBAction func BackAct(){
         dismiss(animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        studentDataList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SectionTvTableViewCell, for: indexPath) as!
         SectionTvTableViewCell
         cell.selectionStyle = .none
+        cell.nameLbl.text = studentDataList[indexPath.row].Name
+        cell.mobileNumberLbl.text = studentDataList[indexPath.row].MobileNo
+        cell.SectionLbl.text = studentDataList[indexPath.row].StandandAndSection
+        cell.AddmisionLbl.text = studentDataList[indexPath.row].AdmissionNo
         return cell
     }
     
@@ -59,17 +81,12 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SectionCollectionViewCell, for: indexPath) as! SectionCollectionViewCell
         if ClickID == indexPath.row {
             
-            
-            
-            cell.sectionClick.backgroundColor = Colornames.CustomOrange
+            cell.sectionClick.backgroundColor = .systemOrange
             cell.sectionNameLbl.textColor = .white
             cell.sectionNameLbl.textColor = .white
         }
         else{
-            
-            
-            
-            cell.sectionClick.backgroundColor = Colornames.LightOrange
+            cell.sectionClick.backgroundColor = .gray
             cell.sectionNameLbl.textColor = .black
             cell.sectionNameLbl.textColor = .black
         }
@@ -85,6 +102,9 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         cv.dataSource = self
         cv.delegate = self
         cv.reloadData()
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

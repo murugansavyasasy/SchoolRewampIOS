@@ -246,6 +246,8 @@
 		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
 		843960252D11938000FC3242 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960242D11938000FC3242 /* LanguageManager.swift */; };
 		843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960262D1193AD00FC3242 /* Bundle+Language.swift */; };
+		843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */; };
+		843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */; };
 		844188642CC8C839006483C3 /* ResponceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188632CC8C839006483C3 /* ResponceModal.swift */; };
 		844188682CC8C85C006483C3 /* ViewModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188672CC8C85C006483C3 /* ViewModal.swift */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
@@ -848,6 +850,8 @@
 		84395FED2D1002A900FC3242 /* ChatTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTVCell.xib; sourceTree = "<group>"; };
 		843960242D11938000FC3242 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		843960262D1193AD00FC3242 /* Bundle+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Language.swift"; sourceTree = "<group>"; };
+		843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequestVC.swift; sourceTree = "<group>"; };
+		843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateRequestVC.xib; sourceTree = "<group>"; };
 		844188632CC8C839006483C3 /* ResponceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceModal.swift; sourceTree = "<group>"; };
 		844188672CC8C85C006483C3 /* ViewModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModal.swift; sourceTree = "<group>"; };
 		8441886E2CC8E18B006483C3 /* Models.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Models.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1302,6 +1306,8 @@
 				187CF5E22D1539AE001422CE /* Cell */,
 				187CF5DA2D142D06001422CE /* CertificateRequestViewController.swift */,
 				187CF5DB2D142D06001422CE /* CertificateRequestViewController.xib */,
+				843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */,
+				843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */,
 			);
 			path = CertificateRequest;
 			sourceTree = "<group>";
@@ -3568,6 +3574,7 @@
 				8442A8FD2CDC83860006068E /* RatingTableViewCell.xib in Resources */,
 				187CF4972D113B6E001422CE /* MessageFromManagementTableViewCell.xib in Resources */,
 				8442A8FE2CDC83860006068E /* RatingTypeTableViewCell.xib in Resources */,
+				843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */,
 				8442A8FF2CDC83860006068E /* SubmitRatingViewController.xib in Resources */,
 				187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
@@ -3751,6 +3758,7 @@
 				18926CBF2D0306CA002BBB97 /* SltoCreationViewController.swift in Sources */,
 				18926CC02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift in Sources */,
 				18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */,
+				843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */,
 				18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */,
 				18D718572D0D471A00E9EDA3 /* DailyCollectionFeeRequest.swift in Sources */,
 				18D718582D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.swift in Sources */,

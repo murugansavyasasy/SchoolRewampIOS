@@ -41,6 +41,9 @@ class ImagePdfTv: UITableViewCell {
         fullView.layer.shadowRadius = 3
         fullView.layer.masksToBounds = false
         fullView.layer.cornerRadius  = Colornames.CORadius10
+        cv.layer.cornerRadius  = Colornames.CORadius10
+        cv.layer.borderWidth = 0.3
+        cv.layer.borderColor = UIColor.lightGray.cgColor
         cv.delegate = self
         cv.dataSource = self
         
@@ -166,7 +169,7 @@ extension ImagePdfTv : UICollectionViewDelegate,UICollectionViewDataSource,UICol
 func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
   
-        return CGSize(width: 250, height: 110)
+        return CGSize(width: 250, height: 130)
    
 }
     
