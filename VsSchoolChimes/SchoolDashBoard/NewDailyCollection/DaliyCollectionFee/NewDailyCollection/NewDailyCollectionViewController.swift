@@ -10,7 +10,18 @@ import UIKit
 import DropDown
 //import ObjectMapper
 
-class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+@available(iOS 14.0, *)
+class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
+   
+    func date(date: String) {
+        
+        if dateSelection == true{
+            fromLbl.text = date
+        }else{
+            todateLbl.text = date
+        }
+    }
+    
     
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var Backbtn: UIButton!
@@ -29,6 +40,10 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var fromLbl: UILabel!
+    @IBOutlet weak var CategoryLbl: UILabel!
+    @IBOutlet weak var ClassLbl: UILabel!
+    @IBOutlet weak var ModeLbl: UILabel!
+    
     
     var url_time : String!
     var url_hours : String!
@@ -43,14 +58,39 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     var SchoolId : String!
     var type : Int!
     var DropDownStr : [String] = []
+    var dateSelection = false
+    
+    // Example data for Feescategory
+    let feesCategories = [
+        Feescategory(category: "Tuition", amount: "5000"),
+        Feescategory(category: "Library", amount: "300"),
+        Feescategory(category: "Laboratory", amount: "700"),
+        Feescategory(category: "Sports", amount: "400"),
+        Feescategory(category: "Transportation", amount: "1000")
+    ]
+
+    // Example data for FeeMode
+    let feeModes = [
+        FeeMode(paymentMode: "Cash", amount: "2000"),
+        FeeMode(paymentMode: "Credit Card", amount: "3000"),
+        FeeMode(paymentMode: "Bank Transfer", amount: "1500"),
+        FeeMode(paymentMode: "Online Payment", amount: "2500"),
+        FeeMode(paymentMode: "Check", amount: "1200")
+    ]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
+       
+        categoryWiseView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
         )
+        CategoryLbl.textColor = .white
+        ClassLbl.textColor = .gray
+        ModeLbl.textColor = .gray
+        
         norecordLbl.isHidden = true
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM dd,yyyy"
@@ -58,7 +98,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         currentdate = formattedDateTime
         fromLbl.text = formattedDateTime
         todateLbl.text = formattedDateTime
-        tv.isHidden = true
+       // tv.isHidden = true
         dropDownLbl.textColor = .lightGray
         tv.dataSource = self
         tv.delegate = self
@@ -66,8 +106,6 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         tv.register(UINib(nibName: CellConfingName.PaymentListTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentListTableViewCell)
         tv.register(UINib(nibName:CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
         
-//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
-//        backView.addGestureRecognizer(backGesture)
         caleView.isHidden = true
         
         let classWiseGuesture = UITapGestureRecognizer(target: self, action: #selector(classAction))
@@ -84,10 +122,22 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         let categoryGuesture = UITapGestureRecognizer(target: self, action: #selector(categoryAction))
         categoryWiseView.addGestureRecognizer(categoryGuesture)
         
+        let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
+        calendarView.addGestureRecognizer(fromdateTap)
+        
+        let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
+        TodateView.addGestureRecognizer(todateTap)
+        
         dashBoardList()
         
     }
-    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
     @IBAction func DropDownVc(){
         let acadamicYear = DropDownStr
         dropDown.dataSource = acadamicYear //4
@@ -177,12 +227,35 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dateViewHeight.constant = 70
         calendarView.isHidden = false
         TodateView.isHidden = false
-        tv.isHidden = true
-        classWiseView.backgroundColor = .lightGray
-        modeView.backgroundColor = .lightGray
-        categoryWiseView.backgroundColor = .systemOrange
+        classWiseView.backgroundColor = .systemGray6
+        modeView.backgroundColor = .systemGray6
+        
+        categoryWiseView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        classWiseView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.0),
+            endPoint: CGPoint(x: 0.0, y: 0.0)
+        )
+        modeView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        classWiseView.backgroundColor = .systemGray6
+        CategoryLbl.textColor = .white
+        ClassLbl.textColor = .gray
+        ModeLbl.textColor = .gray
+        //categoryWiseView.backgroundColor = .systemOrange
         ClickId = "1"
         dashBoardList()
+        
+        tv.dataSource = self
+        tv.delegate = self
+        tv.reloadData()
     }
     
     @IBAction func classAction() {
@@ -190,11 +263,31 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         dateViewHeight.constant = 70
         calendarView.isHidden = false
         TodateView.isHidden = false
-        tv.isHidden = true
-        categoryWiseView.backgroundColor = .lightGray
-        modeView.backgroundColor = .lightGray
-        categoryWiseView.backgroundColor = .lightGray
-        classWiseView.backgroundColor = .systemOrange
+        categoryWiseView.backgroundColor = .systemGray6
+        modeView.backgroundColor = .systemGray6
+        
+        classWiseView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        categoryWiseView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.0),
+            endPoint: CGPoint(x: 0.0, y: 0.0)
+        )
+        modeView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        ClassLbl.textColor = .white
+        CategoryLbl.textColor = .gray
+        ModeLbl.textColor = .gray
+        
+        tv.dataSource = self
+        tv.delegate = self
+        tv.reloadData()
     }
     
     @IBAction func modeAction() {
@@ -203,10 +296,54 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         TodateView.isHidden = false
         ClickId = "0"
         PaymentMode()
-        tv.isHidden = true
-        categoryWiseView.backgroundColor = .lightGray
-        modeView.backgroundColor = .systemOrange
-        classWiseView.backgroundColor = .lightGray
+        categoryWiseView.backgroundColor = .systemGray6
+        //modeView.backgroundColor = .systemOrange
+        classWiseView.backgroundColor = .systemGray6
+        
+        modeView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        categoryWiseView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.0),
+            endPoint: CGPoint(x: 0.0, y: 0.0)
+        )
+        classWiseView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        ModeLbl.textColor = .white
+        CategoryLbl.textColor = .gray
+        ClassLbl.textColor = .gray
+        
+        tv.dataSource = self
+        tv.delegate = self
+        tv.reloadData()
+    }
+    
+    //MARK: Date Picker
+    
+    @IBAction func SelectFromDate(){
+        dateSelection = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
+    }
+    
+    @IBAction func SelectToDate(){
+        dateSelection = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
     @IBAction func backAct() {
@@ -225,10 +362,13 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if ClickId == "1" || ClickId == "2"{
             let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
-            cell.numberLbl.text = String(indexPath.row+1)
+            cell.classLbl.text = feesCategories[indexPath.row].category
+            cell.amountLbl.text = feesCategories[indexPath.row].amount
             return cell
         }else{
             let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
+            cell.classLbl.text = feeModes[indexPath.row].paymentMode
+            cell.amountLbl.text = feeModes[indexPath.row].amount
             return cell
         }
         
@@ -236,15 +376,22 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if ClickId == "1" || ClickId == "2"{
-            return 3
+            return 4
         }
         else{
-            return 4
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
+        if ClickId == "0"{
+            headerView.classLbl.text = "Total"
+            headerView.amountLbl.text = "37,515"
+        }else{
+            headerView.classLbl.text = "Total"
+            headerView.amountLbl.text = "37,515"
+        }
         return headerView
     }
     
@@ -786,3 +933,13 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
  
  
  */
+
+struct Feescategory {
+    
+    var category : String
+    var amount : String
+}
+struct FeeMode {
+    var paymentMode : String
+    var amount : String
+}

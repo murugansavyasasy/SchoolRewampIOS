@@ -50,6 +50,64 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     var rowIdentifier = "LsrwListShowTableViewCell"
     var instituteId  = Int()
     var studentId = String()
+    
+    let tasks: [LSRW] = [
+        LSRW(
+            title: "Listening Comprehension - The Environment",
+            description: "Listen to an audio about saving the environment and answer questions.",
+            subject: "English",
+            SubmitedOn: "2025-01-15"
+        ),
+        
+        LSRW(
+            title: "Speaking - Debate on Climate Change",
+            description: "Give a 5-minute speech about whether climate change is real or not.",
+            subject: "English",
+            SubmitedOn: "2025-01-20"
+        ),
+        
+        LSRW(
+            title: "Reading - Short Story Analysis",
+            description: "Read a short story and write about its characters and themes.",
+            subject: "Literature",
+            SubmitedOn: "2025-01-18"
+        ),
+        
+        LSRW(
+            title: "Writing - Persuasive Essay",
+            description: "Write an essay arguing if homework should be banned or not.",
+            subject: "English",
+            SubmitedOn: "2025-01-25"
+        ),
+        
+        LSRW(
+            title: "Listening - Understanding News Broadcast",
+            description: "Listen to a news report and summarize the main points.",
+            subject: "Social Studies",
+            SubmitedOn: "2025-01-22"
+        ),
+        
+        LSRW(
+            title: "Speaking - Show and Tell",
+            description: "Present an item that is important to you and explain why.",
+            subject: "English",
+            SubmitedOn: "2025-01-30"
+        ),
+        
+        LSRW(
+            title: "Reading - Poetry Analysis",
+            description: "Read a poem and explain its meaning and main ideas.",
+            subject: "Literature",
+            SubmitedOn: "2025-01-28"
+        ),
+        
+        LSRW(
+            title: "Writing - Creative Writing",
+            description: "Write a short, creative story with a good plot and characters.",
+            subject: "English",
+            SubmitedOn: "2025-02-01"
+        )
+    ]
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,8 +115,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         addDoneButton()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
         
         let userDefaults = UserDefaults.standard
        
@@ -70,6 +127,13 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         nodataLbl.isHidden = true
         
         tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
+    }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -157,7 +221,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       4
+        return tasks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -200,8 +264,13 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
 //        attachGes.getSkillId = String(skillData.SkillId)
 //        cell.takingSkillView.addGestureRecognizer(attachGes)
 
-        
-        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(AttachmentRedirect))
+       // cell.takingSkillView.addGestureRecognizer(tap)
+        cell.titleLbl.text = tasks[indexPath.row].title
+        cell.descLbl.text = tasks[indexPath.row].description
+        cell.subLbl.text = tasks[indexPath.row].subject
+        cell.submittedOnLbl.text = tasks[indexPath.row].SubmitedOn
+        cell.sentByLbl.text = "Lakshmanan"
         
         return cell
     }
@@ -217,7 +286,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         
         
         let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
-        vc.skillId = ges.getSkillId
+        //vc.skillId = ges.getSkillId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -334,4 +403,12 @@ extension LsrwListShowViewController{
         searchBar.resignFirstResponder()
     }
 
+}
+
+struct LSRW {
+   var title : String
+   var description : String
+   var subject : String
+   var SubmitedOn : String
+    
 }

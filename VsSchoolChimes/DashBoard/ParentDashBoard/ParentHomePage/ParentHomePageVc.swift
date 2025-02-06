@@ -1,19 +1,18 @@
 //
-//  ParentVC.swift
+//  ParentHomePageVc.swift
 //  VsSchoolChimes
 //
-//  Created by admin on 14/12/24.
+//  Created by Admin on 31/01/25.
 //
 
 import UIKit
 import AVFoundation
 
 @available(iOS 14.0, *)
-class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
-    
+class ParentHomePageVc: UIViewController {
+
     @IBOutlet weak var Profileimage: UIImageViewX!
     @IBOutlet weak var changeRollLbl: UILabel!
-    @IBOutlet weak var lowBottomCv: UICollectionView!
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var templateview: UIView!
     @IBOutlet weak var profileFullview: UIView!
@@ -23,11 +22,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     @IBOutlet weak var AddressLabel: UILabel!
     @IBOutlet weak var SchoolNameLabel: UILabel!
     @IBOutlet weak var BellImage: UIImageView!
-    @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
-    @IBOutlet weak var TopCv: UICollectionView!
-    @IBOutlet weak var pageContorler: UIPageControl!
+    
     @IBOutlet weak var bottomCv: UICollectionView!
     
     @IBOutlet weak var collectionBtn: UIView!
@@ -76,7 +73,10 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
         //startPlaceholderRotation()
         addDoneButton()
         
-        templateview.roundTopCorners(radius: 10)
+        //templateview.roundTopCorners(radius: 10)
+        templateview.layer.cornerRadius = 10 // Adjust as needed
+        templateview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Top-left and Top-right corners
+        templateview.clipsToBounds = true // Ensures the corners are clipped
         
         let midIndex = MenuRedirect.receiverItems.count / 2
         firstArray = Array(MenuRedirect.receiverItems.prefix(midIndex))  // First half
@@ -187,9 +187,9 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        bottomCv.delegate = self
-        bottomCv.dataSource = self
-        bottomCv.reloadData()
+//        bottomCv.delegate = self
+//        bottomCv.dataSource = self
+//        bottomCv.reloadData()
         
     }
     // Helper function to configure the button
@@ -288,9 +288,10 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
     }
     @IBAction func gotoProfile() {
         let vc = ProfileViewController(nibName: nil, bundle: nil)
+        vc.passvalue = 2
+        vc.HideBackButton = false
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
-        
     }
     
     func setupVideoBackground() {
@@ -332,13 +333,13 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 //    func setupSearchBar() {
 //        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
 //    }
-//    
+//
 //    func startPlaceholderRotation() {
 //        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
 //            self?.updatePlaceholder()
 //        }
 //    }
-//    
+//
 //    func updatePlaceholder() {
 //        currentPlaceholderIndex = (currentPlaceholderIndex + 1) % MenuRedirect.items.count
 //        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
@@ -357,7 +358,7 @@ class ParentVC: UIViewController, UISearchBarDelegate, UICollectionViewDelegate,
 
 
 @available(iOS 14.0, *)
-extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return displayedCategories.count // Ensure ItemnCount matches your data source
@@ -490,7 +491,7 @@ extension ParentVC: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 @available(iOS 14.0, *)
-extension ParentVC: UICollectionViewDelegateFlowLayout {
+extension ParentHomePageVc: UICollectionViewDelegateFlowLayout {
     
     // Set item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -498,16 +499,27 @@ extension ParentVC: UICollectionViewDelegateFlowLayout {
             return CGSize(width: collectionView.frame.width, height: 160)
         }
         
-        let width = (collectionView.frame.width) / 3
+//        let width = (collectionView.frame.width) / 4
+//        let padding: CGFloat = 10
+//        let maxTextWidth = width - padding * 2
+//        
+//        let label = MenuRedirect.receiverItems[indexPath.row].translated()
+//        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
+//        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
+//        
+//        let height = max(textHeight + padding * 2, width - 10)
+//        return CGSize(width: width, height: height)
+        
+        let width = (collectionView.frame.width) / 3.2
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
-        
-        let label = MenuRedirect.receiverItems[indexPath.row].translated()
+
+        let label = filteredItems[indexPath.row].translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
         let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
-        
+
         let height = max(textHeight + padding * 2, width - 10)
-        return CGSize(width: width, height: height)
+        return CGSize(width: width, height: height + 10)
     }
     
     
@@ -521,7 +533,7 @@ extension String {
 }
 
 @available(iOS 14.0, *)
-extension ParentVC: UISearchBarDelegate{
+extension ParentHomePageVc: UISearchBarDelegate{
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         Searchbar.endEditing(true)
@@ -658,4 +670,5 @@ extension UIColor {
         )
     }
 }
+
 

@@ -19,6 +19,8 @@ struct Item {
 
 class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
     
+    @IBOutlet weak var MeetingHistoryLbl: UILabel!
+    @IBOutlet weak var ShedulemeetingLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
@@ -94,11 +96,18 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+       
+        segment1.applyGradientWithAdjustedColors(gradientColors: [UIColor.green,UIColor.blue],lightenFactor: 0.6,opacity: 0.8)
+        
+        segment2.backgroundColor = .systemGray6
+        ShedulemeetingLbl.textColor = .black
+        MeetingHistoryLbl.textColor = .gray
+        
+        
         bookSlotBtn.layer.cornerRadius = 5
         tvLeading.constant = 0
         tvTralling.constant = 0
-        tv.isHidden=true
+       // tv.isHidden=true
         cv.register(UINib(nibName: CellConfingName.PTMCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PTMCollectionViewCell)
         tv.register(UINib(nibName: CellConfingName.cancelTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.cancelTableViewCell)
         tv.register(UINib(nibName: CellConfingName.SlotHistoryTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.SlotHistoryTableViewCell)
@@ -109,7 +118,6 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         segment1.addGestureRecognizer(segments1)
         let segments2 = UITapGestureRecognizer(target: self, action: #selector(seg2Vc))
         segment2.addGestureRecognizer(segments2)
-        segment1.backgroundColor = Colornames.CheckBoxSelectColor
         noRecordsView.isHidden = true
         noRecordsLbl.isHidden =  true
 //        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
@@ -128,8 +136,13 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         getEventDate = DateInFormat
         tv.register(UINib(nibName: CellConfingName.TimeHeader, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.TimeHeader)
         
+        tv.dataSource = self
+        tv.delegate = self
+        tv.reloadData()
     }
-    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
     func generateDates() {
            let currentDate = Date()
            for i in 0..<366 {
@@ -169,16 +182,16 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CalendarCollectionViewCell, for: indexPath) as! CalendarCollectionViewCell
             let date = dates[indexPath.item]
             if ClickID == indexPath.row {
-                cell.caleView.backgroundColor = .systemOrange
-                cell.dayLbl.textColor = .white
-                cell.dateLbl.textColor = .white
-                cell.slotCountLbl.textColor = .white
-            }
-            else{
-                cell.caleView.backgroundColor = Colornames.NoDataColor
+                cell.caleView.backgroundColor = .attendence
                 cell.dayLbl.textColor = .black
                 cell.dateLbl.textColor = .black
                 cell.slotCountLbl.textColor = .black
+            }
+            else{
+                cell.caleView.backgroundColor = .white
+                cell.dayLbl.textColor = .gray
+                cell.dateLbl.textColor = .gray
+                cell.slotCountLbl.textColor = .gray
             }
             var boools = true
             let dateFormatter = DateFormatter()
@@ -215,8 +228,13 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         tvLeading.constant = 0
         tvTralling.constant = 0
         segmentId = 1
-        segment1.backgroundColor = Colornames.CheckBoxSelectColor
-        segment2.backgroundColor = .white
+        
+        segment1.applyGradientWithAdjustedColors(gradientColors: [UIColor.green,UIColor.blue],lightenFactor: 0.6,opacity: 0.8)
+        
+        segment2.applyGradientWithAdjustedColors(gradientColors: [UIColor.systemGray6,UIColor.systemGray6],lightenFactor: 0.6,opacity: 0.8)
+        ShedulemeetingLbl.textColor = .black
+        MeetingHistoryLbl.textColor = .gray
+        
         calanderHeightCon.constant = 130
         subView.isHidden = false
         calendarView.isHidden = false
@@ -225,6 +243,9 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         noRecordsView.isHidden = true
         tv.isHidden = false
         bookSlotBtn.isHidden = false
+        tv.dataSource = self
+        tv.delegate = self
+        tv.reloadData()
 
     }
     @IBAction func seg2Vc(){
@@ -239,8 +260,12 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         print("calanderHeightt",calanderHeightCon.constant)
 
         tvTop.constant = -20
-        segment2.backgroundColor = Colornames.CheckBoxSelectColor
-        segment1.backgroundColor = .white
+        segment2.applyGradientWithAdjustedColors(gradientColors: [UIColor.green,UIColor.blue],lightenFactor: 0.6,opacity: 0.8)
+        
+        segment1.applyGradientWithAdjustedColors(gradientColors: [UIColor.systemGray6,UIColor.systemGray6],lightenFactor: 0.6,opacity: 0.8)
+        ShedulemeetingLbl.textColor = .gray
+        MeetingHistoryLbl.textColor = .black
+        
         if let headerView = tv.tableHeaderView {
             headerView.isHidden = true
         }
@@ -255,14 +280,14 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
+        if segment1.backgroundColor == .systemOrange {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.TimeHeader) as! TimeHeader
 
 
-            headerView.meetingLbl.text = exNames[section].eventName
-            headerView.modeLbl.text = exNames[section].event_mode
+            headerView.meetingLbl.text = "Parents Meeting"//[section].eventName
+            headerView.modeLbl.text = "Phone Call" //exNames[section].event_mode
 
-            headerView.nameAndSubjectLbl.text = exNames[section].subjectName + " - " + exNames[section].staff_name
+            headerView.nameAndSubjectLbl.text = "Lakshmanan - Tamil"//exNames[section].subjectName + " - " + exNames[section].staff_name
             
             
             
@@ -312,17 +337,18 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     }
     func numberOfSections(in tableView: UITableView) -> Int {
 
-            if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
-
-                print("getTeacherDatacount",exNames.count)
-
-                return  exNames.count
-
-            }else{
-
-                return 1
-
-            }
+//        if segment1.backgroundColor == .systemOrange {
+//
+//                print("getTeacherDatacount",exNames.count)
+//
+//                return  exNames.count
+//
+//            }else{
+//
+//                return 1
+//
+//            }
+        return 0
 
         }
 
@@ -338,17 +364,18 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
 
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-            if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
-
-               return 1
-
-            }else{
-
-                
-
-                return 3
-
-            }
+//            if segment1.backgroundColor == .systemOrange {
+//
+//               return 1
+//
+//            }else{
+//
+//                
+//
+//                return 3
+//
+//            }
+            return 0
 
         }
 
@@ -357,6 +384,8 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.cancelTableViewCell, for: indexPath) as! cancelTableViewCell
+            
+            
                 return cell
 
         }
@@ -386,21 +415,23 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     }
 
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            if segment1.backgroundColor == Colornames.CheckBoxSelectColor {
-                let text = exNames[indexPath.section].slots.count
-                if text == 1{
-                    return 80
-                }
-                           else if text < 5 {
-                                return CGFloat(text * 40)
-                            } else if text < 10 {
-                                return CGFloat(text * 30)
-                            } else{
-                            return 300
-                            }
-            }else {
-                return UITableView.automaticDimension
-            }
+//            if segment1.backgroundColor == .systemOrange {
+//                let text = exNames[indexPath.section].slots.count
+//                if text == 1{
+//                    return 80
+//                }
+//                           else if text < 5 {
+//                                return CGFloat(text * 40)
+//                            } else if text < 10 {
+//                                return CGFloat(text * 30)
+//                            } else{
+//                            return 300
+//                            }
+//            }else {
+//                return UITableView.automaticDimension
+//            }
+            //return 50
+            UITableView.automaticDimension
         }
 
         @objc func slotClick(gets : CanelSlotGesture ) {
@@ -1592,3 +1623,49 @@ class LinkSClicks : UITapGestureRecognizer{
  
  
  */
+
+import UIKit
+
+extension UIView {
+    /// Applies a gradient with colors that are lightened and adjusted for alpha.
+    func applyGradientWithAdjustedColors(
+        gradientColors: [UIColor],
+        lightenFactor: CGFloat = 0.3, // Factor to lighten colors (0 = no change, 1 = full white)
+        opacity: CGFloat = 0.5,      // Opacity for the gradient
+        startPoint: CGPoint = CGPoint(x: 1, y: 0.5),
+        endPoint: CGPoint = CGPoint(x: 0, y: 0.5)
+    ) {
+        // Adjust colors: lighten them and apply the desired opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+        }
+        
+        // Apply gradient with the adjusted colors
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = adjustedColors.map { $0.cgColor }
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.frame = self.bounds
+        
+        // Remove any existing gradient layers to avoid overlap
+        self.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+        
+        // Add the new gradient layer
+        self.layer.insertSublayer(gradientLayer, at: 0)
+    }
+}
+
+extension UIColor {
+    /// Blends the color with white by a specific factor.
+    func blendedWithWhiteColour(factor: CGFloat) -> UIColor {
+        let factor = max(0, min(1, factor)) // Clamp factor between 0 and 1
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        return UIColor(
+            red: r + (1 - r) * factor,
+            green: g + (1 - g) * factor,
+            blue: b + (1 - b) * factor,
+            alpha: a
+        )
+    }
+}

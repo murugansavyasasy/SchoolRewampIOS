@@ -99,9 +99,6 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="play-button"/>
                                 <state key="selected" image="play-button"/>
-                                <connections>
-                                    <action selector="play:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4RQ-bP-o4a"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

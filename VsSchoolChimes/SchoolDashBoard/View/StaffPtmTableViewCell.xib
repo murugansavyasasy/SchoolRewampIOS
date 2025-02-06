@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,25 +12,25 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="265" id="KGk-i7-Jjw" customClass="StaffPtmTableViewCell" customModule="VoicesnapSchoolApp" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="265" id="KGk-i7-Jjw" customClass="StaffPtmTableViewCell" customModule="VsSchoolChimes" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="332" height="265"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="332" height="265"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YxH-QI-qGB" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
-                        <rect key="frame" x="8" y="5" width="316" height="255"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YxH-QI-qGB" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                        <rect key="frame" x="10" y="10" width="312" height="245"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sports Meeting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0Z-ui-c69">
-                                <rect key="frame" x="15" y="14.999999999999998" width="201" height="19.333333333333329"/>
+                                <rect key="frame" x="15" y="14.999999999999998" width="197" height="19.333333333333329"/>
                                 <color key="backgroundColor" red="0.95686274770000002" green="0.96078431610000004" blue="0.97647058959999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SAO-QR-lAH" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
-                                <rect key="frame" x="229" y="15" width="80" height="25"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SAO-QR-lAH" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                                <rect key="frame" x="225" y="15" width="80" height="25"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upcomming..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPx-Mv-Kt8">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="25"/>
@@ -55,43 +55,43 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-----------------------------------" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wT2-Dz-d7b">
-                                <rect key="frame" x="0.0" y="101" width="316" height="20.333333333333329"/>
+                                <rect key="frame" x="0.0" y="101" width="312" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="s24" translatesAutoresizingMaskIntoConstraints="NO" id="WNT-H2-1uB">
-                                <rect key="frame" x="252" y="46" width="45" height="0.0"/>
+                                <rect key="frame" x="248" y="46" width="45" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="eUe-T4-pyI"/>
                                     <constraint firstAttribute="width" constant="45" id="zE3-g4-zrp"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="m4W-g7-drj">
-                                <rect key="frame" x="12" y="129.33333333333334" width="293.33333333333331" height="71.666666666666657"/>
+                                <rect key="frame" x="12" y="129.33333333333334" width="289.33333333333331" height="61.666666666666657"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Monday , Oct 13 2024, 10:30 Am - 10:50Am" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMi-kF-TAX">
-                                        <rect key="frame" x="0.0" y="0.0" width="293.33333333333331" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Monday , Oct 13 2024, 10:30 Am - 10:50Am" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KMi-kF-TAX">
+                                        <rect key="frame" x="0.0" y="0.0" width="289.33333333333331" height="32.666666666666664"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mode -  Zoom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2L-Qz-THT">
-                                        <rect key="frame" x="0.0" y="27" width="293.33333333333331" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Mode -  Zoom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T2L-Qz-THT">
+                                        <rect key="frame" x="0.0" y="38.666666666666657" width="289.33333333333331" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take me to meeting  &gt;&gt;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRb-Ua-oA1">
-                                        <rect key="frame" x="0.0" y="53.666666666666657" width="293.33333333333331" height="18"/>
+                                    <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Take me to meeting  &gt;&gt;" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SRb-Ua-oA1">
+                                        <rect key="frame" x="0.0" y="61.666666666666657" width="289.33333333333331" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <color key="textColor" systemColor="linkColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PYL-hs-c7n" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
-                                <rect key="frame" x="12" y="216" width="128" height="32"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PYL-hs-c7n" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                                <rect key="frame" x="12" y="206" width="128" height="32"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5q-Xn-IIa">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="32"/>
@@ -122,18 +122,18 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saranraj" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tL7-ph-8Tg">
-                                <rect key="frame" x="15" y="49.333333333333336" width="291" height="17.000000000000007"/>
+                                <rect key="frame" x="15" y="49.333333333333336" width="287" height="17.000000000000007"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VI - A" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aNi-kp-ft5">
-                                <rect key="frame" x="15" y="74" width="290.33333333333331" height="17"/>
+                                <rect key="frame" x="15" y="74" width="286.33333333333331" height="17"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ptt-wk-9G2" customClass="UIViewX" customModule="VoicesnapSchoolApp" customModuleProvider="target">
-                                <rect key="frame" x="169" y="216" width="128" height="32"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ptt-wk-9G2" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                                <rect key="frame" x="165" y="206" width="128" height="32"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel &amp; Reopen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qR3-dt-6y0">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="32"/>
@@ -201,10 +201,10 @@
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstItem="YxH-QI-qGB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="ODE-LA-lkl"/>
-                    <constraint firstAttribute="bottom" secondItem="YxH-QI-qGB" secondAttribute="bottom" constant="5" id="aSK-LC-fDy"/>
-                    <constraint firstItem="YxH-QI-qGB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="e2j-IC-EIC"/>
-                    <constraint firstAttribute="trailing" secondItem="YxH-QI-qGB" secondAttribute="trailing" constant="8" id="fWd-wC-Urs"/>
+                    <constraint firstItem="YxH-QI-qGB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ODE-LA-lkl"/>
+                    <constraint firstAttribute="bottom" secondItem="YxH-QI-qGB" secondAttribute="bottom" constant="10" id="aSK-LC-fDy"/>
+                    <constraint firstItem="YxH-QI-qGB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="e2j-IC-EIC"/>
+                    <constraint firstAttribute="trailing" secondItem="YxH-QI-qGB" secondAttribute="trailing" constant="10" id="fWd-wC-Urs"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

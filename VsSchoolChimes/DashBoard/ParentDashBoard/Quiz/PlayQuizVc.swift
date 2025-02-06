@@ -9,6 +9,7 @@ import UIKit
 
 class PlayQuizVc: UIViewController {
     
+    @IBOutlet weak var PreviousBtn: UIButton!
     @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
@@ -29,20 +30,13 @@ class PlayQuizVc: UIViewController {
     @IBOutlet weak var ContinueBtn: UIButton!
     @IBOutlet weak var CompletedImg: UIImageView!
     @IBOutlet weak var CompletedLbl: UILabel!
-    
     @IBOutlet weak var CompTotalQuestionDefLbl: UILabel!
-    
     @IBOutlet weak var CompTotalQuestionNoLbl: UILabel!
-    
     @IBOutlet weak var CompCorretAnsDefLbl: UILabel!
-    
     @IBOutlet weak var CompCorrectAnsCountLbl: UILabel!
-    
     @IBOutlet weak var CompInccorectCountLbl: UILabel!
     @IBOutlet weak var CompInCorretAnsDefLbl: UILabel!
-    
     @IBOutlet weak var CompTotalMarkDefLbl: UILabel!
-    
     @IBOutlet weak var CompTotalmarkLbl: UILabel!
     var questions: [Question] = [
         Question(text: "What is the capital of Germany?", options: ["Berlin", "Munich", "Frankfurt", "Hamburg"], correctOptionIndex: 0),
@@ -67,9 +61,6 @@ class PlayQuizVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        
-        
         QuestionView.layer.cornerRadius = 10
         
         CompletedView.layer.cornerRadius = 10
@@ -87,36 +78,44 @@ class PlayQuizVc: UIViewController {
         Button3.layer.cornerRadius = 15
         Button4.layer.cornerRadius = 15
         
-        Button1.setTitleFont(style: .body, size: FontSize.BodySize)
-        Button2.setTitleFont(style: .body, size: FontSize.BodySize)
-        Button3.setTitleFont(style: .body, size: FontSize.BodySize)
-        Button4.setTitleFont(style: .body, size: FontSize.BodySize)
+//        if let customFont = UIFont(name: "Poppins-Medium", size: 17) {
+//                    let attributedTitle = NSAttributedString(string: "Button Title", attributes: [NSAttributedString.Key.font: customFont])
+//            Button1.setAttributedTitle(attributedTitle, for: .normal)
+//            Button2.setAttributedTitle(attributedTitle, for: .normal)
+//            Button3.setAttributedTitle(attributedTitle, for: .normal)
+//                }
+        applyCustomFontToButtons()
         selectedOptions = Array(repeating: nil, count: questions.count)
         loadQuestion()
-        Button1.setTitleFont(style: .body, size: FontSize.BodySize)
-        Button2.setTitleFont(style: .body, size: FontSize.BodySize)
-        Button3.setTitleFont(style: .body, size: FontSize.BodySize)
-        Button4.setTitleFont(style: .body, size: FontSize.BodySize)
-        
         StyleAndTranslate()
     }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
     
-//        func loadQuestion() {
-//                let currentQuestion = questions[currentQuestionIndex]
-//            QuestionLbl.text = currentQuestion.text
-//            Button1.setTitle(currentQuestion.options[0], for: .normal)
-//            Button2.setTitle(currentQuestion.options[1], for: .normal)
-//            Button3.setTitle(currentQuestion.options[2], for: .normal)
-//            Button4.setTitle(currentQuestion.options[3], for: .normal)
-//            
-//            Button1.setTitleFont(style: .body, size: FontSize.BodySize)
-//            Button2.setTitleFont(style: .body, size: FontSize.BodySize)
-//            Button3.setTitleFont(style: .body, size: FontSize.BodySize)
-//            Button4.setTitleFont(style: .body, size: FontSize.BodySize)
-//            
-//    
-//            selectedOptionIndex = nil
-//            }
+    func applyCustomFontToButtons() {
+            guard let customFont = UIFont(name: "Poppins-Medium", size: 14) else {
+                print("Error: Custom font not found")
+                return
+            }
+
+            for button in buttons {
+                button.titleLabel?.font = customFont
+                button.setTitleColor(.black, for: .normal)
+
+                // Explicitly set the font for all states
+                for state: UIControl.State in [.normal, .highlighted, .selected, .disabled] {
+                    let title = button.title(for: state) ?? "" // Fallback to empty string if nil
+                    button.setAttributedTitle(
+                        NSAttributedString(
+                            string: title,
+                            attributes: [.font: customFont]
+                        ),
+                        for: state
+                    )
+                }
+            }
+        }
     
     func StyleAndTranslate() {
         backBtn.setTitleFont(style: .body, size: 20)
@@ -127,6 +126,9 @@ class PlayQuizVc: UIViewController {
         
         NextBtn.layer.cornerRadius = 10
         NextBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        PreviousBtn.layer.cornerRadius = 10
+        PreviousBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        PreviousBtn.backgroundColor = .lightGray
         
         CompletedLbl.setFont(style: .header, size: FontSize.HeaderSize)
         CompTotalmarkLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -142,34 +144,38 @@ class PlayQuizVc: UIViewController {
     }
     
     func loadQuestion() {
-        let currentQuestion = questions[currentQuestionIndex]
-        QuestionLbl.text = currentQuestion.text
-        
-        for (index, button) in buttons.enumerated() {
-            button.setTitle(currentQuestion.options[index], for: .normal)
-           // button.setTitleFont(style: .body, size: FontSize.BodySize)
-            button.tag = index // Set button tag to match option index
-            resetButtonStyle(button)
-            
-            // Highlight the previously selected option, if any
-            if let selectedOption = selectedOptions[currentQuestionIndex], selectedOption == index {
-                button.backgroundColor = .systemBlue
-                button.setTitleColor(.white, for: .normal)
-            }
-        }
-        
-        // Update progress bar and question count
-        progressBar.progress = Float(currentQuestionIndex + 1) / Float(questions.count)
-        QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(questions.count)"
-    }
-    
+           let currentQuestion = questions[currentQuestionIndex]
+           QuestionLbl.text = currentQuestion.text
+           
+           for (index, button) in buttons.enumerated() {
+               button.setTitle(currentQuestion.options[index], for: .normal)
+               button.tag = index // Set button tag to match option index
+               resetButtonStyle(button)
+               
+               // Highlight the previously selected option, if any
+               if let selectedOption = selectedOptions[currentQuestionIndex], selectedOption == index {
+                   button.backgroundColor = .systemBlue
+                   button.setTitleColor(.white, for: .normal)
+                   button.tintColor = .white
+               }
+           }
+           
+           // Apply the custom font to the buttons again when loading a new question
+           applyCustomFontToButtons()
+           
+           // Update progress bar and question count
+           progressBar.progress = Float(currentQuestionIndex + 1) / Float(questions.count)
+           QuestionCountLbl.text = "\(currentQuestionIndex + 1) / \(questions.count)"
+       }
     
     @IBAction func NextAct(_ sender: Any) {
         
         if currentQuestionIndex < questions.count - 1 {
             currentQuestionIndex += 1
             loadQuestion()
+            PreviousBtn.backgroundColor = .systemIndigo
             if currentQuestionIndex == questions.count - 1 {
+                NextBtn.backgroundColor = .systemGreen
                 NextBtn.setTitle("Submit", for: .normal)
             }
                
@@ -184,17 +190,6 @@ class PlayQuizVc: UIViewController {
                 }
             }
             
-            // Show the result to the user
-            //                let alert = UIAlertController(
-            //                    title: "Quiz Completed",
-            //                    message: "You scored \(score) out of \(questions.count) correct answers!",
-            //                    preferredStyle: .alert
-            //                )
-            //                alert.addAction(UIAlertAction(title: "OK", style: .default))
-            //                present(alert, animated: true)
-//            view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-//            BaseView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-//            QuestionView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
             CompCorrectAnsCountLbl.text = String (score)
             CompInccorectCountLbl.text = String (questions.count - score)
             CompTotalmarkLbl.text = " \(score) out of \(questions.count)"
@@ -206,33 +201,57 @@ class PlayQuizVc: UIViewController {
         if currentQuestionIndex > 0 {
             currentQuestionIndex -= 1
             NextBtn.setTitle("Next", for: .normal)
+            NextBtn.backgroundColor = .systemIndigo
             loadQuestion()
+        }
+        if currentQuestionIndex != 0{
+            PreviousBtn.backgroundColor = .systemIndigo
+        }else{
+            PreviousBtn.backgroundColor = .lightGray
         }
     }
     
     @IBAction func optionSelected(_ sender: UIButton) {
-        // Update selected option for the current question
-        selectedOptions[currentQuestionIndex] = sender.tag
-        print("sender.tag",sender.tag)
-        for i in selectedOptions{
-            print("SelectedOptions",i)
-        }
-        // Reset all button styles
-        for button in buttons {
-            resetButtonStyle(button)
-        }
+//        // Update selected option for the current question
+//        selectedOptions[currentQuestionIndex] = sender.tag
+//        print("sender.tag",sender.tag)
+//        for i in selectedOptions{
+//            print("SelectedOptions",i)
+//        }
+//        // Reset all button styles
+//        for button in buttons {
+//            resetButtonStyle(button)
+//        }
+//        // Highlight the selected button
+//        sender.backgroundColor = .systemBlue
+//        sender.setTitleColor(.white, for: .normal)
         
-        // Highlight the selected button
-        sender.backgroundColor = .systemBlue
-        sender.setTitleColor(.white, for: .normal)
+        // Update selected option for the current question
+               selectedOptions[currentQuestionIndex] = sender.tag
+               print("sender.tag", sender.tag)
+               for i in selectedOptions {
+                   print("SelectedOptions", i)
+               }
+               
+               // Reset all button styles
+               for button in buttons {
+                   resetButtonStyle(button)
+               }
+               
+               // Highlight the selected button
+               sender.backgroundColor = .systemBlue
+               sender.tintColor = .white
+               sender.setTitleColor(.white, for: .normal)
     }
+    
     
     func resetButtonStyle(_ button: UIButton) {
         button.backgroundColor = .clear
         button.setTitleColor(.systemBlue, for: .normal)
+        button.tintColor = .systemBlue
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.systemBlue.cgColor
-        button.setTitleFont(style: .body, size: FontSize.BodySize)
+       // button.setTitleFont(style: .body, size: FontSize.BodySize)
     }
     
     

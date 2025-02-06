@@ -28,13 +28,14 @@ class PriorityViewController1: UIViewController {
     
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
+    let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
     var passedValue = 1
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UserDefaults.standard.set(passedValue, forKey: "passvalue")
         ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
-        TeacherParentlbl.text =  CommonStringFile.LoginAsTeacherOrParent.translated()
+        TeacherParentlbl.text =  CommonStringFile.LoginAsPrincipalOrParent.translated()
         NextButtonView.layer.cornerRadius = 18
         
         priorityview.layer.cornerRadius = 20
@@ -77,7 +78,7 @@ class PriorityViewController1: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
-        TeacherParentlbl.text =  CommonStringFile.LoginAsTeacherOrParent.translated()
+        TeacherParentlbl.text =  CommonStringFile.LoginAsPrincipalOrParent.translated()
         ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
         teacherButton.setTitle(CommonStringFile.Principal.translated(), for: .normal)
         NextButtonView.setTitle(CommonStringFile.Proceed.translated(), for: .normal)
@@ -183,6 +184,8 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
         let gradient = gradientcolour[indexPath.row % gradientcolour.count]
         let colour2 =  UIColor(named: gradient)
         
+        let image = UIImage(named: ProfileImage[indexPath.row % ProfileImage.count])
+        
         if passedValue  == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.DemoTVCell, for: indexPath) as! DemoTVCell
             
@@ -190,7 +193,11 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])
             }
             cell.SchoolInfoView.backgroundColor = colour1
-            
+            cell.imgview.image = image
+            if indexPath.row == 8{
+                cell.imgview.image = UIImage(systemName: "person.circle")
+            }
+           
             return cell
             
         } else {

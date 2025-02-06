@@ -52,6 +52,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         datelbl.setFont(style: .body, size: FontSize.BodySize)
         dicriptContent.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SelectBtn.layer.cornerRadius = 10
+        SelectBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         HomeworkSubjectLbl.isHidden = true
         CVHeight.constant = 0  // set this to 120 when you need
         pagecontrollerheight.constant = 0  // set this to 26 when you need
@@ -105,7 +107,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     
     func hiddenui(_ hide:Bool){
         
-       // cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
+        cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
+        //fullView.changeHeightAndAnimate(40, 150, 21, 30, top: 5)
         pinImage.isHidden = hide
         SelectBtn.isHidden = hide
         datelbl.isHidden = hide

@@ -24,7 +24,7 @@ class ExamTmTblVCViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+       
         backBtn.setTitle(ReceiverMenuItems.ExamTest.translated(), for: .normal)
         Searchbar.placeholder = CommonStringFile.Search.translated()
         addDoneButton()
@@ -40,7 +40,10 @@ class ExamTmTblVCViewController: UIViewController {
         tv.delegate = self
         tv.dataSource = self
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
 
   
     @IBAction func backBtn(_ sender: Any) {

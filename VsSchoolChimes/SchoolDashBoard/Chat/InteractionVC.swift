@@ -8,21 +8,19 @@
 import UIKit
 
 class InteractionVC: UIViewController {
-
+    @IBOutlet weak var NameStandardStackView: UIStackView!
+    
+    @IBOutlet weak var StandardLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var CV: UICollectionView!
     var passvalue = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if passvalue == 1{
-            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }
-        else if passvalue == 2{
-            HeaderLbl.text = "Interact With Student"
-            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }
-        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        HeaderLbl.setFont(style: .header, size: 17)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         let nib = UINib(nibName: CellConfingName.ChatCvcell, bundle: nil)
         CV.register(nib, forCellWithReuseIdentifier: CellConfingName.ChatCvcell)
         
@@ -30,8 +28,18 @@ class InteractionVC: UIViewController {
         CV.dataSource = self
         CV.reloadData()
     }
-
-
+    
+    override func viewDidLayoutSubviews() {
+        if passvalue == 1{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            NameStandardStackView.isHidden = false
+        }
+        else if passvalue == 2{
+            HeaderLbl.text = "Interact With Student"
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            NameStandardStackView.isHidden = true
+        }
+    }
     
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)

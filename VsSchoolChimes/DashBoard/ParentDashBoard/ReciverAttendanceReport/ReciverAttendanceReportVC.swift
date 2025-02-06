@@ -18,14 +18,16 @@ class ReciverAttendanceReportVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
         let nib = UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
         
         TV.delegate = self
         TV.dataSource = self
     }
-
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
 
     @IBAction func BackBtnAct(_ sender: Any) {
         

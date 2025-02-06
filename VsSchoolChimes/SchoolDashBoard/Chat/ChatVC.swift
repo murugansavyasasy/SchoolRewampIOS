@@ -57,8 +57,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
           
        }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLayoutSubviews() {
         if getValue == 1{
             view.applyGradient(
                 colors: [Colornames.stafGradient, Colornames.stafGradient1],
@@ -68,6 +67,11 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         }else{
             view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     private func addDoneButtonToTextView() {
            let toolbar = UIToolbar()

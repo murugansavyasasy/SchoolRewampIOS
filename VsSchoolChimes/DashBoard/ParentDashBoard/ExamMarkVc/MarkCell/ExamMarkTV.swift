@@ -9,6 +9,7 @@ import UIKit
 
 class ExamMarkTV: UITableViewCell {
 
+    @IBOutlet weak var ArrowImageview: UIImageView!
     @IBOutlet weak var MarksStackview: UIStackView!
     @IBOutlet weak var PracticalLbl: UILabel!
     @IBOutlet weak var TheoryLbl: UILabel!

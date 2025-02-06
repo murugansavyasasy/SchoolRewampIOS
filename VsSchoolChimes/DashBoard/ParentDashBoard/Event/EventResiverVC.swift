@@ -32,8 +32,7 @@ class EventResiverVC: UIViewController, SelectNotice{
         backBtn.setTitle(button1.translated(), for: .normal)
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+       
        
         addDoneButton()
         uiConficration()
@@ -47,9 +46,9 @@ class EventResiverVC: UIViewController, SelectNotice{
             lightenFactor: 0.6// 40% lighter
         )
         
-        createEvent.setTitleColor(.white, for:.normal)
+        createEvent.setTitleColor(.black, for:.normal)
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        historyBtn.setTitleColor(.black, for:.normal)
+        historyBtn.setTitleColor(.gray, for:.normal)
         // Set the initial page
     
         
@@ -62,6 +61,10 @@ class EventResiverVC: UIViewController, SelectNotice{
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
         tableview.reloadData()
     }
     
@@ -118,12 +121,12 @@ class EventResiverVC: UIViewController, SelectNotice{
                 opacity: 0.8, // 70% opacity
                 lightenFactor: 0.6// 40% lighter
             )
-            createEvent.setTitleColor(.white, for:.normal)
+            createEvent.setTitleColor(.black, for:.normal)
             gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            historyBtn.setTitleColor(.black, for:.normal)
+            historyBtn.setTitleColor(.gray, for:.normal)
         }else{
             gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            createEvent.setTitleColor(.black, for:.normal)
+            createEvent.setTitleColor(.gray, for:.normal)
             configureButton(
                 historyBtn,
                 title: button2,
@@ -132,7 +135,7 @@ class EventResiverVC: UIViewController, SelectNotice{
                 opacity: 0.8, // 70% opacity
                 lightenFactor: 0.6// 40% lighter
             )
-            historyBtn.setTitleColor(.white, for:.normal)
+            historyBtn.setTitleColor(.black, for:.normal)
         }
         
        

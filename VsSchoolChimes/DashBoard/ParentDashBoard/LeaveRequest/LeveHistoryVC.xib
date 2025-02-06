@@ -44,7 +44,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGF-bZ-BIu">
-                            <rect key="frame" x="257" y="10" width="120" height="35"/>
+                            <rect key="frame" x="257" y="2.6666666666666643" width="120" height="35"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="icw-kM-LqJ">
                                     <rect key="frame" x="0.0" y="0.0" width="120" height="35"/>
@@ -123,9 +123,9 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="VEu-bE-JfD" secondAttribute="bottom" id="0dp-fx-N9Z"/>
                         <constraint firstItem="hwc-TF-r9I" firstAttribute="top" secondItem="r7K-uF-CDB" secondAttribute="top" constant="10" id="0wG-NF-sUo"/>
+                        <constraint firstItem="OGF-bZ-BIu" firstAttribute="centerY" secondItem="hwc-TF-r9I" secondAttribute="centerY" id="H1f-Wd-qjY"/>
                         <constraint firstItem="hwc-TF-r9I" firstAttribute="leading" secondItem="r7K-uF-CDB" secondAttribute="leading" constant="16" id="PLE-3V-GVg"/>
                         <constraint firstAttribute="trailing" secondItem="VEu-bE-JfD" secondAttribute="trailing" id="Qy7-YS-ytN"/>
-                        <constraint firstItem="OGF-bZ-BIu" firstAttribute="top" secondItem="r7K-uF-CDB" secondAttribute="top" constant="10" id="VDP-iE-X2g"/>
                         <constraint firstItem="qkB-YM-V0u" firstAttribute="leading" secondItem="r7K-uF-CDB" secondAttribute="leading" id="X8i-hn-yM8"/>
                         <constraint firstAttribute="trailing" secondItem="qkB-YM-V0u" secondAttribute="trailing" id="Xqg-s9-sYm"/>
                         <constraint firstAttribute="trailing" secondItem="OGF-bZ-BIu" secondAttribute="trailing" constant="16" id="dET-ng-1zc"/>
@@ -153,7 +153,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -12,7 +12,26 @@ import SDWebImage
 import SwiftUI
 
 @available(iOS 14.0, *)
-class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate, DeleteImge {
+class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate, DeleteImge, Datepicker {
+    
+    func date(date: String) {
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yy"
+            let DayDate = dateFormatter.date(from: date)!
+            // Change to output format
+            dateFormatter.dateFormat = "EEE dd"
+            let outputDateString = dateFormatter.string(from: DayDate)
+            
+            if dateSelection == true{
+                fromdateBtn.setTitle(date, for: .normal)
+                setFormattedDate(outputDateString, label: fromDateLbl)
+
+            }else{
+                todateBtn.setTitle(date, for: .normal)
+                setFormattedDate(outputDateString, label: toDateLbl)
+            }
+        }
+    
   
     @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var textview: UITextView!
@@ -52,11 +71,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+        
         setupdatePicker()
         setInitialButtonTitles()
         setupPlaceholder()
@@ -86,6 +101,14 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         costomView.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     override func viewWillAppear(_ animated: Bool) {
         if desript != ""{
@@ -313,14 +336,64 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     }
     
     @IBAction func fromDate(_ sender: UIButton) {
-        showTimePicker(for: sender, date: true)
+        //showTimePicker(for: sender, date: true)
         dateSelection = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
     @IBAction func toDate(_ sender: UIButton) {
-        showTimePicker(for: sender, date: false)
+       // showTimePicker(for: sender, date: false)
         dateSelection = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
+    
+    func setFormattedDate(_ date: String, label: UILabel) {
+           let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+           let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+           
+           // Function to create an attributed string from a given date
+           func createAttributedText(from date: String) -> NSMutableAttributedString {
+               let components = date.split(separator: " ")
+               guard components.count > 1 else {
+                   print("Error: Invalid date format")
+                   return NSMutableAttributedString()
+               }
+               
+               let day = components[0]
+               let month = components[1]
+               
+               let attributedText = NSMutableAttributedString()
+               attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                   .font: weekdayFont,
+                   .foregroundColor: UIColor.darkGray
+               ]))
+               attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                   .font: dayFont,
+                   .foregroundColor: UIColor.black
+               ]))
+               
+               // Set paragraph style for centered alignment
+               let paragraphStyle = NSMutableParagraphStyle()
+               paragraphStyle.alignment = .center
+               attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+               
+               return attributedText
+           }
+           
+           // Create attributed text and set to label
+           label.attributedText = createAttributedText(from: date)
+           label.numberOfLines = 0
+       }
     
     
     @IBAction func BackClick(_ sender: Any) {

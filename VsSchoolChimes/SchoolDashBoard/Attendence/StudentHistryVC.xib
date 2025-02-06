@@ -186,7 +186,8 @@
                     <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Select all">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <imageReference key="image" image="square" catalog="system" symbolScale="small"/>
+                        <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="semibold"/>
                     </state>
                     <connections>
                         <action selector="selectAllStd:" destination="-1" eventType="touchUpInside" id="zIU-AT-7al"/>

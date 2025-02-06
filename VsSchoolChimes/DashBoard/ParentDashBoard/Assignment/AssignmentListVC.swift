@@ -4,8 +4,9 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     func sumition(index: Int) {
         if #available(iOS 14.0, *) {
             let vc = submitVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+           // vc.modalPresentationStyle = .overCurrentContext
+            vc.modalPresentationStyle = .fullScreen
+           // vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
             self.present(vc, animated: false)
         }
        
@@ -22,7 +23,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     var filteredData :[Assigment]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+       
         backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
@@ -37,7 +38,9 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
         view.addGestureRecognizer(tapGesture)
         register()
     }
-    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }

@@ -33,19 +33,7 @@ class SettingsViewController: UIViewController, BaktoHome {
     var passVale = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-        if passVale == 2{
-            topView.applyGradient(
-                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }else{
-            topView.applyGradient(
-                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-        }
+       
         section = sections
         SettingspageHeading.text = MenuTapbar.Settings.translated()
         SettingspageHeading.setFont(style: .header, size: 20)
@@ -75,6 +63,21 @@ class SettingsViewController: UIViewController, BaktoHome {
         tableview.register(UINib(nibName:CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
         
         
+    }
+    override func viewDidLayoutSubviews() {
+        if passVale == 2{
+            topView.applyGradient(
+                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }else{
+            topView.applyGradient(
+                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

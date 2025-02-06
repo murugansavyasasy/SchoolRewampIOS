@@ -27,13 +27,7 @@ class NotificationViewController: UIViewController {
     var passValue = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-        if passValue == 1{
-            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }else{
-            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }
+        
         NotificationpageHeader.text = MenuTapbar.Notifications.translated()
         NotificationpageHeader.setFont(style: .header, size: 20)
         
@@ -46,6 +40,16 @@ class NotificationViewController: UIViewController {
         let nib = UINib(nibName: CellConfingName.NotificationTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier:  CellConfingName.NotificationTableViewCell)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if passValue == 1{
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }else{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -70,11 +74,13 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NotificationTableViewCell, for: indexPath) as! NotificationTableViewCell
-        
+      
         cell.NameLabel.text = name[indexPath.row]
         cell.messageTypeLabel.text = type[indexPath.row % type.count]
         cell.imgview.image = icon[indexPath.row % icon.count]
         cell.contentLabel.text = content[indexPath.row % content.count]
+        let firstletter = name[indexPath.row].first ?? "A"
+        cell.ProfileLbl.text = String(firstletter)
         
         return cell
     }

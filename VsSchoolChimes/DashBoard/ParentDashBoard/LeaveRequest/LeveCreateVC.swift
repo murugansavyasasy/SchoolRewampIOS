@@ -7,8 +7,26 @@
 
 import UIKit
 @available(iOS 14.0, *)
-class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
+class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
+    func date(date: String) {
+        
+        dateFormatter.dateFormat = "dd MMM yy"
+        let DayDate = dateFormatter.date(from: date)!
+        // Change to output format
+        dateFormatter.dateFormat = "MMM dd"
+        let outputDateString = dateFormatter.string(from: DayDate)
+        
+        if dateSelection == true{
+            dateBtn.setTitle(date, for: .normal)
+            setFormattedDate(outputDateString, label: fromDateLbl)
+
+        }else{
+            todate.setTitle(date, for: .normal)
+            setFormattedDate(outputDateString, label: toDateLbl)
+        }
+    }
     
+    let dateFormatter = DateFormatter()
     var placeholderLabel: UILabel!
     var activeButton: UIButton?
     var timePicker: UIDatePicker!
@@ -44,7 +62,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
     override func viewDidLoad() {
         super.viewDidLoad()
         contentTxtView.delegate = self
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+       
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
         imageSelection()
@@ -59,6 +77,11 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
     }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         contentTxtView.delegate = self
         uiConfic()
@@ -176,7 +199,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
             // Handle case where LeaveRequest is nil (if necessary)
 //            todate.setTitle(formattedDate, for: .normal)
             dateBtn.setTitle(formattedDate, for: .normal)
-            todate.setTitle("Select To Date", for: .normal)
+            todate.setTitle(formattedDate, for: .normal)
             dayCount.isHidden = true
             dateSet(currentdate ?? "", currentdate ?? "", formattedDate)
         }
@@ -242,6 +265,44 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
         // Ensure labels are multi-line if needed
         fromDateLbl.numberOfLines = 0
         toDateLbl.numberOfLines = 0
+    }
+    
+    func setFormattedDate(_ date: String, label: UILabel) {
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+        
+        // Function to create an attributed string from a given date
+        func createAttributedText(from date: String) -> NSMutableAttributedString {
+            let components = date.split(separator: " ")
+            guard components.count > 1 else {
+                print("Error: Invalid date format")
+                return NSMutableAttributedString()
+            }
+            
+            let day = components[0]
+            let month = components[1]
+            
+            let attributedText = NSMutableAttributedString()
+            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                .font: weekdayFont,
+                .foregroundColor: UIColor.darkGray
+            ]))
+            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                .font: dayFont,
+                .foregroundColor: UIColor.black
+            ]))
+            
+            // Set paragraph style for centered alignment
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+            
+            return attributedText
+        }
+        
+        // Create attributed text and set to label
+        label.attributedText = createAttributedText(from: date)
+        label.numberOfLines = 0
     }
     
     func keyboardDionebtn(){
@@ -321,15 +382,23 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge{
     }
     
     @IBAction func datepicker(_ sender: UIButton) {
-        
-        activeButton = sender
-        showTimePicker(for: sender, date: true)
-        dateSelection = true
+         dateSelection = true
+         let vc = DatePickerVC(nibName: nil, bundle: nil)
+         vc.dateSelection = 2
+         vc.delegate = self
+         vc.modalPresentationStyle = .overCurrentContext
+         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+         self.present(vc, animated: false)
+         
     }
     @IBAction func toDate(_ sender: UIButton) {
-        activeButton = sender
-        showTimePicker(for: sender, date: true)
         dateSelection = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     func daytCounts(_ fromdate:String,_ todate:String)->String{
         let dateFormatter = DateFormatter()

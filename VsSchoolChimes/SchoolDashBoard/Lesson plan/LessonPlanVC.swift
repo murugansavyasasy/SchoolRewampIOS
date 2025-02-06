@@ -22,11 +22,11 @@ class LessonPlanVC: UIViewController {
     var id  = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+        
+        searchBar.backgroundImage = UIImage()
+        searchBar.layer.borderWidth = 0
+        searchBar.layer.borderColor = UIColor.clear.cgColor
+
         ButtonStackview.layer.cornerRadius = 20
         createBtn.layer.cornerRadius = 20
         viewBtn.layer.cornerRadius = 20
@@ -39,6 +39,14 @@ class LessonPlanVC: UIViewController {
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonDetailsTVcell)
         tableview.delegate = self
         tableview.dataSource = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     
     func gradientcolours(button : UIButton,colours : [CGColor]){

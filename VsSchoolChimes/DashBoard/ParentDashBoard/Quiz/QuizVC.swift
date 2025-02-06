@@ -31,14 +31,14 @@ class QuizVC: UIViewController {
         
         super.viewDidLoad()
         
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        
         CorrectAnswerLbl.text = "Correct Answers : " + " \(correctAnswers) / \(questions.count)"
         IncorrectAnswerLbl.text = "Incorrect Answers : " + " \(questions.count - (Int(correctAnswers) ?? 0)) / \(questions.count)"
         ButtonStackview.layer.cornerRadius = 20
         UpcomingBtn.layer.cornerRadius = 20
         CompletedBtn.layer.cornerRadius = 20
-        gradientcolours(button: UpcomingBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        
+        configureButton(UpcomingBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
+        //gradientcolours(button: UpcomingBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
         
         UpcomingBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         CompletedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -60,6 +60,10 @@ class QuizVC: UIViewController {
 
     }
     
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
+    
     func gradientcolours(button : UIButton,colours : [CGColor]){
         
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
@@ -75,8 +79,30 @@ class QuizVC: UIViewController {
         button.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    func configureButton(
+        _ button: UIButton,
+        gradientColors: [UIColor],
+        opacity: CGFloat = 0.5, // Opacity for the gradient
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+    ) {
+        
+        // Adjust colors for lightening and opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity).cgColor
+        }
+        
+        gradientcolours(button: button, colours: adjustedColors)
+        // Apply gradient
+//        button.applyGradient(
+//            colors: adjustedColors,
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
+    }
+    
     @IBAction func UpcomingAct(_ sender: Any) {
-        gradientcolours(button: UpcomingBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+       // gradientcolours(button: UpcomingBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        configureButton(UpcomingBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
         UpcomingBtn.tintColor = .black
         CompletedBtn.tintColor = .lightGray
         
@@ -93,7 +119,8 @@ class QuizVC: UIViewController {
     
     @IBAction func CompletedAct(_ sender: Any) {
         
-        gradientcolours(button: CompletedBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        //gradientcolours(button: CompletedBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        configureButton(CompletedBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
         UpcomingBtn.tintColor = .lightGray
         CompletedBtn.tintColor = .black
         

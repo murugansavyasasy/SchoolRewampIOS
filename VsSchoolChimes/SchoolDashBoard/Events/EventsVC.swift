@@ -13,7 +13,26 @@ protocol DeleteImge{
     func deleteImage(index:Int)
 }
 @available(iOS 14.0, *)
-class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate ,UIDocumentPickerDelegate, DeleteImge{
+class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate ,UIDocumentPickerDelegate, DeleteImge, Datepicker{
+   
+    func date(date: String) {
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yy"
+            let DayDate = dateFormatter.date(from: date)!
+            // Change to output format
+            dateFormatter.dateFormat = "EEE dd"
+            let outputDateString = dateFormatter.string(from: DayDate)
+            
+            if dateSelection == true{
+                todate.setTitle(date, for: .normal)
+                setFormattedDate(outputDateString, label: toDateLbl)
+
+            }else{
+                dateBtn.setTitle(date, for: .normal)
+                setFormattedDate(outputDateString, label: pickerDateLbl)
+            }
+        }
+    
     func deleteImage(index: Int) {
         
         selectedImages.remove(at: index)
@@ -275,6 +294,43 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         pickerDateLbl.numberOfLines = 0
     }
     
+    func setFormattedDate(_ date: String, label: UILabel) {
+           let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+           let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+           
+           // Function to create an attributed string from a given date
+           func createAttributedText(from date: String) -> NSMutableAttributedString {
+               let components = date.split(separator: " ")
+               guard components.count > 1 else {
+                   print("Error: Invalid date format")
+                   return NSMutableAttributedString()
+               }
+               
+               let day = components[0]
+               let month = components[1]
+               
+               let attributedText = NSMutableAttributedString()
+               attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                   .font: weekdayFont,
+                   .foregroundColor: UIColor.darkGray
+               ]))
+               attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                   .font: dayFont,
+                   .foregroundColor: UIColor.black
+               ]))
+               
+               // Set paragraph style for centered alignment
+               let paragraphStyle = NSMutableParagraphStyle()
+               paragraphStyle.alignment = .center
+               attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+               
+               return attributedText
+           }
+           
+           // Create attributed text and set to label
+           label.attributedText = createAttributedText(from: date)
+           label.numberOfLines = 0
+       }
     
     func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
         print(text)
@@ -361,8 +417,14 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     @IBAction func datepicker(_ sender: UIButton) {
-        showTimePicker(for: sender, date: true)
-        dateSelection = true
+//        showTimePicker(for: sender, date: true)
+            dateSelection = false
+            let vc = DatePickerVC(nibName: nil, bundle: nil)
+            vc.dateSelection = 2
+            vc.delegate = self
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            self.present(vc, animated: false)
     }
     @IBAction func Timepicker(_ sender: UIButton) {
         showTimePicker(for: sender, date: false)
@@ -373,8 +435,14 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         dateSelection = true
     }
     @IBAction func toDate(_ sender: UIButton) {
-        showTimePicker(for: sender, date: true)
-        dateSelection = false
+        //showTimePicker(for: sender, date: true)
+        dateSelection = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     @IBAction func chooseSchool(_ sender: UIButton) {
         if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{

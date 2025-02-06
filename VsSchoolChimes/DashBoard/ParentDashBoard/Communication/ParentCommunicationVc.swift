@@ -42,7 +42,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         buttons()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
         clickTextView.text = CommonStringFile.TextMessage.translated()
         backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
@@ -58,7 +58,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         tv.dataSource = self
     }
 
-
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
     
     func ButtonStyle(){
         textClickView.backgroundColor = .white

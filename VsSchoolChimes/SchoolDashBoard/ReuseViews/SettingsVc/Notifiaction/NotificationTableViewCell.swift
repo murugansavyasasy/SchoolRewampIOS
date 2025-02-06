@@ -9,6 +9,7 @@ import UIKit
 
 class NotificationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var ProfileLbl: UILabel!
     @IBOutlet weak var imgview: UIImageView!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var messageTypeLabel: UILabel!
@@ -28,6 +29,9 @@ class NotificationTableViewCell: UITableViewCell {
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellview.layer.shadowRadius = 3
         cellview.layer.masksToBounds = false
+        ProfileLbl.layer.cornerRadius = 10
+        ProfileLbl.layer.masksToBounds = true
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

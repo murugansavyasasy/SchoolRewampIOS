@@ -28,13 +28,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     var passValue = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-        if passValue == 1{
-            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }else{
-            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        }
+        
         ReportHeading.text = MenuTapbar.Report_a_bug.translated()
         ReportHeading.setFont(style: .header, size: 20)
         
@@ -66,7 +60,15 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
         
         
     }
-    
+    override func viewDidLayoutSubviews() {
+        if passValue == 1{
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }else{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
+    }
     
     
     @IBAction func ModuleDrop(){
@@ -100,7 +102,10 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        BugsTextview.text = nil
+        if BugsTextview.text == CommonStringFile.Enterbugs.translated() {
+            BugsTextview.text = nil
+            BugsTextview.textColor = .black
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

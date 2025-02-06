@@ -21,7 +21,7 @@ class TimeCollectionViewCell: UICollectionViewCell {
                 //
             } else {
                 
-                self.timeHoleView.backgroundColor = Colornames.NoDataColor
+                self.timeHoleView.backgroundColor = .gray
                 
             }
         }
@@ -31,6 +31,6 @@ class TimeCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.timeHoleView.backgroundColor = Colornames.NoDataColor
+        self.timeHoleView.backgroundColor = .gray
     }
 }

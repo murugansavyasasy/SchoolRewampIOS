@@ -22,6 +22,8 @@ class VideoVC: UIViewController {
     @IBOutlet weak var searchview: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
     //    var truncatedDescription = ""
+    var downloadButton: UIButton?
+    var playerViewController: AVPlayerViewController?
     var image = UIImage()
     var activityIndicator: UIActivityIndicatorView!
     var filteredData: [Video] = []
@@ -36,8 +38,7 @@ class VideoVC: UIViewController {
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        
+       
         backBtn.setTitle(ReceiverMenuItems.Video.translated(), for: .normal)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
@@ -59,6 +60,9 @@ class VideoVC: UIViewController {
             }
         }
         scrollToVideo(withId: "4")
+    }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     // Function to scroll to a specific Video by ID
     func scrollToVideo(withId id: String) {
@@ -118,11 +122,95 @@ class VideoVC: UIViewController {
         dismiss(animated: true)
     }
     
+//    func addDownloadButton(to playerViewController: AVPlayerViewController, videoURL: URL) {
+//        guard let overlayView = playerViewController.contentOverlayView else { return }
+//
+//        let downloadButton = UIButton(type: .system)
+//        //downloadButton.setTitle("⬇️", for: .normal) // Use an icon for better UI
+//        downloadButton.setImage(UIImage(systemName:"dock.arrow.down.rectangle"), for: .normal)
+//        downloadButton.tintColor = .white
+//        downloadButton.setTitleColor(.white, for: .normal)
+//        downloadButton.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+//        downloadButton.layer.cornerRadius = 20
+//        downloadButton.frame = CGRect(x: overlayView.frame.width - 100, y: 60, width: 40, height: 40)
+//        //downloadButton.addTarget(self, action: #selector(downloadVideo(_:)), for: .touchUpInside)
+//
+//        // Store video URL inside button
+//        downloadButton.tag = videoURL.hashValue
+//        downloadButton.accessibilityHint = videoURL.absoluteString
+//        
+//        // Ensure button stays in the correct position on rotation
+//        downloadButton.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin]
+//
+//        overlayView.addSubview(downloadButton)
+//    }
     
+   
 }
 extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate, shareDelegate{
     
-    
+    func playvideo(index: Int) {
+        guard let videoURL = filteredData[index].url, !videoURL.isEmpty,
+              let url = URL(string: videoURL) else {
+            print("Invalid URL")
+            return
+        }
+
+        let player = AVPlayer(url: url)
+        playerViewController = AVPlayerViewController()
+        playerViewController?.player = player
+
+        // Observe UI visibility changes
+        playerViewController?.addObserver(self, forKeyPath: "showsPlaybackControls", options: [.new, .initial], context: nil)
+
+        // Present AVPlayerViewController
+        if let playerVC = playerViewController {
+            present(playerVC, animated: true) {
+                player.play()
+            }
+        }
+
+        // Add the download button
+        addDownloadButton(to: playerViewController, videoURL: url)
+    }
+
+    func addDownloadButton(to playerViewController: AVPlayerViewController?, videoURL: URL) {
+        guard let overlayView = playerViewController?.contentOverlayView else { return }
+
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = CGRect(x: overlayView.frame.width - 50, y: 40, width: 40, height: 40)
+        blurView.layer.cornerRadius = 20
+        blurView.clipsToBounds = true
+        blurView.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin]
+
+        downloadButton = UIButton(type: .system)
+        downloadButton?.setTitle("⬇️", for: .normal)
+        downloadButton?.tintColor = .white
+        downloadButton?.frame = blurView.bounds
+       // downloadButton?.addTarget(self, action: #selector(downloadVideo(_:)), for: .touchUpInside)
+
+        downloadButton?.accessibilityHint = videoURL.absoluteString
+        blurView.contentView.addSubview(downloadButton!)
+        overlayView.addSubview(blurView)
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        guard keyPath == "showsPlaybackControls",
+              let isVisible = change?[.newKey] as? Bool,
+              let playerVC = playerViewController else { return }
+
+        DispatchQueue.main.async {
+            if isVisible {
+                // Add the download button when controls are visible
+                self.addDownloadButton(to: playerVC, videoURL: URL(string: self.downloadButton?.accessibilityHint ?? "")!)
+            } else {
+                // Remove the download button when controls are hidden
+                self.downloadButton?.superview?.removeFromSuperview()
+            }
+        }
+    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData.count
@@ -144,10 +232,20 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
         }
         cell.thumimg.image = filteredData[indexPath.row].img
         cell.sharedelegate = self
+        
+        let playTap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
+        cell.playbtl.addGestureRecognizer(playTap)
+        cell.playbtl.isUserInteractionEnabled = true
+        
         return cell
     }
     
-    
+    @IBAction func playVideo(){
+        let vc = VideoPlayerVC(nibName: nil, bundle: nil)
+        vc.url = URL(string: filteredData[0].url!)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     
     
     //MARK: EXPANDABLE LABLE
@@ -248,7 +346,7 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
         }
     }
     
-    func playvideo(index:Int){
+   /* func playvideo(index:Int){
         
         
         guard let url = URL(string: filteredData[index].url ?? "") else {
@@ -266,7 +364,10 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
             self.data[index].readed = true
             self.tableview.reloadData()
         }
-    }
+        
+        // Add the download button to contentOverlayView
+           addDownloadButton(to: playerViewController, videoURL: url)
+    } */
     func getThumbnailImage(forUrl url: URL, completion: @escaping (UIImage?) -> Void) {
         let asset = AVAsset(url: url)
         let assetImageGenerator = AVAssetImageGenerator(asset: asset)

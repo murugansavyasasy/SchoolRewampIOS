@@ -28,7 +28,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     private let tabBar = UITabBar()
     private var containerView = UIView()
     private lazy var firstVC = HomePageVc()
-    private lazy var Parent = ParentVC()
+    private lazy var Parent = ParentHomePageVc()
     private lazy var secondVC = HelpVc()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = ProfileViewController()
@@ -53,7 +53,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
         // Create the gradient color for tab bar
      
-        tabBar.tintColor = .purple
+        tabBar.tintColor = .black//.purple
         tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
         tabBar.delegate = self
         tabBar.selectedItem = firstItem
@@ -86,8 +86,9 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
                 endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
             )
             tabBar.backgroundImage = gradientColor
+           
         }else if passedValue == 1{
-            tabBar.backgroundColor = .topBackgroundCLr
+            //tabBar.backgroundColor = .topBackgroundCLr
             firstVC.getValue = passedValue
             selectViewController(firstVC)
             let width = UIScreen.main.bounds.width
@@ -140,7 +141,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         } else if let profileVC = viewController as? ProfileViewController, passedValue == 2 {
             profileVC.passvalue = passedValue
 //
-        }else if let profileVC = viewController as? ParentVC, passedValue == 2 {
+        }else if let profileVC = viewController as? ParentHomePageVc, passedValue == 2 {
             profileVC.getValue = passedValue
             
         }else if let HelpVc = viewController as? HelpVc, passedValue == 2 {

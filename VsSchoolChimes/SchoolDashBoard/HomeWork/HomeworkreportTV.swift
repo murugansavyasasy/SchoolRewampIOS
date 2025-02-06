@@ -17,6 +17,7 @@ class HomeworkreportTV: UITableViewCell {
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var SubjectLbl: UILabel!
     @IBOutlet weak var HomeworkTitleLbl: UILabel!
+    @IBOutlet weak var DateLbl: UILabel!
     
     var AudioPlayUrl = "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav"
     var player: AVPlayer?
@@ -41,6 +42,7 @@ class HomeworkreportTV: UITableViewCell {
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         SubjectLbl.setFont(style: .title, size: FontSize.TitleSize)
         DurationLbl.setFont(style: .body, size: FontSize.BodySize)
+        DateLbl.setFont(style: .body, size: FontSize.BodySize)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

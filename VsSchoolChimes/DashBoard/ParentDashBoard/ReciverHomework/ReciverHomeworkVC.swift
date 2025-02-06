@@ -42,7 +42,6 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     var playIndex : Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         backBtn.setTitle(MenuStringFile.Homework.translated(), for: .normal)
         searchBar.placeholder = CommonStringFile.Search.translated()
         addDoneButton()
@@ -54,12 +53,17 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         
         let head = UINib(nibName: CellConfingName.ReciverHomeworkHeader, bundle: nil)
         TV.register(head, forHeaderFooterViewReuseIdentifier: CellConfingName.ReciverHomeworkHeader)
-        
+//        TV.layoutMargins = UIEdgeInsets.zero
+//        TV.separatorInset = UIEdgeInsets.zero
+        TV.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        TV.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         TV.delegate = self
         TV.dataSource = self
     }
 
-
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
     
     @IBAction func BackBtnAct(_ sender: Any) {
         dismiss(animated: true)
@@ -114,15 +118,16 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-            
+//            cell.layoutMargins = UIEdgeInsets.zero
+//            cell.contentView.layoutMargins = UIEdgeInsets.zero
             cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
             cell.ishomework = true
             cell.CVHeight.constant = 120
             cell.pagecontrollerheight.constant = 26
             cell.pagecontroller.isHidden = false
             cell.SelectBtn.isHidden = true
-            cell.HomeworkSubjectLbl.text = "Write Assignment"
-            cell.TitleLbl.text = "Tamil"
+            cell.HomeworkSubjectLbl.text = "Tamil"
+            cell.TitleLbl.text = "Write Assignment"
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality.", expanded: false)
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
@@ -158,8 +163,8 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             cell.SelectBtn.isHidden = true
             cell.SelectBtnHeight.constant = 0
             cell.CVHeight.constant = 0
-            cell.HomeworkSubjectLbl.text = "Write Assignment"
-            cell.TitleLbl.text = "Tamil"
+            cell.HomeworkSubjectLbl.text = "Tamil"
+            cell.TitleLbl.text = "Write Assignment"
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality.", expanded: false)
             
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))

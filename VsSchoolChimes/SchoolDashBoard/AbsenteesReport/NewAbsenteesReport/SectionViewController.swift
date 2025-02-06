@@ -50,6 +50,14 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         tv.reloadData()
     }
     
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
+    
     @IBAction func BackAct(){
         dismiss(animated: true)
     }
@@ -81,14 +89,14 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SectionCollectionViewCell, for: indexPath) as! SectionCollectionViewCell
         if ClickID == indexPath.row {
             
-            cell.sectionClick.backgroundColor = .systemOrange
-            cell.sectionNameLbl.textColor = .white
-            cell.sectionNameLbl.textColor = .white
+            cell.sectionClick.backgroundColor = .gradient1
+            cell.sectionNameLbl.textColor = .black
+            cell.absentcountLbl.textColor = .black
         }
         else{
-            cell.sectionClick.backgroundColor = .gray
-            cell.sectionNameLbl.textColor = .black
-            cell.sectionNameLbl.textColor = .black
+            cell.sectionClick.backgroundColor = .systemGray6
+            cell.sectionNameLbl.textColor = .gray
+            cell.absentcountLbl.textColor = .gray
         }
         return cell
     }

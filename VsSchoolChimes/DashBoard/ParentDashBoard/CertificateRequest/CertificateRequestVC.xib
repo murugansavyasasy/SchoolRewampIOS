@@ -66,7 +66,7 @@
                             </subviews>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTC-hE-Pdo">
-                            <rect key="frame" x="10" y="8" width="220" height="35"/>
+                            <rect key="frame" x="10" y="7.6666666666666714" width="220" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="UZi-8o-V7M"/>
                             </constraints>
@@ -129,7 +129,7 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" name="lesson2"/>
+                            <color key="backgroundColor" name="Clr"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="ycI-aE-eUY"/>
                             </constraints>
@@ -322,8 +322,8 @@
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="lesson2">
-            <color red="0.792156862745098" green="0.94117647058823528" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Clr">
+            <color red="0.92900002002716064" green="0.92900002002716064" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

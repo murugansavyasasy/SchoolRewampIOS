@@ -47,12 +47,6 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-        
         Id = "1"
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
 //        let back = UITapGestureRecognizer(target: self, action: #selector(BackVc))
@@ -66,6 +60,14 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
         
         Tv.dataSource = self
         Tv.delegate = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     
     @IBAction func BackAct() {
@@ -108,14 +110,14 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
         if ClickID == indexPath.row {
             cell.dateLbl.text = String (20 + indexPath.row)
             cell.dayLbl.text = days[indexPath.row]
-            cell.dateFulView.backgroundColor = .systemOrange
-            cell.dayLbl.textColor = .white
-            cell.dateLbl.textColor = .white
+            cell.dateFulView.backgroundColor = .attendence
+            cell.dayLbl.textColor = .black
+            cell.dateLbl.textColor = .black
         }
         else{
             cell.dateFulView.backgroundColor = .white
-            cell.dayLbl.textColor = .black
-            cell.dateLbl.textColor = .black
+            cell.dayLbl.textColor = .gray
+            cell.dateLbl.textColor = .gray
         }
         return cell
     }

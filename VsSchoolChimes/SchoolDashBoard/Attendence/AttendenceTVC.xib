@@ -12,18 +12,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="130" id="KGk-i7-Jjw" customClass="AttendenceTVC" customModule="VsSchoolChimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="420" height="130"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="120" id="KGk-i7-Jjw" customClass="AttendenceTVC" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="445" height="120"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="420" height="130"/>
+                <rect key="frame" x="0.0" y="0.0" width="445" height="120"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SrI-1v-lWc">
-                        <rect key="frame" x="10" y="10" width="400" height="110"/>
+                        <rect key="frame" x="10" y="10" width="425" height="100"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADMIS No: 12415" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rgd-kF-TzI">
-                                <rect key="frame" x="10" y="108" width="98" height="0.0"/>
+                                <rect key="frame" x="10" y="98" width="98" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" id="ilc-GA-SV4"/>
                                 </constraints>
@@ -32,13 +32,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D5f-9T-eqA">
-                                <rect key="frame" x="8" y="10" width="152" height="60"/>
+                                <rect key="frame" x="8" y="10.000000000000002" width="172" height="30.666666666666671"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNd-E8-DOe">
-                                <rect key="frame" x="10" y="85" width="73.666666666666671" height="34.333333333333343"/>
+                                <rect key="frame" x="10" y="55.666666666666671" width="73.666666666666671" height="34.333333333333329"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34.333333333333343" id="uYk-zr-GC2"/>
                                 </constraints>
@@ -50,30 +50,8 @@
                                     <action selector="phnBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lSa-rg-OeL"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cPl-h6-j3d">
-                                <rect key="frame" x="170" y="15" width="120" height="70"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fZ-Sf-Otj">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="30"/>
-                                        <color key="backgroundColor" name="AccentColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="tU1-9C-MJH"/>
-                                            <constraint firstAttribute="width" constant="120" id="u0x-bt-uju"/>
-                                        </constraints>
-                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="76979871"/>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADMIS No: 123456789" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdm-cP-HBS">
-                                        <rect key="frame" x="0.0" y="40" width="120" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z4Y-6z-siO">
-                                <rect key="frame" x="305" y="14.666666666666668" width="90" height="31.000000000000004"/>
+                                <rect key="frame" x="330" y="10" width="90" height="31"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="LOL-PK-KhT">
                                         <rect key="frame" x="10" y="0.0" width="70" height="31"/>
@@ -103,29 +81,49 @@
                                     <constraint firstAttribute="height" constant="31" id="vlB-dO-Q0Q"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADMIS No: 123456789" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wdm-cP-HBS">
+                                <rect key="frame" x="330" y="58.666666666666664" width="87" height="28.666666666666664"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fZ-Sf-Otj">
+                                <rect key="frame" x="190" y="10.333333333333332" width="120" height="29.999999999999996"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="tU1-9C-MJH"/>
+                                    <constraint firstAttribute="width" constant="120" id="u0x-bt-uju"/>
+                                </constraints>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="76979871"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="rgd-kF-TzI" secondAttribute="bottom" constant="2" id="AAM-08-Lwb"/>
+                            <constraint firstAttribute="trailing" secondItem="wdm-cP-HBS" secondAttribute="trailing" constant="8" id="FWG-NE-ke7"/>
                             <constraint firstItem="rgd-kF-TzI" firstAttribute="leading" secondItem="SrI-1v-lWc" secondAttribute="leading" constant="10" id="Hc7-Se-Pe3"/>
                             <constraint firstItem="D5f-9T-eqA" firstAttribute="top" secondItem="SrI-1v-lWc" secondAttribute="top" constant="10" id="IR3-jD-9Q3"/>
+                            <constraint firstItem="wdm-cP-HBS" firstAttribute="leading" secondItem="z4Y-6z-siO" secondAttribute="leading" id="Li1-bo-Wo2"/>
                             <constraint firstItem="TNd-E8-DOe" firstAttribute="leading" secondItem="SrI-1v-lWc" secondAttribute="leading" constant="10" id="N9S-HB-sKR"/>
-                            <constraint firstItem="z4Y-6z-siO" firstAttribute="centerY" secondItem="9fZ-Sf-Otj" secondAttribute="centerY" id="SwR-gX-TlF"/>
-                            <constraint firstAttribute="bottom" secondItem="D5f-9T-eqA" secondAttribute="bottom" constant="40" id="TNL-7w-M7j"/>
+                            <constraint firstItem="9fZ-Sf-Otj" firstAttribute="centerY" secondItem="D5f-9T-eqA" secondAttribute="centerY" id="Ovn-94-rfK"/>
+                            <constraint firstAttribute="bottom" secondItem="wdm-cP-HBS" secondAttribute="bottom" constant="12.67" id="ShT-uA-xkM"/>
+                            <constraint firstItem="z4Y-6z-siO" firstAttribute="leading" secondItem="9fZ-Sf-Otj" secondAttribute="trailing" constant="20" id="WKS-yc-bpN"/>
                             <constraint firstItem="TNd-E8-DOe" firstAttribute="top" secondItem="D5f-9T-eqA" secondAttribute="bottom" constant="15" id="Zxz-WN-PSS"/>
-                            <constraint firstItem="z4Y-6z-siO" firstAttribute="leading" secondItem="cPl-h6-j3d" secondAttribute="trailing" constant="15" id="bgU-9G-DhQ"/>
+                            <constraint firstItem="z4Y-6z-siO" firstAttribute="centerY" secondItem="9fZ-Sf-Otj" secondAttribute="centerY" id="a96-lb-hLI"/>
                             <constraint firstItem="D5f-9T-eqA" firstAttribute="leading" secondItem="SrI-1v-lWc" secondAttribute="leading" constant="8" id="f3U-mp-eku"/>
-                            <constraint firstItem="cPl-h6-j3d" firstAttribute="leading" secondItem="D5f-9T-eqA" secondAttribute="trailing" constant="10" id="hmR-uy-aTl"/>
-                            <constraint firstItem="cPl-h6-j3d" firstAttribute="centerY" secondItem="D5f-9T-eqA" secondAttribute="centerY" constant="10" id="mhz-np-seI"/>
+                            <constraint firstAttribute="bottom" secondItem="TNd-E8-DOe" secondAttribute="bottom" constant="10" id="iKH-lT-cmr"/>
+                            <constraint firstItem="9fZ-Sf-Otj" firstAttribute="leading" secondItem="D5f-9T-eqA" secondAttribute="trailing" constant="10" id="w4M-DR-sus"/>
                             <constraint firstAttribute="trailing" secondItem="z4Y-6z-siO" secondAttribute="trailing" constant="5" id="xAa-0e-sL5"/>
                         </constraints>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="SrI-1v-lWc" secondAttribute="trailing" constant="10" id="3Q6-oY-cPU"/>
+                    <constraint firstAttribute="bottom" secondItem="SrI-1v-lWc" secondAttribute="bottom" constant="10" id="Ht7-Th-SFx"/>
                     <constraint firstItem="SrI-1v-lWc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="KUb-FP-ohb"/>
                     <constraint firstItem="SrI-1v-lWc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="P4D-V2-Hgq"/>
-                    <constraint firstAttribute="bottom" secondItem="SrI-1v-lWc" secondAttribute="bottom" constant="10" id="PxV-sc-PsR"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -138,7 +136,7 @@
                 <outlet property="presentLbl" destination="bV4-1O-0fc" id="RYH-LW-0eJ"/>
                 <outlet property="rollNo" destination="9fZ-Sf-Otj" id="WQk-AE-Asn"/>
             </connections>
-            <point key="canvasLocation" x="112.97709923664122" y="39.436619718309863"/>
+            <point key="canvasLocation" x="132.06106870229007" y="42.253521126760567"/>
         </tableViewCell>
     </objects>
     <resources>

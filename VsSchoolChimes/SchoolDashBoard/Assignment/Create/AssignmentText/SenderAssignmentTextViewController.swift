@@ -11,7 +11,21 @@ import AWSCore
 import AWSS3
 
 @available(iOS 14.0, *)
-class SenderAssignmentTextViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge {
+class SenderAssignmentTextViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, Datepicker {
+    
+    func date(date: String) {
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yy"
+            let DayDate = dateFormatter.date(from: date)!
+            // Change to output format
+            dateFormatter.dateFormat = "EEE dd"
+            let outputDateString = dateFormatter.string(from: DayDate)
+            
+           DateBtn.setTitle(date, for: .normal)
+           setFormattedDate(outputDateString, label: CustomDateLbl)
+
+        }
+    
     func deleteImage(index: Int) {
         selectedImages.remove(at: index)
         selectImgPdfview.imageCollectionview.reloadData()
@@ -60,18 +74,14 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     var doneButton : UIButton!
     var pdfData: Data?
     let customdate = DateFormatter()
+    let formatter = DateFormatter()
     let initialHeight: CGFloat = 60
     let maxHeight: CGFloat = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createDatepicker()
         StyleAndTranslater()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+       
         
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
@@ -92,7 +102,11 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
-        setcustomDate(attributedLbl: customdatestring)
+        setFormattedDate(customdatestring, label: CustomDateLbl)
+        
+        formatter.dateFormat = "EEE d MMM yyyy"
+        let dateBtntitle = formatter.string(from: Date())
+        DateBtn.setTitle(dateBtntitle, for: .normal)
         
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
@@ -144,6 +158,15 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             print("Selectef12 \(pdf)")
         }
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     
     deinit {
@@ -344,121 +367,53 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         dismiss(animated: true, completion: nil)
     }
     
-    
-    @IBAction func CustomDateBtnAct(_ sender: Any) {
-        
-        showDatepicker(button: sender as! UIButton)
-    }
-    
     @IBAction func DateBtnAct(_ sender: Any) {
-        
-        showDatepicker(button: sender as! UIButton)
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+              vc.dateSelection = 2
+              vc.delegate = self
+              vc.modalPresentationStyle = .overCurrentContext
+              vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+              self.present(vc, animated: false)
     }
     
-    func createDatepicker(){
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = Date()
-        datePicker.backgroundColor = .white
-        
-        if #available(iOS 14.0, *) {
-            datePicker.preferredDatePickerStyle = .inline
+    func setFormattedDate(_ date: String, label: UILabel) {
+            let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+            let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+            
+            // Function to create an attributed string from a given date
+            func createAttributedText(from date: String) -> NSMutableAttributedString {
+                let components = date.split(separator: " ")
+                guard components.count > 1 else {
+                    print("Error: Invalid date format")
+                    return NSMutableAttributedString()
+                }
+                
+                let day = components[0]
+                let month = components[1]
+                
+                let attributedText = NSMutableAttributedString()
+                attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                    .font: weekdayFont,
+                    .foregroundColor: UIColor.darkGray
+                ]))
+                attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                    .font: dayFont,
+                    .foregroundColor: UIColor.black
+                ]))
+                
+                // Set paragraph style for centered alignment
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.alignment = .center
+                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+                
+                return attributedText
+            }
+            
+            // Create attributed text and set to label
+            label.attributedText = createAttributedText(from: date)
+            label.numberOfLines = 0
         }
-        
-        datePicker.isHidden = true
-        self.view.addSubview(datePicker!)
-        
-        // Initialize and configure Done button
-        doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
-        doneButton.isHidden = true
-        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
-        doneButton.setTitleColor(.white, for: .normal)
-        doneButton.layer.cornerRadius = 8
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        self.view.addSubview(doneButton)
-        
-    }
-    
-    func showDatepicker(button: UIButton) {
-        datePicker.isHidden = false
-        doneButton.isHidden = false
-        
-        let buttonFrame = button.convert(button.bounds, to: self.view)
-        
-        // Set the frame for the datePicker
-        let pickerYPosition = view.frame.minY + 110
-        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
-        
-        // Set appearance for datePicker
-        datePicker.backgroundColor = .white
-        datePicker.layer.shadowColor = UIColor.black.cgColor
-        datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-        datePicker.layer.shadowRadius = 5
-        datePicker.layer.shadowOpacity = 0.3
-        datePicker.layer.cornerRadius = 20
-        
-        doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
-        
-        // Add both datePicker and Done button to the view
-        self.view.addSubview(datePicker)
-        self.view.addSubview(doneButton)
-    }
-    
-    @IBAction func doneButtonTapped(){
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat =  "EEE d MMM yyyy"
-        let datelabel = dateFormatter.string(from: datePicker.date)
-        DateBtn.setTitle(datelabel, for: .normal)
-        
-        
-        customdate.dateFormat = "EEE d"
-        let attributedLbl = customdate.string(from: datePicker.date)
-        setcustomDate(attributedLbl: attributedLbl)
-        datePicker.isHidden = true
-        doneButton.isHidden = true
-    }
-    
-    func setcustomDate(attributedLbl: String) {
-        // Split the input string into weekday and day components
-        let components = attributedLbl.split(separator: " ")
-        guard components.count == 2,
-              let weekday = components.first,
-              let day = components.last else {
-            print("Error: Invalid format for attributedLbl. Expected 'EEE d', got: \(attributedLbl)")
-            return
-        }
-        
-        // Fonts for different parts
-        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day
-        
-        // Create an attributed string
-        let attributedString = NSMutableAttributedString()
-        
-        // Add the weekday (e.g., "Mon")
-        attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
-            .font: weekdayFont,
-            .foregroundColor: UIColor.gray
-        ]))
-        
-        // Add the day (e.g., "23")
-        attributedString.append(NSAttributedString(string: "\(day)", attributes: [
-            .font: dayFont,
-            .foregroundColor: UIColor.black
-        ]))
-        
-        // Set paragraph style for centered alignment
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
-        
-        // Assign the attributed string to the label
-        CustomDateLbl.attributedText = attributedString
-    }
-    
-    
+  
 }
 
 

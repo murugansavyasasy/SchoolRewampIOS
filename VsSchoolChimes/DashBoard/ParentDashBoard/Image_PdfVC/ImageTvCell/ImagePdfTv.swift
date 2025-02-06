@@ -26,7 +26,7 @@ class ImagePdfTv: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        DateLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DateLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         animationview()

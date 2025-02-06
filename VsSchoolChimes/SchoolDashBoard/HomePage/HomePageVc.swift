@@ -11,6 +11,7 @@ import AVFoundation
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
+    @IBOutlet weak var ViewDetailsBtn: UIButton!
     @IBOutlet weak var TopGradientView: UIView!
     @IBOutlet weak var changeRollLbl: UILabel!
     @IBOutlet weak var loginDetailView: UIView!
@@ -137,14 +138,14 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         configureButton(
             assignmentkBtn,
             title: MenuStringFile.Assignment.translated(),
-            imageName: UIImage(named: "Schedule ExamTest"),
+            imageName: UIImage(named: "Assignment"),
             gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
             lightenFactor: 0.7 // 40% lighter
         )
         configureButton(
             onlineMeetingBtn,
             title: MenuStringFile.OnlineMeeting.translated(),
-            imageName: UIImage(named: "Online  Meeting"),
+            imageName: UIImage(named: "online_meeting"),
             gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
@@ -265,6 +266,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
     }
     
+    @IBAction func ViewDetailsAct(_ sender: Any) {
+        
+        let vc  = MarkAttendenceVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
     @IBAction func redirectAct() {
         dismiss(animated: true)
         

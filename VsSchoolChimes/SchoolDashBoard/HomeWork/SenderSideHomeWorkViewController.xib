@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="Buttonstackview" destination="3GV-FL-1M2" id="WUZ-ZD-2d4"/>
                 <outlet property="CalendarView" destination="M08-Qf-8hX" id="D0E-GL-ObO"/>
+                <outlet property="CalenderViewTodateBtnTop" destination="yjT-Om-1Dt" id="Py1-2u-FSL"/>
                 <outlet property="ComposeHomeworkView" destination="5Vf-Cx-qQT" id="qJK-Uf-s4g"/>
                 <outlet property="CustomDateBtn" destination="Tth-IZ-phM" id="rWg-RJ-FgP"/>
                 <outlet property="DetailsLbl" destination="qYd-0j-moL" id="0cT-sn-0gI"/>
@@ -340,7 +341,7 @@
                                     </constraints>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <connections>
-                                        <action selector="CustomDateBtnAct:" destination="-1" eventType="touchUpInside" id="p6g-VH-2IK"/>
+                                        <action selector="DateBtnAct:" destination="-1" eventType="touchUpInside" id="tos-lK-wpk"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jan  15" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sv7-QO-hSv">

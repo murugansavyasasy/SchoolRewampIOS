@@ -19,7 +19,7 @@ class CVIconCollectionViewCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                dateFulView.backgroundColor = .systemOrange
+                dateFulView.backgroundColor = .attendence
                 dayLbl.textColor = .white
                 dateLbl.textColor = .white
             } else {

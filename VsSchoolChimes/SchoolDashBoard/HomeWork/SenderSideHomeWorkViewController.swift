@@ -17,6 +17,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var CalenderViewTodateBtnTop: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var ReportView: UIView!
     @IBOutlet weak var TV: UITableView!
@@ -63,11 +64,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
         
         // Add observers for keyboard notifications
         // Add observers for keyboard events
@@ -124,6 +120,14 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         ReportView.alpha = 0
         
         imageSelection()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     
     deinit {
@@ -230,6 +234,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
        // calenderimgHeight.constant = 38
         //   DateViewheight.constant = 25
         calenderHeight.constant = 0
+        CalenderViewTodateBtnTop.constant = 0
         CalendarView.isHidden = true
         dateBtn.isHidden = false
         dateBtn.setTitle(label, for: .normal)
@@ -264,6 +269,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             
             self.CalendarView.isHidden = true
             self.calenderHeight.constant = 0
+            self.CalenderViewTodateBtnTop.constant = 0
             
             //                self.TV.isHidden = false
             //                self.TV.delegate = self
@@ -290,6 +296,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             
             CalendarView.isHidden = true
             calenderHeight.constant = 0
+            CalenderViewTodateBtnTop.constant = 0
             self.TV.isHidden = false
             self.TV.delegate = self
             self.TV.dataSource = self
@@ -370,19 +377,17 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         dismiss(animated: true)
     }
     
-    
-    @IBAction func CustomDateBtnAct(_ sender: Any) {
-    }
-    
     @IBAction func DateBtnAct(_ sender: Any) {
         
         if calenderHeight.constant == 0 {
             CalendarView.isHidden = false
             calenderHeight.constant = 260
+            CalenderViewTodateBtnTop.constant = 25
             dateBtn.setImage(UIImage(systemName: "chevron.up"), for: .normal)
         }else{
             CalendarView.isHidden = true
             calenderHeight.constant = 0
+            CalenderViewTodateBtnTop.constant = 0
             dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
     }
@@ -600,8 +605,8 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             //            cell.collectionview.isHidden = false
             cell.pagecontroller.isHidden = false
             cell.SelectBtn.isHidden = true
-            cell.HomeworkSubjectLbl.text = "Write Assignment"
-            cell.TitleLbl.text = "Tamil"
+            cell.HomeworkSubjectLbl.text = "Tamil"
+            cell.TitleLbl.text = "Write Assignment"
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
             cell.delegate = self
@@ -615,7 +620,13 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.HomeworkreportTV, for: indexPath) as! HomeworkreportTV
             
             cell.HomeworkTitleLbl.text = "Write Assignment"
-            cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
+            cell.DescriptionLbl.attributedText = descript(for:"Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality." , expanded: false)
+           // cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+           // cell.delegate = self
+            cell.DescriptionLbl.tag = indexPath.row // Tag the label with the row index
+            cell.DescriptionLbl.isUserInteractionEnabled = true
+            cell.DescriptionLbl.addGestureRecognizer(tapGesture)
             cell.SubjectLbl.text = "Tamil"
             return cell
         }

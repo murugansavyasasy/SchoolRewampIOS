@@ -36,11 +36,11 @@ class RatingTableViewCell: UITableViewCell {
             case 2:
                 ratingText = RatingCellStringFile.Not_bad
             case 3:
-                ratingText = RatingCellStringFile.Better
-            case 4:
                 ratingText = RatingCellStringFile.Nice
-            case 5:
+            case 4:
                 ratingText = RatingCellStringFile.Well_done
+            case 5:
+                ratingText = RatingCellStringFile.Excellent
             default:
                 RatingValue.layer.borderColor = UIColor.red.cgColor
                 return // Exit if out of expected range

@@ -16,7 +16,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         totalcount = studentData.filter { $0.isAbsent == true }.count
         if totalcount == 0 {
             // All students are absent
-            selectAllBtn.setImage(UIImage(systemName: "checkmark.rectangle.portrait.fill"), for: .normal)
+            selectAllBtn.setImage(UIImage(systemName: "checkmark.square.portrait.fill"), for: .normal)
         } else {
             // At least one student is present
             selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
@@ -66,11 +66,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             HeaderviewHeight.constant = 0
             headerView.isHidden = true
         }
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+       
         
         rollNoLbl.text = CommonStringFile.RollNo.translated()
         nameLbl.text = CommonStringFile.Name.translated()
@@ -93,6 +89,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     @IBAction func fliter(_ sender: UIButton) {
         dropDown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated()]
@@ -279,9 +283,13 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             }
         
         
-            func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-                return UITableView.automaticDimension
-            }
+//            func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//                return UITableView.automaticDimension
+//            }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if id == 2{
             let cell = tableView.cellForRow(at: indexPath) as? StudentHistryTVC

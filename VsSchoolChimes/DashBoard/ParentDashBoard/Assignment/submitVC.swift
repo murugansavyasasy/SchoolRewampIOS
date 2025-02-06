@@ -19,6 +19,10 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var outerView: UIView!
     let photoPickManager = PhotoPickerManager.shared
  
+    @IBOutlet weak var NameLbl: UILabel!
+    
+    @IBOutlet weak var StandardLbl: UILabel!
+    
     @IBOutlet weak var DescriptionTextview: UITextView!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var submitBtn: UIButton!
@@ -29,13 +33,12 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
-    
+    var url : URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         StyleAndTranslater()
-        selectImgPdfview.imageCollectionview.delegate = self
-        selectImgPdfview.imageCollectionview.dataSource = self
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -43,6 +46,15 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         outerView.layer.shadowOpacity = 0.3
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_:)))
         view.addGestureRecognizer(tapGesture)
+        
+        selectImgPdfview.imageCollectionview.delegate = self
+        selectImgPdfview.imageCollectionview.dataSource = self
+        //selectImgPdfview.imageCollectionview.reloadData()
+        selectImgPdfview.imageCollectionview.isUserInteractionEnabled = true
+        imageSelection()
+    }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     // Action for tap gesture
       @objc func viewTapped(_ sender: UITapGestureRecognizer) {
@@ -70,9 +82,6 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
-       
-
-        
     }
     
     @IBAction func chooseImgBtnAction(_ sender: UIButton) {
@@ -81,6 +90,43 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
 
     @IBAction func CancelBtn(_ sender: Any) {
         dismiss(animated: true)
+    }
+    
+    func imageSelection(){
+        photoPickManager.onImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            // Handle selected images here
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
+            selectedImages.append(contentsOf: images)
+            for image in images {
+                print("Selected image: \(image)")
+                // photoPickManager.uploadAWS(image: image)
+            }
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+        photoPickManager.pdfUrl = { [weak self] pdfurl in
+            guard let self = self else { return }
+            selectedImages.removeAll()
+            url = pdfurl.absoluteURL
+            selectedImages.append(ImageName.pdf!)
+            //            url = URL(string:pdfurl)
+            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+        photoPickManager.onCameraImagePicked = { [weak self] images in
+            guard let self = self else { return }
+            // Handle selected images here
+            
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
+            selectedImages.append(images)
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
     }
     
     @IBAction func presentSelectionAlert() {
@@ -114,8 +160,6 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
 
     func selectImages() {
         photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
-
-
        }
 
     func selectPdf() {
@@ -153,10 +197,96 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
 
 }
 
+//@available(iOS 14.0, *)
+//extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+//    
+// 
+//    
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return 1
+//    }
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return 1 + selectedImages.count
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        if indexPath.item == 0{
+//            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
+//            cell.layer.cornerRadius = 20
+//            return cell
+//        }else{
+//            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
+//            cell.delegate = self
+//            cell.deleteBtn.tag = indexPath.item - 1
+//            if selectedImages.count > indexPath.item - 1 {
+//                // Assign the image starting from the second image in the selectedImages array
+//                cell.imageViews.image = selectedImages[indexPath.item - 1]
+//            } else {
+//                cell.imageViews.image = nil
+//            }
+//            if selectedImages.count <= 2{
+//                collectionViewHeght.constant = 120
+//            }else{
+//                collectionViewHeght.constant = 220
+//            }
+//            return cell
+//        }
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        
+//        let width = (selectImgPdfview.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
+//        
+//        return CGSize(width: width, height: 100)
+//    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if indexPath.row == 0{
+//            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+//            //
+//            // Camera option
+//            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+//            }
+//            alertController.addAction(cameraAction)
+//            
+//            // Gallery option
+//            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+//                //
+//                selectImages()
+//                //
+//            }
+//            alertController.addAction(galleryAction)
+//            
+//            //             PDF option
+//            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+//                
+//                //selectPDF()
+//            }
+//            alertController.addAction(pdfAction)
+//            
+//            // Cancel action
+//            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+//            alertController.addAction(cancelAction)
+//            
+//            // Present the alert
+//            self.present(alertController, animated: true, completion: nil)
+//        }else{
+//            if selectedImages.count > indexPath.item - 1 {
+//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                
+//                // Safe unwrapping of imgView before assigning
+//                vc.img = selectedImages[indexPath.item - 1]
+//                //
+//                present(vc, animated: true)
+//            }
+//        }
+//    }
+//}
+
+
 @available(iOS 14.0, *)
-extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+extension  submitVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
- 
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -167,11 +297,11 @@ extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0{
-            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
+            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
         }else{
-            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
+            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
             cell.delegate = self
             cell.deleteBtn.tag = indexPath.item - 1
             if selectedImages.count > indexPath.item - 1 {
@@ -180,11 +310,11 @@ extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UIColle
             } else {
                 cell.imageViews.image = nil
             }
-            if selectedImages.count <= 2{
-                collectionViewHeght.constant = 120
-            }else{
-                collectionViewHeght.constant = 220
-            }
+//            if selectedImages.count <= 2{
+//                collectionViewHeight.constant = 120
+//            }else{
+//                collectionViewHeight.constant = 220
+//            }
             return cell
         }
     }
@@ -196,11 +326,14 @@ extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UIColle
         return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("entered did select")
         if indexPath.row == 0{
             let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
             //
             // Camera option
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                //
+                openCamera()
             }
             alertController.addAction(cameraAction)
             
@@ -215,7 +348,7 @@ extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UIColle
             //             PDF option
             let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
                 
-                //selectPDF()
+                selectPdf()
             }
             alertController.addAction(pdfAction)
             
@@ -229,12 +362,23 @@ extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UIColle
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                
+                vc.selectedFileURL = url
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
                 //
                 present(vc, animated: true)
             }
+            
         }
+        
+        
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+            
+            controller.dismiss(animated: true, completion: nil)
+            
+        }
+        
+        
     }
+    
 }

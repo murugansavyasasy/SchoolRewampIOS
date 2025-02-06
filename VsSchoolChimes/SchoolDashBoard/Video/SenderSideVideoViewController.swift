@@ -19,6 +19,8 @@ enum UploadResult {
 class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     
+    @IBOutlet weak var StackViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var ButtonStackview: UIStackView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
     
     @IBOutlet weak var CharCountLbl: UILabel!
@@ -58,11 +60,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     var playerurl: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+        
         
         // Add observers for keyboard notifications
                 NotificationCenter.default.addObserver(
@@ -79,6 +77,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
                 )
         
         chooseVideoBtn.isHidden = true
+        changeVideoBtn.isHidden = true
+        StackViewHeight.constant = 0
         StyleAndTranslater()
         descTxtView.delegate = self
         let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
@@ -86,6 +86,13 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         keyboardDonebtn()
     }
     
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
     
     deinit {
         // Remove observers
@@ -246,7 +253,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             playerurl = videoURL
             print("Selected video URL: \(videoURL)")
             generateThumbnail(from: playerurl!)
-            
+            changeVideoBtn.isHidden = false
+            StackViewHeight.constant = 40
         }
         
         picker.dismiss(animated: true, completion: nil)

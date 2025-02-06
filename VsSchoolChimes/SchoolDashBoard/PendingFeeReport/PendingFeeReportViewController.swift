@@ -24,7 +24,9 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     @IBOutlet weak var classWiseView: UIView!
     @IBOutlet weak var categoryWiseView: UIView!
     
+    @IBOutlet weak var CategoryLbl: UILabel!
     
+    @IBOutlet weak var ClassLbl: UILabel!
     let dropDown = DropDown()
     var url_time : String!
     var url_hours : String!
@@ -38,13 +40,37 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     var DropDownStr : [String] = []
     var type : Int!
     
+    // Example data for Feescategory
+    let feesCategories = [
+        Feescategory(category: "Tuition", amount: "5000"),
+        Feescategory(category: "Library", amount: "300"),
+        Feescategory(category: "Laboratory", amount: "700"),
+        Feescategory(category: "Sports", amount: "400"),
+        Feescategory(category: "Transportation", amount: "1000")
+    ]
+
+    // Example data for FeeMode
+    let feeModes = [
+        FeeMode(paymentMode: "Cash", amount: "2000"),
+        FeeMode(paymentMode: "Credit Card", amount: "3000"),
+        FeeMode(paymentMode: "Bank Transfer", amount: "1500"),
+        FeeMode(paymentMode: "Online Payment", amount: "2500"),
+        FeeMode(paymentMode: "Check", amount: "1200")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
+        
+        DropDownStr = ["2012 - 2013","2014 - 2015","2016 - 2017","2018 - 2019"]
+        
+        categoryWiseView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
         )
+        CategoryLbl.textColor = .white
+        ClassLbl.textColor = .gray
+        
         let userDefaults = UserDefaults.standard
         
         nodataLbl.isHidden = true
@@ -52,20 +78,28 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         if type == 1 {
         }else{
         }
-        tv.isHidden = true
+//        tv.isHidden = true
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
-//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVC))
-//        backView.addGestureRecognizer(backGesture)
         let dropDown = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
         AcadamidropDown.addGestureRecognizer(dropDown)
         let classWiseGuesture = UITapGestureRecognizer(target: self, action: #selector(classAction))
         classWiseView.addGestureRecognizer(classWiseGuesture)
         let categoryGuesture = UITapGestureRecognizer(target: self, action: #selector(categoryAction))
         categoryWiseView.addGestureRecognizer(categoryGuesture)
+        
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
 
     }
-    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
     
     @IBAction func DropDownVc(){
         let acadamicYear = DropDownStr
@@ -84,17 +118,45 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     
     
     @IBAction func categoryAction() {
-        tv.isHidden = true
+       
         ClickId = "1"
-        classWiseView.backgroundColor = .lightGray
-        categoryWiseView.backgroundColor = .systemOrange
+//        classWiseView.backgroundColor = .lightGray
+//        categoryWiseView.backgroundColor = .systemOrange
+        categoryWiseView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        classWiseView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        CategoryLbl.textColor = .white
+        ClassLbl.textColor = .gray
+        
+        tv.reloadData()
     }
     
     @IBAction func classAction() {
         ClickId = "2"
-        tv.isHidden = true
-        categoryWiseView.backgroundColor = .lightGray
-        classWiseView.backgroundColor = .systemOrange
+       
+//        categoryWiseView.backgroundColor = .lightGray
+//        classWiseView.backgroundColor = .systemOrange
+        classWiseView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        categoryWiseView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        ClassLbl.textColor = .white
+        CategoryLbl.textColor = .gray
+        
+        tv.reloadData()
     }
     
     @IBAction func backAct() {
@@ -102,16 +164,48 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if ClickId == "1"{
+            return 5
+        }
+        else{
+            return 3
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
-        return cell
+        if ClickId == "1"{
+            let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
+            cell.classLbl.text = feesCategories[indexPath.row].category
+            cell.amountLbl.text = feesCategories[indexPath.row].amount
+            return cell
+        }else{
+            let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
+            cell.classLbl.text = feeModes[indexPath.row].paymentMode
+            cell.amountLbl.text = feeModes[indexPath.row].amount
+            return cell
+        }
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if ClickId == "1"{
+            return 4
+        }
+        else{
+            return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
+        if ClickId == "1"{
+            headerView.classLbl.text = "Total"
+            headerView.amountLbl.text = "37,515"
+        }else{
+            headerView.classLbl.text = "Total"
+            headerView.amountLbl.text = "37,515"
+        }
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -477,3 +571,4 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
  
  
  */
+

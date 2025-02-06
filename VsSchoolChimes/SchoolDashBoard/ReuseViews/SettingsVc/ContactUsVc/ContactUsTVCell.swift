@@ -28,7 +28,8 @@ class ContactUsTVCell: UITableViewCell {
         mailOrPhoneLabel.setFont(style: .body, size: 13)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(openGmail))
-        mailOrPhoneLabel.addGestureRecognizer(tap)
+       // mailOrPhoneLabel.addGestureRecognizer(tap)
+        cellview.addGestureRecognizer(tap)
       
     }
 

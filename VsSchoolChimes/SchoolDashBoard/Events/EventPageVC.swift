@@ -26,11 +26,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     var button2 = "History".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+       
         uiConficration()
         setupPageViewController()
 //        pages = [page1, page2]
@@ -46,6 +42,14 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         }
         
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     func uiConficration(){
         TitleHederLbl.text = titleLbl.translated()

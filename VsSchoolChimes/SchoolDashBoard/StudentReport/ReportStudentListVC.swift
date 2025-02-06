@@ -42,11 +42,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     let menuName = MenuStringFile()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+       
         pageTitle.text = MenuStringFile.StudentReport
         filterStudent = studentList
         sortedStudent = studentList
@@ -60,6 +56,14 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionSelection.alpha = 0
         sectionSelection.transform = CGAffineTransform(translationX: 0, y: -sectionSelection.bounds.height)
     }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
+    
     private func showStackView() {
         classSelection.isHidden = false
         sectionSelection.isHidden = false

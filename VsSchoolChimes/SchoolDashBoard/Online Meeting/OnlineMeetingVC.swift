@@ -42,6 +42,11 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     @IBOutlet weak var customDateLbl: UILabel!
     @IBOutlet weak var CustomDateBtn: HalfColorButton!
     
+    @IBOutlet weak var NameStandardStackview: UIStackView!
+    @IBOutlet weak var NameLbl: UILabel!
+    
+    @IBOutlet weak var StandardLbl: UILabel!
+    
     let eventStore = EKEventStore()
     var data = ["Parents meeting", "Google Meeting", "Annual day Discussion"]
     let assetColors: [String] = ["meetingcolour1", /*"priortitClr1",*/ "meetcolour2"]
@@ -75,28 +80,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
                     object: nil
                 )
         
-        if passvalue == 2 {
-            view.applyGradient(
-                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-            Gradientview.isHidden = true
-            ButtonStackHeight.constant = 0
-            createView.isHidden = true
-            receiverView.isHidden = false
-            receiverView.alpha = 1
-            ReciverviewTopConstraint.constant = 0
-           
-        }else {
-            view.applyGradient(
-                colors: [Colornames.stafGradient, Colornames.stafGradient1],
-                startPoint: CGPoint(x: 1, y: 0.5),
-                endPoint: CGPoint(x: 0, y: 0.5)
-            )
-            receiverView.isHidden = true
-            createView.isHidden = false
-        }
+        
         
         StyleAndTranslater()
         createDatepicker()
@@ -115,6 +99,33 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.MeetingsTVcell)
         tableview.delegate = self
         tableview.dataSource = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        if passvalue == 2 {
+            view.applyGradient(
+                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+            Gradientview.isHidden = true
+            ButtonStackHeight.constant = 0
+            createView.isHidden = true
+            receiverView.isHidden = false
+            receiverView.alpha = 1
+            ReciverviewTopConstraint.constant = 0
+            NameStandardStackview.isHidden = false
+           
+        }else {
+            view.applyGradient(
+                colors: [Colornames.stafGradient, Colornames.stafGradient1],
+                startPoint: CGPoint(x: 1, y: 0.5),
+                endPoint: CGPoint(x: 0, y: 0.5)
+            )
+            receiverView.isHidden = true
+            createView.isHidden = false
+            NameStandardStackview.isHidden = true
+        }
     }
     
     deinit {

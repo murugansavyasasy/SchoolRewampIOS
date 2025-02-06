@@ -14,6 +14,12 @@ class HelpVc: UIViewController {
     var passVale = 1
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        HelppageHeader.text = "Help".translated()
+        HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize)
+        // Do any additional setup after loading the view.
+    }
+    override func viewDidLayoutSubviews() {
         if passVale == 2{
             outerView.applyGradient(
                 colors: [Colornames.gradientBlue, Colornames.gradientgreen],
@@ -27,9 +33,6 @@ class HelpVc: UIViewController {
                 endPoint: CGPoint(x: 0, y: 0.5)
             )
         }
-        HelppageHeader.text = CommonStringFile.ContactSupport.translated()
-        HelppageHeader.setFont(style: .header, size: FontSize.HeaderSize)
-        // Do any additional setup after loading the view.
     }
 
 }

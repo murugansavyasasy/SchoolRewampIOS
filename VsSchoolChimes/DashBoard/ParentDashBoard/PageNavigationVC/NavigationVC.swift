@@ -36,13 +36,22 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
 //        pages = [page1, page2]
         loadPages([page1, page2])
         disableSwipeGesture()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        gradientcolours(
-            button: createEvent,
-            colours: [
-                UIColor(hex: "7ED957").cgColor,
-                UIColor(hex: "0097B2").cgColor
-            ]
+        
+//        gradientcolours(
+//            button: createEvent,
+//            colours: [
+//                UIColor(hex: "7ED957").cgColor,
+//                UIColor(hex: "0097B2").cgColor
+//            ]
+//        )
+        
+        configureButton(
+            createEvent,
+            title: button1,
+            imageName: nil,
+            gradientColors:[UIColor.green,UIColor.blue],
+            opacity: 0.8, // 70% opacity
+            lightenFactor: 0.6// 40% lighter
         )
 
         createEvent.setTitleColor(.black, for:.normal)
@@ -52,8 +61,9 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         if let firstPage = pages.first {
             pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
         }
-        
-        
+    }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     func uiConficration(){
         backBtn.setTitle(titleLbl, for: .normal)
@@ -111,24 +121,34 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     @IBAction func SelectionController(_ sender: UIButton) {
         
         if sender.tag == 0{
-            gradientcolours(
-                button: createEvent,
-                colours: [
-                    UIColor(hex: "7ED957").cgColor,
-                    UIColor(hex: "0097B2").cgColor
-                ])
+            configureButton(
+                createEvent,
+                title: button1,
+                imageName: nil,
+                gradientColors:[UIColor.green,UIColor.blue],
+                opacity: 0.8, // 70% opacity
+                lightenFactor: 0.6// 40% lighter
+            )
+//            gradientcolours(
+//                button: createEvent,
+//                colours: [
+//                    UIColor(hex: "7ED957").cgColor,
+//                    UIColor(hex: "0097B2").cgColor
+//                ])
             createEvent.setTitleColor(.black, for:.normal)
             gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             historyBtn.setTitleColor(.black, for:.normal)
         }else{
             gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             createEvent.setTitleColor(.black, for:.normal)
-            gradientcolours(
-                button: historyBtn,
-                colours: [
-                    UIColor(hex: "7ED957").cgColor,
-                    UIColor(hex: "0097B2").cgColor
-                ])
+            configureButton(
+                historyBtn,
+                title: button2,
+                imageName: nil,
+                gradientColors:[UIColor.green,UIColor.blue],
+                opacity: 0.8, // 70% opacity
+                lightenFactor: 0.6// 40% lighter
+            )
             historyBtn.setTitleColor(.black, for:.normal)
         }
         
@@ -159,6 +179,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         }
         if #available(iOS 14.0, *) {
             if let page1 = pages[0] as? LeveCreateVC {
+                backBtn.setTitle("Edit Leave Request", for: .normal)
                 page1.LeaveRequest = leaveRequest
             }
         } 
@@ -171,6 +192,73 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
 
         pageViewController.setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)
     }
+    
+    func configureButton(
+        _ button: UIButton,
+        title: String,
+        imageName: UIImage?,
+        gradientColors: [UIColor],
+        cornerRadius: CGFloat = 20,
+        imageSize: CGSize = CGSize(width: 40, height: 40),
+        spacing: CGFloat = 8.0,
+        opacity: CGFloat = 0.5, // Opacity for the gradient
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+    ) {
+        // Set corner radius
+        button.layer.cornerRadius = cornerRadius
+        button.layer.masksToBounds = true
+        
+        // Adjust colors for lightening and opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+        }
+        
+        // Apply gradient
+        button.applyGradient(
+            colors: adjustedColors,
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+        button.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        // Set title and image
+        button.setTitle(title, for: .normal)
+        if let image = imageName {
+            let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
+                image.draw(in: CGRect(origin: .zero, size: imageSize))
+            }
+            button.setImage(resizedImage, for: .normal)
+        }
+        
+        // Align image and title
+        button.contentHorizontalAlignment = .center  // Ensure horizontal alignment
+        if let imageSize = button.imageView?.frame.size,
+           let titleSize = button.titleLabel?.intrinsicContentSize {
+            let totalHeight = imageSize.height + titleSize.height + spacing
+            
+            button.imageEdgeInsets = UIEdgeInsets(
+                top: -(totalHeight - imageSize.height),  // Move image to the top
+                left: 0,
+                bottom: 0,
+                right: -titleSize.width // Center align horizontally
+            )
+            
+            button.titleEdgeInsets = UIEdgeInsets(
+                top: 0,  // No padding at the top
+                left: -imageSize.width,  // Center align horizontally
+                bottom: -(totalHeight - titleSize.height),  // Move title below the image
+                right: 0
+            )
+            
+            button.contentEdgeInsets = UIEdgeInsets(
+                top: 0,
+                left: 0,
+                bottom: spacing,
+                right: 0
+            )
+        }
+    }
+
 
 
     // MARK: - UIPageViewController Data Source Methods

@@ -111,13 +111,13 @@
                                     </constraints>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="94N-D7-EPX">
-                                    <rect key="frame" x="15" y="68" width="363" height="20.333333333333329"/>
+                                    <rect key="frame" x="15" y="68" width="363" height="16.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Select Standard and Section" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71P-cl-GJZ">
-                                    <rect key="frame" x="15" y="160.66666666666669" width="363" height="20.333333333333343"/>
+                                    <rect key="frame" x="15" y="156.66666666666669" width="363" height="20.333333333333343"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -194,7 +194,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="7Pg-6v-lGn">
-                                                    <rect key="frame" x="0.0" y="28.333333333333314" width="363" height="40"/>
+                                                    <rect key="frame" x="0.0" y="32.333333333333314" width="363" height="40"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EC8-zk-JjI">
                                                             <rect key="frame" x="0.0" y="0.0" width="179" height="40"/>
@@ -260,7 +260,7 @@
                                                 <constraint firstItem="7Pg-6v-lGn" firstAttribute="leading" secondItem="QJ7-U2-Uke" secondAttribute="leading" id="EQT-mY-p30"/>
                                                 <constraint firstAttribute="trailing" secondItem="IHO-75-tLw" secondAttribute="trailing" id="UKr-Zp-TbX"/>
                                                 <constraint firstItem="IHO-75-tLw" firstAttribute="top" secondItem="QJ7-U2-Uke" secondAttribute="top" id="WO3-Ta-l0I"/>
-                                                <constraint firstItem="7Pg-6v-lGn" firstAttribute="top" secondItem="IHO-75-tLw" secondAttribute="bottom" constant="8" id="WeI-53-vdO"/>
+                                                <constraint firstItem="7Pg-6v-lGn" firstAttribute="top" secondItem="IHO-75-tLw" secondAttribute="bottom" constant="12" id="WeI-53-vdO"/>
                                                 <constraint firstAttribute="height" constant="91" id="kw4-dn-5OC"/>
                                                 <constraint firstAttribute="trailing" secondItem="7Pg-6v-lGn" secondAttribute="trailing" id="mJr-es-wVO"/>
                                                 <constraint firstItem="IHO-75-tLw" firstAttribute="leading" secondItem="QJ7-U2-Uke" secondAttribute="leading" id="pzm-FW-ebO"/>
@@ -276,7 +276,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VeO-nA-FmA">
-                                                    <rect key="frame" x="0.0" y="28.333333333333314" width="353" height="40"/>
+                                                    <rect key="frame" x="0.0" y="32.333333333333314" width="353" height="40"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yxT-GA-Mzw">
                                                             <rect key="frame" x="0.0" y="0.0" width="174" height="40"/>
@@ -345,7 +345,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="VeO-nA-FmA" secondAttribute="trailing" constant="10" id="dzv-oe-y2g"/>
                                                 <constraint firstItem="VeO-nA-FmA" firstAttribute="leading" secondItem="Oqr-Lm-LVF" secondAttribute="leading" id="ffd-md-NxH"/>
                                                 <constraint firstItem="Oqr-Lm-LVF" firstAttribute="top" secondItem="riq-Bj-i5T" secondAttribute="top" id="qrf-aQ-aB7"/>
-                                                <constraint firstItem="VeO-nA-FmA" firstAttribute="top" secondItem="Oqr-Lm-LVF" secondAttribute="bottom" constant="8" id="xwV-x3-h7M"/>
+                                                <constraint firstItem="VeO-nA-FmA" firstAttribute="top" secondItem="Oqr-Lm-LVF" secondAttribute="bottom" constant="12" id="xwV-x3-h7M"/>
                                             </constraints>
                                         </view>
                                     </subviews>
@@ -397,7 +397,7 @@
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pf9-a7-QOJ" customClass="HalfColorButton" customModule="VsSchoolChimes" customModuleProvider="target">
-                                    <rect key="frame" x="15" y="96.333333333333343" width="45" height="45"/>
+                                    <rect key="frame" x="15" y="92.333333333333343" width="45" height="45"/>
                                     <color key="backgroundColor" name="AttendenceColor"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="45" id="YXN-qr-NPG"/>
@@ -409,7 +409,7 @@
                                     </connections>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kO4-tS-alp">
-                                    <rect key="frame" x="68" y="96.333333333333343" width="305" height="45"/>
+                                    <rect key="frame" x="68" y="92.333333333333343" width="305" height="45"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Fee-bC-OdD">
                                             <rect key="frame" x="0.0" y="0.0" width="305" height="44"/>
@@ -442,7 +442,7 @@
                                     </subviews>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jan  15" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ywM-2U-Ifb">
-                                    <rect key="frame" x="15" y="96.333333333333343" width="45" height="45"/>
+                                    <rect key="frame" x="15" y="92.333333333333343" width="45" height="45"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
@@ -450,7 +450,7 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstItem="5xq-g8-r82" firstAttribute="top" secondItem="71P-cl-GJZ" secondAttribute="bottom" constant="8" id="3YM-Tb-Sqd"/>
+                                <constraint firstItem="5xq-g8-r82" firstAttribute="top" secondItem="71P-cl-GJZ" secondAttribute="bottom" constant="12" id="3YM-Tb-Sqd"/>
                                 <constraint firstItem="o9c-HF-ncc" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="15" id="5Ji-pt-Se4"/>
                                 <constraint firstItem="NZG-wr-4Ha" firstAttribute="top" secondItem="zvh-Wt-plI" secondAttribute="bottom" id="5LY-cP-QQz"/>
                                 <constraint firstItem="ywM-2U-Ifb" firstAttribute="trailing" secondItem="pf9-a7-QOJ" secondAttribute="trailing" id="6bf-v5-486"/>
@@ -556,10 +556,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

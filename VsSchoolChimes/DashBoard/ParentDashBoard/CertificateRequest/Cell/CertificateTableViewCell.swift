@@ -27,8 +27,15 @@ class CertificateTableViewCell: UITableViewCell {
     @IBOutlet weak var DownloadBtn: UIButton!
     
     @IBOutlet weak var DownloadBtnHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var StatusImgHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var StatusImgWidth: NSLayoutConstraint!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        statusImgview.tintColor = .white
         cellView.layer.cornerRadius = 10
         cellView.layer.shadowColor = UIColor.black.cgColor
         cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -50,6 +57,8 @@ class CertificateTableViewCell: UITableViewCell {
         statusView.layer.shadowOffset = CGSize(width: 0, height: 2)
         statusView.layer.shadowRadius = 5
         statusView.layer.shadowOpacity = 0.3
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -57,5 +66,5 @@ class CertificateTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+   
 }

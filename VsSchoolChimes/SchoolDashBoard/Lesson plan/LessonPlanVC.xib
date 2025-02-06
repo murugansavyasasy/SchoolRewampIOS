@@ -78,7 +78,7 @@
                             </constraints>
                         </stackView>
                         <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="dr7-Rn-lEB">
-                            <rect key="frame" x="102.66666666666666" y="68" width="282.33333333333337" height="40"/>
+                            <rect key="frame" x="10" y="68" width="373" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="ngu-Jp-dBK"/>
                             </constraints>
@@ -91,30 +91,19 @@
                             <rect key="frame" x="10" y="116" width="373" height="593"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </tableView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uqr-38-vuI">
-                            <rect key="frame" x="8" y="68" width="90.666666666666671" height="40"/>
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="slider.horizontal.3" catalog="system" title="Filter">
-                                <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="17"/>
-                            </buttonConfiguration>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="Uqr-38-vuI" firstAttribute="top" secondItem="dr7-Rn-lEB" secondAttribute="top" id="1LN-GS-ARc"/>
                         <constraint firstAttribute="trailing" secondItem="jHp-sf-kcz" secondAttribute="trailing" constant="30" id="4Ei-m6-8Nz"/>
-                        <constraint firstItem="Uqr-38-vuI" firstAttribute="leading" secondItem="PVT-5w-vrA" secondAttribute="leading" constant="8" id="9yi-1f-Xqa"/>
                         <constraint firstItem="dr7-Rn-lEB" firstAttribute="top" secondItem="jHp-sf-kcz" secondAttribute="bottom" constant="20" id="Bz0-Q7-0hE"/>
-                        <constraint firstItem="dr7-Rn-lEB" firstAttribute="leading" secondItem="Uqr-38-vuI" secondAttribute="trailing" constant="4" id="Cw0-s0-PHY"/>
                         <constraint firstItem="jHp-sf-kcz" firstAttribute="top" secondItem="PVT-5w-vrA" secondAttribute="top" constant="8" id="FOd-iY-Ijt"/>
+                        <constraint firstItem="dr7-Rn-lEB" firstAttribute="leading" secondItem="PVT-5w-vrA" secondAttribute="leading" constant="10" id="H4F-cg-YBj"/>
                         <constraint firstItem="Q45-3M-bwr" firstAttribute="top" secondItem="dr7-Rn-lEB" secondAttribute="bottom" constant="8" id="Ltt-9U-Ou7"/>
                         <constraint firstItem="Q45-3M-bwr" firstAttribute="leading" secondItem="PVT-5w-vrA" secondAttribute="leading" constant="10" id="ScP-xU-FCU"/>
                         <constraint firstAttribute="trailing" secondItem="Q45-3M-bwr" secondAttribute="trailing" constant="10" id="XVW-gy-pMm"/>
                         <constraint firstAttribute="bottom" secondItem="Q45-3M-bwr" secondAttribute="bottom" id="Yor-9v-kXu"/>
-                        <constraint firstItem="Uqr-38-vuI" firstAttribute="bottom" secondItem="dr7-Rn-lEB" secondAttribute="bottom" id="ZOv-O5-VQG"/>
                         <constraint firstItem="jHp-sf-kcz" firstAttribute="leading" secondItem="PVT-5w-vrA" secondAttribute="leading" constant="30" id="jzg-9S-GaF"/>
-                        <constraint firstAttribute="trailing" secondItem="dr7-Rn-lEB" secondAttribute="trailing" constant="8" id="ok7-Iq-iAs"/>
+                        <constraint firstAttribute="trailing" secondItem="dr7-Rn-lEB" secondAttribute="trailing" constant="10" id="ok7-Iq-iAs"/>
                     </constraints>
                 </view>
             </subviews>
@@ -136,7 +125,6 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

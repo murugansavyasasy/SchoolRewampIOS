@@ -94,6 +94,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="ArrowImageview" destination="SpF-nT-Jan" id="MgH-bt-yG8"/>
                 <outlet property="MarkLbl" destination="ay3-3V-aa3" id="dTG-n2-5xl"/>
                 <outlet property="MarksStackview" destination="Bd5-b6-RhC" id="0vl-zf-aqY"/>
                 <outlet property="PracticalLbl" destination="48U-5I-UVT" id="m1h-2o-Kew"/>

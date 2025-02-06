@@ -49,7 +49,9 @@ class CertificateRequestVC: UIViewController {
         ButtonStackview.layer.cornerRadius = 20
         RequestCertificateBtn.layer.cornerRadius = 20
         CertificatesBtn.layer.cornerRadius = 20
-        gradientcolours(button: RequestCertificateBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        
+        configureButton(RequestCertificateBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
+        //gradientcolours(button: RequestCertificateBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
         
         RequestView.layer.cornerRadius = 10
         RequestView.layer.shadowColor = UIColor.black.cgColor
@@ -63,7 +65,7 @@ class CertificateRequestVC: UIViewController {
         
         RequestCertificateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         CertificatesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        BackBtn.setTitleFont(style: .primary, size: 20)
+        BackBtn.setTitleFont(style: .primary, size: 17)
         CertificatesBtn.tintColor = .lightGray
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UrgencyDropdown))
@@ -81,11 +83,23 @@ class CertificateRequestVC: UIViewController {
         let nib = UINib(nibName: CellConfingName.CertificateTableViewCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier: CellConfingName.CertificateTableViewCell)
     }
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
+        view.applyGradient(
+            colors: [
+                Colornames.gradientBlue,  // Green
+                Colornames.gradientgreen   // Blue
+            ],
+            startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
+            endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
+        )
+    }
     func StyleAndTranslate(){
         
-        NameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        StandardLbl.setFont(style: .title, size: FontSize.TitleSize)
+        NameLbl.setFont(style: .body, size: 15)
+        StandardLbl.setFont(style: .body, size: 15)
         SelectCertificateLbl.setFont(style: .title, size: FontSize.TitleSize)
         SelectUrgencyLbl.setFont(style: .title, size: FontSize.TitleSize)
         DropdownLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -116,7 +130,8 @@ class CertificateRequestVC: UIViewController {
     }
     
     @IBAction func RequestAct(_ sender: Any) {
-        gradientcolours(button: RequestCertificateBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        //gradientcolours(button: RequestCertificateBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        configureButton(RequestCertificateBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
         RequestCertificateBtn.tintColor = .black
         CertificatesBtn.tintColor = .lightGray
         
@@ -127,7 +142,8 @@ class CertificateRequestVC: UIViewController {
     }
     
     @IBAction func CertificatesAct(_ sender: Any) {
-        gradientcolours(button: CertificatesBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        //gradientcolours(button: CertificatesBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
+        configureButton(CertificatesBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
         CertificatesBtn.tintColor = .black
         RequestCertificateBtn.tintColor = .lightGray
         
@@ -190,6 +206,27 @@ class CertificateRequestVC: UIViewController {
         button.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    func configureButton(
+        _ button: UIButton,
+        gradientColors: [UIColor],
+        opacity: CGFloat = 0.5, // Opacity for the gradient
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+    ) {
+        
+        // Adjust colors for lightening and opacity
+        let adjustedColors = gradientColors.map { color in
+            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity).cgColor
+        }
+        
+        gradientcolours(button: button, colours: adjustedColors)
+        // Apply gradient
+//        button.applyGradient(
+//            colors: adjustedColors,
+//            startPoint: CGPoint(x: 1, y: 0.5),
+//            endPoint: CGPoint(x: 0, y: 0.5)
+//        )
+    }
+    
 }
 
 extension CertificateRequestVC : UITableViewDelegate,UITableViewDataSource {
@@ -207,7 +244,7 @@ extension CertificateRequestVC : UITableViewDelegate,UITableViewDataSource {
         
         if certificates[indexPath.row].status == "Approved" {
             cell.statusView.backgroundColor = Colornames.AprovedClr
-            cell.statusImgview.image = ImageName.check
+            cell.statusImgview.image = ImageName.check//UIImage(named: "checked_Tick")//UIImage(systemName: "checkmark.circle.fill")//
             cell.StatusLbl.textColor = .white
             cell.DownloadBtnHeight.constant = 30
             cell.DownloadBtn.isHidden = false
@@ -219,10 +256,19 @@ extension CertificateRequestVC : UITableViewDelegate,UITableViewDataSource {
             cell.DownloadBtnHeight.constant = 0
             cell.DownloadBtn.isHidden = true
         } else {
+            
+//            if let originalImage = UIImage(named: "Pending") {
+//                let resizedImage = originalImage.resizeTo(size: CGSize(width: 100, height: 100))
+//                cell.statusImgview.image = resizedImage?.withTintColor(.white)//ImageName.Pending
+//            cell.statusImgview.tintColor = .white
+//                print("Original Size: \(originalImage.size), Resized Size: \(resizedImage!.size)")
+//            }
+            
             cell.StatusLbl.textColor = .white
+            cell.StatusImgHeight.constant = 15
+            cell.statusImgview.image = ImageName.Pending
             cell.statusImgview.tintColor = .white
             cell.statusView.backgroundColor = Colornames.pendingClr
-            cell.statusImgview.image = ImageName.Pending
             cell.DownloadBtnHeight.constant = 0
             cell.DownloadBtn.isHidden = true
         }
@@ -259,3 +305,18 @@ struct CertificateRequestDetails{
     let status : String
     
 }
+
+import UIKit
+
+extension UIImage {
+    func resizeTo(size: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0.0) // Use 0.0 to maintain scale factor
+        self.draw(in: CGRect(origin: .zero, size: size))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return resizedImage
+    }
+}
+
+
+

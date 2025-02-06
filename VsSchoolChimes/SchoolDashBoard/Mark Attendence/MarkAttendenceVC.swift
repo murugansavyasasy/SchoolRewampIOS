@@ -8,7 +8,22 @@
 import UIKit
 import DropDown
 
-class MarkAttendenceVC: UIViewController {
+@available(iOS 14.0, *)
+class MarkAttendenceVC: UIViewController, Datepicker {
+    
+    func date(date: String) {
+        let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd MMM yy"
+            let DayDate = dateFormatter.date(from: date)!
+            // Change to output format
+            dateFormatter.dateFormat = "EEE dd"
+            let outputDateString = dateFormatter.string(from: DayDate)
+            
+           DateBtn.setTitle(date, for: .normal)
+           setFormattedDate(outputDateString, label: CustomDateLbl)
+
+        }
+    
 
     @IBOutlet weak var attendtypeStackToAttendmarkStackBottom: NSLayoutConstraint!
     @IBOutlet weak var AttendStackToStandardTop: NSLayoutConstraint!
@@ -63,16 +78,14 @@ class MarkAttendenceVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-        createDatepicker()
         
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
-        setcustomDate(attributedLbl: customdatestring)
+        setFormattedDate(customdatestring, label: CustomDateLbl)
+        
+        formatter.dateFormat = "EEE d MMM yyyy"
+        let dateBtntitle = formatter.string(from: Date())
+        DateBtn.setTitle(dateBtntitle, for: .normal)
         
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
@@ -159,6 +172,17 @@ class MarkAttendenceVC: UIViewController {
         let nib = UINib(nibName: CellConfingName.AttendenceReportTVCell, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.AttendenceReportTVCell)
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // Ensure the gradient resizes with the button
+        //CustumDateBtn.layer.sublayers?.first?.frame = CustumDateBtn.bounds
+        view.applyGradient(
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     
     @objc func fulldayAction(){
@@ -253,110 +277,51 @@ class MarkAttendenceVC: UIViewController {
     }
     
     @IBAction func DateBtnAct(_ sender: Any) {
-        showDatepicker(button: sender as! UIButton)
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+             vc.dateSelection = 2
+             vc.delegate = self
+             vc.modalPresentationStyle = .overCurrentContext
+             vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+             self.present(vc, animated: false)
     }
-    func createDatepicker(){
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = Date()
-        datePicker.backgroundColor = .white
-        
-        if #available(iOS 14.0, *) {
-            datePicker.preferredDatePickerStyle = .inline
-        }
-        
-        datePicker.isHidden = true
-        self.view.addSubview(datePicker!)
-        
-        // Initialize and configure Done button
-        doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
-        doneButton.isHidden = true
-        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
-        doneButton.setTitleColor(.white, for: .normal)
-        doneButton.layer.cornerRadius = 8
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        self.view.addSubview(doneButton)
-        
-    }
-    
-    func showDatepicker(button: UIButton) {
-        datePicker.isHidden = false
-        doneButton.isHidden = false
-        
-        let buttonFrame = button.convert(button.bounds, to: self.view)
-        
-        // Set the frame for the datePicker
-        let pickerYPosition = view.frame.minY + 230
-        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 350)
-        
-        // Set appearance for datePicker
-        datePicker.backgroundColor = .white
-        datePicker.layer.shadowColor = UIColor.black.cgColor
-        datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-        datePicker.layer.shadowRadius = 5
-        datePicker.layer.shadowOpacity = 0.3
-        datePicker.layer.cornerRadius = 20
-        
-        doneButton.frame = CGRect(x: datePicker.frame.maxX - 70, y: pickerYPosition + datePicker.frame.height - 25, width: 70, height: 25)
-        
-        // Add both datePicker and Done button to the view
-        self.view.addSubview(datePicker)
-        self.view.addSubview(doneButton)
-    }
-    
-    @IBAction func doneButtonTapped(){
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat =  "EEE d MMM yyyy"
-        let datelabel = dateFormatter.string(from: datePicker.date)
-        DateBtn.setTitle(datelabel, for: .normal)
-        
-        
-        customdate.dateFormat = "EEE d"
-        let attributedLbl = customdate.string(from: datePicker.date)
-        setcustomDate(attributedLbl: attributedLbl)
-        datePicker.isHidden = true
-        doneButton.isHidden = true
-    }
-    
-    func setcustomDate(attributedLbl: String) {
-        // Split the input string into weekday and day components
-        let components = attributedLbl.split(separator: " ")
-        guard components.count == 2,
-              let weekday = components.first,
-              let day = components.last else {
-            print("Error: Invalid format for attributedLbl. Expected 'EEE d', got: \(attributedLbl)")
-            return
-        }
-        
-        // Fonts for different parts
-        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day
-        
-        // Create an attributed string
-        let attributedString = NSMutableAttributedString()
-        
-        // Add the weekday (e.g., "Mon")
-        attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
-            .font: weekdayFont,
-            .foregroundColor: UIColor.gray
-        ]))
-        
-        // Add the day (e.g., "23")
-        attributedString.append(NSAttributedString(string: "\(day)", attributes: [
-            .font: dayFont,
-            .foregroundColor: UIColor.black
-        ]))
-        
-        // Set paragraph style for centered alignment
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
-        
-        // Assign the attributed string to the label
-        CustomDateLbl.attributedText = attributedString
-    }
+   
+    func setFormattedDate(_ date: String, label: UILabel) {
+           let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+           let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+           
+           // Function to create an attributed string from a given date
+           func createAttributedText(from date: String) -> NSMutableAttributedString {
+               let components = date.split(separator: " ")
+               guard components.count > 1 else {
+                   print("Error: Invalid date format")
+                   return NSMutableAttributedString()
+               }
+               
+               let day = components[0]
+               let month = components[1]
+               
+               let attributedText = NSMutableAttributedString()
+               attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                   .font: weekdayFont,
+                   .foregroundColor: UIColor.darkGray
+               ]))
+               attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                   .font: dayFont,
+                   .foregroundColor: UIColor.black
+               ]))
+               
+               // Set paragraph style for centered alignment
+               let paragraphStyle = NSMutableParagraphStyle()
+               paragraphStyle.alignment = .center
+               attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+               
+               return attributedText
+           }
+           
+           // Create attributed text and set to label
+           label.attributedText = createAttributedText(from: date)
+           label.numberOfLines = 0
+       }
     
     func applyVerticalGradientToButton(button: UIButton) {
             // Create a gradient layer
@@ -381,11 +346,7 @@ class MarkAttendenceVC: UIViewController {
             button.layer.insertSublayer(gradientLayer, at: 0)
         }
 
-//        override func viewDidLayoutSubviews() {
-//            super.viewDidLayoutSubviews()
-//            // Ensure the gradient resizes with the button
-//            CustumDateBtn.layer.sublayers?.first?.frame = CustumDateBtn.bounds
-//        }
+        
 
     func gradientcolours(button : UIButton,colours : [CGColor]){
         
@@ -485,6 +446,7 @@ class MarkAttendenceVC: UIViewController {
     
 }
 
+@available(iOS 14.0, *)
 extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         

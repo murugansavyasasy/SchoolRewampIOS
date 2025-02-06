@@ -14,7 +14,7 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         print(index)
         let alert = CustomAlert()
         alert.showAlertCancel(title: "",
-                              message: AlertstringFile.ConfirmLeave + status + " Chandhru" + AlertstringFile.LeaveRequest ,
+                              message: AlertstringFile.ConfirmLeave + status + AlertstringFile.LeaveRequest ,
                               actionLbl1: AlertstringFile.Confirm,
                               actionLbl2: AlertstringFile.Cancel,
                               on: self) { [self] in
@@ -34,11 +34,7 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
     var filterStudent: [LeaveRequest]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+        
         filterStudent = leaveResuest
         searchBar.placeholder = CommonStringFile.Search.translated()
         titleLbl.text = MenuStringFile.LeaveRequests.translated()
@@ -48,6 +44,14 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
             addDoneButton()
             searchBar.delegate = self
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

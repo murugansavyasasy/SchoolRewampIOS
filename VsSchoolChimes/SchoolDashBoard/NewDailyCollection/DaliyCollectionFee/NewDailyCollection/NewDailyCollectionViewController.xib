@@ -14,7 +14,10 @@
             <connections>
                 <outlet property="AcadamidropDown" destination="92g-4N-b24" id="LRv-LI-EKo"/>
                 <outlet property="Backbtn" destination="qKV-32-mQC" id="xnF-UM-4X1"/>
+                <outlet property="CategoryLbl" destination="cyO-vf-Urw" id="BPy-Mp-32T"/>
+                <outlet property="ClassLbl" destination="nIJ-Gc-0st" id="eb6-Qf-gnv"/>
                 <outlet property="HeaderLbl" destination="hra-K1-SrB" id="sj5-RO-Yv5"/>
+                <outlet property="ModeLbl" destination="y1S-cy-Yqt" id="YuK-tD-TWb"/>
                 <outlet property="TodateView" destination="dLj-7Q-oNe" id="tTB-ns-NGj"/>
                 <outlet property="caleView" destination="6vD-Hp-PeJ" id="PZT-bg-uc5"/>
                 <outlet property="calendarView" destination="V0y-aK-beX" id="V3y-8l-zKm"/>
@@ -48,7 +51,7 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0y-aK-beX" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
                                             <rect key="frame" x="50" y="28" width="130" height="30"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eventcalendar" translatesAutoresizingMaskIntoConstraints="NO" id="7Ug-BE-i9Q">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calender" translatesAutoresizingMaskIntoConstraints="NO" id="7Ug-BE-i9Q">
                                                     <rect key="frame" x="110" y="7.6666666666666572" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="VjR-qT-yHg"/>
@@ -88,7 +91,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eventcalendar" translatesAutoresizingMaskIntoConstraints="NO" id="Qb5-bX-oTa">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calender" translatesAutoresizingMaskIntoConstraints="NO" id="Qb5-bX-oTa">
                                                     <rect key="frame" x="110" y="7.6666666666666572" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="Oxc-RU-SRV"/>
@@ -156,11 +159,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CATEGORY" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cyO-vf-Urw">
                                                     <rect key="frame" x="0.0" y="0.0" width="131" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" name="CustomOrange"/>
+                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="cyO-vf-Urw" secondAttribute="trailing" id="GJT-EK-lSj"/>
                                                 <constraint firstAttribute="bottom" secondItem="cyO-vf-Urw" secondAttribute="bottom" id="O0p-L1-GTh"/>
@@ -175,11 +178,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CLASS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIJ-Gc-0st">
                                                     <rect key="frame" x="0.0" y="0.0" width="131" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <constraints>
                                                 <constraint firstItem="nIJ-Gc-0st" firstAttribute="leading" secondItem="Lbc-UT-pgo" secondAttribute="leading" id="Aey-ZV-bRq"/>
                                                 <constraint firstAttribute="width" constant="131" id="Q1a-O7-QFd"/>
@@ -194,11 +197,11 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MODE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1S-cy-Yqt">
                                                     <rect key="frame" x="0.0" y="0.0" width="125" height="50"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" systemColor="systemGray6Color"/>
                                             <constraints>
                                                 <constraint firstItem="y1S-cy-Yqt" firstAttribute="top" secondItem="rT1-fU-sDh" secondAttribute="top" id="IXf-2g-0qI"/>
                                                 <constraint firstAttribute="bottom" secondItem="y1S-cy-Yqt" secondAttribute="bottom" id="J4v-Yn-Vhl"/>
@@ -381,12 +384,9 @@
         </view>
     </objects>
     <resources>
+        <image name="calender" width="512" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="downArrow" width="20" height="20"/>
-        <image name="eventcalendar" width="30" height="30"/>
-        <namedColor name="CustomOrange">
-            <color red="0.94099998474121094" green="0.60399997234344482" blue="0.21600000560283661" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

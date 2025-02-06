@@ -388,6 +388,7 @@
 		849AD0572D1A858D002DEC07 /* SenderAssignmentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849AD04E2D1A858D002DEC07 /* SenderAssignmentViewController.xib */; };
 		849AD0582D1A858D002DEC07 /* AssignmentViewTotalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849AD0482D1A858D002DEC07 /* AssignmentViewTotalViewController.xib */; };
 		849AD0592D1A858D002DEC07 /* AssignmentViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849AD04B2D1A858D002DEC07 /* AssignmentViewTableViewCell.xib */; };
+		849B3AF82D50D889005DD4E8 /* MenuShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849B3AF72D50D889005DD4E8 /* MenuShimmerView.swift */; };
 		849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722E2D14270D0060E222 /* SubscriptionView.swift */; };
 		849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */; };
 		849D72332D14270D0060E222 /* SubscriptionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849D722F2D14270D0060E222 /* SubscriptionView.xib */; };
@@ -415,8 +416,6 @@
 		849F4C772D24010300C9F4BF /* addCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F4C732D24010300C9F4BF /* addCvCell.swift */; };
 		849F4C782D24010300C9F4BF /* seeMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F4C712D24010300C9F4BF /* seeMore.swift */; };
 		849F4C7C2D24012E00C9F4BF /* Mathematics.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 849F4C7B2D24012E00C9F4BF /* Mathematics.mp4 */; };
-		849F4C7D2D24012E00C9F4BF /* ParentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 849F4C7A2D24012E00C9F4BF /* ParentVC.xib */; };
-		849F4C7E2D24012E00C9F4BF /* ParentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F4C792D24012E00C9F4BF /* ParentVC.swift */; };
 		84A2717C2CEDAB9F0033EB02 /* ImagePdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271782CEDAB9F0033EB02 /* ImagePdfVC.swift */; };
 		84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271752CEDAB9F0033EB02 /* ImagePdfTv.swift */; };
 		84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271702CEDAB9F0033EB02 /* ImagePdfCvCell.swift */; };
@@ -508,8 +507,14 @@
 		84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F02D086A490024A46A /* SparkViewFactory.swift */; };
 		84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F32D086A490024A46A /* CircleColorSparkViewFactory.swift */; };
 		84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E02D086A490024A46A /* ClassicFireworkController.swift */; };
+		84D1FF1C2D4CE00A003ACC04 /* ParentHomePageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D1FF1A2D4CE00A003ACC04 /* ParentHomePageVc.swift */; };
+		84D1FF1D2D4CE00A003ACC04 /* ParentHomePageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D1FF1B2D4CE00A003ACC04 /* ParentHomePageVc.xib */; };
+		84D85D782D51D7B5006842E9 /* CustomShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D772D51D7B5006842E9 /* CustomShimmerView.swift */; };
+		84D85D7A2D51D7C6006842E9 /* CustomShimmerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D85D792D51D7C6006842E9 /* CustomShimmerView.xib */; };
 		84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */; };
 		84E420BF2D2CF11500AA9D87 /* SpecificStudentTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */; };
+		84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */; };
+		84E70DD22D49F61900E916D1 /* DatePickerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E70DD02D49F61900E916D1 /* DatePickerVC.xib */; };
 		84E795DD2D2FF3DF000B36BC /* ChatCvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E795DB2D2FF3DF000B36BC /* ChatCvcell.swift */; };
 		84E795DE2D2FF3DF000B36BC /* ChatCvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E795DC2D2FF3DF000B36BC /* ChatCvcell.xib */; };
 		84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E795DF2D2FF684000B36BC /* InteractionVC.swift */; };
@@ -998,6 +1003,7 @@
 		849AD04B2D1A858D002DEC07 /* AssignmentViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentViewTableViewCell.xib; sourceTree = "<group>"; };
 		849AD04D2D1A858D002DEC07 /* SenderAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderAssignmentViewController.swift; sourceTree = "<group>"; };
 		849AD04E2D1A858D002DEC07 /* SenderAssignmentViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderAssignmentViewController.xib; sourceTree = "<group>"; };
+		849B3AF72D50D889005DD4E8 /* MenuShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuShimmerView.swift; sourceTree = "<group>"; };
 		849D722B2D14270D0060E222 /* SubscriptionTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTVCell.swift; sourceTree = "<group>"; };
 		849D722C2D14270D0060E222 /* SubscriptionTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionTVCell.xib; sourceTree = "<group>"; };
 		849D722E2D14270D0060E222 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -1024,8 +1030,6 @@
 		849F4C722D24010300C9F4BF /* seeMore.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = seeMore.xib; sourceTree = "<group>"; };
 		849F4C732D24010300C9F4BF /* addCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addCvCell.swift; sourceTree = "<group>"; };
 		849F4C742D24010300C9F4BF /* addCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = addCvCell.xib; sourceTree = "<group>"; };
-		849F4C792D24012E00C9F4BF /* ParentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentVC.swift; sourceTree = "<group>"; };
-		849F4C7A2D24012E00C9F4BF /* ParentVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentVC.xib; sourceTree = "<group>"; };
 		849F4C7B2D24012E00C9F4BF /* Mathematics.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Mathematics.mp4; sourceTree = "<group>"; };
 		84A271702CEDAB9F0033EB02 /* ImagePdfCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePdfCvCell.swift; sourceTree = "<group>"; };
 		84A271712CEDAB9F0033EB02 /* ImagePdfCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfCvCell.xib; sourceTree = "<group>"; };
@@ -1122,8 +1126,14 @@
 		84C829F42D086A490024A46A /* ImageSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkView.swift; sourceTree = "<group>"; };
 		84C829F52D086A490024A46A /* ImageSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkViewFactory.swift; sourceTree = "<group>"; };
 		84C829F72D086A490024A46A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		84D1FF1A2D4CE00A003ACC04 /* ParentHomePageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomePageVc.swift; sourceTree = "<group>"; };
+		84D1FF1B2D4CE00A003ACC04 /* ParentHomePageVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentHomePageVc.xib; sourceTree = "<group>"; };
+		84D85D772D51D7B5006842E9 /* CustomShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShimmerView.swift; sourceTree = "<group>"; };
+		84D85D792D51D7C6006842E9 /* CustomShimmerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomShimmerView.xib; sourceTree = "<group>"; };
 		84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificStudentTvcell.swift; sourceTree = "<group>"; };
 		84E420BD2D2CF11500AA9D87 /* SpecificStudentTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SpecificStudentTvcell.xib; sourceTree = "<group>"; };
+		84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerVC.swift; sourceTree = "<group>"; };
+		84E70DD02D49F61900E916D1 /* DatePickerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DatePickerVC.xib; sourceTree = "<group>"; };
 		84E795DB2D2FF3DF000B36BC /* ChatCvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCvcell.swift; sourceTree = "<group>"; };
 		84E795DC2D2FF3DF000B36BC /* ChatCvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCvcell.xib; sourceTree = "<group>"; };
 		84E795DF2D2FF684000B36BC /* InteractionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionVC.swift; sourceTree = "<group>"; };
@@ -1966,8 +1976,6 @@
 			children = (
 				849F4C712D24010300C9F4BF /* seeMore.swift */,
 				849F4C722D24010300C9F4BF /* seeMore.xib */,
-				849F4C792D24012E00C9F4BF /* ParentVC.swift */,
-				849F4C7A2D24012E00C9F4BF /* ParentVC.xib */,
 				849F4C7B2D24012E00C9F4BF /* Mathematics.mp4 */,
 				849F4C732D24010300C9F4BF /* addCvCell.swift */,
 				849F4C742D24010300C9F4BF /* addCvCell.xib */,
@@ -2721,6 +2729,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				84D1FF192D4CDFE2003ACC04 /* ParentHomePage */,
 				84F9862A2D3A57DD009FF065 /* Quiz */,
 				849AD0062D1A837A002DEC07 /* ReciverHomework */,
 				849ACFFD2D1A8369002DEC07 /* ReciverAttendanceReport */,
@@ -2988,15 +2997,37 @@
 			path = Fireworks;
 			sourceTree = "<group>";
 		};
+		84D1FF192D4CDFE2003ACC04 /* ParentHomePage */ = {
+			isa = PBXGroup;
+			children = (
+				84D1FF1A2D4CE00A003ACC04 /* ParentHomePageVc.swift */,
+				84D1FF1B2D4CE00A003ACC04 /* ParentHomePageVc.xib */,
+			);
+			path = ParentHomePage;
+			sourceTree = "<group>";
+		};
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				84E70DCE2D49F5F700E916D1 /* DatePicker */,
 				8497570C2D2BA575006A27FD /* SelectRecipient */,
 				84A82F642D2259EC00ACF7A1 /* newImage */,
 				849D72302D14270D0060E222 /* SubscriptionVC */,
 				84759C662CEDEF3300E7D367 /* ShowImage */,
+				849B3AF72D50D889005DD4E8 /* MenuShimmerView.swift */,
+				84D85D772D51D7B5006842E9 /* CustomShimmerView.swift */,
+				84D85D792D51D7C6006842E9 /* CustomShimmerView.xib */,
 			);
 			path = CommonScreens;
+			sourceTree = "<group>";
+		};
+		84E70DCE2D49F5F700E916D1 /* DatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				84E70DCF2D49F61900E916D1 /* DatePickerVC.swift */,
+				84E70DD02D49F61900E916D1 /* DatePickerVC.xib */,
+			);
+			path = DatePicker;
 			sourceTree = "<group>";
 		};
 		84EFF4942CE388B800E39BEA /* ProfilepageVc */ = {
@@ -3367,6 +3398,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84D1FF1D2D4CE00A003ACC04 /* ParentHomePageVc.xib in Resources */,
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
 				8442A86C2CDB787A0006068E /* DemoTVCell.xib in Resources */,
 				18D718B42D0D477900E9EDA3 /* PreviousCvcell.xib in Resources */,
@@ -3439,7 +3471,6 @@
 				849AD0002D1A8369002DEC07 /* ReciverAttendanceReportVC.xib in Resources */,
 				849AD0012D1A8369002DEC07 /* ReciverAttendReportTV.xib in Resources */,
 				849F4C7C2D24012E00C9F4BF /* Mathematics.mp4 in Resources */,
-				849F4C7D2D24012E00C9F4BF /* ParentVC.xib in Resources */,
 				848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */,
 				84A271832CEDAB9F0033EB02 /* ImagePdfTv.xib in Resources */,
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
@@ -3509,6 +3540,7 @@
 				18926CDB2D0306CA002BBB97 /* SlotHeader.xib in Resources */,
 				18926CDC2D0306CA002BBB97 /* CheckAviableTv.xib in Resources */,
 				18926CDD2D0306CA002BBB97 /* StaffPtmViewController.xib in Resources */,
+				84D85D7A2D51D7C6006842E9 /* CustomShimmerView.xib in Resources */,
 				18926CDE2D0306CA002BBB97 /* TimeHeader.xib in Resources */,
 				849970CB2CF8752400800B07 /* TextHistoryTVCell.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
@@ -3523,6 +3555,7 @@
 				84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
 				849AD03E2D1A845E002DEC07 /* MarkAttendenceVC.xib in Resources */,
+				84E70DD22D49F61900E916D1 /* DatePickerVC.xib in Resources */,
 				849AD03F2D1A845E002DEC07 /* AttendenceReportTVCell.xib in Resources */,
 				84EFFACD2CCF90DE00C11C26 /* SettingsViewController.xib in Resources */,
 				848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */,
@@ -3781,6 +3814,7 @@
 				18926CC82D0306CA002BBB97 /* TimeCollectionViewCell.swift in Sources */,
 				18926CC92D0306CA002BBB97 /* SlotHeader.swift in Sources */,
 				18926CCA2D0306CA002BBB97 /* verifyReq.swift in Sources */,
+				849B3AF82D50D889005DD4E8 /* MenuShimmerView.swift in Sources */,
 				187CF4D72D119C82001422CE /* ClassTimeTableViewController.swift in Sources */,
 				18926CCB2D0306CA002BBB97 /* SlotHistoryForParentRequest.swift in Sources */,
 				18926CCC2D0306CA002BBB97 /* SlotDetailsForStaffResponse.swift in Sources */,
@@ -3806,6 +3840,7 @@
 				849AD0502D1A858D002DEC07 /* AssignmentViewTotalTableViewCell.swift in Sources */,
 				849AD0512D1A858D002DEC07 /* SenderAssignmentViewController.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
+				84D85D782D51D7B5006842E9 /* CustomShimmerView.swift in Sources */,
 				84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */,
 				849AD0532D1A858D002DEC07 /* AssignmentViewTotalViewController.swift in Sources */,
 				849AD0542D1A858D002DEC07 /* AssignmentViewTableViewCell.swift in Sources */,
@@ -3842,6 +3877,7 @@
 				187CF4982D113B6E001422CE /* MessageFromManagementTableViewCell.swift in Sources */,
 				18D7189A2D0D477900E9EDA3 /* GetLocationResp.swift in Sources */,
 				18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */,
+				84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */,
 				849AD03C2D1A845E002DEC07 /* MarkAttendenceVC.swift in Sources */,
 				849AD03D2D1A845E002DEC07 /* AttendenceReportTVCell.swift in Sources */,
 				18D7189C2D0D477900E9EDA3 /* PunchHistryReq.swift in Sources */,
@@ -4007,7 +4043,6 @@
 				84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */,
 				84C829FF2D086A490024A46A /* FountainSparkTrajectoryFactory.swift in Sources */,
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
-				849F4C7E2D24012E00C9F4BF /* ParentVC.swift in Sources */,
 				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
 				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
 				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,
@@ -4037,6 +4072,7 @@
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
 				8497570D2D2BA575006A27FD /* SelectRecipientVC.swift in Sources */,
 				8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */,
+				84D1FF1C2D4CE00A003ACC04 /* ParentHomePageVc.swift in Sources */,
 				8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */,
 				8442A96B2CDE8AE80006068E /* LanguageVc.swift in Sources */,
 				84EFF9992CCBA7E800C11C26 /* CustomAlert.swift in Sources */,
@@ -4314,7 +4350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -4372,7 +4408,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;

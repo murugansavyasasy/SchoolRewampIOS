@@ -24,11 +24,11 @@ class CalendarCollectionViewCell: UICollectionViewCell {
             // Change the appearance of the cell when it's selected
             if isSelected {
             
-                self.caleView.backgroundColor = .systemOrange
+                self.caleView.backgroundColor = .attendence
 //
             } else {
                 
-                self.caleView.backgroundColor = Colornames.NoDataColor
+                self.caleView.backgroundColor = .white
 
             }
         }
@@ -38,7 +38,9 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.caleView.backgroundColor = Colornames.NoDataColor
+        self.caleView.backgroundColor = .attendence
+        caleView.layer.borderWidth = 0.5
+        caleView.layer.borderColor = UIColor.gray.cgColor
     }
    
 

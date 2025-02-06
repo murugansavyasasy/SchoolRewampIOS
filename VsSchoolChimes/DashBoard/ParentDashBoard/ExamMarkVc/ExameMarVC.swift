@@ -19,7 +19,7 @@ class ExameMarVC: UIViewController {
     let subject = ["Tamil","English","Maths","Science","Social Science"]
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+       
         backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
         HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
         SearchBar.placeholder = CommonStringFile.Search.translated()
@@ -42,7 +42,10 @@ class ExameMarVC: UIViewController {
         cv.dataSource = self
         cv.delegate = self
     }
-
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
 
  
     @IBAction func backBtn(_ sender: Any) {
@@ -156,6 +159,12 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
             let shouldExpand = cell.TheoryLbl.isHidden
             cell.TheoryLbl.isHidden = !shouldExpand
             cell.PracticalLbl.isHidden = !shouldExpand
+            
+            if cell.TheoryLbl.isHidden == false {
+            cell.ArrowImageview.image = UIImage(named: "arrow_up")
+            }else{
+                cell.ArrowImageview.image = UIImage(named: "arrow_down")
+            }
 
             // Use beginUpdates and endUpdates to refresh the row height without reloading the cell
             tableView.beginUpdates()

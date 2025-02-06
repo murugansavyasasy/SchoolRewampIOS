@@ -9,6 +9,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var ScrollviewBottom: NSLayoutConstraint!
     @IBOutlet weak var SaveBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var EditBtn: UIButton!
@@ -19,17 +20,13 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var standardView: UIView!
     @IBOutlet weak var personalview: UIView!
     @IBOutlet weak var AboutstudentView: UIView!
-    
     @IBOutlet weak var hostelimg: UIImageView!
     @IBOutlet weak var locationimg: UIImageView!
     @IBOutlet weak var bloodimg: UIImageView!
     @IBOutlet weak var familyDetailsView: UIView!
-    
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var fullview: UIView!
-    
     @IBOutlet weak var Profile: UILabel!
-    
     @IBOutlet weak var RegisterNo: UILabel!
     @IBOutlet weak var aboutstudent: UILabel!
     @IBOutlet weak var contactdetails: UILabel!
@@ -41,9 +38,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var FatherOccupation: UILabel!
     @IBOutlet weak var Motheroccupation: UILabel!
     @IBOutlet weak var SeconadaryphoneNo: UILabel!
-    
     @IBOutlet weak var topview: UIView!
+    
     var passvalue = 1
+    var HideBackButton = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,6 +50,15 @@ class ProfileViewController: UIViewController {
         //        fullview.backgroundColor = Colornames.topBackgroundCLr
         
         bottomFullview.backgroundColor = Colornames.bottomClr
+       
+        
+        SaveBtnHeight.constant = 0
+        
+        StyleAndTranslater()
+        BackBtn.isHidden = HideBackButton
+    }
+    
+    override func viewDidLayoutSubviews() {
         if passvalue == 2{
             topview.applyGradient(
                 colors: [Colornames.gradientBlue, Colornames.gradientgreen],
@@ -64,14 +72,7 @@ class ProfileViewController: UIViewController {
                 endPoint: CGPoint(x: 0, y: 0.5)
             )
         }
-        
-        SaveBtnHeight.constant = 0
-        
-        StyleAndTranslater()
-        
     }
-    
-    
     
     
     func StyleAndTranslater(){

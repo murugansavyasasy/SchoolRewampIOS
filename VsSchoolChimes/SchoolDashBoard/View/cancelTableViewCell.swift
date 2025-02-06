@@ -50,7 +50,7 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
 
                 cv.delegate = self
                 cv.dataSource = self
-                
+                cv.reloadData()
                 
             }
             
@@ -68,8 +68,8 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-     
-        return slotdetails.count
+        return 3
+        //return slotdetails.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -216,7 +216,7 @@ class cancelTableViewCell: UITableViewCell,UICollectionViewDelegate,UICollection
 //                          }
 //        
 //        
-        
+        cell.timelbl.text = "7:00 AM "
         
                 return cell
             

@@ -17,7 +17,7 @@ class LogoutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DescribeLabel.text = AlertstringFile.AreYouSureYouWantToProceed.translated()
+        DescribeLabel.text = "Are you sure you want to Logout?".translated()
         Cancellabel.text = AlertstringFile.Cancel
         
         DescribeLabel.setFont(style: .title, size: FontSize.TitleSize)

@@ -14,6 +14,9 @@
             <connections>
                 <outlet property="CV" destination="QAE-2i-M8B" id="7j1-Wj-jld"/>
                 <outlet property="HeaderLbl" destination="OtL-fn-kTf" id="FlI-jM-adN"/>
+                <outlet property="NameLbl" destination="3m7-sV-peE" id="bmr-Lz-vI5"/>
+                <outlet property="NameStandardStackView" destination="rfc-bf-nIb" id="6ZU-8j-F4C"/>
+                <outlet property="StandardLbl" destination="Jtb-MR-x8h" id="wgc-sn-HwA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -68,23 +71,45 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interact With Staff" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtL-fn-kTf">
-                    <rect key="frame" x="40" y="71" width="343" height="21"/>
+                    <rect key="frame" x="39.999999999999986" y="71.333333333333329" width="180.66666666666663" height="20.333333333333329"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="rfc-bf-nIb">
+                    <rect key="frame" x="220.66666666666663" y="64" width="167.33333333333337" height="45"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3m7-sV-peE">
+                            <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="20.333333333333332"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jtb-MR-x8h">
+                            <rect key="frame" x="0.0" y="25.333333333333329" width="167.33333333333334" height="19.666666666666671"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="19.666666666666671" id="xue-w6-dLy"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="rfc-bf-nIb" firstAttribute="leading" secondItem="OtL-fn-kTf" secondAttribute="trailing" id="6TQ-9M-usb"/>
                 <constraint firstItem="rLm-Fx-yTM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="AY8-ty-ddm"/>
                 <constraint firstItem="akq-jb-C1F" firstAttribute="top" secondItem="rLm-Fx-yTM" secondAttribute="bottom" constant="15" id="BM0-zt-1DC"/>
                 <constraint firstItem="OtL-fn-kTf" firstAttribute="leading" secondItem="rLm-Fx-yTM" secondAttribute="trailing" id="BkX-7y-qdu"/>
+                <constraint firstItem="rfc-bf-nIb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="En0-aX-4qO"/>
                 <constraint firstItem="akq-jb-C1F" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="JhD-9X-6ho"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="rfc-bf-nIb" secondAttribute="trailing" constant="5" id="Ufc-Do-q4p"/>
                 <constraint firstItem="OtL-fn-kTf" firstAttribute="centerY" secondItem="rLm-Fx-yTM" secondAttribute="centerY" id="cfc-Qt-DaJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="akq-jb-C1F" secondAttribute="bottom" id="g8q-C2-Dru"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="akq-jb-C1F" secondAttribute="trailing" id="rAR-RJ-mCy"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="OtL-fn-kTf" secondAttribute="trailing" constant="10" id="ue1-AM-gBE"/>
                 <constraint firstItem="rLm-Fx-yTM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="yzP-7U-fK0"/>
             </constraints>
             <point key="canvasLocation" x="35.877862595419849" y="-12.67605633802817"/>
@@ -92,7 +117,7 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="interactionBackground" width="2000" height="2000"/>
+        <image name="interactionBackground" width="5000" height="5000"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

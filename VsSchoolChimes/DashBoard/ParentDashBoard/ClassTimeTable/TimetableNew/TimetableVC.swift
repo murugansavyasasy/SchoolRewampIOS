@@ -24,9 +24,7 @@ class TimetableVC: UIViewController{
     var tableanimate = true
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        bgview.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        
+       
         dateFormatter.dateFormat = "E"
         let currentDayName = dateFormatter.string(from: Date())
         dateFormatter.dateFormat = "dd-MM-yyyy"
@@ -59,6 +57,10 @@ class TimetableVC: UIViewController{
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
+    }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgview.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     @IBAction func BackAct(_ sender: Any) {
         dismiss(animated: true)
@@ -171,7 +173,7 @@ extension TimetableVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
             if collectionView.indexPathsForSelectedItems?.contains(indexPath) == true {
                 cell.bgView.backgroundColor = UIColor(named: "Priority") // Selected state
             } else {
-                cell.bgView.backgroundColor = UIColor(named: "PriorityClr2") // Default state
+                cell.bgView.backgroundColor = .systemGray6//UIColor(named: "PriorityClr2") // Default state
             }
             
             return cell
@@ -183,7 +185,7 @@ extension TimetableVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
                 let firstCellIndexPath = IndexPath(item: 0, section: 0)
                 if let firstCell = collectionView.cellForItem(at: firstCellIndexPath) as? WeekDaysNameCollectionViewCell {
                     collectionView.deselectItem(at: firstCellIndexPath, animated: true)
-                    firstCell.bgView.backgroundColor = UIColor(named: "PriorityClr2") // Default state
+                    firstCell.bgView.backgroundColor = .systemGray6//UIColor(named: "PriorityClr2") // Default state
                 }
             }
             
@@ -199,7 +201,7 @@ extension TimetableVC: UICollectionViewDelegate, UICollectionViewDataSource, UIC
         func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
             // Reset the background color of the deselected cell
             if let cell = collectionView.cellForItem(at: indexPath) as? WeekDaysNameCollectionViewCell {
-                cell.bgView.backgroundColor = UIColor(named: "PriorityClr2")
+                cell.bgView.backgroundColor = .systemGray6//UIColor(named: "PriorityClr2")
             }
         }
         

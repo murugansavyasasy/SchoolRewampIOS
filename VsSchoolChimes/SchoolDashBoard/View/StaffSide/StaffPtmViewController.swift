@@ -8,7 +8,15 @@
 
 import UIKit
 //import ObjectMapper
-class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+@available(iOS 14.0, *)
+class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, Datepicker {
+    func date(date: String) {
+        
+        dateLbl.text = date
+        dateLbl.textColor = .black
+        tv.reloadData()
+    }
+    
 
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var Backbtn: UIButton!
@@ -19,8 +27,10 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBOutlet weak var todaSlotView: UIView!
     @IBOutlet weak var datePickerView: UIViewX!
     @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var AllslotsLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     
+    @IBOutlet weak var TodaysBookedSlotsLbl: UILabel!
     var instituteId  = Int()
     var sectionId = Int()
     var staffId  = Int()
@@ -37,11 +47,14 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
+       
+        todaSlotView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
         )
+        TodaysBookedSlotsLbl.textColor = .white
+        AllslotsLbl.textColor = .gray
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -56,7 +69,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
             let formattedDate1 = dateFormatter1.string(from: date1)
             dateLbl.text = formattedDate1
         }
-        todaSlotView.backgroundColor = .systemOrange
+        
         print("SchoolId",SchoolId)
         print("staffIdstaffId",staffId)
         tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
@@ -71,6 +84,28 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         slotView.addGestureRecognizer(Slot) 
         let create  = UITapGestureRecognizer(target: self , action:#selector(cretaeVC) )
         createView.addGestureRecognizer(create)
+        
+        let DateTap = UITapGestureRecognizer(target: self, action: #selector(SelectDate))
+        datePickerView.addGestureRecognizer(DateTap)
+        
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
+    }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
+    @IBAction func SelectDate(){
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
     @IBAction func backVC(){
@@ -92,16 +127,41 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBAction func  TodaySlotVC (){
         createView.isHidden = false
         dateLbl.text = "--- Select Date ---"
-        slotView.backgroundColor = .lightGray
-        todaSlotView.backgroundColor = .systemOrange
+        todaSlotView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        slotView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        TodaysBookedSlotsLbl.textColor = .white
+        AllslotsLbl.textColor = .gray
+        
+        tv.reloadData()
     }
     
     @IBAction func  SlotVC (){
         createView.isHidden = true
-        todaSlotView.backgroundColor = .lightGray
-        slotView.backgroundColor = .systemOrange
         dateLbl.text = "--- Select Date ---"
         display_date = "ALL"
+        
+        slotView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        todaSlotView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        TodaysBookedSlotsLbl.textColor = .gray
+        AllslotsLbl.textColor = .white
+        
+        tv.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -114,7 +174,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
       }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if  slotView.backgroundColor == .systemOrange{
+        if  AllslotsLbl.textColor == .white{
             return UITableView.automaticDimension
         }else  if  todaSlotView.backgroundColor == .systemOrange{
             return 0
@@ -126,7 +186,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if  slotView.backgroundColor == .systemOrange{
             return 1
         }else{
-            return 1
+            return 3
         }
     }
 

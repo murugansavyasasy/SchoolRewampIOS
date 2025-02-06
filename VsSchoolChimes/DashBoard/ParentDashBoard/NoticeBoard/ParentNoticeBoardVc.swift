@@ -22,8 +22,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     var delegate : HistorySelectDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
         // Do any additional setup after loading the view.
         
         searchbar.placeholder = CommonStringFile.Search.translated()
@@ -39,6 +38,10 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+       
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
         tableview.reloadData()
     }
 
