@@ -39,7 +39,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
         ModuleDropDown.layer.borderColor = UIColor.lightGray.cgColor
         
         BugsTextview.delegate = self
-        BugsTextview.text = CommonStringFile.Enterbugs.translated()
+        BugsTextview.text = "Type content"//CommonStringFile.Enterbugs.translated()
         BugsTextview.textColor = UIColor.lightGray
         keyboardDonebtn()
         
@@ -102,7 +102,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if BugsTextview.text == CommonStringFile.Enterbugs.translated() {
+        if BugsTextview.text == "Type content"/*CommonStringFile.Enterbugs.translated()*/ {
             BugsTextview.text = nil
             BugsTextview.textColor = .black
         }
@@ -111,7 +111,7 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         if BugsTextview.text.isEmpty{
             
-            BugsTextview.text = CommonStringFile.Enterbugs.translated()
+            BugsTextview.text = "Type content"//CommonStringFile.Enterbugs.translated()
             BugsTextview.textColor = UIColor.lightGray
         }
     }

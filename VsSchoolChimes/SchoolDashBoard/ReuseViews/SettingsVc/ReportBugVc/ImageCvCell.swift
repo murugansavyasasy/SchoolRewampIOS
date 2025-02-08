@@ -10,6 +10,7 @@ import WebKit
 
 class ImageCvCell: UICollectionViewCell, WKUIDelegate, WKNavigationDelegate {
     
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageViews: UIImageView!
     
     @IBOutlet weak var pdf: WKWebView!
@@ -20,13 +21,15 @@ class ImageCvCell: UICollectionViewCell, WKUIDelegate, WKNavigationDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        pdf.navigationDelegate = self
+        ActivityIndicator.stopAnimating()
         let filePath = "file:///private/var/mobile/Containers/Data/Application/4881C40B-0842-4004-A75C-A6C2B640BCCF/tmp/com.voicesnap.schoolmessenger-Inbox/sample.pdf"
         guard let fileURL = URL(string: filePath) else {
             print("Invalid file URL.")
             
             return
         }
-        
+        ActivityIndicator.hidesWhenStopped = true
     }
     
     
@@ -49,8 +52,15 @@ class ImageCvCell: UICollectionViewCell, WKUIDelegate, WKNavigationDelegate {
         decisionHandler(.allow)
     }
     
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        ActivityIndicator.startAnimating()
+    }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        ActivityIndicator.stopAnimating()
+    }
     
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        ActivityIndicator.stopAnimating()
         print("Error loading page: \(error.localizedDescription)")
     }
     @IBAction func deleteImg(_ sender: UIButton) {

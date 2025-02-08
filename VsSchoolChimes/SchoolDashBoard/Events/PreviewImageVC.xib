@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewImageVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="ActivityIndicator" destination="aet-zo-NYi" id="40Y-Wh-Ge4"/>
                 <outlet property="imgView" destination="4yl-s2-YkC" id="3gd-W1-glF"/>
                 <outlet property="outerView" destination="ydE-Gv-3Nj" id="1aa-iC-fyc"/>
                 <outlet property="pdfView" destination="mFu-pa-TRI" id="Tc9-lN-dWK"/>
@@ -49,6 +50,14 @@
                                 <action selector="back:" destination="-1" eventType="touchUpInside" id="bAu-kg-Jxa"/>
                             </connections>
                         </button>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="aet-zo-NYi">
+                            <rect key="frame" x="160.66666666666666" y="309.66666666666669" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="pd1-gR-z4U"/>
+                                <constraint firstAttribute="height" constant="40" id="xUj-Gg-Ors"/>
+                            </constraints>
+                            <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -58,9 +67,11 @@
                         <constraint firstItem="mFu-pa-TRI" firstAttribute="trailing" secondItem="4yl-s2-YkC" secondAttribute="trailing" id="K5S-LH-OJA"/>
                         <constraint firstAttribute="trailing" secondItem="qkX-dV-Ofn" secondAttribute="trailing" id="LQz-eQ-caO"/>
                         <constraint firstItem="4yl-s2-YkC" firstAttribute="top" secondItem="ydE-Gv-3Nj" secondAttribute="top" id="PY8-Wu-GI4"/>
+                        <constraint firstItem="aet-zo-NYi" firstAttribute="centerX" secondItem="ydE-Gv-3Nj" secondAttribute="centerX" id="aTx-eN-FJs"/>
                         <constraint firstItem="qkX-dV-Ofn" firstAttribute="top" secondItem="ydE-Gv-3Nj" secondAttribute="top" id="e3F-Nj-uMC"/>
                         <constraint firstAttribute="bottom" secondItem="4yl-s2-YkC" secondAttribute="bottom" id="iZO-lJ-VT4"/>
                         <constraint firstAttribute="trailing" secondItem="4yl-s2-YkC" secondAttribute="trailing" id="jaq-Wr-uYA"/>
+                        <constraint firstItem="aet-zo-NYi" firstAttribute="centerY" secondItem="ydE-Gv-3Nj" secondAttribute="centerY" id="wYr-hB-Jlt"/>
                         <constraint firstItem="4yl-s2-YkC" firstAttribute="leading" secondItem="ydE-Gv-3Nj" secondAttribute="leading" id="zBN-CW-hmc"/>
                     </constraints>
                 </view>

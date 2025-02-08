@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageSelection" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="ActivityIndicator" destination="xA0-vl-WDZ" id="i5K-tD-djf"/>
                 <outlet property="imageCollectionview" destination="g4u-e3-eHS" id="hUv-8F-q4C"/>
             </connections>
         </placeholder>
@@ -29,11 +30,21 @@
                         <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="xA0-vl-WDZ">
+                    <rect key="frame" x="176.66666666666666" y="406" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="N0d-Ca-sXD"/>
+                        <constraint firstAttribute="height" constant="40" id="v1B-iO-0kT"/>
+                    </constraints>
+                    <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <constraints>
+                <constraint firstItem="xA0-vl-WDZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="5Uj-4M-fa9"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="g4u-e3-eHS" secondAttribute="bottom" id="W39-Ic-EaI"/>
                 <constraint firstItem="g4u-e3-eHS" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="egP-sC-Vjb"/>
+                <constraint firstItem="xA0-vl-WDZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="v6w-hf-98M"/>
                 <constraint firstItem="g4u-e3-eHS" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="wrQ-Iz-vNH"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="g4u-e3-eHS" secondAttribute="trailing" id="wsV-1s-WjU"/>
             </constraints>

@@ -8,8 +8,9 @@
 import UIKit
 import WebKit
 
-class PreviewImageVC: UIViewController {
+class PreviewImageVC: UIViewController,WKNavigationDelegate {
 
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var outerView: UIView!
     var img :UIImage?
@@ -17,12 +18,15 @@ class PreviewImageVC: UIViewController {
     @IBOutlet weak var pdfView: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        pdfView.navigationDelegate = self
+        
         imgView.image = img
         print(selectedFileURL)
         if selectedFileURL != nil {
             imgView.isHidden = true
             pdfView.isHidden = false
         }else{
+            ActivityIndicator.stopAnimating()
             imgView.isHidden = false
             pdfView.isHidden = true
         }
@@ -34,7 +38,7 @@ class PreviewImageVC: UIViewController {
 //        outerView.layer.shadowOpacity = 0.3
     }
     private func loadPDF() {
-        
+       
         guard let fileURL = selectedFileURL else {
             print("No selected file URL.")
             return
@@ -53,4 +57,13 @@ class PreviewImageVC: UIViewController {
         dismiss(animated: true)
     }
     
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        ActivityIndicator.startAnimating()
+    }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        ActivityIndicator.stopAnimating()
+    }
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
+        ActivityIndicator.stopAnimating()
+    }
 }

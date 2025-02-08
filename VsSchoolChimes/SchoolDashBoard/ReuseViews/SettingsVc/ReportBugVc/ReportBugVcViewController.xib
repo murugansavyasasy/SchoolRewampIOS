@@ -78,7 +78,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="gce-HM-DUe" secondAttribute="bottom" id="emC-Ja-o5j"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Bugs *" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uo8-qH-x4w">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remarks*" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uo8-qH-x4w">
                                             <rect key="frame" x="20" y="130.33333333333334" width="363" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -87,7 +87,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dfE-vw-itN">
                                             <rect key="frame" x="20" y="170.66666666666669" width="353" height="100"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Enter The Bug..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jM9-T9-Jfa">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Type Content" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jM9-T9-Jfa">
                                                     <rect key="frame" x="0.0" y="0.0" width="353" height="100"/>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <color key="textColor" systemColor="labelColor"/>
