@@ -53,7 +53,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
         // Create the gradient color for tab bar
      
-        tabBar.tintColor = .black//.purple
+        tabBar.tintColor = .red//.purple
         tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
         tabBar.delegate = self
         tabBar.selectedItem = firstItem
@@ -78,30 +78,40 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             Parent.getValue = passedValue
             selectViewController(Parent)
             
-            let width = UIScreen.main.bounds.width
-            let gradientColor = createGradientColor(
-                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-                size: CGSize(width: width, height: 400),
-                startPoint: CGPoint(x: 1, y: 0.5), // Start from the right
-                endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
-            )
-            tabBar.backgroundImage = gradientColor
+//            let width = UIScreen.main.bounds.width
+//            let gradientColor = createGradientColor(
+//                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
+//                size: CGSize(width: width, height: 400),
+//                startPoint: CGPoint(x: 1, y: 0.5), // Start from the right
+//                endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
+//            )
+//            tabBar.backgroundImage = gradientColor
+            
+            applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue, Colornames.gradientgreen])
            
         }else if passedValue == 1{
-            //tabBar.backgroundColor = .topBackgroundCLr
+            //            //tabBar.backgroundColor = .topBackgroundCLr
+            //            firstVC.getValue = passedValue
+            //            selectViewController(firstVC)
+            //            let width = UIScreen.main.bounds.width
+            //            let gradientColor = createGradientColor(
+            //                colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            //
+            //                size: CGSize(width: width, height: 400),
+            //                startPoint: CGPoint(x: 1, y: 0.5), // Start from the right
+            //                endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
+            //            )
+            //            tabBar.backgroundImage = gradientColor
+            //        }
+            //        tabBar.tintColor = .black
+            
             firstVC.getValue = passedValue
             selectViewController(firstVC)
-            let width = UIScreen.main.bounds.width
-            let gradientColor = createGradientColor(
-                colors: [Colornames.stafGradient, Colornames.stafGradient1],
-              
-                size: CGSize(width: width, height: 400),
-                startPoint: CGPoint(x: 1, y: 0.5), // Start from the right
-                endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
-            )
-            tabBar.backgroundImage = gradientColor
+            
+            applyGradientToTabBar(tabBar, colors: [Colornames.stafGradient, Colornames.stafGradient1])
+            
+            tabBar.tintColor = .black
         }
-        tabBar.tintColor = .white
     }
     private func setupContainerView() {
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -233,29 +243,52 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     }
     
     
-    func createGradientColor(colors: [UIColor], size: CGSize, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> UIImage? {
-        // Adjust the alpha of the colors to make them less opaque
-        let adjustedColors = colors.map { color -> UIColor in
-            let alpa = profile ? 0:0.7
-            return color.withAlphaComponent(0.7) // Reduce alpha to 70% (you can change this value)
-        }
-        
-        // Create a gradient layer with adjusted colors
+//    func createGradientColor(colors: [UIColor], size: CGSize, profile: Bool = false, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> UIImage? {
+//        // Adjust the alpha of the colors based on `profile` flag
+//        let adjustedColors = colors.map { color -> UIColor in
+//            let alpha = profile ? 0.0 : 0.7
+//            return color.withAlphaComponent(alpha)
+//        }
+//        
+//        // Create a gradient layer
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = adjustedColors.map { $0.cgColor }
+//        gradientLayer.startPoint = startPoint
+//        gradientLayer.endPoint = endPoint
+//        gradientLayer.frame = CGRect(origin: .zero, size: size)
+//        
+//        // Render the gradient to an image
+//        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+//        guard let context = UIGraphicsGetCurrentContext() else {
+//            UIGraphicsEndImageContext()
+//            return nil
+//        }
+//        
+//        gradientLayer.render(in: context)
+//        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
+//        UIGraphicsEndImageContext()
+//        
+//        return gradientImage
+//    }
+    func applyGradientToTabBar(_ tabBar: UITabBar, colors: [UIColor]) {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = adjustedColors.map { $0.cgColor }
-        gradientLayer.startPoint = startPoint
-        gradientLayer.endPoint = endPoint
-        gradientLayer.frame = CGRect(origin: .zero, size: size)
-        
-        // Render the gradient to a UIImage
-        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        gradientLayer.render(in: context)
-        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return gradientImage
+        let width = UIScreen.main.bounds.width
+        let height: CGFloat = 80 // Adjust based on tab bar height
+
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.startPoint = CGPoint(x: 1, y: 0.5) // Start from the right
+        gradientLayer.endPoint = CGPoint(x: 0, y: 0.5)   // End at the left
+
+        // Remove any existing gradient layers to prevent overlapping
+        tabBar.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+
+        // Insert the gradient at the bottom layer to ensure it's behind other content
+        tabBar.layer.insertSublayer(gradientLayer, at: 0)
     }
+
+
+
 
     
 }
