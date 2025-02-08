@@ -10,12 +10,14 @@ import AVFoundation
 import Photos
 import AVKit
 
-class VideoPlayerVC: UIViewController {
+class VideoPlayerVC: UIViewController, URLSessionDelegate {
     @IBOutlet weak var paybtn: UIButton!
     
-    @IBOutlet weak var DownloadImg: UIImageView!
+    @IBOutlet weak var DownloadImg: UIButton!
     @IBOutlet weak var playerview: UIView!
     var phasset: PHAsset?
+    var alert: UIAlertController?
+    var progressView: UIProgressView?
     //var player: AVPlayer!
     var srlstring: String?
     var url: URL?
@@ -129,7 +131,64 @@ class VideoPlayerVC: UIViewController {
            super.viewDidLayoutSubviews()
            playerLayer?.frame = playerview.bounds // Ensure it resizes correctly
        }
-    
+   
+
+    func showLoad(hide: Bool, progress: Float = 0.0) {
+        if hide {
+            // Dismiss the alert when the download is complete
+            alert?.dismiss(animated: true, completion: nil)
+            alert = nil
+            progressView = nil
+        } else {
+            if alert == nil {
+                // Create alert and progress view
+                alert = UIAlertController(title: nil, message: "Downloading... 0%", preferredStyle: .alert)
+
+                let progressFrame = CGRect(x: 10, y: 70, width: 250, height: 10)
+                progressView = UIProgressView(progressViewStyle: .default)
+                progressView?.frame = progressFrame
+                progressView?.progress = 0.0
+                
+                alert?.view.addSubview(progressView!)
+                
+                present(alert!, animated: true, completion: nil)
+            } else {
+                // Update the progress percentage and progress bar
+                alert?.message = "Downloading... \(Int(progress * 100))%"
+                progressView?.progress = progress
+            }
+        }
+    }
+
+    @IBAction func downloadBtn(_ sender: UIButton) {
+        startDownload()
+    }
+
+    func startDownload() {
+        guard let url = URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") else { return }
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+        let downloadTask = session.downloadTask(with: url)
+        downloadTask.resume()
+        
+        showLoad(hide: false) // Show loading alert initially
+    }
+
+    // Update progress inside the alert
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        DispatchQueue.main.async {
+            let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+            self.showLoad(hide: false, progress: progress)
+        }
+    }
+
+    // Hide alert when download completes
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        DispatchQueue.main.async {
+            self.showLoad(hide: true)
+        }
+        print("File downloaded to: \(location)")
+    }
+
 }
 extension AVPlayer {
     var isPlaying: Bool {

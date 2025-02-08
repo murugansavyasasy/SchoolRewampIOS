@@ -517,7 +517,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceview.isHidden = false
         textmessageview.isHidden = true
         historyview.isHidden = true
-        addfile.isHidden = false
         tittlemessage.text = CommonStringFile.VoiceMessage.translated()
     }
     
@@ -573,7 +572,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             historyBtn.setAttributedTitle(attributedTitle, for: .normal)
         }else{
-            let title = CommonStringFile.VoiceMessage.translated()
+            let title = CommonStringFile.BackToVoiceMessage.translated()
             let attributedTitle = NSAttributedString(string: title, attributes: [
                 .underlineStyle: NSUnderlineStyle.single.rawValue
             ])
@@ -793,6 +792,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
         }else{
             showVoiceMessageView()
+           
         }
     }
     
@@ -814,7 +814,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceview.isHidden = false
         textmessageview.isHidden = true
         historyview.isHidden = true
-        addfile.isHidden = false
+//        addfile.isHidden = false
         tittlemessage.text = CommonStringFile.VoiceMessage.translated()
         clickVoiceLbl.textColor = .white
         clickTextView.textColor = .black
