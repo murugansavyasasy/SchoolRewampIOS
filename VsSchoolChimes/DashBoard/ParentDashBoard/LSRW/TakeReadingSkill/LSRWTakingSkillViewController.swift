@@ -11,12 +11,15 @@ import UIKit
 //import ObjectMapper
 class LSRWTakingSkillViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
    
-    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var tv: UITableView!
     
+    @IBOutlet weak var BackBtn: UIButton!
     
+    @IBOutlet weak var NextBtn: UIButton!
     
+    @IBOutlet weak var NameLbl: UILabel!
     
+    @IBOutlet weak var StandardLbl: UILabel!
     
     var skillId : String!
 //    var attachData : [GetAttachmentForSkillData] = []
@@ -28,25 +31,27 @@ class LSRWTakingSkillViewController: UIViewController,UITableViewDataSource,UITa
         super.viewDidLoad()
         
       
-        
+        NextBtn.layer.cornerRadius = 10
         let userDefaults = UserDefaults.standard
        
 //        studentId = userDefaults.string(forKey: DefaultsKeys.chilId)!
         
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        backView.addGestureRecognizer(backGesture)
         
 //        viewAllSkillByStudent()
         
         
-        tv.register(UINib(nibName: rowId, bundle: nil), forCellReuseIdentifier: rowId)
+        tv.register(UINib(nibName: CellConfingName.TakeReadingSkillTableViewCell, bundle: nil), forCellReuseIdentifier: rowId)
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
 
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
 
-
-    
-    @IBAction func backVc() {
+    @IBAction func backAct() {
         dismiss(animated: true)
     }
     
@@ -81,11 +86,19 @@ class LSRWTakingSkillViewController: UIViewController,UITableViewDataSource,UITa
 //        attachGes.getType = getAttach.ActivityType
 //        cell.viewAttac.addGestureRecognizer(attachGes)
 
+        cell.attachmentLbl.text = ": Image"
+        cell.typeLbl.text = ": Text"
+        let viewTap = UITapGestureRecognizer(target: self, action: #selector(ViewAttachment))
+        cell.viewAttac.addGestureRecognizer(viewTap)
         
         return cell
     }
     
-    
+    @objc func ViewAttachment(){
+        let vc  = PreviewLsrwViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
 //    func viewAllSkillByStudent(){
 //        
 //        

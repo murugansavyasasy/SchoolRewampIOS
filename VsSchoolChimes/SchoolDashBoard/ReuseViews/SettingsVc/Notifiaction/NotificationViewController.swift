@@ -80,6 +80,11 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
         cell.imgview.image = icon[indexPath.row % icon.count]
         cell.contentLabel.text = content[indexPath.row % content.count]
         let firstletter = name[indexPath.row].first ?? "A"
+        
+        if let letterColor = ColorManager.shared.letterColors[firstletter] {
+            cell.ProfileLbl.backgroundColor = letterColor
+        }
+
         cell.ProfileLbl.text = String(firstletter)
         
         return cell

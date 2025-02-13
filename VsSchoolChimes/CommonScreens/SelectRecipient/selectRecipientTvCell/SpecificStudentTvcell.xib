@@ -58,7 +58,7 @@
                                 </subviews>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckCircle" translatesAutoresizingMaskIntoConstraints="NO" id="ve5-Dh-Bgc">
-                                <rect key="frame" x="270" y="30" width="25" height="25"/>
+                                <rect key="frame" x="270" y="10" width="25" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="25" id="dkv-c0-7eu"/>
                                     <constraint firstAttribute="height" constant="25" id="vkB-OT-LfP"/>
@@ -85,10 +85,10 @@
                             <constraint firstItem="ZHf-SP-fLM" firstAttribute="leading" secondItem="MjC-kP-lXS" secondAttribute="trailing" constant="20" id="IRo-GI-9ra"/>
                             <constraint firstAttribute="trailing" secondItem="ve5-Dh-Bgc" secondAttribute="trailing" constant="5" id="MFv-rR-SSn"/>
                             <constraint firstItem="fAS-bH-9Oh" firstAttribute="leading" secondItem="MjC-kP-lXS" secondAttribute="trailing" constant="20" id="Mgt-xW-Xw9"/>
+                            <constraint firstItem="ve5-Dh-Bgc" firstAttribute="top" secondItem="tZN-BB-RIQ" secondAttribute="top" constant="10" id="T6o-s9-2LN"/>
                             <constraint firstItem="MjC-kP-lXS" firstAttribute="centerY" secondItem="tZN-BB-RIQ" secondAttribute="centerY" id="XYR-Cr-yEp"/>
                             <constraint firstItem="ZHf-SP-fLM" firstAttribute="top" secondItem="tZN-BB-RIQ" secondAttribute="top" constant="12" id="Xgk-eQ-vI8"/>
                             <constraint firstItem="fnh-Tl-9n7" firstAttribute="leading" secondItem="ZHf-SP-fLM" secondAttribute="trailing" constant="8" id="bH2-x6-PJ9"/>
-                            <constraint firstItem="ve5-Dh-Bgc" firstAttribute="centerY" secondItem="tZN-BB-RIQ" secondAttribute="centerY" id="e4k-bB-dNT"/>
                             <constraint firstItem="ve5-Dh-Bgc" firstAttribute="leading" secondItem="fAS-bH-9Oh" secondAttribute="trailing" constant="20" id="js2-bB-i02"/>
                             <constraint firstItem="MjC-kP-lXS" firstAttribute="leading" secondItem="tZN-BB-RIQ" secondAttribute="leading" constant="8" id="q4f-Rz-XTU"/>
                             <constraint firstItem="fAS-bH-9Oh" firstAttribute="top" secondItem="ZHf-SP-fLM" secondAttribute="bottom" constant="5" id="xyx-Gl-lby"/>

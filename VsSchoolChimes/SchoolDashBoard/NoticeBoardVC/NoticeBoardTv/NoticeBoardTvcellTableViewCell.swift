@@ -16,6 +16,7 @@ protocol SelectNotice: AnyObject {
 @available(iOS 14.0, *)
 class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var HomeworkTitleTop: NSLayoutConstraint!
     @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var HomeworkSubjectLbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
@@ -55,6 +56,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         SelectBtn.layer.cornerRadius = 10
         SelectBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         HomeworkSubjectLbl.isHidden = true
+        HomeworkTitleTop.constant = 0
         CVHeight.constant = 0  // set this to 120 when you need
         pagecontrollerheight.constant = 0  // set this to 26 when you need
         pagecontroller.isHidden = true
@@ -149,6 +151,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     
     func hideforHomework(){
         HomeworkSubjectLbl.isHidden = false
+        HomeworkTitleTop.constant = 15
         pinImage.isHidden = true
         datelbl.isHidden = false
         SelectBtnHeight.constant=0

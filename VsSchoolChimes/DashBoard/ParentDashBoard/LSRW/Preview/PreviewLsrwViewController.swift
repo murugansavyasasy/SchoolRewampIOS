@@ -34,8 +34,8 @@ class PreviewLsrwViewController: UIViewController,AVAudioRecorderDelegate, AVAud
     @IBOutlet weak var textLbl: UILabel!
     @IBOutlet weak var textView: UIView!
     
+    @IBOutlet weak var BackBtn: UIButton!
     
-    @IBOutlet weak var backView: UIView!
     var attactType : String!
     var attactText : String!
     var videoId : String!
@@ -140,11 +140,14 @@ class PreviewLsrwViewController: UIViewController,AVAudioRecorderDelegate, AVAud
         }
         
         
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        backView.addGestureRecognizer(backGesture)
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
+
 
 func loadPDF(from url: URL) {
         // Create a URLSession data task to download the file
@@ -422,7 +425,7 @@ func loadPDF(from url: URL) {
     
     
     
-    @IBAction func backVc() {
+    @IBAction func backAct() {
         dismiss(animated: true)
     }
     

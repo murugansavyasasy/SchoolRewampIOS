@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -101,21 +100,18 @@
                                     <constraint firstItem="PiV-Gz-8Xh" firstAttribute="centerX" secondItem="leg-Xk-YZ9" secondAttribute="centerX" id="a56-8b-nf8"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJZ-ow-9au">
-                                <rect key="frame" x="348.33333333333331" y="182" width="133.66666666666669" height="35"/>
-                                <color key="backgroundColor" name="ButtonColor"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJZ-ow-9au">
+                                <rect key="frame" x="377.66666666666669" y="182" width="104.33333333333331" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Hq8-Sb-ivF"/>
                                 </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Download Certificate" image="arrow.down.to.line.circle.fill" catalog="system"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Download" imagePadding="10">
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" title="Download">
                                     <imageReference key="image" image="dock.arrow.down.rectangle" catalog="system" symbolScale="medium"/>
-                                </buttonConfiguration>
+                                </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7a4-Aa-xs6">
-                                <rect key="frame" x="348.33333333333331" y="10" width="133.66666666666669" height="30"/>
+                                <rect key="frame" x="377.66666666666669" y="10" width="104.33333333333331" height="30"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Pending" translatesAutoresizingMaskIntoConstraints="NO" id="79I-bK-0IW">
                                         <rect key="frame" x="2" y="2.6666666666666679" width="25" height="25"/>
@@ -125,7 +121,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pending" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5C-rD-L9w">
-                                        <rect key="frame" x="32.000000000000007" y="4.6666666666666679" width="91.666666666666686" height="20.333333333333332"/>
+                                        <rect key="frame" x="32" y="4.6666666666666679" width="62.333333333333343" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -194,11 +190,7 @@
     </objects>
     <resources>
         <image name="Pending" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="arrow.down.to.line.circle.fill" catalog="system" width="128" height="123"/>
         <image name="dock.arrow.down.rectangle" catalog="system" width="128" height="93"/>
-        <namedColor name="ButtonColor">
-            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

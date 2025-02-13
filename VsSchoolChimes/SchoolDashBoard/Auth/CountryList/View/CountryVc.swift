@@ -196,7 +196,7 @@ class CountryVc: UIViewController {
             present(vc, animated: true)
             
         }else{
-            view.makeToast(AlertstringFile.Tems_And_Conition)
+            view.makeToast(AlertstringFile.Terms_And_Conditions)
         }
     }
    

@@ -53,7 +53,8 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         let fourthItem = UITabBarItem(title: StringsName.Profile.translated(), image: UIImage(systemName: "person.crop.circle"), tag: 3)
         // Create the gradient color for tab bar
      
-        tabBar.tintColor = .red//.purple
+        tabBar.tintColor = .white
+        tabBar.unselectedItemTintColor = .black.withAlphaComponent(0.5)
         tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
         tabBar.delegate = self
         tabBar.selectedItem = firstItem
@@ -110,7 +111,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             
             applyGradientToTabBar(tabBar, colors: [Colornames.stafGradient, Colornames.stafGradient1])
             
-            tabBar.tintColor = .black
+            tabBar.tintColor = .white
         }
     }
     private func setupContainerView() {

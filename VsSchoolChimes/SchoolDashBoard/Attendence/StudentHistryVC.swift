@@ -42,8 +42,36 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var id = 1
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
-    var specificdata:[SpecificStudent] = [SpecificStudent(name: "Lakshmanan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Saranraj shanmugammmmmmmmmmmmmmmmmm", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Murugan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Chandru", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Sathish", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533")]
-    
+//    var specificdata:[SpecificStudent] = [SpecificStudent(name: "Lakshmanan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Saranraj shanmugammmmmmmmmmmmmmmmmm", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Murugan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Chandru", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Sathish", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533")]
+    var specificdata: [SpecificStudent] = [
+        SpecificStudent(name: "Aarav", rollnumber: "Roll no: 101", admissionNo: "Admission no: 100001"),
+        SpecificStudent(name: "Bhavana", rollnumber: "Roll no: 102", admissionNo: "Admission no: 100002"),
+        SpecificStudent(name: "Chirag", rollnumber: "Roll no: 103", admissionNo: "Admission no: 100003"),
+        SpecificStudent(name: "Dhruv", rollnumber: "Roll no: 104", admissionNo: "Admission no: 100004"),
+        SpecificStudent(name: "Eshwar", rollnumber: "Roll no: 105", admissionNo: "Admission no: 100005"),
+        SpecificStudent(name: "Farhan", rollnumber: "Roll no: 106", admissionNo: "Admission no: 100006"),
+        SpecificStudent(name: "Gopal", rollnumber: "Roll no: 107", admissionNo: "Admission no: 100007"),
+        SpecificStudent(name: "Harini", rollnumber: "Roll no: 108", admissionNo: "Admission no: 100008"),
+        SpecificStudent(name: "Ishaan", rollnumber: "Roll no: 109", admissionNo: "Admission no: 100009"),
+        SpecificStudent(name: "Jeevan", rollnumber: "Roll no: 110", admissionNo: "Admission no: 100010"),
+        SpecificStudent(name: "Karthik", rollnumber: "Roll no: 111", admissionNo: "Admission no: 100011"),
+        SpecificStudent(name: "Lakshmanan", rollnumber: "Roll no: 112", admissionNo: "Admission no: 100012"),
+        SpecificStudent(name: "Meera", rollnumber: "Roll no: 113", admissionNo: "Admission no: 100013"),
+        SpecificStudent(name: "Neha", rollnumber: "Roll no: 114", admissionNo: "Admission no: 100014"),
+        SpecificStudent(name: "Omkar", rollnumber: "Roll no: 115", admissionNo: "Admission no: 100015"),
+        SpecificStudent(name: "Pranav", rollnumber: "Roll no: 116", admissionNo: "Admission no: 100016"),
+        SpecificStudent(name: "Qadir", rollnumber: "Roll no: 117", admissionNo: "Admission no: 100017"),
+        SpecificStudent(name: "Rajesh", rollnumber: "Roll no: 118", admissionNo: "Admission no: 100018"),
+        SpecificStudent(name: "Saranraj", rollnumber: "Roll no: 119", admissionNo: "Admission no: 100019"),
+        SpecificStudent(name: "Tarun", rollnumber: "Roll no: 120", admissionNo: "Admission no: 100020"),
+        SpecificStudent(name: "Umesh", rollnumber: "Roll no: 121", admissionNo: "Admission no: 100021"),
+        SpecificStudent(name: "Varun", rollnumber: "Roll no: 122", admissionNo: "Admission no: 100022"),
+        SpecificStudent(name: "Waseem", rollnumber: "Roll no: 123", admissionNo: "Admission no: 100023"),
+        SpecificStudent(name: "Xavier", rollnumber: "Roll no: 124", admissionNo: "Admission no: 100024"),
+        SpecificStudent(name: "Yash", rollnumber: "Roll no: 125", admissionNo: "Admission no: 100025"),
+        SpecificStudent(name: "Zara", rollnumber: "Roll no: 126", admissionNo: "Admission no: 100026")
+    ]
+
     var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
                                  Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
                                  Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
@@ -55,13 +83,15 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                  Student(name: "Navin", isAbsent: false, rollnumber: "76979878", phoneNo: "7456792347"),
                                  Student(name: "kothai", isAbsent: false, rollnumber: "76979879", phoneNo: "9360183031"),
                                  Student(name: "kothai", isAbsent: false, rollnumber: "769798710", phoneNo: "9360183031")]
+    
+    
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [Student]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataVisibility = Array(repeating: false, count: 10)
-        selectedRows = Array(repeating: false, count: 10)
+        dataVisibility = Array(repeating: false, count: specificdata.count)
+        selectedRows = Array(repeating: false, count: specificdata.count)
         if id == 1{
             HeaderviewHeight.constant = 0
             headerView.isHidden = true
@@ -87,8 +117,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(fliter))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
         
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -98,6 +126,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
+    
+    
     @IBAction func fliter(_ sender: UIButton) {
         dropDown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated()]
         dropDown.anchorView = filterBtn
@@ -205,7 +235,15 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         dismiss(animated: true)
     }
     
+    // MARK: Function to get color for a given name
+    func colorForName(_ name: String) -> UIColor {
+        let firstLetter = name.uppercased().first!
+        let color = ColorManager.shared.letterColors[firstLetter]
+        return color ?? .gradient1
+    }
+    
 }
+
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
             func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -219,6 +257,8 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
                 if id == 1{
                     let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
+                    let backgroundColor = colorForName(specificdata[indexPath.row].name)
+                    
                     cell.NameLbl.text = specificdata[indexPath.row].name
                     cell.AdmisionNoLbl.text = specificdata[indexPath.row].admissionNo
                     cell.RollNoLbl.text = specificdata[indexPath.row].rollnumber
@@ -227,8 +267,10 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                     } else {
                         cell.alphabetLbl.text = "" // Fallback for empty string
                     }
+                    cell.AlphabetView.backgroundColor = backgroundColor
                     let isSelected = selectedRows[indexPath.row]
                     cell.CheckBoxImgview.image = isSelected ? UIImage(named: "checked_Tick") : UIImage(named: "CheckCircle")
+                    cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
                     
                     // Set visibility state
                     cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]

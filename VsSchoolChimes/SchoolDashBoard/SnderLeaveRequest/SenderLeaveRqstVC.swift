@@ -68,7 +68,7 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         cell.rejectBtn.tag = indexPath.row
         cell.statusLbl.isHidden = !filterStudent![indexPath.row].isExpanded
         cell.statusLbl.text = filterStudent?[indexPath.row].status
-        cell.statusLbl.textColor = filterStudent?[indexPath.row].status == "Aproved" ? .aproved : .red
+        cell.statusLbl.textColor = filterStudent?[indexPath.row].status == "Approved" ? .aproved : .red
         if filterStudent![indexPath.row].isExpanded{
             cell.aproved.isHidden = true
             cell.reject.isHidden = true

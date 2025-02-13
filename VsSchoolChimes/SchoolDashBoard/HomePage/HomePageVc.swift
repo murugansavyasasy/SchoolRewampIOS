@@ -283,7 +283,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     @IBAction func ViewDetailsAct(_ sender: Any) {
         
-        let vc  = MarkAttendenceVC(nibName: nil, bundle: nil)
+        let vc  = LocationHistoryVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -532,6 +532,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.ScheduleExamVCNavigat(from: self)
             case MenuStringFile.DailyCollection:
                 MenuRedirect.dailyCollectionNavigate(from: self)
+            case MenuStringFile.StaffWiseAttendanceReport:
+                MenuRedirect.StaffWiseAttendance(from: self)
                 
             case MenuStringFile.AttendanceMarking:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
