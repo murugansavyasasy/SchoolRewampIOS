@@ -10,6 +10,7 @@ import DropDown
 
 class CertificateRequestVC: UIViewController {
     
+    @IBOutlet weak var SegmentControl: UISegmentedControl!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
@@ -46,11 +47,22 @@ class CertificateRequestVC: UIViewController {
         super.viewDidLoad()
 
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        ButtonStackview.layer.cornerRadius = 20
-        RequestCertificateBtn.layer.cornerRadius = 20
-        CertificatesBtn.layer.cornerRadius = 20
+
+        ButtonStackview.isLayoutMarginsRelativeArrangement = true
+        ButtonStackview.layoutMargins = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
         
-        configureButton(RequestCertificateBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
+        ButtonStackview.layer.cornerRadius = 8
+        RequestCertificateBtn.layer.cornerRadius = 8
+        CertificatesBtn.layer.cornerRadius = 8
+        
+        ButtonStackview.layer.borderWidth = 0.0
+        ButtonStackview.layer.borderColor = UIColor.gray.cgColor
+        
+        ButtonStackview.backgroundColor = .clr
+        CertificatesBtn.backgroundColor = .white
+        RequestBtn.backgroundColor = .white
+     
+
         //gradientcolours(button: RequestCertificateBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
         
         RequestView.layer.cornerRadius = 10
@@ -63,11 +75,12 @@ class CertificateRequestVC: UIViewController {
         
         tv.isHidden = true
         
-        RequestCertificateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        CertificatesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        RequestCertificateBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
+        CertificatesBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
         BackBtn.setTitleFont(style: .primary, size: 17)
         CertificatesBtn.tintColor = .lightGray
         
+       
         let tap = UITapGestureRecognizer(target: self, action: #selector(UrgencyDropdown))
         DropdownView.addGestureRecognizer(tap)
         DropdownView.isUserInteractionEnabled = true
@@ -82,7 +95,11 @@ class CertificateRequestVC: UIViewController {
         
         let nib = UINib(nibName: CellConfingName.CertificateTableViewCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier: CellConfingName.CertificateTableViewCell)
+        
+        configureSegmentedControlAppearance(SegmentControl, lightenFactor: 0.3) // Adjust lightening factor
+               configureSegmentedControlText(SegmentControl)
     }
+   
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -95,7 +112,9 @@ class CertificateRequestVC: UIViewController {
             startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
             endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
         )
+        configureButton(RequestCertificateBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
     }
+    
     func StyleAndTranslate(){
         
         NameLbl.setFont(style: .body, size: 15)
@@ -127,6 +146,101 @@ class CertificateRequestVC: UIViewController {
         ReasonTextView.textColor = .gray
         
         RequestBtn.layer.cornerRadius = 10
+    }
+    
+    
+    @IBAction func SegmentControlAct(_ sender: Any) {
+        UpdateUI()
+    }
+    
+    // MARK: - Customize UISegmentedControl Background
+        func configureSegmentedControlAppearance(_ segmentedControl: UISegmentedControl, lightenFactor: CGFloat) {
+            // Base gradient colors
+            let baseColors = [UIColor.systemBlue, UIColor.systemGreen]
+
+            // Apply lightening factor to colors
+            let adjustedColors = baseColors.map { $0.blendedWithWhite(factor: lightenFactor) }
+
+            // Create gradient image for the selected segment
+            let gradientImage = createGradientImage(colors: adjustedColors)
+
+            // Create a solid color image for unselected segments
+            let unselectedColorImage = createImageWithColor(color: UIColor.lightGray.withAlphaComponent(0.3))
+
+            // Apply the images to the segmented control
+            segmentedControl.setBackgroundImage(unselectedColorImage, for: .normal, barMetrics: .default)
+            segmentedControl.setBackgroundImage(gradientImage, for: .selected, barMetrics: .default)
+
+            // Remove divider image for a seamless look
+            segmentedControl.setDividerImage(UIImage(), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+
+            // Optional: Round the corners of the segmented control
+            segmentedControl.layer.cornerRadius = 8
+            segmentedControl.layer.masksToBounds = true
+            
+        }
+
+        // MARK: - Customize UISegmentedControl Text Colors
+        func configureSegmentedControlText(_ segmentedControl: UISegmentedControl) {
+            let normalAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.darkGray, // Text color for unselected segments
+                .font: UIFont.systemFont(ofSize: 16, weight: .medium)
+            ]
+            
+            let selectedAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.white, // Text color for selected segment
+                .font: UIFont.systemFont(ofSize: 16, weight: .bold)
+            ]
+            
+            segmentedControl.setTitleTextAttributes(normalAttributes, for: .normal)
+            segmentedControl.setTitleTextAttributes(selectedAttributes, for: .selected)
+        }
+
+        // MARK: - Create Gradient Image
+        func createGradientImage(colors: [UIColor]) -> UIImage? {
+            let gradientLayer = CAGradientLayer()
+            let size = CGSize(width: 200, height: 40) // Adjust width/height as needed
+            gradientLayer.frame = CGRect(origin: .zero, size: size)
+            gradientLayer.colors = colors.map { $0.cgColor }
+            gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+            gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+
+            UIGraphicsBeginImageContext(size)
+            guard let context = UIGraphicsGetCurrentContext() else { return nil }
+            gradientLayer.render(in: context)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return image
+        }
+
+        // MARK: - Create Solid Color Image
+        func createImageWithColor(color: UIColor) -> UIImage {
+            let rect = CGRect(x: 0, y: 0, width: 1, height: 30) // Small 1px-wide image
+            UIGraphicsBeginImageContext(rect.size)
+            guard let context = UIGraphicsGetCurrentContext() else { return UIImage() }
+            context.setFillColor(color.cgColor)
+            context.fill(rect)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            return image ?? UIImage()
+        }
+    
+   
+
+    
+    func UpdateUI(){
+        if SegmentControl.selectedSegmentIndex == 0{
+            tv.isHidden = true
+            RequestView.isHidden = false
+        }else {
+            tv.isHidden = false
+            RequestView.isHidden = true
+            tv.delegate = self
+            tv.dataSource = self
+            tv.reloadData()
+        }
+       
     }
     
     @IBAction func RequestAct(_ sender: Any) {
