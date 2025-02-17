@@ -11,6 +11,7 @@ import UIKit
 
 class ImageSelection:UIView{
     
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageCollectionview: UICollectionView!
     
     // MARK: - Initialization
@@ -37,6 +38,7 @@ class ImageSelection:UIView{
     }
     override func awakeFromNib() {
         super.awakeFromNib()
+        ActivityIndicator.stopAnimating()
         registerCell()
     }
     func registerCell(){

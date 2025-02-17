@@ -36,7 +36,7 @@ class RatingTableViewCell: UITableViewCell {
             case 2:
                 ratingText = RatingCellStringFile.Not_bad
             case 3:
-                ratingText = RatingCellStringFile.Nice
+                ratingText = RatingCellStringFile.Good
             case 4:
                 ratingText = RatingCellStringFile.Well_done
             case 5:

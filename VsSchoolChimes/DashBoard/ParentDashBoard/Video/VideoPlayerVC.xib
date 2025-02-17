@@ -40,15 +40,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uac-go-ZHw">
                     <rect key="frame" x="0.0" y="59" width="393" height="60"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkw-Vo-sLh">
-                            <rect key="frame" x="276" y="19" width="91" height="22"/>
+                        <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkw-Vo-sLh">
+                            <rect key="frame" x="281.33333333333331" y="19" width="85.666666666666686" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="22" id="V5L-7r-ohu"/>
                             </constraints>
+                            <inset key="titleEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Dowload" image="arrowshape.down.circle" catalog="system">
-                                <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
+                            <state key="normal" title="Dowload" image="arrowshape.down.circle" catalog="system"/>
                             <connections>
                                 <action selector="downloadBtn:" destination="-1" eventType="touchUpInside" id="qWr-CK-sOH"/>
                             </connections>

@@ -265,7 +265,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
 //        cell.takingSkillView.addGestureRecognizer(attachGes)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(AttachmentRedirect))
-       // cell.takingSkillView.addGestureRecognizer(tap)
+        cell.takingSkillView.addGestureRecognizer(tap)
         cell.titleLbl.text = tasks[indexPath.row].title
         cell.descLbl.text = tasks[indexPath.row].description
         cell.subLbl.text = tasks[indexPath.row].subject

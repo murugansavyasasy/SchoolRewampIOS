@@ -19,7 +19,7 @@ enum UploadResult {
 class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     
-    @IBOutlet weak var StackViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var ChangeVideoBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var ButtonStackview: UIStackView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
     
@@ -32,15 +32,11 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     
     @IBOutlet weak var BaseView: UIView!
     
-    @IBOutlet weak var selectVideoView: RectangularDashedView!
-    
     @IBOutlet weak var playBtn: UIButton!
     
     @IBOutlet weak var PlayerHeight: NSLayoutConstraint!
     @IBOutlet weak var sendBtn: UIButton!
-    @IBOutlet weak var uploadVideoTitleLbl: UILabel!
     @IBOutlet weak var changeVideoBtn: UIButton!
-    @IBOutlet weak var chooseVideoBtn: UIButton!
     @IBOutlet weak var descTxtView: UITextView!
     @IBOutlet weak var titleTxtFld: UITextField!
     
@@ -76,9 +72,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
                     object: nil
                 )
         
-        chooseVideoBtn.isHidden = true
         changeVideoBtn.isHidden = true
-        StackViewHeight.constant = 0
+        ChangeVideoBtnHeight.constant = 0
         StyleAndTranslater()
         descTxtView.delegate = self
         let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
@@ -110,26 +105,23 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         descTxtView.layer.borderColor = UIColor.black.cgColor
         changeVideoBtn.layer.cornerRadius = Colornames.CORadius10
         sendBtn.layer.cornerRadius = Colornames.CORadius10
-        chooseVideoBtn.layer.cornerRadius = Colornames.CORadius10
+       
         
         //MARK: Translate
         HeaderLabel.text = MenuTapbar.Video.translated()
-        uploadVideoTitleLbl.text = textFieldStringFile.Upload_Video
         chooseVideoLabel.text = textFieldStringFile.Click_To_Choose_video
         titleTxtFld.placeholder = CommonStringFile.Title.translated()
         descTxtView.text = CommonStringFile.Description.translated()
         descTxtView.textColor = .lightGray
         changeVideoBtn.setTitle("Change Video".translated(), for: .normal)
-        chooseVideoBtn.setTitle("Choose Video".translated(), for: .normal)
+       
         sendBtn.setTitle("Send".translated(), for: .normal)
         
         //MARK: Font Style
         
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         chooseVideoLabel.setFont(style: .title, size: FontSize.TitleSize)
-        uploadVideoTitleLbl.setFont(style: .header, size: 17)
-        changeVideoBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        chooseVideoBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+       
         sendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
     }
@@ -254,7 +246,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             print("Selected video URL: \(videoURL)")
             generateThumbnail(from: playerurl!)
             changeVideoBtn.isHidden = false
-            StackViewHeight.constant = 40
+            ChangeVideoBtnHeight.constant = 40
         }
         
         picker.dismiss(animated: true, completion: nil)

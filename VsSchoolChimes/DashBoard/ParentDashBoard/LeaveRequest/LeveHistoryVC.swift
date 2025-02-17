@@ -16,7 +16,7 @@ class LeveHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
     @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var toLbl: UILabel!
     @IBOutlet weak var statusLbl: UILabel!
-    var leaveResuest = [LeaveRequest(fromDate: "12 Sep 24", toDate: "13 Sep 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "11 Oct 24", toDate: "12 Oct 24", status: "Aproved", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "08 Nov 24", toDate: "10 Nov 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "12 Dec 24", toDate: "13 Dec 24", status: "Rejected", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false)]
+    var leaveResuest = [LeaveRequest(fromDate: "12 Sep 24", toDate: "13 Sep 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "11 Oct 24", toDate: "12 Oct 24", status: "Approved", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "08 Nov 24", toDate: "10 Nov 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "12 Dec 24", toDate: "13 Dec 24", status: "Rejected", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false)]
     var filterData:[LeaveRequest]?
     @IBOutlet weak var historyTable: UITableView!
     var EditDropdown = DropDown()
@@ -151,7 +151,7 @@ class LeveHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
         cell.aproveLbl.text = leaveData.status
         
         // Status-based customization
-        if leaveData.status == "Aproved" {
+        if leaveData.status == "Approved" {
             cell.statusBtn.backgroundColor = Colornames.AprovedClr
             cell.satusImg.image = ImageName.check
             cell.aproveLbl.textColor = .white

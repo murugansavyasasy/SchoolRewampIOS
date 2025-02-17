@@ -21,6 +21,8 @@ class QuizVC: UIViewController {
     
     @IBOutlet weak var IncorrectAnswerLbl: UILabel!
     @IBOutlet weak var CorrectAnswerLbl: UILabel!
+    //var colours = ["lesson1","lesson2","lesson3"]
+    let colours = ["AttendenceColor","Color","lesson1","lesson3"]
     var id = 0
     var correctoption : [Int] = []
     var selectedOption : [Int] = []
@@ -54,6 +56,9 @@ class QuizVC: UIViewController {
         
         let nib2 = UINib(nibName: CellConfingName.CompletedTVcell, bundle: nil)
         tv.register(nib2, forCellReuseIdentifier: CellConfingName.CompletedTVcell)
+        
+        let nib3 = UINib(nibName: CellConfingName.QuizListTvCell, bundle: nil)
+        tv.register(nib3, forCellReuseIdentifier: CellConfingName.QuizListTvCell)
         
         tv.delegate = self
         tv.dataSource = self
@@ -203,10 +208,14 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
             return cell
 
         }else{
-            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.QuizTVcell, for: indexPath) as! QuizTVcell
-            
+//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.QuizTVcell, for: indexPath) as! QuizTVcell
+            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as! QuizListTvCell
+            let colour = colours[indexPath.row % colours.count]
+            let colour2 = UIColor(named:colour)?.adjustedColor(brightnessFactor: 1.7, saturationFactor: 0.4)
+            cell.CellView.backgroundColor = colour2
             let tap = UITapGestureRecognizer(target: self, action: #selector(StartQuiz))
-            cell.StartBtn.addGestureRecognizer(tap)
+            //cell.StartBtn.addGestureRecognizer(tap)
+            cell.PlayBtn.addGestureRecognizer(tap)
             return cell
         }
     }
@@ -221,4 +230,22 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
         present(vc, animated: true)
     }
     
+}
+
+
+extension UIColor {
+    func adjustedColor(brightnessFactor: CGFloat = 1.3, saturationFactor: CGFloat = 0.8) -> UIColor? {
+        var hue: CGFloat = 0
+        var saturation: CGFloat = 0
+        var brightness: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        if getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) {
+            let newBrightness = min(brightness * brightnessFactor, 1.0) // Increase brightness
+            let newSaturation = max(saturation * saturationFactor, 0.0) // Reduce saturation
+            
+            return UIColor(hue: hue, saturation: newSaturation, brightness: newBrightness, alpha: alpha)
+        }
+        return nil
+    }
 }

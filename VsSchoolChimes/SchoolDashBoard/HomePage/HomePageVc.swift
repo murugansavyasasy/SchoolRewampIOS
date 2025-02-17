@@ -57,28 +57,28 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        TopGradientView.applyGradient(
-            colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
+    
         advertisements = [
             "Ad 1: Special Offer",
             "Ad 2: Final Sale",
             "Ad 3: New Arrivals",
             "Ad 4: Discount Up to 50%"
         ]
+        
+        bottomView.layer.cornerRadius = 10
+        bottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        bottomView.clipsToBounds = true
+        
         setupVideoBackground()
         filteredItems = MenuRedirect.items
         displayedCategories = Array(filteredItems.prefix(6))
         
         displayedCategories.insert(newString, at: 5)
-//        setupSearchBar()
-//        startPlaceholderRotation()
+          //setupSearchBar()
+         //startPlaceholderRotation()
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
         changeRollLbl.textColor = .link
-        startAutoScroll()
+        //startAutoScroll()
         cellRegistration()
         addDoneButton()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
@@ -87,8 +87,8 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         Searchbar.placeholder = CommonStringFile.Search.translated()
         Searchbar.delegate = self
         searchHeightCon.constant = 0
-        TopCv.delegate = self
-        TopCv.dataSource = self
+//        TopCv.delegate = self
+//        TopCv.dataSource = self
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
@@ -113,18 +113,31 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         schoolLogoImg.addGestureRecognizer(profileTap)
         schoolLogoImg.isUserInteractionEnabled = true
         
-        bottomView.roundTopCorners(radius: 10)
+        //bottomView.roundTopCorners(radius: 10)
+        
         reportView.layer.cornerRadius = 5
         reportView.layer.shadowColor = UIColor.black.cgColor
         reportView.layer.shadowOpacity = 0.5
         reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
         reportView.layer.shadowRadius = 3
         reportView.layer.masksToBounds = false
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        view.applyGradient(
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
+            endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
+        )
+        
         loginDetailView.applyGradient(
             colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        
         configureButton(
             homeworkBtn,
             title: MenuStringFile.Homework.translated(),
@@ -149,6 +162,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
+        
     }
     // Helper function to configure the button
     func configureButton(
@@ -185,7 +199,8 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
                 image.draw(in: CGRect(origin: .zero, size: imageSize))
             }
-            button.setImage(resizedImage, for: .normal)
+            button.setImage(resizedImage.withRenderingMode(.alwaysTemplate), for: .normal)
+            button.tintColor = .gray
         }
         
         // Align image and title
@@ -234,15 +249,15 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear - View is about to appear.")
-        
-        TopCv.reloadData()
-        TopCv.delegate = self
-        TopCv.dataSource = self
+//        
+//        TopCv.reloadData()
+//        TopCv.delegate = self
+//        TopCv.dataSource = self
         bottomCv.delegate = self
         bottomCv.dataSource = self
         bottomCv.reloadData()
         filteredItems = MenuRedirect.items
-        restartAnimations()
+        //restartAnimations()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -251,7 +266,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         bottomCv.delegate = self
         bottomCv.dataSource = self
-        restartAnimations()
+       // restartAnimations()
         
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -268,7 +283,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     @IBAction func ViewDetailsAct(_ sender: Any) {
         
-        let vc  = MarkAttendenceVC(nibName: nil, bundle: nil)
+        let vc  = LocationHistoryVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -279,6 +294,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBAction func OpenProfile() {
         
         let vc = ProfileViewController(nibName: nil, bundle: nil)
+        vc.HideBackButton = false
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -498,6 +514,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 
             case MenuStringFile.VeryImportantInfo.translated():
                 MenuRedirect.senderImportantInfoNavigate(from: self)
+            case MenuStringFile.SchoolNeeds.translated() :
+                MenuRedirect.senderSchoolNeedsNavigate(from: self)
                 
             case MenuStringFile.SchoolClassEvents.translated():
                 MenuRedirect.senderEventNavigate(from: self)
@@ -505,7 +523,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.senderSchoolStrength(from: self)
                 
             case MenuStringFile.MarkYourAttendance.translated():
-                MenuRedirect.senderMarkAttendanceNavigate(from: self)
+                print("Mark your Attendance")
                 
             case MenuStringFile.InteractionWithStudent.translated():
                 MenuRedirect.Senderchat(from: self)
@@ -514,6 +532,8 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 MenuRedirect.ScheduleExamVCNavigat(from: self)
             case MenuStringFile.DailyCollection:
                 MenuRedirect.dailyCollectionNavigate(from: self)
+            case MenuStringFile.StaffWiseAttendanceReport:
+                MenuRedirect.StaffWiseAttendance(from: self)
                 
             case MenuStringFile.AttendanceMarking:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)

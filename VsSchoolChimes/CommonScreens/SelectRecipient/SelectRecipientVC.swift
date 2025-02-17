@@ -315,12 +315,11 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
         
         if flag == 1{
             cell.checkboxImg.isUserInteractionEnabled = true
-//            cell.cellLabel.text = Group[indexPath.section].items[indexPath.row]
-//            let checkClick = checkClick(target: self, action: #selector(CheckBoxclick))
-//            checkClick.index = indexPath.row
-//            checkClick.indexs = indexPath
-//            cell.checkboxImg.addGestureRecognizer(checkClick)
-            
+            cell.cellLabel.text = Group[indexPath.section].items[indexPath.row]
+            let checkClick = checkClick(target: self, action: #selector(CheckBoxclick))
+            checkClick.index = indexPath.row
+            checkClick.indexs = indexPath
+            cell.checkboxImg.addGestureRecognizer(checkClick)
         }
         else{
             cell.cellLabel.text = sections[indexPath.section].items[indexPath.row]

@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageShowVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="ActivityIndicator" destination="mlM-Cy-xFT" id="85w-UP-BAH"/>
                 <outlet property="TitleLbl" destination="4LN-Xu-FRb" id="pDQ-Hv-bJP"/>
                 <outlet property="cv" destination="2nI-Xu-ypg" id="bdC-fH-JvR"/>
                 <outlet property="pdfView" destination="Mij-9M-Z3u" id="wct-1Y-xlK"/>
@@ -74,6 +75,13 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="mlM-Cy-xFT">
+                            <rect key="frame" x="176.66666666666666" y="359.66666666666669" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="dEO-Dr-M2P"/>
+                                <constraint firstAttribute="width" constant="40" id="tdr-H2-dB8"/>
+                            </constraints>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -86,7 +94,9 @@
                         <constraint firstItem="Mij-9M-Z3u" firstAttribute="leading" secondItem="2nI-Xu-ypg" secondAttribute="leading" id="GCp-36-QSQ"/>
                         <constraint firstItem="2nI-Xu-ypg" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" id="HOm-IM-im4"/>
                         <constraint firstItem="kPN-2u-D3K" firstAttribute="top" secondItem="4LN-Xu-FRb" secondAttribute="bottom" constant="17" id="JuO-5T-Mac"/>
+                        <constraint firstItem="mlM-Cy-xFT" firstAttribute="centerX" secondItem="b3Y-cI-Ree" secondAttribute="centerX" id="MI6-8z-stJ"/>
                         <constraint firstItem="Mij-9M-Z3u" firstAttribute="top" secondItem="2nI-Xu-ypg" secondAttribute="top" id="S6l-mc-3Y9"/>
+                        <constraint firstItem="mlM-Cy-xFT" firstAttribute="centerY" secondItem="b3Y-cI-Ree" secondAttribute="centerY" id="Vba-yY-MDD"/>
                         <constraint firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="WzM-Ex-QG6"/>
                         <constraint firstItem="2nI-Xu-ypg" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="50" id="a4Y-Am-9yz"/>
                         <constraint firstItem="4LN-Xu-FRb" firstAttribute="leading" secondItem="TE9-Ng-rGr" secondAttribute="trailing" constant="8" id="cBz-CH-0AR"/>

@@ -1057,9 +1057,9 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 		return cell
 	}
     
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+//    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
 	
 	fileprivate func configureCell(_ cell: DropDownCell, at index: Int) {
 		if index >= 0 && index < localizationKeysDataSource.count {

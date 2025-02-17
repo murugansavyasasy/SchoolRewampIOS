@@ -45,15 +45,25 @@
                             <action selector="deleteImg:" destination="gTV-IL-0wX" eventType="touchUpInside" id="4qZ-e6-FbX"/>
                         </connections>
                     </button>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="6Hk-15-U5u">
+                        <rect key="frame" x="86" y="42.666666666666664" width="40" height="39.999999999999993"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="rxA-Sz-mP4"/>
+                            <constraint firstAttribute="width" constant="40" id="x28-T6-Hce"/>
+                        </constraints>
+                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </activityIndicatorView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="7MX-fw-h8e" firstAttribute="top" secondItem="p43-r7-nQ5" secondAttribute="top" id="3dw-Sf-c2B"/>
+                <constraint firstItem="6Hk-15-U5u" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="6u4-aG-eMs"/>
                 <constraint firstItem="p43-r7-nQ5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="AzC-Vj-Hao"/>
                 <constraint firstItem="P1s-O8-NbB" firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" id="B58-wl-Vfa"/>
                 <constraint firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" constant="10" id="D9k-4s-TJc"/>
                 <constraint firstAttribute="trailing" secondItem="p43-r7-nQ5" secondAttribute="trailing" constant="10" id="KT4-Mp-Ixk"/>
+                <constraint firstItem="6Hk-15-U5u" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="OPU-2A-J5h"/>
                 <constraint firstItem="P1s-O8-NbB" firstAttribute="leading" secondItem="amK-p2-KzG" secondAttribute="leading" id="PtN-yB-MEo"/>
                 <constraint firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" constant="9" id="Tjn-ab-Qvu"/>
                 <constraint firstItem="P1s-O8-NbB" firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" id="lNM-Pl-Viy"/>
@@ -66,6 +76,7 @@
             </constraints>
             <size key="customSize" width="187" height="94"/>
             <connections>
+                <outlet property="ActivityIndicator" destination="6Hk-15-U5u" id="l1w-Js-2zC"/>
                 <outlet property="TrashIcon" destination="amK-p2-KzG" id="LVs-dT-38d"/>
                 <outlet property="deleteBtn" destination="P1s-O8-NbB" id="Reg-UE-1M8"/>
                 <outlet property="imageViews" destination="p43-r7-nQ5" id="hJk-zK-BF2"/>

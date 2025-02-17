@@ -32,7 +32,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             }
         }
     
-  
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var outerView: UIView!
@@ -148,6 +148,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             
             
             costomView.imageCollectionview.reloadData()
+            costomView.ActivityIndicator.stopAnimating()
         }
         photoPickManager.pdfUrl = { [weak self] pdfurl in
             guard let self = self else { return }
@@ -158,6 +159,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             //            url = URL(string:pdfurl)
             //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
             costomView.imageCollectionview.reloadData()
+            costomView.ActivityIndicator.stopAnimating()
         }
         photoPickManager.onCameraImagePicked = { [weak self] images in
             guard let self = self else { return }
@@ -169,6 +171,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             }
             selectedImages.append(images)
             costomView.imageCollectionview.reloadData()
+            costomView.ActivityIndicator.stopAnimating()
         }
         
         
@@ -522,7 +525,9 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     // MARK: File Attachments Actions
     
     func selectImages() {
+        
         if selectedImages.count != 5{
+            costomView.ActivityIndicator.startAnimating()
             photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
             
         }else{
@@ -530,9 +535,11 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
+        
     }
     func openCamera(){
         if selectedImages.count != 5{
+            costomView.ActivityIndicator.startAnimating()
             photoPickManager.openCamera(from: self)
         }else{
             let alert = CustomAlert()
@@ -540,6 +547,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         }
     }
     func selectPDF() {
+        costomView.ActivityIndicator.startAnimating()
         photoPickManager.pickPDF(from: self)
     }
     

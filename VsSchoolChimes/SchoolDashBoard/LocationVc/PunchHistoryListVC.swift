@@ -24,6 +24,9 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         noRecordLbl.isHidden = true
         let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
         backView.addGestureRecognizer(back)
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
     }
     
     @IBAction func backClick(){
@@ -37,6 +40,9 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell
+        cell.timing.text = "9.00 AM"
+        cell.punchType.text = "Fingerprint"
+        cell.phoneModel.text = "Realme 11 Pro"
         return cell
     }
     

@@ -507,8 +507,11 @@
 		84C82A0D2D086A490024A46A /* SparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F02D086A490024A46A /* SparkViewFactory.swift */; };
 		84C82A0E2D086A490024A46A /* CircleColorSparkViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829F32D086A490024A46A /* CircleColorSparkViewFactory.swift */; };
 		84C82A0F2D086A490024A46A /* ClassicFireworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C829E02D086A490024A46A /* ClassicFireworkController.swift */; };
+		84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */; };
 		84D1FF1C2D4CE00A003ACC04 /* ParentHomePageVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D1FF1A2D4CE00A003ACC04 /* ParentHomePageVc.swift */; };
 		84D1FF1D2D4CE00A003ACC04 /* ParentHomePageVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D1FF1B2D4CE00A003ACC04 /* ParentHomePageVc.xib */; };
+		84D32C972D55CE2300A420A9 /* QuizListTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D32C962D55CE2300A420A9 /* QuizListTvCell.xib */; };
+		84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D32C952D55CE2300A420A9 /* QuizListTvCell.swift */; };
 		84D85D782D51D7B5006842E9 /* CustomShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D85D772D51D7B5006842E9 /* CustomShimmerView.swift */; };
 		84D85D7A2D51D7C6006842E9 /* CustomShimmerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D85D792D51D7C6006842E9 /* CustomShimmerView.xib */; };
 		84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */; };
@@ -1126,8 +1129,11 @@
 		84C829F42D086A490024A46A /* ImageSparkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkView.swift; sourceTree = "<group>"; };
 		84C829F52D086A490024A46A /* ImageSparkViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSparkViewFactory.swift; sourceTree = "<group>"; };
 		84C829F72D086A490024A46A /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourManager.swift; sourceTree = "<group>"; };
 		84D1FF1A2D4CE00A003ACC04 /* ParentHomePageVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentHomePageVc.swift; sourceTree = "<group>"; };
 		84D1FF1B2D4CE00A003ACC04 /* ParentHomePageVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentHomePageVc.xib; sourceTree = "<group>"; };
+		84D32C952D55CE2300A420A9 /* QuizListTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListTvCell.swift; sourceTree = "<group>"; };
+		84D32C962D55CE2300A420A9 /* QuizListTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizListTvCell.xib; sourceTree = "<group>"; };
 		84D85D772D51D7B5006842E9 /* CustomShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShimmerView.swift; sourceTree = "<group>"; };
 		84D85D792D51D7C6006842E9 /* CustomShimmerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomShimmerView.xib; sourceTree = "<group>"; };
 		84E420BC2D2CF11500AA9D87 /* SpecificStudentTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecificStudentTvcell.swift; sourceTree = "<group>"; };
@@ -2687,6 +2693,7 @@
 				843960242D11938000FC3242 /* LanguageManager.swift */,
 				843960262D1193AD00FC3242 /* Bundle+Language.swift */,
 				849D72352D14272C0060E222 /* NetworkMoniter.swift */,
+				84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3182,6 +3189,8 @@
 				84F986312D3A6169009FF065 /* QuizTVcell.xib */,
 				84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */,
 				84FB97D12D3E31FF00EBF9F4 /* CompletedTVcell.xib */,
+				84D32C952D55CE2300A420A9 /* QuizListTvCell.swift */,
+				84D32C962D55CE2300A420A9 /* QuizListTvCell.xib */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -3505,6 +3514,7 @@
 				849AD0122D1A83CA002DEC07 /* HomeworkreportTV.xib in Resources */,
 				849AD0132D1A83CA002DEC07 /* SenderSideHomeWorkViewController.xib in Resources */,
 				849F4C752D24010300C9F4BF /* addCvCell.xib in Resources */,
+				84D32C972D55CE2300A420A9 /* QuizListTvCell.xib in Resources */,
 				849F4C762D24010300C9F4BF /* seeMore.xib in Resources */,
 				849970B72CF8750B00800B07 /* ImageCViewCell.xib in Resources */,
 				84F9863B2D3A6E8E009FF065 /* PlayQuizVc.xib in Resources */,
@@ -3832,6 +3842,7 @@
 				849F4C772D24010300C9F4BF /* addCvCell.swift in Sources */,
 				849F4C782D24010300C9F4BF /* seeMore.swift in Sources */,
 				18926C552D02DE81002BBB97 /* FileAttachmentTableViewCell.swift in Sources */,
+				84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */,
 				18926C562D02DE81002BBB97 /* RestrictionRequest.swift in Sources */,
 				18926C572D02DE81002BBB97 /* RestrictionModal.swift in Sources */,
 				18926C582D02DE81002BBB97 /* GetAttachmentForSkill.swift in Sources */,
@@ -3890,6 +3901,7 @@
 				18D718A22D0D477900E9EDA3 /* PunchHistoryListVC.swift in Sources */,
 				18D718A32D0D477900E9EDA3 /* CreateLocationViewController.swift in Sources */,
 				18D718A42D0D477900E9EDA3 /* EditLocResp.swift in Sources */,
+				84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */,
 				18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */,
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
 				18D718A72D0D477900E9EDA3 /* deleteVc.swift in Sources */,

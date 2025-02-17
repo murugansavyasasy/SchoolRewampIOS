@@ -8,17 +8,25 @@
 import UIKit
 import WebKit
 
-class ImportantInfoViewController: UIViewController {
+class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
 
+    @IBOutlet weak var LoadingView: UIView!
+    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var backView: UIView!
+    
+    @IBOutlet weak var LoadingLbl: UILabel!
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
+    var Header = "Important info"
     override func viewDidLoad() {
         super.viewDidLoad()
-        webkitLoading()
         
-        
+       
+        webView.navigationDelegate = self
+        HeaderLbl.text = Header
         let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
         backView.addGestureRecognizer(backGesture)
+        webkitLoading()
     }
 
     override func viewDidLayoutSubviews() {
@@ -38,6 +46,28 @@ class ImportantInfoViewController: UIViewController {
         let url = URL (string: urlStr)
                let requestObj = URLRequest(url: url!)
                webView.load(requestObj)
+        
     }
+    
+    // MARK: - WKNavigationDelegate Methods
+
+       // Show loading animation when page starts loading
+       func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+           LoadingView.isHidden = false
+           ActivityIndicator.startAnimating()
+       }
+
+       // Hide loading animation when page finishes loading
+       func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+           LoadingView.isHidden = true
+           ActivityIndicator.stopAnimating()
+       }
+
+       // Hide loading animation in case of an error
+       func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+           LoadingView.isHidden = true
+           ActivityIndicator.stopAnimating()
+           print("Error loading page: \(error.localizedDescription)")
+       }
 
 }

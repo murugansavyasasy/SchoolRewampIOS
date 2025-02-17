@@ -188,12 +188,22 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
+    func senderSchoolNeedsNavigate(from viewController: UIViewController) {
+        let vc = ImportantInfoViewController(nibName: nil, bundle: nil)
+        vc.Header = "School Needs"
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     func dailyCollectionNavigate(from viewController: UIViewController) {
         let vc = NewDailyCollectionViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    
+    func StaffWiseAttendance(from viewController: UIViewController) {
+        let vc = LocationHistoryVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
     
     
     //MARK: ResiverSideMenuViewContoller Starts

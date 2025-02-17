@@ -9,8 +9,9 @@ import UIKit
 import SDWebImage
 import WebKit
 
-class ImageShowVc: UIViewController {
+class ImageShowVc: UIViewController{
     
+    @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var pdfView: WKWebView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var cv: UICollectionView!
@@ -25,9 +26,9 @@ class ImageShowVc: UIViewController {
     var type = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        pdfView.navigationDelegate = self
         // Do any additional setup after loading the view.
-
+        
         cv.delegate = self
         cv.dataSource = self
         
@@ -55,6 +56,7 @@ class ImageShowVc: UIViewController {
                 pdfView.isHidden = true
                 textView.isHidden = false
             case 2:
+                ActivityIndicator.stopAnimating()
                 cv.isHidden = false
                 pdfView.isHidden = true
                 textView.isHidden = true
@@ -115,4 +117,17 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
     }
     
     
+}
+
+extension ImageShowVc : WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        ActivityIndicator.startAnimating()
+    }
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        ActivityIndicator.stopAnimating()
+    }
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: any Error) {
+        ActivityIndicator.stopAnimating()
+    }
 }

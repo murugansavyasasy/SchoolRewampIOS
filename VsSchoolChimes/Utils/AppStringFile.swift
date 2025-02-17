@@ -110,7 +110,7 @@ class AlertstringFile{
     static let Enter_valid_Mobile = "Enter valid Mobile".translated()
     static let Invalid = "Invalid Password".translated()
     static let Enter_the_10_digit = "Enter the 10 digit mobile number".translated()
-    static let Tems_And_Conition = "Please aggree to the terms and condition".translated()
+    static let Terms_And_Conditions = "Please agree to the terms and conditions".translated()
     static let Enter_Otp = "Enter the otp".translated()
     static let OK = "Ok".translated()
     static let  enableRemindersAccess =  "Please enable reminders access in Settings.".translated()
@@ -299,6 +299,7 @@ class RatingCellStringFile{
     static let Nice =  "Nice".translated()
     static let Well_done =  "Well done".translated()
     static let Excellent =  "Excellent".translated()
+    static let Good =  "Good".translated()
     
 }
 class PiechartCvcellStringFile{

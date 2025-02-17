@@ -96,13 +96,6 @@ class ParentHomePageVc: UIViewController {
         assignmentkBtn.layer.cornerRadius = 10
         onlineMeetingBtn.layer.cornerRadius = 10
         
-        view.applyGradient(
-            colors: [Colornames.gradientBlue,  // Green
-                     Colornames.gradientgreen],
-            startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
-            endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
-        )
-        
         setupVideoBackground()
         
         let value = UserDefaults.standard.integer(forKey: "passvalue")
@@ -136,6 +129,30 @@ class ParentHomePageVc: UIViewController {
         Profileimage.addGestureRecognizer(profiletap)
         Profileimage.isUserInteractionEnabled = true
         
+       
+    }
+    
+    
+    
+    @IBAction func ViewDetailsBtn(_ sender: Any) {
+        
+        print("clikcHappen")
+        MenuRedirect.receiverAttendancereport(from: self)
+        
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
+        view.applyGradient(
+            colors: [
+                Colornames.gradientBlue,  // Green
+                Colornames.gradientgreen   // Blue
+            ],
+            startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
+            endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
+        )
+        
         configureButton(
             homeworkBtn,
             title: MenuStringFile.OnlineMeeting,
@@ -161,28 +178,6 @@ class ParentHomePageVc: UIViewController {
             imageName: UIImage(named: "Assignment"),
             gradientColors:[UIColor.yellow,UIColor.red],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
-        )
-    }
-    
-    
-    
-    @IBAction func ViewDetailsBtn(_ sender: Any) {
-        
-        print("clikcHappen")
-        MenuRedirect.receiverAttendancereport(from: self)
-        
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        
-        view.applyGradient(
-            colors: [
-                Colornames.gradientBlue,  // Green
-                Colornames.gradientgreen   // Blue
-            ],
-            startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
-            endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
         )
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -227,7 +222,8 @@ class ParentHomePageVc: UIViewController {
             let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
                 image.draw(in: CGRect(origin: .zero, size: imageSize))
             }
-            button.setImage(resizedImage, for: .normal)
+            button.setImage(resizedImage.withRenderingMode(.alwaysTemplate), for: .normal)
+            button.tintColor = .gray
         }
         
         // Align image and title
@@ -450,7 +446,7 @@ extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource
             case ReceiverMenuItems.RequestLeave.translated():
                 MenuRedirect.LeaveRquest(from: self)
             case ReceiverMenuItems.FeeDetails.translated():
-                MenuRedirect.receiverchat(from: self)
+                print("fee details")//MenuRedirect.receiverchat(from: self)
             case ReceiverMenuItems.InteractionWithStaff.translated():
                 MenuRedirect.receiverchat(from: self)
                 print(getValue)
@@ -610,7 +606,7 @@ extension UIView {
     
     func applyGradient(colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) {
         // Adjust the alpha of the colors to make them less opaque
-        let adjustedColors = colors.map { $0.withAlphaComponent(0.7) }
+        let adjustedColors = colors.map { $0.withAlphaComponent(0.65) }
         
         // Create a gradient layer
         let gradientLayer = CAGradientLayer()

@@ -9,13 +9,15 @@
 import UIKit
 import DropDown
 class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    @IBOutlet weak var HeaderLbl: UILabel!
+    
     @IBOutlet weak var seachHeight: NSLayoutConstraint!
     @IBOutlet weak var todayDefaultLbl: UILabel!
     @IBOutlet weak var staffWiseDefaultLbl: UILabel!
     @IBOutlet weak var selectYrHeight: NSLayoutConstraint!
     @IBOutlet weak var selctStaffHeight: NSLayoutConstraint!
     @IBOutlet weak var noRecordLbl: UILabel!
-    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var staffDefaultsLbl: UILabel!
     @IBOutlet weak var selectMthLbl: UILabel!
     @IBOutlet weak var yearLbl: UILabel!
@@ -43,8 +45,29 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var url_date : String!
     var dateAndMoth : String!
     
+    let attendanceRecords: [Attendance] = [
+        Attendance(staffName: "Alice Johnson", dayType: "Full Day", status: "Present", firstIn: "08:45", lastOut: "17:30", workingHours: "8.75"),
+        Attendance(staffName: "Bob Smith", dayType: "Half Day", status: "Present", firstIn: "09:00", lastOut: "13:00", workingHours: "4.0"),
+        Attendance(staffName: "Charlie Brown", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
+        Attendance(staffName: "Diana Ross", dayType: "Full Day", status: "Present", firstIn: "09:15", lastOut: "18:00", workingHours: "8.75"),
+        Attendance(staffName: "Ethan Hunt", dayType: "Half Day", status: "Present", firstIn: "10:00", lastOut: "14:00", workingHours: "4.0"),
+        Attendance(staffName: "Fiona Green", dayType: "Full Day", status: "Present", firstIn: "08:30", lastOut: "17:45", workingHours: "9.25"),
+        Attendance(staffName: "George White", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
+        Attendance(staffName: "Hannah Blue", dayType: "Full Day", status: "Present", firstIn: "09:00", lastOut: "18:30", workingHours: "9.5"),
+        Attendance(staffName: "Ian Black", dayType: "Half Day", status: "Present", firstIn: "12:00", lastOut: "16:00", workingHours: "4.0"),
+        Attendance(staffName: "Julia Red", dayType: "Full Day", status: "Present", firstIn: "09:30", lastOut: "18:15", workingHours: "8.75")
+    ]
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        todayStaffView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        todayDefaultLbl.textColor = .white
+        staffWiseDefaultLbl.textColor = .gray
         noRecordLbl.isHidden = true
         yearsView.isHidden = true
         monthView.isHidden = true
@@ -84,10 +107,12 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
             let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
             tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
+            tv.delegate = self
+            tv.dataSource = self
+            tv.reloadData()
+            
             let today = UITapGestureRecognizer(target: self, action: #selector(todayView))
             todayStaffView.addGestureRecognizer(today)
-            let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
-            backView.addGestureRecognizer(back)
             let allStaff = UITapGestureRecognizer(target: self, action: #selector(allStaffVIew))
             allsatffView.addGestureRecognizer(allStaff)
             let seletYrs = UITapGestureRecognizer(target: self, action: #selector(selectYearsViewClick))
@@ -99,19 +124,35 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
+    
     @IBAction func backClick(){
         dismiss(animated: true)
     }
     
     @IBAction func todayView(){
         seachHeight.constant = 56
-        tv.isHidden = true
-            
-        todayStaffView.backgroundColor = Colornames.CustomOrange
-       
-        allsatffView.backgroundColor = .white
-        staffWiseDefaultLbl.textColor = .black
+        tv.isHidden = false
+        
+        todayStaffView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        allsatffView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
         todayDefaultLbl.textColor = .white
+        staffWiseDefaultLbl.textColor = .gray
+        
         monthView.isHidden = true
         yearsView.isHidden = true
         staffDropViewHeight.constant = 0
@@ -126,18 +167,25 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         display_date = formattedDate
         noRecordLbl.isHidden = true
         RefId = 1
+        tv.reloadData()
     }
     
     @IBAction func allStaffVIew(){
         seachHeight.constant = 0
         noRecordLbl.isHidden = true
-        allsatffView.backgroundColor = Colornames.CustomOrange
-      
-      
-        
-        todayStaffView.backgroundColor = .white
+        allsatffView.applyGradient(
+            colors: [UIColor.blue,UIColor.systemTeal],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        todayStaffView.applyGradient(
+            colors: [UIColor.systemGray6,UIColor.systemGray6],
+            startPoint: CGPoint(x: 0, y: 0.5),
+            endPoint: CGPoint(x: 0.8, y: 0.5)
+        )
+        todayDefaultLbl.textColor = .gray
         staffWiseDefaultLbl.textColor = .white
-        todayDefaultLbl.textColor = .black
+        
         RefId = 2
         monthView.isHidden = false
         yearsView.isHidden = false
@@ -145,7 +193,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         selectYrHeight.constant = 30
         selctStaffHeight.constant = 38
         staffDefaultsLbl.isHidden = false
-        tv.isHidden = true
+        tv.isHidden = false
+        tv.reloadData()
         dateAndMoth = ""
     }
     
@@ -198,7 +247,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return attendanceRecords.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -219,10 +268,30 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.toDateLbl.isHidden = false
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
+        
+        cell.namelbl.text = attendanceRecords[indexPath.row].staffName
+        cell.attendanceTypeLbl.text = attendanceRecords[indexPath.row].dayType
+        cell.firstInLbl.text = "First in - " + attendanceRecords[indexPath.row].firstIn
+        cell.toDateLbl.text = "Last out - " + attendanceRecords[indexPath.row].lastOut
+        cell.workingHrsLbl.text = "Working Hours - " + attendanceRecords[indexPath.row].workingHours
+        cell.StatusLbl.text = attendanceRecords[indexPath.row].status
+        if cell.StatusLbl.text == "Absent" {
+            cell.StatusLbl.backgroundColor = .systemRed
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
+        let historyTap = UITapGestureRecognizer(target: self, action: #selector(GoTOHISTORY))
+        cell.historyTimImage.addGestureRecognizer(historyTap)
+        cell.historyTimImage.isUserInteractionEnabled = true
         return cell
     }
+    
+    @objc func GoTOHISTORY(){
+        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+   
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -645,3 +714,12 @@ class ShowPunchHistiryClick : UITapGestureRecognizer{
  
  */
 
+struct Attendance {
+    var staffName: String
+    var dayType: String // "Half Day" or "Full Day"
+    var status: String // "Present" or "Absent"
+    var firstIn: String // Time format "HH:mm"
+    var lastOut: String // Time format "HH:mm"
+    var workingHours: String // Total working hours
+    
+}

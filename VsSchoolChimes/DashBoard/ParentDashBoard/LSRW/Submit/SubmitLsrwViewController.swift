@@ -16,6 +16,7 @@ import KRProgressHUD
 
 class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIDocumentPickerDelegate, AVAudioRecorderDelegate, AVAudioPlayerDelegate,UITextViewDelegate {
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var addAttachHeadingLbl: UILabel!
     @IBOutlet weak var restrictionTv: UITableView!
     @IBOutlet weak var restrictionView: UIView!
@@ -23,7 +24,6 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
     @IBOutlet weak var voiceOverAllHeight: NSLayoutConstraint!
     @IBOutlet weak var addAttachTop: NSLayoutConstraint!
     @IBOutlet weak var PlayVocieButton: UIButton!
-    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var submitView: UIView!
     @IBOutlet weak var overallTimeLbl: UILabel!
     @IBOutlet weak var uploadFileImg: UIImageView!
@@ -122,9 +122,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         contentTextViw.isHidden = false
         timerLbl.text = "00:00"
         addBtn.setTitle("Add Content", for: .normal)
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        backView.addGestureRecognizer(backGesture)
-        
+        submitView.layer.cornerRadius = 10
 //        let strImageLimit : NSString = UserDefaults.standard.object(forKey: IMAGE_COUNT) as! NSString
 //        imageLimit = strImageLimit.integerValue
         print("imageLimit",imageLimit)
@@ -161,8 +159,13 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
         
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
 
-    @IBAction func backVc() {
+
+    @IBAction func backAct() {
         dismiss(animated: true)
     }
     
@@ -287,7 +290,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.delegate = self
                 tv.dataSource = self
                 tv.reloadData()
-                submitView.backgroundColor = UIColor(named: "serach_color")
+                submitView.backgroundColor = .button
                 
             }else  if dropDownTextLbl.text == "Image" {
                 //            pathArr.removeAll()
@@ -305,7 +308,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.dataSource = self
                 tv.reloadData()
                 addBtn.backgroundColor = .lightGray
-                submitView.backgroundColor = Colornames.serach_color
+                submitView.backgroundColor = .button
 
             }else  if dropDownTextLbl.text == "Pdf" {
                 
@@ -320,8 +323,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.dataSource = self
                 addBtn.backgroundColor = .lightGray
                 tv.reloadData()
-                submitView.backgroundColor = Colornames.serach_color
-
+                submitView.backgroundColor = .button
                 
             }else  if dropDownTextLbl.text == "Voice" {
 //                pathArr.append(contentTextViw.text)
@@ -333,7 +335,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.delegate = self
                 tv.dataSource = self
                 tv.reloadData()
-                submitView.backgroundColor = Colornames.serach_color
+                submitView.backgroundColor = .button
 
             }else  if dropDownTextLbl.text == "Video" {
               
@@ -348,7 +350,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                 tv.delegate = self
                 tv.dataSource = self
                 tv.reloadData()
-                submitView.backgroundColor = Colornames.serach_color
+                submitView.backgroundColor = .button
 
                 
             }
@@ -386,7 +388,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
           print("Text changed to: \(textView.text ?? "")")
         if textView.text.count > 0 {
                 // Change the button color to blue when text exists
-            addBtn.backgroundColor = Colornames.AddContent
+            addBtn.backgroundColor = .button
             } else {
                 // Change the button color to gray when no text exists
                 addBtn.backgroundColor = .lightGray
@@ -427,7 +429,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
             if pdfData!.count > 0 {
                     // Change the button color to blue when text exists
                
-                addBtn.backgroundColor = Colornames.AddContent
+                addBtn.backgroundColor = .button
 
                 } else {
                     // Change the button color to gray when no text exists
@@ -603,8 +605,7 @@ class SubmitLsrwViewController: UIViewController,UITableViewDataSource,UITableVi
                         let chosenImage = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
 
             picker.dismiss(animated: true, completion: nil)
-            self.addBtn.backgroundColor = Colornames.AddContent
-
+            self.addBtn.backgroundColor = .button
 //            self.uploadAWS(image:chosenImage)
 
         }else {

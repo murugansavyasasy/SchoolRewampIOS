@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="140" height="124"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FNy-DY-QgV" customClass="AnimatView" customModule="VsSchoolChimes" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FNy-DY-QgV" customClass="CustomShimmerView" customModule="VsSchoolChimes" customModuleProvider="target">
                         <rect key="frame" x="10" y="10" width="120" height="99"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SM6-YI-4ac" customClass="ShimmerView" customModule="VsSchoolChimes" customModuleProvider="target">
@@ -77,11 +77,11 @@
             </constraints>
             <size key="customSize" width="59" height="34"/>
             <connections>
-                <outlet property="GradientView" destination="SM6-YI-4ac" id="577-QF-sLJ"/>
-                <outlet property="MenuImgView" destination="KTI-hm-DIW" id="M0C-XX-L5b"/>
-                <outlet property="MenuLabelview" destination="W9h-ek-HJc" id="Seg-fl-w3Y"/>
-                <outlet property="MenuLbl" destination="lFN-A5-5Ml" id="bKp-gP-Mlp"/>
-                <outlet property="shimmersViewss" destination="FNy-DY-QgV" id="3hc-As-f8u"/>
+                <outlet property="GradientView" destination="SM6-YI-4ac" id="1Dr-wm-QtJ"/>
+                <outlet property="MenuImgView" destination="KTI-hm-DIW" id="75U-DB-jkZ"/>
+                <outlet property="MenuLabelview" destination="W9h-ek-HJc" id="QKk-5I-Wj4"/>
+                <outlet property="MenuLbl" destination="lFN-A5-5Ml" id="77p-P7-Ey0"/>
+                <outlet property="shimmersViewss" destination="FNy-DY-QgV" id="BIw-gh-Na4"/>
             </connections>
             <point key="canvasLocation" x="143.5114503816794" y="14.084507042253522"/>
         </collectionViewCell>
