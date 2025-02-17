@@ -606,7 +606,7 @@ extension UIView {
     
     func applyGradient(colors: [UIColor], startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) {
         // Adjust the alpha of the colors to make them less opaque
-        let adjustedColors = colors.map { $0.withAlphaComponent(0.7) }
+        let adjustedColors = colors.map { $0.withAlphaComponent(0.65) }
         
         // Create a gradient layer
         let gradientLayer = CAGradientLayer()
