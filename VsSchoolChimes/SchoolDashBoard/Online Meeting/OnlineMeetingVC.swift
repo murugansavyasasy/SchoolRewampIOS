@@ -522,7 +522,7 @@ extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
         let colorName = assetColors[indexPath.row % assetColors.count]
         let colour1 = UIColor(named: colorName)
         let gradient = gradientcolour[indexPath.row % gradientcolour.count]
-//        let colour2 =  UIColor(named: gradient)
+        let colour2 =  UIColor(named: gradient)
         
         cell.cellview.backgroundColor = colour1
 //        cell.contentview.backgroundColor = colour2
