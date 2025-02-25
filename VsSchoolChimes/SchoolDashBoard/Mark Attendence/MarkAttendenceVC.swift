@@ -459,21 +459,18 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
         
         if status[indexPath.row] == true{
             
-//            cell.cellView.layer.borderWidth = 1
-            cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
+           // cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
             cell.statusView.backgroundColor = .systemGreen
             cell.statusLbl.text = "Present"
-           // cell.cellView.layer.cornerRadius = 10
-           // cell.Imgview.image = UIImage(named: "present")
+           
         }
         else{
             
             
-            cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
+           // cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
             cell.statusView.backgroundColor = .systemRed
             cell.statusLbl.text = "Absent"
            
-           // cell.Imgview.image = UIImage(named: "Absent")
         }
         
         return cell

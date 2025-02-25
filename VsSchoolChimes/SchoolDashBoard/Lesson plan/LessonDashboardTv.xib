@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="195" id="KGk-i7-Jjw" customClass="LessonDashboardTv" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="381" height="195"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="381" height="195"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFj-dL-r9b">
+                        <rect key="frame" x="10" y="5" width="361" height="180"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="b4C-Jt-5Rp">
+                                <rect key="frame" x="13" y="10" width="214" height="101"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Principles of Management" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fee-bV-4eB">
+                                        <rect key="frame" x="0.0" y="0.0" width="214" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="XI - A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Io1-9c-8YS">
+                                        <rect key="frame" x="0.0" y="23.333333333333332" width="214" height="54.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Staff : Lakshmanan S" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wmb-VX-if7">
+                                        <rect key="frame" x="0.0" y="80.666666666666671" width="214" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LP4-0i-4lS" customClass="PieChartView" customModule="Charts">
+                                <rect key="frame" x="251" y="0.0" width="120" height="120"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="2PZ-cM-Mz0"/>
+                                    <constraint firstAttribute="height" constant="120" id="O7e-dT-E6s"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zS4-wl-DWP">
+                                <rect key="frame" x="15" y="125" width="136" height="35"/>
+                                <color key="backgroundColor" name="gradient1"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="7kZ-6v-v88"/>
+                                    <constraint firstAttribute="width" constant="136" id="p9V-Ea-jWA"/>
+                                </constraints>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="View Progress" image="comp"/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wxa-Zq-Bsm">
+                                <rect key="frame" x="0.0" y="0.0" width="8" height="180"/>
+                                <color key="backgroundColor" name="gradient2"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="8" id="JCw-sM-4E2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="LP4-0i-4lS" firstAttribute="leading" secondItem="b4C-Jt-5Rp" secondAttribute="trailing" constant="24" id="5by-MR-zMN"/>
+                            <constraint firstAttribute="trailing" secondItem="LP4-0i-4lS" secondAttribute="trailing" constant="-10" id="8bj-tL-fgf"/>
+                            <constraint firstItem="wxa-Zq-Bsm" firstAttribute="top" secondItem="eFj-dL-r9b" secondAttribute="top" id="9Co-nz-Vdd"/>
+                            <constraint firstItem="b4C-Jt-5Rp" firstAttribute="leading" secondItem="wxa-Zq-Bsm" secondAttribute="trailing" constant="5" id="Aio-tc-I2b"/>
+                            <constraint firstItem="wxa-Zq-Bsm" firstAttribute="leading" secondItem="eFj-dL-r9b" secondAttribute="leading" id="Xtg-S0-WHM"/>
+                            <constraint firstAttribute="bottom" secondItem="zS4-wl-DWP" secondAttribute="bottom" constant="20" symbolic="YES" id="gz9-6C-R0I"/>
+                            <constraint firstAttribute="bottom" secondItem="wxa-Zq-Bsm" secondAttribute="bottom" id="hYN-1s-uN9"/>
+                            <constraint firstItem="b4C-Jt-5Rp" firstAttribute="top" secondItem="eFj-dL-r9b" secondAttribute="top" constant="10" id="iCw-ne-Rvy"/>
+                            <constraint firstItem="zS4-wl-DWP" firstAttribute="leading" secondItem="eFj-dL-r9b" secondAttribute="leading" constant="15" id="sUP-5x-2EF"/>
+                            <constraint firstItem="zS4-wl-DWP" firstAttribute="top" secondItem="b4C-Jt-5Rp" secondAttribute="bottom" constant="14" id="v3B-Iy-Lbr"/>
+                            <constraint firstItem="LP4-0i-4lS" firstAttribute="top" secondItem="eFj-dL-r9b" secondAttribute="top" id="w4p-4q-dL6"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="eFj-dL-r9b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="DRl-z0-H8P"/>
+                    <constraint firstAttribute="trailing" secondItem="eFj-dL-r9b" secondAttribute="trailing" constant="10" id="hmZ-v5-0da"/>
+                    <constraint firstItem="eFj-dL-r9b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="sAS-EB-9uK"/>
+                    <constraint firstAttribute="bottom" secondItem="eFj-dL-r9b" secondAttribute="bottom" constant="10" id="zDv-6T-E1v"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="Cellview" destination="eFj-dL-r9b" id="MFl-Nx-gG0"/>
+                <outlet property="SideColourView" destination="wxa-Zq-Bsm" id="i9i-3K-KqU"/>
+                <outlet property="StaffNameLbl" destination="wmb-VX-if7" id="Shu-ra-u3o"/>
+                <outlet property="StandardLbl" destination="Io1-9c-8YS" id="md5-de-5PR"/>
+                <outlet property="SubjectLbl" destination="fee-bV-4eB" id="Nmm-BG-twD"/>
+                <outlet property="ViewBtn" destination="zS4-wl-DWP" id="1bJ-5e-MFe"/>
+                <outlet property="pieChartView" destination="LP4-0i-4lS" id="MpJ-VG-hsK"/>
+            </connections>
+            <point key="canvasLocation" x="95.419847328244273" y="67.957746478873247"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="comp" width="128" height="128"/>
+        <namedColor name="gradient1">
+            <color red="0.49803921568627452" green="0.81960784313725488" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gradient2">
+            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

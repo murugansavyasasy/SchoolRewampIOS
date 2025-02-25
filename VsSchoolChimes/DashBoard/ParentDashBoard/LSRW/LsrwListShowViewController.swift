@@ -18,7 +18,8 @@ import Alamofire
 
 class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
   
-    
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var nodataView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -47,7 +48,9 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     var onImagePicked: (([UIImage]) -> Void)?
 //    var viewSkillDatas : [ViewAllSkillByData] = []
 //    var clone_list : [ViewAllSkillByData] = []
-    var rowIdentifier = "LsrwListShowTableViewCell"
+    //var rowIdentifier = "LsrwListShowTableViewCell"
+    //var rowIdentifier = "LSRWTvCell"
+    var rowIdentifier = "NewLSRWTVcell"
     var instituteId  = Int()
     var studentId = String()
     
@@ -125,7 +128,9 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         backBtn.titleLabel?.lineBreakMode = .byWordWrapping
         nodataView.isHidden = true
         nodataLbl.isHidden = true
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        
         tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
         tv.delegate = self
         tv.dataSource = self
@@ -224,8 +229,8 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         return tasks.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as! LsrwListShowTableViewCell
+   /* func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as! NewLSRWTVcell /*LsrwListShowTableViewCell*/
         
         
 //        let skillData : ViewAllSkillByData = viewSkillDatas[indexPath.row]
@@ -265,13 +270,37 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
 //        cell.takingSkillView.addGestureRecognizer(attachGes)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(AttachmentRedirect))
-        cell.takingSkillView.addGestureRecognizer(tap)
-        cell.titleLbl.text = tasks[indexPath.row].title
-        cell.descLbl.text = tasks[indexPath.row].description
-        cell.subLbl.text = tasks[indexPath.row].subject
-        cell.submittedOnLbl.text = tasks[indexPath.row].SubmitedOn
-        cell.sentByLbl.text = "Lakshmanan"
+//        cell.takingSkillView.addGestureRecognizer(tap)
+//        cell.titleLbl.text = tasks[indexPath.row].title
+//        cell.descLbl.text = tasks[indexPath.row].description
+//        cell.subLbl.text = tasks[indexPath.row].subject
+//        cell.submittedOnLbl.text = tasks[indexPath.row].SubmitedOn
+//        cell.sentByLbl.text = "Lakshmanan"
+        cell.TitleLbl.text = tasks[indexPath.row].title
+        cell.DescriptionLbl.text = tasks[indexPath.row].description
+        cell.SubjectLbl.text = tasks[indexPath.row].subject
+        cell.SubmittedLbl.text = tasks[indexPath.row].SubmitedOn
+//        let colour = UIColor.attendence.adjustedColor(brightnessFactor: 5.0,saturationFactor: 0.4)
+        let colour : UIColor!
+        if indexPath.row % 2 == 0{
+             colour = UIColor.attendence.blendedWithWhite(factor: 0.6)
+        }else{
+             colour = UIColor.lesson1
+        }
         
+        cell.CellView.backgroundColor = colour.blendedWithWhite(factor: 0.3)
+        cell.takeSkillBtn.addGestureRecognizer(tap)
+        return cell
+    }*/
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tv.dequeueReusableCell(withIdentifier: rowIdentifier, for: indexPath) as! NewLSRWTVcell
+        cell.TitleLbl.text = tasks[indexPath.row].title
+        cell.DescriptionLbl.text = tasks[indexPath.row].description
+        cell.Subject.setTitle(tasks[indexPath.row].subject, for: .normal)
+        cell.Date.setTitle(tasks[indexPath.row].SubmitedOn, for: .normal)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(AttachmentRedirect))
+        cell.TakeSkillBtn.addGestureRecognizer(tap)
         return cell
     }
     

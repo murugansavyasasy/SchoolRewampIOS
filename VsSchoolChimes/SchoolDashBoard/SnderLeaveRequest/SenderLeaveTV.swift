@@ -61,11 +61,11 @@ class SenderLeaveTV: UITableViewCell {
         
     }
     @IBAction func aprovedBtn(_ sender: UIButton) {
-        delegate?.confirm(index: sender.tag, status: "Approved")
+        delegate?.confirm(index: sender.tag, status: "Approved", AlertMsg: "Approve")
         
     }
     @IBAction func rejectBtn(_ sender: UIButton) {
         print("Rejected")
-        delegate?.confirm(index: sender.tag, status: "Rejected")
+        delegate?.confirm(index: sender.tag, status: "Rejected", AlertMsg: "Reject")
     }
 }

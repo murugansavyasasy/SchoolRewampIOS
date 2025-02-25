@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LessonPlanVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="ButtonStackview" destination="jHp-sf-kcz" id="Gls-Z6-1Ov"/>
+                <outlet property="HeaderLbl" destination="UvA-c7-ggo" id="Le3-LB-lYU"/>
                 <outlet property="createBtn" destination="s4U-tu-SDV" id="IsO-kY-4Sh"/>
                 <outlet property="searchBar" destination="dr7-Rn-lEB" id="bNK-l0-wak"/>
                 <outlet property="tableview" destination="Q45-3M-bwr" id="ia1-vR-7mh"/>
@@ -55,8 +56,8 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s4U-tu-SDV">
                                     <rect key="frame" x="0.0" y="0.0" width="176.66666666666666" height="40"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="All classes"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="All classes"/>
                                     <connections>
                                         <action selector="createBtnAct:" destination="-1" eventType="touchUpInside" id="mOL-G0-F6h"/>
                                     </connections>
@@ -64,8 +65,8 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4sn-IX-hAJ">
                                     <rect key="frame" x="156.66666666666663" y="0.0" width="176.33333333333337" height="40"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="My classes"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="My classes"/>
                                     <connections>
                                         <action selector="viewBtnAct:" destination="-1" eventType="touchUpInside" id="squ-6g-lcs"/>
                                     </connections>
