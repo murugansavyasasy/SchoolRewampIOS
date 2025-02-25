@@ -11,15 +11,18 @@ import Charts
 class LessonPlanTvCell: UITableViewCell {
     
     @IBOutlet weak var navigateview: UIView!
-    @IBOutlet weak var viewBtn: UIButton!
     @IBOutlet weak var redLabel: UILabel!
     @IBOutlet weak var Redview: UIView!
     @IBOutlet weak var Greenlabel: UILabel!
     @IBOutlet weak var Greenview: UIView!
     @IBOutlet weak var percentagesStackView: UIStackView!
     @IBOutlet weak var Cellview: UIView!
-    
     @IBOutlet weak var pieChartView: PieChartView!
+    @IBOutlet weak var SubjectLbl: UILabel!
+    @IBOutlet weak var CompletedLbl: UILabel!
+    @IBOutlet weak var StaffNameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
+    @IBOutlet weak var ButtonLbl: UILabel!
     
     var val1: Double! = 75
     var val2: Double! = 25
@@ -41,11 +44,19 @@ class LessonPlanTvCell: UITableViewCell {
         // Optional: Add a border for a polished look
         Cellview.layer.borderColor = UIColor.lightGray.cgColor
         Cellview.layer.borderWidth = 0.5
-        
         // Background color for the card
         Cellview.backgroundColor = .white
         navigateview.layer.cornerRadius = 10
-        //viewBtn.layer.cornerRadius = 10
+        
+        SubjectLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        StaffNameLbl.setFont(style: .body, size: FontSize.BodySize)
+        CompletedLbl.setFont(style: .body, size: FontSize.BodySize)
+        ButtonLbl.setFont(style: .body, size: FontSize.BodySize)
+        redLabel.setFont(style: .body, size: FontSize.BodySize)
+        Greenlabel.setFont(style: .body, size: FontSize.BodySize)
+
+        
         pieChartView.frame = CGRect(x: 0, y: 0, width: 180, height: 165)
         setupPieChart()
         

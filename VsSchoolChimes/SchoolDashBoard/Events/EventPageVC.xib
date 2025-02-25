@@ -28,11 +28,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpr-Lv-zOq">
                     <rect key="frame" x="0.0" y="109" width="430" height="789"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="1dg-g2-rGC">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-20" translatesAutoresizingMaskIntoConstraints="NO" id="1dg-g2-rGC">
                             <rect key="frame" x="50" y="10" width="330" height="40"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njW-Lw-5Wv">
-                                    <rect key="frame" x="0.0" y="0.0" width="180" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="175" height="40"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="Create"/>
                                     <connections>
@@ -40,7 +40,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1af-1a-6C4">
-                                    <rect key="frame" x="150" y="0.0" width="180" height="40"/>
+                                    <rect key="frame" x="155" y="0.0" width="175" height="40"/>
                                     <color key="tintColor" name="topBackgroundCLr 1"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <state key="normal" title="History"/>

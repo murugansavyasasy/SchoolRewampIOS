@@ -67,13 +67,12 @@ class ParentHomePageVc: UIViewController {
         displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
         displayedCategories.insert(newString, at: 5)
         filteredItems = MenuRedirect.items
-       // setupSearchBar()
-        //    startAutoScroll()
+        
         cellRegistration()
         //startPlaceholderRotation()
         addDoneButton()
         
-        //templateview.roundTopCorners(radius: 10)
+      
         templateview.layer.cornerRadius = 10 // Adjust as needed
         templateview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Top-left and Top-right corners
         templateview.clipsToBounds = true // Ensures the corners are clipped
@@ -89,7 +88,6 @@ class ParentHomePageVc: UIViewController {
         reportView.layer.shadowRadius = 3
         reportView.layer.masksToBounds = false
         
-        //
         profileFullview.layer.cornerRadius =  30
         loginDetailView.layer.cornerRadius =  30
         homeworkBtn.layer.cornerRadius = 10
@@ -100,7 +98,6 @@ class ParentHomePageVc: UIViewController {
         
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
-        // Do any additional setup after loading the view.
         Searchbar.placeholder = CommonStringFile.Search.translated()
         Searchbar.delegate = self
         searchHeightCon.constant = 0
@@ -133,6 +130,7 @@ class ParentHomePageVc: UIViewController {
     }
     
     
+
     
     @IBAction func ViewDetailsBtn(_ sender: Any) {
         
@@ -140,10 +138,12 @@ class ParentHomePageVc: UIViewController {
         MenuRedirect.receiverAttendancereport(from: self)
         
     }
+    
+ 
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        
+     
         view.applyGradient(
             colors: [
                 Colornames.gradientBlue,  // Green
@@ -152,6 +152,10 @@ class ParentHomePageVc: UIViewController {
             startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
             endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
         )
+        ButtonUIupdate()
+    }
+    
+    func ButtonUIupdate(){
         
         configureButton(
             homeworkBtn,
@@ -180,13 +184,7 @@ class ParentHomePageVc: UIViewController {
             lightenFactor: 0.8// 40% lighter
         )
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        bottomCv.delegate = self
-//        bottomCv.dataSource = self
-//        bottomCv.reloadData()
-        
-    }
+    
     // Helper function to configure the button
     func configureButton(
         _ button: UIButton,
@@ -400,8 +398,10 @@ extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource
             // Collapse back to show only the first 6 items
             displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
             displayedCategories.insert(newString, at: 5)
-            heightStackview.constant = 90
+            heightStackview.constant = 110
             collectionBtn.isHidden = false
+            ButtonUIupdate()
+            
         } else {
             // Expand to show all items
             displayedCategories = MenuRedirect.receiverItems
@@ -563,7 +563,7 @@ extension ParentHomePageVc: UISearchBarDelegate{
             collectionBtn.isHidden = true
             searchHeightCon.constant = 56
         }else{
-            heightStackview.constant = 90
+            heightStackview.constant = 110
             collectionBtn.isHidden = false
             searchHeightCon.constant = 0
             

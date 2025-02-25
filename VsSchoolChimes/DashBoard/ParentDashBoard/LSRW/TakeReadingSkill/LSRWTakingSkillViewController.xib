@@ -154,6 +154,31 @@
             </constraints>
             <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
+        <viewController id="NyR-2b-dWj">
+            <view key="view" contentMode="scaleToFill" id="mVz-bb-lYf">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <searchBar contentMode="redraw" fixedFrame="YES" searchBarStyle="minimal" showsScopeBar="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UgY-Mq-BOW">
+                        <rect key="frame" x="0.0" y="76" width="393" height="103"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" name="Clr"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <scopeButtonTitles>
+                            <string>Title</string>
+                            <string>Title</string>
+                        </scopeButtonTitles>
+                        <connections>
+                            <outlet property="delegate" destination="NyR-2b-dWj" id="Zlf-aU-wp5"/>
+                        </connections>
+                    </searchBar>
+                </subviews>
+                <viewLayoutGuide key="safeArea" id="oeN-7T-dZi"/>
+                <color key="backgroundColor" systemColor="systemGreenColor"/>
+            </view>
+            <point key="canvasLocation" x="1175" y="20"/>
+        </viewController>
     </objects>
     <resources>
         <image name="AppBG" width="360" height="640"/>
@@ -161,11 +186,17 @@
         <namedColor name="ButtonColor">
             <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="Clr">
+            <color red="0.92900002002716064" green="0.92900002002716064" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ParentClr">
             <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

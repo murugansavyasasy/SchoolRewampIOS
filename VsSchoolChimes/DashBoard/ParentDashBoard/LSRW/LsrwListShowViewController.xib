@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LsrwListShowViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="NameLbl" destination="TiL-Gs-IkH" id="DkB-So-GFJ"/>
+                <outlet property="StandardLbl" destination="EoT-wh-G39" id="gEa-mZ-t8m"/>
                 <outlet property="backBtn" destination="C3T-wS-ckn" id="Bu9-Xu-n9X"/>
                 <outlet property="bgView" destination="qjc-ha-zjw" id="uTP-JQ-BjA"/>
                 <outlet property="nodataLbl" destination="4mR-26-aIA" id="PqX-9S-w9x"/>
@@ -48,7 +50,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiL-Gs-IkH">
                                                     <rect key="frame" x="0.0" y="0.0" width="163" height="25.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EoT-wh-G39">
@@ -57,7 +59,7 @@
                                                         <constraint firstAttribute="height" constant="19.666666666666671" id="8LO-C7-RtT"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -81,7 +83,6 @@
                                             </connections>
                                         </button>
                                     </subviews>
-                                    <color key="backgroundColor" name="ParentClr"/>
                                     <constraints>
                                         <constraint firstItem="p8B-57-lGS" firstAttribute="centerY" secondItem="qjc-ha-zjw" secondAttribute="centerY" id="1UR-E5-IUw"/>
                                         <constraint firstAttribute="trailing" secondItem="2Jk-Qx-ee2" secondAttribute="trailing" constant="5" id="41L-N2-D8q"/>
@@ -104,6 +105,10 @@
                                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0a-CO-gv6">
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="50"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <scopeButtonTitles>
+                                                <string>Title</string>
+                                                <string>Title</string>
+                                            </scopeButtonTitles>
                                             <connections>
                                                 <outlet property="delegate" destination="-1" id="kCF-hg-Twv"/>
                                             </connections>
@@ -189,7 +194,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="ParentClr"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Ynr-y0-lTl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="0xL-7e-jZK"/>
                 <constraint firstItem="Ynr-y0-lTl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="9MU-Rf-Qvw"/>
@@ -202,9 +207,6 @@
     <resources>
         <image name="AppBG" width="360" height="640"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="ParentClr">
-            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="serach_color">
             <color red="0.0" green="0.37599998712539673" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -212,7 +214,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

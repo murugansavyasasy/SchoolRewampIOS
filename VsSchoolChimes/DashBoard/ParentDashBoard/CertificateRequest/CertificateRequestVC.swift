@@ -58,7 +58,7 @@ class CertificateRequestVC: UIViewController {
         ButtonStackview.layer.borderWidth = 0.0
         ButtonStackview.layer.borderColor = UIColor.gray.cgColor
         
-        ButtonStackview.backgroundColor = .clr
+        ButtonStackview.backgroundColor = .lightGray
         CertificatesBtn.backgroundColor = .white
         RequestBtn.backgroundColor = .white
      
@@ -261,7 +261,7 @@ class CertificateRequestVC: UIViewController {
         CertificatesBtn.tintColor = .black
         RequestCertificateBtn.tintColor = .lightGray
         
-        gradientcolours(button: RequestCertificateBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+        gradientcolours(button: RequestCertificateBtn, colours: [UIColor.white.cgColor,UIColor.white.cgColor])
         
         tv.isHidden = false
         RequestView.isHidden = true

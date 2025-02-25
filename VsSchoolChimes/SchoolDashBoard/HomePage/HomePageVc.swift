@@ -74,8 +74,6 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         displayedCategories = Array(filteredItems.prefix(6))
         
         displayedCategories.insert(newString, at: 5)
-          //setupSearchBar()
-         //startPlaceholderRotation()
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
         changeRollLbl.textColor = .link
         //startAutoScroll()
@@ -83,7 +81,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         addDoneButton()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
-        // Do any additional setup after loading the view.
+        
         Searchbar.placeholder = CommonStringFile.Search.translated()
         Searchbar.delegate = self
         searchHeightCon.constant = 0
@@ -113,8 +111,6 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         schoolLogoImg.addGestureRecognizer(profileTap)
         schoolLogoImg.isUserInteractionEnabled = true
         
-        //bottomView.roundTopCorners(radius: 10)
-        
         reportView.layer.cornerRadius = 5
         reportView.layer.shadowColor = UIColor.black.cgColor
         reportView.layer.shadowOpacity = 0.5
@@ -137,6 +133,12 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        
+        ButtonUIupdate()
+    }
+    
+    //MARK: Apply gradient for the UIButton
+    func ButtonUIupdate(){
         
         configureButton(
             homeworkBtn,
@@ -162,8 +164,8 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
-        
     }
+    
     // Helper function to configure the button
     func configureButton(
         _ button: UIButton,
@@ -307,20 +309,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         TopCv.register(UINib(nibName: CellConfingName.PiechartCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PiechartCVCell)
     }
     
-    func setupSearchBar() {
-        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
-    }
-    
-    func startPlaceholderRotation() {
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-            self?.updatePlaceholder()
-        }
-    }
-    
-    func updatePlaceholder() {
-        currentPlaceholderIndex = (currentPlaceholderIndex + 1) % MenuRedirect.items.count
-        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
-    }
+
     
     deinit {
         timer?.invalidate()
@@ -356,6 +345,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             displayedCategories.insert(newString, at: 5)
             heightStackview.constant = 110
             collectionBtn.isHidden = false
+            ButtonUIupdate()
         } else {
             // Expand to show all items
             displayedCategories = filteredItems
@@ -614,6 +604,7 @@ extension HomePageVc: UISearchBarDelegate{
         }else{
             heightStackview.constant = 110
             collectionBtn.isHidden = false
+            ButtonUIupdate()
             searchHeightCon.constant = 0
             
         }

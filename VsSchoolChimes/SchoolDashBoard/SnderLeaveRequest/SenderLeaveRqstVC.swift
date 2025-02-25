@@ -7,14 +7,14 @@
 
 import UIKit
 protocol ConfirmDelegate{
-    func confirm(index:Int,status:String)
+    func confirm(index:Int,status:String,AlertMsg: String)
 }
 class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSource, ConfirmDelegate {
-    func confirm(index: Int, status: String) {
+    func confirm(index: Int, status: String, AlertMsg: String) {
         print(index)
         let alert = CustomAlert()
         alert.showAlertCancel(title: "",
-                              message: AlertstringFile.ConfirmLeave + status + AlertstringFile.LeaveRequest ,
+                              message: AlertstringFile.ConfirmLeave + AlertMsg + AlertstringFile.LeaveRequest ,
                               actionLbl1: AlertstringFile.Confirm,
                               actionLbl2: AlertstringFile.Cancel,
                               on: self) { [self] in

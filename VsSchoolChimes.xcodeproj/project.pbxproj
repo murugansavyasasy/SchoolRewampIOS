@@ -48,58 +48,6 @@
 		18926C622D02DE81002BBB97 /* PreviewLsrwViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C362D02DE81002BBB97 /* PreviewLsrwViewController.xib */; };
 		18926C632D02DE81002BBB97 /* LSRWTakingSkillViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C412D02DE81002BBB97 /* LSRWTakingSkillViewController.xib */; };
 		18926C642D02DE81002BBB97 /* LsrwListShowTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C442D02DE81002BBB97 /* LsrwListShowTableViewCell.xib */; };
-		18926CAA2D0306CA002BBB97 /* GetTeacherWiseSlotRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C802D0306CA002BBB97 /* GetTeacherWiseSlotRequest.swift */; };
-		18926CAB2D0306CA002BBB97 /* StaffPtmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C762D0306CA002BBB97 /* StaffPtmViewController.swift */; };
-		18926CAC2D0306CA002BBB97 /* CreateSlotByStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C982D0306CA002BBB97 /* CreateSlotByStaffRequest.swift */; };
-		18926CAD2D0306CA002BBB97 /* StandardSectionDetailsForStaffResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C9D2D0306CA002BBB97 /* StandardSectionDetailsForStaffResponse.swift */; };
-		18926CAE2D0306CA002BBB97 /* DateWiseSlotDetailsStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C962D0306CA002BBB97 /* DateWiseSlotDetailsStaffRequest.swift */; };
-		18926CAF2D0306CA002BBB97 /* CancelAndCloseSlotByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C9E2D0306CA002BBB97 /* CancelAndCloseSlotByStaffModal.swift */; };
-		18926CB02D0306CA002BBB97 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C792D0306CA002BBB97 /* CalendarHelper.swift */; };
-		18926CB12D0306CA002BBB97 /* SlotAvailablityForStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C7F2D0306CA002BBB97 /* SlotAvailablityForStudentRequest.swift */; };
-		18926CB22D0306CA002BBB97 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C8C2D0306CA002BBB97 /* CalendarCollectionViewCell.swift */; };
-		18926CB32D0306CA002BBB97 /* BookingSlotRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C812D0306CA002BBB97 /* BookingSlotRequest.swift */; };
-		18926CB42D0306CA002BBB97 /* SlotsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C722D0306CA002BBB97 /* SlotsCollectionViewCell.swift */; };
-		18926CB52D0306CA002BBB97 /* cancelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C882D0306CA002BBB97 /* cancelTableViewCell.swift */; };
-		18926CB62D0306CA002BBB97 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926CA32D0306CA002BBB97 /* TeacherWiseSlotAvailabilityResponse.swift */; };
-		18926CB72D0306CA002BBB97 /* CancelAndCloseSlotStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C942D0306CA002BBB97 /* CancelAndCloseSlotStaffRequest.swift */; };
-		18926CB82D0306CA002BBB97 /* CreateSlotsByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C932D0306CA002BBB97 /* CreateSlotsByStaffModal.swift */; };
-		18926CB92D0306CA002BBB97 /* SubjectListForStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C822D0306CA002BBB97 /* SubjectListForStudentRequest.swift */; };
-		18926CBA2D0306CA002BBB97 /* DateWiseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C972D0306CA002BBB97 /* DateWiseModal.swift */; };
-		18926CBB2D0306CA002BBB97 /* CheckAviableTvHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C6C2D0306CA002BBB97 /* CheckAviableTvHeader.swift */; };
-		18926CBC2D0306CA002BBB97 /* CancelSlotResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C9F2D0306CA002BBB97 /* CancelSlotResponse.swift */; };
-		18926CBD2D0306CA002BBB97 /* CheckAviableTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C6A2D0306CA002BBB97 /* CheckAviableTv.swift */; };
-		18926CBE2D0306CA002BBB97 /* TimeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C852D0306CA002BBB97 /* TimeHeader.swift */; };
-		18926CBF2D0306CA002BBB97 /* SltoCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C742D0306CA002BBB97 /* SltoCreationViewController.swift */; };
-		18926CC02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926CA02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift */; };
-		18926CC12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926CA12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift */; };
-		18926CC22D0306CA002BBB97 /* SubjectListForStudentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926CA42D0306CA002BBB97 /* SubjectListForStudentResponse.swift */; };
-		18926CC32D0306CA002BBB97 /* CheckAviableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C6E2D0306CA002BBB97 /* CheckAviableViewController.swift */; };
-		18926CC52D0306CA002BBB97 /* StandardSectionDetailsStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C9C2D0306CA002BBB97 /* StandardSectionDetailsStaffRequest.swift */; };
-		18926CC62D0306CA002BBB97 /* SlotDetailsForStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C952D0306CA002BBB97 /* SlotDetailsForStaffRequest.swift */; };
-		18926CC72D0306CA002BBB97 /* CancelAndReopenSlotStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C992D0306CA002BBB97 /* CancelAndReopenSlotStaffRequest.swift */; };
-		18926CC82D0306CA002BBB97 /* TimeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C8B2D0306CA002BBB97 /* TimeCollectionViewCell.swift */; };
-		18926CC92D0306CA002BBB97 /* SlotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C702D0306CA002BBB97 /* SlotHeader.swift */; };
-		18926CCA2D0306CA002BBB97 /* verifyReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926CA52D0306CA002BBB97 /* verifyReq.swift */; };
-		18926CCB2D0306CA002BBB97 /* SlotHistoryForParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C7E2D0306CA002BBB97 /* SlotHistoryForParentRequest.swift */; };
-		18926CCC2D0306CA002BBB97 /* SlotDetailsForStaffResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C9B2D0306CA002BBB97 /* SlotDetailsForStaffResponse.swift */; };
-		18926CCD2D0306CA002BBB97 /* PTMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C912D0306CA002BBB97 /* PTMViewController.swift */; };
-		18926CCE2D0306CA002BBB97 /* CancelSlotByParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C7D2D0306CA002BBB97 /* CancelSlotByParentRequest.swift */; };
-		18926CCF2D0306CA002BBB97 /* SlotAvailabilityForStudentsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926CA22D0306CA002BBB97 /* SlotAvailabilityForStudentsResponse.swift */; };
-		18926CD02D0306CA002BBB97 /* StaffPtmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C7A2D0306CA002BBB97 /* StaffPtmTableViewCell.swift */; };
-		18926CD12D0306CA002BBB97 /* slotValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C9A2D0306CA002BBB97 /* slotValidation.swift */; };
-		18926CD22D0306CA002BBB97 /* CheckAviableTvHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C6D2D0306CA002BBB97 /* CheckAviableTvHeader.xib */; };
-		18926CD32D0306CA002BBB97 /* PTMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C902D0306CA002BBB97 /* PTMViewController.xib */; };
-		18926CD42D0306CA002BBB97 /* CalendarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C8D2D0306CA002BBB97 /* CalendarCollectionViewCell.xib */; };
-		18926CD52D0306CA002BBB97 /* SlotsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C732D0306CA002BBB97 /* SlotsCollectionViewCell.xib */; };
-		18926CD62D0306CA002BBB97 /* cancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C872D0306CA002BBB97 /* cancelTableViewCell.xib */; };
-		18926CD72D0306CA002BBB97 /* TimeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C8A2D0306CA002BBB97 /* TimeCollectionViewCell.xib */; };
-		18926CD82D0306CA002BBB97 /* StaffPtmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C7B2D0306CA002BBB97 /* StaffPtmTableViewCell.xib */; };
-		18926CD92D0306CA002BBB97 /* CheckAviableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C6F2D0306CA002BBB97 /* CheckAviableViewController.xib */; };
-		18926CDA2D0306CA002BBB97 /* SltoCreationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C752D0306CA002BBB97 /* SltoCreationViewController.xib */; };
-		18926CDB2D0306CA002BBB97 /* SlotHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C712D0306CA002BBB97 /* SlotHeader.xib */; };
-		18926CDC2D0306CA002BBB97 /* CheckAviableTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C6B2D0306CA002BBB97 /* CheckAviableTv.xib */; };
-		18926CDD2D0306CA002BBB97 /* StaffPtmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C772D0306CA002BBB97 /* StaffPtmViewController.xib */; };
-		18926CDE2D0306CA002BBB97 /* TimeHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18926C862D0306CA002BBB97 /* TimeHeader.xib */; };
 		18926D262D04140B002BBB97 /* SectionwiesReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D182D04140B002BBB97 /* SectionwiesReq.swift */; };
 		18926D272D04140B002BBB97 /* NewPendingResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1A2D04140B002BBB97 /* NewPendingResp.swift */; };
 		18926D282D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1E2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift */; };
@@ -577,6 +525,70 @@
 		84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97CE2D3E13BD00EBF9F4 /* Successful.gif */; };
 		84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97D12D3E31FF00EBF9F4 /* CompletedTVcell.xib */; };
+		FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */; };
+		FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */; };
+		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
+		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
+		FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */; };
+		FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */; };
+		FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */; };
+		FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */; };
+		FAFF9DD42D6C7B7A00498368 /* SltoCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D982D6C7B7A00498368 /* SltoCreationViewController.swift */; };
+		FAFF9DD52D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA42D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift */; };
+		FAFF9DD62D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBF2D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift */; };
+		FAFF9DD72D6C7B7A00498368 /* SubjectListForStudentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DCA2D6C7B7A00498368 /* SubjectListForStudentResponse.swift */; };
+		FAFF9DD82D6C7B7A00498368 /* SlotsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D962D6C7B7A00498368 /* SlotsCollectionViewCell.swift */; };
+		FAFF9DD92D6C7B7A00498368 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D9D2D6C7B7A00498368 /* CalendarHelper.swift */; };
+		FAFF9DDA2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBB2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift */; };
+		FAFF9DDB2D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC32D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift */; };
+		FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC92D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift */; };
+		FAFF9DDD2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBC2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift */; };
+		FAFF9DDE2D6C7B7A00498368 /* CheckAviableTvHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D902D6C7B7A00498368 /* CheckAviableTvHeader.swift */; };
+		FAFF9DDF2D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA32D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift */; };
+		FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DAF2D6C7B7A00498368 /* TimeCollectionViewCell.swift */; };
+		FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBD2D6C7B7A00498368 /* DateWiseModal.swift */; };
+		FAFF9DE22D6C7B7A00498368 /* PTMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB72D6C7B7A00498368 /* PTMViewController.swift */; };
+		FAFF9DE32D6C7B7A00498368 /* SlotHistoryForParentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC62D6C7B7A00498368 /* SlotHistoryForParentResponse.swift */; };
+		FAFF9DE42D6C7B7A00498368 /* SubjectListForStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA62D6C7B7A00498368 /* SubjectListForStudentRequest.swift */; };
+		FAFF9DE52D6C7B7A00498368 /* BookingSlotRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA52D6C7B7A00498368 /* BookingSlotRequest.swift */; };
+		FAFF9DE62D6C7B7A00498368 /* SlotHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D942D6C7B7A00498368 /* SlotHeader.swift */; };
+		FAFF9DE72D6C7B7A00498368 /* CancelSlotResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC52D6C7B7A00498368 /* CancelSlotResponse.swift */; };
+		FAFF9DE82D6C7B7A00498368 /* SlotHistoryForParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA22D6C7B7A00498368 /* SlotHistoryForParentRequest.swift */; };
+		FAFF9DE92D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC42D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift */; };
+		FAFF9DEA2D6C7B7A00498368 /* slotValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC02D6C7B7A00498368 /* slotValidation.swift */; };
+		FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBA2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift */; };
+		FAFF9DEC2D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC82D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift */; };
+		FAFF9DED2D6C7B7A00498368 /* CheckAviableTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D8E2D6C7B7A00498368 /* CheckAviableTv.swift */; };
+		FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC72D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift */; };
+		FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC22D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift */; };
+		FAFF9DF02D6C7B7A00498368 /* cancelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DAC2D6C7B7A00498368 /* cancelTableViewCell.swift */; };
+		FAFF9DF12D6C7B7A00498368 /* verifyReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DCB2D6C7B7A00498368 /* verifyReq.swift */; };
+		FAFF9DF22D6C7B7A00498368 /* StaffPtmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D9E2D6C7B7A00498368 /* StaffPtmTableViewCell.swift */; };
+		FAFF9DF32D6C7B7A00498368 /* parentPTMcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DCE2D6C7B7A00498368 /* parentPTMcell.swift */; };
+		FAFF9DF42D6C7B7A00498368 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB02D6C7B7A00498368 /* CalendarCollectionViewCell.swift */; };
+		FAFF9DF52D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DC12D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift */; };
+		FAFF9DF62D6C7B7A00498368 /* CheckAviableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D922D6C7B7A00498368 /* CheckAviableViewController.swift */; };
+		FAFF9DF72D6C7B7A00498368 /* StaffPtmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D9A2D6C7B7A00498368 /* StaffPtmViewController.swift */; };
+		FAFF9DF82D6C7B7A00498368 /* CalenderCVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB22D6C7B7A00498368 /* CalenderCVcell.swift */; };
+		FAFF9DF92D6C7B7A00498368 /* CreateSlotByStaffRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DBE2D6C7B7A00498368 /* CreateSlotByStaffRequest.swift */; };
+		FAFF9DFA2D6C7B7A00498368 /* TimeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA92D6C7B7A00498368 /* TimeHeader.swift */; };
+		FAFF9DFB2D6C7B7A00498368 /* StaffPtmViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D9B2D6C7B7A00498368 /* StaffPtmViewController.xib */; };
+		FAFF9DFC2D6C7B7A00498368 /* CheckAviableTvHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D912D6C7B7A00498368 /* CheckAviableTvHeader.xib */; };
+		FAFF9DFD2D6C7B7A00498368 /* parentPTMcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DCF2D6C7B7A00498368 /* parentPTMcell.xib */; };
+		FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DB32D6C7B7A00498368 /* CalenderCVcell.xib */; };
+		FAFF9DFF2D6C7B7A00498368 /* SlotsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D972D6C7B7A00498368 /* SlotsCollectionViewCell.xib */; };
+		FAFF9E002D6C7B7A00498368 /* CheckAviableTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D8F2D6C7B7A00498368 /* CheckAviableTv.xib */; };
+		FAFF9E012D6C7B7A00498368 /* SltoCreationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D992D6C7B7A00498368 /* SltoCreationViewController.xib */; };
+		FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DB62D6C7B7A00498368 /* PTMViewController.xib */; };
+		FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DB12D6C7B7A00498368 /* CalendarCollectionViewCell.xib */; };
+		FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DAA2D6C7B7A00498368 /* TimeHeader.xib */; };
+		FAFF9E052D6C7B7A00498368 /* cancelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DAB2D6C7B7A00498368 /* cancelTableViewCell.xib */; };
+		FAFF9E062D6C7B7A00498368 /* TimeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9DAE2D6C7B7A00498368 /* TimeCollectionViewCell.xib */; };
+		FAFF9E072D6C7B7A00498368 /* StaffPtmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D9F2D6C7B7A00498368 /* StaffPtmTableViewCell.xib */; };
+		FAFF9E082D6C7B7A00498368 /* CheckAviableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D932D6C7B7A00498368 /* CheckAviableViewController.xib */; };
+		FAFF9E092D6C7B7A00498368 /* SlotHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9D952D6C7B7A00498368 /* SlotHeader.xib */; };
+		FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9E0A2D6C806700498368 /* NewLSRWTVcell.swift */; };
+		FAFF9E0D2D6C806700498368 /* NewLSRWTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAFF9E0B2D6C806700498368 /* NewLSRWTVcell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -659,58 +671,6 @@
 		18926C492D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllSkillByStudentRequest.swift; sourceTree = "<group>"; };
 		18926C4A2D02DE81002BBB97 /* GetAttachmentForSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAttachmentForSkill.swift; sourceTree = "<group>"; };
 		18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAttachmentForSkillRequest.swift; sourceTree = "<group>"; };
-		18926C6A2D0306CA002BBB97 /* CheckAviableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTv.swift; sourceTree = "<group>"; };
-		18926C6B2D0306CA002BBB97 /* CheckAviableTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableTv.xib; sourceTree = "<group>"; };
-		18926C6C2D0306CA002BBB97 /* CheckAviableTvHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTvHeader.swift; sourceTree = "<group>"; };
-		18926C6D2D0306CA002BBB97 /* CheckAviableTvHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableTvHeader.xib; sourceTree = "<group>"; };
-		18926C6E2D0306CA002BBB97 /* CheckAviableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableViewController.swift; sourceTree = "<group>"; };
-		18926C6F2D0306CA002BBB97 /* CheckAviableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableViewController.xib; sourceTree = "<group>"; };
-		18926C702D0306CA002BBB97 /* SlotHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHeader.swift; sourceTree = "<group>"; };
-		18926C712D0306CA002BBB97 /* SlotHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlotHeader.xib; sourceTree = "<group>"; };
-		18926C722D0306CA002BBB97 /* SlotsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsCollectionViewCell.swift; sourceTree = "<group>"; };
-		18926C732D0306CA002BBB97 /* SlotsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlotsCollectionViewCell.xib; sourceTree = "<group>"; };
-		18926C742D0306CA002BBB97 /* SltoCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SltoCreationViewController.swift; sourceTree = "<group>"; };
-		18926C752D0306CA002BBB97 /* SltoCreationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SltoCreationViewController.xib; sourceTree = "<group>"; };
-		18926C762D0306CA002BBB97 /* StaffPtmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffPtmViewController.swift; sourceTree = "<group>"; };
-		18926C772D0306CA002BBB97 /* StaffPtmViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffPtmViewController.xib; sourceTree = "<group>"; };
-		18926C792D0306CA002BBB97 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
-		18926C7A2D0306CA002BBB97 /* StaffPtmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffPtmTableViewCell.swift; sourceTree = "<group>"; };
-		18926C7B2D0306CA002BBB97 /* StaffPtmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffPtmTableViewCell.xib; sourceTree = "<group>"; };
-		18926C7D2D0306CA002BBB97 /* CancelSlotByParentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSlotByParentRequest.swift; sourceTree = "<group>"; };
-		18926C7E2D0306CA002BBB97 /* SlotHistoryForParentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHistoryForParentRequest.swift; sourceTree = "<group>"; };
-		18926C7F2D0306CA002BBB97 /* SlotAvailablityForStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAvailablityForStudentRequest.swift; sourceTree = "<group>"; };
-		18926C802D0306CA002BBB97 /* GetTeacherWiseSlotRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTeacherWiseSlotRequest.swift; sourceTree = "<group>"; };
-		18926C812D0306CA002BBB97 /* BookingSlotRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingSlotRequest.swift; sourceTree = "<group>"; };
-		18926C822D0306CA002BBB97 /* SubjectListForStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListForStudentRequest.swift; sourceTree = "<group>"; };
-		18926C852D0306CA002BBB97 /* TimeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHeader.swift; sourceTree = "<group>"; };
-		18926C862D0306CA002BBB97 /* TimeHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeHeader.xib; sourceTree = "<group>"; };
-		18926C872D0306CA002BBB97 /* cancelTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cancelTableViewCell.xib; sourceTree = "<group>"; };
-		18926C882D0306CA002BBB97 /* cancelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cancelTableViewCell.swift; sourceTree = "<group>"; };
-		18926C8A2D0306CA002BBB97 /* TimeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeCollectionViewCell.xib; sourceTree = "<group>"; };
-		18926C8B2D0306CA002BBB97 /* TimeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCollectionViewCell.swift; sourceTree = "<group>"; };
-		18926C8C2D0306CA002BBB97 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
-		18926C8D2D0306CA002BBB97 /* CalendarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarCollectionViewCell.xib; sourceTree = "<group>"; };
-		18926C902D0306CA002BBB97 /* PTMViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PTMViewController.xib; sourceTree = "<group>"; };
-		18926C912D0306CA002BBB97 /* PTMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTMViewController.swift; sourceTree = "<group>"; };
-		18926C932D0306CA002BBB97 /* CreateSlotsByStaffModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotsByStaffModal.swift; sourceTree = "<group>"; };
-		18926C942D0306CA002BBB97 /* CancelAndCloseSlotStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndCloseSlotStaffRequest.swift; sourceTree = "<group>"; };
-		18926C952D0306CA002BBB97 /* SlotDetailsForStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDetailsForStaffRequest.swift; sourceTree = "<group>"; };
-		18926C962D0306CA002BBB97 /* DateWiseSlotDetailsStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWiseSlotDetailsStaffRequest.swift; sourceTree = "<group>"; };
-		18926C972D0306CA002BBB97 /* DateWiseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWiseModal.swift; sourceTree = "<group>"; };
-		18926C982D0306CA002BBB97 /* CreateSlotByStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotByStaffRequest.swift; sourceTree = "<group>"; };
-		18926C992D0306CA002BBB97 /* CancelAndReopenSlotStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndReopenSlotStaffRequest.swift; sourceTree = "<group>"; };
-		18926C9A2D0306CA002BBB97 /* slotValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotValidation.swift; sourceTree = "<group>"; };
-		18926C9B2D0306CA002BBB97 /* SlotDetailsForStaffResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDetailsForStaffResponse.swift; sourceTree = "<group>"; };
-		18926C9C2D0306CA002BBB97 /* StandardSectionDetailsStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSectionDetailsStaffRequest.swift; sourceTree = "<group>"; };
-		18926C9D2D0306CA002BBB97 /* StandardSectionDetailsForStaffResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSectionDetailsForStaffResponse.swift; sourceTree = "<group>"; };
-		18926C9E2D0306CA002BBB97 /* CancelAndCloseSlotByStaffModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndCloseSlotByStaffModal.swift; sourceTree = "<group>"; };
-		18926C9F2D0306CA002BBB97 /* CancelSlotResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSlotResponse.swift; sourceTree = "<group>"; };
-		18926CA02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHistoryForParentResponse.swift; sourceTree = "<group>"; };
-		18926CA12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingSlotsForStudentResponse.swift; sourceTree = "<group>"; };
-		18926CA22D0306CA002BBB97 /* SlotAvailabilityForStudentsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAvailabilityForStudentsResponse.swift; sourceTree = "<group>"; };
-		18926CA32D0306CA002BBB97 /* TeacherWiseSlotAvailabilityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherWiseSlotAvailabilityResponse.swift; sourceTree = "<group>"; };
-		18926CA42D0306CA002BBB97 /* SubjectListForStudentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListForStudentResponse.swift; sourceTree = "<group>"; };
-		18926CA52D0306CA002BBB97 /* verifyReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyReq.swift; sourceTree = "<group>"; };
 		18926D132D04140B002BBB97 /* PendingFeeReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeReportTableViewCell.swift; sourceTree = "<group>"; };
 		18926D142D04140B002BBB97 /* PendingFeeReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeReportTableViewCell.xib; sourceTree = "<group>"; };
 		18926D162D04140B002BBB97 /* PendingApiResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingApiResp.swift; sourceTree = "<group>"; };
@@ -1204,7 +1164,71 @@
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
+		FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWTvCell.swift; sourceTree = "<group>"; };
+		FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWTvCell.xib; sourceTree = "<group>"; };
+		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
+		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
 		FA8A5D25D3E56CCD6CFE4A08 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressCell.swift; sourceTree = "<group>"; };
+		FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressCell.xib; sourceTree = "<group>"; };
+		FAFF9D8E2D6C7B7A00498368 /* CheckAviableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTv.swift; sourceTree = "<group>"; };
+		FAFF9D8F2D6C7B7A00498368 /* CheckAviableTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableTv.xib; sourceTree = "<group>"; };
+		FAFF9D902D6C7B7A00498368 /* CheckAviableTvHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTvHeader.swift; sourceTree = "<group>"; };
+		FAFF9D912D6C7B7A00498368 /* CheckAviableTvHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableTvHeader.xib; sourceTree = "<group>"; };
+		FAFF9D922D6C7B7A00498368 /* CheckAviableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableViewController.swift; sourceTree = "<group>"; };
+		FAFF9D932D6C7B7A00498368 /* CheckAviableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableViewController.xib; sourceTree = "<group>"; };
+		FAFF9D942D6C7B7A00498368 /* SlotHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHeader.swift; sourceTree = "<group>"; };
+		FAFF9D952D6C7B7A00498368 /* SlotHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlotHeader.xib; sourceTree = "<group>"; };
+		FAFF9D962D6C7B7A00498368 /* SlotsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotsCollectionViewCell.swift; sourceTree = "<group>"; };
+		FAFF9D972D6C7B7A00498368 /* SlotsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SlotsCollectionViewCell.xib; sourceTree = "<group>"; };
+		FAFF9D982D6C7B7A00498368 /* SltoCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SltoCreationViewController.swift; sourceTree = "<group>"; };
+		FAFF9D992D6C7B7A00498368 /* SltoCreationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SltoCreationViewController.xib; sourceTree = "<group>"; };
+		FAFF9D9A2D6C7B7A00498368 /* StaffPtmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffPtmViewController.swift; sourceTree = "<group>"; };
+		FAFF9D9B2D6C7B7A00498368 /* StaffPtmViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffPtmViewController.xib; sourceTree = "<group>"; };
+		FAFF9D9D2D6C7B7A00498368 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
+		FAFF9D9E2D6C7B7A00498368 /* StaffPtmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffPtmTableViewCell.swift; sourceTree = "<group>"; };
+		FAFF9D9F2D6C7B7A00498368 /* StaffPtmTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StaffPtmTableViewCell.xib; sourceTree = "<group>"; };
+		FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSlotByParentRequest.swift; sourceTree = "<group>"; };
+		FAFF9DA22D6C7B7A00498368 /* SlotHistoryForParentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHistoryForParentRequest.swift; sourceTree = "<group>"; };
+		FAFF9DA32D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAvailablityForStudentRequest.swift; sourceTree = "<group>"; };
+		FAFF9DA42D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTeacherWiseSlotRequest.swift; sourceTree = "<group>"; };
+		FAFF9DA52D6C7B7A00498368 /* BookingSlotRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingSlotRequest.swift; sourceTree = "<group>"; };
+		FAFF9DA62D6C7B7A00498368 /* SubjectListForStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListForStudentRequest.swift; sourceTree = "<group>"; };
+		FAFF9DA92D6C7B7A00498368 /* TimeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeHeader.swift; sourceTree = "<group>"; };
+		FAFF9DAA2D6C7B7A00498368 /* TimeHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeHeader.xib; sourceTree = "<group>"; };
+		FAFF9DAB2D6C7B7A00498368 /* cancelTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cancelTableViewCell.xib; sourceTree = "<group>"; };
+		FAFF9DAC2D6C7B7A00498368 /* cancelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cancelTableViewCell.swift; sourceTree = "<group>"; };
+		FAFF9DAE2D6C7B7A00498368 /* TimeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimeCollectionViewCell.xib; sourceTree = "<group>"; };
+		FAFF9DAF2D6C7B7A00498368 /* TimeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCollectionViewCell.swift; sourceTree = "<group>"; };
+		FAFF9DB02D6C7B7A00498368 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		FAFF9DB12D6C7B7A00498368 /* CalendarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarCollectionViewCell.xib; sourceTree = "<group>"; };
+		FAFF9DB22D6C7B7A00498368 /* CalenderCVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderCVcell.swift; sourceTree = "<group>"; };
+		FAFF9DB32D6C7B7A00498368 /* CalenderCVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalenderCVcell.xib; sourceTree = "<group>"; };
+		FAFF9DB62D6C7B7A00498368 /* PTMViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PTMViewController.xib; sourceTree = "<group>"; };
+		FAFF9DB72D6C7B7A00498368 /* PTMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PTMViewController.swift; sourceTree = "<group>"; };
+		FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotsByStaffModal.swift; sourceTree = "<group>"; };
+		FAFF9DBA2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndCloseSlotStaffRequest.swift; sourceTree = "<group>"; };
+		FAFF9DBB2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDetailsForStaffRequest.swift; sourceTree = "<group>"; };
+		FAFF9DBC2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWiseSlotDetailsStaffRequest.swift; sourceTree = "<group>"; };
+		FAFF9DBD2D6C7B7A00498368 /* DateWiseModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateWiseModal.swift; sourceTree = "<group>"; };
+		FAFF9DBE2D6C7B7A00498368 /* CreateSlotByStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSlotByStaffRequest.swift; sourceTree = "<group>"; };
+		FAFF9DBF2D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndReopenSlotStaffRequest.swift; sourceTree = "<group>"; };
+		FAFF9DC02D6C7B7A00498368 /* slotValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = slotValidation.swift; sourceTree = "<group>"; };
+		FAFF9DC12D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDetailsForStaffResponse.swift; sourceTree = "<group>"; };
+		FAFF9DC22D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSectionDetailsStaffRequest.swift; sourceTree = "<group>"; };
+		FAFF9DC32D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardSectionDetailsForStaffResponse.swift; sourceTree = "<group>"; };
+		FAFF9DC42D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelAndCloseSlotByStaffModal.swift; sourceTree = "<group>"; };
+		FAFF9DC52D6C7B7A00498368 /* CancelSlotResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelSlotResponse.swift; sourceTree = "<group>"; };
+		FAFF9DC62D6C7B7A00498368 /* SlotHistoryForParentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotHistoryForParentResponse.swift; sourceTree = "<group>"; };
+		FAFF9DC72D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingSlotsForStudentResponse.swift; sourceTree = "<group>"; };
+		FAFF9DC82D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotAvailabilityForStudentsResponse.swift; sourceTree = "<group>"; };
+		FAFF9DC92D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherWiseSlotAvailabilityResponse.swift; sourceTree = "<group>"; };
+		FAFF9DCA2D6C7B7A00498368 /* SubjectListForStudentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectListForStudentResponse.swift; sourceTree = "<group>"; };
+		FAFF9DCB2D6C7B7A00498368 /* verifyReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verifyReq.swift; sourceTree = "<group>"; };
+		FAFF9DCE2D6C7B7A00498368 /* parentPTMcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = parentPTMcell.swift; sourceTree = "<group>"; };
+		FAFF9DCF2D6C7B7A00498368 /* parentPTMcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = parentPTMcell.xib; sourceTree = "<group>"; };
+		FAFF9E0A2D6C806700498368 /* NewLSRWTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLSRWTVcell.swift; sourceTree = "<group>"; };
+		FAFF9E0B2D6C806700498368 /* NewLSRWTVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewLSRWTVcell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -1401,6 +1425,10 @@
 			children = (
 				18926C432D02DE81002BBB97 /* LsrwListShowTableViewCell.swift */,
 				18926C442D02DE81002BBB97 /* LsrwListShowTableViewCell.xib */,
+				FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */,
+				FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */,
+				FAFF9E0A2D6C806700498368 /* NewLSRWTVcell.swift */,
+				FAFF9E0B2D6C806700498368 /* NewLSRWTVcell.xib */,
 			);
 			path = Tv;
 			sourceTree = "<group>";
@@ -1422,154 +1450,6 @@
 				18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */,
 			);
 			path = LSRW;
-			sourceTree = "<group>";
-		};
-		18926C782D0306CA002BBB97 /* StaffSide */ = {
-			isa = PBXGroup;
-			children = (
-				18926C6A2D0306CA002BBB97 /* CheckAviableTv.swift */,
-				18926C6B2D0306CA002BBB97 /* CheckAviableTv.xib */,
-				18926C6C2D0306CA002BBB97 /* CheckAviableTvHeader.swift */,
-				18926C6D2D0306CA002BBB97 /* CheckAviableTvHeader.xib */,
-				18926C6E2D0306CA002BBB97 /* CheckAviableViewController.swift */,
-				18926C6F2D0306CA002BBB97 /* CheckAviableViewController.xib */,
-				18926C702D0306CA002BBB97 /* SlotHeader.swift */,
-				18926C712D0306CA002BBB97 /* SlotHeader.xib */,
-				18926C722D0306CA002BBB97 /* SlotsCollectionViewCell.swift */,
-				18926C732D0306CA002BBB97 /* SlotsCollectionViewCell.xib */,
-				18926C742D0306CA002BBB97 /* SltoCreationViewController.swift */,
-				18926C752D0306CA002BBB97 /* SltoCreationViewController.xib */,
-				18926C762D0306CA002BBB97 /* StaffPtmViewController.swift */,
-				18926C772D0306CA002BBB97 /* StaffPtmViewController.xib */,
-			);
-			path = StaffSide;
-			sourceTree = "<group>";
-		};
-		18926C7C2D0306CA002BBB97 /* BothStaffParentTv */ = {
-			isa = PBXGroup;
-			children = (
-				18926C792D0306CA002BBB97 /* CalendarHelper.swift */,
-				18926C7A2D0306CA002BBB97 /* StaffPtmTableViewCell.swift */,
-				18926C7B2D0306CA002BBB97 /* StaffPtmTableViewCell.xib */,
-			);
-			name = BothStaffParentTv;
-			sourceTree = "<group>";
-		};
-		18926C832D0306CA002BBB97 /* Parent */ = {
-			isa = PBXGroup;
-			children = (
-				18926C7D2D0306CA002BBB97 /* CancelSlotByParentRequest.swift */,
-				18926C7E2D0306CA002BBB97 /* SlotHistoryForParentRequest.swift */,
-				18926C7F2D0306CA002BBB97 /* SlotAvailablityForStudentRequest.swift */,
-				18926C802D0306CA002BBB97 /* GetTeacherWiseSlotRequest.swift */,
-				18926C812D0306CA002BBB97 /* BookingSlotRequest.swift */,
-				18926C822D0306CA002BBB97 /* SubjectListForStudentRequest.swift */,
-			);
-			name = Parent;
-			sourceTree = "<group>";
-		};
-		18926C842D0306CA002BBB97 /* Request */ = {
-			isa = PBXGroup;
-			children = (
-				18926C832D0306CA002BBB97 /* Parent */,
-			);
-			name = Request;
-			sourceTree = "<group>";
-		};
-		18926C892D0306CA002BBB97 /* Tv */ = {
-			isa = PBXGroup;
-			children = (
-				18926C852D0306CA002BBB97 /* TimeHeader.swift */,
-				18926C862D0306CA002BBB97 /* TimeHeader.xib */,
-				18926C872D0306CA002BBB97 /* cancelTableViewCell.xib */,
-				18926C882D0306CA002BBB97 /* cancelTableViewCell.swift */,
-			);
-			name = Tv;
-			sourceTree = "<group>";
-		};
-		18926C8E2D0306CA002BBB97 /* Cv */ = {
-			isa = PBXGroup;
-			children = (
-				18926C8A2D0306CA002BBB97 /* TimeCollectionViewCell.xib */,
-				18926C8B2D0306CA002BBB97 /* TimeCollectionViewCell.swift */,
-				18926C8C2D0306CA002BBB97 /* CalendarCollectionViewCell.swift */,
-				18926C8D2D0306CA002BBB97 /* CalendarCollectionViewCell.xib */,
-			);
-			name = Cv;
-			sourceTree = "<group>";
-		};
-		18926C8F2D0306CA002BBB97 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				18926C892D0306CA002BBB97 /* Tv */,
-				18926C8E2D0306CA002BBB97 /* Cv */,
-			);
-			name = Cell;
-			sourceTree = "<group>";
-		};
-		18926C922D0306CA002BBB97 /* Vc */ = {
-			isa = PBXGroup;
-			children = (
-				18926C902D0306CA002BBB97 /* PTMViewController.xib */,
-				18926C912D0306CA002BBB97 /* PTMViewController.swift */,
-			);
-			name = Vc;
-			sourceTree = "<group>";
-		};
-		18926CA62D0306CA002BBB97 /* ParentSide */ = {
-			isa = PBXGroup;
-			children = (
-				18926C932D0306CA002BBB97 /* CreateSlotsByStaffModal.swift */,
-				18926C942D0306CA002BBB97 /* CancelAndCloseSlotStaffRequest.swift */,
-				18926C952D0306CA002BBB97 /* SlotDetailsForStaffRequest.swift */,
-				18926C962D0306CA002BBB97 /* DateWiseSlotDetailsStaffRequest.swift */,
-				18926C972D0306CA002BBB97 /* DateWiseModal.swift */,
-				18926C982D0306CA002BBB97 /* CreateSlotByStaffRequest.swift */,
-				18926C992D0306CA002BBB97 /* CancelAndReopenSlotStaffRequest.swift */,
-				18926C9A2D0306CA002BBB97 /* slotValidation.swift */,
-				18926C9B2D0306CA002BBB97 /* SlotDetailsForStaffResponse.swift */,
-				18926C9C2D0306CA002BBB97 /* StandardSectionDetailsStaffRequest.swift */,
-				18926C9D2D0306CA002BBB97 /* StandardSectionDetailsForStaffResponse.swift */,
-				18926C9E2D0306CA002BBB97 /* CancelAndCloseSlotByStaffModal.swift */,
-				18926C9F2D0306CA002BBB97 /* CancelSlotResponse.swift */,
-				18926CA02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift */,
-				18926CA12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift */,
-				18926CA22D0306CA002BBB97 /* SlotAvailabilityForStudentsResponse.swift */,
-				18926CA32D0306CA002BBB97 /* TeacherWiseSlotAvailabilityResponse.swift */,
-				18926CA42D0306CA002BBB97 /* SubjectListForStudentResponse.swift */,
-				18926CA52D0306CA002BBB97 /* verifyReq.swift */,
-			);
-			name = ParentSide;
-			sourceTree = "<group>";
-		};
-		18926CA72D0306CA002BBB97 /* Modal */ = {
-			isa = PBXGroup;
-			children = (
-				18926CA62D0306CA002BBB97 /* ParentSide */,
-			);
-			name = Modal;
-			sourceTree = "<group>";
-		};
-		18926CA82D0306CA002BBB97 /* ParentSide */ = {
-			isa = PBXGroup;
-			children = (
-				18926C842D0306CA002BBB97 /* Request */,
-				18926C8F2D0306CA002BBB97 /* Cell */,
-				18926C922D0306CA002BBB97 /* Vc */,
-				18926CA72D0306CA002BBB97 /* Modal */,
-			);
-			name = ParentSide;
-			sourceTree = "<group>";
-		};
-		18926CA92D0306CA002BBB97 /* PTMVc */ = {
-			isa = PBXGroup;
-			children = (
-				18926C782D0306CA002BBB97 /* StaffSide */,
-				18926C7C2D0306CA002BBB97 /* BothStaffParentTv */,
-				18926CA82D0306CA002BBB97 /* ParentSide */,
-			);
-			name = PTMVc;
-			path = View;
 			sourceTree = "<group>";
 		};
 		18926D152D04140B002BBB97 /* TvCell */ = {
@@ -2300,6 +2180,10 @@
 				849AD0192D1A8402002DEC07 /* LessonPlanTvCell.xib */,
 				849AD01A2D1A8402002DEC07 /* LessonPlanVC.swift */,
 				849AD01B2D1A8402002DEC07 /* LessonPlanVC.xib */,
+				FA7A64102D64995900D43031 /* LessonDashboardTv.swift */,
+				FA7A64112D64995900D43031 /* LessonDashboardTv.xib */,
+				FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */,
+				FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */,
 			);
 			path = "Lesson plan";
 			sourceTree = "<group>";
@@ -2714,9 +2598,9 @@
 				18D718D52D0D479B00E9EDA3 /* AbsenteesReport */,
 				18D718982D0D477900E9EDA3 /* LocationVc */,
 				18D718542D0D471A00E9EDA3 /* NewDailyCollection */,
-				18926CA92D0306CA002BBB97 /* PTMVc */,
 				18926D252D04140B002BBB97 /* PendingFeeReport */,
 				18926D342D041D54002BBB97 /* ImportantInfo */,
+				FAFF9DD12D6C7B7A00498368 /* PTMVc */,
 				848B94662CFD724800FFC5C2 /* ImagePdfVc */,
 				1861BEE92CE61DC70095BF28 /* Video */,
 				189E99DC2CE4925F00FE98A5 /* SchoolSide */,
@@ -3208,6 +3092,158 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FAFF9D9C2D6C7B7A00498368 /* StaffSide */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9D8E2D6C7B7A00498368 /* CheckAviableTv.swift */,
+				FAFF9D8F2D6C7B7A00498368 /* CheckAviableTv.xib */,
+				FAFF9D902D6C7B7A00498368 /* CheckAviableTvHeader.swift */,
+				FAFF9D912D6C7B7A00498368 /* CheckAviableTvHeader.xib */,
+				FAFF9D922D6C7B7A00498368 /* CheckAviableViewController.swift */,
+				FAFF9D932D6C7B7A00498368 /* CheckAviableViewController.xib */,
+				FAFF9D942D6C7B7A00498368 /* SlotHeader.swift */,
+				FAFF9D952D6C7B7A00498368 /* SlotHeader.xib */,
+				FAFF9D962D6C7B7A00498368 /* SlotsCollectionViewCell.swift */,
+				FAFF9D972D6C7B7A00498368 /* SlotsCollectionViewCell.xib */,
+				FAFF9D982D6C7B7A00498368 /* SltoCreationViewController.swift */,
+				FAFF9D992D6C7B7A00498368 /* SltoCreationViewController.xib */,
+				FAFF9D9A2D6C7B7A00498368 /* StaffPtmViewController.swift */,
+				FAFF9D9B2D6C7B7A00498368 /* StaffPtmViewController.xib */,
+			);
+			path = StaffSide;
+			sourceTree = "<group>";
+		};
+		FAFF9DA02D6C7B7A00498368 /* BothStaffParentTv */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9D9D2D6C7B7A00498368 /* CalendarHelper.swift */,
+				FAFF9D9E2D6C7B7A00498368 /* StaffPtmTableViewCell.swift */,
+				FAFF9D9F2D6C7B7A00498368 /* StaffPtmTableViewCell.xib */,
+			);
+			name = BothStaffParentTv;
+			sourceTree = "<group>";
+		};
+		FAFF9DA72D6C7B7A00498368 /* Parent */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */,
+				FAFF9DA22D6C7B7A00498368 /* SlotHistoryForParentRequest.swift */,
+				FAFF9DA32D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift */,
+				FAFF9DA42D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift */,
+				FAFF9DA52D6C7B7A00498368 /* BookingSlotRequest.swift */,
+				FAFF9DA62D6C7B7A00498368 /* SubjectListForStudentRequest.swift */,
+			);
+			name = Parent;
+			sourceTree = "<group>";
+		};
+		FAFF9DA82D6C7B7A00498368 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DA72D6C7B7A00498368 /* Parent */,
+			);
+			name = Request;
+			sourceTree = "<group>";
+		};
+		FAFF9DAD2D6C7B7A00498368 /* Tv */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DA92D6C7B7A00498368 /* TimeHeader.swift */,
+				FAFF9DAA2D6C7B7A00498368 /* TimeHeader.xib */,
+				FAFF9DAB2D6C7B7A00498368 /* cancelTableViewCell.xib */,
+				FAFF9DAC2D6C7B7A00498368 /* cancelTableViewCell.swift */,
+			);
+			name = Tv;
+			sourceTree = "<group>";
+		};
+		FAFF9DB42D6C7B7A00498368 /* Cv */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DAE2D6C7B7A00498368 /* TimeCollectionViewCell.xib */,
+				FAFF9DAF2D6C7B7A00498368 /* TimeCollectionViewCell.swift */,
+				FAFF9DB02D6C7B7A00498368 /* CalendarCollectionViewCell.swift */,
+				FAFF9DB12D6C7B7A00498368 /* CalendarCollectionViewCell.xib */,
+				FAFF9DB22D6C7B7A00498368 /* CalenderCVcell.swift */,
+				FAFF9DB32D6C7B7A00498368 /* CalenderCVcell.xib */,
+			);
+			name = Cv;
+			sourceTree = "<group>";
+		};
+		FAFF9DB52D6C7B7A00498368 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DAD2D6C7B7A00498368 /* Tv */,
+				FAFF9DB42D6C7B7A00498368 /* Cv */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		FAFF9DB82D6C7B7A00498368 /* Vc */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DB62D6C7B7A00498368 /* PTMViewController.xib */,
+				FAFF9DB72D6C7B7A00498368 /* PTMViewController.swift */,
+			);
+			name = Vc;
+			sourceTree = "<group>";
+		};
+		FAFF9DCC2D6C7B7A00498368 /* ParentSide */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */,
+				FAFF9DBA2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift */,
+				FAFF9DBB2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift */,
+				FAFF9DBC2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift */,
+				FAFF9DBD2D6C7B7A00498368 /* DateWiseModal.swift */,
+				FAFF9DBE2D6C7B7A00498368 /* CreateSlotByStaffRequest.swift */,
+				FAFF9DBF2D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift */,
+				FAFF9DC02D6C7B7A00498368 /* slotValidation.swift */,
+				FAFF9DC12D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift */,
+				FAFF9DC22D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift */,
+				FAFF9DC32D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift */,
+				FAFF9DC42D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift */,
+				FAFF9DC52D6C7B7A00498368 /* CancelSlotResponse.swift */,
+				FAFF9DC62D6C7B7A00498368 /* SlotHistoryForParentResponse.swift */,
+				FAFF9DC72D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift */,
+				FAFF9DC82D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift */,
+				FAFF9DC92D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift */,
+				FAFF9DCA2D6C7B7A00498368 /* SubjectListForStudentResponse.swift */,
+				FAFF9DCB2D6C7B7A00498368 /* verifyReq.swift */,
+			);
+			name = ParentSide;
+			sourceTree = "<group>";
+		};
+		FAFF9DCD2D6C7B7A00498368 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DCC2D6C7B7A00498368 /* ParentSide */,
+			);
+			name = Modal;
+			sourceTree = "<group>";
+		};
+		FAFF9DD02D6C7B7A00498368 /* ParentSide */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9DA82D6C7B7A00498368 /* Request */,
+				FAFF9DB52D6C7B7A00498368 /* Cell */,
+				FAFF9DB82D6C7B7A00498368 /* Vc */,
+				FAFF9DCD2D6C7B7A00498368 /* Modal */,
+				FAFF9DCE2D6C7B7A00498368 /* parentPTMcell.swift */,
+				FAFF9DCF2D6C7B7A00498368 /* parentPTMcell.xib */,
+			);
+			name = ParentSide;
+			sourceTree = "<group>";
+		};
+		FAFF9DD12D6C7B7A00498368 /* PTMVc */ = {
+			isa = PBXGroup;
+			children = (
+				FAFF9D9C2D6C7B7A00498368 /* StaffSide */,
+				FAFF9DA02D6C7B7A00498368 /* BothStaffParentTv */,
+				FAFF9DD02D6C7B7A00498368 /* ParentSide */,
+			);
+			name = PTMVc;
+			path = "View 2";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3417,6 +3453,7 @@
 				84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */,
 				18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */,
 				849AD0212D1A8402002DEC07 /* LessonPlanVC.xib in Resources */,
+				FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */,
 				849AD0222D1A8402002DEC07 /* LessonDetailsTVcell.xib in Resources */,
 				849AD0232D1A8402002DEC07 /* EditLessonplanVC.xib in Resources */,
 				849AD0242D1A8402002DEC07 /* LessonPlanTvCell.xib in Resources */,
@@ -3478,6 +3515,7 @@
 				84BB5EB32D1133AA00AD0C87 /* ExamsListTVCell.xib in Resources */,
 				84A271822CEDAB9F0033EB02 /* ImagePdfCvCell.xib in Resources */,
 				849AD0002D1A8369002DEC07 /* ReciverAttendanceReportVC.xib in Resources */,
+				FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */,
 				849AD0012D1A8369002DEC07 /* ReciverAttendReportTV.xib in Resources */,
 				849F4C7C2D24012E00C9F4BF /* Mathematics.mp4 in Resources */,
 				848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */,
@@ -3519,6 +3557,21 @@
 				849970B72CF8750B00800B07 /* ImageCViewCell.xib in Resources */,
 				84F9863B2D3A6E8E009FF065 /* PlayQuizVc.xib in Resources */,
 				849970B82CF8750B00800B07 /* PageVC.xib in Resources */,
+				FAFF9DFB2D6C7B7A00498368 /* StaffPtmViewController.xib in Resources */,
+				FAFF9DFC2D6C7B7A00498368 /* CheckAviableTvHeader.xib in Resources */,
+				FAFF9DFD2D6C7B7A00498368 /* parentPTMcell.xib in Resources */,
+				FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */,
+				FAFF9DFF2D6C7B7A00498368 /* SlotsCollectionViewCell.xib in Resources */,
+				FAFF9E002D6C7B7A00498368 /* CheckAviableTv.xib in Resources */,
+				FAFF9E012D6C7B7A00498368 /* SltoCreationViewController.xib in Resources */,
+				FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */,
+				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
+				FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */,
+				FAFF9E052D6C7B7A00498368 /* cancelTableViewCell.xib in Resources */,
+				FAFF9E062D6C7B7A00498368 /* TimeCollectionViewCell.xib in Resources */,
+				FAFF9E072D6C7B7A00498368 /* StaffPtmTableViewCell.xib in Resources */,
+				FAFF9E082D6C7B7A00498368 /* CheckAviableViewController.xib in Resources */,
+				FAFF9E092D6C7B7A00498368 /* SlotHeader.xib in Resources */,
 				8420317A2D390FF3003C4076 /* TimetableTv.xib in Resources */,
 				849E57372C1FF6BD006119DA /* RobotoSlab-Bold.ttf in Resources */,
 				849970C92CF8752400800B07 /* DateCVC.xib in Resources */,
@@ -3535,23 +3588,10 @@
 				842FBABB2D0BEDBF007C0B51 /* ReportStudentTVC.xib in Resources */,
 				842FBABC2D0BEDBF007C0B51 /* ReportStudentListVC.xib in Resources */,
 				842FBABD2D0BEDBF007C0B51 /* StudentReportVC.xib in Resources */,
-				18926CD22D0306CA002BBB97 /* CheckAviableTvHeader.xib in Resources */,
-				18926CD32D0306CA002BBB97 /* PTMViewController.xib in Resources */,
 				849D72332D14270D0060E222 /* SubscriptionView.xib in Resources */,
 				849D72342D14270D0060E222 /* SubscriptionTVCell.xib in Resources */,
-				18926CD42D0306CA002BBB97 /* CalendarCollectionViewCell.xib in Resources */,
-				18926CD52D0306CA002BBB97 /* SlotsCollectionViewCell.xib in Resources */,
-				18926CD62D0306CA002BBB97 /* cancelTableViewCell.xib in Resources */,
-				18926CD72D0306CA002BBB97 /* TimeCollectionViewCell.xib in Resources */,
 				84E795E22D2FF684000B36BC /* InteractionVC.xib in Resources */,
-				18926CD82D0306CA002BBB97 /* StaffPtmTableViewCell.xib in Resources */,
-				18926CD92D0306CA002BBB97 /* CheckAviableViewController.xib in Resources */,
-				18926CDA2D0306CA002BBB97 /* SltoCreationViewController.xib in Resources */,
-				18926CDB2D0306CA002BBB97 /* SlotHeader.xib in Resources */,
-				18926CDC2D0306CA002BBB97 /* CheckAviableTv.xib in Resources */,
-				18926CDD2D0306CA002BBB97 /* StaffPtmViewController.xib in Resources */,
 				84D85D7A2D51D7C6006842E9 /* CustomShimmerView.xib in Resources */,
-				18926CDE2D0306CA002BBB97 /* TimeHeader.xib in Resources */,
 				849970CB2CF8752400800B07 /* TextHistoryTVCell.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
@@ -3561,6 +3601,7 @@
 				847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */,
 				84EFFACC2CCF90DE00C11C26 /* SettingsTableViewCell.xib in Resources */,
 				84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */,
+				FAFF9E0D2D6C806700498368 /* NewLSRWTVcell.xib in Resources */,
 				84EFF4982CE38F6300E39BEA /* ProfileViewController.xib in Resources */,
 				84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */,
 				8442A9062CDC8A820006068E /* LogoutViewController.xib in Resources */,
@@ -3609,6 +3650,7 @@
 				846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */,
 				840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */,
 				18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */,
+				FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */,
 				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
 				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
 				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
@@ -3771,35 +3813,12 @@
 				18926C4D2D02DE81002BBB97 /* LsrwListShowTableViewCell.swift in Sources */,
 				18926C4E2D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift in Sources */,
 				18926C4F2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift in Sources */,
-				18926CAA2D0306CA002BBB97 /* GetTeacherWiseSlotRequest.swift in Sources */,
-				18926CAB2D0306CA002BBB97 /* StaffPtmViewController.swift in Sources */,
-				18926CAC2D0306CA002BBB97 /* CreateSlotByStaffRequest.swift in Sources */,
-				18926CAD2D0306CA002BBB97 /* StandardSectionDetailsForStaffResponse.swift in Sources */,
-				18926CAE2D0306CA002BBB97 /* DateWiseSlotDetailsStaffRequest.swift in Sources */,
-				18926CAF2D0306CA002BBB97 /* CancelAndCloseSlotByStaffModal.swift in Sources */,
-				18926CB02D0306CA002BBB97 /* CalendarHelper.swift in Sources */,
 				842FBAC22D0BEDDC007C0B51 /* TranslationManager.swift in Sources */,
 				849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */,
 				849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */,
-				18926CB12D0306CA002BBB97 /* SlotAvailablityForStudentRequest.swift in Sources */,
-				18926CB22D0306CA002BBB97 /* CalendarCollectionViewCell.swift in Sources */,
 				84BB5EB42D1133AA00AD0C87 /* ExamsListTVCell.swift in Sources */,
-				18926CB32D0306CA002BBB97 /* BookingSlotRequest.swift in Sources */,
-				18926CB42D0306CA002BBB97 /* SlotsCollectionViewCell.swift in Sources */,
-				18926CB52D0306CA002BBB97 /* cancelTableViewCell.swift in Sources */,
-				18926CB62D0306CA002BBB97 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */,
-				18926CB72D0306CA002BBB97 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
-				18926CB82D0306CA002BBB97 /* CreateSlotsByStaffModal.swift in Sources */,
-				18926CB92D0306CA002BBB97 /* SubjectListForStudentRequest.swift in Sources */,
 				8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */,
-				18926CBA2D0306CA002BBB97 /* DateWiseModal.swift in Sources */,
-				18926CBB2D0306CA002BBB97 /* CheckAviableTvHeader.swift in Sources */,
 				18926D372D041D74002BBB97 /* ImportantInfoViewController.swift in Sources */,
-				18926CBC2D0306CA002BBB97 /* CancelSlotResponse.swift in Sources */,
-				18926CBD2D0306CA002BBB97 /* CheckAviableTv.swift in Sources */,
-				18926CBE2D0306CA002BBB97 /* TimeHeader.swift in Sources */,
-				18926CBF2D0306CA002BBB97 /* SltoCreationViewController.swift in Sources */,
-				18926CC02D0306CA002BBB97 /* SlotHistoryForParentResponse.swift in Sources */,
 				18D718552D0D471A00E9EDA3 /* DailyCollectionTableViewCell.swift in Sources */,
 				843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */,
 				18D718562D0D471A00E9EDA3 /* NewDailyCollectionViewController.swift in Sources */,
@@ -3814,31 +3833,56 @@
 				18D7185F2D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift in Sources */,
 				18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */,
 				18D718612D0D471A00E9EDA3 /* DailyCollReq.swift in Sources */,
-				18926CC12D0306CA002BBB97 /* BookingSlotsForStudentResponse.swift in Sources */,
-				18926CC22D0306CA002BBB97 /* SubjectListForStudentResponse.swift in Sources */,
-				18926CC32D0306CA002BBB97 /* CheckAviableViewController.swift in Sources */,
-				18926CC52D0306CA002BBB97 /* StandardSectionDetailsStaffRequest.swift in Sources */,
 				84E795DD2D2FF3DF000B36BC /* ChatCvcell.swift in Sources */,
-				18926CC62D0306CA002BBB97 /* SlotDetailsForStaffRequest.swift in Sources */,
-				18926CC72D0306CA002BBB97 /* CancelAndReopenSlotStaffRequest.swift in Sources */,
-				18926CC82D0306CA002BBB97 /* TimeCollectionViewCell.swift in Sources */,
-				18926CC92D0306CA002BBB97 /* SlotHeader.swift in Sources */,
-				18926CCA2D0306CA002BBB97 /* verifyReq.swift in Sources */,
 				849B3AF82D50D889005DD4E8 /* MenuShimmerView.swift in Sources */,
 				187CF4D72D119C82001422CE /* ClassTimeTableViewController.swift in Sources */,
-				18926CCB2D0306CA002BBB97 /* SlotHistoryForParentRequest.swift in Sources */,
-				18926CCC2D0306CA002BBB97 /* SlotDetailsForStaffResponse.swift in Sources */,
-				18926CCD2D0306CA002BBB97 /* PTMViewController.swift in Sources */,
-				18926CCE2D0306CA002BBB97 /* CancelSlotByParentRequest.swift in Sources */,
-				18926CCF2D0306CA002BBB97 /* SlotAvailabilityForStudentsResponse.swift in Sources */,
-				18926CD02D0306CA002BBB97 /* StaffPtmTableViewCell.swift in Sources */,
-				18926CD12D0306CA002BBB97 /* slotValidation.swift in Sources */,
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
 				18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */,
 				18926C522D02DE81002BBB97 /* SubmitLsrwRequest.swift in Sources */,
 				8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */,
 				18926C532D02DE81002BBB97 /* LsrwListShowViewController.swift in Sources */,
 				18926C542D02DE81002BBB97 /* SubmitResponseForSkillModal.swift in Sources */,
+				FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */,
+				FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */,
+				FAFF9DD42D6C7B7A00498368 /* SltoCreationViewController.swift in Sources */,
+				FAFF9DD52D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift in Sources */,
+				FAFF9DD62D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift in Sources */,
+				FAFF9DD72D6C7B7A00498368 /* SubjectListForStudentResponse.swift in Sources */,
+				FAFF9DD82D6C7B7A00498368 /* SlotsCollectionViewCell.swift in Sources */,
+				FAFF9DD92D6C7B7A00498368 /* CalendarHelper.swift in Sources */,
+				FAFF9DDA2D6C7B7A00498368 /* SlotDetailsForStaffRequest.swift in Sources */,
+				FAFF9DDB2D6C7B7A00498368 /* StandardSectionDetailsForStaffResponse.swift in Sources */,
+				FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */,
+				FAFF9DDD2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift in Sources */,
+				FAFF9DDE2D6C7B7A00498368 /* CheckAviableTvHeader.swift in Sources */,
+				FAFF9DDF2D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift in Sources */,
+				FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */,
+				FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */,
+				FAFF9DE22D6C7B7A00498368 /* PTMViewController.swift in Sources */,
+				FAFF9DE32D6C7B7A00498368 /* SlotHistoryForParentResponse.swift in Sources */,
+				FAFF9DE42D6C7B7A00498368 /* SubjectListForStudentRequest.swift in Sources */,
+				FAFF9DE52D6C7B7A00498368 /* BookingSlotRequest.swift in Sources */,
+				FAFF9DE62D6C7B7A00498368 /* SlotHeader.swift in Sources */,
+				FAFF9DE72D6C7B7A00498368 /* CancelSlotResponse.swift in Sources */,
+				FAFF9DE82D6C7B7A00498368 /* SlotHistoryForParentRequest.swift in Sources */,
+				FAFF9DE92D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift in Sources */,
+				FAFF9DEA2D6C7B7A00498368 /* slotValidation.swift in Sources */,
+				FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
+				FAFF9DEC2D6C7B7A00498368 /* SlotAvailabilityForStudentsResponse.swift in Sources */,
+				FAFF9DED2D6C7B7A00498368 /* CheckAviableTv.swift in Sources */,
+				FAFF9DEE2D6C7B7A00498368 /* BookingSlotsForStudentResponse.swift in Sources */,
+				FAFF9DEF2D6C7B7A00498368 /* StandardSectionDetailsStaffRequest.swift in Sources */,
+				FAFF9DF02D6C7B7A00498368 /* cancelTableViewCell.swift in Sources */,
+				FAFF9DF12D6C7B7A00498368 /* verifyReq.swift in Sources */,
+				FAFF9DF22D6C7B7A00498368 /* StaffPtmTableViewCell.swift in Sources */,
+				FAFF9DF32D6C7B7A00498368 /* parentPTMcell.swift in Sources */,
+				FAFF9DF42D6C7B7A00498368 /* CalendarCollectionViewCell.swift in Sources */,
+				FAFF9DF52D6C7B7A00498368 /* SlotDetailsForStaffResponse.swift in Sources */,
+				FAFF9DF62D6C7B7A00498368 /* CheckAviableViewController.swift in Sources */,
+				FAFF9DF72D6C7B7A00498368 /* StaffPtmViewController.swift in Sources */,
+				FAFF9DF82D6C7B7A00498368 /* CalenderCVcell.swift in Sources */,
+				FAFF9DF92D6C7B7A00498368 /* CreateSlotByStaffRequest.swift in Sources */,
+				FAFF9DFA2D6C7B7A00498368 /* TimeHeader.swift in Sources */,
 				849F4C772D24010300C9F4BF /* addCvCell.swift in Sources */,
 				849F4C782D24010300C9F4BF /* seeMore.swift in Sources */,
 				18926C552D02DE81002BBB97 /* FileAttachmentTableViewCell.swift in Sources */,
@@ -3851,6 +3895,7 @@
 				849AD0502D1A858D002DEC07 /* AssignmentViewTotalTableViewCell.swift in Sources */,
 				849AD0512D1A858D002DEC07 /* SenderAssignmentViewController.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
+				FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */,
 				84D85D782D51D7B5006842E9 /* CustomShimmerView.swift in Sources */,
 				84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */,
 				849AD0532D1A858D002DEC07 /* AssignmentViewTotalViewController.swift in Sources */,
@@ -3858,6 +3903,7 @@
 				18926C5A2D02DE81002BBB97 /* PreviewLsrwViewController.swift in Sources */,
 				18926C5B2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.swift in Sources */,
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
+				FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
@@ -3988,6 +4034,7 @@
 				8442A90D2CDC8B2D0006068E /* FAQTableViewCell.swift in Sources */,
 				84EFF9E82CCCA7F000C11C26 /* AppBottomView.swift in Sources */,
 				18BAF3E72CE8BF0900517441 /* PhotoPickManager.swift in Sources */,
+				FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */,
 				84A5BE922C197CE800E32496 /* UIImageViewX.swift in Sources */,
 				844188642CC8C839006483C3 /* ResponceModal.swift in Sources */,
 				849AD02A2D1A840E002DEC07 /* MeetingsTVcell.swift in Sources */,
@@ -4106,6 +4153,7 @@
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
 				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,
 				848BEEE42CFF093100581A55 /* PreviewImageVC.swift in Sources */,
+				FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */,
 				8442A8FA2CDC83860006068E /* SuggestionsCollectionViewCell.swift in Sources */,
 				84EFFAED2CCFB32800C11C26 /* rectangelDash.swift in Sources */,
 			);

@@ -160,21 +160,21 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         TitleLbl.isHidden = false
         collectionview.isHidden = false
        // pagecontroller.isHidden = false
-        let color = true == true ? UIColor.dashBoardClr : UIColor.white
-        cellview.backgroundColor = color
+//        let color = true == true ? UIColor.dashBoardClr : UIColor.white
+        cellview.backgroundColor = .white
     }
     func hideforReciverNotice(){
-        HomeworkSubjectLbl.isHidden = false
-//        pinImage.isHidden = true
+        HomeworkSubjectLbl.isHidden = true
+        pinImage.isHidden = false
         datelbl.isHidden = false
         SelectBtnHeight.constant=0
-//        Pinview.isHidden = true
+        Pinview.isHidden = false
         dicriptContent.isHidden = false
         TitleLbl.isHidden = false
         collectionview.isHidden = false
        // pagecontroller.isHidden = false
         let color = true == true ? UIColor.dashBoardClr : UIColor.white
-        cellview.backgroundColor = color
+        cellview.backgroundColor = .white/*color*/
     }
     func hideforsenderEvent(){
         HomeworkSubjectLbl.isHidden = false
@@ -187,7 +187,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         collectionview.isHidden = false
         pagecontroller.isHidden = false
         let color = true == true ? UIColor.dashBoardClr : UIColor.white
-        cellview.backgroundColor = color
+        cellview.backgroundColor = .white/*color*/
     }
     
     
