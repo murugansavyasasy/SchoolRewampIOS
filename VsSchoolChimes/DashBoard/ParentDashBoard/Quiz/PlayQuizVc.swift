@@ -72,7 +72,8 @@ class PlayQuizVc: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(previousQuesAct))
         PreviousImgView.addGestureRecognizer(tap)
         PreviousImgView.isUserInteractionEnabled = true
-        
+        NameLbl.setFont(style: .body, size: 12)
+        sectionLbl.setFont(style: .body, size: 12)
         Button1.layer.cornerRadius = 15
         Button2.layer.cornerRadius = 15
         Button3.layer.cornerRadius = 15

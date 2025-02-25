@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VideoVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HeaderLabel" destination="fWt-bp-UNa" id="qhn-Ld-pXW"/>
+                <outlet property="NameLbl" destination="n6F-Bn-4TI" id="3yb-a7-fr9"/>
+                <outlet property="StandardLbl" destination="Bi8-Nh-ge4" id="uRg-HH-xuA"/>
                 <outlet property="backBtn" destination="CgT-js-DNs" id="Trt-Y7-zCN"/>
                 <outlet property="searchview" destination="WOf-iN-p5e" id="4CJ-1x-fHI"/>
                 <outlet property="tableview" destination="DFV-CH-evV" id="YIw-7I-2lp"/>

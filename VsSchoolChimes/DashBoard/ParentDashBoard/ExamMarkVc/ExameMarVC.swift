@@ -14,6 +14,8 @@ class ExameMarVC: UIViewController {
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     let marks = ["85 / 100","70 / 100","75 / 100","49 / 100","93 / 100"]
     let status = [0.85,0.70,0.75,0.49,0.93]
     let subject = ["Tamil","English","Maths","Science","Social Science"]
@@ -34,11 +36,11 @@ class ExameMarVC: UIViewController {
         let cvnib = UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil)
         cv.register(cvnib, forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
       
-//        let nib1 = UINib(nibName:"MarkTvCell", bundle: nil)
-//        tv.register(nib1, forCellReuseIdentifier: "MarkTvCell")
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         let nib1 = UINib(nibName:CellConfingName.ExamMarkTV, bundle: nil)
         tv.register(nib1, forCellReuseIdentifier: CellConfingName.ExamMarkTV)
-        
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         cv.dataSource = self
         cv.delegate = self
     }

@@ -179,6 +179,8 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         MeetingtypeLbl.setFont(style: .title, size: FontSize.TitleSize)
         MeetingLinkLbl.setFont(style: .title, size: FontSize.TitleSize)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Text Field Font Style
         // LinkTxtfld.setFont(style: .body, size: FontSize.BodySize)
@@ -510,7 +512,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
 extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 4
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -523,7 +525,7 @@ extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
         let colour2 =  UIColor(named: gradient)
         
         cell.cellview.backgroundColor = colour1
-        cell.contentview.backgroundColor = colour2
+//        cell.contentview.backgroundColor = colour2
         cell.indexPath = indexPath
         cell.delegate = self
         

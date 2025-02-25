@@ -36,6 +36,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     var expandedSections: Set<Int> = [] // Tracks expanded sections
     let sections = ["11 Dec 2024","12 Dec 2024","13 Dec 2024","14 Dec 2024"]
     var delegate : HistorySelectDelegate?
@@ -59,6 +61,9 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         TV.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         TV.delegate = self
         TV.dataSource = self
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
     }
 
     override func viewDidLayoutSubviews() {

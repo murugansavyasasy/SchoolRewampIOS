@@ -18,7 +18,8 @@ class QuizVC: UIViewController {
     @IBOutlet weak var CompletedBtn: UIButton!
     
     @IBOutlet weak var tv: UITableView!
-    
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var IncorrectAnswerLbl: UILabel!
     @IBOutlet weak var CorrectAnswerLbl: UILabel!
     //var colours = ["lesson1","lesson2","lesson3"]
@@ -32,7 +33,8 @@ class QuizVC: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         CorrectAnswerLbl.text = "Correct Answers : " + " \(correctAnswers) / \(questions.count)"
         IncorrectAnswerLbl.text = "Incorrect Answers : " + " \(questions.count - (Int(correctAnswers) ?? 0)) / \(questions.count)"
         ButtonStackview.layer.cornerRadius = 20

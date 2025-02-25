@@ -11,7 +11,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExamTmTblVCViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="NameLbl" destination="p0i-xh-DPC" id="FKp-zB-xZr"/>
                 <outlet property="Searchbar" destination="5Di-UL-sCz" id="yRN-Hs-OX3"/>
+                <outlet property="StandardLbl" destination="k83-60-y07" id="WdH-Jl-IBu"/>
                 <outlet property="backBtn" destination="sWV-nx-gRa" id="o5J-xM-0GW"/>
                 <outlet property="sideTv" destination="GDv-gG-9Ti" id="zdj-UN-t4x"/>
                 <outlet property="tv" destination="zp7-BQ-emi" id="mAH-hp-vNK"/>

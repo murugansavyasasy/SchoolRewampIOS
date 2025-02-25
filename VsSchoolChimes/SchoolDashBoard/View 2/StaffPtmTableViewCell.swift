@@ -12,24 +12,41 @@ class StaffPtmTableViewCell: UITableViewCell {
 
     @IBOutlet weak var statusview: UIViewX!
     @IBOutlet weak var cancelHeight: NSLayoutConstraint!
-    @IBOutlet weak var zoomLbl: UILabel!
-    @IBOutlet weak var yourMeetingLbl: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var cancelView: UIViewX!
-    @IBOutlet weak var eventLink: UILabel!
-    
     @IBOutlet weak var cancelReopenHeight: NSLayoutConstraint!
   
+    @IBOutlet weak var dateBtn: UIButton!
+    @IBOutlet weak var slotBtn: UIButton!
+    @IBOutlet weak var MeetingModeBtn: UIButton!
+    @IBOutlet weak var takeMeetingBtn: UIButton!
     @IBOutlet weak var cancelAndReponeView: UIViewX!
-    @IBOutlet weak var dateAndTimeLbl: UILabel!
     @IBOutlet weak var classSectionLbl: UILabel!
     @IBOutlet weak var studentName: UILabel!
     @IBOutlet weak var eventName: UILabel!
     @IBOutlet weak var statusLbl: UILabel!
-    @IBOutlet weak var frontView: UIView!
     @IBOutlet weak var backView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
+        takeMeetingBtn.layer.cornerRadius = 8
+        takeMeetingBtn.layer.backgroundColor = UIColor.systemBlue.cgColor
+//        if let image = UIImage(systemName: "clock") {
+//            let resizedImage = image.resizeTo(size: CGSize(width: 15, height: 15)) // Adjust size as needed
+//            dateBtn.setImage(resizedImage, for: .normal)
+//            dateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+//        }
+//        if let image = UIImage(systemName: "clock") {
+//            let resizedImage = image.resizeTo(size: CGSize(width: 15, height: 15)) // Adjust size as needed
+//            slotBtn.setImage(resizedImage, for: .normal)
+//            slotBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+//        }
+        
+        if let image = UIImage(systemName: "video") {
+            let resizedImage = image.resizeTo(size: CGSize(width: 15, height: 12)) // Adjust size as needed
+            MeetingModeBtn.setImage(resizedImage, for: .normal)
+            MeetingModeBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        }
+
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -73,5 +90,12 @@ extension UIView {
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         self.layer.mask = mask
+    }
+}
+class customView:UIView{
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layer.cornerRadius = 10
+        self.backgroundColor = .systemGray6
     }
 }

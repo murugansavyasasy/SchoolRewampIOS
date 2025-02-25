@@ -13,7 +13,8 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeadingLabel: UILabel!
-  
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var bgView: UIView!
@@ -24,7 +25,8 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
         addDoneButton()
@@ -32,7 +34,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
 //        HeadingLabel.text = MenuTapbar.Noticeboard
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         tabelViewRegister()
-     
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
     }
 
     

@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReciverAttendanceReportVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HeaderLbl" destination="Erx-O7-EGE" id="kLT-lz-OAo"/>
+                <outlet property="NameLbl" destination="xjJ-cC-NB3" id="FSd-rc-olS"/>
+                <outlet property="StandardLbl" destination="RdF-SV-o2L" id="fg1-c5-eDQ"/>
                 <outlet property="TV" destination="3lf-vv-7Re" id="i6y-IM-ymP"/>
                 <outlet property="searchBar" destination="cAn-d5-13C" id="HPO-Yj-kit"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

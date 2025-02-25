@@ -18,6 +18,8 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var TitleHederLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
  
     var titleLbl = "Event"
     var button1 = "Event".translated()
@@ -32,8 +34,9 @@ class EventResiverVC: UIViewController, SelectNotice{
         backBtn.setTitle(button1.translated(), for: .normal)
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
-       
-       
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         addDoneButton()
         uiConficration()
         tabelViewRegister()

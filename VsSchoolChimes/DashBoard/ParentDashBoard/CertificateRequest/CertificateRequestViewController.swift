@@ -28,6 +28,8 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
     @IBOutlet weak var certificatesBtn: UIButton!
     @IBOutlet weak var requestBtn: UIButton!
     @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var StandardLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
     
     var urgentItems = ["Urgent", "Not Urgent"]
     var statusItems = ["Complete","Under Review", "Reject"]
@@ -66,7 +68,10 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
         tv.dataSource = self
         tv.delegate = self
         tv.register(UINib(nibName: CellConfingName.CertificateTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.CertificateTableViewCell)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         let certificateGesture = UITapGestureRecognizer(target: self, action: #selector(selectCertificateClick))
         selectCertificateView.addGestureRecognizer(certificateGesture)
         let levelGesture = UITapGestureRecognizer(target: self, action: #selector(selectLevelClick))

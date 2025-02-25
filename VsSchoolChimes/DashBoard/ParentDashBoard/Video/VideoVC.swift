@@ -16,12 +16,13 @@ protocol shareDelegate{
 class VideoVC: UIViewController {
     
     
-    
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchview: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
-    //    var truncatedDescription = ""
+    
     var downloadButton: UIButton?
     var playerViewController: AVPlayerViewController?
     var image = UIImage()
@@ -40,6 +41,7 @@ class VideoVC: UIViewController {
         super.viewDidLoad()
        
         backBtn.setTitle(ReceiverMenuItems.Video.translated(), for: .normal)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
         keyboardDionebtn()
@@ -116,35 +118,15 @@ class VideoVC: UIViewController {
     }
     func CellRegistre(){
         tableview.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
     }
     
     @IBAction func back(_ sender: Any) {
         dismiss(animated: true)
     }
     
-//    func addDownloadButton(to playerViewController: AVPlayerViewController, videoURL: URL) {
-//        guard let overlayView = playerViewController.contentOverlayView else { return }
-//
-//        let downloadButton = UIButton(type: .system)
-//        //downloadButton.setTitle("⬇️", for: .normal) // Use an icon for better UI
-//        downloadButton.setImage(UIImage(systemName:"dock.arrow.down.rectangle"), for: .normal)
-//        downloadButton.tintColor = .white
-//        downloadButton.setTitleColor(.white, for: .normal)
-//        downloadButton.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-//        downloadButton.layer.cornerRadius = 20
-//        downloadButton.frame = CGRect(x: overlayView.frame.width - 100, y: 60, width: 40, height: 40)
-//        //downloadButton.addTarget(self, action: #selector(downloadVideo(_:)), for: .touchUpInside)
-//
-//        // Store video URL inside button
-//        downloadButton.tag = videoURL.hashValue
-//        downloadButton.accessibilityHint = videoURL.absoluteString
-//        
-//        // Ensure button stays in the correct position on rotation
-//        downloadButton.autoresizingMask = [.flexibleLeftMargin, .flexibleBottomMargin]
-//
-//        overlayView.addSubview(downloadButton)
-//    }
-    
+
    
 }
 extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate, shareDelegate{

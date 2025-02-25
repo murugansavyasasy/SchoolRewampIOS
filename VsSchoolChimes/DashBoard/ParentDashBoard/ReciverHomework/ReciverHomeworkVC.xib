@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReciverHomeworkVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HeaderLbl" destination="u3U-RS-N7n" id="bmK-Kr-RvQ"/>
+                <outlet property="NameLbl" destination="c09-iY-GuI" id="vRw-7W-O60"/>
+                <outlet property="StandardLbl" destination="on5-ZU-Ya7" id="WJf-fY-78o"/>
                 <outlet property="TV" destination="b5l-kf-8Gc" id="AnN-Qv-X5d"/>
                 <outlet property="backBtn" destination="yyh-BM-TCB" id="oQo-mN-kV2"/>
                 <outlet property="searchBar" destination="gwY-Hq-pap" id="huo-PR-PDh"/>

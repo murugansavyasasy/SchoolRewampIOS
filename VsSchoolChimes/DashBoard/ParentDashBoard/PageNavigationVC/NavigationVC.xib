@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NavigationVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="NameLbl" destination="EbC-ev-Y2l" id="kRu-CP-3hO"/>
+                <outlet property="StandardLbl" destination="vxi-lr-qNN" id="iX7-nw-Iva"/>
                 <outlet property="TitleHederLbl" destination="skM-3j-n9B" id="D8L-lE-ip8"/>
                 <outlet property="backBtn" destination="SRO-fe-ero" id="HQt-Si-ttC"/>
                 <outlet property="createEvent" destination="8JM-rf-WZh" id="vlW-Jm-IUP"/>

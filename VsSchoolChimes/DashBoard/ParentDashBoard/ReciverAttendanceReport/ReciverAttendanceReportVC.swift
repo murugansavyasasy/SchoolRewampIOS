@@ -12,6 +12,8 @@ class ReciverAttendanceReportVC: UIViewController {
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     let date = 11
     let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
     let present = [true,true,false,true,false]
@@ -21,6 +23,8 @@ class ReciverAttendanceReportVC: UIViewController {
         
         let nib = UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         
         TV.delegate = self
         TV.dataSource = self

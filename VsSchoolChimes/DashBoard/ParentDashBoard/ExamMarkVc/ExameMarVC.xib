@@ -14,7 +14,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExameMarVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HeaderLbl" destination="kAh-K6-11C" id="c4J-B3-E91"/>
+                <outlet property="NameLbl" destination="ljZ-CY-aDu" id="apT-My-mP8"/>
                 <outlet property="SearchBar" destination="OXc-83-TMa" id="auM-Uj-fsd"/>
+                <outlet property="StandardLbl" destination="FCM-Qc-veT" id="g6E-yj-dFR"/>
                 <outlet property="backBtn" destination="o2h-l2-5CP" id="WrB-XM-3di"/>
                 <outlet property="cv" destination="mH4-ng-0SF" id="1sI-ki-OG8"/>
                 <outlet property="tv" destination="7by-2i-e2O" id="j5t-wd-kmT"/>

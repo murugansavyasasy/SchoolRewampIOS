@@ -34,6 +34,7 @@ class CertificateRequestVC: UIViewController {
     @IBOutlet weak var ReasonTextView: UITextView!
     @IBOutlet weak var tv: UITableView!
     
+    
     let dropdown = DropDown()
     let certificates = [
         CertificateRequestDetails(certificatename: "Attendance Certificate", Date: "21 Jan 2024", reason: "I need this certificate to apply for the education loan for my studies", status: "Approved"),
@@ -45,7 +46,8 @@ class CertificateRequestVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
 
         ButtonStackview.isLayoutMarginsRelativeArrangement = true
@@ -272,6 +274,11 @@ class CertificateRequestVC: UIViewController {
     }
     
     @IBAction func RequestCertificateAct(_ sender: Any) {
+        if let image = UIImage(named: "your_image_name") {
+            let resizedImage = image.resizeTo(size: CGSize(width: 100, height: 100))
+//            imageView.image = resizedImage
+        }
+
     }
     
     @IBAction func BackAct(_ sender: Any) {
@@ -420,17 +427,19 @@ struct CertificateRequestDetails{
     
 }
 
-import UIKit
 
 extension UIImage {
     func resizeTo(size: CGSize) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0) // Use 0.0 to maintain scale factor
+        UIGraphicsBeginImageContextWithOptions(size, false,0.0) // Use 0.0 to maintain scale factor
         self.draw(in: CGRect(origin: .zero, size: size))
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return resizedImage
     }
 }
+
+
+
 
 
 

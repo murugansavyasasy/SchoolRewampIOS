@@ -9,7 +9,8 @@ import UIKit
 
 class ImagePdfVC: UIViewController {
 
-    
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var headinglabel: UILabel!
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var tv: UITableView!
@@ -30,10 +31,11 @@ class ImagePdfVC: UIViewController {
         addDoneButton()
         
         backBtn.setTitle(ReceiverMenuItems.ImagePdf.translated(), for: .normal)
-//        headinglabel.text = "Image/Pdf".translated()
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         headinglabel.setFont(style: .header, size: FontSize.HeaderSize)
         // Do any additional setup after loading the view.
-        
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         CellRegistre()
     }
     override func viewDidLayoutSubviews() {

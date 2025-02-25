@@ -33,7 +33,6 @@ class VideoPlayerVC: UIViewController, URLSessionDelegate {
         super.viewDidLoad()
         
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        print("Entered Video player")
        // setupVideoPlayer(with: url!)
         setupPlayer(with: url!)
        // setupPlayer(url: URL(string: "https://www.w3schools.com/tags/mov_bbb.mp4"))
@@ -43,71 +42,7 @@ class VideoPlayerVC: UIViewController, URLSessionDelegate {
     @IBAction func backAct(_ sender: Any) {
         dismiss(animated: true)
     }
-    
-//    override func viewDidLayoutSubviews() {
-//          super.viewDidLayoutSubviews()
-//          avPlayerLayer?.frame = playerview.bounds
-//      }
-//    
-//    func setupPlayer(url: URL?) {
-//        guard let url = url else {
-//                print("URL is nil")
-//                return
-//            }
-//            
-//            player = AVPlayer(url: url)
-//            avPlayerLayer = AVPlayerLayer(player: player)
-//            avPlayerLayer?.videoGravity = .resizeAspect
-//            if let avPlayerLayer = avPlayerLayer {
-//                avPlayerLayer.frame = playerview.bounds
-//                playerview.layer.addSublayer(avPlayerLayer)
-//            }
-//            player.play()
-//    }
-//    
-    
-    //     override func layoutSubviews() {
-    //         super.layoutSubviews()
-    //         avPlayerLayer?.frame = playerview.bounds
-    //     }
-//    private func setupPlayPauseButton() {
-//        paybtn.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
-//        paybtn.addTarget(self, action: #selector(playPauseButtonTapped), for: .touchUpInside)
-//        paybtn.tintColor = .red
-//        paybtn.translatesAutoresizingMaskIntoConstraints = false
-//        playerview.addSubview(paybtn)
-//        
-//        NSLayoutConstraint.activate([
-//            paybtn.centerXAnchor.constraint(equalTo: playerview.centerXAnchor),
-//            paybtn.centerYAnchor.constraint(equalTo: playerview.centerYAnchor),
-//            paybtn.widthAnchor.constraint(equalToConstant: 50),
-//            paybtn.heightAnchor.constraint(equalToConstant: 50)
-//        ])
-//    }
-//    // IBAction for play/pause button
-//    @IBAction func playPauseButtonTapped(_ sender: UIButton) {
-//        if player.isPlaying {
-//            player.pause()
-//            paybtn.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
-//        } else {
-//            player.play()
-//            paybtn.setImage(UIImage(systemName: "pause.circle.fill"), for: .normal)
-//        }
-//    }
-//    
-//    @IBAction func back(_ sender: Any) {
-//        dismiss(animated: true)
-//       
-//    }
-//    
-//    func setupVideoPlayer(with url: URL) {
-//           player = AVPlayer(url: url)
-//           playerLayer = AVPlayerLayer(player: player)
-//           playerLayer?.frame = playerview.bounds
-//           playerLayer?.videoGravity = .resizeAspectFill
-//           playerview.layer.addSublayer(playerLayer!)
-//           player?.play()
-//       }
+
     func setupPlayer(with url: URL) {
             player = AVPlayer(url: url)
             

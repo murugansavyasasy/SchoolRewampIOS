@@ -495,17 +495,6 @@ extension ParentHomePageVc: UICollectionViewDelegateFlowLayout {
             return CGSize(width: collectionView.frame.width, height: 160)
         }
         
-//        let width = (collectionView.frame.width) / 4
-//        let padding: CGFloat = 10
-//        let maxTextWidth = width - padding * 2
-//        
-//        let label = MenuRedirect.receiverItems[indexPath.row].translated()
-//        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
-//        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
-//        
-//        let height = max(textHeight + padding * 2, width - 10)
-//        return CGSize(width: width, height: height)
-        
         let width = (collectionView.frame.width) / 3.2
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
@@ -517,8 +506,6 @@ extension ParentHomePageVc: UICollectionViewDelegateFlowLayout {
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height + 10)
     }
-    
-    
 }
 extension String {
     func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {

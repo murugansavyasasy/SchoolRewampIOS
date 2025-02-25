@@ -14,6 +14,8 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var dayLbl: UILabel!
     @IBOutlet weak var dateLBl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
@@ -50,8 +52,10 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
         getCurrentDay = currentDayName
         print("day",day)
         backBtn.setTitle(ReceiverMenuItems.ClassTimetable.translated(), for: .normal)
-        
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         tv.register(UINib(nibName: CellConfingName.ClassTimeTableTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ClassTimeTableTableViewCell)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
             
     }
     override func viewDidLayoutSubviews() {
