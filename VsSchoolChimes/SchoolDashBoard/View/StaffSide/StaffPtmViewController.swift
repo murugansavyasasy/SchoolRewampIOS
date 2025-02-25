@@ -11,21 +11,41 @@ import UIKit
 @available(iOS 14.0, *)
 class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, Datepicker {
     func date(date: String) {
-        
-        dateLbl.text = date
-        dateLbl.textColor = .black
+        let dateFormatter = DateFormatter()
+        let dateOnlyFormatter = DateFormatter()
+
+        // Set the input date format that matches "19 Feb 25"
+        dateFormatter.dateFormat = "d MMM yy"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")  // Ensures correct parsing
+
+        // Convert string to Date
+        guard let parsedDate = dateFormatter.date(from: date) else {
+            print("Invalid date format: \(date)")
+            return
+        }
+
+        // Set the output format for weekday and day (e.g., "Mon 19")
+        dateOnlyFormatter.dateFormat = "EEE d"
+        let dateOnly = dateOnlyFormatter.string(from: parsedDate)
+
+        // Pass formatted values to dateSet
+        dateSet(date, dateOnly, dateOnly)
         tv.reloadData()
     }
-    
 
+
+    
+    
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var createView: UIView!
     @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var toDateLbl: UILabel!
+    @IBOutlet weak var calanderBtn: HalfColorButton!
     @IBOutlet weak var nodatalabl: UILabel!
     @IBOutlet weak var slotView: UIView!
     @IBOutlet weak var todaSlotView: UIView!
-    @IBOutlet weak var datePickerView: UIViewX!
+    @IBOutlet weak var datePickerView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var AllslotsLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
@@ -47,7 +67,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         todaSlotView.applyGradient(
             colors: [UIColor.blue,UIColor.systemTeal],
             startPoint: CGPoint(x: 0, y: 0.5),
@@ -55,43 +75,86 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         )
         TodaysBookedSlotsLbl.textColor = .white
         AllslotsLbl.textColor = .gray
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let formattedDate = dateFormatter.string(from: currentDate)
-        print(formattedDate)
-        display_date = formattedDate
-        let eventDate = formattedDate
-        let dateFormatter1 = DateFormatter()
-        dateFormatter1.dateFormat = "dd/MM/yyyy"
-        if let date1 = dateFormatter1.date(from: formattedDate) {
-            dateFormatter1.dateFormat = "E, MMM d, yyyy"
-            let formattedDate1 = dateFormatter1.string(from: date1)
-            dateLbl.text = formattedDate1
-        }
-        
-        print("SchoolId",SchoolId)
-        print("staffIdstaffId",staffId)
         tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
         let rownib2 = UINib(nibName: CellConfingName.SlotHeader, bundle: nil)
         tv.register(rownib2, forHeaderFooterViewReuseIdentifier: CellConfingName.SlotHeader)
         nodatalabl.isHidden = true
-//        let back = UITapGestureRecognizer(target: self , action:#selector(backVC) )
-//        backView.addGestureRecognizer(back)
-        let todaySlot  = UITapGestureRecognizer(target: self , action:#selector(TodaySlotVC) )
-        todaSlotView.addGestureRecognizer(todaySlot)
-        let Slot  = UITapGestureRecognizer(target: self , action:#selector(SlotVC) )
-        slotView.addGestureRecognizer(Slot) 
+        calanderBtn.layer.borderWidth = 1 // Border width
+        calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
+        calanderBtn.layer.cornerRadius = 10 // Add
         let create  = UITapGestureRecognizer(target: self , action:#selector(cretaeVC) )
         createView.addGestureRecognizer(create)
-        
-        let DateTap = UITapGestureRecognizer(target: self, action: #selector(SelectDate))
-        datePickerView.addGestureRecognizer(DateTap)
         
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
+        setInitialButtonTitles()
     }
+    //MARK: BUTTON TITLE CURRANT TIME
+    func setInitialButtonTitles() {
+        let dateFormatter = DateFormatter()
+        let timeFormatter = DateFormatter()
+        let dateOnlyFormatter = DateFormatter()
+        
+        // Set the date format (e.g., "Tue 3 Dec 2024")
+        dateFormatter.dateFormat = "d MMM yy"
+        dateOnlyFormatter.dateFormat = "EEE d"
+        
+        // Set the time format (e.g., "4:30 PM")
+        timeFormatter.timeStyle = .short
+        
+        // Get the current date and time
+        let currentDate = Date() // Current date and time
+        let nextHourTime = Calendar.current.date(byAdding: .hour, value: 0, to: currentDate) ?? currentDate
+        
+        // Format the date and time
+        let formattedDate = dateFormatter.string(from: currentDate)   // "Tue 3 Dec 2024"
+        let formattedTime = timeFormatter.string(from: nextHourTime)  // "4:30 PM"
+        let dateOnly = dateOnlyFormatter.string(from: nextHourTime)   // "Tue 3"
+  
+        // Set the date and time to the date button
+        dateSet(formattedDate, dateOnly,dateOnly)
+    }
+    func dateSet(_ date: String, _ splitDate: String, _ currentDate: String) {
+        // Fonts for different parts
+        let monthFont = UIFont.systemFont(ofSize: 12) // Smaller font for month
+        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day number
+
+        // Split the date into components (Expecting "Feb 26")
+        let components = splitDate.split(separator: " ")
+        guard components.count > 1 else {
+            print("Error: Invalid format for splitDate -> \(splitDate)")
+            return
+        }
+
+        let month = components[0] // Extract the month first
+        let day = components[1]   // Extract the day
+
+        // Create an attributed string
+        let attributedText = NSMutableAttributedString()
+
+        // Add the month part
+        attributedText.append(NSAttributedString(string: "\(month)\n", attributes: [
+            .font: monthFont,
+            .foregroundColor: UIColor.darkGray // Optional: Set month color
+        ]))
+
+        // Add the day part
+        attributedText.append(NSAttributedString(string: "\(day)", attributes: [
+            .font: dayFont,
+            .foregroundColor: UIColor.black // Optional: Set day color
+        ]))
+
+        // Set paragraph style for centered alignment
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+
+        // Apply the attributed string to `toDateLbl`
+        toDateLbl.attributedText = attributedText
+    }
+
+
     override func viewDidLayoutSubviews() {
         view.applyGradient(
             colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
@@ -99,7 +162,49 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
-    @IBAction func SelectDate(){
+    
+    
+    @IBAction func slotSelection(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            createView.isHidden = false
+            dateLbl.text = "--- Select Date ---"
+            todaSlotView.applyGradient(
+                colors: [UIColor.blue,UIColor.systemTeal],
+                startPoint: CGPoint(x: 0, y: 0.5),
+                endPoint: CGPoint(x: 0.8, y: 0.5)
+            )
+            slotView.applyGradient(
+                colors: [UIColor.systemGray6,UIColor.systemGray6],
+                startPoint: CGPoint(x: 0, y: 0.5),
+                endPoint: CGPoint(x: 0.8, y: 0.5)
+            )
+            TodaysBookedSlotsLbl.textColor = .white
+            AllslotsLbl.textColor = .gray
+            
+            tv.reloadData()
+        } else if sender.selectedSegmentIndex == 1 {
+            createView.isHidden = true
+            dateLbl.text = "--- Select Date ---"
+            display_date = "ALL"
+            
+            slotView.applyGradient(
+                colors: [UIColor.blue,UIColor.systemTeal],
+                startPoint: CGPoint(x: 0, y: 0.5),
+                endPoint: CGPoint(x: 0.8, y: 0.5)
+            )
+            todaSlotView.applyGradient(
+                colors: [UIColor.systemGray6,UIColor.systemGray6],
+                startPoint: CGPoint(x: 0, y: 0.5),
+                endPoint: CGPoint(x: 0.8, y: 0.5)
+            )
+            TodaysBookedSlotsLbl.textColor = .gray
+            AllslotsLbl.textColor = .white
+            
+            tv.reloadData()
+        }
+    }
+    
+    @IBAction func SelectDate(_ sender:UIButton){
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.delegate = self
@@ -113,7 +218,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     @IBAction func cretaeVC(){
-      let vc = SltoCreationViewController(nibName: nil, bundle: nil)
+        let vc = SltoCreationViewController(nibName: nil, bundle: nil)
         vc.instute = Int(instituteId)
         vc.staffId = staffId
         vc.modalPresentationStyle = .fullScreen
@@ -123,7 +228,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     @IBAction func btn(_ sender: Any) {
         dismiss(animated: true)
     }
-
+    
     @IBAction func  TodaySlotVC (){
         createView.isHidden = false
         dateLbl.text = "--- Select Date ---"
@@ -170,8 +275,8 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }else if todaSlotView.backgroundColor == .systemOrange{
             return 1
         }
-          return 0
-      }
+        return 0
+    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if  AllslotsLbl.textColor == .white{
@@ -189,25 +294,30 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
             return 3
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StaffPtmTableViewCell, for: indexPath) as! StaffPtmTableViewCell
-            cell.selectionStyle = .none
-            cell.backView.layer.cornerRadius = 20
-            cell.backView.layer.masksToBounds = true
-            cell.backView.layer.shadowColor = UIColor.black.cgColor
-            cell.backView.layer.shadowOpacity = 0.5
-            cell.backView.layer.shadowOffset = CGSize(width: 4, height: 4)
-            cell.backView.layer.shadowRadius = 1
-            cell.backView.layer.masksToBounds = false
-            cell.statusview.layer.masksToBounds = true
-            cell.statusview.layer.shadowColor = UIColor.white.cgColor
-            cell.statusview.layer.shadowOpacity = 0.5
-            cell.statusview.layer.shadowOffset = CGSize(width: 4, height: 4)
-            cell.statusview.layer.shadowRadius = 5
-            cell.statusview.layer.masksToBounds = false
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StaffPtmTableViewCell, for: indexPath) as! StaffPtmTableViewCell
+        cell.selectionStyle = .none
+        //            cell.backView.layer.cornerRadius = 20
+        //            cell.backView.layer.masksToBounds = true
+        //            cell.backView.layer.shadowColor = UIColor.black.cgColor
+        //            cell.backView.layer.shadowOpacity = 0.5
+        //            cell.backView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        //            cell.backView.layer.shadowRadius = 1
+        //            cell.backView.layer.masksToBounds = false
+        cell.statusview.layer.masksToBounds = true
+        cell.backView.layer.cornerRadius = 10
+        cell.backView.layer.shadowColor = UIColor.black.cgColor
+        cell.backView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.backView.layer.shadowRadius = 5
+        cell.backView.layer.shadowOpacity = 0.3
+        cell.statusview.layer.shadowColor = UIColor.white.cgColor
+        cell.statusview.layer.shadowOpacity = 0.5
+        cell.statusview.layer.shadowOffset = CGSize(width: 4, height: 4)
+        cell.statusview.layer.shadowRadius = 5
+        cell.statusview.layer.masksToBounds = false
+        return cell
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -216,43 +326,43 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 2
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SlotsCollectionViewCell, for: indexPath) as! SlotsCollectionViewCell
-       
+        
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/3, height: 50) // Adjust item size as needed
-        }
+    }
     
     @IBAction func linkClickVC(ges: linkClick){
         print("linkClickVC")
         openZoomLink(eventLink: ges.link)
     }
-
-       @IBAction func CancelVc(ges: linkClick){
-           let refreshAlert = UIAlertController(title: "", message: "Are you sure  want to cancel the meeting.", preferredStyle: UIAlertController.Style.alert)
-           refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] (action: UIAlertAction!) in
-           }))
-           refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
-               print("Handle Cancel Logic here")
-           }))
-           present(refreshAlert, animated: true, completion: nil)
-
+    
+    @IBAction func CancelVc(ges: linkClick){
+        let refreshAlert = UIAlertController(title: "", message: "Are you sure  want to cancel the meeting.", preferredStyle: UIAlertController.Style.alert)
+        refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] (action: UIAlertAction!) in
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Cancel Logic here")
+        }))
+        present(refreshAlert, animated: true, completion: nil)
+        
     }
-     @IBAction func CancelAndReopenVc(ges: linkClick){
-       
-           let refreshAlert = UIAlertController(title: "", message: "Are you sure  want to CancelAndReopen the meeting.", preferredStyle: UIAlertController.Style.alert)
-           refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] (action: UIAlertAction!) in
-           }))
-           refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
-               print("Handle Cancel Logic here")
-           }))
-           present(refreshAlert, animated: true, completion: nil)
+    @IBAction func CancelAndReopenVc(ges: linkClick){
+        
+        let refreshAlert = UIAlertController(title: "", message: "Are you sure  want to CancelAndReopen the meeting.", preferredStyle: UIAlertController.Style.alert)
+        refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] (action: UIAlertAction!) in
+        }))
+        refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
+            print("Handle Cancel Logic here")
+        }))
+        present(refreshAlert, animated: true, completion: nil)
     }
-
+    
     func openZoomLink(eventLink: String) {
         guard let encodedLink = eventLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
               let url = URL(string: encodedLink) else {
@@ -269,699 +379,13 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
         }
     }
-
-        }
-
-
-    class linkClick : UITapGestureRecognizer{
-
-        var link  : String!
-        var slotid : Int!
-
-    }
-
-
-
-/*
- 
- //MARK: var declared
- //    var sectiondeatils : [sectionDetails] = []
-
- //    var dateWiseData : [DateWiseModalDataDetails] = []
- //    var StaffData : [SlotDetailsForStaffData] = []
- //    var slotdetails : [SlotLists] = []
- //    var sectiondeatils : [sectionDetails] = []
- //    var detailss : [SlotDetails] = []
- 
- //MARK: viewDidLoad
- dateFormatter.dateFormat = "MMM d, yyyy"
- let userDefaults = UserDefaults.standard
-//        sectionId = userDefaults.integer(forKey: DefaultsKeys.SectionId)
-////        instituteId = userDefaults.integer(forKey: DefaultsKeys.SchoolD)
-////        staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
-//        classId = userDefaults.integer(forKey: DefaultsKeys.ClassID)
-//        studentId = userDefaults.integer(forKey: DefaultsKeys.chilId)
- 
- let calander  = UITapGestureRecognizer(target: self , action:#selector(datePick) )
-//        datePickerView.addGestureRecognizer(calander)
-      
- if type == 1 {
-     
-     
-//            staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
-//            SchoolId = userDefaults.string(forKey: (DefaultsKeys.SchoolD))!
- }else{
-     //        StaffId = userDefaults.string(forKey: DefaultsKeys.StaffID)
-//            SchoolId = userDefaults.string(forKey: (DefaultsKeys.SchoolD))!
-//            staffId = userDefaults.integer(forKey: DefaultsKeys.StaffID)
- }
- 
- 
- //MARK: func  datePick
- 
- 
- @IBAction func  datePick (){
- //
- //        RPickerTwo.selectDate(title: "Select Date", cancelText: "Cancel", datePickerMode: .date, style: .Inline, didSelectDate: {[weak self] (today_date) in
- //
- //
- //
- //            self?.display_date = today_date.dateString("dd/MM/yyyy")
- //
- //            self?.url_date = today_date.dateString("yyyy/MM/dd")
- //
- //            self?.dateLbl.text = self!.display_date
- //
- //
- //            let eventDate = self!.dateLbl.text
- //            let dateFormatter1 = DateFormatter()
- //            // Input format
- //            dateFormatter1.dateFormat = "dd/MM/yyyy"
- //
- //            if let date1 = dateFormatter1.date(from: self!.dateLbl.text!) {
- //
- //                dateFormatter1.dateFormat = "E, MMM d, yyyy"
- //                let formattedDate1 = dateFormatter1.string(from: date1)
- //                self!.dateLbl.text = formattedDate1
- //
- //            }
- //
- //
- //
- //            if  self!.slotView.backgroundColor == UIColor(named: self!.CustomOrange){
- //                self!.StaffDetailsForStaff()
- //            }else{
- //
- //                self!.dateWiseSlot()
- //            }
- //
- //        })
- //
- //    }
- //MARK: TodaySlotVC
- dateWiseSlot()()
- //MARK: SlotVC
- StaffDetailsForStaff()
- //MARK: viewForHeaderInSection
- 
- func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//                if slotView.backgroundColor == UIColor(named: CustomOrange){
-//
-//
-//                    print("SlotTabelVIEWHEADER")
-//                    let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderTv) as! SlotHeader
-//
-//                    let dateFormatter1 = DateFormatter()
-//                    // Input format
-//                    dateFormatter1.dateFormat = "dd/MM/yyyy"
-//                    print("detailss[section].std_sec_details.count",detailss[section].std_sec_details.count)
-//                    collectionViewCount = detailss[section].std_sec_details.count
-//                    if let date1 = dateFormatter1.date(from: StaffData[section].date) {
-//
-//                        dateFormatter1.dateFormat = "E, MMM d, yyyy"
-//                        let formattedDate1 = dateFormatter1.string(from: date1)
-//                        headerView.dateLabl.text = formattedDate1
-//
-//                    }
-//
-//                    headerView.stdSecDetails = detailss[section].std_sec_details
-//
-//                    let itemCount = detailss[section].std_sec_details.count
-//                    headerView.adjustCollectionViewHeight(for: itemCount )
-//                    return headerView
-//
-//                }else{
-//                    let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: HeaderTv) as! SlotHeader
-//                    headerView.isHidden = true
-//                    return headerView
-//                }
-//
-//
-//
-//            }
     
- //MARK: cellForRowAt
- 
- 
- //        if  slotView.backgroundColor == UIColor(named: CustomOrange){
-
- if detailss[indexPath.section].slots[indexPath.row].event_name == ""{
-//
-//                cell.studentName.isHidden = true
-//
-//
-//            }else{
-//
-//                cell.studentName.isHidden = false
-//
-//                cell.studentName.text  = detailss[indexPath.section].slots[indexPath.row].event_name
-//            }
-//
-//            cell.zoomLbl.text = "Mode - " +   detailss[indexPath.section].slots[indexPath.row].event_mode
-//
-//
-//
-           
-
-//            if data.eventLink == ""{
- 
- 
-//
-     cell.eventLink.isHidden = true
-//
-//            }else{
-//
-//                cell.eventLink.isHidden = false
-//
-//            }
+}
 
 
-//            if detailss[indexPath.section].slots[indexPath.row].booked_by == ""{
-//
-//
-//                cell.eventName.isHidden = true
-//
-//            }else{
-//
-//
-//                cell.eventName.isHidden = false
-//
-//                cell.eventName.text  = detailss[indexPath.section].slots[indexPath.row].booked_by
-//            }
-//
-//
-//            if detailss[indexPath.section].slots[indexPath.row].profile_url == ""{
-//
-//
-//            }else{
-//
-//            cell.profileImage.sd_setImage(with: URL(string: detailss[indexPath.section].slots[indexPath.row].profile_url), placeholderImage: UIImage(named: "profile"))
-//            }
-
- 
- 
-//            if detailss[indexPath.section].slots[indexPath.row].my_class == "" || detailss[indexPath.section].slots[indexPath.row].my_section == ""{
-//
-//                cell.classSectionLbl.isHidden = true
-//
-//
-//            }else{
-//
-//                cell.classSectionLbl.isHidden = false
-//                cell.classSectionLbl.text = detailss[indexPath.section].slots[indexPath.row].my_class + " - " + detailss[indexPath.section].slots[indexPath.row].my_section
-//            }
-//            if detailss[indexPath.section].slots[indexPath.row].status == "Completed" {
-//
-//                cell.statusLbl.textColor = UIColor(named: "completed")
-//                cell.statusLbl.text = detailss[indexPath.section].slots[indexPath.row].status
-//                cell.cancelView.isHidden = true
-//                cell.cancelAndReponeView.isHidden = true
-//
-//            } else if detailss[indexPath.section].slots[indexPath.row].status == "Available" {
-//
-//                cell.statusLbl.textColor  = .systemCyan
-//                cell.statusLbl.text = detailss[indexPath.section].slots[indexPath.row].status
-//
-//
-//                if (detailss[indexPath.section].slots[indexPath.row].is_booked == 0) && (detailss[indexPath.section].slots[indexPath.row].is_cancelled == 0){
-//
-//                    print("cell.cancelView.isHidden",cell.cancelView.isHidden)
-////                    cell.cancelView.isHidden = false
-//                    print("nkjnjknkjnknafterrr",cell.cancelView.isHidden)
-//                    print("cell.cancelViewHeight",cell.cancelHeight)
- 
- 
-//                    let cancel = linkClick(target: self, action: #selector(CancelVc))
-//                    cancel.slotid = Int(detailss[indexPath.section].slots[indexPath.row].slot_id)
-//                    cell.cancelView.addGestureRecognizer(cancel)
-//
-//
-//                    cell.cancelAndReponeView.isHidden = true
-////                    cell.cancelHeight.constant = 32
-////                    cell.cancelReopenHeight.constant = 0
-//                }
-//
-//            } else if detailss[indexPath.section].slots[indexPath.row].status == "Upcoming" {
-//
-//                cell.statusLbl.textColor = .systemCyan
-//                cell.statusLbl.text = detailss[indexPath.section].slots[indexPath.row].status
-//                if detailss[indexPath.section].slots[indexPath.row].is_booked == 1 && detailss[indexPath.section].slots[indexPath.row].is_cancelled == 0{
-//
-//
-//                    cell.cancelView.isHidden = false
-//
-//                    let cancel = linkClick(target: self, action: #selector(CancelVc))
-//                    cancel.slotid = Int(detailss[indexPath.section].slots[indexPath.row].slot_id)
-//                    cell.cancelView.addGestureRecognizer(cancel)
-//
-//
-//
-//                    cell.cancelAndReponeView.isHidden = false
-//
-//
-//                    let cancelAndRepone = linkClick(target: self, action: #selector(CancelAndReopenVc))
-//                    cancelAndRepone.slotid = Int(detailss[indexPath.section].slots[indexPath.row].slot_id)
-//                    cell.cancelAndReponeView.addGestureRecognizer(cancelAndRepone)
-//
-//                    cell.cancelHeight.constant = 32
-//                    cell.cancelReopenHeight.constant = 32
-//                }
-//
-//            }else if detailss[indexPath.section].slots[indexPath.row].status == "Expired" {
-//
-//                cell.statusLbl.textColor = UIColor(named: "Expried")
-//
-//                cell.statusLbl.text = detailss[indexPath.section].slots[indexPath.row].status
-//                cell.cancelView.isHidden = true
-//                cell.cancelAndReponeView.isHidden = true
-//                cell.cancelHeight.constant = 0
-//                cell.cancelReopenHeight.constant = 0
-//
-//            }else if detailss[indexPath.section].slots[indexPath.row].status == "Cancelled" {
-//
-//                cell.statusLbl.textColor = UIColor(named: "Expried")
-//                cell.statusLbl.text = detailss[indexPath.section].slots[indexPath.row].status
-//                cell.cancelView.isHidden = true
-//                cell.cancelAndReponeView.isHidden = true
-//                cell.cancelHeight.constant = 0
-//                cell.cancelReopenHeight.constant = 0
-//            }else{
-//
-//                cell.statusLbl.textColor = UIColor(named: "Expried")
-//
- //                cell.statusLbl.text = detailss[indexPath.section].slots[indexPath.row].status
- //                cell.cancelView.isHidden = true
- //                cell.cancelAndReponeView.isHidden = true
- //                cell.cancelHeight.constant = 0
- //                cell.cancelReopenHeight.constant = 0
- //            }
- //
- //
- //
- //
- //            // date converstion start
- //
- //            let eventDate = detailss[indexPath.section].slots[indexPath.row].date
- //            let dateFormatter = DateFormatter()
- //            // Input format
- //            dateFormatter.dateFormat = "dd/MM/yyyy"
- //
- //            if let date = dateFormatter.date(from: eventDate!) {
- //
- //                dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
- //                let formattedDate = dateFormatter.string(from: date)
- //
- //                cell.dateAndTimeLbl.text = formattedDate + "," + detailss[indexPath.section].slots[indexPath.row].from_time + " - " + detailss[indexPath.section].slots[indexPath.row].to_time
- //
- //                print(formattedDate)
- //            } else {
- //                print("Invalid date format")
- //            } // date converstion End
- //            return cell
- //
- //        }else{
- //
- //            let cell = tableView.dequeueReusableCell(withIdentifier: tvcellIdentifier, for: indexPath) as! StaffPtmTableViewCell
-
- //            cell.selectionStyle = .none
- //            cell.backView.layer.cornerRadius = 20
- //
- //            cell.backView.layer.masksToBounds = true
- //            cell.backView.layer.shadowColor = UIColor.black.cgColor
- //            cell.backView.layer.shadowOpacity = 0.5
- //            cell.backView.layer.shadowOffset = CGSize(width: 4, height: 4)
- //            cell.backView.layer.shadowRadius = 1
- //            cell.backView.layer.masksToBounds = false
- //            cell.statusview.layer.masksToBounds = true
- //            cell.statusview.layer.shadowColor = UIColor.white.cgColor
- //            cell.statusview.layer.shadowOpacity = 0.5
- //            cell.statusview.layer.shadowOffset = CGSize(width: 4, height: 4)
- //            cell.statusview.layer.shadowRadius = 5
- //            cell.statusview.layer.masksToBounds = false
- //            let data  : DateWiseModalDataDetails = dateWiseData[indexPath.row]
- //
- //            cell.studentName.text  = data.eventName
- //
- ////            cell.studentName.text  = data.studentName
- //
- //            cell.classSectionLbl.text = data.className + " - " + data.sectionName
- //
- //            cell.zoomLbl.text = " Mode - " + data.eventMode
- //
- //            if data.isBooked == 1 && data.slotStatus == "Upcoming"{
- //
- //                cell.cancelView.isHidden = false
- //                cell.cancelAndReponeView.isHidden = false
- //
- //                cell.cancelHeight.constant = 32
- //                cell.cancelReopenHeight.constant = 32
- //
- //                let cancel = linkClick(target: self, action: #selector(CancelVc))
- //                cancel.slotid = data.slotId
- //                cell.cancelView.addGestureRecognizer(cancel)
- //
- //                let cancelAndRepone = linkClick(target: self, action: #selector(CancelAndReopenVc))
- //                cancelAndRepone.slotid = data.slotId
- //                cell.cancelAndReponeView.addGestureRecognizer(cancelAndRepone)
- //            }else{
- //
- //                cell.cancelView.isHidden = true
- //                cell.cancelAndReponeView.isHidden = true
- //                cell.cancelHeight.constant = 0
- //                cell.cancelReopenHeight.constant = 0
- //            }
- //
- //            if data.eventLink == ""{
- //
- //                cell.eventLink.isHidden = true
- //
- //            }else{
- //
- //                cell.eventLink.isHidden = false
- //
- //                cell.eventLink.isUserInteractionEnabled = true
- //                let click = linkClick(target: self, action: #selector(linkClickVC))
- //                click.link = data.eventLink
- //                cell.eventLink.addGestureRecognizer(click)
- //
- //
- //            }
- //
- //
- //            if data.studentName == ""{
- //
- //
- //                cell.studentName.isHidden = true
- //            }else{
- //
- //
- //                cell.eventName.text  = data.studentName
- //            }
- //
- //
- //            if data.slotStatus == "Completed" {
- //
- //                cell.statusLbl.textColor = UIColor(named: "completed")
- //                cell.statusLbl.text = data.slotStatus
- //                cell.cancelView.isHidden = true
- //                cell.cancelAndReponeView.isHidden = true
- //                cell.cancelHeight.constant = 0
- //                cell.cancelReopenHeight.constant = 0
- //
- //
- //            } else if data.slotStatus == "Available" {
- //
- //                cell.statusLbl.textColor = UIColor(named: "completed")
- //                cell.statusLbl.text = data.slotStatus
- //                cell.cancelView.isHidden = true
- //                cell.cancelAndReponeView.isHidden = true
- //                cell.cancelHeight.constant = 0
- //                cell.cancelReopenHeight.constant = 0
- //
- //            } else if data.slotStatus == "Upcoming" {
- //
- //                cell.statusLbl.textColor = .systemCyan
- //                cell.statusLbl.text = data.slotStatus
- //
- //
- //            }else if data.slotStatus == "Expired" {
- //
- //                cell.statusLbl.textColor = UIColor(named: "Expried")
- //
- //                cell.statusLbl.text = data.slotStatus
- //                cell.cancelView.isHidden = true
- //                cell.cancelAndReponeView.isHidden = true
- //                cell.cancelHeight.constant = 0
- //                cell.cancelReopenHeight.constant = 0
- //
- //            }else if data.slotStatus == "Cancelled" {
- //
- //                cell.statusLbl.textColor = UIColor(named: "Expried")
- //                cell.statusLbl.text = data.slotStatus
- //                cell.cancelView.isHidden = true
- //                cell.cancelAndReponeView.isHidden = true
- //                cell.cancelHeight.constant = 0
- //                cell.cancelReopenHeight.constant = 0
- //
- //            }else{
- //
- //                cell.statusLbl.textColor = UIColor(named: "Expried")
- //                cell.statusLbl.text = data.slotStatus
- //                cell.cancelView.isHidden = true
- //                cell.cancelAndReponeView.isHidden = true
- //                cell.cancelHeight.constant = 0
- //                cell.cancelReopenHeight.constant = 0
- //
- //            }
- //
- //
- //
- //
- //            // date converstion start
- //
- //            let eventDate = data.eventDate
- //            let dateFormatter = DateFormatter()
- //            // Input format
- //            dateFormatter.dateFormat = "dd/MM/yyyy"
- //
- //            if let date = dateFormatter.date(from: eventDate!) {
- //
- //                dateFormatter.dateFormat = "E, MMM d, yyyy"
- //                let formattedDate = dateFormatter.string(from: date)
- //
- //                cell.dateAndTimeLbl.text = formattedDate + "," + data.slotFrom + " - " + data.slotTo
- //
- //                print(formattedDate)
- //            } else {
- //                print("Invalid date format")
- //            } // date converstion End
-//MARK: func
- func dateWiseSlot(){
-//
-//        if  dateLbl.text == "--- Select Date ---"{
-//
-//            nodatalabl.text = "Select date to start"
-//            nodatalabl.isHidden = false
-//            tv.isHidden = true
-//
-//
-//        }else{
-//
-//            let param : [String : Any] =
-//
-//
-//            [
-//                "staff_id" : staffId ,
-//                "event_date" :display_date!,
-//                "institute_id" : instituteId
-//            ]
-//
-//
-//            print("param",param)
-//
-//
-//
-//            DateWiseSlotDetailsStaffRequest.call_request(param: param)  {
-//
-//
-//                [self] (res) in
-//
-//                print("res",res)
-//                let DateWise : DateWiseModals = Mapper<DateWiseModals>().map(JSONString: res)!
-//
-//                if DateWise.Status == 1 {
-//
-//
-//                    print("helooo")
-//                    dateWiseData = DateWise.data
-//                    nodatalabl.isHidden = true
-//                    tv.isHidden = false
-//                    tv.dataSource = self
-//                    tv.delegate = self
-//                    tv.reloadData()
-//                }else{
-//                    tv.isHidden = true
-//                    nodatalabl.isHidden = false
-//                    nodatalabl.text = DateWise.Message
-//
-//                }
-//            }
-//
-//        }
-//        }
-        
-        
-//    func StaffDetailsForStaff(){
-//
-//        detailss.removeAll()
-//
-//            let param : [String : Any] =
-//
-//
-//            [
-//                "staff_id" : staffId,
-//                "event_date" : display_date!,
-//                "institute_id" : instituteId
-//            ]
-//
-//
-//            print("param",param)
-//
-//
-//
-//        SlotDetailsForStaffRequest.call_request(param: param)  {
-//
-//
-//                [self] (res) in
-//
-//                print("res",res)
-//                let DateWise : SlotDetailsForStaffResponse = Mapper<SlotDetailsForStaffResponse>().map(JSONString: res)!
-//
-//                if DateWise.Status == 1 {
-//
-//                    StaffData = DateWise.data
-//
-//
-//
-//                    for i in DateWise.data{
-//                        detailss.append(contentsOf: i.details)
-//
-//                    }
-//
-//
-//
-//                    let firstDetail = DateWise.data.first?.details.first
-//
-//                    sectiondeatils = (firstDetail?.std_sec_details)!
-//                    nodatalabl.isHidden = true
-//                    tv.isHidden = false
-//                    tv.dataSource = self
-//                    tv.delegate = self
-//                    tv.reloadData()
-//
-//
-//                }else{
-//                    tv.isHidden = true
-//                    nodatalabl.isHidden = false
-//                    nodatalabl.text = DateWise.Message
-//
-//                }
-//            }
-//
-//
-//        }
-
-
-
-
-
-
-
-
-//    func cancelSlot(slotID : Int) {
-//
-//
-//
-//            let cancelSlotsForStudModal = CancelSlotsForStudModal()
-//
-//            cancelSlotsForStudModal.staff_id = staffId
-//            cancelSlotsForStudModal.slot_id = slotID
-//
-//            cancelSlotsForStudModal.institute_id = instituteId
-//
-//
-//            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
-//            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
-//
-//
-//            CancelAndCloseSlotStaffRequest.call_request(param: cancelSlotsForStudModalStr!) {
-//
-//                [self] (res) in
-//
-//                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
-//
-//                if cancelSlotsForStudRes.Status == 1 {
-//
-//                    let refreshAlert = UIAlertController(title: "", message: cancelSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
-//
-//                    refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//
-//                        if  slotView.backgroundColor == UIColor(named: CustomOrange){
-//
-//                            StaffDetailsForStaff()
-//                        }else{
-//
-//
-//                            dateWiseSlot()
-//                        }
-//                    }))
-//                present(refreshAlert, animated: true, completion: nil)
-//                }else{
-//
-//                }
-//
-//
-//
-//            }
-//
-//        }
-
-   
-        
-//        func cancelAndReopenSlot(slotID:Int) {
-//
-//            let cancelSlotsForStudModal = CancelSlotsForStudModal()
-//
-//            cancelSlotsForStudModal.staff_id = staffId
-//            cancelSlotsForStudModal.slot_id = slotID
-//            cancelSlotsForStudModal.institute_id = instituteId
-//
-//
-//            var  cancelSlotsForStudModalStr = cancelSlotsForStudModal.toJSONString()
-//            print("cancelSlotsForStudModalStr",cancelSlotsForStudModal.toJSON())
-//
-//
-//            CancelAndReopenSlotStaffRequest.call_request(param: cancelSlotsForStudModalStr!) {
-//
-//                [self] (res) in
-//
-//                let cancelSlotsForStudRes : CancelSlotsForStudentsResponse = Mapper<CancelSlotsForStudentsResponse>().map(JSONString: res)!
-//
-//                if cancelSlotsForStudRes.Status == 1 {
-//
-//
-//                        let refreshAlert = UIAlertController(title: "", message: cancelSlotsForStudRes.Message, preferredStyle: UIAlertController.Style.alert)
-//
-//                        refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
-//
-//
-//                            if  slotView.backgroundColor == UIColor(named: CustomOrange){
-//
-//                                StaffDetailsForStaff()
-//                            }else{
-//
-//
-//                                dateWiseSlot()
-//                            }
-//
-//                        }))
-//                    present(refreshAlert, animated: true, completion: nil)
-//
-//
-//
-//                }else{
-//                    //
-//
-//                }
-//
-//
-//
-//            }
-//
-//        }
-
- 
- 
- 
- */
+class linkClick : UITapGestureRecognizer{
+    
+    var link  : String!
+    var slotid : Int!
+    
+}

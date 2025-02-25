@@ -31,12 +31,22 @@ class MeetingsTVcell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        cellview.layer.cornerRadius = 7
-        cellview.layer.masksToBounds = true
+//        cellview.layer.cornerRadius = 7
+//        cellview.layer.masksToBounds = true
+//        cellview.layer.shadowColor = UIColor.black.cgColor
+//        cellview.layer.shadowOpacity = 0.5
+//        cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
+//        cellview.layer.shadowRadius = 3
+//        
+        cellview.layer.cornerRadius = 6
+//        contentview.layer.cornerRadius = 
         cellview.layer.shadowColor = UIColor.black.cgColor
-        cellview.layer.shadowOpacity = 0.5
-        cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
-        cellview.layer.shadowRadius = 3
+        cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cellview.layer.shadowRadius = 5
+        cellview.layer.shadowOpacity = 0.3
+        contentview.layer.cornerRadius = 6 // Adjust as needed
+        contentview.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner] // Top-right and Bottom-right corners
+        contentview.clipsToBounds = true // Ensures the corners are clipped
         
         DateTimeLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -55,4 +65,10 @@ class MeetingsTVcell: UITableViewCell {
         
         delegate?.didTapCreateReminder(at: indexPath)
     }
+    @IBAction func JoinMeeting(_ sender: UIButton) {
+        if let url = URL(string: "https://meet.google.com/dac-augr-itc") {
+                   UIApplication.shared.open(url)
+               }
+    }
+    
 }

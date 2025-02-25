@@ -29,7 +29,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     @IBOutlet weak var clickVoiceLbl: UILabel!
     @IBOutlet weak var textBtn: UIButton!
     @IBOutlet weak var voiceClickView: UIView!
-    
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var textClickView: UIView!
     @IBOutlet weak var voiceBtn: UIButton!
@@ -45,6 +46,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
         clickTextView.text = CommonStringFile.TextMessage.translated()
         backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
         ButtonStyle()
         // Do any additional setup after loading the view.
@@ -53,7 +55,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
         let nib2 = UINib(nibName: CellConfingName.HistoryTC, bundle: nil)
         tv.register(nib2, forCellReuseIdentifier: CellConfingName.HistoryTC)
-        
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         tv.delegate = self
         tv.dataSource = self
     }

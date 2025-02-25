@@ -348,7 +348,7 @@
                     </constraints>
                 </scrollView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online Meeting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMo-Da-bsh">
-                    <rect key="frame" x="39.999999999999986" y="69.333333333333329" width="180.66666666666663" height="24"/>
+                    <rect key="frame" x="40" y="69.333333333333329" width="215" height="24"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -370,20 +370,20 @@
                     </connections>
                 </button>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Y1Z-v2-1vM">
-                    <rect key="frame" x="220.66666666666663" y="64" width="167.33333333333337" height="45"/>
+                    <rect key="frame" x="255" y="64" width="133" height="40.333333333333343"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2e-s7-Bub">
-                            <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="20.333333333333332"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                            <rect key="frame" x="0.0" y="0.0" width="133" height="15.666666666666666"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fuq-TW-OwO">
-                            <rect key="frame" x="0.0" y="25.333333333333329" width="167.33333333333334" height="19.666666666666671"/>
+                            <rect key="frame" x="0.0" y="20.666666666666671" width="133" height="19.666666666666671"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="19.666666666666671" id="4jx-C9-B7P"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -431,7 +431,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

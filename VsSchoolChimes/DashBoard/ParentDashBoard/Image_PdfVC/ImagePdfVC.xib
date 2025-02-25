@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImagePdfVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="NameLbl" destination="XWx-y4-ymU" id="gIK-qj-MV9"/>
+                <outlet property="StandardLbl" destination="B19-sW-eD7" id="R1y-PP-GrY"/>
                 <outlet property="backBtn" destination="Sld-qj-0Ab" id="8da-jE-ghi"/>
                 <outlet property="headinglabel" destination="zc3-JZ-Z97" id="0Bw-8g-W17"/>
                 <outlet property="search" destination="pKh-VS-d3z" id="oum-eg-Oey"/>

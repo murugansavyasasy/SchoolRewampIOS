@@ -125,7 +125,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         backBtn.titleLabel?.lineBreakMode = .byWordWrapping
         nodataView.isHidden = true
         nodataLbl.isHidden = true
-        
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         tv.register(UINib(nibName: rowIdentifier, bundle: nil), forCellReuseIdentifier: rowIdentifier)
         tv.delegate = self
         tv.dataSource = self

@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventResiverVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="NameLbl" destination="VrD-2D-RLJ" id="jQd-fd-c2T"/>
+                <outlet property="StandardLbl" destination="I3Y-8Z-JSi" id="7m1-LH-9NX"/>
                 <outlet property="TitleHederLbl" destination="qpN-Yo-u0B" id="YBx-YL-PqB"/>
                 <outlet property="backBtn" destination="cCk-JC-1iU" id="Mka-1g-pxG"/>
                 <outlet property="bgView" destination="ple-Yb-ohd" id="hdY-oD-ZP6"/>

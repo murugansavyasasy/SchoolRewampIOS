@@ -13,6 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ParentNoticeBoardVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HeadingLabel" destination="dzL-u0-OpH" id="m3j-9I-CH6"/>
+                <outlet property="NameLbl" destination="R17-G6-HYv" id="w2B-Lr-2Ko"/>
+                <outlet property="StandardLbl" destination="ITA-pO-r3W" id="YbU-xJ-qly"/>
                 <outlet property="backBtn" destination="RAF-MZ-6Sl" id="q8F-pi-5dS"/>
                 <outlet property="bgView" destination="NQG-kl-22B" id="P15-GF-jpw"/>
                 <outlet property="searchbar" destination="jyY-Ez-Rga" id="uIR-Gn-gzZ"/>

@@ -21,6 +21,11 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     
     
     @IBOutlet weak var TitleHederLbl: UILabel!
+    
+    
+    @IBOutlet weak var StandardLbl: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var page1 = UIViewController()
@@ -67,6 +72,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     }
     func uiConficration(){
         backBtn.setTitle(titleLbl, for: .normal)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
@@ -75,6 +81,8 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         historyBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         historyBtn.setTitle(button2, for: .normal)
         createEvent.setTitle(button1, for: .normal)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
     }
     private func setupPageViewController() {
         // Initialize the page view controller

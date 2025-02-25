@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ClassTimeTableViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="NameLbl" destination="MBF-9e-ndq" id="y7N-Pq-63G"/>
+                <outlet property="StandardLbl" destination="zgu-F5-xnr" id="5lI-4e-k7c"/>
                 <outlet property="backBtn" destination="A9X-vZ-3nR" id="wlR-RR-URf"/>
                 <outlet property="bgView" destination="qan-a5-OQD" id="9eA-RA-ybx"/>
                 <outlet property="cv" destination="hKd-yG-qqU" id="yE7-FB-zPl"/>

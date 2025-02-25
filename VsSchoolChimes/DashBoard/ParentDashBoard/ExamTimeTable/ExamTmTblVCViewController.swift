@@ -14,7 +14,8 @@ class ExamTmTblVCViewController: UIViewController {
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
-    
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     var SideItemArry = ["QuatalyExamQuatalyExam","SSlC ExamQuatalyExam","Hsc ExamQuatalyExam","HalfYearExamQuatalyExam"]
     var  TvSide = [""]
     var isCellSelected = false
@@ -28,13 +29,14 @@ class ExamTmTblVCViewController: UIViewController {
         backBtn.setTitle(ReceiverMenuItems.ExamTest.translated(), for: .normal)
         Searchbar.placeholder = CommonStringFile.Search.translated()
         addDoneButton()
-        
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         let nib = UINib(nibName:CellConfingName.SideTvcell, bundle: nil)
         sideTv.register(nib, forCellReuseIdentifier: CellConfingName.SideTvcell)
         
         let nib1 = UINib(nibName:CellConfingName.Tvcell, bundle: nil)
         tv.register(nib1, forCellReuseIdentifier: CellConfingName.Tvcell)
-        
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         sideTv.delegate = self
         sideTv.dataSource = self
         tv.delegate = self

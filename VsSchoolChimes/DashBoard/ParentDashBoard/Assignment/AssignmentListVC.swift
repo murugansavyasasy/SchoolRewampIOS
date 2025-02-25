@@ -16,6 +16,8 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeaderLabel: UILabel!
+    @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
     var didSelectDelegate : DidSelectDelegate?
@@ -25,7 +27,10 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
         super.viewDidLoad()
        
         backBtn.setTitle(ReceiverMenuItems.Assignment.translated(), for: .normal)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         filteredData = data
         searchview.placeholder = CommonStringFile.Search.translated()
         searchview.delegate = self
