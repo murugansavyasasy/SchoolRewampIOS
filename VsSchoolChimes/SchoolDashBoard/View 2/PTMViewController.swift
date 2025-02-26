@@ -112,9 +112,10 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         calendarView.layer.borderColor = UIColor.gray.cgColor
         calendarView.layer.cornerRadius = 10
         
-        ButtonStack.backgroundColor = .systemGray5
-        segment1.backgroundColor = .systemGreen.withAlphaComponent(0.8)
-        segment2.backgroundColor = .white
+        ButtonStack.backgroundColor = .systemGray4
+//        segment1.backgroundColor = .systemGreen.withAlphaComponent(0.8)
+        segment1.backgroundColor = .white
+        segment2.backgroundColor = .clear
         
         ShedulemeetingLbl.textColor = .black
         MeetingHistoryLbl.textColor = .gray

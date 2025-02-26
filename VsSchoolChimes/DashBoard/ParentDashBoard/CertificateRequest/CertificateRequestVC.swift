@@ -183,7 +183,7 @@ class CertificateRequestVC: UIViewController {
         }
 
         // MARK: - Customize UISegmentedControl Text Colors
-        func configureSegmentedControlText(_ segmentedControl: UISegmentedControl) {
+    func configureSegmentedControlText(_ segmentedControl: UISegmentedControl) {
             let normalAttributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor.darkGray, // Text color for unselected segments
                 .font: UIFont.systemFont(ofSize: 16, weight: .medium)
