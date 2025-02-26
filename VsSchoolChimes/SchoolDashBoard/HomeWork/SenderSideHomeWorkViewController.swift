@@ -39,13 +39,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var uploadattachmentLbl: UILabel!
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
     @IBOutlet weak var RecipientBtn: UIButton!
-    @IBOutlet weak var calenderimgHeight: NSLayoutConstraint!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
     @IBOutlet weak var calenderHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var SectionLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
-    
     @IBOutlet weak var CustomDateBtn: HalfColorButton!
     @IBOutlet weak var customDateLbl: UILabel!
    
@@ -231,7 +228,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         let label = formatter.string(from: sender.date)
         
-       // calenderimgHeight.constant = 38
         //   DateViewheight.constant = 25
         calenderHeight.constant = 0
         CalenderViewTodateBtnTop.constant = 0

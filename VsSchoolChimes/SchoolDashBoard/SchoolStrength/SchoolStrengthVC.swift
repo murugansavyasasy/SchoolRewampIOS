@@ -23,26 +23,7 @@ class SchoolStrengthVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        TotalStrengthView.layer.cornerRadius = 10
-        
-        TotalStrengthView.layer.masksToBounds = false
-        
-        // Shadow to make it look "popped up"
-        TotalStrengthView.layer.shadowColor = UIColor.black.cgColor
-        TotalStrengthView.layer.shadowOpacity = 0.2
-        TotalStrengthView.layer.shadowOffset = CGSize(width: 0, height: 4)
-        TotalStrengthView.layer.shadowRadius = 6
-        
-        // Optional: Add a border for a polished look
-        TotalStrengthView.layer.borderColor = UIColor.lightGray.cgColor
-        TotalStrengthView.layer.borderWidth = 0.5
-        
-        // Background color for the card
-        TotalStrengthView.backgroundColor = .white
-        
-        studentCountLbl.setFont(style: .body, size: FontSize.BodySize)
-        staffCountLbl.setFont(style: .body, size: FontSize.BodySize)
-        totalCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        UIupdate()
         setupPieChart()
         setChartData()
         
@@ -51,6 +32,7 @@ class SchoolStrengthVC: UIViewController {
         
         Tv.delegate = self
         Tv.dataSource = self
+        Tv.reloadData()
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -58,6 +40,29 @@ class SchoolStrengthVC: UIViewController {
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+    }
+    
+   func UIupdate(){
+       TotalStrengthView.layer.cornerRadius = 10
+       TotalStrengthView.layer.masksToBounds = false
+       
+       // Shadow to make it look "popped up"
+       TotalStrengthView.layer.shadowColor = UIColor.black.cgColor
+       TotalStrengthView.layer.shadowOpacity = 0.2
+       TotalStrengthView.layer.shadowOffset = CGSize(width: 0, height: 4)
+       TotalStrengthView.layer.shadowRadius = 6
+       
+       // Optional: Add a border for a polished look
+       TotalStrengthView.layer.borderColor = UIColor.lightGray.cgColor
+       TotalStrengthView.layer.borderWidth = 0.5
+       
+       // Background color for the card
+       TotalStrengthView.backgroundColor = .white
+       
+       HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
+       studentCountLbl.setFont(style: .body, size: FontSize.BodySize)
+       staffCountLbl.setFont(style: .body, size: FontSize.BodySize)
+       totalCountLbl.setFont(style: .body, size: FontSize.BodySize)
     }
     
     @IBAction func BackbtnAct(_ sender: Any) {
@@ -138,13 +143,6 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        // Toggle the state for the selected row
-//        isBarChartVisible[indexPath.row] = !isBarChartVisible[indexPath.row]
-//        
-//        // Reload the specific row to reflect the change
-//        tableView.reloadRows(at: [indexPath], with: .none)
-//    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Safely unwrap the cell
         if let cell = tableView.cellForRow(at: indexPath) as? StrengthTvCell {
@@ -184,7 +182,4 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
             tableView.endUpdates()
         }
     }
-
-
-
 }

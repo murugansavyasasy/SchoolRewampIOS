@@ -10,7 +10,6 @@ import UIKit
 class LessonPlanVC: UIViewController {
     
     @IBOutlet weak var HeaderLbl: UILabel!
-    @IBOutlet weak var FilterImgview: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var viewBtn: UIButton!
     @IBOutlet weak var createBtn: UIButton!
@@ -33,11 +32,40 @@ class LessonPlanVC: UIViewController {
         LessonPlan(subject: "Entrepreneurship", className: "XI - G", staffName: "Ramesh T", progress: 35),
         LessonPlan(subject: "Human Resource Management", className: "XI - H", staffName: "Priya N", progress: 90)
     ]
+    
     let colours = ["gradient1","gradient2","gradient3","gradientBlue1","gradientgreen1"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UIupdate()
+        
+        gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        createBtn.setTitleColor(UIColor.white, for: .normal)
+        
+        addDoneButton()
+        
+        let nib1 = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
+        tableview.register(nib1, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
+        let nib = UINib(nibName: CellConfingName.LessonProgressCell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonProgressCell)
+        
+        let nib2 = UINib(nibName: CellConfingName.LessonDashboardTv, bundle: nil)
+        tableview.register(nib2, forCellReuseIdentifier: CellConfingName.LessonDashboardTv)
+        tableview.delegate = self
+        tableview.dataSource = self
+        tableview.reloadData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
+    
+    func UIupdate(){
         searchBar.backgroundImage = UIImage()
         searchBar.layer.borderWidth = 0
         searchBar.layer.borderColor = UIColor.clear.cgColor
@@ -49,27 +77,6 @@ class LessonPlanVC: UIViewController {
         HeaderLbl.setFont(style: .header, size: 16)
         createBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         viewBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
-        gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        createBtn.setTitleColor(UIColor.white, for: .normal)
-        addDoneButton()
-        let nib1 = UINib(nibName: CellConfingName.LessonPlanTvCell, bundle: nil)
-        tableview.register(nib1, forCellReuseIdentifier: CellConfingName.LessonPlanTvCell)
-        let nib = UINib(nibName: CellConfingName.LessonProgressCell, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.LessonProgressCell)
-        
-        let nib2 = UINib(nibName: CellConfingName.LessonDashboardTv, bundle: nil)
-        tableview.register(nib2, forCellReuseIdentifier: CellConfingName.LessonDashboardTv)
-        tableview.delegate = self
-        tableview.dataSource = self
-    }
-    
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
     }
     
     func gradientcolours(button : UIButton,colours : [CGColor]){
@@ -83,7 +90,6 @@ class LessonPlanVC: UIViewController {
         gradientLayer.cornerRadius = button.layer.cornerRadius
         // Insert the gradient layer into the button's layer
         button.layer.insertSublayer(gradientLayer, at: 0)
-        
     }
     
     @IBAction func createBtnAct(_ sender: Any) {
@@ -143,9 +149,6 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
             cell.StandardLbl.text = lessonPlans[indexPath.row].className
             cell.setProgress(to: lessonPlans[indexPath.row].progress)
             
-//            let Sidecolour = colours[indexPath.row % colours.count]
-//            cell.SideColourView.backgroundColor = UIColor(named: Sidecolour)!.withAlphaComponent(0.8)
-            
             let tap = UITapGestureRecognizer(target: self, action: #selector(ViewbtnAct))
             cell.ViewBtn.addGestureRecognizer(tap)
             return cell
@@ -153,13 +156,10 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
         else{
             let colour = cellcolour[indexPath.row % cellcolour.count]
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonProgressCell, for: indexPath) as! LessonProgressCell
-            
-           
-            
+    
             // Set the default state before configuring the cell
             cell.progressView.backgroundColor = .systemGreen  // Default color
            // cell.ProgressHeight.constant = 85  // Default height
-            
             
             if indexPath.row == 0{
                 cell.TopProgressView.isHidden = true

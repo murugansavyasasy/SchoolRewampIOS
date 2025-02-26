@@ -12,7 +12,6 @@ import AVFoundation
 class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     @IBOutlet weak var ViewDetailsBtn: UIButton!
-    @IBOutlet weak var TopGradientView: UIView!
     @IBOutlet weak var changeRollLbl: UILabel!
     @IBOutlet weak var loginDetailView: UIView!
     @IBOutlet weak var Searchbar: UISearchBar!
@@ -22,24 +21,22 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
-    
     @IBOutlet weak var heightStackview: NSLayoutConstraint!
     @IBOutlet weak var homeworkBtn: UIButton!
     @IBOutlet weak var assignmentkBtn: UIButton!
     @IBOutlet weak var onlineMeetingBtn: UIButton!
     @IBOutlet weak var collectionBtn: UIView!
-    
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var TopCv: UICollectionView!
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
+    
     var advertisements: [String] = []
     var filteredItems: [String] = []
     let menuName = MenuStringFile()
     var getValue : Int!
     var searchItem = 0
-    
     var currentIndex = 0
     var autoScrollTimer: Timer?
     private let tabBar = UITabBar()
@@ -47,7 +44,6 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
-    @IBOutlet weak var userView: UIView!
     let MenuRedirect = MenuRedirectHandler.shared
     var currentPlaceholderIndex = 0
     var timer: Timer?
@@ -55,9 +51,10 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var isShowingAll = false
     var displayedCategories: [String] = []
     let newString = "Add"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         advertisements = [
             "Ad 1: Special Offer",
             "Ad 2: Final Sale",
@@ -65,36 +62,31 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             "Ad 4: Discount Up to 50%"
         ]
         
-        bottomView.layer.cornerRadius = 10
-        bottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        bottomView.clipsToBounds = true
-        
         setupVideoBackground()
         filteredItems = MenuRedirect.items
         displayedCategories = Array(filteredItems.prefix(6))
         
         displayedCategories.insert(newString, at: 5)
-        changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
-        changeRollLbl.textColor = .link
+        
         //startAutoScroll()
         cellRegistration()
         addDoneButton()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
         
-        Searchbar.placeholder = CommonStringFile.Search.translated()
+        
         Searchbar.delegate = self
         searchHeightCon.constant = 0
-//        TopCv.delegate = self
-//        TopCv.dataSource = self
+        //        TopCv.delegate = self
+        //        TopCv.dataSource = self
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
+        
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stopAutoScroll), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         let searchImage  = UITapGestureRecognizer(target: self, action:#selector(SearchViewHidden))
         searchImgView.addGestureRecognizer(searchImage)
-        
         searchImgView.isUserInteractionEnabled = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(openNotification))
@@ -105,18 +97,11 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         changeRollLbl.addGestureRecognizer(changerollTap)
         changeRollLbl.isUserInteractionEnabled = true
         
-        SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
-        AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-       let profileTap =  UITapGestureRecognizer(target: self, action: #selector(OpenProfile))
+        let profileTap =  UITapGestureRecognizer(target: self, action: #selector(OpenProfile))
         schoolLogoImg.addGestureRecognizer(profileTap)
         schoolLogoImg.isUserInteractionEnabled = true
         
-        reportView.layer.cornerRadius = 5
-        reportView.layer.shadowColor = UIColor.black.cgColor
-        reportView.layer.shadowOpacity = 0.5
-        reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        reportView.layer.shadowRadius = 3
-        reportView.layer.masksToBounds = false
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -136,6 +121,32 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         ButtonUIupdate()
     }
+    
+    func StyleAndTranslater(){
+        
+        //MARK: UI Changes
+        bottomView.layer.cornerRadius = 10
+        bottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        bottomView.clipsToBounds = true
+        
+        reportView.layer.cornerRadius = 5
+        reportView.layer.shadowColor = UIColor.black.cgColor
+        reportView.layer.shadowOpacity = 0.5
+        reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        reportView.layer.shadowRadius = 3
+        reportView.layer.masksToBounds = false
+        changeRollLbl.textColor = .link
+        
+        //MARK: Setting Font Style
+        SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
+        AddressLabel.setFont(style: .body, size: FontSize.BodySize)
+        changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
+        
+        
+        //MARK: Translation
+        Searchbar.placeholder = CommonStringFile.Search.translated()
+    }
+    
     
     //MARK: Apply gradient for the UIButton
     func ButtonUIupdate(){
@@ -251,10 +262,10 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear - View is about to appear.")
-//        
-//        TopCv.reloadData()
-//        TopCv.delegate = self
-//        TopCv.dataSource = self
+        //
+        //        TopCv.reloadData()
+        //        TopCv.delegate = self
+        //        TopCv.dataSource = self
         bottomCv.delegate = self
         bottomCv.dataSource = self
         bottomCv.reloadData()
@@ -268,7 +279,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         bottomCv.delegate = self
         bottomCv.dataSource = self
-       // restartAnimations()
+        // restartAnimations()
         
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -309,7 +320,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         TopCv.register(UINib(nibName: CellConfingName.PiechartCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PiechartCVCell)
     }
     
-
+    
     
     deinit {
         timer?.invalidate()
@@ -548,16 +559,16 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
             return CGSize(width: collectionView.frame.width, height: 170)
         }
         
-             let width = (collectionView.frame.width) / 3
-             let padding: CGFloat = 10
-             let maxTextWidth = width - padding * 2
-
-             let label = filteredItems[indexPath.row].translated()
-             let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
-             let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
-
-             let height = max(textHeight + padding * 2, width - 10)
-             return CGSize(width: width, height: height + 10)
+        let width = (collectionView.frame.width) / 3
+        let padding: CGFloat = 10
+        let maxTextWidth = width - padding * 2
+        
+        let label = filteredItems[indexPath.row].translated()
+        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
+        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
+        
+        let height = max(textHeight + padding * 2, width - 10)
+        return CGSize(width: width, height: height + 10)
         
     }
     

@@ -8,7 +8,7 @@
 import UIKit
 
 class MarkAtendenceTV: UITableViewCell {
-
+    
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var addmisionLbl: UILabel!
     @IBOutlet weak var rollNoLbl: UILabel!
@@ -44,19 +44,19 @@ class MarkAtendenceTV: UITableViewCell {
         sender.isSelected.toggle()
         let name = sender.isSelected ? "Absent" : "Present"
         stsBtn.setTitle(name, for: .normal)
-
+        
         // Change btnView background color based on selection
         btnView.backgroundColor = !sender.isSelected ? UIColor.red : Colornames.AprovedClr
-
+        
         // Pop Animation
         UIView.animate(withDuration: 0.1,
                        animations: {
-                           self.btnView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2) // Slightly enlarge
-                       }, completion: { _ in
-                           UIView.animate(withDuration: 0.1) {
-                               self.btnView.transform = CGAffineTransform.identity // Back to original size
-                           }
-                       })
-
+            self.btnView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2) // Slightly enlarge
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.btnView.transform = CGAffineTransform.identity // Back to original size
+            }
+        })
+        
     }
 }
