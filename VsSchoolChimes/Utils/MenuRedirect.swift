@@ -33,6 +33,7 @@ class MenuRedirectHandler {
     
     var receiverImageItems : [String] = ["Communication","Homework" ,/*"ExamTest",*/"Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM"]
     
+    //MARK: SenderSideMenuViewContoller Starts
     
     func senderVideoNavigate(from viewController: UIViewController) {
         let vc = SenderSideVideoViewController(nibName: nil, bundle: nil)

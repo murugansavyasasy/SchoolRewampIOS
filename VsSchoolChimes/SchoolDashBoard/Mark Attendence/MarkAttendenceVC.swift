@@ -39,7 +39,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     @IBOutlet weak var SelectAttendanceTypeLbl: UILabel!
     @IBOutlet weak var selectStandardandSectionDefaultLbl: UILabel!
     @IBOutlet weak var selectDateDefautLbl: UILabel!
-   
     @IBOutlet weak var CustumDateBtn: UIButton!
     @IBOutlet weak var CustomDateLbl: UILabel!
     @IBOutlet weak var HalfdayImgview: UIImageView!
@@ -58,9 +57,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     @IBOutlet weak var MarkAttendBtn: UIButton!
     @IBOutlet weak var ButtonStackview: UIStackView!
     @IBOutlet weak var TV: UITableView!
-    
     @IBOutlet weak var DateBtn: UIButton!
-    
     @IBOutlet weak var AttendTypeStackView: UIStackView!
     
     var activeButton: UIButton?
@@ -82,19 +79,12 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
         setFormattedDate(customdatestring, label: CustomDateLbl)
-        
         formatter.dateFormat = "EEE d MMM yyyy"
         let dateBtntitle = formatter.string(from: Date())
         DateBtn.setTitle(dateBtntitle, for: .normal)
         
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
-        //applyVerticalGradientToButton(button: CustumDateBtn)
-//        calenderview.applyGradient(
-//            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
         orLabel.setFont(style: .body, size: FontSize.BodySize)
         ButtonStackview.layer.cornerRadius = 20
         AttendRecordBtn.layer.cornerRadius = 20
@@ -183,6 +173,10 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+    }
+    
+    func UIupdate() {
+        
     }
     
     @objc func fulldayAction(){

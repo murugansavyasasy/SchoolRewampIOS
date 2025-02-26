@@ -15,16 +15,16 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yy"
-            let DayDate = dateFormatter.date(from: date)!
-            // Change to output format
-            dateFormatter.dateFormat = "EEE dd"
-            let outputDateString = dateFormatter.string(from: DayDate)
-            
-           DateBtn.setTitle(date, for: .normal)
-           setFormattedDate(outputDateString, label: CustomDateLbl)
-
-        }
+        dateFormatter.dateFormat = "dd MMM yy"
+        let DayDate = dateFormatter.date(from: date)!
+        // Change to output format
+        dateFormatter.dateFormat = "EEE dd"
+        let outputDateString = dateFormatter.string(from: DayDate)
+        
+        DateBtn.setTitle(date, for: .normal)
+        setFormattedDate(outputDateString, label: CustomDateLbl)
+        
+    }
     
     func deleteImage(index: Int) {
         selectedImages.remove(at: index)
@@ -81,7 +81,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
-       
+        
         
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
@@ -117,18 +117,14 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
         
-        //        MARK: Gallery Image
+        //MARK: Gallery Image
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
             // Handle selected images here
             selectedImages.append(contentsOf: images)
+            
             for image in images {
                 print("Selected image: \(image)")
-                //                collectionView.isHidden = false
-                //                collectionView.delegate = self
-                //                collectionView.dataSource = self
-                //                photoPickManager.uploadAWS(image: image)
-                
                 selectImgPdfview.imageCollectionview.reloadData()
             }
         }
@@ -138,16 +134,11 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             guard let self = self else { return }
             
             selectedImages.append(images)
-            //            for image in images {
             print("Selected image: \(images)")
-            //                collectionView.isHidden = false
-            //                collectionView.delegate = self
-            //                collectionView.dataSource = self
             photoPickManager.uploadAWS(image: images)
-            //            }
         }
         
-        //        MARK: PDF
+        //MARK: PDF
         photoPickManager.onPdfPicked = { [weak self] pdf in
             print("Selectedpdf12 \(pdf)")
             self!.photoPickManager.uploadPDFFileToAWS(pdfData: pdf)
@@ -157,7 +148,6 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         photoPickManager.onPdfString = { [weak self] pdf in
             print("Selectef12 \(pdf)")
         }
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -207,7 +197,6 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         customizedDateBtn.layer.borderColor = UIColor.gray.cgColor
         
         //MARK: Button Font Style
-        //chooseImgBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         chooseRecipientsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
@@ -221,9 +210,6 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryDropDownLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryLbl.setFont(style: .title, size: FontSize.TitleSize)
-        //subDateLbl.setFont(style: .title, size: FontSize.TitleSize)
-        
-        
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -231,6 +217,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         let selectedDate = sender.date
         print("Selected Date: \(selectedDate)")
     }
+    
     @IBAction func backVc() {
         
         dismiss(animated: true)
@@ -287,39 +274,6 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         }
     }
     
-    @IBAction func chooseImgBtnAction(_ sender: UIButton) {
-        presentSelectionAlert()
-    }
-    
-    
-    @IBAction func presentSelectionAlert() {
-        let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-        
-        // Camera option
-        let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-            openCamera()
-        }
-        alertController.addAction(cameraAction)
-        
-        // Gallery option
-        let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-            selectImages()
-        }
-        alertController.addAction(galleryAction)
-        
-        let pdfAction = UIAlertAction(title: "Pdf".translated(), style: .default) { [self] _ in
-            selectPdf()
-        }
-        alertController.addAction(pdfAction)
-        
-        // Cancel action
-        let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        // Present the alert
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
     
     func selectImages() {
         photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
@@ -333,124 +287,59 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     @IBAction func openCamera() {
         // Check if the camera is available
         photoPickManager.openCamera(from: self)
-        //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-        //            let imagePicker = UIImagePickerController()
-        //            imagePicker.delegate = self
-        //            imagePicker.sourceType = .camera
-        //            imagePicker.allowsEditing = true // Allows editing of the captured image
-        //            present(imagePicker, animated: true, completion: nil)
-        //        } else {
-        //            // Camera is not available, show an alert
-        //            let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
-        //            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
-        //            present(alert, animated: true, completion: nil)
-        //        }
-    }
-    
-    
-    // Handle the image once it has been captured
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.editedImage] as? UIImage {
-            // Use the captured image
-            // For example, display it in an image view or save it
-            print("Captured Image: \(image)")
-            self.selectedImages.append(image)
-        } else if let image = info[.originalImage] as? UIImage {
-            print("Captured Image: \(image)")
-            self.selectedImages.append(image)
-        }
-        dismiss(animated: true, completion: nil)
-    }
-    
-    // Handle cancellation
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func DateBtnAct(_ sender: Any) {
         let vc = DatePickerVC(nibName: nil, bundle: nil)
-              vc.dateSelection = 2
-              vc.delegate = self
-              vc.modalPresentationStyle = .overCurrentContext
-              vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-              self.present(vc, animated: false)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
     func setFormattedDate(_ date: String, label: UILabel) {
-            let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-            let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
-            
-            // Function to create an attributed string from a given date
-            func createAttributedText(from date: String) -> NSMutableAttributedString {
-                let components = date.split(separator: " ")
-                guard components.count > 1 else {
-                    print("Error: Invalid date format")
-                    return NSMutableAttributedString()
-                }
-                
-                let day = components[0]
-                let month = components[1]
-                
-                let attributedText = NSMutableAttributedString()
-                attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
-                    .font: weekdayFont,
-                    .foregroundColor: UIColor.darkGray
-                ]))
-                attributedText.append(NSAttributedString(string: "\(month)", attributes: [
-                    .font: dayFont,
-                    .foregroundColor: UIColor.black
-                ]))
-                
-                // Set paragraph style for centered alignment
-                let paragraphStyle = NSMutableParagraphStyle()
-                paragraphStyle.alignment = .center
-                attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-                
-                return attributedText
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+        
+        // Function to create an attributed string from a given date
+        func createAttributedText(from date: String) -> NSMutableAttributedString {
+            let components = date.split(separator: " ")
+            guard components.count > 1 else {
+                print("Error: Invalid date format")
+                return NSMutableAttributedString()
             }
             
-            // Create attributed text and set to label
-            label.attributedText = createAttributedText(from: date)
-            label.numberOfLines = 0
+            let day = components[0]
+            let month = components[1]
+            
+            let attributedText = NSMutableAttributedString()
+            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                .font: weekdayFont,
+                .foregroundColor: UIColor.darkGray
+            ]))
+            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                .font: dayFont,
+                .foregroundColor: UIColor.black
+            ]))
+            
+            // Set paragraph style for centered alignment
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+            
+            return attributedText
         }
-  
+        
+        // Create attributed text and set to label
+        label.attributedText = createAttributedText(from: date)
+        label.numberOfLines = 0
+    }
 }
 
 
 @available(iOS 14.0, *)
 extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    
-    // MARK: - UICollectionView DataSource
-    //       func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    //           return selectedImages.count
-    //       }
-    //
-    //       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    //           let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-    //           cell.imageViews.image = selectedImages[indexPath.item]
-    //           return cell
-    //       }
-    //
-    //       // MARK: - UICollectionView Delegate
-    //       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //           // Delete the selected image
-    //           selectedImages.remove(at: indexPath.item)
-    //           collectionView.deleteItems(at: [indexPath])
-    //       }
-    //
-    //
-    //}
-    //
-    //@available(iOS 14.0, *)
-    //extension SenderAssignmentTextViewController: UICollectionViewDelegateFlowLayout {
-    //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    //        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-    //        return CGSize(width: width, height: width)
-    //    }
-    //
-    //
-    //
-    //
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -492,7 +381,7 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
             let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-            //
+            
             // Camera option
             let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
             }
@@ -500,9 +389,9 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
             
             // Gallery option
             let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-                //
+                
                 selectImages()
-                //
+                
             }
             alertController.addAction(galleryAction)
             

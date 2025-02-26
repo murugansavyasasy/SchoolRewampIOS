@@ -165,6 +165,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     @IBAction func slotSelection(_ sender: UISegmentedControl) {
+        configureSegmentedControlText(sender)
         if sender.selectedSegmentIndex == 0 {
             createView.isHidden = false
             dateLbl.text = "--- Select Date ---"
@@ -203,7 +204,20 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
             tv.reloadData()
         }
     }
-    
+    func configureSegmentedControlText(_ segmentedControl: UISegmentedControl) {
+            let normalAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.darkGray, // Text color for unselected segments
+                .font: UIFont.systemFont(ofSize: 13, weight: .medium)
+            ]
+            
+            let selectedAttributes: [NSAttributedString.Key: Any] = [
+                .foregroundColor: UIColor.systemBlue.withAlphaComponent(0.7), // Text color for selected segment
+                .font: UIFont.systemFont(ofSize: 13, weight: .bold)
+            ]
+            
+            segmentedControl.setTitleTextAttributes(normalAttributes, for: .normal)
+            segmentedControl.setTitleTextAttributes(selectedAttributes, for: .selected)
+        }
     @IBAction func SelectDate(_ sender:UIButton){
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
