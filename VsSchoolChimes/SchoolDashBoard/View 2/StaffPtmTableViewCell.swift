@@ -7,15 +7,14 @@
 //
 
 import UIKit
-
+protocol ShowPopupDelegate{
+    func showPopup(sender:UIButton)
+}
 class StaffPtmTableViewCell: UITableViewCell {
 
     @IBOutlet weak var statusview: UIViewX!
-    @IBOutlet weak var cancelHeight: NSLayoutConstraint!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var cancelView: UIViewX!
-    @IBOutlet weak var cancelReopenHeight: NSLayoutConstraint!
-  
     @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var slotBtn: UIButton!
     @IBOutlet weak var MeetingModeBtn: UIButton!
@@ -26,21 +25,12 @@ class StaffPtmTableViewCell: UITableViewCell {
     @IBOutlet weak var eventName: UILabel!
     @IBOutlet weak var statusLbl: UILabel!
     @IBOutlet weak var backView: UIView!
+    
+    var showpopup:ShowPopupDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         takeMeetingBtn.layer.cornerRadius = 8
         takeMeetingBtn.layer.backgroundColor = UIColor.systemBlue.cgColor
-//        if let image = UIImage(systemName: "clock") {
-//            let resizedImage = image.resizeTo(size: CGSize(width: 15, height: 15)) // Adjust size as needed
-//            dateBtn.setImage(resizedImage, for: .normal)
-//            dateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-//        }
-//        if let image = UIImage(systemName: "clock") {
-//            let resizedImage = image.resizeTo(size: CGSize(width: 15, height: 15)) // Adjust size as needed
-//            slotBtn.setImage(resizedImage, for: .normal)
-//            slotBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-//        }
-        
         if let image = UIImage(systemName: "video") {
             let resizedImage = image.resizeTo(size: CGSize(width: 15, height: 12)) // Adjust size as needed
             MeetingModeBtn.setImage(resizedImage, for: .normal)
@@ -53,6 +43,9 @@ class StaffPtmTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    @IBAction func showPopup(_ sender: UIButton) {
+        showpopup?.showPopup(sender: sender)
+    }
     enum CutoutPosition {
         case left
         case right

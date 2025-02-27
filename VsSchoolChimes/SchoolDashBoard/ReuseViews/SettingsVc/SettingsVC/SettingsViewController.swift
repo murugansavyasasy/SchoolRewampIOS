@@ -31,9 +31,10 @@ class SettingsViewController: UIViewController, BaktoHome {
     var imagesArray: [UIImage] = []
     var delegate:BaktoHome?
     var passVale = 1
+    var Language:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         section = sections
         SettingspageHeading.text = MenuTapbar.Settings.translated()
         SettingspageHeading.setFont(style: .header, size: 20)
@@ -117,6 +118,8 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         cell.nameLbl.textColor = sections[indexPath.section].items[indexPath.row].translated() == menuname.logout ? .red : .black
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
         cell.imgView.tintColor =  Images[indexPath.section].uiImages[indexPath.row] == UIImage(systemName: "iphone.and.arrow.forward") ? .red : .black
+        cell.arrowImg.applyRTLFlip(Language == "ar")
+        cell.imgView.applyRTLFlip(Language == "ar")
         cell.selectionStyle = .none
         
         return cell

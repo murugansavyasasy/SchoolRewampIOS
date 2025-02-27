@@ -1,0 +1,193 @@
+/*
+  Localizable.strings
+  VsSchoolChimes
+
+  Created by admin on 08/11/24.
+  
+*/
+"welcome_message" = "مرحبًا";
+"change_language" = "تغيير اللغة";
+"Home" = "الرئيسية";
+"Help" = "مساعدة";
+"Settings" = "الإعدادات";
+"Profile" = "الملف الشخصي";
+"ChooseYourRole" = "اختر دورك";
+"LoginAsTeacherOrParent" = "تسجيل الدخول كمعلم أو ولي أمر";
+"Principal" = "المدير";
+"Parent" = "ولي الأمر";
+"Proceed" = "متابعة";
+"exam_test" = "اختبار الامتحان";
+"exam_marks" = "علامات الامتحان";
+"attendance" = "الحضور";
+"receiver_assignment" = "استلام الواجب";
+"online_meeting" = "اجتماع عبر الإنترنت";
+"attendance_report" = "تقرير الحضور";
+
+// MARK: Settings page
+"Notifications" = "الإشعارات";
+"FAQ" = "الأسئلة الشائعة";
+"Contact Us" = "اتصل بنا";
+"Terms and Conditions" = "الشروط والأحكام";
+"Change App Language" = "تغيير لغة التطبيق";
+"Feedback" = "التقييم";
+"Report a bug" = "الإبلاغ عن خطأ";
+"Send Feedback" = "إرسال التقييم";
+"Logout" = "تسجيل الخروج";
+"GENERAL" = "عام";
+"Rate Us" = "قيمنا";
+"Contact Support" = "اتصل بالدعم";
+
+// MARK: Dashboard
+"discussion" = "المناقشة";
+"SmallIcon" = "أيقونة صغيرة";
+"drawing-compass" = "بوصلة الرسم";
+"knowledge" = "المعرفة";
+"pencil" = "قلم رصاص";
+"scale" = "مسطرة";
+"schoolss" = "مدرسة";
+"university" = "جامعة";
+"support" = "الدعم";
+"Video" = "فيديو";
+
+"Communication" = "التواصل";
+"Image/Pdf" = "صورة / PDF";
+"Video Upload" = "رفع فيديو";
+"Circulars" = "التعاميم";
+"Homework" = "الواجب المنزلي";
+"Schedule Exam/Test" = "جدولة امتحان / اختبار";
+"Notice Board" = "لوحة الإعلانات";
+"Attendance marking" = "تسجيل الحضور";
+"Messages from management" = "رسائل من الإدارة";
+"Leave Requests" = "طلبات الإجازة";
+"Assignment" = "التكليفات";
+"Interaction with student" = "التفاعل مع الطالب";
+"Online Meeting" = "اجتماع عبر الإنترنت";
+"Lesson Plan" = "خطة الدرس";
+"PTM" = "اجتماع أولياء الأمور والمعلمين";
+"Mark your attendance" = "سجل حضورك";
+"Absentees Report" = "تقرير الغياب";
+"School Strength" = "عدد طلاب المدرسة";
+"Daily Collection" = "المجموع اليومي";
+"Student Report" = "تقرير الطالب";
+"Fee Pending Report" = "تقرير الرسوم المعلقة";
+"Staff Wise Attendance Report" = "تقرير حضور الموظفين";
+
+// MARK: profile page
+"Family Details" = "تفاصيل العائلة";
+"Fathername" = "اسم الأب";
+"Mothername" = "اسم الأم";
+"Father occupation" = "مهنة الأب";
+"Mother occupation" = "مهنة الأم";
+"Secondary Phone no" = "رقم الهاتف الثانوي";
+"About Student" = "عن الطالب";
+"Profile" = "الملف الشخصي";
+"Register number" = "رقم التسجيل";
+"Standard" = "الصف";
+"Section" = "القسم";
+"Contact details" = "تفاصيل الاتصال";
+
+// MARK: piechart
+"School Strength" = "إجمالي عدد الطلاب";
+"Total Strength" = "الإجمالي";
+"Staff's count" = "عدد الموظفين";
+"Boy's count" = "عدد الأولاد";
+"Girl's count" = "عدد الفتيات";
+
+// MARK: Logout page
+"Are you sure you want to logout?" = "هل أنت متأكد أنك تريد تسجيل الخروج؟";
+"Cancel" = "إلغاء";
+
+"Select" = "اختر";
+"Choose an option" = "اختر خيارًا";
+
+// MARK: Image Sender Side
+"Upload Image/Pdf" = "تحميل صورة / PDF";
+"Description" = "الوصف";
+"Camera" = "الكاميرا";
+"Gallery" = "المعرض";
+"Pdf" = "ملف PDF";
+"Upload Attachment" = "رفع مرفق";
+"Camera Not Available" = "الكاميرا غير متوفرة";
+"This device has no camera." = "هذا الجهاز لا يحتوي على كاميرا";
+"OK" = "موافق";
+
+// MARK: Video Sender Side
+"Enter Video Title" = "أدخل عنوان الفيديو";
+"Enter Video Description" = "أدخل وصف الفيديو";
+"Choose Video From Gallery" = "اختر فيديو من المعرض";
+"Change Video" = "تغيير الفيديو";
+"Upload Video" = "رفع الفيديو";
+"Send" = "إرسال";
+
+// MARK: Home Work Sender Side
+"Home Work" = "الواجب المنزلي";
+"Content" = "المحتوى";
+"Home Work Reports" = "تقارير الواجب المنزلي";
+"Compose Home work Message" = "إنشاء رسالة الواجب المنزلي";
+
+// MARK: Feedback page
+"How satisfied are you with the School Chimes?" = "ما مدى رضاك عن School Chimes؟";
+"Maybe later" = "ربما لاحقًا";
+"Any other suggestions? (optional)" = "هل لديك أي اقتراحات أخرى؟ (اختياري)";
+"SUBMIT" = "إرسال";
+"Thank You" = "شكرًا لك";
+"We appreciate your feedback! Your rating helps us improve." = "نحن نقدر ملاحظاتك! يساعدنا تقييمك على التحسن.";
+"Back to Home <<" = "العودة إلى الصفحة الرئيسية <<";
+
+// MARK: Report bugs page
+"Select Module*" = "حدد الوحدة*";
+"Enter Bugs *" = "أدخل الأخطاء *";
+"Upload Attachment" = "تحميل مرفق";
+
+// MARK: NoticeBoard
+"NoticeBoard" = "لوحة الإعلانات";
+"Search" = "بحث";
+"Compose NoticeBoard" = "إنشاء لوحة إعلانات";
+"From" = "من";
+"To" = "إلى";
+"Submit" = "إرسال";
+
+// MARK: Sender Side Assignment
+"Select the type in which you want to create the assignment" = "حدد النوع الذي تريد إنشاء المهمة به";
+"CREATE" = "إنشاء";
+"VIEW" = "عرض";
+"Assignment" = "الواجب";
+"Compose Assignment" = "إنشاء واجب";
+"Submission Date" = "تاريخ التقديم";
+"Category" = "الفئة";
+"Click here to choose Image" = "اضغط هنا لاختيار صورة";
+"Subject" = "الموضوع";
+"Submission Due" = "موعد التقديم";
+"Submission Count" = "عدد التقديمات";
+"Total Count" = "الإجمالي";
+"Forward" = "إعادة توجيه";
+"Delete" = "حذف";
+"Submission" = "تقديم";
+
+// MARK: Sender side Events
+"Name" = "الاسم";
+"RollNo" = "رقم التسجيل";
+"Status" = "الحالة";
+"LeaveRequests" = "طلبات الإجازة";
+"Present" = "حاضر";
+"Absent" = "غائب";
+"Filter" = "تصفية";
+
+// MARK: Event
+"Circulars" = "التعاميم";
+"EventTitle" = "عنوان الحدث";
+"EventDetails" = "تفاصيل الحدث";
+"Venue" = "المكان";
+"CreateEvent" = "إنشاء حدث";
+
+// MARK: Communication
+"BackToTextMessage" = "العودة إلى الرسالة النصية";
+"BackToVoiceMessage" = "العودة إلى الرسالة الصوتية";
+"Schedule a Call" = "جدولة مكالمة";
+
+// MARK: ScheduleExam
+"scheduleExam" = "جدولة الامتحان";
+"Day" = "يوم";
+"Days" = "أيام";
+"CreateLeaveRequest" = "إنشاء طلب إجازة";
+"LeaveRequestInfo" = "معلومات طلب الإجازة";

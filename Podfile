@@ -23,6 +23,9 @@ pod 'AWSCore'
 pod 'Charts'
 pod 'SDWebImage'
 pod 'FSCalendar'
+pod 'Firebase/Database'
+
+
 
   target 'VsSchoolChimesTests' do
     inherit! :search_paths

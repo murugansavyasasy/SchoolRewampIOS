@@ -64,6 +64,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="arrowImg" destination="nyR-Sb-TQn" id="qHp-Rh-kqJ"/>
                 <outlet property="imgView" destination="d5H-b3-lRv" id="HXQ-sm-mfz"/>
                 <outlet property="nameLbl" destination="Wia-De-e5t" id="xEg-ZC-Qoq"/>
             </connections>

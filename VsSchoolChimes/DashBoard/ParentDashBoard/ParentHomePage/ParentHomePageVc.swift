@@ -465,6 +465,8 @@ extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource
                 MenuRedirect.QuizExam(from: self)
             case ReceiverMenuItems.OnlineMeeting.translated():
                 MenuRedirect.receiverOnlineNavigate(from: self)
+            case ReceiverMenuItems.Map:
+                MenuRedirect.ParantMapVC(from: self)
             default:
                 break
             }

@@ -9,31 +9,52 @@
 import UIKit
 //import ObjectMapper
 @available(iOS 14.0, *)
-class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, Datepicker {
+class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, Datepicker, ShowPopupDelegate, UIPopoverPresentationControllerDelegate {
+    func showPopup(sender: UIButton) {
+        let popoverContentVC = PopupVC(nibName: nil, bundle: nil)
+        popoverContentVC.view.backgroundColor = .white
+        popoverContentVC.preferredContentSize = CGSize(width: 150, height: 100)
+        popoverContentVC.modalPresentationStyle = .popover
+        if let popoverController = popoverContentVC.popoverPresentationController {
+            popoverController.sourceView = sender
+            popoverController.sourceRect = sender.bounds
+            popoverController.permittedArrowDirections = .up
+            popoverController.delegate = self
+        }
+        
+        // For iPhones: Present as a pop-up instead of full-screen
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            popoverContentVC.modalPresentationStyle = .overFullScreen
+            popoverContentVC.view.backgroundColor = UIColor(white: 0, alpha: 0.3) // Optional dim effect
+        }
+        
+        self.present(popoverContentVC, animated: true, completion: nil)
+    }
+    
     func date(date: String) {
         let dateFormatter = DateFormatter()
         let dateOnlyFormatter = DateFormatter()
-
+        
         // Set the input date format that matches "19 Feb 25"
         dateFormatter.dateFormat = "d MMM yy"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")  // Ensures correct parsing
-
+        
         // Convert string to Date
         guard let parsedDate = dateFormatter.date(from: date) else {
             print("Invalid date format: \(date)")
             return
         }
-
+        
         // Set the output format for weekday and day (e.g., "Mon 19")
         dateOnlyFormatter.dateFormat = "EEE d"
         let dateOnly = dateOnlyFormatter.string(from: parsedDate)
-
+        
         // Pass formatted values to dateSet
         dateSet(date, dateOnly, dateOnly)
         tv.reloadData()
     }
-
-
+    
+    
     
     
     @IBOutlet weak var HeaderLbl: UILabel!
@@ -111,7 +132,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let formattedDate = dateFormatter.string(from: currentDate)   // "Tue 3 Dec 2024"
         let formattedTime = timeFormatter.string(from: nextHourTime)  // "4:30 PM"
         let dateOnly = dateOnlyFormatter.string(from: nextHourTime)   // "Tue 3"
-  
+        
         // Set the date and time to the date button
         dateSet(formattedDate, dateOnly,dateOnly)
     }
@@ -119,42 +140,42 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         // Fonts for different parts
         let monthFont = UIFont.systemFont(ofSize: 12) // Smaller font for month
         let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day number
-
+        
         // Split the date into components (Expecting "Feb 26")
         let components = splitDate.split(separator: " ")
         guard components.count > 1 else {
             print("Error: Invalid format for splitDate -> \(splitDate)")
             return
         }
-
+        
         let month = components[0] // Extract the month first
         let day = components[1]   // Extract the day
-
+        
         // Create an attributed string
         let attributedText = NSMutableAttributedString()
-
+        
         // Add the month part
         attributedText.append(NSAttributedString(string: "\(month)\n", attributes: [
             .font: monthFont,
             .foregroundColor: UIColor.darkGray // Optional: Set month color
         ]))
-
+        
         // Add the day part
         attributedText.append(NSAttributedString(string: "\(day)", attributes: [
             .font: dayFont,
             .foregroundColor: UIColor.black // Optional: Set day color
         ]))
-
+        
         // Set paragraph style for centered alignment
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-
+        
         // Apply the attributed string to `toDateLbl`
         toDateLbl.attributedText = attributedText
     }
-
-
+    
+    
     override func viewDidLayoutSubviews() {
         view.applyGradient(
             colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
@@ -205,19 +226,19 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     func configureSegmentedControlText(_ segmentedControl: UISegmentedControl) {
-            let normalAttributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.darkGray, // Text color for unselected segments
-                .font: UIFont.systemFont(ofSize: 13, weight: .medium)
-            ]
-            
-            let selectedAttributes: [NSAttributedString.Key: Any] = [
-                .foregroundColor: UIColor.systemBlue.withAlphaComponent(0.7), // Text color for selected segment
-                .font: UIFont.systemFont(ofSize: 13, weight: .bold)
-            ]
-            
-            segmentedControl.setTitleTextAttributes(normalAttributes, for: .normal)
-            segmentedControl.setTitleTextAttributes(selectedAttributes, for: .selected)
-        }
+        let normalAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.darkGray, // Text color for unselected segments
+            .font: UIFont.systemFont(ofSize: 13, weight: .medium)
+        ]
+        
+        let selectedAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemBlue.withAlphaComponent(0.7), // Text color for selected segment
+            .font: UIFont.systemFont(ofSize: 13, weight: .bold)
+        ]
+        
+        segmentedControl.setTitleTextAttributes(normalAttributes, for: .normal)
+        segmentedControl.setTitleTextAttributes(selectedAttributes, for: .selected)
+    }
     @IBAction func SelectDate(_ sender:UIButton){
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
@@ -312,13 +333,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StaffPtmTableViewCell, for: indexPath) as! StaffPtmTableViewCell
         cell.selectionStyle = .none
-        //            cell.backView.layer.cornerRadius = 20
-        //            cell.backView.layer.masksToBounds = true
-        //            cell.backView.layer.shadowColor = UIColor.black.cgColor
-        //            cell.backView.layer.shadowOpacity = 0.5
-        //            cell.backView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        //            cell.backView.layer.shadowRadius = 1
-        //            cell.backView.layer.masksToBounds = false
+        
         cell.statusview.layer.masksToBounds = true
         cell.backView.layer.cornerRadius = 10
         cell.backView.layer.shadowColor = UIColor.black.cgColor
@@ -330,6 +345,7 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.statusview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cell.statusview.layer.shadowRadius = 5
         cell.statusview.layer.masksToBounds = false
+        cell.showpopup = self
         return cell
     }
     
@@ -350,53 +366,12 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width/3, height: 50) // Adjust item size as needed
     }
-    
-    @IBAction func linkClickVC(ges: linkClick){
-        print("linkClickVC")
-        openZoomLink(eventLink: ges.link)
-    }
-    
-    @IBAction func CancelVc(ges: linkClick){
-        let refreshAlert = UIAlertController(title: "", message: "Are you sure  want to cancel the meeting.", preferredStyle: UIAlertController.Style.alert)
-        refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] (action: UIAlertAction!) in
-        }))
-        refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
-            print("Handle Cancel Logic here")
-        }))
-        present(refreshAlert, animated: true, completion: nil)
-        
-    }
-    @IBAction func CancelAndReopenVc(ges: linkClick){
-        
-        let refreshAlert = UIAlertController(title: "", message: "Are you sure  want to CancelAndReopen the meeting.", preferredStyle: UIAlertController.Style.alert)
-        refreshAlert.addAction(UIAlertAction(title: "YES", style: .default, handler: { [self] (action: UIAlertAction!) in
-        }))
-        refreshAlert.addAction(UIAlertAction(title: "NO", style: .cancel, handler: { (action: UIAlertAction!) in
-            print("Handle Cancel Logic here")
-        }))
-        present(refreshAlert, animated: true, completion: nil)
-    }
-    
-    func openZoomLink(eventLink: String) {
-        guard let encodedLink = eventLink.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-              let url = URL(string: encodedLink) else {
-            print("Invalid URL")
-            return
-        }
-        
-        if UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        } else {
-            let appStoreLink = "https://apps.apple.com/us/app/zoom-cloud-meetings/id546505307"
-            if let appStoreURL = URL(string: appStoreLink) {
-                UIApplication.shared.open(appStoreURL, options: [:], completionHandler: nil)
-            }
-        }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        // Ensure the popup style is maintained on iPhone
+        return .none
     }
     
 }
-
-
 class linkClick : UITapGestureRecognizer{
     
     var link  : String!

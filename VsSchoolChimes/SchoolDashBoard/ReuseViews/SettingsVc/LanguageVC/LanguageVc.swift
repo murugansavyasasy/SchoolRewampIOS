@@ -23,13 +23,16 @@ class LanguageVc: UIViewController {
     @IBOutlet weak var baseview: UIView!
     var selectedLanguage: String?
     
-    var Items = [language(language: "English", selected: false),
-                 language(language: "Tamil", selected: false),
-                 language(language: "Hindi", selected: false),
-                 language(language: "Thai", selected: false)]
+    var Items = [
+        language(language: "English", selected: false),
+        language(language: "Tamil", selected: false),
+        language(language: "Hindi", selected: false),
+        language(language: "Thai", selected: false),
+        language(language: "Arabic", selected: false)]
+
     
-    var Language = ["English","தமிழ்","हिंदी","ไทย"]
-    var  Buttontext = ["Confirm","உறுதிப்படுத்தவும்","पुष्टि करें","ยืนยัน"]
+    var Language = ["English", "தமிழ்", "हिंदी", "ไทย", "العربية"]
+    var Buttontext = ["Confirm", "உறுதிப்படுத்தவும்", "पुष्टि करें", "ยืนยัน", "تأكيد"]
     var index = 0
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +107,9 @@ class LanguageVc: UIViewController {
             //        vc.modalPresentationStyle = .fullScreen
             //        present(vc, animated: true)
             // Reload the entire application
+//            let isRTL = (languageCode == "ar")  // Replace with your language-checking logic
+//                UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+            
                        guard let window = UIApplication.shared.keyWindow else { return }
                        let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
                        let initialViewController = storyboard.instantiateInitialViewController()
@@ -195,9 +201,12 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
             languageCode = "hi"
         } else if selectedLanguage == "English" {
             languageCode = "en"
+        } else if selectedLanguage == "Arabic" {
+            languageCode = "ar"
         }
-        
-        tv.reloadData()
+//        let isRTL = (languageCode == "ar")  // Replace with your language-checking logic
+//        UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+//        tv.reloadData()
     }
     
     

@@ -29,9 +29,9 @@ class MenuRedirectHandler {
     
     var Imgitems : [String] = [ "Communication","ImagePdf","Upload Video","Notice Board","Request Leave","Assignment","Online Meeting","Homework","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
-    var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,/*ReceiverMenuItems.ExamTest,*/ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM]
+    var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,/*ReceiverMenuItems.ExamTest,*/ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
     
-    var receiverImageItems : [String] = ["Communication","Homework" ,/*"ExamTest",*/"Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM"]
+    var receiverImageItems : [String] = ["Communication","Homework" ,/*"ExamTest",*/"Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM","Map"]
     
     //MARK: SenderSideMenuViewContoller Starts
     
@@ -334,6 +334,11 @@ class MenuRedirectHandler {
     }
     func QuizExam(from viewController: UIViewController){
         let vc = QuizVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    func ParantMapVC(from viewController: UIViewController){
+        let vc = VsSchoolChimes.ParantMapVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
