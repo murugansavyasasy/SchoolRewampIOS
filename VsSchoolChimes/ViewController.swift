@@ -10,7 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class ViewController: UIViewController {
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,10 +20,7 @@ class ViewController: UIViewController {
             self.present(viewController, animated: true)
         }
         
-        
-        
-            }
-
-
+    }
+    
 }
 

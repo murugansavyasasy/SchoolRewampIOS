@@ -2,7 +2,7 @@
 //  ExameMarVC.swift
 //  VsSchoolChimes
 //
-//  Created by admin on 09/12/24.
+//  Created by Lakshmanan on 09/12/24.
 //
 
 import UIKit
@@ -22,25 +22,13 @@ class ExameMarVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
-        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        SearchBar.placeholder = CommonStringFile.Search.translated()
+        StyleAndTranslate()
         addDoneButton()
+        CellRegister()
 
         // Do any additional setup after loading the view.
         tv.isHidden = true
         
-        tv.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
-        tv.register(UINib(nibName: CellConfingName.ExammarkFooterView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.ExammarkFooterView)
-        
-        let cvnib = UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil)
-        cv.register(cvnib, forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
-      
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        let nib1 = UINib(nibName:CellConfingName.ExamMarkTV, bundle: nil)
-        tv.register(nib1, forCellReuseIdentifier: CellConfingName.ExamMarkTV)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         cv.dataSource = self
         cv.delegate = self
     }
@@ -49,6 +37,32 @@ class ExameMarVC: UIViewController {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
 
+    //MARK: UI Changes
+    func StyleAndTranslate(){
+        
+        backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
+        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        SearchBar.placeholder = CommonStringFile.Search.translated()
+        
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+     
+    }
+    
+    //MARK: Cell Registration
+    func CellRegister(){
+        
+        tv.register(UINib(nibName: CellConfingName.SettingHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.SettingHeaderView)
+        
+        tv.register(UINib(nibName: CellConfingName.ExammarkFooterView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.ExammarkFooterView)
+        
+        let cvnib = UINib(nibName: CellConfingName.ExamMarkCV, bundle: nil)
+        cv.register(cvnib, forCellWithReuseIdentifier: CellConfingName.ExamMarkCV)
+        
+        let nib1 = UINib(nibName:CellConfingName.ExamMarkTV, bundle: nil)
+        tv.register(nib1, forCellReuseIdentifier: CellConfingName.ExamMarkTV)
+    }
  
     @IBAction func backBtn(_ sender: Any) {
         
@@ -74,15 +88,14 @@ class ExameMarVC: UIViewController {
     
 }
 
+//MARK: Tableview Functions
 extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
         return 4
     }
   
-   
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier:CellConfingName.SettingHeaderView) as! SettingHeaderView
         cell.headerLabel.text = "Exam Marks"
@@ -91,14 +104,12 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
         
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         
         return 5
     }
@@ -178,6 +189,8 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
     
 }
 
+//MARK: Collectionview Delegate
+
 extension ExameMarVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -205,18 +218,10 @@ extension ExameMarVC : UICollectionViewDelegate,UICollectionViewDataSource,UICol
        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
            return 10 // No spacing between rows
        }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        
-//        cv.isHidden = true
-//        tv.isHidden = false
-//        tv.delegate = self
-//        tv.dataSource = self
-//        tv.reloadData()
-//    }
-    
     
 }
 
+//MARK: Searchbar Delegate
 extension ExameMarVC: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

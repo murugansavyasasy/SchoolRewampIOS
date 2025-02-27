@@ -99,59 +99,6 @@ class CountryVc: UIViewController {
         UgandaLbl.setFont(style: .body, size: FontSize.BodySize)
         canadaLabel.setFont(style: .body, size: FontSize.BodySize)
         //MARK: Button font
-//        Canada.setTitleFont(style: .body, size: FontSize.BodySize)
-//        Singapore.setTitleFont(style: .body, size: FontSize.BodySize)
-//        China.setTitleFont(style: .body, size: FontSize.BodySize)
-//        Usa.setTitleFont(style: .body, size: FontSize.BodySize)
-//        thailand.setTitleFont(style: .body, size: FontSize.BodySize)
-//        indiabutton.setTitleFont(style: .body, size: FontSize.BodySize)
-////        configureButton(
-//            ,
-//            imageName: UIImage(named: ""),
-//            gradientColors:[UIColor.yellow,UIColor.red],lightenFactor: 0.8, opacity: 0.4// 40% lighter
-//        )
-//        if let image = UIImage(named: "india1") {
-//            configureButton(
-//                indiabutton,
-//                imageName: image,
-//                cornerRadius: 15
-//            )
-//        }
-//        if let image = UIImage(named: "thailand") {
-//            configureButton(
-//                thailand,
-//                imageName: image,
-//                cornerRadius: 15
-//            )
-//        }
-//        if let image = UIImage(named: "USA") {
-//            configureButton(
-//                Usa,
-//                imageName: image,
-//                cornerRadius: 15
-//            )
-//        }
-//        if let image = UIImage(named: "indonesia") {
-//            configureButton(
-//                China,
-//                imageName: image,
-//                cornerRadius: 15
-//            )
-//        }
-//        if let image = UIImage(named: "uganda") {
-//            configureButton(
-//                Singapore,
-//                imageName: image,
-//                cornerRadius: 15
-//            )
-//        }
-//        if let image = UIImage(named: "canada") {
-//            configureButton(
-//                Canada,
-//                imageName: image,
-//                cornerRadius: 15
-//            )
-//        }
         
     }
     func configureButton(

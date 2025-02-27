@@ -18,7 +18,6 @@ class VideoTVCell: UITableViewCell {
     @IBOutlet weak var OuterView: AnimatView!
     @IBOutlet weak var datelbl: UILabel!
     @IBOutlet weak var videoName: UILabel!
-
     @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var thumimg: UIImageView!
     @IBOutlet weak var videoloadview: WKWebView!

@@ -46,12 +46,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        view.backgroundColor = Colornames.topBackgroundCLr
-        //        fullview.backgroundColor = Colornames.topBackgroundCLr
-        
         bottomFullview.backgroundColor = Colornames.bottomClr
        
-        
         SaveBtnHeight.constant = 0
         
         StyleAndTranslater()

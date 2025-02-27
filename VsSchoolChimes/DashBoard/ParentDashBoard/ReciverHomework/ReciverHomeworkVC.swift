@@ -9,25 +9,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 class ReciverHomeworkVC: UIViewController, SelectNotice {
-//    func reload(index: Int?, playToggle: Bool) {
-//        
-//        // Stop playback in the currently playing cell (if any)
-//        if let currentIndex = playIndex, currentIndex != index {
-//            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-//            if let previousCell = TV.cellForRow(at: previousIndexPath) as? HistoryTC {
-//                previousCell.updatePlayState(isPlaying: false, url: previousCell.AudioPlayUrl)
-//            }
-//        }
-//        
-//        // Update the currently playing index and reload the table view
-//        playIndex = (playIndex == index) ? nil : index
-//        TV.reloadData()
-//    }
-//    
-//    func deleteDelegate(index: Int) {
-//        ""
-//    }
-    
+
     func didTapButton(title: String, content: String, items: [String]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
@@ -42,11 +24,42 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     let sections = ["11 Dec 2024","12 Dec 2024","13 Dec 2024","14 Dec 2024"]
     var delegate : HistorySelectDelegate?
     var playIndex : Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        StyleAndTranslate()
+        addDoneButton()
+       
+        RegisterCell()
+//        TV.layoutMargins = UIEdgeInsets.zero
+//        TV.separatorInset = UIEdgeInsets.zero
+        TV.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        TV.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        TV.delegate = self
+        TV.dataSource = self
+        
+    }
+
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
+    
+    func StyleAndTranslate(){
+        //MARK: UI Changes
+        
+        //FontStyle
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        
+        //Translation
         backBtn.setTitle(MenuStringFile.Homework.translated(), for: .normal)
         searchBar.placeholder = CommonStringFile.Search.translated()
-        addDoneButton()
+    }
+    
+    //MARK: Cell Registration
+    func RegisterCell(){
         let nib = UINib(nibName: CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
         
@@ -55,19 +68,6 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         
         let head = UINib(nibName: CellConfingName.ReciverHomeworkHeader, bundle: nil)
         TV.register(head, forHeaderFooterViewReuseIdentifier: CellConfingName.ReciverHomeworkHeader)
-//        TV.layoutMargins = UIEdgeInsets.zero
-//        TV.separatorInset = UIEdgeInsets.zero
-        TV.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        TV.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        TV.delegate = self
-        TV.dataSource = self
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-    }
-
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     
     @IBAction func BackBtnAct(_ sender: Any) {
@@ -75,7 +75,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     }
 }
 
-
+//MARK: Tableview Functions
 @available(iOS 14.0, *)
 extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     
@@ -248,6 +248,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+//MARK: Searchbar delegate
 @available(iOS 14.0, *)
 extension ReciverHomeworkVC: UISearchBarDelegate{
     

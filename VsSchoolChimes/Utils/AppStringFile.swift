@@ -100,6 +100,7 @@ class AlertstringFile{
     static let Confirm = "Confirm".translated()
     static let AreYouSureYouWantToProceed = "Are you sure you want to proceed?".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
+    static let ConfirmLogout = "Are you sure you want to Logout".translated()
     static let No = "No".translated()
     static let Submit = "Submit".translated()
     static let Successfully_password_created = "Successfully password created".translated()
@@ -180,6 +181,7 @@ class MenuTapbar{
     static let Video = "Video"//.translated()
     static let Assignment = "Assignment".translated()
     static let Noticeboard = "Noticeboard".translated()
+    static let Help = "Help".translated()
     
     
     
@@ -224,7 +226,7 @@ class CommonStringFile{
     static let Filter = "Filter"
     static let UploadAttachment = "Upload Attachment"
     static let UploadImagepdf = "Upload Image/Pdf"
-    static let UploadImagepdfoptional = "Upload Image/Pdf (Optional?)"
+    static let UploadImagepdfoptional = "Upload Image/Pdf (Optional)"
     static let Description = "Description"
     static let Groups = "Groups"
     static let Sectionorstudent = "Section or student"
@@ -243,7 +245,7 @@ class CommonStringFile{
     static let AddPhotos = "Add Photos"
     static let EventDetails = "Event Details"
     static let EventTitle = "Event Title"
-    static let Optional = "Optional"
+    static let Optional = "(Optional)"
     static let AddPhotos1 = "Add Photos1"
     static let egChennai = "egChennai"
     static let egYogaEvent = "egYogaEvent"

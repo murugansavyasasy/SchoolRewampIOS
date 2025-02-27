@@ -22,35 +22,27 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     @IBOutlet weak var ChangeVideoBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var ButtonStackview: UIStackView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var CharCountLbl: UILabel!
     @IBOutlet weak var outerView: UIView!
-    
     @IBOutlet weak var chooseVideoLabel: UILabel!
     @IBOutlet weak var scrollview: UIScrollView!
     @IBOutlet weak var HeaderLabel: UILabel!
-    
     @IBOutlet weak var BaseView: UIView!
-    
     @IBOutlet weak var playBtn: UIButton!
-    
     @IBOutlet weak var PlayerHeight: NSLayoutConstraint!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var changeVideoBtn: UIButton!
     @IBOutlet weak var descTxtView: UITextView!
     @IBOutlet weak var titleTxtFld: UITextField!
-    
     @IBOutlet weak var VideoPlayer: UIView!
-    
     @IBOutlet weak var ThumnailImage: UIImageView!
+    
     var authToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var videoEmbdUrl : String!
     var iframeLink : String!
     var videoSucessId = 0
     let initialHeight: CGFloat = 120
     let maxHeight: CGFloat = 300
-    
-    
     var player: AVPlayer?
     var playerViewController: AVPlayerViewController?
     var playerurl: URL?
@@ -97,6 +89,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
    
     
     func StyleAndTranslater(){
+        
+       //MARK: UI Changes
         TextviewHeight.constant = initialHeight
         BaseView.layer.cornerRadius = 10
         VideoPlayer.layer.cornerRadius = 10
@@ -114,14 +108,11 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         descTxtView.text = CommonStringFile.Description.translated()
         descTxtView.textColor = .lightGray
         changeVideoBtn.setTitle("Change Video".translated(), for: .normal)
-       
         sendBtn.setTitle("Send".translated(), for: .normal)
         
         //MARK: Font Style
-        
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         chooseVideoLabel.setFont(style: .title, size: FontSize.TitleSize)
-       
         sendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
     }

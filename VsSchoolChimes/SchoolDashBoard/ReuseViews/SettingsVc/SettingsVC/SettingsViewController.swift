@@ -33,7 +33,7 @@ class SettingsViewController: UIViewController, BaktoHome {
     var passVale = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         section = sections
         SettingspageHeading.text = MenuTapbar.Settings.translated()
         SettingspageHeading.setFont(style: .header, size: 20)
@@ -73,7 +73,7 @@ class SettingsViewController: UIViewController, BaktoHome {
             )
         }else{
             topView.applyGradient(
-                colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+                colors: [Colornames.stafGradient, Colornames.stafGradient1],
                 startPoint: CGPoint(x: 1, y: 0.5),
                 endPoint: CGPoint(x: 0, y: 0.5)
             )
@@ -82,7 +82,7 @@ class SettingsViewController: UIViewController, BaktoHome {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         section = sections
-       
+        
     }
 }
 
@@ -125,7 +125,6 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        
         if  sections[indexPath.section].items[indexPath.row] == menuname.contactUs{
             let vc = ContactUsVc(nibName: nil, bundle: nil)
             vc.passValue = passVale
@@ -166,7 +165,6 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         
         else if  sections[indexPath.section].items[indexPath.row] == menuname.faq{
             
-            
             let vc = FAQViewController(nibName: nil, bundle: nil)
             vc.passValue = passVale
             vc.modalPresentationStyle = .overFullScreen
@@ -175,7 +173,6 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         
         
         else if  sections[indexPath.section].items[indexPath.row] == menuname.changeAppLanguage{
-            
             
             let vc = LanguageVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen
@@ -201,12 +198,6 @@ struct Section {
     let items: [String]
 }
 
-//let sections: [Section] = [
-//    Section(title: "GENERAL", items: ["Notifications", "FAQ", "Contact Us", "Terms and Conditions","Change App Language"]),
-//    Section(title: "FEEDBACK", items: ["Report a bug", "Send Feedback", "Logout"])
-//]
-
-
 struct Image {
     let title: String
     let uiImages: [UIImage?]
@@ -223,12 +214,3 @@ let Images: [Image] = [
     Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja"]),
     Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
 ]
-
-
-
-// Example of accessing UIImages
-
-
-
-
-

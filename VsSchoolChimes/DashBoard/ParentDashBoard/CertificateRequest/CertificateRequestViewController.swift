@@ -13,7 +13,6 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var requestCertificateView: UIView!
     @IBOutlet weak var reqCertView: UIView!
-    
     @IBOutlet weak var statusShowLbl: UILabel!
     @IBOutlet weak var statusShowView: UIView!
     @IBOutlet weak var selectCertificateLbl: UILabel!
@@ -273,9 +272,9 @@ func gradientcolours(button : UIButton,colours : [CGColor]){
         cell.reasonLbl.text = filteredTimetable[indexPath.row].techer
         
         let tapGes = UITapGestureRecognizer(target: self, action: #selector(labelTapped))
-        cell.linkUrlLbl.isUserInteractionEnabled = true
-        cell.linkUrlLbl.text = "https://www.apple.com/in/shop/buy-mac"
-        cell.linkUrlLbl.addGestureRecognizer(tapGes)
+//        cell.linkUrlLbl.isUserInteractionEnabled = true
+//        cell.linkUrlLbl.text = "https://www.apple.com/in/shop/buy-mac"
+//        cell.linkUrlLbl.addGestureRecognizer(tapGes)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

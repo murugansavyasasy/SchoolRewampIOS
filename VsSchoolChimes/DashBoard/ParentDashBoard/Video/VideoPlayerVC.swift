@@ -11,14 +11,12 @@ import Photos
 import AVKit
 
 class VideoPlayerVC: UIViewController, URLSessionDelegate {
-    @IBOutlet weak var paybtn: UIButton!
     
     @IBOutlet weak var DownloadImg: UIButton!
     @IBOutlet weak var playerview: UIView!
     var phasset: PHAsset?
     var alert: UIAlertController?
     var progressView: UIProgressView?
-    //var player: AVPlayer!
     var srlstring: String?
     var url: URL?
     var index : Int?
@@ -26,8 +24,8 @@ class VideoPlayerVC: UIViewController, URLSessionDelegate {
     var shareDelegate : shareDelegate?
     var playerViewController: AVPlayerViewController?
     var videoURL: URL? // Receive the URL
-       var player: AVPlayer?
-       var playerLayer: AVPlayerLayer?
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()

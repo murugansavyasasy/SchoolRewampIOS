@@ -79,32 +79,9 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             Parent.getValue = passedValue
             selectViewController(Parent)
             
-//            let width = UIScreen.main.bounds.width
-//            let gradientColor = createGradientColor(
-//                colors: [Colornames.gradientBlue, Colornames.gradientgreen],
-//                size: CGSize(width: width, height: 400),
-//                startPoint: CGPoint(x: 1, y: 0.5), // Start from the right
-//                endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
-//            )
-//            tabBar.backgroundImage = gradientColor
-            
             applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue, Colornames.gradientgreen])
            
         }else if passedValue == 1{
-            //            //tabBar.backgroundColor = .topBackgroundCLr
-            //            firstVC.getValue = passedValue
-            //            selectViewController(firstVC)
-            //            let width = UIScreen.main.bounds.width
-            //            let gradientColor = createGradientColor(
-            //                colors: [Colornames.stafGradient, Colornames.stafGradient1],
-            //
-            //                size: CGSize(width: width, height: 400),
-            //                startPoint: CGPoint(x: 1, y: 0.5), // Start from the right
-            //                endPoint: CGPoint(x: 0, y: 0.5)    // End at the left
-            //            )
-            //            tabBar.backgroundImage = gradientColor
-            //        }
-            //        tabBar.tintColor = .black
             
             firstVC.getValue = passedValue
             selectViewController(firstVC)
@@ -118,12 +95,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
         
-//        NSLayoutConstraint.activate([
-//            containerView.topAnchor.constraint(equalTo: view.topAnchor),
-//            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            containerView.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
-//        ])
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: view.topAnchor),
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -151,7 +122,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             
         } else if let profileVC = viewController as? ProfileViewController, passedValue == 2 {
             profileVC.passvalue = passedValue
-//
+
         }else if let profileVC = viewController as? ParentHomePageVc, passedValue == 2 {
             profileVC.getValue = passedValue
             
@@ -166,55 +137,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         containerView.addSubview(viewController.view)
         viewController.didMove(toParent: self)
     }
-//
-//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        switch item.tag {
-//        case 0:
-//            if passedValue == 1 {
-//                selectViewController(firstVC)
-//                firstVC.bottomCv.reloadData()
-//            } else if passedValue == 2 {
-//                selectViewController(Parent)
-//                Parent.bottomCv.reloadData()
-//            }
-//        case 1:
-//            selectViewController(secondVC)
-//        case 2:
-//            selectViewController(thirdVC)
-//        case 3:
-//            selectViewController(fourthVC)
-//        default:
-//            break
-//        }
-//    }
-
-
-    
-//    private func selectViewController(_ viewController: UIViewController) {
-//        
-//        for child in children {
-//            child.willMove(toParent: nil)
-//            child.view.removeFromSuperview()
-//            child.removeFromParent()
-//        }
-//        if let pageVC = viewController as? SettingsViewController {
-//            pageVC.delegate = self
-//           if passedValue == 2{
-//               pageVC.view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//            }
-//        }else if let pageVC = viewController as? ProfileViewController {
-//            if passedValue == 2{
-//                pageVC.view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-//                pageVC.fullview.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-////                tabBar.tintColor = .red
-//             }
-//        }
-//        // Add new child view controller
-//        addChild(viewController)
-//        viewController.view.frame = containerView.bounds
-//        containerView.addSubview(viewController.view)
-//        viewController.didMove(toParent: self)
-//        }
     
     // Handle tab bar item selection with animation
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -243,34 +165,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         }
     }
     
-    
-//    func createGradientColor(colors: [UIColor], size: CGSize, profile: Bool = false, startPoint: CGPoint = CGPoint(x: 0.5, y: 0), endPoint: CGPoint = CGPoint(x: 0.5, y: 1)) -> UIImage? {
-//        // Adjust the alpha of the colors based on `profile` flag
-//        let adjustedColors = colors.map { color -> UIColor in
-//            let alpha = profile ? 0.0 : 0.7
-//            return color.withAlphaComponent(alpha)
-//        }
-//        
-//        // Create a gradient layer
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.colors = adjustedColors.map { $0.cgColor }
-//        gradientLayer.startPoint = startPoint
-//        gradientLayer.endPoint = endPoint
-//        gradientLayer.frame = CGRect(origin: .zero, size: size)
-//        
-//        // Render the gradient to an image
-//        UIGraphicsBeginImageContextWithOptions(size, false, 0)
-//        guard let context = UIGraphicsGetCurrentContext() else {
-//            UIGraphicsEndImageContext()
-//            return nil
-//        }
-//        
-//        gradientLayer.render(in: context)
-//        let gradientImage = UIGraphicsGetImageFromCurrentImageContext()
-//        UIGraphicsEndImageContext()
-//        
-//        return gradientImage
-//    }
     func applyGradientToTabBar(_ tabBar: UITabBar, colors: [UIColor]) {
         let gradientLayer = CAGradientLayer()
         let width = UIScreen.main.bounds.width
@@ -287,11 +181,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         // Insert the gradient at the bottom layer to ensure it's behind other content
         tabBar.layer.insertSublayer(gradientLayer, at: 0)
     }
-
-
-
-
-    
 }
 extension UIColor {
     // Convert hex string to UIColor

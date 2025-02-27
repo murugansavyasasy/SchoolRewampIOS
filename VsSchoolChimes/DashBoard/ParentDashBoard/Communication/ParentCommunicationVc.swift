@@ -40,29 +40,47 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     let tapColor = Colornames.topBackgroundCLr1
     var playIndex :Int?
     var AudioPlayUrl: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         buttons()
+
+        StyleAndTranslate()
+      
+        ButtonStyle()
+        // Do any additional setup after loading the view.
+      
+        RegisterCell()
+       
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
+    }
+
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
+    
+    //MARK: StyleAndTranslate
+    func StyleAndTranslate(){
+        
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        
         
         clickTextView.text = CommonStringFile.TextMessage.translated()
         backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
-        ButtonStyle()
-        // Do any additional setup after loading the view.
+    }
+    
+    //MARK: Cell registration
+    func RegisterCell(){
         let nib = UINib(nibName: CellConfingName.TextHistoryTVCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier: CellConfingName.TextHistoryTVCell)
         
         let nib2 = UINib(nibName: CellConfingName.HistoryTC, bundle: nil)
         tv.register(nib2, forCellReuseIdentifier: CellConfingName.HistoryTC)
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        tv.delegate = self
-        tv.dataSource = self
-    }
-
-    override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     
     func ButtonStyle(){
@@ -169,8 +187,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     }
     
 }
+
+//MARK: Tableview Functions
 extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -181,12 +200,10 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             return 5
         }
        
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-      
         if BtnId == 0{
             
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
@@ -219,17 +236,12 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.playBtn.setImage(image, for: .normal)
             return cell
         }
-        
-        
-        
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    
     
     //MARK: EXPANDABLE LABLE
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {

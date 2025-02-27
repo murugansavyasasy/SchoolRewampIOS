@@ -15,25 +15,23 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
         selectedImages.remove(at: index)
         selectImgPdfview.imageCollectionview.reloadData()
     }
-    var selectedImages: [UIImage] = []
+    
     @IBOutlet weak var outerView: UIView!
-    let photoPickManager = PhotoPickerManager.shared
- 
     @IBOutlet weak var NameLbl: UILabel!
-    
     @IBOutlet weak var StandardLbl: UILabel!
-    
     @IBOutlet weak var DescriptionTextview: UITextView!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var submitBtn: UIButton!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var AddphotosLbl: UILabel!
-    
     @IBOutlet weak var letterscountLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
+    
     var url : URL?
+    let photoPickManager = PhotoPickerManager.shared
+    var selectedImages: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -196,93 +194,6 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
   
 
 }
-
-//@available(iOS 14.0, *)
-//extension submitVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-//    
-// 
-//    
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 1 + selectedImages.count
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if indexPath.item == 0{
-//            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
-//            cell.layer.cornerRadius = 20
-//            return cell
-//        }else{
-//            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
-//            cell.delegate = self
-//            cell.deleteBtn.tag = indexPath.item - 1
-//            if selectedImages.count > indexPath.item - 1 {
-//                // Assign the image starting from the second image in the selectedImages array
-//                cell.imageViews.image = selectedImages[indexPath.item - 1]
-//            } else {
-//                cell.imageViews.image = nil
-//            }
-//            if selectedImages.count <= 2{
-//                collectionViewHeght.constant = 120
-//            }else{
-//                collectionViewHeght.constant = 220
-//            }
-//            return cell
-//        }
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        
-//        let width = (selectImgPdfview.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
-//        
-//        return CGSize(width: width, height: 100)
-//    }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.row == 0{
-//            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-//            //
-//            // Camera option
-//            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-//            }
-//            alertController.addAction(cameraAction)
-//            
-//            // Gallery option
-//            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-//                //
-//                selectImages()
-//                //
-//            }
-//            alertController.addAction(galleryAction)
-//            
-//            //             PDF option
-//            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-//                
-//                //selectPDF()
-//            }
-//            alertController.addAction(pdfAction)
-//            
-//            // Cancel action
-//            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-//            alertController.addAction(cancelAction)
-//            
-//            // Present the alert
-//            self.present(alertController, animated: true, completion: nil)
-//        }else{
-//            if selectedImages.count > indexPath.item - 1 {
-//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-//                vc.modalPresentationStyle = .fullScreen
-//                
-//                // Safe unwrapping of imgView before assigning
-//                vc.img = selectedImages[indexPath.item - 1]
-//                //
-//                present(vc, animated: true)
-//            }
-//        }
-//    }
-//}
-
 
 @available(iOS 14.0, *)
 extension  submitVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {

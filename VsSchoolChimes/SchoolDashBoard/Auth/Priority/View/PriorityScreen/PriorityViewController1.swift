@@ -12,16 +12,11 @@ class PriorityViewController1: UIViewController {
     
     @IBOutlet weak var TeacherParentlbl: UILabel!
     @IBOutlet weak var ChooseRoleLabel: UILabel!
-    
     @IBOutlet weak var NextButtonView: UIButton!
-    
     @IBOutlet weak var containerViewHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var priorityview: UIView!
-    
     @IBOutlet weak var teacherButton: UIButton!
-    
     @IBOutlet weak var ParentButton: UIButton!
     
     var selectedIndexPath : IndexPath!
@@ -30,40 +25,18 @@ class PriorityViewController1: UIViewController {
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
     let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
     var passedValue = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UserDefaults.standard.set(passedValue, forKey: "passvalue")
-        ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
-        TeacherParentlbl.text =  CommonStringFile.LoginAsPrincipalOrParent.translated()
-        NextButtonView.layer.cornerRadius = 18
-        
-        priorityview.layer.cornerRadius = 20
-        teacherButton.layer.cornerRadius = 20
-        ParentButton.layer.cornerRadius = 20
-        
-        TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
-        ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
-        NextButtonView.setTitleFont(style: .body, size: FontSize.BodySize)
-        TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
-        ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
-        
-        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
-        teacherButton.setTitle(CommonStringFile.Principal.translated(), for: .normal)
-        ParentButton.setTitleColor(.black, for:.normal)
-        
-        DispatchQueue.main.async {
-            self.teacherButton.setTitleFont(style: .body, size: FontSize.BodySize)
-            self.ParentButton.setTitleFont(style: .body, size: FontSize.BodySize)
-        }
+    
+        StyleAndTranslate()
         
         gradientcolours(button: NextButtonView, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        
+       
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         teacherButton.tintColor = .white
-        
-        
-        
         
         let nib = UINib(nibName: CellConfingName.DemoTVCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.DemoTVCell)
@@ -75,54 +48,63 @@ class PriorityViewController1: UIViewController {
         tableview.dataSource = self
         tableview.reloadData()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
-        TeacherParentlbl.text =  CommonStringFile.LoginAsPrincipalOrParent.translated()
-        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
-        teacherButton.setTitle(CommonStringFile.Principal.translated(), for: .normal)
-        NextButtonView.setTitle(CommonStringFile.Proceed.translated(), for: .normal)
+
+ 
+   func StyleAndTranslate(){
+        
+       //MARK: UI Changes
+       NextButtonView.layer.cornerRadius = 18
+       priorityview.layer.cornerRadius = 20
+       teacherButton.layer.cornerRadius = 20
+       ParentButton.layer.cornerRadius = 20
+       ParentButton.setTitleColor(.black, for:.normal)
+      
+       
+       //MARK: Font Style
+       TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
+       ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
+       NextButtonView.setTitleFont(style: .body, size: FontSize.BodySize)
+       TeacherParentlbl.setFont(style: .body, size: FontSize.BodySize)
+       ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
+       teacherButton.setTitleFont(style: .body, size: FontSize.BodySize)
+       ParentButton.setTitleFont(style: .body, size: FontSize.BodySize)
+       
+       //MARK: Translate
+       ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
+       TeacherParentlbl.text =  CommonStringFile.LoginAsPrincipalOrParent.translated()
+       ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
+       teacherButton.setTitle(CommonStringFile.Principal.translated(), for: .normal)
     }
     
     @IBAction func teacherAct(_ sender: Any) {
         NextButtonView.isHidden = false
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        
-        
         teacherButton.setTitleColor(.white, for:.normal)
         
         
         gradientcolours(button: ParentButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ParentButton.setTitleColor(.black, for:.normal)
         
-        
         passedValue = 1
         UserDefaults.standard.set(passedValue, forKey: "passvalue")
-        tableview.delegate = self
-        tableview.dataSource = self
         tableview.reloadData()
-        
     }
     
     
     @IBAction func ParentAct(_ sender: Any) {
         NextButtonView.isHidden = true
         gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        
         ParentButton.setTitleColor(.white, for:.normal)
         
-        teacherButton.backgroundColor = .clear
+        //teacherButton.backgroundColor = .clear
         
         
         gradientcolours(button: teacherButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        
         teacherButton.setTitleColor(.black, for:.normal)
         
         
         passedValue = 2
         UserDefaults.standard.set(passedValue, forKey: "passvalue")
-        tableview.delegate = self
-        tableview.dataSource = self
         tableview.reloadData()
     }
     
@@ -189,13 +171,13 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
         if passedValue  == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.DemoTVCell, for: indexPath) as! DemoTVCell
             
-            if let color1 = colour1, let color2 = colour2 {
-                cell.setGradientColors([color2.cgColor, color1.cgColor])
-            }
             cell.SchoolInfoView.backgroundColor = colour1
             cell.imgview.image = image
             if indexPath.row == 8{
                 cell.imgview.image = UIImage(systemName: "person.circle")
+            }
+            if let color1 = colour1, let color2 = colour2 {
+                cell.setGradientColors([color2.cgColor, color1.cgColor])
             }
            
             return cell
