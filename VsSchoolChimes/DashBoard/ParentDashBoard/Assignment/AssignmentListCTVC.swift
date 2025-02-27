@@ -17,7 +17,6 @@ class AssignmentListCTVC: UITableViewCell {
     @IBOutlet weak var DueSecLbl: UILabel!
     @IBOutlet weak var CategorySecLbl: UILabel!
     @IBOutlet weak var subjectSecLbl: UILabel!
-    
     @IBOutlet weak var imageLabel: UILabel!
     @IBOutlet weak var imgHeght: NSLayoutConstraint!
     @IBOutlet weak var spirelview: UIView!

@@ -12,16 +12,14 @@ class QuizVC: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var ButtonStackview: UIStackView!
-    
     @IBOutlet weak var UpcomingBtn: UIButton!
-    
     @IBOutlet weak var CompletedBtn: UIButton!
-    
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var IncorrectAnswerLbl: UILabel!
     @IBOutlet weak var CorrectAnswerLbl: UILabel!
+    
     //var colours = ["lesson1","lesson2","lesson3"]
     let colours = ["AttendenceColor","Color","lesson1","lesson3"]
     var id = 0
@@ -33,26 +31,48 @@ class QuizVC: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        StyleAndTranslate()
+       
         CorrectAnswerLbl.text = "Correct Answers : " + " \(correctAnswers) / \(questions.count)"
         IncorrectAnswerLbl.text = "Incorrect Answers : " + " \(questions.count - (Int(correctAnswers) ?? 0)) / \(questions.count)"
-        ButtonStackview.layer.cornerRadius = 20
-        UpcomingBtn.layer.cornerRadius = 20
-        CompletedBtn.layer.cornerRadius = 20
-        
-        configureButton(UpcomingBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
-        //gradientcolours(button: UpcomingBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
-        
-        UpcomingBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        CompletedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        BackBtn.setTitleFont(style: .body, size: 20)
-        CompletedBtn.tintColor = .lightGray
-        IncorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
-        CorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
+       
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
         
+        CellRegister()
+        
+        tv.delegate = self
+        tv.dataSource = self
+        tv.reloadData()
+
+    }
+    
+    func StyleAndTranslate(){
+        
+        //MARK: UI Changes
+        ButtonStackview.layer.cornerRadius = 20
+        UpcomingBtn.layer.cornerRadius = 20
+        CompletedBtn.layer.cornerRadius = 20
+        CompletedBtn.tintColor = .lightGray
+        
+        configureButton(UpcomingBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
+        
+        //MARK: Font Style
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        UpcomingBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        CompletedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.setTitleFont(style: .body, size: 20)
+        IncorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
+        CorrectAnswerLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        //MARK: Translate
+        
+    }
+    
+    //MARK: Cell Registration
+    func CellRegister(){
         let nib = UINib(nibName: CellConfingName.QuizTVcell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier: CellConfingName.QuizTVcell)
         
@@ -61,10 +81,6 @@ class QuizVC: UIViewController {
         
         let nib3 = UINib(nibName: CellConfingName.QuizListTvCell, bundle: nil)
         tv.register(nib3, forCellReuseIdentifier: CellConfingName.QuizListTvCell)
-        
-        tv.delegate = self
-        tv.dataSource = self
-
     }
     
     override func viewDidLayoutSubviews() {
@@ -99,16 +115,9 @@ class QuizVC: UIViewController {
         }
         
         gradientcolours(button: button, colours: adjustedColors)
-        // Apply gradient
-//        button.applyGradient(
-//            colors: adjustedColors,
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
     }
     
     @IBAction func UpcomingAct(_ sender: Any) {
-       // gradientcolours(button: UpcomingBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
         configureButton(UpcomingBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
         UpcomingBtn.tintColor = .black
         CompletedBtn.tintColor = .lightGray
@@ -118,7 +127,6 @@ class QuizVC: UIViewController {
         IncorrectAnswerLbl.isHidden = true
         CorrectAnswerLbl.isHidden = true
         id = 0
-        tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
     }
@@ -136,8 +144,6 @@ class QuizVC: UIViewController {
         IncorrectAnswerLbl.isHidden = false
         CorrectAnswerLbl.isHidden = false
         id = 1
-        tv.delegate = self
-        tv.dataSource = self
         tv.reloadData()
     }
     
@@ -150,6 +156,7 @@ class QuizVC: UIViewController {
     }
 }
 
+//MARK: Tableview Delegate Functions
 extension QuizVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if id == 1 {
@@ -160,26 +167,8 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if id == 1 {
-//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.CompletedTVcell, for: indexPath) as! CompletedTVcell
-//            
-//            cell.QuestionLbl.text = questions[indexPath.row].text
-//            for (i, button) in cell.buttons.enumerated() {
-//                // Use `i` for the index and `button` for the element
-//                button.setTitle(questions[indexPath.row].options[i], for: .normal)
-//            }
-//            if selectedOption[indexPath.row] != questions[indexPath.row].correctOptionIndex{
-//                cell.buttons[selectedOption[indexPath.row]].backgroundColor = .systemRed
-//            }
-//            cell.buttons[questions[indexPath.row].correctOptionIndex].backgroundColor = .systemGreen
-//
-////            let button = cell.buttons[correctoption[indexPath.row]]
-////            button.backgroundColor = .systemGreen
-////            if selectedOption[indexPath.row] != correctoption[indexPath.row]{
-////                let button2 = cell.buttons[selectedOption[indexPath.row]]
-////                button2.backgroundColor = .systemRed
-////            }
-//            return cell
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.CompletedTVcell, for: indexPath) as! CompletedTVcell
 
             // Set the question text
@@ -210,7 +199,6 @@ extension QuizVC : UITableViewDelegate,UITableViewDataSource {
             return cell
 
         }else{
-//            let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.QuizTVcell, for: indexPath) as! QuizTVcell
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.QuizListTvCell, for: indexPath) as! QuizListTvCell
             let colour = colours[indexPath.row % colours.count]
             let colour2 = UIColor(named:colour)?.adjustedColor(brightnessFactor: 1.7, saturationFactor: 0.4)

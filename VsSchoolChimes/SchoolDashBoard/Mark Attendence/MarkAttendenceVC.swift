@@ -76,6 +76,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UIupdate()
+        
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
         setFormattedDate(customdatestring, label: CustomDateLbl)
@@ -83,36 +85,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         let dateBtntitle = formatter.string(from: Date())
         DateBtn.setTitle(dateBtntitle, for: .normal)
         
-        markAllPresentBtn.backgroundColor = .systemGray3
-        MarkAbsentiesBtn.backgroundColor = .lightGray
-        orLabel.setFont(style: .body, size: FontSize.BodySize)
-        ButtonStackview.layer.cornerRadius = 20
-        AttendRecordBtn.layer.cornerRadius = 20
-        MarkAttendBtn.layer.cornerRadius = 20
-        MarkAbsentiesBtn.layer.cornerRadius = 10
-       // AttendenceTypeView.layer.cornerRadius = 10
-        standardView.layer.cornerRadius = 10
-        SectionView.layer.cornerRadius = 10
-        standardView.layer.borderWidth = 1
-        standardView.layer.borderColor = UIColor.lightGray.cgColor
-        SectionView.layer.borderWidth = 1
-        SectionView.layer.borderColor = UIColor.lightGray.cgColor
         
-        CustumDateBtn.layer.borderWidth = 1 // Border width
-        CustumDateBtn.layer.borderColor = UIColor.gray.cgColor
         
-        markAllPresentBtn.layer.cornerRadius = 10
-        markAllPresentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        MarkAbsentiesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        MarkAttendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        AttendRecordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        selectDateDefautLbl.setFont(style: .title, size: FontSize.TitleSize)
-        selectStandardandSectionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
-        SelectSessionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
-        SelectAttendanceTypeLbl.setFont(style: .title, size: FontSize.TitleSize)
-        standardLbl.setFont(style: .title, size: FontSize.TitleSize)
-        sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
        // setInitialButtonTitles()
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         MarkAttendBtn.setTitleColor(UIColor.white, for: .normal)
@@ -121,24 +95,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
         
         SessionView.isHidden = true
-
-       // setupdatePicker()
-        
-        FulldayView.layer.borderWidth = 1
-        FulldayView.layer.borderColor = UIColor.lightGray.cgColor
-        FulldayView.layer.cornerRadius = 10
-        
-        HalfdayView.layer.borderWidth = 1
-        HalfdayView.layer.borderColor = UIColor.lightGray.cgColor
-        HalfdayView.layer.cornerRadius = 10
-        
-        FirstHalfView.layer.borderWidth = 1
-        FirstHalfView.layer.borderColor = UIColor.lightGray.cgColor
-        FirstHalfView.layer.cornerRadius = 10
-        
-        SecondHalfView.layer.borderWidth = 1
-        SecondHalfView.layer.borderColor = UIColor.lightGray.cgColor
-        SecondHalfView.layer.cornerRadius = 10
         
         let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
         standardView.addGestureRecognizer(standardTap)
@@ -176,7 +132,47 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     }
     
     func UIupdate() {
+        markAllPresentBtn.backgroundColor = .systemGray3
+        MarkAbsentiesBtn.backgroundColor = .lightGray
+        ButtonStackview.layer.cornerRadius = 20
+        AttendRecordBtn.layer.cornerRadius = 20
+        MarkAttendBtn.layer.cornerRadius = 20
+        MarkAbsentiesBtn.layer.cornerRadius = 10
+        standardView.layer.cornerRadius = 10
+        SectionView.layer.cornerRadius = 10
+        standardView.layer.borderWidth = 1
+        standardView.layer.borderColor = UIColor.lightGray.cgColor
+        SectionView.layer.borderWidth = 1
+        SectionView.layer.borderColor = UIColor.lightGray.cgColor
+        FulldayView.layer.borderWidth = 1
+        FulldayView.layer.borderColor = UIColor.lightGray.cgColor
+        FulldayView.layer.cornerRadius = 10
+        HalfdayView.layer.borderWidth = 1
+        HalfdayView.layer.borderColor = UIColor.lightGray.cgColor
+        HalfdayView.layer.cornerRadius = 10
+        FirstHalfView.layer.borderWidth = 1
+        FirstHalfView.layer.borderColor = UIColor.lightGray.cgColor
+        FirstHalfView.layer.cornerRadius = 10
+        SecondHalfView.layer.borderWidth = 1
+        SecondHalfView.layer.borderColor = UIColor.lightGray.cgColor
+        SecondHalfView.layer.cornerRadius = 10
+        CustumDateBtn.layer.borderWidth = 1 // Border width
+        CustumDateBtn.layer.borderColor = UIColor.gray.cgColor
+        markAllPresentBtn.layer.cornerRadius = 10
         
+        markAllPresentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        MarkAbsentiesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        MarkAttendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        AttendRecordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        orLabel.setFont(style: .body, size: FontSize.BodySize)
+        selectDateDefautLbl.setFont(style: .title, size: FontSize.TitleSize)
+        selectStandardandSectionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SelectSessionDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SelectAttendanceTypeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        standardLbl.setFont(style: .title, size: FontSize.TitleSize)
+        sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     
     @objc func fulldayAction(){
@@ -317,31 +313,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
            label.numberOfLines = 0
        }
     
-    func applyVerticalGradientToButton(button: UIButton) {
-            // Create a gradient layer
-            let gradientLayer = CAGradientLayer()
-            gradientLayer.frame = button.bounds
-            
-            // Define the colors for the top and bottom halves
-//            gradientLayer.colors = [
-//                UIColor.red.cgColor,    // Top half color
-//                UIColor.blue.cgColor    // Bottom half color
-//            ]
-        gradientLayer.colors = [
-            UIColor.white.cgColor,   // Top half color
-            UIColor.systemBlue.cgColor    // Bottom half color
-        ]
-            
-            // Set the gradient direction (vertical)
-            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // Top-center
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.5)   // Bottom-center
-
-            // Apply the gradient to the button
-            button.layer.insertSublayer(gradientLayer, at: 0)
-        }
-
-        
-
     func gradientcolours(button : UIButton,colours : [CGColor]){
         
         button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
@@ -367,11 +338,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         id = 0
         TV.isHidden = true
-//        calenderimgHeight.constant = 0
-//        DateViewheight.constant = 0
-//        DateBtn.isHidden = true
-       // calenderview.isHidden = false
-       // calenderHeight.constant = 260
         
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         MarkAttendBtn.setTitleColor(UIColor.white, for: .normal)
@@ -379,7 +345,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         gradientcolours(button: AttendRecordBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
         
-       // AttendenceTypeView.isHidden = false
         MarkAbsentiesBtn.isHidden = false
         markAllPresentBtn.isHidden = false
         stackview.isHidden = false
@@ -394,15 +359,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     
     @IBAction func ReportBtnAct(_ sender: Any) {
         id = 1
-//        calenderview.isHidden = true
-//        calenderimgHeight.constant = 38
-//        DateViewheight.constant = 25
-//        DateBtn.isHidden = false
         formatter.dateFormat = "EEE d MMM yyyy"
         let datelabel = formatter.string(from: Date())
-//        DateBtn.setTitle(datelabel, for: .normal)
-//        calenderview.isHidden = true
-//        calenderHeight.constant = 0
+
         TV.isHidden = false
         TV.delegate = self
         TV.dataSource = self
@@ -413,7 +372,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         MarkAttendBtn.setTitleColor(UIColor.black, for: .normal)
-      //  AttendenceTypeView.isHidden = true
         MarkAbsentiesBtn.isHidden = true
         markAllPresentBtn.isHidden = true
         stackview.isHidden = true
@@ -430,6 +388,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         let alert = CustomAlert()
         alert.showAlertCancel(title: "", message: AlertstringFile.Mark_All_as_Present, actionLbl1: "Ok", actionLbl2: "Cancel", on: self, onOk: {print("Attendance marked")} , onNo: {print("Canceled")})
     }
+    
     @IBAction func MarkAbsentAct(_ sender: Any) {
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)

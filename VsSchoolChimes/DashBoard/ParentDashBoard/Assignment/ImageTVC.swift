@@ -38,14 +38,9 @@ class ImageTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataS
         imageCollecctView.register(nib, forCellWithReuseIdentifier: "ImageCViewCell")
 
     }
-//    func heightAdjesed(){
-//        switch type{
-//        case 0 :
-//        case 1 :
-//        case 2 :
-//        default:
-//        }
-//    }
+
+    //MARK: Collectionview Functions
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 6
     }

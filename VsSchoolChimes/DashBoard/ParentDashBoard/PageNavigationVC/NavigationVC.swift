@@ -18,11 +18,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
     @IBOutlet weak var presentView: UIView! // Container view to embed the page view controller
-    
-    
     @IBOutlet weak var TitleHederLbl: UILabel!
-    
-    
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     
@@ -38,17 +34,8 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         super.viewDidLoad()
         uiConficration()
         setupPageViewController()
-//        pages = [page1, page2]
         loadPages([page1, page2])
         disableSwipeGesture()
-        
-//        gradientcolours(
-//            button: createEvent,
-//            colours: [
-//                UIColor(hex: "7ED957").cgColor,
-//                UIColor(hex: "0097B2").cgColor
-//            ]
-//        )
         
         configureButton(
             createEvent,
@@ -137,12 +124,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
                 opacity: 0.8, // 70% opacity
                 lightenFactor: 0.6// 40% lighter
             )
-//            gradientcolours(
-//                button: createEvent,
-//                colours: [
-//                    UIColor(hex: "7ED957").cgColor,
-//                    UIColor(hex: "0097B2").cgColor
-//                ])
+
             createEvent.setTitleColor(.black, for:.normal)
             gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
             historyBtn.setTitleColor(.black, for:.normal)

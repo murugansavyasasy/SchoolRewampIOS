@@ -22,6 +22,16 @@ class TermsAndCondVC: UIViewController,WKNavigationDelegate {
         super.viewDidLoad()
         
         Pdfview.navigationDelegate = self
+        HeadingLabel.text = CommonStringFile.TermsandConditions.translated()
+        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        
+        if let pdfURL = URL(string: "https://schoolchimes.com/vs_web/terms_conditions/") {
+            let request = URLRequest(url: pdfURL)
+            Pdfview.load(request)
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
         
         if passValue == 1{
             view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
@@ -30,23 +40,12 @@ class TermsAndCondVC: UIViewController,WKNavigationDelegate {
             view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
             outerView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         }
-        HeadingLabel.text = CommonStringFile.TermsandConditions.translated()
-        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        
-        if let pdfURL = URL(string: "https://schoolchimes.com/vs_web/terms_conditions/") {
-            let request = URLRequest(url: pdfURL)
-            Pdfview.load(request)
-            
-        }
     }
     
     // MARK: - WKNavigationDelegate Methods
-    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        
         LoadingView.isHidden = false
         ActivityIndicator.startAnimating()
-        
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

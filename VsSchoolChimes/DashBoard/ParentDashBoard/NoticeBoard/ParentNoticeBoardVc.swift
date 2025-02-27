@@ -9,7 +9,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 class ParentNoticeBoardVc: UIViewController, SelectNotice {
-
+    
     
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeadingLabel: UILabel!
@@ -25,47 +25,53 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        searchbar.placeholder = CommonStringFile.Search.translated()
+        
+        StyleAndTranslate()
         searchbar.delegate = self
         addDoneButton()
-        backBtn.setTitle(MenuStringFile.NoticeBoard.translated(), for: .normal)
-//        HeadingLabel.text = MenuTapbar.Noticeboard
-        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        tabelViewRegister()
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        
+        CellRegister()
+        tableview.delegate = self
+        tableview.dataSource = self
+        tableview.reloadData()
     }
-
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-       
+        
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         
-        tableview.reloadData()
-    }
-
-  
-    @IBAction func backBtn(_ sender: Any) {
-        
-        dismiss(animated: true)
     }
     
-    func tabelViewRegister() {
-        tableview.delegate = self
-        tableview.dataSource = self
+    //MARK: UI Changes
+    func StyleAndTranslate(){
         
+        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
+        searchbar.placeholder = CommonStringFile.Search.translated()
+        backBtn.setTitle(MenuStringFile.NoticeBoard.translated(), for: .normal)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        
+    }
+    
+    func CellRegister() {
         let nib = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
     }
     
-
+    
+    @IBAction func backBtn(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
 }
 
-
+//MARK: Tableview Functions
 @available(iOS 14.0, *)
 extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,7 +160,7 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
 }
 
 
-
+//MARK: Searchbar Delegate
 @available(iOS 14.0, *)
 extension ParentNoticeBoardVc: UISearchBarDelegate{
     

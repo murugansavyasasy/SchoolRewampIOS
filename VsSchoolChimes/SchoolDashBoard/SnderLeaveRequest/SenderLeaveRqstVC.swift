@@ -9,7 +9,7 @@ import UIKit
 protocol ConfirmDelegate{
     func confirm(index:Int,status:String,AlertMsg: String)
 }
-class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSource, ConfirmDelegate {
+class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
     func confirm(index: Int, status: String, AlertMsg: String) {
         print(index)
         let alert = CustomAlert()
@@ -54,6 +54,14 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
         )
     }
 
+    
+    @IBAction func back(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
+}
+
+extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filterStudent?.count ?? 0
     }
@@ -84,10 +92,8 @@ class SenderLeaveRqstVC: UIViewController,UITableViewDelegate,UITableViewDataSou
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    @IBAction func back(_ sender: UIButton) {
-        dismiss(animated: true)
-    }
 }
+
 @available(iOS 14.0, *)
 extension SenderLeaveRqstVC: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

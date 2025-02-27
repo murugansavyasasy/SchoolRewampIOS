@@ -11,7 +11,6 @@ import Charts
 class StrengthTvCell: UITableViewCell {
     
     @IBOutlet weak var SideBtn: UIButton!
-    
     @IBOutlet weak var SideBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var dropdownImgview: UIImageView!
     @IBOutlet weak var countLbl: UILabel!
@@ -19,13 +18,11 @@ class StrengthTvCell: UITableViewCell {
     @IBOutlet weak var standardLbl: UILabel!
     @IBOutlet weak var barchartHeight: NSLayoutConstraint!
     @IBOutlet weak var barChartView: BarChartView!
-    
     @IBOutlet weak var cellview: UIView!
-    
     @IBOutlet weak var StandardView: UIView!
-    
     @IBOutlet weak var BottomLblHeight: NSLayoutConstraint!
     @IBOutlet weak var BottomLbl: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -142,6 +139,15 @@ class StrengthTvCell: UITableViewCell {
         // Set chart background color
         barChartView.backgroundColor = UIColor.white
         
+        // X-Axis Font Configuration
+        barChartView.xAxis.labelFont = UIFont(name: "Poppins-Medium", size: 9) ?? UIFont.systemFont(ofSize: 12)
+        barChartView.xAxis.labelTextColor = .black
+
+        // Y-Axis Font Configuration
+        barChartView.leftAxis.labelFont = UIFont(name: "Poppins-Medium", size: 9) ?? UIFont.systemFont(ofSize: 12)
+        barChartView.leftAxis.labelTextColor = .black
+
+        
         // X-Axis Configuration
         barChartView.xAxis.labelPosition = .bottom
         barChartView.xAxis.drawGridLinesEnabled = false
@@ -181,7 +187,7 @@ class StrengthTvCell: UITableViewCell {
         if #available(iOS 15.0, *) {
             dataSet.colors = [UIColor.systemMint]
         }
-        dataSet.valueFont = .systemFont(ofSize: 12)
+        dataSet.valueFont = UIFont(name: "Poppins-Medium", size:11)!//.systemFont(ofSize: 12)
         dataSet.valueTextColor = .black
         
         // Add data set to BarChartData

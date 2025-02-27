@@ -90,6 +90,8 @@ class LessonDashboardTv: UITableViewCell {
                
                pieChartView.centerAttributedText = attributedString
                pieChartView.centerTextRadiusPercent = 0.9
+           
+           pieChartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0, easingOption: .easeInExpo)
        }
     
     func colorForPercentage(_ percentage: Double) -> UIColor {

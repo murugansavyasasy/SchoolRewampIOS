@@ -4,14 +4,12 @@ import AVFoundation
 import UniformTypeIdentifiers
 import AVFAudio
 
-
 protocol reloadDelegate{
     func reload(index: Int,playToggle:Bool)
     func deleteDelegate(index:Int)
 }
+
 class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate{
-    
-    
     
     var isKeyboardVisible = false
     var selectedDates: [Date] = [] // Store selected dates
@@ -36,6 +34,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     let backgroundcolor = Colornames.topBackgroundCLr
     let tapColor = Colornames.topBackgroundCLr1
     var placeholderLabel: UILabel!
+    
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
     @IBOutlet weak var TextMsgTitle: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
@@ -79,30 +78,24 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var DateSelection: FSCalendar!
     @IBOutlet weak var voiceTitleeTxt: UITextField!
     @IBOutlet weak var nextMontBtn: UIButton!
-    
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var monthLbl: UILabel!
     @IBOutlet weak var TxtTitle: UITextField!
-    
     @IBOutlet weak var voiceClickView: UIView!
     @IBOutlet weak var textClickView: UIView!
     @IBOutlet weak var seduleClickView: UIView!
-    
-    
     @IBOutlet weak var clickVoiceLbl: UILabel!
     @IBOutlet weak var clickSchedule: UILabel!
     @IBOutlet weak var clickTextView: UILabel!
-    
     @IBOutlet weak var fromDateLbl: UILabel!
     @IBOutlet weak var ScheduleLbl: UILabel!
     @IBOutlet weak var ToDateLbl: UILabel!
-    
     @IBOutlet weak var TextMsgTittle: UITextField!
     @IBOutlet weak var TextMsgContent: UILabel!
     @IBOutlet weak var EnableCallLbl: UILabel!
-    
     @IBOutlet weak var textViewOuter: UIView!
     @IBOutlet weak var textCountLbl: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         sendbtn.isEnabled = true
@@ -124,14 +117,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         DateSelection.delegate = self
         DateSelection.dataSource = self
         NotificationCenter.default.addObserver(self,
-                                                       selector: #selector(keyboardWillShow(_:)),
-                                                       name: UIResponder.keyboardWillShowNotification,
-                                                       object: nil)
+                                               selector: #selector(keyboardWillShow(_:)),
+                                               name: UIResponder.keyboardWillShowNotification,
+                                               object: nil)
         
-                NotificationCenter.default.addObserver(self,
-                                                       selector: #selector(keyboardWillHide(_:)),
-                                                       name: UIResponder.keyboardWillHideNotification,
-                                                       object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHide(_:)),
+                                               name: UIResponder.keyboardWillHideNotification,
+                                               object: nil)
         
     }
     
@@ -145,10 +138,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     func StyleAndTranslater() {
         
-        
-//        informationcontent.textContainer.lineFragmentPadding = 10 // Adjusts padding inside text container
-//        informationcontent.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) // Controls overall padding
-
         //MARK: Translate
         fromDateLbl.text = CommonStringFile.FromTime.translated()
         ScheduleLbl.text = CommonStringFile.Schedule.translated()
@@ -157,7 +146,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
         clickTextView.text = CommonStringFile.TextMessage.translated()
         clickSchedule.text = CommonStringFile.ScheduleCall.translated()
-        
         
         //MARK: Label font style
         TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
@@ -195,7 +183,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         scheduleBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TxtMsgSendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-
+        
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
@@ -344,6 +332,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
         //        sendbtn.isEnabled = false
     }
+    
     func printCurrentMonth() {
         let currentPage = DateSelection.currentPage
         let dateFormatter = DateFormatter()
@@ -419,7 +408,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         return filePath
     }
     
-    // Setup Audio Session
+    //MARK: Setup Audio Session
     func setupAudioSession() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
@@ -792,7 +781,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
         }else{
             showVoiceMessageView()
-           
+            
         }
     }
     
@@ -814,7 +803,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceview.isHidden = false
         textmessageview.isHidden = true
         historyview.isHidden = true
-//        addfile.isHidden = false
+        //        addfile.isHidden = false
         tittlemessage.text = CommonStringFile.VoiceMessage.translated()
         clickVoiceLbl.textColor = .white
         clickTextView.textColor = .black
@@ -959,6 +948,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
 }
 
+//MARK: Table view Delegate Functions
 extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
     
     
@@ -1190,6 +1180,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         dateCV.reloadData()
     }
     
+    //MARK: Collection View Delegate Functions
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectedDates.count
     }

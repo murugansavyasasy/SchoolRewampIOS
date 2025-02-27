@@ -56,9 +56,8 @@ class ImagePdfVC: UIViewController {
 
 }
 
+//MARK: Tableview Functions
 extension ImagePdfVC : UITableViewDelegate,UITableViewDataSource{
-    
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
@@ -80,7 +79,6 @@ extension ImagePdfVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return  UITableView.automaticDimension
-        
         
     }
     
@@ -134,6 +132,7 @@ extension ImagePdfVC : UITableViewDelegate,UITableViewDataSource{
     
 }
 
+//MARK: Searchbar Delegate Functions
 extension ImagePdfVC: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

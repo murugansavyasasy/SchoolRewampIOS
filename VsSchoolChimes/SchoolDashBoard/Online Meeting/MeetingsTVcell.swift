@@ -31,15 +31,8 @@ class MeetingsTVcell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-//        cellview.layer.cornerRadius = 7
-//        cellview.layer.masksToBounds = true
-//        cellview.layer.shadowColor = UIColor.black.cgColor
-//        cellview.layer.shadowOpacity = 0.5
-//        cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        cellview.layer.shadowRadius = 3
-//        
+
         cellview.layer.cornerRadius = 6
-//        contentview.layer.cornerRadius = 
         cellview.layer.shadowColor = UIColor.black.cgColor
         cellview.layer.shadowOffset = CGSize(width: 0, height: 2)
         cellview.layer.shadowRadius = 5

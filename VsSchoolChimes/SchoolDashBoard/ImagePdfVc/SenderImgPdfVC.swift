@@ -16,7 +16,6 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var HeaderLabel: UILabel!
-    @IBOutlet weak var collectionview: UICollectionView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var UploadView: ImageSelection!
     @IBOutlet weak var SelectButton: UIButton!

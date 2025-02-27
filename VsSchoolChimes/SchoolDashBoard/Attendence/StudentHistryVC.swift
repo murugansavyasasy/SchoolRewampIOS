@@ -9,6 +9,7 @@ import UIKit
 import DropDown
 
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
+    
     func statusUpdate(status: Bool,index:Int) {
         studentData[index].isAbsent = status
         filterData?[index].isAbsent = status
@@ -22,7 +23,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
         }
     }
-   
+    
     @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
     @IBOutlet weak var studentCollection: UICollectionView!
     @IBOutlet weak var HeaderLabel: UILabel!
@@ -42,7 +43,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var id = 1
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
-//    var specificdata:[SpecificStudent] = [SpecificStudent(name: "Lakshmanan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Saranraj shanmugammmmmmmmmmmmmmmmmm", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Murugan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Chandru", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Sathish", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533")]
+    //    var specificdata:[SpecificStudent] = [SpecificStudent(name: "Lakshmanan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Saranraj shanmugammmmmmmmmmmmmmmmmm", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Murugan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Chandru", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Sathish", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533")]
     var specificdata: [SpecificStudent] = [
         SpecificStudent(name: "Aarav", rollnumber: "Roll no: 101", admissionNo: "Admission no: 100001"),
         SpecificStudent(name: "Bhavana", rollnumber: "Roll no: 102", admissionNo: "Admission no: 100002"),
@@ -71,7 +72,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         SpecificStudent(name: "Yash", rollnumber: "Roll no: 125", admissionNo: "Admission no: 100025"),
         SpecificStudent(name: "Zara", rollnumber: "Roll no: 126", admissionNo: "Admission no: 100026")
     ]
-
+    
     var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
                                  Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
                                  Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
@@ -88,27 +89,19 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [Student]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        StyleAndTranslater()
+        
         dataVisibility = Array(repeating: false, count: specificdata.count)
         selectedRows = Array(repeating: false, count: specificdata.count)
         if id == 1{
             HeaderviewHeight.constant = 0
             headerView.isHidden = true
         }
-       
         
-        rollNoLbl.text = CommonStringFile.RollNo.translated()
-        nameLbl.text = CommonStringFile.Name.translated()
-        statusLbl.text = CommonStringFile.Status.translated()
-        HeaderLabel.text = CommonStringFile.Section.translated()
-        search.placeholder = CommonStringFile.Search.translated()
-        filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
-        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
-        rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
-        statusLbl.setFont(style: .title, size: FontSize.TitleSize)
-        filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         registerCell()
         filterData = studentData
         search.delegate = self
@@ -116,7 +109,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         // Do any additional setup after loading the view.
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(fliter))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -127,6 +119,32 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         )
     }
     
+    func StyleAndTranslater() {
+        
+        //MARK: Label And Button Font Style
+        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
+        nameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
+        statusLbl.setFont(style: .title, size: FontSize.TitleSize)
+        filterBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        //MARK: Translation
+        rollNoLbl.text = CommonStringFile.RollNo.translated()
+        nameLbl.text = CommonStringFile.Name.translated()
+        statusLbl.text = CommonStringFile.Status.translated()
+        HeaderLabel.text = CommonStringFile.Section.translated()
+        search.placeholder = CommonStringFile.Search.translated()
+        filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
+        
+    }
+    
+    func registerCell(){
+        historyTable.register(UINib(nibName: CellConfingName.SpecificStudentTvcell, bundle: nil), forCellReuseIdentifier: CellConfingName.SpecificStudentTvcell)
+        historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
+        historyTable.register(UINib(nibName: CellConfingName.StudentHistryTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.StudentHistryTVC)
+        historyTable.register(UINib(nibName: "MarkAtendenceTV", bundle: nil), forCellReuseIdentifier: "MarkAtendenceTV")
+        studentCollection.register(UINib(nibName: "MarkAttendenceCV", bundle: nil), forCellWithReuseIdentifier: "MarkAttendenceCV")
+    }
     
     @IBAction func fliter(_ sender: UIButton) {
         dropDown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.Absent.translated(),CommonStringFile.Present.translated()]
@@ -173,13 +191,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }
         
     }
-    func registerCell(){
-        historyTable.register(UINib(nibName: CellConfingName.SpecificStudentTvcell, bundle: nil), forCellReuseIdentifier: CellConfingName.SpecificStudentTvcell)
-        historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
-        historyTable.register(UINib(nibName: CellConfingName.StudentHistryTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.StudentHistryTVC)
-        historyTable.register(UINib(nibName: "MarkAtendenceTV", bundle: nil), forCellReuseIdentifier: "MarkAtendenceTV")
-        studentCollection.register(UINib(nibName: "MarkAttendenceCV", bundle: nil), forCellWithReuseIdentifier: "MarkAttendenceCV")
-    }
+    
     @IBAction func selectAllStd(_ sender: UIButton) {
         sender.isSelected.toggle()
         
@@ -200,26 +212,26 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             }
         }
         else{
-//            for i in 0..<specificdata.count{
-//                let indexPath = IndexPath(row: i, section: 0)
-//                if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
-//                    customCell.CheckBoxImgview.image = UIImage(named: "checked_Tick")
-//                }
-//            }
+            //            for i in 0..<specificdata.count{
+            //                let indexPath = IndexPath(row: i, section: 0)
+            //                if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
+            //                    customCell.CheckBoxImgview.image = UIImage(named: "checked_Tick")
+            //                }
+            //            }
             isSelectAllEnabled.toggle()
             for i in 0..<specificdata.count {
-                    let indexPath = IndexPath(row: i, section: 0)
-                    if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
-                        if isSelectAllEnabled {
-                            customCell.CheckBoxImgview.image = UIImage(named: "checked_Tick")
-                        } else {
-                            customCell.CheckBoxImgview.image = UIImage(named: "CheckCircle")
-                        }
+                let indexPath = IndexPath(row: i, section: 0)
+                if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
+                    if isSelectAllEnabled {
+                        customCell.CheckBoxImgview.image = UIImage(named: "checked_Tick")
+                    } else {
+                        customCell.CheckBoxImgview.image = UIImage(named: "CheckCircle")
                     }
-                    
-                    // Update `selectedRows` to match the state
-                    selectedRows[i] = isSelectAllEnabled
                 }
+                
+                // Update `selectedRows` to match the state
+                selectedRows[i] = isSelectAllEnabled
+            }
         }
         // Update select all button image and total count
         if isSelectingAll {
@@ -246,88 +258,88 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
 
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
-            func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-                if id == 2{
-                    return filterData?.count ?? 0
-                }else{
-                    return specificdata.count
-                }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if id == 2{
+            return filterData?.count ?? 0
+        }else{
+            return specificdata.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if id == 1{
+            let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
+            let backgroundColor = colorForName(specificdata[indexPath.row].name)
+            
+            cell.NameLbl.text = specificdata[indexPath.row].name
+            cell.AdmisionNoLbl.text = specificdata[indexPath.row].admissionNo
+            cell.RollNoLbl.text = specificdata[indexPath.row].rollnumber
+            if let firstChar = specificdata[indexPath.row].name.first {
+                cell.alphabetLbl.text = String(firstChar)
+            } else {
+                cell.alphabetLbl.text = "" // Fallback for empty string
             }
-        
-            func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-                if id == 1{
-                    let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
-                    let backgroundColor = colorForName(specificdata[indexPath.row].name)
-                    
-                    cell.NameLbl.text = specificdata[indexPath.row].name
-                    cell.AdmisionNoLbl.text = specificdata[indexPath.row].admissionNo
-                    cell.RollNoLbl.text = specificdata[indexPath.row].rollnumber
-                    if let firstChar = specificdata[indexPath.row].name.first {
-                        cell.alphabetLbl.text = String(firstChar)
-                    } else {
-                        cell.alphabetLbl.text = "" // Fallback for empty string
-                    }
-                    cell.AlphabetView.backgroundColor = backgroundColor
-                    let isSelected = selectedRows[indexPath.row]
-                    cell.CheckBoxImgview.image = isSelected ? UIImage(named: "checked_Tick") : UIImage(named: "CheckCircle")
-                    cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
-                    
-                    // Set visibility state
-                    cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
-                    cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
-                       
-                       // Configure tap action
-                       cell.tapAction = { [weak self] in
-                           self?.handleImageTap(at: indexPath)
-                       }
-                    
-                    return cell
-                }
-                else{
-                    if switchCell == 0{
-                        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StudentHistryTVC, for: indexPath) as! StudentHistryTVC
-                        cell.nameLbl.text = filterData?[indexPath.row].name
-                        cell.AdmisNomber.text = filterData?[indexPath.row].phoneNo
-                        cell.rollNomber.text = filterData?[indexPath.row].rollnumber
-                        let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
-                        cell.statusBtn.setImage(img, for: .normal)
-                        cell.outerView.layer.borderColor = filterData?[indexPath.row].isAbsent ?? false ? UIColor.red.cgColor : Colornames.AprovedClr?.cgColor
-                        cell.outerView.layer.borderWidth = 1
-                        
-                        return cell
-                    }else if switchCell == 1{
-                        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
-                        cell.nameLbl.text = filterData?[indexPath.row].name
-                        cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
-                        cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
-                        cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
-                        cell.phnBtn.tag = indexPath.row
-                        cell.phnBtn.setTitle(filterData?[indexPath.row].phoneNo, for: .normal)
-                        cell.custSwitch.index = indexPath.row
-                        cell.delegate = self
-                        return cell
-                    }else{
-                        
-                        let cell = tableView.dequeueReusableCell(withIdentifier: "MarkAtendenceTV", for: indexPath) as! MarkAtendenceTV
-                        cell.nameLbl.text = filterData?[indexPath.row].name
-                        cell.addmisionLbl.text = filterData?[indexPath.row].phoneNo
-                        cell.rollNoLbl.text = filterData?[indexPath.row].rollnumber
-                        let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
-                        cell.btnView.backgroundColor = filterData?[indexPath.row].isAbsent  ?? false ? UIColor.red : Colornames.AprovedClr
-                        let name = filterData?[indexPath.row].isAbsent  ?? false ? "Absent" : "Present"
-                        cell.btnView.layer.cornerRadius = 20
-                        
-                        cell.stsBtn.setTitle(name, for: .normal)
-                        return cell
-                    }
-                }
+            cell.AlphabetView.backgroundColor = backgroundColor
+            let isSelected = selectedRows[indexPath.row]
+            cell.CheckBoxImgview.image = isSelected ? UIImage(named: "checked_Tick") : UIImage(named: "CheckCircle")
+            cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
+            
+            // Set visibility state
+            cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
+            cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
+            
+            // Configure tap action
+            cell.tapAction = { [weak self] in
+                self?.handleImageTap(at: indexPath)
+            }
+            
+            return cell
+        }
+        else{
+            if switchCell == 0{
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StudentHistryTVC, for: indexPath) as! StudentHistryTVC
+                cell.nameLbl.text = filterData?[indexPath.row].name
+                cell.AdmisNomber.text = filterData?[indexPath.row].phoneNo
+                cell.rollNomber.text = filterData?[indexPath.row].rollnumber
+                let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
+                cell.statusBtn.setImage(img, for: .normal)
+                cell.outerView.layer.borderColor = filterData?[indexPath.row].isAbsent ?? false ? UIColor.red.cgColor : Colornames.AprovedClr?.cgColor
+                cell.outerView.layer.borderWidth = 1
                 
+                return cell
+            }else if switchCell == 1{
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
+                cell.nameLbl.text = filterData?[indexPath.row].name
+                cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
+                cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
+                cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
+                cell.phnBtn.tag = indexPath.row
+                cell.phnBtn.setTitle(filterData?[indexPath.row].phoneNo, for: .normal)
+                cell.custSwitch.index = indexPath.row
+                cell.delegate = self
+                return cell
+            }else{
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MarkAtendenceTV", for: indexPath) as! MarkAtendenceTV
+                cell.nameLbl.text = filterData?[indexPath.row].name
+                cell.addmisionLbl.text = filterData?[indexPath.row].phoneNo
+                cell.rollNoLbl.text = filterData?[indexPath.row].rollnumber
+                let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
+                cell.btnView.backgroundColor = filterData?[indexPath.row].isAbsent  ?? false ? UIColor.red : Colornames.AprovedClr
+                let name = filterData?[indexPath.row].isAbsent  ?? false ? "Absent" : "Present"
+                cell.btnView.layer.cornerRadius = 20
+                
+                cell.stsBtn.setTitle(name, for: .normal)
+                return cell
             }
+        }
         
-        
-//            func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//                return UITableView.automaticDimension
-//            }
+    }
+    
+    
+    //            func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    //                return UITableView.automaticDimension
+    //            }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -379,61 +391,13 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         }
     }
     
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
-//        cell.NameLbl.text = specificdata[indexPath.row].name
-//        cell.AdmisionNoLbl.text = specificdata[indexPath.row].admissionNo
-//        cell.RollNoLbl.text = specificdata[indexPath.row].rollnumber
-//        if let firstChar = specificdata[indexPath.row].name.first {
-//            cell.alphabetLbl.text = String(firstChar)
-//        } else {
-//            cell.alphabetLbl.text = "" // Fallback for empty string
-//        }
-//        let isSelected = selectedRows[indexPath.row]
-//        cell.CheckBoxImgview.image = isSelected ? UIImage(named: "checked_Tick") : UIImage(named: "CheckCircle")
-//        
-//        // Set visibility state
-//        cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
-//        cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
-//           
-//           // Configure tap action
-//           cell.tapAction = { [weak self] in
-//               self?.handleImageTap(at: indexPath)
-//           }
-//        
-//        return cell
-//    }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = historyTable.cellForRow(at: indexPath)as! SpecificStudentTvcell
-//        if cell.CheckBoxImgview.image == UIImage(named:"CheckCircle"){
-//            cell.CheckBoxImgview.image = UIImage(named:"checked_Tick")
-//        }else{
-//           
-//            cell.CheckBoxImgview.image = UIImage(named:"CheckCircle")
-//        }
-////        cell.RollNoLbl.isHidden = false
-////        cell.AdmisionNoLbl.isHidden = false
-//        
-//        historyTable.deselectRow(at: indexPath, animated: true)
-//        historyTable.reloadRows(at: [indexPath], with: .automatic)
-//    }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        // Toggle the state
-//        selectedRows[indexPath.row] = !selectedRows[indexPath.row]
-//        
-//        // Reload the specific row to update the checkbox image
-//        tableView.reloadRows(at: [indexPath], with: .none)
-//    }
-
     func handleImageTap(at indexPath: IndexPath) {
         dataVisibility[indexPath.row].toggle() // Toggle the visibility state
         
         // Reload the specific row
         historyTable.reloadRows(at: [indexPath], with: .automatic)
     }
-
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {

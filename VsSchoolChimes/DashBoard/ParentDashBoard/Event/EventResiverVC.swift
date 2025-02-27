@@ -54,8 +54,7 @@ class EventResiverVC: UIViewController, SelectNotice{
         historyBtn.setTitleColor(.gray, for:.normal)
         // Set the initial page
     
-        
-        
+        tableview.reloadData()
     }
     
     @IBAction func backbtn(_ sender: Any) {
@@ -68,13 +67,12 @@ class EventResiverVC: UIViewController, SelectNotice{
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         
-        tableview.reloadData()
     }
     
+    //MARK: Cell Registration
     func tabelViewRegister() {
         tableview.delegate = self
         tableview.dataSource = self
-        
         
         let nib = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
@@ -213,6 +211,8 @@ class EventResiverVC: UIViewController, SelectNotice{
     
  
 }
+
+//MARK: Tableview Functions
 @available(iOS 14.0, *)
 extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -317,7 +317,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
 }
 
 
-
+//MARK: Searchbar Delegate
 @available(iOS 14.0, *)
 extension EventResiverVC: UISearchBarDelegate{
     

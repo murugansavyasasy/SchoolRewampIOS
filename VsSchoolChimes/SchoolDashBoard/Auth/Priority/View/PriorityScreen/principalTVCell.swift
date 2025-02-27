@@ -14,7 +14,6 @@ class principalTVCell: UITableViewCell {
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var checkbox: CheckBox!
     @IBOutlet weak var SchoolNamelbl: UILabel!
-    //    @IBOutlet weak var checkbox: UIImageView!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var imgview: UIImageView!
     

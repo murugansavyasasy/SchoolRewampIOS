@@ -15,7 +15,6 @@ class ExammarkFooterView: UITableViewHeaderFooterView {
     @IBOutlet weak var TotalMarkLbl: UILabel!
     @IBOutlet weak var footerview: UIView!
     @IBOutlet weak var TotalLbl: UILabel!
-    
     @IBOutlet weak var RankLbl: UILabel!
     /*
     // Only override draw() if you perform custom drawing.

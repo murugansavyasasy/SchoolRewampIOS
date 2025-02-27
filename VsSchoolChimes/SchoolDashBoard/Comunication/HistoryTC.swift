@@ -13,8 +13,8 @@ import AVFAudio
 class HistoryTC: UITableViewCell {
     var AudioPlayUrl = "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav"
     var player: AVPlayer?
-        var updateTimer: Timer?
-        var isPlaying = false
+    var updateTimer: Timer?
+    var isPlaying = false
     var totalsecont = "03.00"
     var lastPlayingduration = "00:00"
     var audioRecorder: AVAudioRecorder?
@@ -23,13 +23,12 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var sentBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var datelbl: UILabel!
     @IBOutlet weak var contentlbl: UILabel!
-    @IBOutlet weak var sendedTime: UILabel!
     @IBOutlet weak var totaltime: UILabel!
-    
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var playerView: WaveView!
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var outerview: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         outerview.layer.shadowColor = UIColor.black.cgColor
@@ -41,11 +40,8 @@ class HistoryTC: UITableViewCell {
         
         datelbl.setFont(style: .body, size: FontSize.BodySize)
         contentlbl.setFont(style: .title, size: FontSize.TitleSize)
-        //sendedTime.setFont(style: .body, size: FontSize.BodySize)
         totaltime.setFont(style: .body, size: FontSize.BodySize)
         
-        
-        //            setupWaveBars()
     }
     func setupPlayer(with url: URL) {
         player = AVPlayer(url: url)
@@ -127,14 +123,14 @@ class HistoryTC: UITableViewCell {
         }
         self.isPlaying = isPlaying
     }
-
+    
     // Helper to format time as mm:ss
     private func formatTime(_ seconds: Double) -> String {
         let minutes = Int(seconds) / 60
         let seconds = Int(seconds) % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
-
+    
     // Helper to update audio levels
     private func updateAudioLevels(int:Float) {
         audioRecorder?.updateMeters()
@@ -142,13 +138,13 @@ class HistoryTC: UITableViewCell {
         let normalizedPower = max(int, (averagePower + 160) / 160)
         playerView.updateWithLevel(CGFloat(normalizedPower))
     }
-
-
+    
+    
     @objc func updateSlider() {
         guard let audioPlayer = player else { return }
         
         if audioPlayer.isPlaying {
-
+            
             
             // Update playback time
             if let currentItem = audioPlayer.currentItem {

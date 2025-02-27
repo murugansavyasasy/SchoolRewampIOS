@@ -46,8 +46,7 @@ class CertificateRequestVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
 
         ButtonStackview.isLayoutMarginsRelativeArrangement = true
@@ -63,9 +62,6 @@ class CertificateRequestVC: UIViewController {
         ButtonStackview.backgroundColor = .lightGray
         CertificatesBtn.backgroundColor = .white
         RequestBtn.backgroundColor = .white
-     
-
-        //gradientcolours(button: RequestCertificateBtn, colours: [Colornames.gradientgreen.cgColor,Colornames.gradientBlue.cgColor])
         
         RequestView.layer.cornerRadius = 10
         RequestView.layer.shadowColor = UIColor.black.cgColor
@@ -82,7 +78,6 @@ class CertificateRequestVC: UIViewController {
         BackBtn.setTitleFont(style: .primary, size: 17)
         CertificatesBtn.tintColor = .lightGray
         
-       
         let tap = UITapGestureRecognizer(target: self, action: #selector(UrgencyDropdown))
         DropdownView.addGestureRecognizer(tap)
         DropdownView.isUserInteractionEnabled = true
@@ -105,7 +100,6 @@ class CertificateRequestVC: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        
         view.applyGradient(
             colors: [
                 Colornames.gradientBlue,  // Green
@@ -117,10 +111,10 @@ class CertificateRequestVC: UIViewController {
         configureButton(RequestCertificateBtn, gradientColors: [UIColor.blue,UIColor.green],opacity: 0.8,lightenFactor: 0.6)
     }
     
+    //MARK: UI changes
     func StyleAndTranslate(){
-        
-        NameLbl.setFont(style: .body, size: 15)
-        StandardLbl.setFont(style: .body, size: 15)
+        NameLbl.setFont(style: .body, size: FontSize.BodySize)
+        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         SelectCertificateLbl.setFont(style: .title, size: FontSize.TitleSize)
         SelectUrgencyLbl.setFont(style: .title, size: FontSize.TitleSize)
         DropdownLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -340,16 +334,11 @@ class CertificateRequestVC: UIViewController {
         }
         
         gradientcolours(button: button, colours: adjustedColors)
-        // Apply gradient
-//        button.applyGradient(
-//            colors: adjustedColors,
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
     }
     
 }
 
+//MARK: Tableview Functions
 extension CertificateRequestVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return certificates.count
@@ -377,13 +366,6 @@ extension CertificateRequestVC : UITableViewDelegate,UITableViewDataSource {
             cell.DownloadBtnHeight.constant = 0
             cell.DownloadBtn.isHidden = true
         } else {
-            
-//            if let originalImage = UIImage(named: "Pending") {
-//                let resizedImage = originalImage.resizeTo(size: CGSize(width: 100, height: 100))
-//                cell.statusImgview.image = resizedImage?.withTintColor(.white)//ImageName.Pending
-//            cell.statusImgview.tintColor = .white
-//                print("Original Size: \(originalImage.size), Resized Size: \(resizedImage!.size)")
-//            }
             
             cell.StatusLbl.textColor = .white
             cell.StatusImgHeight.constant = 15
@@ -437,9 +419,4 @@ extension UIImage {
         return resizedImage
     }
 }
-
-
-
-
-
 

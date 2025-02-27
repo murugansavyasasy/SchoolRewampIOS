@@ -528,6 +528,12 @@
 		84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97CE2D3E13BD00EBF9F4 /* Successful.gif */; };
 		84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97D12D3E31FF00EBF9F4 /* CompletedTVcell.xib */; };
+		FA31A7C12D7023890069C954 /* VideoPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31A7BA2D7023890069C954 /* VideoPlayerVC.swift */; };
+		FA31A7C22D7023890069C954 /* VideoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31A7BC2D7023890069C954 /* VideoTVCell.swift */; };
+		FA31A7C32D7023890069C954 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31A7BE2D7023890069C954 /* VideoVC.swift */; };
+		FA31A7C42D7023890069C954 /* VideoPlayerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA31A7BB2D7023890069C954 /* VideoPlayerVC.xib */; };
+		FA31A7C52D7023890069C954 /* VideoTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA31A7BD2D7023890069C954 /* VideoTVCell.xib */; };
+		FA31A7C62D7023890069C954 /* VideoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA31A7BF2D7023890069C954 /* VideoVC.xib */; };
 		FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */; };
 		FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */; };
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
@@ -1173,6 +1179,12 @@
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
+		FA31A7BA2D7023890069C954 /* VideoPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerVC.swift; sourceTree = "<group>"; };
+		FA31A7BB2D7023890069C954 /* VideoPlayerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlayerVC.xib; sourceTree = "<group>"; };
+		FA31A7BC2D7023890069C954 /* VideoTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTVCell.swift; sourceTree = "<group>"; };
+		FA31A7BD2D7023890069C954 /* VideoTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoTVCell.xib; sourceTree = "<group>"; };
+		FA31A7BE2D7023890069C954 /* VideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVC.swift; sourceTree = "<group>"; };
+		FA31A7BF2D7023890069C954 /* VideoVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoVC.xib; sourceTree = "<group>"; };
 		FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWTvCell.swift; sourceTree = "<group>"; };
 		FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWTvCell.xib; sourceTree = "<group>"; };
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
@@ -1243,7 +1255,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ShowImage */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ShowImage; sourceTree = "<group>"; };
-		84D2D5642CE463CD00606CE8 /* Video */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Video; sourceTree = "<group>"; };
 		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -2642,7 +2653,7 @@
 				187CF5D92D142CE0001422CE /* CertificateRequest */,
 				187CF4D12D119C27001422CE /* ClassTimeTable */,
 				84395FC92D0D4C8B00FC3242 /* HomePage */,
-				84D2D5642CE463CD00606CE8 /* Video */,
+				FA31A7C02D7023890069C954 /* Video */,
 				84079FEB2D15A7B000D6DF04 /* PageNavigationVC */,
 				84079FF22D15A7B000D6DF04 /* LeaveRequest */,
 				849970B22CF8750B00800B07 /* Assignment */,
@@ -3104,6 +3115,19 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		FA31A7C02D7023890069C954 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				FA31A7BA2D7023890069C954 /* VideoPlayerVC.swift */,
+				FA31A7BB2D7023890069C954 /* VideoPlayerVC.xib */,
+				FA31A7BC2D7023890069C954 /* VideoTVCell.swift */,
+				FA31A7BD2D7023890069C954 /* VideoTVCell.xib */,
+				FA31A7BE2D7023890069C954 /* VideoVC.swift */,
+				FA31A7BF2D7023890069C954 /* VideoVC.xib */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
 		FAFF9D9C2D6C7B7A00498368 /* StaffSide */ = {
 			isa = PBXGroup;
 			children = (
@@ -3329,7 +3353,6 @@
 			fileSystemSynchronizedGroups = (
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				84759C662CEDEF3300E7D367 /* ShowImage */,
-				84D2D5642CE463CD00606CE8 /* Video */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 			);
 			name = VsSchoolChimes;
@@ -3651,6 +3674,9 @@
 				849F313B2D00613B00BACEC7 /* EventPageVC.xib in Resources */,
 				189E99E12CE492B400FE98A5 /* SenderSideImagePdfViewController.xib in Resources */,
 				849AD02C2D1A840E002DEC07 /* OnlineMeetingVC.xib in Resources */,
+				FA31A7C42D7023890069C954 /* VideoPlayerVC.xib in Resources */,
+				FA31A7C52D7023890069C954 /* VideoTVCell.xib in Resources */,
+				FA31A7C62D7023890069C954 /* VideoVC.xib in Resources */,
 				849AD02D2D1A840E002DEC07 /* MeetingsTVcell.xib in Resources */,
 				18D718622D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib in Resources */,
 				18D718632D0D471A00E9EDA3 /* NewDailyCollectionViewController.xib in Resources */,
@@ -3872,6 +3898,9 @@
 				FAFF9DDC2D6C7B7A00498368 /* TeacherWiseSlotAvailabilityResponse.swift in Sources */,
 				FAFF9DDD2D6C7B7A00498368 /* DateWiseSlotDetailsStaffRequest.swift in Sources */,
 				FAFF9DDE2D6C7B7A00498368 /* CheckAviableTvHeader.swift in Sources */,
+				FA31A7C12D7023890069C954 /* VideoPlayerVC.swift in Sources */,
+				FA31A7C22D7023890069C954 /* VideoTVCell.swift in Sources */,
+				FA31A7C32D7023890069C954 /* VideoVC.swift in Sources */,
 				FAFF9DDF2D6C7B7A00498368 /* SlotAvailablityForStudentRequest.swift in Sources */,
 				FAFF9DE02D6C7B7A00498368 /* TimeCollectionViewCell.swift in Sources */,
 				FAFF9DE12D6C7B7A00498368 /* DateWiseModal.swift in Sources */,

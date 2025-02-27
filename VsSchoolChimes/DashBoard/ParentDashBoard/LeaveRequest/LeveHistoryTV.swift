@@ -11,7 +11,6 @@ protocol UpdateDelegate{
 }
 class LeveHistoryTV: UITableViewCell {
 
-    @IBOutlet weak var resonBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var fromDateLbl: UILabel!
     @IBOutlet weak var toDateLbl: UILabel!
@@ -23,8 +22,8 @@ class LeveHistoryTV: UITableViewCell {
     @IBOutlet weak var satusImg: UIImageView!
     @IBOutlet weak var botomSts: NSLayoutConstraint!
     @IBOutlet weak var ShowPopup: UIView!
-    
     @IBOutlet weak var editHeight: NSLayoutConstraint!
+    
     var leaverequest:LeaveRequest? = nil
     var delegate:UpdateDelegate?
     var reson = "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work."

@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReciverAttendanceReportVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="kqu-d0-EaJ" id="RWF-Rb-O0m"/>
                 <outlet property="HeaderLbl" destination="Erx-O7-EGE" id="kLT-lz-OAo"/>
                 <outlet property="NameLbl" destination="xjJ-cC-NB3" id="FSd-rc-olS"/>
                 <outlet property="StandardLbl" destination="RdF-SV-o2L" id="fg1-c5-eDQ"/>

@@ -18,9 +18,6 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     @IBOutlet weak var Gradientview: UIStackView!
     @IBOutlet weak var receiverView: UIView!
     @IBOutlet weak var createView: UIView!
-    
-    @IBOutlet weak var calenderImgview: UIImageView!
-    
     @IBOutlet weak var LinkTxtfld: UITextField!
     @IBOutlet weak var SubmitBtn: UIButton!
     @IBOutlet weak var TimeBtn: UIButton!
@@ -38,13 +35,10 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var MeetingLinkLbl: UILabel!
     @IBOutlet weak var MeetingtypeLbl: UILabel!
-    
     @IBOutlet weak var customDateLbl: UILabel!
     @IBOutlet weak var CustomDateBtn: HalfColorButton!
-    
     @IBOutlet weak var NameStandardStackview: UIStackView!
     @IBOutlet weak var NameLbl: UILabel!
-    
     @IBOutlet weak var StandardLbl: UILabel!
     
     let eventStore = EKEventStore()

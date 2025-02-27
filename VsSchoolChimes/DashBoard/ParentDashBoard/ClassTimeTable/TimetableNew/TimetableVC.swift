@@ -28,11 +28,7 @@ class TimetableVC: UIViewController{
         dateFormatter.dateFormat = "E"
         let currentDayName = dateFormatter.string(from: Date())
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        //let formattedDate = dateFormatter.string(from: currentDate)
-//        dayLbl.text = formattedDate
-//        dateLBl.text = currentDayName
         getCurrentDay = currentDayName
-        //print("day",day)
         
         let nib = UINib(nibName: CellConfingName.TimetableTv, bundle: nil)
         tv.register(nib, forCellReuseIdentifier: CellConfingName.TimetableTv)

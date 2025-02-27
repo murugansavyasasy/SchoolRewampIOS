@@ -15,11 +15,8 @@ class TimetableTv: UITableViewCell {
     @IBOutlet weak var ProgressView: UIView!
     @IBOutlet weak var ProgrssviewHeight: NSLayoutConstraint!
     @IBOutlet weak var CheckImgview: UIImageView!
-    
     @IBOutlet weak var SubjectLbl: UILabel!
-    
     @IBOutlet weak var StaffNameLbl: UILabel!
-    
     @IBOutlet weak var DurationLbl: UILabel!
     var animated = false
     
