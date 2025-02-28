@@ -29,7 +29,10 @@ class ImagePdfVC: UIViewController {
         search.placeholder = "Search".translated()
         search.delegate = self
         addDoneButton()
-        
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        backBtn.imageView?.applyRTLFlip(Language == "ar")
         backBtn.setTitle(ReceiverMenuItems.ImagePdf.translated(), for: .normal)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)

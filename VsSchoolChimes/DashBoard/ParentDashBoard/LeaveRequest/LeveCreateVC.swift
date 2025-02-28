@@ -67,6 +67,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         costomView.imageCollectionview.dataSource = self
         imageSelection()
         setupPlaceholder()
+       
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -355,12 +356,26 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
+        
+        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        let isRTL = (language == "ar")
+
+        // Set text alignment for text view and character count label
+        contentTxtView.textAlignment = isRTL ? .right : .left
+        contentCount.textAlignment = isRTL ? .left : .right
+
+        // Placeholder styling
         placeholderLabel.font = contentTxtView.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
-        placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+
+        // Adjust placeholder position based on language direction
+        let xPosition = isRTL ? (contentTxtView.frame.width - placeholderLabel.frame.width - 10) : 5
+        placeholderLabel.frame.origin = CGPoint(x: xPosition, y: 8) // Adjust padding
+
         contentTxtView.addSubview(placeholderLabel)
     }
+
     func setupdatePicker() {
         // Initialize the date picker
         datePicker = UIDatePicker()

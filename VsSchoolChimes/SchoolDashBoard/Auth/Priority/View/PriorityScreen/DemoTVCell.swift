@@ -9,6 +9,7 @@ import UIKit
 
 class DemoTVCell: UITableViewCell {
     
+    @IBOutlet weak var arrowImg: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var REgisterNoLbl: UILabel!
     @IBOutlet weak var AddressLbl: UILabel!

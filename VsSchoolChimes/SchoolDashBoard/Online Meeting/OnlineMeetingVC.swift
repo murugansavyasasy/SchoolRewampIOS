@@ -56,6 +56,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
     @IBOutlet weak var customDateLbl: UILabel!
     @IBOutlet weak var CustomDateBtn: HalfColorButton!
     @IBOutlet weak var NameStandardStackview: UIStackView!
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     
@@ -91,8 +92,11 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
                     object: nil
                 )
         
-        
-        
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        backBtn.imageView?.applyRTLFlip(Language == "ar")        
+        backBtn.setTitle(ReceiverMenuItems.OnlineMeeting.translated(), for: .normal)
+        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
         StyleAndTranslater()
         setupTimePicker()
         keyboardDonebtn()

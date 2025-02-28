@@ -128,6 +128,7 @@
                 <outlet property="SchoolInfoView" destination="ov8-cn-5tq" id="x5H-vm-hNH"/>
                 <outlet property="SchoolnameLbl" destination="O3I-8l-vhX" id="NfR-fv-Lfy"/>
                 <outlet property="StdSecLbl" destination="Zwv-VW-PEq" id="SgG-Rg-paL"/>
+                <outlet property="arrowImg" destination="jJB-pn-LdA" id="KTO-SG-Vcf"/>
                 <outlet property="cellview" destination="blt-hQ-5dU" id="a6n-aW-ids"/>
                 <outlet property="imgview" destination="O0M-Nf-GQM" id="PAp-0U-0oO"/>
                 <outlet property="namelabel" destination="I8I-lx-Bth" id="sFf-EV-XvB"/>

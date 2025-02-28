@@ -32,6 +32,7 @@
                 <outlet property="TextViewheight" destination="D5G-gA-TSJ" id="FJP-GL-fzN"/>
                 <outlet property="TimeBtn" destination="Vdc-J3-ddY" id="bSw-m6-QWp"/>
                 <outlet property="TitleLbl" destination="xRS-4X-zUP" id="dV1-Ck-Wpc"/>
+                <outlet property="backBtn" destination="yfB-rH-Y3w" id="cOe-cD-eZf"/>
                 <outlet property="createBtn" destination="79x-pm-Vge" id="Vk6-2V-zge"/>
                 <outlet property="createView" destination="mZR-UH-SFC" id="G1P-Qw-e8G"/>
                 <outlet property="customDateLbl" destination="92g-wA-vM0" id="Tr3-MV-coj"/>
@@ -348,20 +349,24 @@
                     </constraints>
                 </scrollView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online Meeting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XMo-Da-bsh">
-                    <rect key="frame" x="40" y="69.333333333333329" width="215" height="24"/>
+                    <rect key="frame" x="255" y="69.333333333333329" width="0.0" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" id="US3-OD-Vv2"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfB-rH-Y3w">
-                    <rect key="frame" x="10" y="64" width="30" height="34.333333333333343"/>
+                    <rect key="frame" x="10" y="64" width="245" height="34.333333333333343"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="9IS-SE-Fis"/>
                         <constraint firstAttribute="height" constant="34.333333333333343" id="eAH-Sf-BKs"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
@@ -431,7 +436,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

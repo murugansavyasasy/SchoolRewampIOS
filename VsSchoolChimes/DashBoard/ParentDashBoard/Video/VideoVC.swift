@@ -42,6 +42,10 @@ class VideoVC: UIViewController {
        
         backBtn.setTitle(ReceiverMenuItems.Video.translated(), for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        backBtn.imageView?.applyRTLFlip(Language == "ar")
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
         keyboardDionebtn()

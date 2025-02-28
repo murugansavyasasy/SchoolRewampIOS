@@ -337,8 +337,8 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    func ParantMapVC(from viewController: UIViewController){
-        let vc = VsSchoolChimes.ParantMapVC(nibName: nil, bundle: nil)
+    func parantMapVC(from viewController: UIViewController){
+        let vc = ParantMapVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
