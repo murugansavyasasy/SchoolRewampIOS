@@ -25,10 +25,10 @@ class PriorityViewController1: UIViewController {
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
     let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
     var passedValue = 1
-    
+    var Language :String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         UserDefaults.standard.set(passedValue, forKey: "passvalue")
     
         StyleAndTranslate()
@@ -179,7 +179,7 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
             if let color1 = colour1, let color2 = colour2 {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])
             }
-           
+            cell.arrowImg.applyRTLFlip(Language == "ar")
             return cell
             
         } else {

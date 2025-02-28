@@ -22,6 +22,9 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
  
 //        loginVerify()
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        let isRTL = (Language == "ar")  // Replace with your language-checking logic
+            UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
 
       
         let defaults = UserDefaults.standard

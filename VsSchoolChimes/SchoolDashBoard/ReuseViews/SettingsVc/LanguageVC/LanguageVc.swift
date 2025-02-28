@@ -33,7 +33,7 @@ class LanguageVc: UIViewController {
     
     var Language = ["English", "தமிழ்", "हिंदी", "ไทย", "العربية"]
     var Buttontext = ["Confirm", "உறுதிப்படுத்தவும்", "पुष्टि करें", "ยืนยัน", "تأكيد"]
-    var index = 0
+    var index:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,7 +43,7 @@ class LanguageVc: UIViewController {
         SelectLangLabel.setFont(style: .title, size: FontSize.TitleSize)
         
         index = UserDefaults.standard.integer(forKey: "index")
-        Items[index].selected = true
+        Items[index ?? 0].selected = true
         
 //        let defaults = UserDefaults.standard
 //        
@@ -54,7 +54,7 @@ class LanguageVc: UIViewController {
         ConfirmBtn.backgroundColor = .lightGray
         
         
-        ConfirmBtn.setTitle(Buttontext[index], for: .normal) // Use setTitle(_:for:) here
+        ConfirmBtn.setTitle(Buttontext[index ?? 0], for: .normal) // Use setTitle(_:for:) here
         ConfirmBtn.titleLabel?.textAlignment = .center
         ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         ConfirmBtn.setTitleFont(style: .body, size: 14)
@@ -155,20 +155,15 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LangTvCellTableViewCell , for: indexPath) as! LangTvCellTableViewCell
         
         if index == indexPath.row{
-            
-            ConfirmBtn.setTitle(Buttontext[index], for: .normal)
+            ConfirmBtn.setTitle(Buttontext[index ?? 0], for: .normal)
             ConfirmBtn.titleLabel?.textAlignment = .center
             ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
             cell.RadioImage.image = ImageName.checkedTick
             cell.LangIconImg.tintColor = .systemOrange
-            
         }else{
-            
             cell.RadioImage.image = ImageName.CheckCircle
             cell.LangIconImg.tintColor = .lightGray
         }
-        
-        
         if Items[indexPath.row].selected == true{
             selectedLanguage = Items[indexPath.row].language
         }
@@ -180,34 +175,76 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         
         return cell
     }
-    
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        ConfirmBtn.backgroundColor = UIColor.button
-        
+        // Deselect the previously selected cell
+        if let previousIndex = index, let previousCell = tableView.cellForRow(at: IndexPath(row: previousIndex, section: 0)) as? LangTvCellTableViewCell {
+            previousCell.RadioImage.image = ImageName.CheckCircle // Change to unchecked image
+            Items[previousIndex].selected = false
+            previousCell.LangIconImg.tintColor = .lightGray
+        }
+
+        // Select the new cell
+        if let cell = tableView.cellForRow(at: indexPath) as? LangTvCellTableViewCell {
+            cell.RadioImage.image = ImageName.checkedTick
+            cell.LangIconImg.tintColor = .systemOrange
+            ConfirmBtn.setTitle(Buttontext[indexPath.row], for: .normal)
+            ConfirmBtn.titleLabel?.textAlignment = .center
+            ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        }
+
+        // Update selection
         selectedLanguage = Items[indexPath.row].language
         Items[indexPath.row].selected = true
         index = indexPath.row
-        
+
+        // Change Confirm Button color
+        ConfirmBtn.backgroundColor = UIColor.button
+
+        // Save language code
         let userDefault = UserDefaults.standard
-        
-        if selectedLanguage == "Tamil" {
-            languageCode = "ta-IN"
-        } else if selectedLanguage == "Thai" {
-            languageCode = "th"
-        } else if selectedLanguage == "Hindi" {
-            languageCode = "hi"
-        } else if selectedLanguage == "English" {
-            languageCode = "en"
-        } else if selectedLanguage == "Arabic" {
-            languageCode = "ar"
+
+        switch selectedLanguage {
+            case "Tamil":
+                languageCode = "ta-IN"
+            case "Thai":
+                languageCode = "th"
+            case "Hindi":
+                languageCode = "hi"
+            case "English":
+                languageCode = "en"
+            case "Arabic":
+                languageCode = "ar"
+            default:
+                break
         }
-//        let isRTL = (languageCode == "ar")  // Replace with your language-checking logic
-//        UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
-//        tv.reloadData()
     }
+
+    
+    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if let cell = tableView.rectForRow(at: indexPath) as? LangTvCellTableViewCell{
+//            cell.RadioImage.image = ImageName.checkedTick
+//        }
+//        ConfirmBtn.backgroundColor = UIColor.button
+//        
+//        selectedLanguage = Items[indexPath.row].language
+//        Items[indexPath.row].selected = true
+//        index = indexPath.row
+//        
+//        let userDefault = UserDefaults.standard
+//        
+//        if selectedLanguage == "Tamil" {
+//            languageCode = "ta-IN"
+//        } else if selectedLanguage == "Thai" {
+//            languageCode = "th"
+//        } else if selectedLanguage == "Hindi" {
+//            languageCode = "hi"
+//        } else if selectedLanguage == "English" {
+//            languageCode = "en"
+//        } else if selectedLanguage == "Arabic" {
+//            languageCode = "ar"
+//        }
+//    }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
