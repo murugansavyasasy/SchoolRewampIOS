@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SchoolStrengthVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="HeaderLbl" destination="9p0-yR-Hnh" id="wgY-oa-zEG"/>
+                <outlet property="BackBtn" destination="9tL-Ix-cKl" id="NUg-G4-gP3"/>
                 <outlet property="TotalStrengthView" destination="TO6-fT-UCg" id="Iab-D5-2Ko"/>
                 <outlet property="Tv" destination="53x-iP-Lpy" id="BCd-fF-Adh"/>
                 <outlet property="pieChartView" destination="U1J-t1-Ony" id="gpN-05-R6O"/>
@@ -28,14 +28,15 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9tL-Ix-cKl">
-                    <rect key="frame" x="10" y="64" width="30" height="35"/>
+                    <rect key="frame" x="10" y="64" width="373" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="UmY-4L-U6x"/>
-                        <constraint firstAttribute="width" constant="30" id="YWE-Re-R9q"/>
                     </constraints>
                     <color key="tintColor" systemColor="darkTextColor"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="chevron.left" catalog="system">
+                    <state key="normal" title="School Strength" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -152,23 +153,15 @@
                         <constraint firstAttribute="trailing" secondItem="TO6-fT-UCg" secondAttribute="trailing" constant="15" id="wLZ-mp-0cW"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="School strength" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9p0-yR-Hnh">
-                    <rect key="frame" x="40" y="69.666666666666671" width="343" height="24"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
                 <constraint firstItem="SBE-9b-QRv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5BC-XP-275"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="SBE-9b-QRv" secondAttribute="bottom" id="HiD-kM-Hyt"/>
-                <constraint firstItem="9p0-yR-Hnh" firstAttribute="leading" secondItem="9tL-Ix-cKl" secondAttribute="trailing" id="MNt-Od-4v1"/>
-                <constraint firstItem="9p0-yR-Hnh" firstAttribute="centerY" secondItem="9tL-Ix-cKl" secondAttribute="centerY" id="UDW-vy-P9t"/>
                 <constraint firstItem="SBE-9b-QRv" firstAttribute="top" secondItem="9tL-Ix-cKl" secondAttribute="bottom" constant="5" id="VOS-7G-K1l"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SBE-9b-QRv" secondAttribute="trailing" id="WmL-zt-yz9"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9p0-yR-Hnh" secondAttribute="trailing" constant="10" id="bsb-pE-y1C"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9tL-Ix-cKl" secondAttribute="trailing" constant="10" id="mvo-OM-bQR"/>
                 <constraint firstItem="9tL-Ix-cKl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="pjz-a7-Bv7"/>
                 <constraint firstItem="9tL-Ix-cKl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="uvw-uy-Gq5"/>
             </constraints>
@@ -190,10 +183,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

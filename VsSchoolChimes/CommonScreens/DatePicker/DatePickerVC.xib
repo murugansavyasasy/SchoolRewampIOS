@@ -30,10 +30,10 @@
                             <rect key="frame" x="0.0" y="0.0" width="353" height="400"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dtW-65-Udt">
-                                    <rect key="frame" x="262" y="10.333333333333343" width="75" height="34"/>
+                                    <rect key="frame" x="259" y="357" width="78" height="35"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="4eQ-xU-8Pc"/>
-                                        <constraint firstAttribute="height" constant="34" id="Q5A-xg-dqm"/>
+                                        <constraint firstAttribute="height" constant="35" id="60G-HC-Mik"/>
+                                        <constraint firstAttribute="width" constant="78" id="dNz-W2-3jp"/>
                                     </constraints>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
@@ -47,10 +47,10 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pbe-bi-OVD">
-                                    <rect key="frame" x="16" y="10" width="76.666666666666671" height="34.333333333333336"/>
+                                    <rect key="frame" x="16" y="357" width="78" height="35"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="75" id="Xmb-jY-fEq"/>
-                                        <constraint firstAttribute="height" constant="34.333333333333336" id="abp-Jy-LL8"/>
+                                        <constraint firstAttribute="width" constant="78" id="BJm-1n-Jtf"/>
+                                        <constraint firstAttribute="height" constant="35" id="cdy-oH-MB2"/>
                                     </constraints>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
@@ -64,20 +64,20 @@
                                     </connections>
                                 </button>
                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="C1e-Qm-Iu3">
-                                    <rect key="frame" x="10" y="49.333333333333314" width="333" height="340.66666666666669"/>
+                                    <rect key="frame" x="10" y="10" width="333" height="332"/>
                                 </datePicker>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="400" id="7FL-sf-WdX"/>
-                                <constraint firstItem="pbe-bi-OVD" firstAttribute="leading" secondItem="3SL-J5-O0i" secondAttribute="leading" constant="16" id="C5X-Th-bV8"/>
-                                <constraint firstItem="C1e-Qm-Iu3" firstAttribute="top" secondItem="pbe-bi-OVD" secondAttribute="bottom" constant="5" id="Kmt-Tu-SQC"/>
-                                <constraint firstAttribute="trailing" secondItem="dtW-65-Udt" secondAttribute="trailing" constant="16" id="QCi-yE-p4U"/>
-                                <constraint firstAttribute="bottom" secondItem="C1e-Qm-Iu3" secondAttribute="bottom" constant="10" id="WAL-BW-YDH"/>
-                                <constraint firstItem="dtW-65-Udt" firstAttribute="centerY" secondItem="pbe-bi-OVD" secondAttribute="centerY" id="Wdr-8S-0uc"/>
-                                <constraint firstAttribute="trailing" secondItem="C1e-Qm-Iu3" secondAttribute="trailing" constant="10" id="b8g-Qw-i3q"/>
-                                <constraint firstItem="C1e-Qm-Iu3" firstAttribute="leading" secondItem="3SL-J5-O0i" secondAttribute="leading" constant="10" id="nCE-V0-eOa"/>
-                                <constraint firstItem="pbe-bi-OVD" firstAttribute="top" secondItem="3SL-J5-O0i" secondAttribute="top" constant="10" id="v1n-aw-B5T"/>
+                                <constraint firstAttribute="bottom" secondItem="pbe-bi-OVD" secondAttribute="bottom" constant="8" id="89l-VN-Lax"/>
+                                <constraint firstAttribute="trailing" secondItem="dtW-65-Udt" secondAttribute="trailing" constant="16" id="Ia8-MO-TB8"/>
+                                <constraint firstAttribute="bottom" secondItem="dtW-65-Udt" secondAttribute="bottom" constant="8" id="KeQ-cm-40d"/>
+                                <constraint firstItem="dtW-65-Udt" firstAttribute="top" secondItem="C1e-Qm-Iu3" secondAttribute="bottom" constant="15" id="c1r-rN-rnv"/>
+                                <constraint firstAttribute="trailing" secondItem="C1e-Qm-Iu3" secondAttribute="trailing" constant="10" id="rAg-iw-vR6"/>
+                                <constraint firstItem="pbe-bi-OVD" firstAttribute="leading" secondItem="3SL-J5-O0i" secondAttribute="leading" constant="16" id="vsq-HG-k5s"/>
+                                <constraint firstItem="C1e-Qm-Iu3" firstAttribute="top" secondItem="3SL-J5-O0i" secondAttribute="top" constant="10" id="w15-Se-HRR"/>
+                                <constraint firstItem="C1e-Qm-Iu3" firstAttribute="leading" secondItem="3SL-J5-O0i" secondAttribute="leading" constant="10" id="z4V-HQ-qIx"/>
                             </constraints>
                         </view>
                     </subviews>

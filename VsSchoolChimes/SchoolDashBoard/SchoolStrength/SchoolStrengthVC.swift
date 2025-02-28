@@ -10,11 +10,11 @@ import Charts
 
 class SchoolStrengthVC: UIViewController {
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TotalStrengthView: UIView!
     @IBOutlet weak var totalCountLbl: UILabel!
     @IBOutlet weak var staffCountLbl: UILabel!
     @IBOutlet weak var studentCountLbl: UILabel!
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var pieChartView: PieChartView!
     
@@ -59,7 +59,6 @@ class SchoolStrengthVC: UIViewController {
        // Background color for the card
        TotalStrengthView.backgroundColor = .white
        
-       HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
        studentCountLbl.setFont(style: .body, size: FontSize.BodySize)
        staffCountLbl.setFont(style: .body, size: FontSize.BodySize)
        totalCountLbl.setFont(style: .body, size: FontSize.BodySize)

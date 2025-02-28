@@ -9,7 +9,25 @@ import UIKit
 import EventKit
 import DropDown
 
-class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
+@available(iOS 14.0, *)
+class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
+    
+    func date(date: String) {
+        
+        if DateSelection == true {
+            DateBtn.setTitle(date, for: .normal)
+            
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "dd MMM yy"
+            let Date = dateformatter.date(from: date)
+            dateformatter.dateFormat = "EEE d"
+            let customdate = dateformatter.string(from: Date!)
+            setFormattedDate(customdate, label: customDateLbl)
+        }else{
+            TimeBtn.setTitle(date, for: .normal)
+        }
+    }
+    
     
     @IBOutlet weak var ReciverviewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var ButtonStackHeight: NSLayoutConstraint!
@@ -54,12 +72,11 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     let initialHeight: CGFloat = 60
     let maxHeight: CGFloat = 300
     var passvalue = 1
+    var DateSelection = true //True for date & false for time
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
-       
-        
         // Add observers for keyboard notifications
                 NotificationCenter.default.addObserver(
                     self,
@@ -77,7 +94,6 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         
         
         StyleAndTranslater()
-        createDatepicker()
         setupTimePicker()
         keyboardDonebtn()
         
@@ -86,6 +102,21 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
         
+        if passvalue == 2{
+            Gradientview.isHidden = true
+            ButtonStackHeight.constant = 0
+            createView.isHidden = true
+            receiverView.isHidden = false
+            receiverView.alpha = 1
+            ReciverviewTopConstraint.constant = 0
+            NameStandardStackview.isHidden = false
+        }else {
+            receiverView.isHidden = true
+            createView.isHidden = false
+            NameStandardStackview.isHidden = true
+
+        }
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(MeetingDropdown))
         selectMeetingView.addGestureRecognizer(tap)
         
@@ -93,6 +124,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.MeetingsTVcell)
         tableview.delegate = self
         tableview.dataSource = self
+        tableview.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -102,13 +134,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
                 startPoint: CGPoint(x: 1, y: 0.5),
                 endPoint: CGPoint(x: 0, y: 0.5)
             )
-            Gradientview.isHidden = true
-            ButtonStackHeight.constant = 0
-            createView.isHidden = true
-            receiverView.isHidden = false
-            receiverView.alpha = 1
-            ReciverviewTopConstraint.constant = 0
-            NameStandardStackview.isHidden = false
+           
            
         }else {
             view.applyGradient(
@@ -116,9 +142,6 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
                 startPoint: CGPoint(x: 1, y: 0.5),
                 endPoint: CGPoint(x: 0, y: 0.5)
             )
-            receiverView.isHidden = true
-            createView.isHidden = false
-            NameStandardStackview.isHidden = true
         }
     }
     
@@ -154,9 +177,15 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         CustomDateBtn.layer.cornerRadius = 10
         CustomDateBtn.layer.borderWidth = 1
         CustomDateBtn.layer.borderColor = UIColor.gray.cgColor
+        
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
-        setcustomDate(attributedLbl: customdatestring)
+        setFormattedDate(customdatestring, label: customDateLbl)
+        
+        customdate.dateFormat = "dd MMM yy"
+        let dateString = customdate.string(from: Date())
+        DateBtn.setTitle(dateString, for: .normal)
+      
         
         //MARK: Button Font Style
         SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -282,7 +311,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
             message: "Do you want to set a reminder for \(taskName)?",
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             self.createReminder(for: taskName)
         }))
         alert.addAction(UIAlertAction(title: AlertstringFile.No, style: .cancel, handler: nil))
@@ -313,6 +342,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         receiverView.isHidden = false
         receiverView.alpha = 1
         createView.isHidden = true
+        tableview.reloadData()
     }
     
     @IBAction func BackBtnAct(_ sender: Any) {
@@ -320,71 +350,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
         dismiss(animated: true)
     }
     
-    func createDatepicker(){
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.minimumDate = Date()
-        datePicker.backgroundColor = .white
-        
-        if #available(iOS 14.0, *) {
-            datePicker.preferredDatePickerStyle = .inline
-        }
-        
-        datePicker.isHidden = true
-        self.view.addSubview(datePicker!)
-        
-        // Initialize and configure Done button
-        doneButton = UIButton(type: .system)
-        doneButton.setTitle("Done", for: .normal)
-        doneButton.isHidden = true
-        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
-        doneButton.setTitleColor(.white, for: .normal)
-        doneButton.layer.cornerRadius = 8
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        self.view.addSubview(doneButton)
-    }
-    
-    func showDatepicker(button: UIButton) {
-        datePicker.isHidden = false
-        doneButton.isHidden = false
-        
-        let buttonFrame = button.convert(button.bounds, to: self.view)
-        
-        // Set the frame for the datePicker
-        //        let pickerYPosition = buttonFrame.maxY + 10
-        //        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
-        
-        let pickerYPosition = view.frame.minY + 110
-        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
-        
-        // Set appearance for datePicker
-        datePicker.backgroundColor = .white
-        datePicker.layer.shadowColor = UIColor.black.cgColor
-        datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-        datePicker.layer.shadowRadius = 5
-        datePicker.layer.shadowOpacity = 0.3
-        datePicker.layer.cornerRadius = 20
-        
-        doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
-        
-        // Add both datePicker and Done button to the view
-        self.view.addSubview(datePicker)
-        self.view.addSubview(doneButton)
-    }
-    
-    @IBAction func doneButtonTapped(){
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat =  "EEE d MMM yyyy"
-        let datelabel = dateFormatter.string(from: datePicker.date)
-        
-        DateBtn.setTitle(datelabel, for: .normal)
-        
-        customdate.dateFormat = "EEE d"
-        let attributedLbl = customdate.string(from: datePicker.date)
-        setcustomDate(attributedLbl: attributedLbl)
-        datePicker.isHidden = true
-        doneButton.isHidden = true
-    }
+   
     
     @IBAction func selectedTime(){
         
@@ -450,59 +416,77 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate {
     
     
     @IBAction func CustomDateBtnAct(_ sender: Any) {
-        showDatepicker(button: sender as! UIButton)
+        DateSelection = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
     @IBAction func SelectdateAct(_ sender: Any) {
         
-        showDatepicker(button: sender as! UIButton)
+        DateSelection = true
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
     @IBAction func SelectTimeAct(_ sender: Any) {
         
-        showTimepicker(button: sender as! UIButton)
+        DateSelection = false
+        //showTimepicker(button: sender as! UIButton)
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     
-    func setcustomDate(attributedLbl: String) {
-        // Split the input string into weekday and day components
-        let components = attributedLbl.split(separator: " ")
-        guard components.count == 2,
-              let weekday = components.first,
-              let day = components.last else {
-            print("Error: Invalid format for attributedLbl. Expected 'EEE d', got: \(attributedLbl)")
-            return
+    func setFormattedDate(_ date: String, label: UILabel) {
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+        
+        // Function to create an attributed string from a given date
+        func createAttributedText(from date: String) -> NSMutableAttributedString {
+            let components = date.split(separator: " ")
+            guard components.count > 1 else {
+                print("Error: Invalid date format")
+                return NSMutableAttributedString()
+            }
+            
+            let day = components[0]
+            let month = components[1]
+            
+            let attributedText = NSMutableAttributedString()
+            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                .font: weekdayFont,
+                .foregroundColor: UIColor.darkGray
+            ]))
+            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                .font: dayFont,
+                .foregroundColor: UIColor.black
+            ]))
+            
+            // Set paragraph style for centered alignment
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+            
+            return attributedText
         }
         
-        // Fonts for different parts
-        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for day
-        
-        // Create an attributed string
-        let attributedString = NSMutableAttributedString()
-        
-        // Add the weekday (e.g., "Mon")
-        attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
-            .font: weekdayFont,
-            .foregroundColor: UIColor.gray
-        ]))
-        
-        // Add the day (e.g., "23")
-        attributedString.append(NSAttributedString(string: "\(day)", attributes: [
-            .font: dayFont,
-            .foregroundColor: UIColor.black
-        ]))
-        
-        // Set paragraph style for centered alignment
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .center
-        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedString.length))
-        
-        // Assign the attributed string to the label
-        customDateLbl.attributedText = attributedString
+        // Create attributed text and set to label
+        label.attributedText = createAttributedText(from: date)
+        label.numberOfLines = 0
     }
-
 }
 
+@available(iOS 14.0, *)
 extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -528,6 +512,7 @@ extension OnlineMeetingVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+@available(iOS 14.0, *)
 extension OnlineMeetingVC : UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -552,7 +537,6 @@ extension OnlineMeetingVC : UITextViewDelegate {
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         titleTxtfld.inputAccessoryView = toolbar
         DescriptTxtview.inputAccessoryView = toolbar
-        
     }
         @objc func doneKeyboard() {
             view.endEditing(true)  // Dismiss the keyboard

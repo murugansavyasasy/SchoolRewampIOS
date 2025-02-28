@@ -19,19 +19,19 @@ class DatePickerVC: UIViewController {
     @IBOutlet weak var datepicker: UIDatePicker!
     var delegate : Datepicker?
     var date : String?
-    var dateSelection:Int?
+    var dateSelection = 1
     override func viewDidLoad() {
         super.viewDidLoad()
         datepicker.locale = .current
         datepicker.date = Date()
         bgView.layer.cornerRadius = 10
         outerView.layer.cornerRadius = 10
-        if dateSelection != 2{
-            datepicker.datePickerMode = .time
-            datepicker.preferredDatePickerStyle = .wheels
-        }else{
+        if dateSelection == 2{
             datepicker.datePickerMode = .date
             datepicker.preferredDatePickerStyle = .inline
+        }else{
+            datepicker.datePickerMode = .time
+            datepicker.preferredDatePickerStyle = .wheels
         }
         dateformate()
         datepicker.addTarget(self, action: #selector(dateselect), for: .valueChanged)

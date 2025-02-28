@@ -139,7 +139,7 @@ class EventResiverVC: UIViewController, SelectNotice{
             historyBtn.setTitleColor(.black, for:.normal)
         }
         
-       
+        tableview.reloadData()
     }
     // Helper function to configure the button
     func configureButton(

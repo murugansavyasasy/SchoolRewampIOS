@@ -55,6 +55,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        StyleAndTranslater()
         advertisements = [
             "Ad 1: Special Offer",
             "Ad 2: Final Sale",

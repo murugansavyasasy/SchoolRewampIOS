@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         let isRTL = (Language == "ar")  // Replace with your language-checking logic
-            UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+//            UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
 
     window?.overrideUserInterfaceStyle = .light
     NetworkMonitor.shared.startMonitoring()
