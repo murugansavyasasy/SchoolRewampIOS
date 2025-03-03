@@ -13,7 +13,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewAbsenteesViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="U7Y-zn-tHs" id="x11-f5-CL5"/>
-                <outlet property="HeaderLbl" destination="hVg-7r-Tz3" id="BQx-dB-NYx"/>
                 <outlet property="Tv" destination="MTa-Uu-S5R" id="3Iz-qT-gCr"/>
                 <outlet property="cvIcon" destination="dNL-bt-krt" id="nVu-Pv-lRt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -82,36 +81,29 @@
                     <rect key="frame" x="0.0" y="64" width="393" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U7Y-zn-tHs">
-                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
+                            <rect key="frame" x="10" y="0.0" width="373" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="4hB-zq-xIk"/>
                                 <constraint firstAttribute="height" constant="35" id="HGD-fW-lgB"/>
                             </constraints>
                             <color key="tintColor" systemColor="darkTextColor"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
+                            <state key="normal" title="Absentees Report" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
                                 <action selector="BackAct" destination="-1" eventType="touchUpInside" id="UVQ-K3-QXn"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Absentees Report" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hVg-7r-Tz3">
-                            <rect key="frame" x="40" y="0.0" width="283" height="35"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="hVg-7r-Tz3" firstAttribute="top" secondItem="McL-WW-GUZ" secondAttribute="top" id="Riy-9F-yFB"/>
-                        <constraint firstItem="hVg-7r-Tz3" firstAttribute="centerY" secondItem="U7Y-zn-tHs" secondAttribute="centerY" id="Yj0-yL-5oM"/>
-                        <constraint firstAttribute="trailing" secondItem="hVg-7r-Tz3" secondAttribute="trailing" constant="70" id="Zz9-pm-ia2"/>
-                        <constraint firstAttribute="bottom" secondItem="hVg-7r-Tz3" secondAttribute="bottom" id="aeR-DG-8pk"/>
+                        <constraint firstItem="U7Y-zn-tHs" firstAttribute="top" secondItem="McL-WW-GUZ" secondAttribute="top" id="Euk-1Z-1s5"/>
+                        <constraint firstAttribute="trailing" secondItem="U7Y-zn-tHs" secondAttribute="trailing" constant="10" id="S3d-aj-qej"/>
+                        <constraint firstAttribute="bottom" secondItem="U7Y-zn-tHs" secondAttribute="bottom" id="YKZ-Fu-BFP"/>
                         <constraint firstAttribute="height" constant="35" id="bIT-DF-X89"/>
                         <constraint firstItem="U7Y-zn-tHs" firstAttribute="leading" secondItem="McL-WW-GUZ" secondAttribute="leading" constant="10" id="dfL-xf-H81"/>
-                        <constraint firstItem="hVg-7r-Tz3" firstAttribute="leading" secondItem="U7Y-zn-tHs" secondAttribute="trailing" id="m4I-AR-eKw"/>
                     </constraints>
                 </view>
             </subviews>

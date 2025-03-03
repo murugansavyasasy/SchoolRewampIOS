@@ -12,7 +12,6 @@ import DropDown
 import FSCalendar
 class SltoCreationViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, UITextFieldDelegate {
     
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var enterDuratonTextFld: UITextField!
     @IBOutlet weak var linkTextFiledHeight: NSLayoutConstraint!

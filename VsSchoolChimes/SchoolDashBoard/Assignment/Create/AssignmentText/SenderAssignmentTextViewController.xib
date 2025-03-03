@@ -16,11 +16,11 @@
                 <outlet property="AddphotosLbl" destination="9EG-oE-MqM" id="mnT-7b-h1f"/>
                 <outlet property="AssignmentTypeview" destination="jGH-5q-5kF" id="KXI-Ua-MeD"/>
                 <outlet property="AssignmenttypeLbl" destination="xWF-9v-BEb" id="mok-Jf-XQk"/>
+                <outlet property="BackBtn" destination="3HA-Cc-xAZ" id="2dD-Se-HJq"/>
                 <outlet property="CreateView" destination="Dya-AT-xDx" id="x8M-z9-XAK"/>
                 <outlet property="CustomDateLbl" destination="yi7-cX-zed" id="io0-G7-b7w"/>
                 <outlet property="DateBtn" destination="D1f-Rt-alV" id="eGf-zL-viD"/>
                 <outlet property="DescriptionLbl" destination="q4B-lE-7Nq" id="bj6-L5-mmp"/>
-                <outlet property="HeaderLbl" destination="kh2-Ln-BZn" id="1vJ-Vg-5Pk"/>
                 <outlet property="SubmissionDateLbl" destination="6BL-ag-hDD" id="1i0-W8-XmL"/>
                 <outlet property="TextviewHeight" destination="vYC-pa-MTI" id="7ZH-vV-unV"/>
                 <outlet property="addphotosheight" destination="RFY-Wy-ebW" id="jpS-nh-yck"/>
@@ -51,8 +51,9 @@
                         <constraint firstAttribute="height" constant="35" id="9ZY-on-3R8"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal">
+                    <state key="normal" title="Assignment">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
@@ -61,15 +62,6 @@
                         <action selector="backVc" destination="-1" eventType="touchUpInside" id="Ax2-hR-jQY"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Asssignment" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kh2-Ln-BZn">
-                    <rect key="frame" x="383" y="69.666666666666671" width="0.0" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="width" id="3bb-l5-sT1"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YT0-qY-ngg">
                     <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
@@ -371,12 +363,10 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
-                <constraint firstItem="kh2-Ln-BZn" firstAttribute="leading" secondItem="3HA-Cc-xAZ" secondAttribute="trailing" id="2ph-9f-mOn"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="B4x-Ui-VYN"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="GwY-hW-1iC"/>
                 <constraint firstItem="BUO-2J-dua" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="HVj-Qb-a7c"/>
-                <constraint firstItem="kh2-Ln-BZn" firstAttribute="centerY" secondItem="3HA-Cc-xAZ" secondAttribute="centerY" id="eH2-mx-pnG"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="kh2-Ln-BZn" secondAttribute="trailing" constant="10" id="hE6-t1-c3p"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3HA-Cc-xAZ" secondAttribute="trailing" constant="10" id="bmB-rI-8Jv"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="i9H-dF-3Pe"/>
                 <constraint firstItem="3HA-Cc-xAZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="pWI-VI-WmE"/>
                 <constraint firstItem="YT0-qY-ngg" firstAttribute="top" secondItem="3HA-Cc-xAZ" secondAttribute="bottom" constant="10" id="u0V-Wc-DrG"/>

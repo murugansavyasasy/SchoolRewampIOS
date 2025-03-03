@@ -35,9 +35,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     let tapColor = Colornames.topBackgroundCLr1
     var placeholderLabel: UILabel!
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
     @IBOutlet weak var TextMsgTitle: UILabel!
-    @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var timePickerHeight: NSLayoutConstraint!
     @IBOutlet weak var fromTime: UIButton!
     @IBOutlet weak var toTime: UIButton!
@@ -148,7 +148,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         clickSchedule.text = CommonStringFile.ScheduleCall.translated()
         
         //MARK: Label font style
-        TitleLbl.setFont(style: .header, size: FontSize.HeaderSize)
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
         messageSendTime.setFont(style: .body, size: FontSize.BodySize)
         voiceTiming.setFont(style: .body, size: FontSize.BodySize)
@@ -243,7 +242,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         calanderOuter.layer.shadowRadius = 5
         calanderOuter.layer.shadowOpacity = 0.3
         DateSelection.appearance.weekdayTextColor = .red
-        TitleLbl.text = MenuStringFile.Communication.translated()
         DateSelection.appearance.todayColor = .orange
         DateSelection.appearance.eventDefaultColor = .purple
         DateSelection.allowsMultipleSelection = true

@@ -11,12 +11,12 @@ protocol HistorySelectDelegate{
 @available(iOS 14.0, *)
 class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate{
 
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var outerView: UIStackView!
     @IBOutlet weak var historyBtn: UIButton!
     @IBOutlet weak var createEvent: UIButton!
     @IBOutlet weak var presentView: UIView! // Container view to embed the page view controller
     
-    @IBOutlet weak var TitleHederLbl: UILabel!
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var page1 = UIViewController()
@@ -52,8 +52,7 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         )
     }
     func uiConficration(){
-        TitleHederLbl.text = titleLbl.translated()
-        TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
+      
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
         createEvent.layer.cornerRadius = 20

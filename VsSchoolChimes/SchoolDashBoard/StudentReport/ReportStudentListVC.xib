@@ -13,12 +13,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportStudentListVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="Lwn-UU-yjl" id="0bv-Q0-hCV"/>
                 <outlet property="classSelection" destination="0gv-qu-Xgy" id="0sn-la-qw8"/>
                 <outlet property="classView" destination="Luu-Ti-08J" id="9xP-7H-Fh1"/>
                 <outlet property="clsBtn" destination="UF0-JX-N3g" id="aH2-c0-Gje"/>
                 <outlet property="filterBtn" destination="b2R-Wl-AQO" id="ZAN-b7-Udu"/>
                 <outlet property="filterView" destination="8hf-ZA-ZyH" id="b1h-xV-in0"/>
-                <outlet property="pageTitle" destination="edw-zt-rUR" id="Pwn-ZR-pCm"/>
                 <outlet property="reportTable" destination="m6e-1o-K5O" id="U6e-k4-m6J"/>
                 <outlet property="searchBar" destination="hOr-xV-ijW" id="yO3-eY-nt8"/>
                 <outlet property="sectionBtn" destination="tTn-uH-wQS" id="WDY-eH-f1C"/>
@@ -234,21 +234,16 @@
                         <constraint firstItem="5dl-sf-vkl" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" constant="16" id="r9d-kG-OdZ"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edw-zt-rUR">
-                    <rect key="frame" x="40" y="68.333333333333329" width="343" height="26.333333333333329"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lwn-UU-yjl">
-                    <rect key="frame" x="10" y="64" width="30" height="35"/>
+                    <rect key="frame" x="10" y="64" width="373" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="4Eh-QA-xJK"/>
                         <constraint firstAttribute="height" constant="35" id="qxF-mu-BeK"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="7" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="chevron.left" catalog="system">
+                    <state key="normal" title="Student Report" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
@@ -261,11 +256,9 @@
             <constraints>
                 <constraint firstItem="tbE-om-2oh" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="6Tb-9j-0mF"/>
                 <constraint firstItem="Lwn-UU-yjl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="G3I-cc-S53"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="edw-zt-rUR" secondAttribute="trailing" constant="10" id="NeU-FU-i4T"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" id="ZWo-eK-8aE"/>
                 <constraint firstItem="Lwn-UU-yjl" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="bqC-XD-IAE"/>
-                <constraint firstItem="edw-zt-rUR" firstAttribute="centerY" secondItem="Lwn-UU-yjl" secondAttribute="centerY" id="d8b-FR-0cQ"/>
-                <constraint firstItem="edw-zt-rUR" firstAttribute="leading" secondItem="Lwn-UU-yjl" secondAttribute="trailing" id="hij-r3-3UB"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Lwn-UU-yjl" secondAttribute="trailing" constant="10" id="l7A-6X-z95"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tbE-om-2oh" secondAttribute="trailing" id="lwG-zp-pJc"/>
                 <constraint firstItem="tbE-om-2oh" firstAttribute="top" secondItem="Lwn-UU-yjl" secondAttribute="bottom" constant="10" id="s3R-lB-2Gi"/>
             </constraints>

@@ -17,6 +17,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var CalenderViewTodateBtnTop: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var ReportView: UIView!
@@ -28,7 +29,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var homeworkBtn: UIButton!
     @IBOutlet weak var ReportBtn: UIButton!
     @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var Buttonstackview: UIStackView!
     @IBOutlet weak var ComposeHomeworkView: UIView!
     @IBOutlet weak var titleLbl: UILabel!
@@ -121,7 +121,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     override func viewDidLayoutSubviews() {
         view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
@@ -174,7 +174,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
 
         //MARK: Label Font Style
-        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DetailsLbl.setFont(style: .title, size: FontSize.TitleSize)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)

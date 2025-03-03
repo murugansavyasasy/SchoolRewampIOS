@@ -9,7 +9,7 @@ import UIKit
 
 class LessonPlanVC: UIViewController {
     
-    @IBOutlet weak var HeaderLbl: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var viewBtn: UIButton!
     @IBOutlet weak var createBtn: UIButton!
@@ -74,7 +74,6 @@ class LessonPlanVC: UIViewController {
         createBtn.layer.cornerRadius = 20
         viewBtn.layer.cornerRadius = 20
         
-        HeaderLbl.setFont(style: .header, size: 16)
         createBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         viewBtn.setTitleFont(style: .body, size: FontSize.BodySize)
     }

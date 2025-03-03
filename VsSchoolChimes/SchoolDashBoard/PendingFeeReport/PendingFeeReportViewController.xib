@@ -16,7 +16,6 @@
                 <outlet property="BackBtn" destination="mXy-kP-c88" id="os2-88-O0t"/>
                 <outlet property="CategoryLbl" destination="jBg-aW-ahb" id="lH2-Qr-IqZ"/>
                 <outlet property="ClassLbl" destination="kfL-Bb-InP" id="KmY-ev-rz1"/>
-                <outlet property="HeaderLbl" destination="QJA-Mq-guI" id="43l-VM-aqS"/>
                 <outlet property="categoryWiseView" destination="gAM-10-XmE" id="TSa-i4-2Wo"/>
                 <outlet property="classWiseView" destination="lfy-PM-hwD" id="VRt-Gq-bRL"/>
                 <outlet property="dropDownTextLbl" destination="8g9-6i-55Y" id="dxr-gN-ktn"/>
@@ -160,36 +159,29 @@
                     <rect key="frame" x="0.0" y="64" width="393" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXy-kP-c88">
-                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
+                            <rect key="frame" x="10" y="0.0" width="373" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="W4W-8w-Pbu"/>
-                                <constraint firstAttribute="width" constant="30" id="sh4-zk-Ggm"/>
                             </constraints>
                             <color key="tintColor" systemColor="darkTextColor"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
+                            <state key="normal" title="Fee Pending" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
                                 <action selector="backAct" destination="-1" eventType="touchUpInside" id="hoJ-NI-Bs2"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fee Pending" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QJA-Mq-guI">
-                            <rect key="frame" x="40" y="0.0" width="283" height="35"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="mXy-kP-c88" secondAttribute="bottom" id="1Kf-fM-uLR"/>
                         <constraint firstAttribute="height" constant="35" id="Bnh-rd-tFu"/>
-                        <constraint firstItem="QJA-Mq-guI" firstAttribute="top" secondItem="4o5-Ju-5Lk" secondAttribute="top" id="KhA-r3-YyL"/>
                         <constraint firstItem="mXy-kP-c88" firstAttribute="leading" secondItem="4o5-Ju-5Lk" secondAttribute="leading" constant="10" id="UIx-Vu-V0d"/>
-                        <constraint firstItem="QJA-Mq-guI" firstAttribute="leading" secondItem="mXy-kP-c88" secondAttribute="trailing" id="bKS-Aq-vDB"/>
-                        <constraint firstAttribute="bottom" secondItem="QJA-Mq-guI" secondAttribute="bottom" id="hsW-Oz-RWh"/>
-                        <constraint firstItem="QJA-Mq-guI" firstAttribute="centerY" secondItem="mXy-kP-c88" secondAttribute="centerY" id="qcC-Z9-Zej"/>
-                        <constraint firstAttribute="trailing" secondItem="QJA-Mq-guI" secondAttribute="trailing" constant="70" id="tSU-m2-QND"/>
+                        <constraint firstItem="mXy-kP-c88" firstAttribute="top" secondItem="4o5-Ju-5Lk" secondAttribute="top" id="f9y-rs-lLV"/>
+                        <constraint firstAttribute="trailing" secondItem="mXy-kP-c88" secondAttribute="trailing" constant="10" id="zmK-pw-bVC"/>
                     </constraints>
                 </view>
             </subviews>

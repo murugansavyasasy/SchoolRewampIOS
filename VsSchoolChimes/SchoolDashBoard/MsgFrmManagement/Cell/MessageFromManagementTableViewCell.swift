@@ -30,8 +30,12 @@ class MessageFromManagementTableViewCell: UITableViewCell {
         pdfLbl.text = "PDF".translated()
         videoLbl.text = "Video".translated()
         
-        
-        
+        dateLbl.setFont(style: .title, size: FontSize.TitleSize)
+        voiceLbl.setFont(style: .body, size: FontSize.BodySize)
+        textLBl.setFont(style: .body, size: FontSize.BodySize)
+        imgLbl.setFont(style: .body, size: FontSize.BodySize)
+        pdfLbl.setFont(style: .body, size: FontSize.BodySize)
+        videoLbl.setFont(style: .body, size: FontSize.BodySize)
         
     }
 

@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="177" id="KGk-i7-Jjw" customClass="MessageFromManagementTableViewCell" customModule="VsSchoolChimes" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="177" id="KGk-i7-Jjw" customClass="MessageFromManagementTableViewCell" customModule="VsSchoolChimes" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="476" height="177"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -19,19 +19,19 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EeA-1v-GNF">
-                        <rect key="frame" x="0.0" y="0.0" width="476" height="177"/>
+                        <rect key="frame" x="5" y="5" width="466" height="167"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2BQ-u5-K00">
-                                <rect key="frame" x="10" y="50" width="456" height="117"/>
+                                <rect key="frame" x="10" y="50" width="446" height="107"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FiK-lz-BVO">
-                                        <rect key="frame" x="0.0" y="0.0" width="83.333333333333329" height="117"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="81.333333333333329" height="107"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tsJ-CD-f8v" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="10" width="73.333333333333329" height="50"/>
+                                                <rect key="frame" x="5" y="10" width="71.333333333333329" height="50"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="voice" translatesAutoresizingMaskIntoConstraints="NO" id="J4u-rK-cT8">
-                                                        <rect key="frame" x="26.666666666666664" y="15" width="20" height="20"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="microphone.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="J4u-rK-cT8">
+                                                        <rect key="frame" x="25.666666666666664" y="14.666666666666668" width="20" height="19.666666666666661"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="T2V-XV-bKy"/>
                                                             <constraint firstAttribute="width" constant="20" id="VLe-Vx-acE"/>
@@ -69,7 +69,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Voice" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E45-6U-UqN">
-                                                <rect key="frame" x="10.000000000000004" y="70" width="63.333333333333343" height="18"/>
+                                                <rect key="frame" x="10.000000000000004" y="70" width="61.333333333333343" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -86,19 +86,19 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDc-cg-wJj">
-                                        <rect key="frame" x="93.333333333333314" y="0.0" width="83" height="117"/>
+                                        <rect key="frame" x="91.333333333333314" y="0.0" width="81" height="107"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hUN-PE-ZW6">
-                                                <rect key="frame" x="10" y="70" width="63" height="18"/>
+                                                <rect key="frame" x="10" y="70" width="61" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwZ-oI-Xzb" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="10" width="73" height="50"/>
+                                                <rect key="frame" x="5" y="10" width="71" height="50"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Communication" translatesAutoresizingMaskIntoConstraints="NO" id="mjD-DS-d6u">
-                                                        <rect key="frame" x="26.333333333333329" y="15" width="20" height="20"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text.bubble.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="mjD-DS-d6u">
+                                                        <rect key="frame" x="25.333333333333329" y="16.333333333333336" width="20" height="19"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="4St-pd-khv"/>
                                                             <constraint firstAttribute="height" constant="20" id="asz-By-1x1"/>
@@ -147,19 +147,19 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FLa-bI-51D">
-                                        <rect key="frame" x="186.33333333333334" y="0.0" width="83.333333333333343" height="117"/>
+                                        <rect key="frame" x="182.33333333333334" y="0.0" width="81.333333333333343" height="107"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nie-NR-SNA">
-                                                <rect key="frame" x="10.000000000000004" y="70" width="63.333333333333343" height="18"/>
+                                                <rect key="frame" x="10.000000000000004" y="70" width="61.333333333333343" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mxC-Df-xor" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="10" width="73.333333333333329" height="50"/>
+                                                <rect key="frame" x="5" y="10" width="71.333333333333329" height="50"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ImagePdf" translatesAutoresizingMaskIntoConstraints="NO" id="wum-lr-TP9">
-                                                        <rect key="frame" x="26.666666666666657" y="15" width="20" height="20"/>
+                                                        <rect key="frame" x="25.666666666666657" y="15" width="20" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="UtQ-Yy-HJ8"/>
                                                             <constraint firstAttribute="width" constant="20" id="cxl-cP-WsO"/>
@@ -208,19 +208,19 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKq-0e-vnY">
-                                        <rect key="frame" x="279.66666666666669" y="0.0" width="83" height="117"/>
+                                        <rect key="frame" x="273.66666666666669" y="0.0" width="81" height="107"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PDF" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tU8-gJ-C65">
-                                                <rect key="frame" x="10" y="70" width="63" height="18"/>
+                                                <rect key="frame" x="10" y="70" width="61" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iQS-bX-pX5" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="10" width="73" height="50"/>
+                                                <rect key="frame" x="5" y="10" width="71" height="50"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Circulars" translatesAutoresizingMaskIntoConstraints="NO" id="ZIa-f6-cCa">
-                                                        <rect key="frame" x="26.666666666666629" y="15" width="20" height="20"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="document.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ZIa-f6-cCa">
+                                                        <rect key="frame" x="25.666666666666629" y="15.33333333333333" width="20" height="19.666666666666671"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="20" id="Kvb-WX-5zX"/>
                                                             <constraint firstAttribute="height" constant="20" id="Qd7-Wf-gsp"/>
@@ -269,19 +269,19 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ncP-RU-ohj">
-                                        <rect key="frame" x="372.66666666666669" y="0.0" width="83.333333333333314" height="117"/>
+                                        <rect key="frame" x="364.66666666666669" y="0.0" width="81.333333333333314" height="107"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nx-AB-rOW">
-                                                <rect key="frame" x="10.000000000000004" y="70" width="63.333333333333343" height="18"/>
+                                                <rect key="frame" x="10.000000000000004" y="70" width="61.333333333333343" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ika-df-ttZ" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
-                                                <rect key="frame" x="5" y="10" width="73.333333333333329" height="50"/>
+                                                <rect key="frame" x="5" y="10" width="71.333333333333329" height="50"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Video" translatesAutoresizingMaskIntoConstraints="NO" id="HXE-ZR-jA2">
-                                                        <rect key="frame" x="26.666666666666629" y="15" width="20" height="20"/>
+                                                        <rect key="frame" x="25.666666666666629" y="15" width="20" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="Dck-cK-WKv"/>
                                                             <constraint firstAttribute="width" constant="20" id="tM7-vP-QbH"/>
@@ -350,7 +350,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fkO-NA-ATf">
-                                <rect key="frame" x="10" y="10" width="456" height="30"/>
+                                <rect key="frame" x="10" y="10" width="446" height="30"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calender2" translatesAutoresizingMaskIntoConstraints="NO" id="VeT-hE-2Pt">
                                         <rect key="frame" x="10" y="5" width="20" height="20"/>
@@ -376,7 +376,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fkO-NA-ATf" firstAttribute="leading" secondItem="EeA-1v-GNF" secondAttribute="leading" constant="10" id="8iC-S5-1pl"/>
                             <constraint firstAttribute="trailing" secondItem="2BQ-u5-K00" secondAttribute="trailing" constant="10" id="DW4-Zw-JuI"/>
@@ -389,10 +389,10 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="EeA-1v-GNF" secondAttribute="trailing" id="OZy-D3-aw6"/>
-                    <constraint firstAttribute="bottom" secondItem="EeA-1v-GNF" secondAttribute="bottom" id="hll-RW-uO7"/>
-                    <constraint firstItem="EeA-1v-GNF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="nr9-19-Fnw"/>
-                    <constraint firstItem="EeA-1v-GNF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="tad-M4-FgD"/>
+                    <constraint firstAttribute="trailing" secondItem="EeA-1v-GNF" secondAttribute="trailing" constant="5" id="OZy-D3-aw6"/>
+                    <constraint firstAttribute="bottom" secondItem="EeA-1v-GNF" secondAttribute="bottom" constant="5" id="hll-RW-uO7"/>
+                    <constraint firstItem="EeA-1v-GNF" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="nr9-19-Fnw"/>
+                    <constraint firstItem="EeA-1v-GNF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="tad-M4-FgD"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -413,17 +413,17 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Circulars" width="42.666667938232422" height="42.666667938232422"/>
-        <image name="Communication" width="42.666667938232422" height="42.666667938232422"/>
-        <image name="ImagePdf" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="ImagePdf" width="32" height="32"/>
         <image name="Video" width="32" height="32"/>
         <image name="calender2" width="512" height="512"/>
-        <image name="voice" width="512" height="512"/>
+        <image name="document.fill" catalog="system" width="115" height="128"/>
+        <image name="microphone.fill" catalog="system" width="110" height="128"/>
+        <image name="text.bubble.fill" catalog="system" width="128" height="110"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

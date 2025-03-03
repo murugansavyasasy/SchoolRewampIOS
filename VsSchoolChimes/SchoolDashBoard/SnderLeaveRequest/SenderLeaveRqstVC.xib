@@ -12,9 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderLeaveRqstVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="atx-K4-uC7" id="jGR-hk-yDc"/>
                 <outlet property="leaveRequestTable" destination="nxa-sv-jIe" id="WLU-Pw-fFF"/>
                 <outlet property="searchBar" destination="gCb-kQ-6B9" id="NgK-fa-wZM"/>
-                <outlet property="titleLbl" destination="P6x-h6-DNq" id="YwZ-wm-7k2"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -57,39 +57,32 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atx-K4-uC7">
-                    <rect key="frame" x="10" y="54" width="30" height="35"/>
+                    <rect key="frame" x="10" y="54" width="373" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="69T-qe-iVg"/>
-                        <constraint firstAttribute="width" constant="30" id="jR7-vb-UWa"/>
                     </constraints>
                     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.84705883260000003" colorSpace="custom" customColorSpace="sRGB"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="chevron.left" catalog="system">
+                    <state key="normal" title="Leave Request" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="WcZ-MM-XZM"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Leave Request" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6x-h6-DNq">
-                    <rect key="frame" x="40" y="59.000000000000007" width="268" height="25.333333333333336"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
-                <constraint firstItem="P6x-h6-DNq" firstAttribute="centerY" secondItem="atx-K4-uC7" secondAttribute="centerY" id="2w8-1K-0op"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="atx-K4-uC7" secondAttribute="top" constant="5" id="BxO-bN-67X"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="atx-K4-uC7" secondAttribute="trailing" constant="10" id="K5D-4o-Xro"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="21u-Ph-GdD" secondAttribute="trailing" id="QP2-lE-DWC"/>
                 <constraint firstItem="atx-K4-uC7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="ZXK-tT-cjV"/>
-                <constraint firstItem="P6x-h6-DNq" firstAttribute="leading" secondItem="atx-K4-uC7" secondAttribute="trailing" id="cmk-4j-6Tz"/>
                 <constraint firstItem="21u-Ph-GdD" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="eBI-Xt-Dfo"/>
                 <constraint firstItem="21u-Ph-GdD" firstAttribute="top" secondItem="atx-K4-uC7" secondAttribute="bottom" constant="10" id="rgz-GV-2we"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="21u-Ph-GdD" secondAttribute="bottom" id="wiS-zx-tzv"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="P6x-h6-DNq" secondAttribute="trailing" constant="85" id="z0s-EC-lC9"/>
             </constraints>
             <point key="canvasLocation" x="-25" y="20"/>
         </view>

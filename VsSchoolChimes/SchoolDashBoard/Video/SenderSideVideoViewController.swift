@@ -18,6 +18,7 @@ enum UploadResult {
 }
 class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
+    @IBOutlet weak var BackBtn: UIButton!
     
     @IBOutlet weak var ChangeVideoBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var ButtonStackview: UIStackView!
@@ -26,7 +27,6 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var chooseVideoLabel: UILabel!
     @IBOutlet weak var scrollview: UIScrollView!
-    @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var BaseView: UIView!
     @IBOutlet weak var playBtn: UIButton!
     @IBOutlet weak var PlayerHeight: NSLayoutConstraint!
@@ -102,7 +102,6 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
        
         
         //MARK: Translate
-        HeaderLabel.text = MenuTapbar.Video.translated()
         chooseVideoLabel.text = textFieldStringFile.Click_To_Choose_video
         titleTxtFld.placeholder = CommonStringFile.Title.translated()
         descTxtView.text = CommonStringFile.Description.translated()
@@ -111,7 +110,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         sendBtn.setTitle("Send".translated(), for: .normal)
         
         //MARK: Font Style
-        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
+      
         chooseVideoLabel.setFont(style: .title, size: FontSize.TitleSize)
         sendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         

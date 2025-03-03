@@ -24,6 +24,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }
     }
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
     @IBOutlet weak var studentCollection: UICollectionView!
     @IBOutlet weak var HeaderLabel: UILabel!

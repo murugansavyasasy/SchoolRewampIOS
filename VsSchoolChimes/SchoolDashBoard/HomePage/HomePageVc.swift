@@ -537,6 +537,9 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             case MenuStringFile.StaffWiseAttendanceReport:
                 MenuRedirect.StaffWiseAttendance(from: self)
                 
+            case MenuStringFile.MessagesFromManagement.translated():
+                MenuRedirect.senderMgmt(from: self)
+                
             case MenuStringFile.AttendanceMarking:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 break

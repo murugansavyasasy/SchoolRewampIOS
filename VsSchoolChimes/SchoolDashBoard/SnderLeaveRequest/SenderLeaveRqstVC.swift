@@ -28,7 +28,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
     }
     
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var leaveRequestTable: UITableView!
     var leaveResuest = [LeaveRequest(fromDate: "12 Sep 24", toDate: "13 Sep 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "11 Oct 24", toDate: "12 Oct 24", status: "Aproved", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "08 Nov 24", toDate: "10 Nov 24", status: "Pending", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false),LeaveRequest(fromDate: "12 Dec 24", toDate: "13 Dec 24", status: "Rejected", reson: "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work.", isExpanded: false)]
     var filterStudent: [LeaveRequest]?
@@ -37,8 +37,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         
         filterStudent = leaveResuest
         searchBar.placeholder = CommonStringFile.Search.translated()
-        titleLbl.text = MenuStringFile.LeaveRequests.translated()
-        titleLbl.setFont(style: .header, size: FontSize.HeaderSize)
+       
         leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)
         if #available(iOS 14.0, *) {
             addDoneButton()

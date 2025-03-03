@@ -12,11 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SenderSideVideoViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="ma6-jA-spZ" id="0NW-Jd-uvi"/>
                 <outlet property="BaseView" destination="u1n-sf-EEP" id="O1E-OQ-CPi"/>
                 <outlet property="ButtonStackview" destination="rFZ-Gn-oLq" id="fOZ-wn-XjO"/>
                 <outlet property="ChangeVideoBtnHeight" destination="x7z-PR-XAD" id="95q-0i-iwe"/>
                 <outlet property="CharCountLbl" destination="PgU-zP-rDB" id="t41-oY-AYt"/>
-                <outlet property="HeaderLabel" destination="xmT-xI-5BQ" id="Cpp-z0-lkr"/>
                 <outlet property="PlayerHeight" destination="Ely-rY-ACG" id="SPp-e3-tp8"/>
                 <outlet property="TextviewHeight" destination="yZ4-HP-G7l" id="jxR-2H-jSm"/>
                 <outlet property="ThumnailImage" destination="IL8-sV-NY1" id="oZZ-Dj-IAJ"/>
@@ -38,26 +38,21 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ma6-jA-spZ">
-                    <rect key="frame" x="10" y="64" width="30" height="35"/>
+                    <rect key="frame" x="10" y="64" width="373" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="89g-ny-njD"/>
-                        <constraint firstAttribute="width" constant="30" id="V6p-Yy-e4o"/>
                     </constraints>
                     <color key="tintColor" systemColor="darkTextColor"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="chevron.left" catalog="system">
+                    <state key="normal" title="Upload Video" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="backAction" destination="-1" eventType="touchUpInside" id="OXk-an-0pd"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xmT-xI-5BQ">
-                    <rect key="frame" x="40" y="67.333333333333329" width="343" height="28.666666666666671"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cNJ-xe-ucj">
                     <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
@@ -213,11 +208,9 @@
                 <constraint firstItem="cNJ-xe-ucj" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="1mL-Rt-GfU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cNJ-xe-ucj" secondAttribute="trailing" id="6Le-0m-svt"/>
                 <constraint firstItem="ma6-jA-spZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="EOH-r6-HnU"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xmT-xI-5BQ" secondAttribute="trailing" constant="10" id="Nau-SW-03F"/>
                 <constraint firstItem="cNJ-xe-ucj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="TO8-rq-1Lf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ma6-jA-spZ" secondAttribute="trailing" constant="10" id="YPX-iK-Yxv"/>
                 <constraint firstItem="ma6-jA-spZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="e2d-mm-aPv"/>
-                <constraint firstItem="xmT-xI-5BQ" firstAttribute="leading" secondItem="ma6-jA-spZ" secondAttribute="trailing" id="mPu-23-WXg"/>
-                <constraint firstItem="xmT-xI-5BQ" firstAttribute="centerY" secondItem="ma6-jA-spZ" secondAttribute="centerY" id="wT8-yE-ce5"/>
             </constraints>
             <point key="canvasLocation" x="138.1679389312977" y="20.422535211267608"/>
         </view>
@@ -307,7 +300,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

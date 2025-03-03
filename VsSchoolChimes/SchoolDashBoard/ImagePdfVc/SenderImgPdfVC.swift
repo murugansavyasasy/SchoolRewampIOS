@@ -10,12 +10,12 @@ import UIKit
 @available(iOS 14.0, *)
 class SenderImgPdfVC: UIViewController, DeleteImge {
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var TextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var CharCountLbl: UILabel!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
-    @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var UploadView: ImageSelection!
     @IBOutlet weak var SelectButton: UIButton!
@@ -28,8 +28,6 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        HeaderLabel.text = CommonStringFile.UploadImagepdf.translated()
-        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         textView.text = CommonStringFile.Description.translated()
         textView.textColor = .gray
         textView.layer.cornerRadius = 10
