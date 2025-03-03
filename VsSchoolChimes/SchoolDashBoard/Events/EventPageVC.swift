@@ -26,7 +26,10 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
     var button2 = "History".translated()
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+     BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+     BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+     BackBtn.imageView?.applyRTLFlip(Language == "ar")
         uiConficration()
         setupPageViewController()
 //        pages = [page1, page2]

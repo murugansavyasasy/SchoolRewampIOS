@@ -61,8 +61,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Add observers for keyboard notifications
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
         // Add observers for keyboard events
 
                 NotificationCenter.default.addObserver(

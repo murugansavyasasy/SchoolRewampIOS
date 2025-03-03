@@ -88,7 +88,11 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        Backbtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        Backbtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        Backbtn.imageView?.applyRTLFlip(Language == "ar")
+    
         todaSlotView.applyGradient(
             colors: [UIColor.blue,UIColor.systemTeal],
             startPoint: CGPoint(x: 0, y: 0.5),

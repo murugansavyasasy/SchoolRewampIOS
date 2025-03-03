@@ -34,7 +34,10 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
     var filterStudent: [LeaveRequest]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
         filterStudent = leaveResuest
         searchBar.placeholder = CommonStringFile.Search.translated()
        
