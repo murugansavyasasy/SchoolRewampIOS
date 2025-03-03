@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationHistoryVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="HeaderLbl" destination="hGv-Mg-JVB" id="bAS-uI-z2F"/>
+                <outlet property="BackBtn" destination="oZE-sV-f1C" id="ayz-9U-acC"/>
                 <outlet property="allsatffView" destination="H1v-gV-tZB" id="PQY-i7-Tkc"/>
                 <outlet property="monthView" destination="A0j-w9-stm" id="Xmm-x0-3xx"/>
                 <outlet property="noRecordLbl" destination="BwB-zO-qak" id="4Wn-rA-KsZ"/>
@@ -267,36 +267,29 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oZE-sV-f1C">
-                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
+                            <rect key="frame" x="10" y="0.0" width="373" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="3Ee-87-ER3"/>
-                                <constraint firstAttribute="width" constant="30" id="xtD-MC-fWg"/>
                             </constraints>
                             <color key="tintColor" systemColor="darkTextColor"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
+                            <state key="normal" title="Attendance Report" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
                                 <action selector="backClick" destination="-1" eventType="touchUpInside" id="lDo-0A-HF7"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance Report" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGv-Mg-JVB">
-                            <rect key="frame" x="40" y="0.0" width="283" height="35"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="oZE-sV-f1C" firstAttribute="leading" secondItem="toI-E6-oPq" secondAttribute="leading" constant="10" id="90Z-2X-9My"/>
-                        <constraint firstItem="hGv-Mg-JVB" firstAttribute="centerY" secondItem="oZE-sV-f1C" secondAttribute="centerY" id="Dx2-in-S2k"/>
-                        <constraint firstItem="hGv-Mg-JVB" firstAttribute="leading" secondItem="oZE-sV-f1C" secondAttribute="trailing" id="JA1-aO-p92"/>
+                        <constraint firstItem="oZE-sV-f1C" firstAttribute="top" secondItem="toI-E6-oPq" secondAttribute="top" id="IpS-Cs-gWD"/>
                         <constraint firstAttribute="height" constant="35" id="KkG-Zi-rbm"/>
-                        <constraint firstAttribute="bottom" secondItem="hGv-Mg-JVB" secondAttribute="bottom" id="UeA-m0-PPL"/>
-                        <constraint firstItem="hGv-Mg-JVB" firstAttribute="top" secondItem="toI-E6-oPq" secondAttribute="top" id="pUI-w1-OCV"/>
-                        <constraint firstAttribute="trailing" secondItem="hGv-Mg-JVB" secondAttribute="trailing" constant="70" id="ttW-d8-Xhc"/>
+                        <constraint firstAttribute="bottom" secondItem="oZE-sV-f1C" secondAttribute="bottom" id="sG9-qh-5aG"/>
+                        <constraint firstAttribute="trailing" secondItem="oZE-sV-f1C" secondAttribute="trailing" constant="10" id="wHo-ab-yDX"/>
                     </constraints>
                 </view>
             </subviews>

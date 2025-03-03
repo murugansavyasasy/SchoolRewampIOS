@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LessonPlanVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="wzj-UU-EHL" id="XGB-zm-sVc"/>
                 <outlet property="ButtonStackview" destination="jHp-sf-kcz" id="Gls-Z6-1Ov"/>
                 <outlet property="createBtn" destination="s4U-tu-SDV" id="IsO-kY-4Sh"/>
                 <outlet property="searchBar" destination="dr7-Rn-lEB" id="bNK-l0-wak"/>

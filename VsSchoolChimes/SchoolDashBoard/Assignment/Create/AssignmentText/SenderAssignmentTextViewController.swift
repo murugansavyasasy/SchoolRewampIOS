@@ -31,6 +31,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
@@ -42,7 +43,6 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     @IBOutlet weak var letterscountLbl: UILabel!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var addphotosheight: NSLayoutConstraint!
     @IBOutlet weak var CreateView: UIView!
     @IBOutlet weak var AssignmenttypeLbl: UILabel!
@@ -206,7 +206,6 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryDropDownLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryLbl.setFont(style: .title, size: FontSize.TitleSize)

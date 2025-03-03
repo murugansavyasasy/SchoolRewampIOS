@@ -18,6 +18,7 @@
                 <outlet property="AttendTypeHeight" destination="kw4-dn-5OC" id="WJP-V6-G0n"/>
                 <outlet property="AttendTypeStackView" destination="o9c-HF-ncc" id="2c6-tr-kQK"/>
                 <outlet property="AttendancetypeView" destination="QJ7-U2-Uke" id="jx4-wO-xsD"/>
+                <outlet property="BackBtn" destination="Brs-cj-K2p" id="Vf2-pa-lvJ"/>
                 <outlet property="ButtonStackview" destination="bzS-F5-uQD" id="OUa-gr-A2G"/>
                 <outlet property="CustomDateLbl" destination="ywM-2U-Ifb" id="9CL-wC-278"/>
                 <outlet property="CustumDateBtn" destination="pf9-a7-QOJ" id="xWs-AO-def"/>
@@ -56,14 +57,15 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Brs-cj-K2p">
-                    <rect key="frame" x="10" y="64" width="30" height="35"/>
+                    <rect key="frame" x="10" y="64" width="373" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="cb4-jq-9h6"/>
-                        <constraint firstAttribute="width" constant="30" id="mh6-ZT-Zi3"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal">
+                    <state key="normal" title="Mark Attendance">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
@@ -71,12 +73,6 @@
                         <action selector="BackBtnAct:" destination="-1" eventType="touchUpInside" id="Bcq-Fj-kTq"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attendance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ES2-n5-DDC">
-                    <rect key="frame" x="40" y="69" width="273" height="25"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Mq-hY-dSd">
                     <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
@@ -499,16 +495,13 @@
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
                 <constraint firstItem="8Mq-hY-dSd" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="0wr-C2-p1L"/>
-                <constraint firstItem="8Mq-hY-dSd" firstAttribute="top" secondItem="ES2-n5-DDC" secondAttribute="bottom" constant="15" id="8cM-Nb-t6f"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="8Mq-hY-dSd" secondAttribute="bottom" id="CoE-XR-DQB"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="8Mq-hY-dSd" secondAttribute="trailing" id="EMC-HL-5eZ"/>
                 <constraint firstItem="Brs-cj-K2p" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="OZe-lP-icG"/>
                 <constraint firstItem="8Mq-hY-dSd" firstAttribute="top" secondItem="Brs-cj-K2p" secondAttribute="bottom" constant="9.9999999999999716" id="ecr-bd-rv1"/>
                 <constraint firstItem="Brs-cj-K2p" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="ezS-oj-pnx"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ES2-n5-DDC" secondAttribute="trailing" constant="80" id="fSL-Q3-BFd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Brs-cj-K2p" secondAttribute="trailing" constant="10" id="lw5-e4-cMs"/>
                 <constraint firstItem="aUv-aO-1NJ" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="lzp-U8-Xvd"/>
-                <constraint firstItem="ES2-n5-DDC" firstAttribute="centerY" secondItem="Brs-cj-K2p" secondAttribute="centerY" id="wOo-K8-cH1"/>
-                <constraint firstItem="ES2-n5-DDC" firstAttribute="leading" secondItem="Brs-cj-K2p" secondAttribute="trailing" id="xUu-b2-bLP"/>
             </constraints>
             <point key="canvasLocation" x="129.00763358778624" y="20.422535211267608"/>
         </view>

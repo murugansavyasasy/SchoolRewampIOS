@@ -10,8 +10,8 @@ import UIKit
 import DropDown
 class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var HeaderLbl: UILabel!
-    
+ 
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var seachHeight: NSLayoutConstraint!
     @IBOutlet weak var todayDefaultLbl: UILabel!
     @IBOutlet weak var staffWiseDefaultLbl: UILabel!

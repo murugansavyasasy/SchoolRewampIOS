@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventPageVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="TitleHederLbl" destination="aZf-FC-Yxc" id="4TJ-aS-qUQ"/>
+                <outlet property="BackBtn" destination="ygH-X9-gex" id="sEz-oX-nVy"/>
                 <outlet property="createEvent" destination="njW-Lw-5Wv" id="fpE-mC-5y3"/>
                 <outlet property="historyBtn" destination="1af-1a-6C4" id="4j4-49-p35"/>
                 <outlet property="outerView" destination="1dg-g2-rGC" id="8Ov-KD-9HB"/>
@@ -71,37 +71,31 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygH-X9-gex">
-                    <rect key="frame" x="10" y="64" width="30" height="35"/>
+                    <rect key="frame" x="10" y="64" width="410" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="7nv-8Z-YmK"/>
                         <constraint firstAttribute="height" constant="35" id="ysK-TG-rQT"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" image="chevron.left" catalog="system">
+                    <state key="normal" title="Events" image="chevron.left" catalog="system">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="ouY-aU-IMT"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Event" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZf-FC-Yxc">
-                    <rect key="frame" x="40.000000000000007" y="69.666666666666671" width="117.66666666666669" height="24"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
-                <constraint firstItem="aZf-FC-Yxc" firstAttribute="centerY" secondItem="ygH-X9-gex" secondAttribute="centerY" id="2Yv-VG-QTW"/>
                 <constraint firstItem="ygH-X9-gex" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="56p-G6-Zjd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="xpr-Lv-zOq" secondAttribute="bottom" id="6up-77-vcY"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="xpr-Lv-zOq" secondAttribute="trailing" id="Fp4-p4-ZgJ"/>
                 <constraint firstItem="ygH-X9-gex" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="KSe-Sg-aMa"/>
                 <constraint firstItem="xpr-Lv-zOq" firstAttribute="top" secondItem="ygH-X9-gex" secondAttribute="bottom" constant="10" id="Prk-rU-PIs"/>
-                <constraint firstItem="aZf-FC-Yxc" firstAttribute="leading" secondItem="ygH-X9-gex" secondAttribute="trailing" id="ppj-Ea-18F"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ygH-X9-gex" secondAttribute="trailing" constant="10" id="XaY-zb-FAl"/>
                 <constraint firstItem="xpr-Lv-zOq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="wmq-4W-gbK"/>
             </constraints>
             <point key="canvasLocation" x="-25" y="20"/>

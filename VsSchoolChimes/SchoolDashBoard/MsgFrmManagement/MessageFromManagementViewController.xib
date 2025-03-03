@@ -4,7 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageFromManagementViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="backView" destination="s8q-Ko-EOr" id="Y7g-et-ucX"/>
+                <outlet property="BackBtn" destination="Rdt-uw-D5U" id="N8a-7h-jNM"/>
                 <outlet property="tv" destination="wv6-yC-4JQ" id="GZm-F9-SQf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -23,78 +23,67 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFK-zA-Bjh">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEw-cc-9tG">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s8q-Ko-EOr">
-                                    <rect key="frame" x="0.0" y="0.0" width="40" height="50"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q4q-9P-opG">
-                                            <rect key="frame" x="10" y="16.333333333333329" width="20" height="17.666666666666671"/>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="Wcv-Si-rsz"/>
-                                                <constraint firstAttribute="width" constant="20" id="blc-Pp-bbd"/>
-                                            </constraints>
-                                            <imageReference key="image" image="chevron.left" catalog="system" symbolScale="medium"/>
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="bold"/>
-                                        </imageView>
-                                    </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    <constraints>
-                                        <constraint firstItem="q4q-9P-opG" firstAttribute="centerY" secondItem="s8q-Ko-EOr" secondAttribute="centerY" id="5fl-aR-393"/>
-                                        <constraint firstAttribute="width" constant="40" id="Jak-5o-tOt"/>
-                                        <constraint firstItem="q4q-9P-opG" firstAttribute="centerX" secondItem="s8q-Ko-EOr" secondAttribute="centerX" id="mkX-aY-eZP"/>
-                                    </constraints>
-                                </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Message from Management" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QjN-7j-2Pr">
-                                    <rect key="frame" x="79" y="15" width="213" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="s8q-Ko-EOr" firstAttribute="leading" secondItem="VEw-cc-9tG" secondAttribute="leading" id="GYI-TI-ROA"/>
-                                <constraint firstItem="s8q-Ko-EOr" firstAttribute="top" secondItem="VEw-cc-9tG" secondAttribute="top" id="JyQ-x1-WCP"/>
-                                <constraint firstAttribute="height" constant="50" id="e3b-cL-cWB"/>
-                                <constraint firstAttribute="bottom" secondItem="s8q-Ko-EOr" secondAttribute="bottom" id="eWC-1f-jtj"/>
-                            </constraints>
-                        </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wv6-yC-4JQ">
-                            <rect key="frame" x="0.0" y="50" width="393" height="709"/>
+                            <rect key="frame" x="0.0" y="10" width="393" height="699"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="VEw-cc-9tG" secondAttribute="trailing" id="620-An-3mU"/>
-                        <constraint firstItem="VEw-cc-9tG" firstAttribute="top" secondItem="fFK-zA-Bjh" secondAttribute="top" id="OY8-zP-P38"/>
-                        <constraint firstItem="wv6-yC-4JQ" firstAttribute="top" secondItem="VEw-cc-9tG" secondAttribute="bottom" id="P7o-T7-F4p"/>
+                        <constraint firstItem="wv6-yC-4JQ" firstAttribute="top" secondItem="fFK-zA-Bjh" secondAttribute="top" constant="10" id="TY0-lz-pK0"/>
                         <constraint firstAttribute="trailing" secondItem="wv6-yC-4JQ" secondAttribute="trailing" id="VQs-OX-Hhi"/>
-                        <constraint firstItem="VEw-cc-9tG" firstAttribute="leading" secondItem="fFK-zA-Bjh" secondAttribute="leading" id="XxE-aM-KRq"/>
                         <constraint firstAttribute="bottom" secondItem="wv6-yC-4JQ" secondAttribute="bottom" id="Ypq-sl-Zrs"/>
                         <constraint firstItem="wv6-yC-4JQ" firstAttribute="leading" secondItem="fFK-zA-Bjh" secondAttribute="leading" id="e3O-Ee-1ue"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEw-cc-9tG">
+                    <rect key="frame" x="0.0" y="59" width="393" height="50"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rdt-uw-D5U">
+                            <rect key="frame" x="10" y="7" width="373" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="5Aw-wV-w04"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Message From Management" image="chevron.backward" catalog="system">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="backAct" destination="-1" eventType="touchUpInside" id="0lc-4R-s1J"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Rdt-uw-D5U" firstAttribute="top" secondItem="VEw-cc-9tG" secondAttribute="top" constant="7" id="GY9-dN-CKx"/>
+                        <constraint firstItem="Rdt-uw-D5U" firstAttribute="leading" secondItem="VEw-cc-9tG" secondAttribute="leading" constant="10" id="XkF-gh-dHd"/>
+                        <constraint firstAttribute="height" constant="50" id="e3b-cL-cWB"/>
+                        <constraint firstAttribute="bottom" secondItem="Rdt-uw-D5U" secondAttribute="bottom" constant="8" id="myf-An-fJJ"/>
+                        <constraint firstAttribute="trailing" secondItem="Rdt-uw-D5U" secondAttribute="trailing" constant="10" id="rxv-QV-YoQ"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
                 <constraint firstItem="fFK-zA-Bjh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="03P-7m-NhE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="fFK-zA-Bjh" secondAttribute="trailing" id="88D-Pg-das"/>
-                <constraint firstItem="fFK-zA-Bjh" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ZCm-sP-jPE"/>
+                <constraint firstItem="VEw-cc-9tG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Slg-HG-Rwn"/>
+                <constraint firstItem="VEw-cc-9tG" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="c6c-OR-rVV"/>
+                <constraint firstItem="fFK-zA-Bjh" firstAttribute="top" secondItem="VEw-cc-9tG" secondAttribute="bottom" id="h8L-PV-mXd"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="fFK-zA-Bjh" secondAttribute="bottom" id="iED-ez-3D5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VEw-cc-9tG" secondAttribute="trailing" id="jc7-FZ-HIW"/>
             </constraints>
-            <point key="canvasLocation" x="138" y="20"/>
+            <point key="canvasLocation" x="136.64122137404578" y="19.718309859154932"/>
         </view>
     </objects>
     <resources>
-        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <namedColor name="topBackgroundCLr">
+            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

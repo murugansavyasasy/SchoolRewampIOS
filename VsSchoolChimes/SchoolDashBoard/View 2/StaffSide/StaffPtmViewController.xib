@@ -14,7 +14,6 @@
             <connections>
                 <outlet property="AllslotsLbl" destination="RgC-j3-CtV" id="Cr1-mb-iZQ"/>
                 <outlet property="Backbtn" destination="pfN-2J-vhI" id="G5Q-Za-lpY"/>
-                <outlet property="HeaderLbl" destination="DaO-G3-P8O" id="2Wb-Tc-UmW"/>
                 <outlet property="TodaysBookedSlotsLbl" destination="TJd-rX-v2P" id="mQK-Qp-8WR"/>
                 <outlet property="calanderBtn" destination="EdM-do-ohm" id="YgE-U4-di1"/>
                 <outlet property="createView" destination="LYD-AR-pxS" id="mwZ-91-bAg"/>
@@ -332,45 +331,28 @@
                     <rect key="frame" x="0.0" y="64" width="393" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pfN-2J-vhI">
-                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
+                            <rect key="frame" x="10" y="0.0" width="373" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="Eby-cn-aU7"/>
                                 <constraint firstAttribute="height" constant="35" id="c8R-l8-hRu"/>
                             </constraints>
                             <color key="tintColor" systemColor="darkTextColor"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
+                            <state key="normal" title="PTM" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
                                 <action selector="backVC" destination="-1" eventType="touchUpInside" id="mle-6i-Onv"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PTM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DaO-G3-P8O">
-                            <rect key="frame" x="40" y="0.0" width="283" height="35"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qhd-yk-OAy">
-                            <rect key="frame" x="338" y="0.0" width="35" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="35" id="AHU-OU-6so"/>
-                                <constraint firstAttribute="width" constant="35" id="C5O-Hj-JDG"/>
-                            </constraints>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="DaO-G3-P8O" firstAttribute="leading" secondItem="pfN-2J-vhI" secondAttribute="trailing" id="43I-eZ-Kdh"/>
-                        <constraint firstAttribute="bottom" secondItem="DaO-G3-P8O" secondAttribute="bottom" id="Ivp-qK-XGC"/>
-                        <constraint firstItem="qhd-yk-OAy" firstAttribute="centerY" secondItem="w59-ir-6UV" secondAttribute="centerY" id="Mot-KB-Bnd"/>
-                        <constraint firstAttribute="trailing" secondItem="qhd-yk-OAy" secondAttribute="trailing" constant="20" id="NSo-BM-aTQ"/>
-                        <constraint firstItem="DaO-G3-P8O" firstAttribute="top" secondItem="w59-ir-6UV" secondAttribute="top" id="Pmm-Ec-ngP"/>
-                        <constraint firstAttribute="trailing" secondItem="DaO-G3-P8O" secondAttribute="trailing" constant="70" id="X2a-ma-PLB"/>
-                        <constraint firstItem="DaO-G3-P8O" firstAttribute="centerY" secondItem="pfN-2J-vhI" secondAttribute="centerY" id="iXf-FS-wen"/>
+                        <constraint firstAttribute="bottom" secondItem="pfN-2J-vhI" secondAttribute="bottom" id="Mfs-fc-cmW"/>
+                        <constraint firstItem="pfN-2J-vhI" firstAttribute="top" secondItem="w59-ir-6UV" secondAttribute="top" id="dmI-DV-AAM"/>
                         <constraint firstAttribute="height" constant="35" id="kg7-Vl-DgE"/>
+                        <constraint firstAttribute="trailing" secondItem="pfN-2J-vhI" secondAttribute="trailing" constant="10" id="wQf-RU-mrE"/>
                         <constraint firstItem="pfN-2J-vhI" firstAttribute="leading" secondItem="w59-ir-6UV" secondAttribute="leading" constant="10" id="yhB-f7-sgg"/>
                     </constraints>
                 </view>

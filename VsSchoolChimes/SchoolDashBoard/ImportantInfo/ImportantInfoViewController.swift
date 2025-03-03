@@ -11,9 +11,8 @@ import WebKit
 class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
 
     @IBOutlet weak var LoadingView: UIView!
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var BackBtn: UIButton!
     
     @IBOutlet weak var LoadingLbl: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
@@ -23,9 +22,7 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
         
        
         webView.navigationDelegate = self
-        HeaderLbl.text = Header
-        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-        backView.addGestureRecognizer(backGesture)
+       
         webkitLoading()
     }
 
@@ -37,7 +34,7 @@ class ImportantInfoViewController: UIViewController, WKNavigationDelegate {
         )
     }
    
-    @IBAction func backVc() {
+    @IBAction func backAct() {
         dismiss(animated: true)
     }
     

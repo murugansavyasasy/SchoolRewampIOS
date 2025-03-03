@@ -24,7 +24,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
 
         }
     
-
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var attendtypeStackToAttendmarkStackBottom: NSLayoutConstraint!
     @IBOutlet weak var AttendStackToStandardTop: NSLayoutConstraint!
     @IBOutlet weak var SessionviewHeight: NSLayoutConstraint!

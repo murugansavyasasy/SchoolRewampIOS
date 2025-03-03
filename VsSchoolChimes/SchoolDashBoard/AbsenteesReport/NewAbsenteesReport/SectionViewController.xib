@@ -13,7 +13,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SectionViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="FlT-8X-sxj" id="w5U-4g-Jg1"/>
-                <outlet property="HeaderLbl" destination="l1k-Ak-Bk1" id="T22-8Y-bOE"/>
                 <outlet property="cv" destination="Xlv-Qb-aV9" id="6AX-iy-UpK"/>
                 <outlet property="noRecordLbl" destination="V16-1C-B4d" id="Mjb-Ai-xt1"/>
                 <outlet property="noRecordView" destination="x6R-U6-u6G" id="hv2-OB-KaJ"/>
@@ -106,36 +105,29 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlT-8X-sxj">
-                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
+                            <rect key="frame" x="10" y="0.0" width="373" height="35"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="6CO-jA-nH9"/>
                                 <constraint firstAttribute="height" constant="35" id="USw-yp-9af"/>
                             </constraints>
                             <color key="tintColor" systemColor="darkTextColor"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
+                            <state key="normal" title="Absentees Students" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
                                 <action selector="BackAct" destination="-1" eventType="touchUpInside" id="Ibs-nR-wkk"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Absentees Students" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1k-Ak-Bk1">
-                            <rect key="frame" x="40" y="0.0" width="283" height="35"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="l1k-Ak-Bk1" firstAttribute="centerY" secondItem="FlT-8X-sxj" secondAttribute="centerY" id="AbV-MM-e3O"/>
-                        <constraint firstAttribute="bottom" secondItem="l1k-Ak-Bk1" secondAttribute="bottom" id="YSm-LN-hQw"/>
-                        <constraint firstItem="l1k-Ak-Bk1" firstAttribute="top" secondItem="BSO-KN-I8y" secondAttribute="top" id="iry-PS-Uge"/>
+                        <constraint firstAttribute="bottom" secondItem="FlT-8X-sxj" secondAttribute="bottom" id="1oJ-9E-Cia"/>
+                        <constraint firstAttribute="trailing" secondItem="FlT-8X-sxj" secondAttribute="trailing" constant="10" id="Udb-0N-XPy"/>
+                        <constraint firstItem="FlT-8X-sxj" firstAttribute="top" secondItem="BSO-KN-I8y" secondAttribute="top" id="a3l-iv-rTR"/>
                         <constraint firstItem="FlT-8X-sxj" firstAttribute="leading" secondItem="BSO-KN-I8y" secondAttribute="leading" constant="10" id="mUj-7p-AvQ"/>
                         <constraint firstAttribute="height" constant="35" id="nfJ-j7-E5n"/>
-                        <constraint firstItem="l1k-Ak-Bk1" firstAttribute="leading" secondItem="FlT-8X-sxj" secondAttribute="trailing" id="rjs-sU-gYx"/>
-                        <constraint firstAttribute="trailing" secondItem="l1k-Ak-Bk1" secondAttribute="trailing" constant="70" id="w3i-OD-f0y"/>
                     </constraints>
                 </view>
             </subviews>

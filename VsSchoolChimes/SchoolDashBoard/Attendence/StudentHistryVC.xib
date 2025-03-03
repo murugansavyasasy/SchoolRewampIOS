@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StudentHistryVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="uty-p2-UrK" id="PCY-g6-w9i"/>
                 <outlet property="HeaderLabel" destination="Ia6-uU-gnj" id="qRo-Pa-HUP"/>
                 <outlet property="HeaderviewHeight" destination="s6D-AA-NXl" id="p8z-qZ-UOK"/>
                 <outlet property="categoryDropDownView" destination="LWT-sJ-Kft" id="Aw2-Bh-Sia"/>
@@ -155,14 +156,15 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uty-p2-UrK">
-                    <rect key="frame" x="10" y="69" width="75" height="35"/>
+                    <rect key="frame" x="10" y="69" width="257" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="75" id="NlJ-P2-tf3"/>
                         <constraint firstAttribute="height" constant="35" id="oEq-AP-wXJ"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal">
+                    <state key="normal" title="10th 'C' sction">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="heavy"/>
                     </state>
@@ -171,7 +173,10 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10th 'C' sction" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ia6-uU-gnj">
-                    <rect key="frame" x="95" y="75" width="182" height="23"/>
+                    <rect key="frame" x="277" y="75" width="0.0" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" id="ZW5-cb-4Yt"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>

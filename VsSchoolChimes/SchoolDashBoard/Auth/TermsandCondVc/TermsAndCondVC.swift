@@ -11,10 +11,10 @@ import WebKit
 //"https://schoolchimes.com/vs_web/terms_conditions/"
 class TermsAndCondVC: UIViewController,WKNavigationDelegate {
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var LoadingLbl: UILabel!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var LoadingView: UIView!
-    @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var Pdfview: WKWebView!
     var passValue = 1
@@ -22,8 +22,6 @@ class TermsAndCondVC: UIViewController,WKNavigationDelegate {
         super.viewDidLoad()
         
         Pdfview.navigationDelegate = self
-        HeadingLabel.text = CommonStringFile.TermsandConditions.translated()
-        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         
         if let pdfURL = URL(string: "https://schoolchimes.com/vs_web/terms_conditions/") {
             let request = URLRequest(url: pdfURL)

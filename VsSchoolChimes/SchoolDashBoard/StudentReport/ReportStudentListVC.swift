@@ -9,12 +9,12 @@ import UIKit
 import DropDown
 
 class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var sectionView: UIView!
     @IBOutlet weak var classView: UIView!
     @IBOutlet weak var reportTable: UITableView!
-    
     @IBOutlet weak var filterBtn: UIButton!
-    @IBOutlet weak var pageTitle: UILabel!
     @IBOutlet weak var selectedType: UIButton!
     @IBOutlet weak var sectionBtn: UIButton!
     @IBOutlet weak var clsBtn: UIButton!
@@ -43,7 +43,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        pageTitle.text = MenuStringFile.StudentReport
+       
         filterStudent = studentList
         sortedStudent = studentList
         uiConfic()
@@ -145,7 +145,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         classSelection.isHidden = true
         
         //MARK: Label Font
-        pageTitle.setFont(style: .header, size: FontSize.HeaderSize)
+     
         sectionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         selectedType.setTitleFont(style: .body, size: FontSize.BodySize)
