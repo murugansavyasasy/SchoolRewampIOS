@@ -12,7 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FAQViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="FaqPageHeading" destination="glh-zN-zIO" id="xkx-dY-fP5"/>
                 <outlet property="outerView" destination="MHi-tq-4Ur" id="qrc-ZJ-3hI"/>
                 <outlet property="tableview" destination="0q4-N6-E91" id="RUH-qS-fkd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -43,36 +42,29 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7l7-5L-kY7">
-                            <rect key="frame" x="10" y="0.0" width="30" height="35"/>
+                            <rect key="frame" x="10" y="0.0" width="373" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="dhq-12-RnG"/>
-                                <constraint firstAttribute="width" constant="30" id="olR-5f-10g"/>
                             </constraints>
                             <color key="tintColor" systemColor="darkTextColor"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="chevron.left" catalog="system">
+                            <state key="normal" title="FAQ" image="chevron.left" catalog="system">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>
                                 <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="DOs-ia-9ep"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FAQ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="glh-zN-zIO">
-                            <rect key="frame" x="40" y="0.0" width="283" height="35"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="glh-zN-zIO" firstAttribute="leading" secondItem="7l7-5L-kY7" secondAttribute="trailing" id="6cF-hJ-U5U"/>
+                        <constraint firstAttribute="bottom" secondItem="7l7-5L-kY7" secondAttribute="bottom" id="KRh-Zi-gp2"/>
                         <constraint firstAttribute="height" constant="35" id="Kvr-I9-dch"/>
-                        <constraint firstItem="glh-zN-zIO" firstAttribute="centerY" secondItem="7l7-5L-kY7" secondAttribute="centerY" id="LNT-Qj-1jX"/>
-                        <constraint firstAttribute="trailing" secondItem="glh-zN-zIO" secondAttribute="trailing" constant="70" id="aOa-EH-4O1"/>
+                        <constraint firstItem="7l7-5L-kY7" firstAttribute="top" secondItem="bak-dh-dut" secondAttribute="top" id="epU-md-d4S"/>
+                        <constraint firstAttribute="trailing" secondItem="7l7-5L-kY7" secondAttribute="trailing" constant="10" id="jaG-I0-qgN"/>
                         <constraint firstItem="7l7-5L-kY7" firstAttribute="leading" secondItem="bak-dh-dut" secondAttribute="leading" constant="10" id="kTk-ql-Ijh"/>
-                        <constraint firstAttribute="bottom" secondItem="glh-zN-zIO" secondAttribute="bottom" id="rDl-ra-dF4"/>
-                        <constraint firstItem="glh-zN-zIO" firstAttribute="top" secondItem="bak-dh-dut" secondAttribute="top" id="ucA-03-FP7"/>
                     </constraints>
                 </view>
             </subviews>

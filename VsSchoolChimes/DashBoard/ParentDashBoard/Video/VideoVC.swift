@@ -28,6 +28,7 @@ class VideoVC: UIViewController {
     var image = UIImage()
     var activityIndicator: UIActivityIndicatorView!
     var filteredData: [Video] = []
+    var passValue = 0
     var data = [
         Video(id: "1", name: "Introduction to Swift", url: "https://www.w3schools.com/tags/mov_bbb.mp4", description: "A beginner's guide to Swift programming language. A beginner's guide to Swift programming language. A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.", readed: false, hasAnimated: true, img: nil),
         Video(id:"2", name: "Advanced iOS Animations", url: "https://videos.pexels.com/video-files/3205789/3205789-hd_1080_1920_25fps.mp4", description: "Learn how to implement complex animations in iOS.", readed: false,hasAnimated: true, img: nil),
@@ -39,6 +40,11 @@ class VideoVC: UIViewController {
     ]
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if passValue == 1 {
+            NameLbl.text = ""
+            StandardLbl.text = ""
+        }
        
         backBtn.setTitle(ReceiverMenuItems.Video.translated(), for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
@@ -68,7 +74,13 @@ class VideoVC: UIViewController {
         scrollToVideo(withId: "4")
     }
     override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        if passValue == 1{
+            view.backgroundColor = .topBackgroundCLr
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+           
+        }else{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
     }
     // Function to scroll to a specific Video by ID
     func scrollToVideo(withId id: String) {

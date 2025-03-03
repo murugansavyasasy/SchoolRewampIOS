@@ -26,16 +26,16 @@
                     <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wv6-yC-4JQ">
-                            <rect key="frame" x="0.0" y="10" width="393" height="699"/>
+                            <rect key="frame" x="8" y="10" width="377" height="699"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="wv6-yC-4JQ" firstAttribute="top" secondItem="fFK-zA-Bjh" secondAttribute="top" constant="10" id="TY0-lz-pK0"/>
-                        <constraint firstAttribute="trailing" secondItem="wv6-yC-4JQ" secondAttribute="trailing" id="VQs-OX-Hhi"/>
+                        <constraint firstAttribute="trailing" secondItem="wv6-yC-4JQ" secondAttribute="trailing" constant="8" id="VQs-OX-Hhi"/>
                         <constraint firstAttribute="bottom" secondItem="wv6-yC-4JQ" secondAttribute="bottom" id="Ypq-sl-Zrs"/>
-                        <constraint firstItem="wv6-yC-4JQ" firstAttribute="leading" secondItem="fFK-zA-Bjh" secondAttribute="leading" id="e3O-Ee-1ue"/>
+                        <constraint firstItem="wv6-yC-4JQ" firstAttribute="leading" secondItem="fFK-zA-Bjh" secondAttribute="leading" constant="8" id="e3O-Ee-1ue"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEw-cc-9tG">

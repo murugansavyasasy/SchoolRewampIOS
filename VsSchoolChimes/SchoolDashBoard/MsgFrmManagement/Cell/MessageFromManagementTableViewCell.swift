@@ -9,6 +9,7 @@ import UIKit
 
 class MessageFromManagementTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var CellView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var voiceLbl: UILabel!
     @IBOutlet weak var textLBl: UILabel!
@@ -23,6 +24,15 @@ class MessageFromManagementTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        CellView.layer.cornerRadius = 10
+        CellView.layer.shadowColor = UIColor.black.cgColor
+        CellView.layer.shadowOpacity = 0.5
+        CellView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        CellView.layer.shadowRadius = 3
+        CellView.layer.masksToBounds = false
+        CellView.layer.borderWidth = 1
+        CellView.layer.borderColor = UIColor.gray.cgColor
         
         voiceLbl.text = "Voice".translated()
         textLBl.text = "Text".translated()

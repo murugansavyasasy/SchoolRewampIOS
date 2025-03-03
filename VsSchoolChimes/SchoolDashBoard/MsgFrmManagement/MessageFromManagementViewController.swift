@@ -16,10 +16,11 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
+        
         tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
         tv.dataSource = self
         tv.delegate = self
-        
         
     }
     
@@ -36,7 +37,7 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,23 +62,44 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     }
     
     @IBAction func voiceTap() {
-        MenuRedirect.receiverCommunicationNavigate(from: self)
+        
+        let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
+        vc.passValue = 1
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+        //MenuRedirect.receiverCommunicationNavigate(from: self)
     }
     
     @IBAction func textTap() {
-        MenuRedirect.receiverCommunicationNavigate(from: self)
+        let vc = ParentCommunicationVc(nibName: nil, bundle: nil)
+        vc.passValue = 1
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+       // MenuRedirect.receiverCommunicationNavigate(from: self)
     }
     
     @IBAction func imageTap() {
-        MenuRedirect.receiverImgPdfNavigate(from: self)
+//        MenuRedirect.receiverImgPdfNavigate(from: self)
+        let vc = ImagePdfVC(nibName: nil, bundle: nil)
+        vc.passValue = 1
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     @IBAction func pdfTap() {
-        MenuRedirect.receiverImgPdfNavigate(from: self)
+       // MenuRedirect.receiverImgPdfNavigate(from: self)
+        let vc = ImagePdfVC(nibName: nil, bundle: nil)
+        vc.passValue = 1
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     @IBAction func videoTap() {
-        MenuRedirect.receiverVideoNavigate(from: self)
+       // MenuRedirect.receiverVideoNavigate(from: self)
+        let vc = VideoVC(nibName: nil, bundle: nil)
+        vc.passValue = 1
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
