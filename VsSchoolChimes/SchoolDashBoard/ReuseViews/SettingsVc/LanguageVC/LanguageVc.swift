@@ -24,8 +24,8 @@ class LanguageVc: UIViewController {
     var selectedLanguage: String?
     
     var Items = [
-        language(language: "English", selected: false),
         language(language: "Tamil", selected: false),
+        language(language: "English", selected: false),
         language(language: "Hindi", selected: false),
         language(language: "Thai", selected: false),
         language(language: "Arabic", selected: false)]
@@ -58,9 +58,6 @@ class LanguageVc: UIViewController {
         ConfirmBtn.titleLabel?.textAlignment = .center
         ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         ConfirmBtn.setTitleFont(style: .body, size: 14)
-        
-        
-        
         tv.dataSource = self
         tv.delegate = self
         tv.reloadData()

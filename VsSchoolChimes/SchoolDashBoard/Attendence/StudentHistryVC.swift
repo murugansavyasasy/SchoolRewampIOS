@@ -95,7 +95,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         super.viewDidLoad()
         
         StyleAndTranslater()
-        
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+     BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+     BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+     BackBtn.imageView?.applyRTLFlip(Language == "ar")
         dataVisibility = Array(repeating: false, count: specificdata.count)
         selectedRows = Array(repeating: false, count: specificdata.count)
         if id == 1{

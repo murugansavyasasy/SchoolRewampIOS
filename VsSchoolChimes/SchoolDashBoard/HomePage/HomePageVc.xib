@@ -18,15 +18,21 @@
                 <outlet property="Searchbar" destination="QYB-jp-54h" id="H99-Ox-d9W"/>
                 <outlet property="TopCv" destination="Lsi-XR-Teu" id="Xuc-JJ-caO"/>
                 <outlet property="ViewDetailsBtn" destination="6DV-7y-qm1" id="ele-YC-suB"/>
-                <outlet property="assignmentkBtn" destination="vsQ-8b-IAs" id="DZc-QM-fmI"/>
+                <outlet property="assignmentkBtn" destination="zbQ-gk-nd6" id="l3p-eq-CWu"/>
+                <outlet property="assignmentkLbl" destination="eG3-Zh-0Af" id="fHv-oh-Pi6"/>
+                <outlet property="assignmentkView" destination="XVw-ZF-wwn" id="2rc-dv-U1f"/>
                 <outlet property="bottomCv" destination="E3y-MD-bUI" id="dpr-iv-T0s"/>
                 <outlet property="bottomView" destination="KSz-Vq-FF8" id="YV1-cb-Zvn"/>
                 <outlet property="changeRollLbl" destination="YPb-Ky-jzz" id="5Ae-jS-pkG"/>
                 <outlet property="collectionBtn" destination="d68-Cq-oLs" id="f6e-j9-ZUz"/>
                 <outlet property="heightStackview" destination="jOd-ar-2RJ" id="aht-Ll-XfP"/>
-                <outlet property="homeworkBtn" destination="xLD-1q-IR3" id="sUb-dH-CmD"/>
+                <outlet property="homeworkBtn" destination="WWY-dH-tOG" id="Ezo-DI-KKW"/>
+                <outlet property="homeworkLbl" destination="dcf-XG-XKF" id="Ryg-zR-5ed"/>
+                <outlet property="homeworkView" destination="KyL-s1-5mb" id="Kkk-J1-GcL"/>
                 <outlet property="loginDetailView" destination="jac-fc-67P" id="TOH-w4-Nds"/>
-                <outlet property="onlineMeetingBtn" destination="g5b-4H-bSX" id="X1V-GK-PA2"/>
+                <outlet property="onlineMeetingBtn" destination="msu-fm-Zwn" id="XZL-IE-VxD"/>
+                <outlet property="onlineMeetingLbl" destination="JKe-GC-cgG" id="X07-ec-Dja"/>
+                <outlet property="onlineMeetingView" destination="cbT-ju-qCz" id="pZn-tE-7N0"/>
                 <outlet property="pageContorler" destination="sco-PE-HIn" id="Zfn-iq-e3v"/>
                 <outlet property="reportView" destination="qY0-wP-4yk" id="tyi-ac-fSW"/>
                 <outlet property="schoolLogoImg" destination="tRe-Ow-MoT" id="6GQ-V2-D2O"/>
@@ -70,7 +76,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="E3y-MD-bUI">
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="E3y-MD-bUI">
                                             <rect key="frame" x="16" y="112.66666666666663" width="361" height="379"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="h57-i9-zft">
@@ -86,39 +92,132 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="beF-ZM-hmh">
                                                     <rect key="frame" x="10" y="5" width="353" height="95"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsQ-8b-IAs">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XVw-ZF-wwn">
                                                             <rect key="frame" x="0.0" y="0.0" width="111" height="95"/>
-                                                            <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.32383478904257013" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="Schedule ExamTest">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="assignment:" destination="-1" eventType="touchUpInside" id="HBw-99-geQ"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5b-4H-bSX">
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbQ-gk-nd6">
+                                                                    <rect key="frame" x="30.666666666666664" y="5" width="49.999999999999993" height="50"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="50" id="Iu3-7c-5Uj"/>
+                                                                        <constraint firstAttribute="width" constant="50" id="JuH-lA-ODe"/>
+                                                                    </constraints>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="Notice Board">
+                                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eG3-Zh-0Af">
+                                                                    <rect key="frame" x="5" y="65" width="101" height="20"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8b7-go-bFm">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="111" height="95"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <connections>
+                                                                        <action selector="assignment:" destination="-1" eventType="touchUpInside" id="zM2-z4-GeH"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstItem="8b7-go-bFm" firstAttribute="top" secondItem="XVw-ZF-wwn" secondAttribute="top" id="4R2-ve-57Z"/>
+                                                                <constraint firstItem="8b7-go-bFm" firstAttribute="leading" secondItem="XVw-ZF-wwn" secondAttribute="leading" id="LFh-aS-HpK"/>
+                                                                <constraint firstItem="zbQ-gk-nd6" firstAttribute="top" secondItem="XVw-ZF-wwn" secondAttribute="top" constant="5" id="LMj-aQ-cf8"/>
+                                                                <constraint firstItem="eG3-Zh-0Af" firstAttribute="top" secondItem="zbQ-gk-nd6" secondAttribute="bottom" constant="10" id="SkC-gH-z2R"/>
+                                                                <constraint firstItem="zbQ-gk-nd6" firstAttribute="centerX" secondItem="XVw-ZF-wwn" secondAttribute="centerX" id="Ygm-Lm-tS0"/>
+                                                                <constraint firstAttribute="bottom" secondItem="eG3-Zh-0Af" secondAttribute="bottom" constant="10" id="bXb-pS-XUR"/>
+                                                                <constraint firstAttribute="trailing" secondItem="8b7-go-bFm" secondAttribute="trailing" id="cwA-Ox-a51"/>
+                                                                <constraint firstAttribute="trailing" secondItem="eG3-Zh-0Af" secondAttribute="trailing" constant="5" id="eEb-xr-xjb"/>
+                                                                <constraint firstAttribute="bottom" secondItem="8b7-go-bFm" secondAttribute="bottom" id="fWP-Hb-tb1"/>
+                                                                <constraint firstItem="eG3-Zh-0Af" firstAttribute="leading" secondItem="XVw-ZF-wwn" secondAttribute="leading" constant="5" id="wLF-xE-IQ7"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cbT-ju-qCz">
                                                             <rect key="frame" x="121" y="0.0" width="111" height="95"/>
-                                                            <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.33224622246359481" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="0.0"/>
-                                                            <state key="normal" image="online_meeting">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="onlineMeeting:" destination="-1" eventType="touchUpInside" id="F18-22-znM"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLD-1q-IR3">
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msu-fm-Zwn">
+                                                                    <rect key="frame" x="30.666666666666657" y="5" width="50" height="50"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="50" id="X3g-Q7-Z1F"/>
+                                                                        <constraint firstAttribute="height" constant="50" id="fPB-xe-8Zk"/>
+                                                                    </constraints>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="Notice Board">
+                                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-GC-cgG">
+                                                                    <rect key="frame" x="5" y="65" width="101" height="20"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YtB-QI-YPN">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="111" height="95"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <connections>
+                                                                        <action selector="onlineMeeting:" destination="-1" eventType="touchUpInside" id="GtC-iL-UxM"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="bottom" secondItem="JKe-GC-cgG" secondAttribute="bottom" constant="10" id="3uz-dG-Sko"/>
+                                                                <constraint firstAttribute="trailing" secondItem="JKe-GC-cgG" secondAttribute="trailing" constant="5" id="4Dh-Uj-AxP"/>
+                                                                <constraint firstItem="YtB-QI-YPN" firstAttribute="top" secondItem="cbT-ju-qCz" secondAttribute="top" id="5JN-e9-Jtf"/>
+                                                                <constraint firstItem="JKe-GC-cgG" firstAttribute="top" secondItem="msu-fm-Zwn" secondAttribute="bottom" constant="10" id="Kyx-5H-heq"/>
+                                                                <constraint firstAttribute="bottom" secondItem="YtB-QI-YPN" secondAttribute="bottom" id="V5l-Qt-gOG"/>
+                                                                <constraint firstItem="YtB-QI-YPN" firstAttribute="leading" secondItem="cbT-ju-qCz" secondAttribute="leading" id="ZA6-yV-Xa2"/>
+                                                                <constraint firstItem="msu-fm-Zwn" firstAttribute="top" secondItem="cbT-ju-qCz" secondAttribute="top" constant="5" id="dFz-cg-4BM"/>
+                                                                <constraint firstItem="msu-fm-Zwn" firstAttribute="centerX" secondItem="cbT-ju-qCz" secondAttribute="centerX" id="dN4-zd-a7P"/>
+                                                                <constraint firstItem="JKe-GC-cgG" firstAttribute="leading" secondItem="cbT-ju-qCz" secondAttribute="leading" constant="5" id="hs9-bt-9ML"/>
+                                                                <constraint firstAttribute="trailing" secondItem="YtB-QI-YPN" secondAttribute="trailing" id="uaD-Yl-ic4"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KyL-s1-5mb">
                                                             <rect key="frame" x="242" y="0.0" width="111" height="95"/>
-                                                            <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.31911940801711308" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
-                                                            <state key="normal" image="Homework">
-                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="homeWork:" destination="-1" eventType="touchUpInside" id="6oL-bo-Gg9"/>
-                                                            </connections>
-                                                        </button>
+                                                            <subviews>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WWY-dH-tOG">
+                                                                    <rect key="frame" x="30.666666666666686" y="5" width="50" height="50"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="50" id="HfV-t5-gO1"/>
+                                                                        <constraint firstAttribute="height" constant="50" id="xtR-uQ-ZSr"/>
+                                                                    </constraints>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" image="Notice Board">
+                                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    </state>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcf-XG-XKF">
+                                                                    <rect key="frame" x="5" y="65" width="101" height="20"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMJ-d2-T9s">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="111" height="95"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <connections>
+                                                                        <action selector="homeWork:" destination="-1" eventType="touchUpInside" id="tj1-Oi-udq"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="vMJ-d2-T9s" secondAttribute="trailing" id="4xt-1J-DDb"/>
+                                                                <constraint firstItem="dcf-XG-XKF" firstAttribute="leading" secondItem="KyL-s1-5mb" secondAttribute="leading" constant="5" id="Db6-gl-gm6"/>
+                                                                <constraint firstAttribute="bottom" secondItem="dcf-XG-XKF" secondAttribute="bottom" constant="10" id="GEz-nh-buY"/>
+                                                                <constraint firstItem="WWY-dH-tOG" firstAttribute="centerX" secondItem="KyL-s1-5mb" secondAttribute="centerX" id="Lns-ew-m6V"/>
+                                                                <constraint firstItem="vMJ-d2-T9s" firstAttribute="top" secondItem="KyL-s1-5mb" secondAttribute="top" id="Qck-gg-LGv"/>
+                                                                <constraint firstAttribute="bottom" secondItem="vMJ-d2-T9s" secondAttribute="bottom" id="SW8-oj-2Qa"/>
+                                                                <constraint firstItem="dcf-XG-XKF" firstAttribute="top" secondItem="WWY-dH-tOG" secondAttribute="bottom" constant="10" id="fRt-qZ-VQP"/>
+                                                                <constraint firstItem="vMJ-d2-T9s" firstAttribute="leading" secondItem="KyL-s1-5mb" secondAttribute="leading" id="khR-AQ-zLk"/>
+                                                                <constraint firstItem="WWY-dH-tOG" firstAttribute="top" secondItem="KyL-s1-5mb" secondAttribute="top" constant="5" id="r9d-3x-Zky"/>
+                                                                <constraint firstAttribute="trailing" secondItem="dcf-XG-XKF" secondAttribute="trailing" constant="5" id="twG-9a-QSk"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
@@ -474,37 +573,37 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gRp-wX-Vtf">
                                                         <rect key="frame" x="10" y="5" width="364" height="95"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OPd-2c-mCH">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsQ-8b-IAs">
                                                                 <rect key="frame" x="0.0" y="0.0" width="114.66666666666667" height="95"/>
-                                                                <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.32383478900000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.32383478904257013" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="Schedule ExamTest">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="assignment:" destination="-1" eventType="touchUpInside" id="nU3-OH-Dfs"/>
+                                                                    <action selector="assignment:" destination="-1" eventType="touchUpInside" id="HBw-99-geQ"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qd3-BA-sY0">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5b-4H-bSX">
                                                                 <rect key="frame" x="124.66666666666666" y="0.0" width="114.66666666666666" height="95"/>
-                                                                <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.33224622250000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.33224622246359481" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="0.0"/>
                                                                 <state key="normal" image="online_meeting">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="onlineMeeting:" destination="-1" eventType="touchUpInside" id="ujO-iN-q92"/>
+                                                                    <action selector="onlineMeeting:" destination="-1" eventType="touchUpInside" id="F18-22-znM"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WSl-uu-Gym">
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLD-1q-IR3">
                                                                 <rect key="frame" x="249.33333333333329" y="0.0" width="114.66666666666666" height="95"/>
-                                                                <color key="backgroundColor" red="0.74117647060000003" green="0.90196078430000004" blue="0.99607843139999996" alpha="0.31911940799999999" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="backgroundColor" red="0.74117647058823533" green="0.90196078431372551" blue="0.99607843137254903" alpha="0.31911940801711308" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
                                                                 <state key="normal" image="Homework">
                                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 </state>
                                                                 <connections>
-                                                                    <action selector="homeWork:" destination="-1" eventType="touchUpInside" id="ynE-6T-YsI"/>
+                                                                    <action selector="homeWork:" destination="-1" eventType="touchUpInside" id="6oL-bo-Gg9"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -685,6 +784,7 @@
     <resources>
         <image name="Default_SchoolLogo2" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Homework" width="64" height="64"/>
+        <image name="Notice Board" width="66" height="66"/>
         <image name="Schedule ExamTest" width="42.666667938232422" height="42.666667938232422"/>
         <image name="bell" catalog="system" width="125" height="128"/>
         <image name="downloads" width="100" height="100"/>

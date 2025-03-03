@@ -25,6 +25,13 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var homeworkBtn: UIButton!
     @IBOutlet weak var assignmentkBtn: UIButton!
     @IBOutlet weak var onlineMeetingBtn: UIButton!
+    @IBOutlet weak var homeworkLbl: UILabel!
+    @IBOutlet weak var assignmentkLbl: UILabel!
+    @IBOutlet weak var onlineMeetingLbl: UILabel!
+    @IBOutlet weak var homeworkView: UIView!
+    @IBOutlet weak var assignmentkView: UIView!
+    @IBOutlet weak var onlineMeetingView: UIView!
+    
     @IBOutlet weak var collectionBtn: UIView!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var reportView: UIView!
@@ -153,34 +160,41 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     func ButtonUIupdate(){
         
         configureButton(
-            homeworkBtn,
-            title: MenuStringFile.Homework.translated(),
-            imageName: UIImage(named: "Homework"),
-            gradientColors:[UIColor.green,UIColor.blue],
+            homeworkView, homeworkBtn,
+            title: MenuStringFile.OnlineMeeting,
+            imageName: UIImage(named: "assignment"),
+            gradientColors:[UIColor.green,UIColor.purple],
             opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
-        
         // Configure assignmentkBtn
         configureButton(
-            assignmentkBtn,
-            title: MenuStringFile.Assignment.translated(),
-            imageName: UIImage(named: "Assignment"),
+            assignmentkView, assignmentkBtn,
+            title: MenuStringFile.NoticeBoard,
+            imageName: UIImage(named: "Notice Board"),
             gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
-            lightenFactor: 0.7 // 40% lighter
+            lightenFactor: 0.6 // 40% lighter
         )
+        assignmentkLbl.setFont(style: .body, size: 12)
+        onlineMeetingLbl.setFont(style: .body, size: 12)
+        homeworkLbl.setFont(style: .body, size: 12)
+        assignmentkLbl.text = MenuStringFile.Assignment.translated()
+        onlineMeetingLbl.text = MenuStringFile.OnlineMeeting.translated()
+        homeworkLbl.text = MenuStringFile.NoticeBoard.translated()
+        // Configure onlineMeetingBtn
         configureButton(
-            onlineMeetingBtn,
-            title: MenuStringFile.OnlineMeeting.translated(),
+            onlineMeetingView, onlineMeetingBtn,
+            title: MenuStringFile.Assignment,
             imageName: UIImage(named: "online_meeting"),
-            gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
+            gradientColors:[UIColor.yellow,UIColor.red],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
+        
     }
     
     // Helper function to configure the button
     func configureButton(
-        _ button: UIButton,
+        _ button: UIView,_ imgBtn:UIButton,
         title: String,
         imageName: UIImage?,
         gradientColors: [UIColor],
@@ -188,7 +202,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         imageSize: CGSize = CGSize(width: 40, height: 40),
         spacing: CGFloat = 8.0,
         opacity: CGFloat = 0.5, // Opacity for the gradient
-        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+        lightenFactor: CGFloat = 0.3
     ) {
         // Set corner radius
         button.layer.cornerRadius = cornerRadius
@@ -198,52 +212,14 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let adjustedColors = gradientColors.map { color in
             color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
         }
-        
+        imgBtn.setImage(imageName, for: .normal)
         // Apply gradient
         button.applyGradient(
             colors: adjustedColors,
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
-        button.setTitleFont(style: .body, size: FontSize.BodySize)
         
-        // Set title and image
-        button.setTitle(title, for: .normal)
-        if let image = imageName {
-            let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
-                image.draw(in: CGRect(origin: .zero, size: imageSize))
-            }
-            button.setImage(resizedImage.withRenderingMode(.alwaysTemplate), for: .normal)
-            button.tintColor = .gray
-        }
-        
-        // Align image and title
-        button.contentHorizontalAlignment = .center  // Ensure horizontal alignment
-        if let imageSize = button.imageView?.frame.size,
-           let titleSize = button.titleLabel?.intrinsicContentSize {
-            let totalHeight = imageSize.height + titleSize.height + spacing
-            
-            button.imageEdgeInsets = UIEdgeInsets(
-                top: -(totalHeight - imageSize.height),  // Move image to the top
-                left: 0,
-                bottom: 0,
-                right: -titleSize.width // Center align horizontally
-            )
-            
-            button.titleEdgeInsets = UIEdgeInsets(
-                top: 0,  // No padding at the top
-                left: -imageSize.width,  // Center align horizontally
-                bottom: -(totalHeight - titleSize.height),  // Move title below the image
-                right: 0
-            )
-            
-            button.contentEdgeInsets = UIEdgeInsets(
-                top: 0,
-                left: 0,
-                bottom: spacing,
-                right: 0
-            )
-        }
     }
     
     

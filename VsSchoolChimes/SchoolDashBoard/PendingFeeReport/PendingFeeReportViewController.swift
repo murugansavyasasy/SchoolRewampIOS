@@ -60,7 +60,10 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
         DropDownStr = ["2012 - 2013","2014 - 2015","2016 - 2017","2018 - 2019"]
         
         categoryWiseView.applyGradient(

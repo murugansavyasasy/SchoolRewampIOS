@@ -77,7 +77,10 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         super.viewDidLoad()
         
         UIupdate()
-        
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
         setFormattedDate(customdatestring, label: CustomDateLbl)

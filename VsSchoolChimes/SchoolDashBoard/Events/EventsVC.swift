@@ -87,6 +87,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         StyleAndTranslate()
         setupTimePicker()
         setInitialButtonTitles()
