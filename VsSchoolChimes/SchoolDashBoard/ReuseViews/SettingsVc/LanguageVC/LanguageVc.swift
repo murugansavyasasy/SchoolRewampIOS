@@ -24,8 +24,8 @@ class LanguageVc: UIViewController {
     var selectedLanguage: String?
     
     var Items = [
-        language(language: "English", selected: false),
         language(language: "Tamil", selected: false),
+        language(language: "English", selected: false),
         language(language: "Hindi", selected: false),
         language(language: "Thai", selected: false),
         language(language: "Arabic", selected: false)]
