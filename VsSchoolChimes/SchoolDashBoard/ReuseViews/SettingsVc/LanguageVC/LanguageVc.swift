@@ -58,9 +58,6 @@ class LanguageVc: UIViewController {
         ConfirmBtn.titleLabel?.textAlignment = .center
         ConfirmBtn.titleLabel?.adjustsFontSizeToFitWidth = true
         ConfirmBtn.setTitleFont(style: .body, size: 14)
-        
-        
-        
         tv.dataSource = self
         tv.delegate = self
         tv.reloadData()
