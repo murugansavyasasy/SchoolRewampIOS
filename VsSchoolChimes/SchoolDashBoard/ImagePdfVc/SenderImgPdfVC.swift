@@ -28,16 +28,15 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-     BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-     BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-     BackBtn.imageView?.applyRTLFlip(Language == "ar")
+
+        BackBtn.applyBackButton()
         textView.text = CommonStringFile.Description.translated()
         textView.textColor = .gray
         textView.layer.cornerRadius = 10
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.gray.cgColor
         textView.delegate = self
+        textView.applyRightTxt()
         TextViewHeight.constant = initialHeight
         SelectButton.layer.cornerRadius = 10
         imageSelection()

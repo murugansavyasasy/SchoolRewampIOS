@@ -99,7 +99,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         
         keyboardDonebtn()
         contentTextView.delegate = self
-        
+        contentTextView.applyRightTxt()
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
         setFormattedDate(customdatestring, label: CustomDateLbl)

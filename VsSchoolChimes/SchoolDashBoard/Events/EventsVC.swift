@@ -87,6 +87,19 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        eventTxt.applyRightTxt()
+        EventTtleLbl.applyRightTxt()
+        placeTxt.applyRightTxt()
+        subTitleLbl.applyRightTxt()
+        placeLbl.applyRightTxt()
+        contentTxtView.applyRightTxt()
+        pickerDateLbl.applyRightTxt()
+        ToLbl.applyRightTxt()
+        contentCount.applyRightTxt()
+        eventDeatail.applyRightTxt()
+        addPhotoLbl.applyRightTxt()
+        toDateLbl.applyRightTxt()
         
         StyleAndTranslate()
         setupTimePicker()
@@ -155,6 +168,14 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         Totime.setTitle(formattedTime, for: .normal)
         todate.setTitle(formattedDate, for: .normal)
         dateBtn.setTitle(formattedDate, for: .normal)
+        dateBtn.applyBackButton()
+        todate.applyBackButton()
+        Totime.applyRightButton()
+        timeBtn.applyRightButton()
+        contentCount.applyRightTxt()
+        contentCount.applyRightTxt()
+        contentCount.applyRightTxt()
+        contentCount.applyRightTxt()
     }
     
     func StyleAndTranslate(){
@@ -342,6 +363,9 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        contentTxtView.applyRightTxt()
+        contentTxtView.applyRightTxt(with: placeholderLabel)
+        
         contentTxtView.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !contentTxtView.text.isEmpty // Hide if text exists
     }

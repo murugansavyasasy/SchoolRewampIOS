@@ -48,11 +48,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     var playerurl: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-     BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-     BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-     BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        BackBtn.applyBackButton()
         // Add observers for keyboard notifications
                 NotificationCenter.default.addObserver(
                     self,
@@ -71,6 +67,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         ChangeVideoBtnHeight.constant = 0
         StyleAndTranslater()
         descTxtView.delegate = self
+        descTxtView.applyRightTxt()
+        
         let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
         VideoPlayer.addGestureRecognizer(PlayGesture)
         keyboardDonebtn()

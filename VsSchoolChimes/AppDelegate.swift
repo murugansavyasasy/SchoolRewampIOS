@@ -196,15 +196,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     
     -> UIBackgroundFetchResult {
-        
-        
-        
-        // If you are receiving a notification message while your app is in the background,
-        
-        
-        
-        
-        
         if let wavURLString = userInfo["wav_url"] as? String, let wavURL = URL(string: wavURLString) {
             
             print("WAV File URL: \(wavURL)")

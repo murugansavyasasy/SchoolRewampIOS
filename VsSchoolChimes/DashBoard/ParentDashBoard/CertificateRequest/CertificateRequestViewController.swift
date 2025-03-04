@@ -82,6 +82,7 @@ class CertificateRequestViewController: UIViewController,UITextViewDelegate,UITa
       
         reasonTextView.isScrollEnabled = false
         reasonTextView.textContainer.lineBreakMode = .byWordWrapping
+        reasonTextView.applyRightTxt()
            }
            
            func textViewDidChange(_ textView: UITextView) {
@@ -234,8 +235,6 @@ func gradientcolours(button : UIButton,colours : [CGColor]){
 
            func filterTimetable(by status: String) {
                let filteredTimetable1 = timetable.filter { $0.status == status }
-//               print("Filtered Items: \(filteredTimetable)")
-              
                filteredTimetable = filteredTimetable1
                tv.dataSource =  self
                print("filteredTimetable: \(filteredTimetable)")
