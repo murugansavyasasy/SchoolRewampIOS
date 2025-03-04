@@ -100,6 +100,14 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         keyboardDonebtn()
         contentTextView.delegate = self
         contentTextView.applyRightTxt()
+        categoryLbl.applyRightTxt()
+        categoryDropDownLbl.applyRightTxt()
+        AssignmenttypeLbl.applyRightTxt()
+        DescriptionLbl.applyRightTxt()
+        letterscountLbl.applyRightTxt()
+        titleLbl.applyRightTxt()
+        SubmissionDateLbl.applyRightTxt()
+        assignTitleTxtFld.applyRightTxt()
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
         setFormattedDate(customdatestring, label: CustomDateLbl)

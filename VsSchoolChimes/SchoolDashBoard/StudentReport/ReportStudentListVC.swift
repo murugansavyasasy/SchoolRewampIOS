@@ -43,7 +43,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
-       
+        searchBar.applyRightTxt()
         filterStudent = studentList
         sortedStudent = studentList
         uiConfic()

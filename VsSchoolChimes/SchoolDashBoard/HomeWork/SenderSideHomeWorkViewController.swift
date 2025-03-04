@@ -63,7 +63,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         super.viewDidLoad()
         BackBtn.applyBackButton()
         // Add observers for keyboard events
-        
+        DetailsTxtview.applyRightTxt()
+        TitleTxtfield.applyRightTxt()
+        wordsCountLbl.applyRightTxt()
         NotificationCenter.default.addObserver(
             
             self,
@@ -187,7 +189,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         //DetailsTxtview.setFont(style: .body, size: FontSize.BodySize)
         
     }
-    
     func showDatepicker(){
         
         // Create a UIDatePicker

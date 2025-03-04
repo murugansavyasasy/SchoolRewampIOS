@@ -17,7 +17,7 @@
                 <outlet property="EnableCallLbl" destination="mip-ix-Rxv" id="0ye-ke-x2w"/>
                 <outlet property="ScheduleLbl" destination="dNJ-pk-al5" id="MF3-gr-LyM"/>
                 <outlet property="TextMsgContent" destination="8z8-G9-XF2" id="zlo-mh-mAc"/>
-                <outlet property="TextMsgTitle" destination="bXD-4C-iTD" id="LUg-zT-q5O"/>
+                <outlet property="TextMsgTitleLbl" destination="bXD-4C-iTD" id="Imq-80-LC1"/>
                 <outlet property="TextMsgTittle" destination="hdb-AK-WZb" id="YYw-vz-ky1"/>
                 <outlet property="Timinglbl" destination="io5-Kc-dta" id="iA3-mI-tAd"/>
                 <outlet property="ToDateLbl" destination="Rov-z3-pd6" id="ZWE-mG-CnT"/>
@@ -68,6 +68,7 @@
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="voiceBtn" destination="DEa-re-PnB" id="NnG-RM-Ote"/>
                 <outlet property="voiceClickView" destination="PoL-zP-x0C" id="g8I-cV-4Zq"/>
+                <outlet property="voiceSetTitleLbl" destination="Apy-3a-gis" id="a14-fj-Rtw"/>
                 <outlet property="voiceStackview" destination="sn6-zQ-zLX" id="PHp-Ow-PsN"/>
                 <outlet property="voiceTiming" destination="czM-7g-5yj" id="xPz-ea-3b4"/>
                 <outlet property="voiceTitleeTxt" destination="UGQ-sg-Cyw" id="JGO-7K-4rn"/>
@@ -400,7 +401,7 @@
                                                 <constraint firstAttribute="height" constant="30" id="4fs-jg-jzO"/>
                                             </constraints>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="titleEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                            <inset key="titleEdgeInsets" minX="-1" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <state key="normal" title="select" image="chevron.down" catalog="system">
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                             </state>
@@ -415,7 +416,6 @@
                                                 <constraint firstAttribute="height" constant="30" id="qMK-ib-BWt"/>
                                             </constraints>
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="titleEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
                                             <state key="normal" title="select" image="chevron.down" catalog="system">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
@@ -574,7 +574,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="oWC-1m-z6y">
                                                     <rect key="frame" x="0.0" y="80" width="361" height="60"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Apy-3a-gis">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Apy-3a-gis">
                                                             <rect key="frame" x="0.0" y="0.0" width="361" height="20.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
@@ -728,7 +728,7 @@
                                                 <action selector="voiceview:" destination="-1" eventType="touchUpInside" id="jxS-Zr-kYI"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXD-4C-iTD">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXD-4C-iTD">
                                             <rect key="frame" x="16" y="60" width="361" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <nil key="textColor"/>
@@ -744,7 +744,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z8-G9-XF2">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z8-G9-XF2">
                                             <rect key="frame" x="16" y="131.66666666666663" width="361" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -883,7 +883,7 @@
                     </constraints>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdr-6F-LLo">
-                    <rect key="frame" x="20" y="208" width="353" height="280"/>
+                    <rect key="frame" x="20" y="151" width="353" height="280"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-4A-iyx" customClass="FSCalendar">
                             <rect key="frame" x="0.0" y="45" width="353" height="225"/>
