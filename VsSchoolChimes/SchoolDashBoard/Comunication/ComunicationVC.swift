@@ -37,7 +37,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
-    @IBOutlet weak var TextMsgTitle: UILabel!
+    @IBOutlet weak var TextMsgTitleLbl: UILabel!
     @IBOutlet weak var timePickerHeight: NSLayoutConstraint!
     @IBOutlet weak var fromTime: UIButton!
     @IBOutlet weak var toTime: UIButton!
@@ -95,6 +95,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var EnableCallLbl: UILabel!
     @IBOutlet weak var textViewOuter: UIView!
     @IBOutlet weak var textCountLbl: UILabel!
+    
+    @IBOutlet weak var voiceSetTitleLbl: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,7 +162,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         fromDateLbl.setFont(style: .title, size: FontSize.TitleSize)
         ToDateLbl.setFont(style: .title, size: FontSize.TitleSize)
         EnableCallLbl.setFont(style: .title, size: FontSize.TitleSize)
-        TextMsgTitle.setFont(style: .title, size: FontSize.TitleSize)
+        TextMsgTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         TextMsgContent.setFont(style: .title, size: FontSize.TitleSize)
         
         //MARK: Button Title font style
@@ -191,6 +194,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        TextMsgTittle.applyRightTxt()
+        TxtTitle.applyRightTxt()
+        TextMsgTitleLbl.applyRightTxt()
+        voiceSetTitleLbl.applyRightTxt()
+        voiceTitleeTxt.applyRightTxt()
+        TextMsgContent.applyRightTxt()
+        textCountLbl.applyRightTxt()
+        informationcontent.applyRightTxt()
+        informationcontent.applyRightTxt(with: placeholderLabel)
         informationcontent.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !informationcontent.text.isEmpty // Hide if text exists
     }

@@ -37,7 +37,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         BackBtn.applyBackButton()
         filterStudent = leaveResuest
         searchBar.placeholder = CommonStringFile.Search.translated()
-       
+        searchBar.applyRightTxt()
         leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)
         if #available(iOS 14.0, *) {
             addDoneButton()

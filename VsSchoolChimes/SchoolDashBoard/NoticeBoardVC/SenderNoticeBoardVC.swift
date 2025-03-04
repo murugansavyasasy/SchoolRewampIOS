@@ -190,6 +190,8 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
         textview.applyRightTxt()
         textview.applyRightTxt(with: placeholderLabel)
+        contentCount.applyRightTxt()
+        eventTxt.applyRightTxt()
         textview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !textview.text.isEmpty // Hide if text exists
     }

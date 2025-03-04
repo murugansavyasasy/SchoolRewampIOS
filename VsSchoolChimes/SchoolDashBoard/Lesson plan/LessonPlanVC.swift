@@ -40,6 +40,7 @@ class LessonPlanVC: UIViewController {
         
         UIupdate()
         BackBtn.applyBackButton()
+        searchBar.applyRightTxt()
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
         

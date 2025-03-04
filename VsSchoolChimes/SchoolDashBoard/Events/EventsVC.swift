@@ -100,7 +100,8 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         eventDeatail.applyRightTxt()
         addPhotoLbl.applyRightTxt()
         toDateLbl.applyRightTxt()
-        
+        fromLbl.applyRightTxt()
+        eventTxt.applyRightTxt()
         StyleAndTranslate()
         setupTimePicker()
         setInitialButtonTitles()
