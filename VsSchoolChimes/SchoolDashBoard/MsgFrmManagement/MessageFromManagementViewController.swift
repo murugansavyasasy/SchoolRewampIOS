@@ -16,12 +16,15 @@ class MessageFromManagementViewController: UIViewController,UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
+      
         
         let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
         BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
         BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        
+        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
+        
         tv.register(UINib(nibName: CellConfingName.MessageFromManagementTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.MessageFromManagementTableViewCell)
         tv.dataSource = self
         tv.delegate = self

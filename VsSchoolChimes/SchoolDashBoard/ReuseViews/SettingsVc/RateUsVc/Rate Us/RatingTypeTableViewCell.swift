@@ -75,8 +75,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         let cell = collectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell, for: indexPath) as! SuggestionsCollectionViewCell
         cell.layer.cornerRadius = 20
         
-        
-        cell.backgroundColor = names[indexPath.row].selected ?? false ?  .blue :UIColor(red: 216/255, green: 220/255, blue: 238/255, alpha: 1)
+        cell.backgroundColor = names[indexPath.row].selected ?? false ?  .gradient1 :UIColor(red: 216/255, green: 220/255, blue: 238/255, alpha: 1)
         
         cell.name.text = names[indexPath.item].name
         cell.name.textColor = names[indexPath.item].selected ?? false ?  .white :.black

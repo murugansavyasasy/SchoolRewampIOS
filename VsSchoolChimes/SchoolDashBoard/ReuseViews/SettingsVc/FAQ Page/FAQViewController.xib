@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FAQViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="7l7-5L-kY7" id="Esf-Jw-0e8"/>
                 <outlet property="outerView" destination="MHi-tq-4Ur" id="qrc-ZJ-3hI"/>
                 <outlet property="tableview" destination="0q4-N6-E91" id="RUH-qS-fkd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -41,7 +42,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bak-dh-dut">
                     <rect key="frame" x="0.0" y="59" width="393" height="35"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7l7-5L-kY7">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7l7-5L-kY7">
                             <rect key="frame" x="10" y="0.0" width="373" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="dhq-12-RnG"/>
@@ -50,7 +51,6 @@
                             <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                             <state key="normal" title="FAQ" image="chevron.left" catalog="system">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>
                             <connections>

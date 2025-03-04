@@ -9,8 +9,7 @@ import UIKit
 
 class FAQViewController: UIViewController {
     
-    @IBOutlet weak var FaqPageHeading: UILabel!
-    
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var outerView: UIView!
     
@@ -20,10 +19,14 @@ class FAQViewController: UIViewController {
     var passValue = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        FaqPageHeading.text = MenuTapbar.FAQ.translated()
-        FaqPageHeading.setFont(style: .header, size: 20)
         
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        
+        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
+       
         let nib = UINib(nibName: CellConfingName.FAQTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.FAQTableViewCell)
         

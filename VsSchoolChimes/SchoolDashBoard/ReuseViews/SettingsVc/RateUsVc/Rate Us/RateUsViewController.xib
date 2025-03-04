@@ -13,7 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RateUsViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="RateusHeading" destination="dff-Fo-XsG" id="6wy-8H-eGv"/>
+                <outlet property="BackBtn" destination="pBy-au-fC9" id="Nbd-3L-zdv"/>
                 <outlet property="outerView" destination="Swq-u5-oa5" id="Xoi-Dt-uSN"/>
                 <outlet property="tableview" destination="33x-KJ-bEt" id="x9c-lN-hV3"/>
                 <outlet property="view" destination="sRa-T6-K2T" id="3Qn-FS-0Fx"/>
@@ -27,16 +27,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Swq-u5-oa5">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBy-au-fC9">
-                            <rect key="frame" x="10" y="10" width="30" height="35"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBy-au-fC9">
+                            <rect key="frame" x="10" y="10" width="373" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="DqC-7d-RIe"/>
-                                <constraint firstAttribute="width" constant="30" id="GQJ-8M-04H"/>
                             </constraints>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="12" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal">
-                                <imageReference key="image" image="chevron.backward" catalog="system" symbolScale="large"/>
+                            <state key="normal" title="Rate Us">
+                                <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
                             </state>
                             <connections>
@@ -51,19 +51,11 @@
                                 <outlet property="delegate" destination="-1" id="0nJ-z6-ASI"/>
                             </connections>
                         </tableView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate us" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dff-Fo-XsG">
-                            <rect key="frame" x="42" y="14.999999999999998" width="331" height="25.333333333333329"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" name="topBackgroundCLr"/>
                     <constraints>
-                        <constraint firstItem="dff-Fo-XsG" firstAttribute="leading" secondItem="pBy-au-fC9" secondAttribute="trailing" constant="2" id="3rH-a4-HAI"/>
-                        <constraint firstItem="dff-Fo-XsG" firstAttribute="centerY" secondItem="pBy-au-fC9" secondAttribute="centerY" id="8MB-fa-5sr"/>
+                        <constraint firstAttribute="trailing" secondItem="pBy-au-fC9" secondAttribute="trailing" constant="10" id="2D3-ar-d9g"/>
                         <constraint firstItem="pBy-au-fC9" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" constant="10" id="Q1o-FW-twh"/>
-                        <constraint firstAttribute="trailing" secondItem="dff-Fo-XsG" secondAttribute="trailing" constant="20" id="c8k-FY-e8z"/>
                         <constraint firstItem="33x-KJ-bEt" firstAttribute="leading" secondItem="Swq-u5-oa5" secondAttribute="leading" id="cJG-zF-iwT"/>
                         <constraint firstItem="pBy-au-fC9" firstAttribute="top" secondItem="Swq-u5-oa5" secondAttribute="top" constant="10" id="eUv-y8-DnF"/>
                         <constraint firstAttribute="trailing" secondItem="33x-KJ-bEt" secondAttribute="trailing" id="k8y-QN-ga0"/>
@@ -84,7 +76,7 @@
         </view>
     </objects>
     <resources>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

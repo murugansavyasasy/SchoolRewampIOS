@@ -12,7 +12,7 @@ import DropDown
 @available(iOS 14.0, *)
 class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     
-    @IBOutlet weak var ReportHeading: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var selectModuleLbl: UILabel!
     @IBOutlet weak var ModuleDropDown: DropDown!
     @IBOutlet weak var textViewStack: UIStackView!
@@ -29,8 +29,13 @@ class ReportBugVcViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ReportHeading.text = MenuTapbar.Report_a_bug.translated()
-        ReportHeading.setFont(style: .header, size: 20)
+        BackBtn.setTitle(MenuTapbar.Report_a_bug.translated(), for: .normal)
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        
+        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
         
         selectModuleLbl.setFont(style: .body, size: 14)
         
