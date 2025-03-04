@@ -45,7 +45,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var CustomDateBtn: HalfColorButton!
     @IBOutlet weak var customDateLbl: UILabel!
-   
+    
     var selectedImages: [UIImage] = []
     var url : URL?
     let photoPickManager = PhotoPickerManager.shared
@@ -61,35 +61,32 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        BackBtn.applyBackButton()
         // Add observers for keyboard events
-
-                NotificationCenter.default.addObserver(
-
-                    self,
-
-                    selector: #selector(keyboardWillShow),
-
-                    name: UIResponder.keyboardWillShowNotification,
-
-                    object: nil
-
-                )
-
-                NotificationCenter.default.addObserver(
-
-                    self,
-
-                    selector: #selector(keyboardWillHide),
-
-                    name: UIResponder.keyboardWillHideNotification,
-
-                    object: nil
-
-                )
+        
+        NotificationCenter.default.addObserver(
+            
+            self,
+            
+            selector: #selector(keyboardWillShow),
+            
+            name: UIResponder.keyboardWillShowNotification,
+            
+            object: nil
+            
+        )
+        
+        NotificationCenter.default.addObserver(
+            
+            self,
+            
+            selector: #selector(keyboardWillHide),
+            
+            name: UIResponder.keyboardWillHideNotification,
+            
+            object: nil
+            
+        )
         
         keyboardDonebtn()
         StyleAndTranslater()
@@ -131,11 +128,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     deinit {
         // Remove observers
-//        NotificationCenter.default.removeObserver(self)
+        //        NotificationCenter.default.removeObserver(self)
         
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-
+        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
@@ -174,7 +171,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         homeworkBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         ReportBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-
+        
         //MARK: Label Font Style
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DetailsLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -182,13 +179,13 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
         StandardLbl.setFont(style: .title, size: FontSize.TitleSize)
         SectionLbl.setFont(style: .title, size: FontSize.TitleSize)
-
+        
         //MARK: Text Field Font Style
         //TitleTxtfield.setFont(style: .body, size: FontSize.BodySize)
-
+        
         //MARK: Text View Font Style
         //DetailsTxtview.setFont(style: .body, size: FontSize.BodySize)
-
+        
     }
     
     func showDatepicker(){
@@ -618,9 +615,9 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             
             cell.HomeworkTitleLbl.text = "Write Assignment"
             cell.DescriptionLbl.attributedText = descript(for:"Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality." , expanded: false)
-           // cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
+            // cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-           // cell.delegate = self
+            // cell.delegate = self
             cell.DescriptionLbl.tag = indexPath.row // Tag the label with the row index
             cell.DescriptionLbl.isUserInteractionEnabled = true
             cell.DescriptionLbl.addGestureRecognizer(tapGesture)
@@ -635,7 +632,7 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             cell.pagecontrollerheight.constant = 0
             cell.pagecontroller.isHidden = true
             
-           // cell.datelbl.isHidden = true
+            // cell.datelbl.isHidden = true
             cell.pinImage.isHidden = true
             cell.Pinview.isHidden = true
             cell.SelectBtn.isHidden = true
@@ -721,51 +718,51 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
     }
     
     func keyboardDonebtn(){
-           let toolbar = UIToolbar()
-           toolbar.sizeToFit()
-           let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-           let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-           toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
         DetailsTxtview.inputAccessoryView = toolbar
         TitleTxtfield.inputAccessoryView = toolbar
-          
-       }
-       @objc func doneKeyboard() {
-           view.endEditing(true)  // Dismiss the keyboard
-       }
+        
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)  // Dismiss the keyboard
+    }
     
     func textViewDidChange(_ textView: UITextView) {
-            let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-            let newHeight = min(max(size.height, initialHeight), maxHeight)
-
-            // Update height constraint and scrolling
+        let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+        let newHeight = min(max(size.height, initialHeight), maxHeight)
+        
+        // Update height constraint and scrolling
         TextViewheight.constant = newHeight
         DetailsTxtview.isScrollEnabled = size.height > maxHeight
-
-            // Ensure layout updates
-            UIView.animate(withDuration: 0.2) {
-                self.view.layoutIfNeeded()
-            }
-
-            // Adjust view position with keyboard
-            if DetailsTxtview.isFirstResponder {
-                self.adjustForKeyboardHeight()
+        
+        // Ensure layout updates
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+        
+        // Adjust view position with keyboard
+        if DetailsTxtview.isFirstResponder {
+            self.adjustForKeyboardHeight()
+        }
+    }
+    
+    // Helper to adjust outerView position dynamically
+    private func adjustForKeyboardHeight() {
+        guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
+        let availableSpace = self.view.frame.height - keyboardFrame.height
+        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+        
+        if textViewBottom > availableSpace {
+            let overlap = textViewBottom - availableSpace + 20 // Add some padding
+            UIView.animate(withDuration: 0.3) {
+                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
             }
         }
-
-        // Helper to adjust outerView position dynamically
-        private func adjustForKeyboardHeight() {
-            guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
-            let availableSpace = self.view.frame.height - keyboardFrame.height
-            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
-
-            if textViewBottom > availableSpace {
-                let overlap = textViewBottom - availableSpace + 20 // Add some padding
-                UIView.animate(withDuration: 0.3) {
-                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
-                }
-            }
-        }
+    }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Current text in the UITextView
@@ -784,109 +781,67 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
             return false // Reject the change
         }
     }
-    
-//    @objc func keyboardWillShow(notification: Notification) {
-//        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-//        
-//        // Calculate new position considering the dynamic height
-//        let availableSpace = self.view.frame.height - keyboardFrame.height
-//        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
-//        
-//        if textViewBottom > availableSpace {
-//            let overlap = textViewBottom - availableSpace - 200 // Add some padding
-//            UIView.animate(withDuration: 0.3) {
-//                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
-//            }
-//        }
-////        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-////            UIView.animate(withDuration: 0.3) {
-////                // Move outerView 20 points from the top
-////                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 400)
-////            }
-////        }
-//    }
-//    
-//    // Reset view when keyboard hides
-//    @objc func keyboardWillHide(notification: Notification) {
-//        UIView.animate(withDuration: 0.3) {
-//            self.outerView.transform = .identity
-//        }
-//    }
-    
-    
     @objc func keyboardWillShow(notification: Notification) {
-
-            guard let userInfo = notification.userInfo,
-
-                  let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-
-                  let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-
-
-
-            // Calculate the available space after keyboard shows
-
-            let keyboardHeight = keyboardFrame.height
-
-            let safeAreaBottom = self.view.safeAreaInsets.bottom
-
-            let adjustedKeyboardHeight = keyboardHeight - safeAreaBottom
-
-
-
-            // Get the bottom position of the outerView
-
-            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
-
-
-
-            // Calculate the overlap
-
-            let overlap = textViewBottom - (self.view.frame.height - adjustedKeyboardHeight)
-
-
-
-            if overlap > 0 {
-
-                UIView.animate(withDuration: animationDuration) {
-
-                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap - 16) // Add padding
-
-                }
-
-            }
-
-        }
-
-
-
-        @objc func keyboardWillHide(notification: Notification) {
-
-            guard let userInfo = notification.userInfo,
-
-                  let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-
-
-
-            // Reset the outerView position
-
+        
+        guard let userInfo = notification.userInfo,
+              
+                let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+              
+                let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        
+        
+        
+        // Calculate the available space after keyboard shows
+        
+        let keyboardHeight = keyboardFrame.height
+        
+        let safeAreaBottom = self.view.safeAreaInsets.bottom
+        
+        let adjustedKeyboardHeight = keyboardHeight - safeAreaBottom
+        
+        
+        
+        // Get the bottom position of the outerView
+        
+        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
+        
+        
+        
+        // Calculate the overlap
+        
+        let overlap = textViewBottom - (self.view.frame.height - adjustedKeyboardHeight)
+        
+        
+        
+        if overlap > 0 {
+            
             UIView.animate(withDuration: animationDuration) {
-
-                self.outerView.transform = .identity
-
+                
+                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap - 16) // Add padding
+                
             }
-
+            
         }
-
-
-
-//        deinit {
-//
-//            // Remove observers when the view controller is deinitialized
-//
-//            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-//
-//            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-//
-//        }
+        
+    }
+    
+    
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        
+        guard let userInfo = notification.userInfo,
+              
+                let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        
+        
+        
+        // Reset the outerView position
+        
+        UIView.animate(withDuration: animationDuration) {
+            
+            self.outerView.transform = .identity
+            
+        }
+        
+    }
 }

@@ -359,8 +359,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let isRTL = (language == "ar")
-
-        // Set text alignment for text view and character count label
         contentTxtView.textAlignment = isRTL ? .right : .left
         contentCount.textAlignment = isRTL ? .left : .right
 

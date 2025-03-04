@@ -18,11 +18,7 @@ class InteractionVC: UIViewController {
     var passvalue = 0
     override func viewDidLoad() {
         super.viewDidLoad()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
-        backBtn.setTitle("Interact With Student", for: .normal)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        backBtn.applyBackButton()
         HeaderLbl.setFont(style: .header, size: 17)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)

@@ -36,10 +36,7 @@ class NavigationVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
         setupPageViewController()
         loadPages([page1, page2])
         disableSwipeGesture()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
+        backBtn.applyBackButton()
         configureButton(
             createEvent,
             title: button1,

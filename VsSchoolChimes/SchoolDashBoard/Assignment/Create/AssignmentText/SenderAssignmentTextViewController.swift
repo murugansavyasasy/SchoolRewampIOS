@@ -81,10 +81,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        BackBtn.applyBackButton()
         
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(

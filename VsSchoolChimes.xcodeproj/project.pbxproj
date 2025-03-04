@@ -25,8 +25,6 @@
 		187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 187CF5E42D1539CD001422CE /* CertificateTableViewCell.xib */; };
 		187CF5E62D1539CD001422CE /* CertificateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187CF5E32D1539CD001422CE /* CertificateTableViewCell.swift */; };
 		18926C4D2D02DE81002BBB97 /* LsrwListShowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C432D02DE81002BBB97 /* LsrwListShowTableViewCell.swift */; };
-		18926C4E2D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C492D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift */; };
-		18926C4F2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */; };
 		18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C2D2D02DE81002BBB97 /* RestrictionTableViewCell.swift */; };
 		18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C402D02DE81002BBB97 /* LSRWTakingSkillViewController.swift */; };
 		18926C522D02DE81002BBB97 /* SubmitLsrwRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C3B2D02DE81002BBB97 /* SubmitLsrwRequest.swift */; };
@@ -35,8 +33,6 @@
 		18926C552D02DE81002BBB97 /* FileAttachmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C322D02DE81002BBB97 /* FileAttachmentTableViewCell.swift */; };
 		18926C562D02DE81002BBB97 /* RestrictionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C302D02DE81002BBB97 /* RestrictionRequest.swift */; };
 		18926C572D02DE81002BBB97 /* RestrictionModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C2F2D02DE81002BBB97 /* RestrictionModal.swift */; };
-		18926C582D02DE81002BBB97 /* GetAttachmentForSkill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C4A2D02DE81002BBB97 /* GetAttachmentForSkill.swift */; };
-		18926C592D02DE81002BBB97 /* ViewAllSkillByStudentModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C482D02DE81002BBB97 /* ViewAllSkillByStudentModal.swift */; };
 		18926C5A2D02DE81002BBB97 /* PreviewLsrwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C352D02DE81002BBB97 /* PreviewLsrwViewController.swift */; };
 		18926C5B2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C3D2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.swift */; };
 		18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926C382D02DE81002BBB97 /* SubmitLsrwViewController.swift */; };
@@ -51,9 +47,7 @@
 		18926D262D04140B002BBB97 /* SectionwiesReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D182D04140B002BBB97 /* SectionwiesReq.swift */; };
 		18926D272D04140B002BBB97 /* NewPendingResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1A2D04140B002BBB97 /* NewPendingResp.swift */; };
 		18926D282D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1E2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift */; };
-		18926D292D04140B002BBB97 /* acidmicYrResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D232D04140B002BBB97 /* acidmicYrResponce.swift */; };
 		18926D2A2D04140B002BBB97 /* PendingFeeReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D212D04140B002BBB97 /* PendingFeeReportViewController.swift */; };
-		18926D2B2D04140B002BBB97 /* AcidmicYrRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D242D04140B002BBB97 /* AcidmicYrRequest.swift */; };
 		18926D2C2D04140B002BBB97 /* NewPendingReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D192D04140B002BBB97 /* NewPendingReq.swift */; };
 		18926D2D2D04140B002BBB97 /* PendingReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D172D04140B002BBB97 /* PendingReq.swift */; };
 		18926D2E2D04140B002BBB97 /* classWisePendingReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18926D1B2D04140B002BBB97 /* classWisePendingReq.swift */; };
@@ -129,14 +123,10 @@
 		18D718BC2D0D477900E9EDA3 /* LocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718942D0D477900E9EDA3 /* LocationViewController.xib */; };
 		18D718BD2D0D477900E9EDA3 /* LocationHistoryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188F2D0D477900E9EDA3 /* LocationHistoryVc.xib */; };
 		18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C82D0D479B00E9EDA3 /* ClassTableViewCell.swift */; };
-		18D718D72D0D479B00E9EDA3 /* AbesentRequst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718CD2D0D479B00E9EDA3 /* AbesentRequst.swift */; };
 		18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718BF2D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift */; };
-		18D718D92D0D479B00E9EDA3 /* StudentListResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C42D0D479B00E9EDA3 /* StudentListResp.swift */; };
 		18D718DA2D0D479B00E9EDA3 /* SectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C62D0D479B00E9EDA3 /* SectionCollectionViewCell.swift */; };
-		18D718DB2D0D479B00E9EDA3 /* StudentListReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C32D0D479B00E9EDA3 /* StudentListReq.swift */; };
 		18D718DC2D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C92D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift */; };
 		18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */; };
-		18D718DE2D0D479B00E9EDA3 /* AbesentReportResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718CE2D0D479B00E9EDA3 /* AbesentReportResp.swift */; };
 		18D718DF2D0D479B00E9EDA3 /* SectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718C02D0D479B00E9EDA3 /* SectionViewController.swift */; };
 		18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718CA2D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib */; };
 		18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718C22D0D479B00E9EDA3 /* SectionViewController.xib */; };
@@ -676,10 +666,6 @@
 		18926C442D02DE81002BBB97 /* LsrwListShowTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LsrwListShowTableViewCell.xib; sourceTree = "<group>"; };
 		18926C462D02DE81002BBB97 /* LsrwListShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LsrwListShowViewController.swift; sourceTree = "<group>"; };
 		18926C472D02DE81002BBB97 /* LsrwListShowViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LsrwListShowViewController.xib; sourceTree = "<group>"; };
-		18926C482D02DE81002BBB97 /* ViewAllSkillByStudentModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllSkillByStudentModal.swift; sourceTree = "<group>"; };
-		18926C492D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllSkillByStudentRequest.swift; sourceTree = "<group>"; };
-		18926C4A2D02DE81002BBB97 /* GetAttachmentForSkill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAttachmentForSkill.swift; sourceTree = "<group>"; };
-		18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAttachmentForSkillRequest.swift; sourceTree = "<group>"; };
 		18926D132D04140B002BBB97 /* PendingFeeReportTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeReportTableViewCell.swift; sourceTree = "<group>"; };
 		18926D142D04140B002BBB97 /* PendingFeeReportTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeReportTableViewCell.xib; sourceTree = "<group>"; };
 		18926D162D04140B002BBB97 /* PendingApiResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingApiResp.swift; sourceTree = "<group>"; };
@@ -692,8 +678,6 @@
 		18926D1E2D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeReportTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		18926D212D04140B002BBB97 /* PendingFeeReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingFeeReportViewController.swift; sourceTree = "<group>"; };
 		18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PendingFeeReportViewController.xib; sourceTree = "<group>"; };
-		18926D232D04140B002BBB97 /* acidmicYrResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = acidmicYrResponce.swift; sourceTree = "<group>"; };
-		18926D242D04140B002BBB97 /* AcidmicYrRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidmicYrRequest.swift; sourceTree = "<group>"; };
 		18926D352D041D74002BBB97 /* ImportantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportantInfoViewController.swift; sourceTree = "<group>"; };
 		18926D362D041D74002BBB97 /* ImportantInfoViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImportantInfoViewController.xib; sourceTree = "<group>"; };
 		189E99052CE3195D00FE98A5 /* VimeoUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VimeoUpload.swift; sourceTree = "<group>"; };
@@ -765,8 +749,6 @@
 		18D718C02D0D479B00E9EDA3 /* SectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewController.swift; sourceTree = "<group>"; };
 		18D718C12D0D479B00E9EDA3 /* SectionTvTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionTvTableViewCell.xib; sourceTree = "<group>"; };
 		18D718C22D0D479B00E9EDA3 /* SectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionViewController.xib; sourceTree = "<group>"; };
-		18D718C32D0D479B00E9EDA3 /* StudentListReq.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListReq.swift; sourceTree = "<group>"; };
-		18D718C42D0D479B00E9EDA3 /* StudentListResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentListResp.swift; sourceTree = "<group>"; };
 		18D718C52D0D479B00E9EDA3 /* SectionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionCollectionViewCell.xib; sourceTree = "<group>"; };
 		18D718C62D0D479B00E9EDA3 /* SectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		18D718C72D0D479B00E9EDA3 /* ClassTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ClassTableViewCell.xib; sourceTree = "<group>"; };
@@ -775,8 +757,6 @@
 		18D718CA2D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CVIconCollectionViewCell.xib; sourceTree = "<group>"; };
 		18D718CB2D0D479B00E9EDA3 /* NewAbsenteesViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewAbsenteesViewController.xib; sourceTree = "<group>"; };
 		18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAbsenteesViewController.swift; sourceTree = "<group>"; };
-		18D718CD2D0D479B00E9EDA3 /* AbesentRequst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbesentRequst.swift; sourceTree = "<group>"; };
-		18D718CE2D0D479B00E9EDA3 /* AbesentReportResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbesentReportResp.swift; sourceTree = "<group>"; };
 		35A2795483C5C78FDA9968BB /* Pods_VsSchoolChimes_VsSchoolChimesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimes_VsSchoolChimesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F82FE68FD218E379E8439E8 /* Pods-VsSchoolChimesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		448627B44482E052DAD11952 /* Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes-VsSchoolChimesUITests/Pods-VsSchoolChimes-VsSchoolChimesUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1465,10 +1445,6 @@
 				18926C452D02DE81002BBB97 /* Tv */,
 				18926C462D02DE81002BBB97 /* LsrwListShowViewController.swift */,
 				18926C472D02DE81002BBB97 /* LsrwListShowViewController.xib */,
-				18926C482D02DE81002BBB97 /* ViewAllSkillByStudentModal.swift */,
-				18926C492D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift */,
-				18926C4A2D02DE81002BBB97 /* GetAttachmentForSkill.swift */,
-				18926C4B2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift */,
 			);
 			path = LSRW;
 			sourceTree = "<group>";
@@ -1521,8 +1497,6 @@
 				18926D202D04140B002BBB97 /* Cell */,
 				18926D212D04140B002BBB97 /* PendingFeeReportViewController.swift */,
 				18926D222D04140B002BBB97 /* PendingFeeReportViewController.xib */,
-				18926D232D04140B002BBB97 /* acidmicYrResponce.swift */,
-				18926D242D04140B002BBB97 /* AcidmicYrRequest.swift */,
 			);
 			path = PendingFeeReport;
 			sourceTree = "<group>";
@@ -1745,8 +1719,6 @@
 				18D718C02D0D479B00E9EDA3 /* SectionViewController.swift */,
 				18D718C12D0D479B00E9EDA3 /* SectionTvTableViewCell.xib */,
 				18D718C22D0D479B00E9EDA3 /* SectionViewController.xib */,
-				18D718C32D0D479B00E9EDA3 /* StudentListReq.swift */,
-				18D718C42D0D479B00E9EDA3 /* StudentListResp.swift */,
 				18D718C52D0D479B00E9EDA3 /* SectionCollectionViewCell.xib */,
 				18D718C62D0D479B00E9EDA3 /* SectionCollectionViewCell.swift */,
 				18D718C72D0D479B00E9EDA3 /* ClassTableViewCell.xib */,
@@ -1755,8 +1727,6 @@
 				18D718CA2D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib */,
 				18D718CB2D0D479B00E9EDA3 /* NewAbsenteesViewController.xib */,
 				18D718CC2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift */,
-				18D718CD2D0D479B00E9EDA3 /* AbesentRequst.swift */,
-				18D718CE2D0D479B00E9EDA3 /* AbesentReportResp.swift */,
 			);
 			path = NewAbsenteesReport;
 			sourceTree = "<group>";
@@ -3854,8 +3824,6 @@
 				84EFFA3D2CCCB49200C11C26 /* ContactUsTVCell.swift in Sources */,
 				84A5BEB12C19830500E32496 /* Constant.swift in Sources */,
 				18926C4D2D02DE81002BBB97 /* LsrwListShowTableViewCell.swift in Sources */,
-				18926C4E2D02DE81002BBB97 /* ViewAllSkillByStudentRequest.swift in Sources */,
-				18926C4F2D02DE81002BBB97 /* GetAttachmentForSkillRequest.swift in Sources */,
 				842FBAC22D0BEDDC007C0B51 /* TranslationManager.swift in Sources */,
 				849D72312D14270D0060E222 /* SubscriptionView.swift in Sources */,
 				849D72322D14270D0060E222 /* SubscriptionTVCell.swift in Sources */,
@@ -3936,8 +3904,6 @@
 				84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */,
 				18926C562D02DE81002BBB97 /* RestrictionRequest.swift in Sources */,
 				18926C572D02DE81002BBB97 /* RestrictionModal.swift in Sources */,
-				18926C582D02DE81002BBB97 /* GetAttachmentForSkill.swift in Sources */,
-				18926C592D02DE81002BBB97 /* ViewAllSkillByStudentModal.swift in Sources */,
 				84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */,
 				849AD0502D1A858D002DEC07 /* AssignmentViewTotalTableViewCell.swift in Sources */,
 				849AD0512D1A858D002DEC07 /* SenderAssignmentViewController.swift in Sources */,
@@ -4004,15 +3970,11 @@
 				18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */,
 				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
 				18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */,
-				18D718D72D0D479B00E9EDA3 /* AbesentRequst.swift in Sources */,
 				18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */,
-				18D718D92D0D479B00E9EDA3 /* StudentListResp.swift in Sources */,
 				18D718DA2D0D479B00E9EDA3 /* SectionCollectionViewCell.swift in Sources */,
 				84BB5EB02D11337E00AD0C87 /* ExamsListCVCell.swift in Sources */,
-				18D718DB2D0D479B00E9EDA3 /* StudentListReq.swift in Sources */,
 				18D718DC2D0D479B00E9EDA3 /* CVIconCollectionViewCell.swift in Sources */,
 				18D718DD2D0D479B00E9EDA3 /* NewAbsenteesViewController.swift in Sources */,
-				18D718DE2D0D479B00E9EDA3 /* AbesentReportResp.swift in Sources */,
 				84B57EE32D15533000E0EA29 /* submitVC.swift in Sources */,
 				18D718DF2D0D479B00E9EDA3 /* SectionViewController.swift in Sources */,
 				84F9862D2D3A57FC009FF065 /* QuizVC.swift in Sources */,
@@ -4091,13 +4053,11 @@
 				18926D262D04140B002BBB97 /* SectionwiesReq.swift in Sources */,
 				18926D272D04140B002BBB97 /* NewPendingResp.swift in Sources */,
 				18926D282D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterView.swift in Sources */,
-				18926D292D04140B002BBB97 /* acidmicYrResponce.swift in Sources */,
 				18926D2A2D04140B002BBB97 /* PendingFeeReportViewController.swift in Sources */,
 				84079FF32D15A7B000D6DF04 /* LeveCreateVC.swift in Sources */,
 				84079FF42D15A7B000D6DF04 /* LeveHistoryVC.swift in Sources */,
 				84079FF52D15A7B000D6DF04 /* LeveHistoryTV.swift in Sources */,
 				84079FF62D15A7B000D6DF04 /* NavigationVC.swift in Sources */,
-				18926D2B2D04140B002BBB97 /* AcidmicYrRequest.swift in Sources */,
 				18926D2C2D04140B002BBB97 /* NewPendingReq.swift in Sources */,
 				18926D2D2D04140B002BBB97 /* PendingReq.swift in Sources */,
 				18926D2E2D04140B002BBB97 /* classWisePendingReq.swift in Sources */,

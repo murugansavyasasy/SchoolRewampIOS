@@ -118,10 +118,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
         addDoneButton()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
+        backBtn.applyBackButton()
         
         let userDefaults = UserDefaults.standard
        

@@ -16,3 +16,21 @@ extension UIImageView {
         }
     }
 }
+extension UIButton {
+    func applyBackButton() {
+        let isRTL = isAppRTL()
+        self.semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
+        self.contentHorizontalAlignment = isRTL ? .right : .left
+        self.imageView?.applyRTLFlip(isRTL)
+    }
+    func applyRightButton() {
+        let isRTL = isAppRTL()
+        self.semanticContentAttribute = isRTL ? .forceLeftToRight: .forceRightToLeft
+        self.imageView?.applyRTLFlip(isRTL)
+    }
+    private func isAppRTL() -> Bool {
+        let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
+        return language == "ar"
+    }
+}
+

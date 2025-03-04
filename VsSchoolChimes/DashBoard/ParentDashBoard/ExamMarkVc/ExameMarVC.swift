@@ -25,11 +25,7 @@ class ExameMarVC: UIViewController {
         StyleAndTranslate()
         addDoneButton()
         CellRegister()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
-
+        backBtn.applyBackButton()
         // Do any additional setup after loading the view.
         tv.isHidden = true
         

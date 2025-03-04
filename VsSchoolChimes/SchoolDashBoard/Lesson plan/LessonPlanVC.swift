@@ -39,10 +39,7 @@ class LessonPlanVC: UIViewController {
         super.viewDidLoad()
         
         UIupdate()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        BackBtn.applyBackButton()
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         createBtn.setTitleColor(UIColor.white, for: .normal)
         

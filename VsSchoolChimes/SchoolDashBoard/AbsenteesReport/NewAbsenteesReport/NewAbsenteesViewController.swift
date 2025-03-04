@@ -46,14 +46,9 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        BackBtn.applyBackButton()
         Id = "1"
         cvIcon.register(UINib(nibName: CellConfingName.CVIconCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CVIconCollectionViewCell)
-//        let back = UITapGestureRecognizer(target: self, action: #selector(BackVc))
-//        backView.addGestureRecognizer(back)
         let rowNib = UINib(nibName: CellConfingName.ClassTableViewCell, bundle: nil)
         Tv.register(rowNib, forCellReuseIdentifier: CellConfingName.ClassTableViewCell)
         

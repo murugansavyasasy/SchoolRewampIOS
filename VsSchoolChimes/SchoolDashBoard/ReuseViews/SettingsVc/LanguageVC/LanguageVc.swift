@@ -31,8 +31,8 @@ class LanguageVc: UIViewController {
         language(language: "Arabic", selected: false)]
 
     
-    var Language = ["English", "தமிழ்", "हिंदी", "ไทย", "العربية"]
-    var Buttontext = ["Confirm", "உறுதிப்படுத்தவும்", "पुष्टि करें", "ยืนยัน", "تأكيد"]
+    var Language = ["தமிழ்", "English","हिंदी", "ไทย", "العربية"]
+    var Buttontext = ["உறுதிப்படுத்தவும்","Confirm","पुष्टि करें", "ยืนยัน", "تأكيد"]
     var index:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class LanguageVc: UIViewController {
         SelectLangLabel.setFont(style: .title, size: FontSize.TitleSize)
         
         index = UserDefaults.standard.integer(forKey: "index")
-        Items[index ?? 0].selected = true
+        Items[index ?? 1].selected = true
         
 //        let defaults = UserDefaults.standard
 //        

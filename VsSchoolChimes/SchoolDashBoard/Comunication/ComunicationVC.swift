@@ -233,20 +233,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     func uiUUpdate(){
-        
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        BackBtn.imageView?.applyRTLFlip(Language == "ar")
-        fromTime.semanticContentAttribute = Language == "ar" ? .forceLeftToRight:.forceRightToLeft
-        toTime.semanticContentAttribute = Language == "ar" ? .forceLeftToRight:.forceRightToLeft
-        moveVoiceMessage.semanticContentAttribute = Language == "ar" ? .forceLeftToRight:.forceRightToLeft
-        moveTextmessage.semanticContentAttribute = Language == "ar" ? .forceLeftToRight:.forceRightToLeft
-        historyBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        moveVoiceMessage.imageView?.applyRTLFlip(Language == "ar")
-        historyBtn.imageView?.applyRTLFlip(Language == "ar")
-        moveTextmessage.imageView?.applyRTLFlip(Language == "ar")
-        
+        moveTextmessage.applyRightButton()
+        historyBtn.applyBackButton()
+        moveVoiceMessage.applyRightButton()
+        BackBtn.applyBackButton()
+        toTime.applyRightButton()
+        fromTime.applyRightButton()
         //MARK: FSCalander View
         Timinglbl.text = "00:00/03:00"
         calanderOuter.isHidden = true

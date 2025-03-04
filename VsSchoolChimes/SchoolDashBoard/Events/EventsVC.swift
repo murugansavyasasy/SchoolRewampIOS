@@ -462,8 +462,6 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
             
             // Present the alert
             self.present(alertController, animated: true, completion: nil)
-            
-//            animateIn()
         }else{
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)

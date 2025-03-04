@@ -21,7 +21,6 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
         pdfView.navigationDelegate = self
         
         imgView.image = img
-        print(selectedFileURL)
         if selectedFileURL != nil {
             imgView.isHidden = true
             pdfView.isHidden = false
@@ -31,11 +30,6 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
             pdfView.isHidden = true
         }
         loadPDF()
-//        outerView.layer.cornerRadius = 10
-//        outerView.layer.shadowColor = UIColor.black.cgColor
-//        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-//        outerView.layer.shadowRadius = 5
-//        outerView.layer.shadowOpacity = 0.3
     }
     private func loadPDF() {
        

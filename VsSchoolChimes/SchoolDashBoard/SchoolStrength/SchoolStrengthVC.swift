@@ -26,7 +26,7 @@ class SchoolStrengthVC: UIViewController {
         UIupdate()
         setupPieChart()
         setChartData()
-        
+        BackBtn.applyBackButton()
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
         Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
         

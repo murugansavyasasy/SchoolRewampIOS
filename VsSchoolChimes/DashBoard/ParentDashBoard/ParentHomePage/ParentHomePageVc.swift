@@ -78,8 +78,6 @@ class ParentHomePageVc: UIViewController {
         cellRegistration()
         //startPlaceholderRotation()
         addDoneButton()
-        
-      
         templateview.layer.cornerRadius = 10 // Adjust as needed
         templateview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Top-left and Top-right corners
         templateview.clipsToBounds = true // Ensures the corners are clipped
@@ -112,7 +110,6 @@ class ParentHomePageVc: UIViewController {
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
         
-        
         let searchImage  = UITapGestureRecognizer(target: self, action:#selector(SearchViewHidden))
         searchImgView.addGestureRecognizer(searchImage)
         
@@ -124,7 +121,6 @@ class ParentHomePageVc: UIViewController {
         
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-        
       
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         changeRollLbl.addGestureRecognizer(redirectGesture)
@@ -132,22 +128,11 @@ class ParentHomePageVc: UIViewController {
         let profiletap = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
         Profileimage.addGestureRecognizer(profiletap)
         Profileimage.isUserInteractionEnabled = true
-        
-       
     }
-    
-    
-
     
     @IBAction func ViewDetailsBtn(_ sender: Any) {
-        
-        print("clikcHappen")
         MenuRedirect.receiverAttendancereport(from: self)
-        
     }
-    
- 
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
      
@@ -232,22 +217,13 @@ class ParentHomePageVc: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("viewDidAppear - View has appeared on the screen.")
-        
         bottomCv.delegate = self
         bottomCv.dataSource = self
-        
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("viewWillDisappear - View is about to disappear.")
         currentIndex = -1
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print("viewDidDisappear - View has disappeared from the screen.")
-        
     }
     
     @IBAction func redirectAct() {
@@ -272,7 +248,6 @@ class ParentHomePageVc: UIViewController {
         playerLayer.opacity = 0.1
         playerLayer.videoGravity = .resizeAspectFill
         profileFullview.layer.addSublayer(playerLayer)
-        
         player.play()
     }
     
@@ -284,7 +259,7 @@ class ParentHomePageVc: UIViewController {
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = profileFullview.bounds
-        gradientLayer.colors = colours //[UIColor.parentClr.cgColor,UIColor.priority.cgColor]
+        gradientLayer.colors = colours
         gradientLayer.startPoint = CGPoint(x: xstart, y: ystart)  // Top-left
         gradientLayer.endPoint = CGPoint(x: 0.9, y: 0.9)    // Bottom-right
         profileFullview.layer.insertSublayer(gradientLayer, at: 0)
@@ -297,23 +272,6 @@ class ParentHomePageVc: UIViewController {
         bottomCv.register(UINib(nibName: CellConfingName.seeMore, bundle: nil), forCellWithReuseIdentifier: CellConfingName.seeMore)
         
     }
-    
-//    func setupSearchBar() {
-//        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
-//    }
-//
-//    func startPlaceholderRotation() {
-//        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-//            self?.updatePlaceholder()
-//        }
-//    }
-//
-//    func updatePlaceholder() {
-//        currentPlaceholderIndex = (currentPlaceholderIndex + 1) % MenuRedirect.items.count
-//        Searchbar.placeholder = CommonStringFile.Search.translated()  + MenuRedirect.items[currentPlaceholderIndex].translated()
-//    }
-    
-    
     
     @IBAction func openNotification(){
         let vc = NotificationViewController(nibName: nil, bundle: nil)
@@ -374,7 +332,9 @@ extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource
             displayedCategories.insert(newString, at: 5)
             heightStackview.constant = 110
             collectionBtn.isHidden = false
-            ButtonUIupdate()
+            homeworkView.layoutIfNeeded()
+            assignmentkView.layoutIfNeeded()
+            onlineMeetingView.layoutIfNeeded()
             
         } else {
             // Expand to show all items
