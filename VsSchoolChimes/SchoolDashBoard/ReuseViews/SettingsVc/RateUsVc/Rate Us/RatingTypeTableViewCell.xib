@@ -112,6 +112,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="AnySuggestionsLbl" destination="So9-Ge-gsW" id="nV0-XT-e4r"/>
+                <outlet property="SubmitBtn" destination="IKB-ZF-dKc" id="gqT-sq-YaE"/>
                 <outlet property="collectionview" destination="o5S-ck-yDX" id="bsU-lo-6Dq"/>
                 <outlet property="collectionviewheight" destination="A5c-GE-pBX" id="QeP-xn-EXJ"/>
                 <outlet property="suggestContetTxtView" destination="uza-Jh-az8" id="NRh-tc-4sW"/>

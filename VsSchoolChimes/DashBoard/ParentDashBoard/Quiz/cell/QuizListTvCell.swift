@@ -9,6 +9,7 @@ import UIKit
 
 class QuizListTvCell: UITableViewCell {
     
+    @IBOutlet weak var LevelView: UIView!
     @IBOutlet weak var CellView: UIView!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var SubjectLbl: UILabel!
@@ -27,13 +28,15 @@ class QuizListTvCell: UITableViewCell {
         CellView.layer.borderWidth = 1
         CellView.layer.borderColor = UIColor.gray.cgColor
         
-        LevelLbl.layer.masksToBounds = true
-        LevelLbl.layer.cornerRadius = 5
+        LevelView.layer.cornerRadius = 10
+        LevelView.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
+       
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         SubjectLbl.setFont(style: .body, size: FontSize.BodySize)
         LevelLbl.setFont(style: .title, size: FontSize.TitleSize)
         PlayBtn.setTitleFont(style: .body, size: FontSize.TitleSize)
+        PlayBtn.applyRightButton()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

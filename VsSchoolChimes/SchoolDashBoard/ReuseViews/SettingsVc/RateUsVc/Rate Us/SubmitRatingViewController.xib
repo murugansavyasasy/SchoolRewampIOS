@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubmitRatingViewController" customModule="VoiceSnap" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubmitRatingViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="AppreciateLbl" destination="aPK-d6-Brt" id="YYM-LE-iS7"/>
+                <outlet property="GobackBtn" destination="dOW-90-T7p" id="02N-OX-vh5"/>
+                <outlet property="ThankyouLbl" destination="W6n-UA-cKG" id="xDk-sa-QxT"/>
                 <outlet property="imgView" destination="BnJ-rL-X8c" id="QIi-ky-EIS"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Oko-uk-cGM"/>
             </connections>
