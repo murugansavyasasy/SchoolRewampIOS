@@ -27,7 +27,7 @@ class MenuRedirectHandler {
     var getValue = 1
     var items : [String] = [ MenuStringFile.Communication,MenuStringFile.ImagePdf,MenuStringFile.VideoUpload,MenuStringFile.NoticeBoard,MenuStringFile.LeaveRequests,MenuStringFile.Assignment,MenuStringFile.OnlineMeeting,MenuStringFile.Homework,MenuStringFile.AttendanceMarking,MenuStringFile.MessagesFromManagement,MenuStringFile.InteractionWithStudent,MenuStringFile.LessonPlan,MenuStringFile.PTM,MenuStringFile.SchoolClassEvents,MenuStringFile.SchoolNeeds,MenuStringFile.VeryImportantInfo,MenuStringFile.AbsenteesReport,MenuStringFile.SchoolStrength,MenuStringFile.DailyCollection,MenuStringFile.StudentReport,MenuStringFile.FeePendingReport,MenuStringFile.MarkYourAttendance,MenuStringFile.StaffWiseAttendanceReport]
     
-    var Imgitems : [String] = [ "Communication","ImagePdf","Upload Video","Notice Board","Request Leave","Assignment","Online Meeting","Homework","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+    var Imgitems : [String] = [ "Communication","ImagePdf","Upload Video","Notice Board","Request Leave","assignment","Online Meeting","Homework","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,/*ReceiverMenuItems.ExamTest,*/ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
     
@@ -69,11 +69,22 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
+//    func senderPtmNavigate(from viewController: UIViewController) {
+//        let vc = StaffPtmViewController(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
+//        
+//    }
     func senderPtmNavigate(from viewController: UIViewController) {
         let vc = StaffPtmViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
         
+        let transition = CATransition()
+        transition.duration = 0.3
+        transition.type = .fade
+        transition.subtype = .fromTop
+        viewController.view.window?.layer.add(transition, forKey: kCATransition)
+        viewController.present(vc, animated: false, completion: nil) // animated: false to avoid default animation
     }
     
     func senderEventNavigate(from viewController: UIViewController) {
@@ -127,7 +138,7 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    
+
     func senderStudentreportNavigate(from viewController: UIViewController) {
         let vc = ReportStudentListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen

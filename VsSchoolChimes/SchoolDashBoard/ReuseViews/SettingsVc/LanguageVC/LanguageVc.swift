@@ -31,8 +31,8 @@ class LanguageVc: UIViewController {
         language(language: "Arabic", selected: false)]
 
     
-    var Language = ["English", "தமிழ்", "हिंदी", "ไทย", "العربية"]
-    var Buttontext = ["Confirm", "உறுதிப்படுத்தவும்", "पुष्टि करें", "ยืนยัน", "تأكيد"]
+    var Language = ["தமிழ்", "English","हिंदी", "ไทย", "العربية"]
+    var Buttontext = ["உறுதிப்படுத்தவும்","Confirm","पुष्टि करें", "ยืนยัน", "تأكيد"]
     var index:Int?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +43,7 @@ class LanguageVc: UIViewController {
         SelectLangLabel.setFont(style: .title, size: FontSize.TitleSize)
         
         index = UserDefaults.standard.integer(forKey: "index")
-        Items[index ?? 0].selected = true
-        
-//        let defaults = UserDefaults.standard
-//        
-//        languageCode = defaults.string(forKey:DefaultsKeys.Language)!
+        Items[index ?? 1].selected = true
         baseview.layer.cornerRadius = Colornames.CORadius15
         
         ConfirmBtn.layer.cornerRadius = Colornames.CORadius10
@@ -63,8 +59,6 @@ class LanguageVc: UIViewController {
         tv.reloadData()
         
         tv.isScrollEnabled = false
-        
-        
         let nib = UINib(nibName: CellConfingName.LangTvCellTableViewCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:  CellConfingName.LangTvCellTableViewCell)
         
@@ -93,20 +87,6 @@ class LanguageVc: UIViewController {
             let value = UserDefaults.standard.integer(forKey: "passvalue")
             
             LanguageManager.shared.setLanguage(languageCode)
-            //
-            //                // Reload UI
-            //        reloadApplication(value: value)
-//            delegate?.backtohome()
-//            dismiss(animated: true)
-            //        let vc = TapBarVC(nibName: nil, bundle: nil)
-            //        vc.passedValue = value
-            //        vc.languageCode = languageCode
-            //        vc.modalPresentationStyle = .fullScreen
-            //        present(vc, animated: true)
-            // Reload the entire application
-//            let isRTL = (languageCode == "ar")  // Replace with your language-checking logic
-//                UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
-            
                        guard let window = UIApplication.shared.keyWindow else { return }
                        let storyboard = UIStoryboard(name: "SplashStoryboard", bundle: nil)
                        let initialViewController = storyboard.instantiateInitialViewController()
@@ -216,34 +196,6 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         }
     }
 
-    
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if let cell = tableView.rectForRow(at: indexPath) as? LangTvCellTableViewCell{
-//            cell.RadioImage.image = ImageName.checkedTick
-//        }
-//        ConfirmBtn.backgroundColor = UIColor.button
-//        
-//        selectedLanguage = Items[indexPath.row].language
-//        Items[indexPath.row].selected = true
-//        index = indexPath.row
-//        
-//        let userDefault = UserDefaults.standard
-//        
-//        if selectedLanguage == "Tamil" {
-//            languageCode = "ta-IN"
-//        } else if selectedLanguage == "Thai" {
-//            languageCode = "th"
-//        } else if selectedLanguage == "Hindi" {
-//            languageCode = "hi"
-//        } else if selectedLanguage == "English" {
-//            languageCode = "en"
-//        } else if selectedLanguage == "Arabic" {
-//            languageCode = "ar"
-//        }
-//    }
-    
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return  75
@@ -256,9 +208,6 @@ extension LanguageVc : UITableViewDelegate,UITableViewDataSource{
         self.baseview.layoutIfNeeded()
     }
 }
-
-
-
 
 struct language{
     let language:String

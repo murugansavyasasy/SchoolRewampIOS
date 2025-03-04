@@ -53,10 +53,7 @@ class ClassTimeTableViewController: UIViewController,UITableViewDataSource,UITab
         print("day",day)
         backBtn.setTitle(ReceiverMenuItems.ClassTimetable.translated(), for: .normal)
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
+        backBtn.applyBackButton()
         tv.register(UINib(nibName: CellConfingName.ClassTimeTableTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.ClassTimeTableTableViewCell)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)

@@ -32,10 +32,7 @@ class EventResiverVC: UIViewController, SelectNotice{
         super.viewDidLoad()
         
         backBtn.setTitle(button1.translated(), for: .normal)
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
+        backBtn.applyBackButton()
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)

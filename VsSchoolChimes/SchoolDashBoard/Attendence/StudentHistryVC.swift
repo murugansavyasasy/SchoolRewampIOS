@@ -44,7 +44,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var id = 1
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
-    //    var specificdata:[SpecificStudent] = [SpecificStudent(name: "Lakshmanan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Saranraj shanmugammmmmmmmmmmmmmmmmm", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Murugan", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Chandru", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533"),SpecificStudent(name: "Sathish", rollnumber: "Roll no : 173", admissionNo: "Admission no: 863533")]
     var specificdata: [SpecificStudent] = [
         SpecificStudent(name: "Aarav", rollnumber: "Roll no: 101", admissionNo: "Admission no: 100001"),
         SpecificStudent(name: "Bhavana", rollnumber: "Roll no: 102", admissionNo: "Admission no: 100002"),
@@ -95,10 +94,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         super.viewDidLoad()
         
         StyleAndTranslater()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-     BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-     BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-     BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        BackBtn.applyBackButton()
         dataVisibility = Array(repeating: false, count: specificdata.count)
         selectedRows = Array(repeating: false, count: specificdata.count)
         if id == 1{
@@ -216,12 +212,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             }
         }
         else{
-            //            for i in 0..<specificdata.count{
-            //                let indexPath = IndexPath(row: i, section: 0)
-            //                if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
-            //                    customCell.CheckBoxImgview.image = UIImage(named: "checked_Tick")
-            //                }
-            //            }
             isSelectAllEnabled.toggle()
             for i in 0..<specificdata.count {
                 let indexPath = IndexPath(row: i, section: 0)
@@ -339,11 +329,6 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         }
         
     }
-    
-    
-    //            func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    //                return UITableView.automaticDimension
-    //            }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -351,8 +336,6 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if id == 2{
             let cell = tableView.cellForRow(at: indexPath) as? StudentHistryTVC
-            //        studentData[indexPath.row].isAbsent.toggle()
-            // Ensure the cell exists before performing animation
             guard let cell = cell else { return }
             if studentData[indexPath.row].isAbsent == true{
                 // Create the flip animation

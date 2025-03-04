@@ -81,10 +81,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        Backbtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        Backbtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        Backbtn.imageView?.applyRTLFlip(Language == "ar")
+        Backbtn.applyBackButton()
   
         categoryWiseView.applyGradient(
             colors: [UIColor.blue,UIColor.systemTeal],

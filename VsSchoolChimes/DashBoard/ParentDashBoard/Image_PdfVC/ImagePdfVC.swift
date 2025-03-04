@@ -8,7 +8,7 @@
 import UIKit
 
 class ImagePdfVC: UIViewController {
-
+    
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var headinglabel: UILabel!
@@ -37,10 +37,7 @@ class ImagePdfVC: UIViewController {
         search.placeholder = "Search".translated()
         search.delegate = self
         addDoneButton()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
+        backBtn.applyBackButton()
         backBtn.setTitle(ReceiverMenuItems.ImagePdf.translated(), for: .normal)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -59,7 +56,7 @@ class ImagePdfVC: UIViewController {
             view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         }
     }
-
+    
     @IBAction func back(_ sender: Any) {
         
         dismiss(animated: true)
@@ -70,8 +67,8 @@ class ImagePdfVC: UIViewController {
         tv.dataSource = self
         tv.delegate = self
     }
-   
-
+    
+    
 }
 
 //MARK: Tableview Functions
@@ -139,8 +136,6 @@ extension ImagePdfVC : UITableViewDelegate,UITableViewDataSource{
         // Toggle the label between expanded and collapsed states
         let isExpanded = label.numberOfLines == 0
         label.numberOfLines = isExpanded ? 3 : 0
-        
-        // Update the label text with the appropriate "See more" or "See less" state
         label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
         
         // Animate the cell height change
@@ -162,12 +157,10 @@ extension ImagePdfVC: UISearchBarDelegate{
         
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
-            
+        
         let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-
         toolbar.setItems([flexibleSpace,doneButton], animated: false)
         
         search.inputAccessoryView = toolbar
@@ -177,7 +170,7 @@ extension ImagePdfVC: UISearchBarDelegate{
         
         search.resignFirstResponder()
     }
-
+    
 }
 
 

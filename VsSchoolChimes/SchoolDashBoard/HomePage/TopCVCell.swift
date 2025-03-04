@@ -34,9 +34,4 @@ class TopCVCell: UICollectionViewCell {
         fullview.layer.masksToBounds = true
        
     }
-
-    
-
-    
-    
 }

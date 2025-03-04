@@ -14,7 +14,6 @@ class AttachmentCVCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         outerView.layer.cornerRadius = 10
-//        outerView.layer.backgroundColor = UIColor.color.cgColor
     }
 
 }

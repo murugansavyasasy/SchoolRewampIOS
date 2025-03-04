@@ -39,7 +39,10 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
     
-    var advertisements: [String] = []
+    var advertisements: [String] = ["Ad 1: Special Offer",
+                                    "Ad 2: Final Sale",
+                                    "Ad 3: New Arrivals",
+                                    "Ad 4: Discount Up to 50%"]
     var filteredItems: [String] = []
     let menuName = MenuStringFile()
     var getValue : Int!
@@ -58,18 +61,13 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var isShowingAll = false
     var displayedCategories: [String] = []
     let newString = "Add"
-    
+    deinit {
+        timer?.invalidate()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         StyleAndTranslater()
-        advertisements = [
-            "Ad 1: Special Offer",
-            "Ad 2: Final Sale",
-            "Ad 3: New Arrivals",
-            "Ad 4: Discount Up to 50%"
-        ]
-        
         setupVideoBackground()
         filteredItems = MenuRedirect.items
         displayedCategories = Array(filteredItems.prefix(6))
@@ -81,12 +79,8 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         addDoneButton()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
-        
-        
         Searchbar.delegate = self
         searchHeightCon.constant = 0
-        //        TopCv.delegate = self
-        //        TopCv.dataSource = self
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
         
@@ -108,7 +102,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let profileTap =  UITapGestureRecognizer(target: self, action: #selector(OpenProfile))
         schoolLogoImg.addGestureRecognizer(profileTap)
         schoolLogoImg.isUserInteractionEnabled = true
-        
+        ButtonUIupdate()
         
     }
     
@@ -120,14 +114,11 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
             endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
         )
-        
         loginDetailView.applyGradient(
             colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
-        
-        ButtonUIupdate()
     }
     
     func StyleAndTranslater(){
@@ -149,8 +140,6 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
-        
-        
         //MARK: Translation
         Searchbar.placeholder = CommonStringFile.Search.translated()
     }
@@ -158,20 +147,19 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     //MARK: Apply gradient for the UIButton
     func ButtonUIupdate(){
-        
         configureButton(
             homeworkView, homeworkBtn,
             title: MenuStringFile.OnlineMeeting,
             imageName: UIImage(named: "assignment"),
-            gradientColors:[UIColor.green,UIColor.purple],
+            gradientColors:[UIColor.green,UIColor.blue],
             opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
         // Configure assignmentkBtn
         configureButton(
             assignmentkView, assignmentkBtn,
-            title: MenuStringFile.NoticeBoard,
-            imageName: UIImage(named: "Notice Board"),
+            title: MenuStringFile.Homework.translated(),
+            imageName: UIImage(named: "Homework"),
             gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
             lightenFactor: 0.6 // 40% lighter
         )
@@ -180,13 +168,13 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         homeworkLbl.setFont(style: .body, size: 12)
         assignmentkLbl.text = MenuStringFile.Assignment.translated()
         onlineMeetingLbl.text = MenuStringFile.OnlineMeeting.translated()
-        homeworkLbl.text = MenuStringFile.NoticeBoard.translated()
+        homeworkLbl.text = MenuStringFile.Homework.translated()
         // Configure onlineMeetingBtn
         configureButton(
             onlineMeetingView, onlineMeetingBtn,
             title: MenuStringFile.Assignment,
             imageName: UIImage(named: "online_meeting"),
-            gradientColors:[UIColor.yellow,UIColor.red],opacity: 0.4, // 70% opacity
+            gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
             lightenFactor: 0.8// 40% lighter
         )
         
@@ -238,39 +226,15 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("viewWillAppear - View is about to appear.")
-        //
-        //        TopCv.reloadData()
-        //        TopCv.delegate = self
-        //        TopCv.dataSource = self
         bottomCv.delegate = self
         bottomCv.dataSource = self
-        bottomCv.reloadData()
         filteredItems = MenuRedirect.items
-        //restartAnimations()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("viewDidAppear - View has appeared on the screen.")
-        
-        bottomCv.delegate = self
-        bottomCv.dataSource = self
-        // restartAnimations()
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("viewWillDisappear - View is about to disappear.")
         currentIndex = -1
     }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        print("viewDidDisappear - View has disappeared from the screen.")
-        
-    }
-    
     @IBAction func ViewDetailsAct(_ sender: Any) {
         
         let vc  = LocationHistoryVc(nibName: nil, bundle: nil)
@@ -296,14 +260,6 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         TopCv.register(UINib(nibName: CellConfingName.PiechartCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PiechartCVCell)
     }
-    
-    
-    
-    deinit {
-        timer?.invalidate()
-    }
-    
-    
     
     func restartAnimations() {
         
@@ -333,7 +289,9 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             displayedCategories.insert(newString, at: 5)
             heightStackview.constant = 110
             collectionBtn.isHidden = false
-            ButtonUIupdate()
+            homeworkView.layoutIfNeeded()
+            assignmentkView.layoutIfNeeded()
+            onlineMeetingView.layoutIfNeeded()
         } else {
             // Expand to show all items
             displayedCategories = filteredItems
@@ -354,7 +312,6 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let nextIndexPath = IndexPath(item: nextIndex, section: 0)
         TopCv.scrollToItem(at: nextIndexPath, at: .right, animated: true)
         currentIndex = nextIndex
-        
         pageContorler.currentPage = currentIndex
         
     }
@@ -411,18 +368,14 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     cell.GradientView.animateView(enable: false)
                 }
-                
-                
                 return cell
             }
             
         }else{
-            
             if indexPath.row == 0 {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.PiechartCVCell , for: indexPath) as! PiechartCVCell
                 return cell
-            }
-            else{
+            }else{
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell , for: indexPath) as! TopCVCell
                 
                 return cell
@@ -439,9 +392,6 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
         if indexPath.row == 6 {
             return
         }
-        
-        
-        
         if collectionView == bottomCv{
             
             let menuItem = MenuRedirect.items[indexPath.row].translated()
@@ -526,8 +476,6 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             
         }
-        
-        
     }
 }
 
@@ -549,9 +497,7 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
         
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height + 10)
-        
     }
-    
 }
 
 
@@ -559,16 +505,12 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
 extension HomePageVc: UISearchBarDelegate{
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
         Searchbar.endEditing(true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         Searchbar.resignFirstResponder()
     }
-    
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         searchItem = 1
@@ -609,8 +551,6 @@ extension HomePageVc: UISearchBarDelegate{
         let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
         
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        
         toolbar.setItems([flexibleSpace,doneButton], animated: false)
         
         Searchbar.inputAccessoryView = toolbar

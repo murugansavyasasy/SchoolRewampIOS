@@ -92,11 +92,7 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
                     object: nil
                 )
         
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.imageView?.applyRTLFlip(Language == "ar")        
-        backBtn.setTitle(ReceiverMenuItems.OnlineMeeting.translated(), for: .normal)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        backBtn.applyBackButton()
         StyleAndTranslater()
         setupTimePicker()
         keyboardDonebtn()
