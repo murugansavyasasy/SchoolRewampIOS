@@ -13,10 +13,18 @@ class FAQViewController: UIViewController {
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var outerView: UIView!
     
-    
     var expandedIndexPaths: Set<IndexPath> = []
     var index : Int? = nil
     var passValue = 1
+    
+    let qaList: [SchoolQA] = [
+        SchoolQA(question: "Does the school have a library?", answer: "Yes, the school has a well-stocked library with various books and study materials."),
+        SchoolQA(question: "Are there sports facilities available?", answer: "Yes, the school has a gymnasium, a football field, and a basketball court."),
+        SchoolQA(question: "Does the school provide cafeteria services?", answer: "Yes, the cafeteria offers a variety of healthy meal options for students."),
+        SchoolQA(question: "Are there computer labs in the school?", answer: "Yes, the school has multiple computer labs with internet access for students."),
+        SchoolQA(question: "Does the school have medical facilities?", answer: "Yes, there is a health center with a nurse available during school hours.")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,12 +64,14 @@ class FAQViewController: UIViewController {
 
 extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return qaList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.FAQTableViewCell, for: indexPath) as! FAQTableViewCell
-        cell.textview.isHidden = true
+        cell.QuestionLabel.text = qaList[indexPath.row].question
+        cell.AnswerLbl.text = qaList[indexPath.row].answer
+       // cell.AnswerLbl.isHidden = true
         return cell
     }
     
@@ -70,29 +80,30 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FAQTableViewCell
         
-        cell.textview.isHidden = false
-        
-        index = indexPath.row
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.beginUpdates()
-        tableView.endUpdates()
+        cell.AnswerLbl.isHidden = false
+        cell.QuestionLabel.isHidden = false
+        tableview.reloadData()
         
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FAQTableViewCell
-        cell.textview.isHidden = true
+        cell.AnswerLbl.isHidden = true
+        cell.QuestionLabel.isHidden = false
+        tableview.reloadData()
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        if index == indexPath.row{
-            return UITableView.automaticDimension
-        }
-        
-        return 100
-        
+        return UITableView.automaticDimension
     }
     
 }
+
+
+struct SchoolQA {
+    var question: String
+    var answer: String
+}
+
+
