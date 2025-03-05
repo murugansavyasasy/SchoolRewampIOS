@@ -76,15 +76,9 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
           dicriptContent.setNeedsLayout()
           dicriptContent.layoutIfNeeded()
         
-       
-
-        
-//        let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
-//        collectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
         collectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
         
-       
         collectionview.delegate = self
         collectionview.dataSource = self
         
@@ -116,7 +110,6 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         datelbl.isHidden = hide
         dicriptContent.isHidden = hide
         TitleLbl.isHidden = hide
-//        pinImage.isHidden = hide
         Pinview.isHidden = hide
         collectionview.isHidden = hide
         pagecontroller.isHidden = hide

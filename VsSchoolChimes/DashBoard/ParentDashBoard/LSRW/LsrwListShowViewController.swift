@@ -20,8 +20,6 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
   
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
-    @IBOutlet weak var nodataLbl: UILabel!
-    @IBOutlet weak var nodataView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var backBtn: UIButton!
@@ -126,8 +124,6 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         backBtn.setTitle(formattedText, for: .normal)
         backBtn.titleLabel?.numberOfLines = 0
         backBtn.titleLabel?.lineBreakMode = .byWordWrapping
-        nodataView.isHidden = true
-        nodataLbl.isHidden = true
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         
@@ -138,7 +134,6 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-        bgView.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -323,14 +318,10 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        nodataView.isHidden = true
-        nodataLbl.isHidden = true
         searchBar.endEditing(true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        nodataView.isHidden = true
-        nodataLbl.isHidden = true
         searchBar.resignFirstResponder()
     }
     

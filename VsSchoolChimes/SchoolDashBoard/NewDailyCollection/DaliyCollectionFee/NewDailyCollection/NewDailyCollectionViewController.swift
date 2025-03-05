@@ -23,7 +23,6 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     }
     
     
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var caleView: UIView!
@@ -37,7 +36,6 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     @IBOutlet weak var classWiseView: UIView!
     @IBOutlet weak var calendarView: UIViewX!
     @IBOutlet weak var modeView: UIView!
-    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var CategoryLbl: UILabel!
@@ -91,6 +89,10 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         CategoryLbl.textColor = .white
         ClassLbl.textColor = .gray
         ModeLbl.textColor = .gray
+        
+        categoryWiseView.layer.cornerRadius = 10
+        classWiseView.layer.cornerRadius = 10
+        modeView.layer.cornerRadius = 10
         
         norecordLbl.isHidden = true
         let dateFormatter = DateFormatter()

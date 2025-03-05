@@ -12,6 +12,7 @@ class SuggestionsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var name: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
+        name.setFont(style: .body, size: FontSize.BodySize)
     }
 
     

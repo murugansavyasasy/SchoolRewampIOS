@@ -9,59 +9,38 @@ import UIKit
 
 class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
     
+    @IBOutlet weak var ArrowImgview: UIImageView!
+    @IBOutlet weak var AnswerLbl: UILabel!
     @IBOutlet weak var QuestionLabel: UILabel!
-    @IBOutlet weak var stackview: UIStackView!
-    @IBOutlet weak var textview: UITextView!
     @IBOutlet weak var cellView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        textview.isHidden = true
-        textview.text = CommonStringFile.EnterTextHere.translated()
-        textview.textColor = UIColor.lightGray
-        textview.isScrollEnabled = false
-        textview.delegate = self
         cellView.layer.cornerRadius = Colornames.CORadius10
         cellView.layer.shadowColor = UIColor.black.cgColor
         cellView.layer.shadowOpacity = 0.5
         cellView.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellView.layer.shadowRadius = 3
+        cellView.layer.borderWidth = 1
+        cellView.layer.borderColor = UIColor.gray.cgColor
         cellView.layer.masksToBounds = false
         
         QuestionLabel.setFont(style: .title, size: FontSize.TitleSize)
+        AnswerLbl.setFont(style: .body, size: FontSize.BodySize)
+        AnswerLbl.isHidden = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
-        // Configure the view for the selected state
+//        if selected == true{
+//            AnswerLbl.isHidden = false
+//        }else{
+//            AnswerLbl.isHidden = true
+//        }
+      
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
-    }
     
-    
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textview.text.isEmpty {
-            textview.text = CommonStringFile.EnterTextHere.translated()
-            textview.textColor = UIColor.lightGray
-        }
-    }
-    
-    func textViewDidChange(_ textView: UITextView) {
-        // Notify the tableView to adjust the cell height
-        guard let tableView = self.superview as? UITableView else { return }
-        
-        // Disable animations for smoother resizing
-        UIView.setAnimationsEnabled(false)
-        tableView.beginUpdates()
-        tableView.endUpdates()
-        UIView.setAnimationsEnabled(true)
-    }
 }

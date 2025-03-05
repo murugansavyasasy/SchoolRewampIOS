@@ -26,31 +26,29 @@
                     <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wv6-yC-4JQ">
-                            <rect key="frame" x="0.0" y="10" width="393" height="699"/>
+                            <rect key="frame" x="8" y="10" width="377" height="699"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="wv6-yC-4JQ" firstAttribute="top" secondItem="fFK-zA-Bjh" secondAttribute="top" constant="10" id="TY0-lz-pK0"/>
-                        <constraint firstAttribute="trailing" secondItem="wv6-yC-4JQ" secondAttribute="trailing" id="VQs-OX-Hhi"/>
+                        <constraint firstAttribute="trailing" secondItem="wv6-yC-4JQ" secondAttribute="trailing" constant="8" id="VQs-OX-Hhi"/>
                         <constraint firstAttribute="bottom" secondItem="wv6-yC-4JQ" secondAttribute="bottom" id="Ypq-sl-Zrs"/>
-                        <constraint firstItem="wv6-yC-4JQ" firstAttribute="leading" secondItem="fFK-zA-Bjh" secondAttribute="leading" id="e3O-Ee-1ue"/>
+                        <constraint firstItem="wv6-yC-4JQ" firstAttribute="leading" secondItem="fFK-zA-Bjh" secondAttribute="leading" constant="8" id="e3O-Ee-1ue"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEw-cc-9tG">
                     <rect key="frame" x="0.0" y="59" width="393" height="50"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rdt-uw-D5U">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rdt-uw-D5U">
                             <rect key="frame" x="10" y="7" width="373" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="5Aw-wV-w04"/>
                             </constraints>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Message From Management" image="chevron.backward" catalog="system">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
+                            <state key="normal" title="Message From Management" image="chevron.left" catalog="system"/>
                             <connections>
                                 <action selector="backAct" destination="-1" eventType="touchUpInside" id="0lc-4R-s1J"/>
                             </connections>
@@ -80,7 +78,7 @@
         </view>
     </objects>
     <resources>
-        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

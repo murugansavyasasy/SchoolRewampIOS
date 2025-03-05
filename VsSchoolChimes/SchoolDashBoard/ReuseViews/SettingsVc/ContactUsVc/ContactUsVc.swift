@@ -9,8 +9,7 @@ import UIKit
 
 class ContactUsVc: UIViewController {
 
-   
-    @IBOutlet weak var ContactusHeader: UILabel!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var tv: UITableView!
     
@@ -22,8 +21,14 @@ class ContactUsVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        ContactusHeader.text = MenuTapbar.Contact_Us.translated()
-        ContactusHeader.setFont(style: .header, size: 20)
+        BackBtn.setTitle(MenuTapbar.Contact_Us.translated(), for: .normal)
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        
+        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
+        
         tv.dataSource = self
         tv.delegate = self
         let nib = UINib(nibName: CellConfingName.ContactUsTVCell, bundle: nil)

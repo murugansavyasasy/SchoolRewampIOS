@@ -40,12 +40,20 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     let tapColor = Colornames.topBackgroundCLr1
     var playIndex :Int?
     var AudioPlayUrl: String?
+    var passValue = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         buttons()
 
         StyleAndTranslate()
+        
+        if passValue == 1{
+            NameLbl.text = ""
+            StandardLbl.text = ""
+        }
+        
+        
         backBtn.applyBackButton()
         ButtonStyle()
         // Do any additional setup after loading the view.
@@ -58,7 +66,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     }
 
     override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
+        if passValue == 1{
+            view.backgroundColor = .topBackgroundCLr
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+           
+        }else{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
     }
     
     //MARK: StyleAndTranslate

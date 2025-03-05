@@ -21,51 +21,62 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYd-ft-7iG">
                         <rect key="frame" x="5" y="10" width="310" height="196"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Online Quiz" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qjq-0J-ZP4">
-                                <rect key="frame" x="8" y="8" width="292" height="20.333333333333329"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online Quiz" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qjq-0J-ZP4">
+                                <rect key="frame" x="8" y="36" width="292" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Play Quiz games to imprve the Learnings in a funnier way it will reduce the stress and Improve the Brain Activities" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Od-d2-3oU">
-                                <rect key="frame" x="8" y="36.333333333333343" width="294" height="81.333333333333314"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Play Quiz games to imprve the Learnings in a funnier way it will reduce the stress and Improve the Brain Activities" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Od-d2-3oU">
+                                <rect key="frame" x="8" y="64.333333333333329" width="294" height="52.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subject : Tamil" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozh-G0-byG">
+                                <rect key="frame" x="8" y="124.66666666666664" width="292" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Subject : Tamil" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozh-G0-byG">
-                                <rect key="frame" x="8" y="125.66666666666666" width="292" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCi-eC-PnL">
+                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCi-eC-PnL">
                                 <rect key="frame" x="8" y="153" width="100" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="dEe-pr-22g"/>
                                     <constraint firstAttribute="width" constant="100" id="pLl-dT-Bfe"/>
                                 </constraints>
-                                <inset key="imageEdgeInsets" minX="4" minY="5" maxX="2.2250738585072014e-308" maxY="3"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Play Now" image="play.circle" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sg6-oK-gZf">
-                                <rect key="frame" x="238" y="2" width="70" height="21"/>
-                                <color key="backgroundColor" red="0.91976243260000001" green="0.49103409529999997" blue="0.53573232559999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="xEz-2r-1Zu"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15 Questions" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K5C-kP-fFh">
                                 <rect key="frame" x="128" y="168" width="174" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pI-yN-eXK" userLabel="LevelView">
+                                <rect key="frame" x="233" y="0.0" width="77" height="28"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Level 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sg6-oK-gZf">
+                                        <rect key="frame" x="2" y="2" width="73" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                <constraints>
+                                    <constraint firstItem="Sg6-oK-gZf" firstAttribute="leading" secondItem="9pI-yN-eXK" secondAttribute="leading" constant="2" id="HPa-pv-9Wt"/>
+                                    <constraint firstItem="Sg6-oK-gZf" firstAttribute="top" secondItem="9pI-yN-eXK" secondAttribute="top" constant="2" id="NDx-G2-JZl"/>
+                                    <constraint firstAttribute="width" constant="77" id="Snz-hJ-QVU"/>
+                                    <constraint firstAttribute="bottom" secondItem="Sg6-oK-gZf" secondAttribute="bottom" constant="2" id="dBu-rk-mCH"/>
+                                    <constraint firstAttribute="trailing" secondItem="Sg6-oK-gZf" secondAttribute="trailing" constant="2" id="jNu-t6-v7b"/>
+                                    <constraint firstAttribute="height" constant="28" id="yFm-dm-wtH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -80,12 +91,12 @@
                             <constraint firstAttribute="trailing" secondItem="Qjq-0J-ZP4" secondAttribute="trailing" constant="10" id="Rby-oT-sJp"/>
                             <constraint firstItem="Qjq-0J-ZP4" firstAttribute="leading" secondItem="YYd-ft-7iG" secondAttribute="leading" constant="8" id="Vbb-Hu-SPL"/>
                             <constraint firstItem="ozh-G0-byG" firstAttribute="top" secondItem="8Od-d2-3oU" secondAttribute="bottom" constant="8" id="bUq-a2-UYa"/>
+                            <constraint firstItem="Qjq-0J-ZP4" firstAttribute="top" secondItem="9pI-yN-eXK" secondAttribute="bottom" constant="8" id="glJ-gr-Dud"/>
                             <constraint firstItem="ozh-G0-byG" firstAttribute="leading" secondItem="YYd-ft-7iG" secondAttribute="leading" constant="8" id="idr-V5-bWE"/>
-                            <constraint firstItem="Qjq-0J-ZP4" firstAttribute="top" secondItem="YYd-ft-7iG" secondAttribute="top" constant="8" id="loA-QP-3iH"/>
                             <constraint firstItem="oCi-eC-PnL" firstAttribute="top" secondItem="ozh-G0-byG" secondAttribute="bottom" constant="8" id="n2e-Tb-Dcv"/>
-                            <constraint firstAttribute="trailing" secondItem="Sg6-oK-gZf" secondAttribute="trailing" constant="2" id="stN-9L-wNA"/>
+                            <constraint firstAttribute="trailing" secondItem="9pI-yN-eXK" secondAttribute="trailing" id="vDc-Yj-SFp"/>
                             <constraint firstItem="K5C-kP-fFh" firstAttribute="leading" secondItem="oCi-eC-PnL" secondAttribute="trailing" constant="20" id="vVT-4e-Mjo"/>
-                            <constraint firstItem="Sg6-oK-gZf" firstAttribute="top" secondItem="YYd-ft-7iG" secondAttribute="top" constant="2" id="xvI-Sv-Kej"/>
+                            <constraint firstItem="9pI-yN-eXK" firstAttribute="top" secondItem="YYd-ft-7iG" secondAttribute="top" id="x3Y-6G-C2P"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -101,6 +112,7 @@
                 <outlet property="CellView" destination="YYd-ft-7iG" id="S7r-3W-5UZ"/>
                 <outlet property="DescriptionLbl" destination="8Od-d2-3oU" id="mGE-Ab-bvm"/>
                 <outlet property="LevelLbl" destination="Sg6-oK-gZf" id="3p5-7Y-Vsx"/>
+                <outlet property="LevelView" destination="9pI-yN-eXK" id="498-q0-sDq"/>
                 <outlet property="PlayBtn" destination="oCi-eC-PnL" id="WPG-vf-ThW"/>
                 <outlet property="SubjectLbl" destination="ozh-G0-byG" id="pMA-wJ-RIj"/>
                 <outlet property="TitleLbl" destination="Qjq-0J-ZP4" id="f6A-Oh-zfQ"/>
@@ -112,6 +124,9 @@
         <image name="play.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

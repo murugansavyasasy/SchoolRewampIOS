@@ -12,8 +12,8 @@ protocol RatingDelegate{
 }
 class RateUsViewController: UIViewController{
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
-    @IBOutlet weak var RateusHeading: UILabel!
     @IBOutlet weak var tableview: UITableView!
     var isSelected:Bool = false
     var passValue = 1
@@ -21,8 +21,12 @@ class RateUsViewController: UIViewController{
         super.viewDidLoad()
        
         
-        RateusHeading.text = MenuTapbar.Rate_Us.translated()
-        RateusHeading.setFont(style: .header, size: 20)
+        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        BackBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
+        BackBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
+        BackBtn.imageView?.applyRTLFlip(Language == "ar")
+        
+        BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
         UiUpdate()
         
     }

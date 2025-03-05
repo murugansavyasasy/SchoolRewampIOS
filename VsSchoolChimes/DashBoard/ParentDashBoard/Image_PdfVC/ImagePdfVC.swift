@@ -24,8 +24,16 @@ class ImagePdfVC: UIViewController {
         Video(id: "5", name: "Debugging in Xcode", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4", description: "Tips and tricks for efficient debugging in Xcode.", readed: false,hasAnimated: true, img: nil),
         Video(id: "6", name: "Publishing to App Store", url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", description: "Step-by-step guide to publishing an app on the App Store.", readed: false,hasAnimated: true, img: nil)
     ]
+    
+    var passValue = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if passValue == 1 {
+            NameLbl.text = ""
+            StandardLbl.text = ""
+        }
         search.placeholder = "Search".translated()
         search.delegate = self
         addDoneButton()
@@ -39,7 +47,14 @@ class ImagePdfVC: UIViewController {
         CellRegistre()
     }
     override func viewDidLayoutSubviews() {
-        view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        
+        if passValue == 1{
+            view.backgroundColor = .topBackgroundCLr
+            view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+           
+        }else{
+            view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+        }
     }
     
     @IBAction func back(_ sender: Any) {

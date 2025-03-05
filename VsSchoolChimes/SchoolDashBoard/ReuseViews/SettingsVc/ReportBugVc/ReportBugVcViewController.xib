@@ -13,9 +13,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportBugVcViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="0GI-RM-qsb" id="MDj-8R-Xlf"/>
                 <outlet property="BugsTextview" destination="jM9-T9-Jfa" id="NXb-sI-ssP"/>
                 <outlet property="ModuleDropDown" destination="PKA-7M-iug" id="wbB-3Q-CAL"/>
-                <outlet property="ReportHeading" destination="6Gr-Jo-h5w" id="ldx-kD-IXW"/>
                 <outlet property="collectionView" destination="7bI-aj-cEW" id="pJM-dE-ZQc"/>
                 <outlet property="outerView" destination="saK-iD-kGY" id="e1t-Vr-siP"/>
                 <outlet property="selectModuleLbl" destination="gce-HM-DUe" id="kxV-bD-prq"/>
@@ -35,15 +35,14 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="saK-iD-kGY">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="771"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0GI-RM-qsb">
-                                    <rect key="frame" x="10" y="5" width="30" height="35"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0GI-RM-qsb">
+                                    <rect key="frame" x="10" y="5" width="318" height="35"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="30" id="FgL-Pd-jel"/>
                                         <constraint firstAttribute="height" constant="35" id="LPv-v0-Dhw"/>
                                     </constraints>
                                     <color key="tintColor" systemColor="labelColor"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" image="chevron.left" catalog="system">
+                                    <state key="normal" title="Report Bug" image="chevron.left" catalog="system">
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                     </state>
                                     <connections>
@@ -188,26 +187,18 @@
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                     </state>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Report a bug" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gr-Jo-h5w">
-                                    <rect key="frame" x="40" y="9.3333333333333268" width="288" height="26.333333333333329"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" name="topBackgroundCLr"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="l7M-L4-UsU" secondAttribute="trailing" constant="20" id="4pt-v1-SGr"/>
                                 <constraint firstItem="A1v-sh-WI5" firstAttribute="top" secondItem="l7M-L4-UsU" secondAttribute="bottom" constant="5" id="JHP-wR-ZvG"/>
-                                <constraint firstItem="l7M-L4-UsU" firstAttribute="leading" secondItem="6Gr-Jo-h5w" secondAttribute="trailing" constant="10" id="OW4-My-0kg"/>
                                 <constraint firstAttribute="height" constant="771" id="UaU-ix-8bS"/>
                                 <constraint firstItem="A1v-sh-WI5" firstAttribute="leading" secondItem="saK-iD-kGY" secondAttribute="leading" id="XnT-jF-kXt"/>
+                                <constraint firstItem="l7M-L4-UsU" firstAttribute="top" secondItem="saK-iD-kGY" secondAttribute="top" constant="5" id="Z3X-Zu-5rj"/>
                                 <constraint firstAttribute="bottom" secondItem="A1v-sh-WI5" secondAttribute="bottom" id="hjM-57-bb1"/>
                                 <constraint firstItem="0GI-RM-qsb" firstAttribute="leading" secondItem="saK-iD-kGY" secondAttribute="leading" constant="10" id="mJf-vm-wQ3"/>
-                                <constraint firstItem="l7M-L4-UsU" firstAttribute="centerY" secondItem="6Gr-Jo-h5w" secondAttribute="centerY" id="rMn-kk-epj"/>
-                                <constraint firstItem="6Gr-Jo-h5w" firstAttribute="centerY" secondItem="0GI-RM-qsb" secondAttribute="centerY" id="sAh-38-x9r"/>
                                 <constraint firstItem="0GI-RM-qsb" firstAttribute="top" secondItem="saK-iD-kGY" secondAttribute="top" constant="5" id="t3I-2U-yOX"/>
-                                <constraint firstItem="6Gr-Jo-h5w" firstAttribute="leading" secondItem="0GI-RM-qsb" secondAttribute="trailing" id="yS4-Fa-wjr"/>
+                                <constraint firstItem="l7M-L4-UsU" firstAttribute="leading" secondItem="0GI-RM-qsb" secondAttribute="trailing" constant="10" id="u2e-C5-znK"/>
                                 <constraint firstAttribute="trailing" secondItem="A1v-sh-WI5" secondAttribute="trailing" id="yq5-Er-5ef"/>
                             </constraints>
                         </view>

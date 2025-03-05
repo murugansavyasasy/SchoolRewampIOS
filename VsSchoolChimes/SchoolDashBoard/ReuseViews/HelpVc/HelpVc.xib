@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HelpVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="HelppageHeader" destination="XIo-ja-QIU" id="fdI-bU-Xwk"/>
-                <outlet property="outerView" destination="6Mh-qZ-q3o" id="LVv-2L-byh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,74 +20,44 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8cE-Ta-18H">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="818"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Support" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIo-ja-QIU">
+                    <rect key="frame" x="16" y="64" width="367" height="25.333333333333329"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JGE-ag-cjQ">
+                    <rect key="frame" x="0.0" y="99.333333333333314" width="393" height="718.66666666666674"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Mh-qZ-q3o">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="104.33333333333333"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact Support" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XIo-ja-QIU">
-                                    <rect key="frame" x="16" y="69" width="361" height="25.333333333333329"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                    <nil key="textColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="XIo-ja-QIU" secondAttribute="trailing" constant="16" id="Pg9-0p-nwr"/>
-                                <constraint firstItem="XIo-ja-QIU" firstAttribute="leading" secondItem="6Mh-qZ-q3o" secondAttribute="leading" constant="16" id="YBl-ib-Eab"/>
-                                <constraint firstAttribute="bottom" secondItem="XIo-ja-QIU" secondAttribute="bottom" constant="10" id="dva-0i-H7z"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JGE-ag-cjQ">
-                            <rect key="frame" x="0.0" y="104.33333333333331" width="393" height="713.66666666666674"/>
-                            <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kfg-Py-muE">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="713.66666666666663"/>
-                                    <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                </tableView>
-                            </subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="kfg-Py-muE">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="718.66666666666663"/>
                             <color key="backgroundColor" systemColor="systemGray6Color"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="kfg-Py-muE" secondAttribute="bottom" id="3es-c2-vHg"/>
-                                <constraint firstItem="kfg-Py-muE" firstAttribute="top" secondItem="JGE-ag-cjQ" secondAttribute="top" id="FvD-pb-aZ9"/>
-                                <constraint firstAttribute="trailing" secondItem="kfg-Py-muE" secondAttribute="trailing" id="Q86-22-ieB"/>
-                                <constraint firstItem="kfg-Py-muE" firstAttribute="leading" secondItem="JGE-ag-cjQ" secondAttribute="leading" id="pjG-Pd-a0P"/>
-                            </constraints>
-                        </view>
+                        </tableView>
                     </subviews>
-                    <color key="backgroundColor" name="topBackgroundCLr"/>
+                    <color key="backgroundColor" systemColor="systemGray6Color"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="JGE-ag-cjQ" secondAttribute="trailing" id="71H-gR-ssn"/>
-                        <constraint firstAttribute="bottom" secondItem="JGE-ag-cjQ" secondAttribute="bottom" id="9DQ-zQ-F8E"/>
-                        <constraint firstItem="6Mh-qZ-q3o" firstAttribute="leading" secondItem="8cE-Ta-18H" secondAttribute="leading" id="Lnu-Vb-8cg"/>
-                        <constraint firstItem="6Mh-qZ-q3o" firstAttribute="top" secondItem="8cE-Ta-18H" secondAttribute="top" id="Nov-Jn-hI1"/>
-                        <constraint firstItem="JGE-ag-cjQ" firstAttribute="leading" secondItem="8cE-Ta-18H" secondAttribute="leading" id="cZe-FB-IiF"/>
-                        <constraint firstItem="JGE-ag-cjQ" firstAttribute="top" secondItem="6Mh-qZ-q3o" secondAttribute="bottom" id="wGg-kl-eZc"/>
-                        <constraint firstAttribute="trailing" secondItem="6Mh-qZ-q3o" secondAttribute="trailing" id="y1F-Dp-AA4"/>
+                        <constraint firstAttribute="bottom" secondItem="kfg-Py-muE" secondAttribute="bottom" id="3es-c2-vHg"/>
+                        <constraint firstItem="kfg-Py-muE" firstAttribute="top" secondItem="JGE-ag-cjQ" secondAttribute="top" id="FvD-pb-aZ9"/>
+                        <constraint firstAttribute="trailing" secondItem="kfg-Py-muE" secondAttribute="trailing" id="Q86-22-ieB"/>
+                        <constraint firstItem="kfg-Py-muE" firstAttribute="leading" secondItem="JGE-ag-cjQ" secondAttribute="leading" id="pjG-Pd-a0P"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemGray6Color"/>
             <constraints>
-                <constraint firstItem="8cE-Ta-18H" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="KjN-zh-8ce"/>
-                <constraint firstItem="8cE-Ta-18H" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="WHw-3v-Szi"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="XIo-ja-QIU" secondAttribute="top" constant="-10" id="Y9f-41-Xmp"/>
-                <constraint firstItem="8cE-Ta-18H" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="hqv-ea-Plo"/>
-                <constraint firstItem="8cE-Ta-18H" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="i9j-w4-Gym"/>
+                <constraint firstItem="XIo-ja-QIU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="8eS-FJ-EKD"/>
+                <constraint firstItem="JGE-ag-cjQ" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ZC3-Rf-hlW"/>
+                <constraint firstItem="JGE-ag-cjQ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jq6-4f-7Wr"/>
+                <constraint firstItem="JGE-ag-cjQ" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="k7z-9K-R9x"/>
+                <constraint firstItem="XIo-ja-QIU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="lBP-UA-1PU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XIo-ja-QIU" secondAttribute="trailing" constant="10" id="lrR-aV-bMh"/>
+                <constraint firstItem="JGE-ag-cjQ" firstAttribute="top" secondItem="XIo-ja-QIU" secondAttribute="bottom" constant="10" id="oal-pP-NdN"/>
             </constraints>
             <point key="canvasLocation" x="138" y="20"/>
         </view>
     </objects>
     <resources>
-        <namedColor name="topBackgroundCLr">
-            <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

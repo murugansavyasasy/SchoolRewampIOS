@@ -10,6 +10,7 @@ import UIKit
 class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     
+    @IBOutlet weak var AnySuggestionsLbl: UILabel!
     
     @IBOutlet weak var collectionviewheight: NSLayoutConstraint!
     @IBOutlet weak var textview: UITextView!
@@ -17,6 +18,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
     
     @IBOutlet weak var suggestContetTxtView: UITextView!
     
+    @IBOutlet weak var SubmitBtn: UIButton!
     var ratingDelegate : RatingDelegate?
     var load = false
     var names = [Categories(name: "App UI interface", selected: false),
@@ -42,6 +44,9 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         keyboardDonebtn()
     }
     func Uiupdate(){
+        
+        AnySuggestionsLbl.setFont(style: .body, size: FontSize.BodySize)
+        SubmitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         collectionview.register(UINib(nibName: CellConfingName.SuggestionsCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell)
         let layout = LeftAlignedFlowLayout()
         layout.minimumInteritemSpacing = 10 // Customize spacing between items
@@ -75,11 +80,10 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         let cell = collectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.SuggestionsCollectionViewCell, for: indexPath) as! SuggestionsCollectionViewCell
         cell.layer.cornerRadius = 20
         
-        
-        cell.backgroundColor = names[indexPath.row].selected ?? false ?  .blue :UIColor(red: 216/255, green: 220/255, blue: 238/255, alpha: 1)
+        cell.backgroundColor = names[indexPath.row].selected ?? false ?  .gradient1 :UIColor(red: 216/255, green: 220/255, blue: 238/255, alpha: 1)
         
         cell.name.text = names[indexPath.item].name
-        cell.name.textColor = names[indexPath.item].selected ?? false ?  .white :.black
+        cell.name.textColor = names[indexPath.item].selected ?? false ?  .black :.black
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
