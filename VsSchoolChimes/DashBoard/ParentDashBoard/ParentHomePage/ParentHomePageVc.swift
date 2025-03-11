@@ -10,13 +10,12 @@ import AVFoundation
 
 @available(iOS 14.0, *)
 class ParentHomePageVc: UIViewController {
-
+    
     @IBOutlet weak var Profileimage: UIImageViewX!
     @IBOutlet weak var changeRollLbl: UILabel!
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var templateview: UIView!
     @IBOutlet weak var profileFullview: UIView!
-    @IBOutlet weak var bottomCvHeight: NSLayoutConstraint!
     @IBOutlet weak var loginDetailView: UIView!
     @IBOutlet weak var Searchbar: UISearchBar!
     @IBOutlet weak var AddressLabel: UILabel!
@@ -24,20 +23,17 @@ class ParentHomePageVc: UIViewController {
     @IBOutlet weak var BellImage: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
-    
     @IBOutlet weak var bottomCv: UICollectionView!
-    
     @IBOutlet weak var collectionBtn: UIView!
-    @IBOutlet weak var homeworkBtn: UIButton!
-    @IBOutlet weak var assignmentkBtn: UIButton!
-    @IBOutlet weak var onlineMeetingBtn: UIButton!
+    @IBOutlet weak var homeworkImgBtn: UIButton!
+    @IBOutlet weak var assignmentImgBtn: UIButton!
+    @IBOutlet weak var onlineMeetingImgBtn: UIButton!
     @IBOutlet weak var homeworkLbl: UILabel!
-    @IBOutlet weak var assignmentkLbl: UILabel!
+    @IBOutlet weak var assignmentLbl: UILabel!
     @IBOutlet weak var onlineMeetingLbl: UILabel!
     @IBOutlet weak var homeworkView: UIView!
-    @IBOutlet weak var assignmentkView: UIView!
+    @IBOutlet weak var assignmentView: UIView!
     @IBOutlet weak var onlineMeetingView: UIView!
-    
     @IBOutlet weak var heightStackview: NSLayoutConstraint!
     
     var filteredItems: [String] = []
@@ -69,8 +65,9 @@ class ParentHomePageVc: UIViewController {
     let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
-        changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
-        changeRollLbl.textColor = .link
+        
+        StyleAndTranslater()
+        
         displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
         displayedCategories.insert(newString, at: 5)
         filteredItems = MenuRedirect.items
@@ -78,64 +75,31 @@ class ParentHomePageVc: UIViewController {
         cellRegistration()
         //startPlaceholderRotation()
         addDoneButton()
-        templateview.layer.cornerRadius = 10 // Adjust as needed
-        templateview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Top-left and Top-right corners
-        templateview.clipsToBounds = true // Ensures the corners are clipped
         
         let midIndex = MenuRedirect.receiverItems.count / 2
         firstArray = Array(MenuRedirect.receiverItems.prefix(midIndex))  // First half
         secondArray = Array(MenuRedirect.receiverItems.suffix(from: midIndex))  // Second half
         
-        reportView.layer.cornerRadius = 5
-        reportView.layer.shadowColor = UIColor.black.cgColor
-        reportView.layer.shadowOpacity = 0.5
-        reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
-        reportView.layer.shadowRadius = 3
-        reportView.layer.masksToBounds = false
-        
-        profileFullview.layer.cornerRadius =  30
-        loginDetailView.layer.cornerRadius =  30
-        homeworkBtn.layer.cornerRadius = 10
-        assignmentkBtn.layer.cornerRadius = 10
-        onlineMeetingBtn.layer.cornerRadius = 10
-        
         setupVideoBackground()
         
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
-        Searchbar.placeholder = CommonStringFile.Search.translated()
         Searchbar.delegate = self
         searchHeightCon.constant = 0
         
         bottomCv.isPrefetchingEnabled = true
         Searchbar.delegate = self
         
-        let searchImage  = UITapGestureRecognizer(target: self, action:#selector(SearchViewHidden))
-        searchImgView.addGestureRecognizer(searchImage)
-        
-        searchImgView.isUserInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(openNotification))
-        BellImage.addGestureRecognizer(tap)
-        BellImage.isUserInteractionEnabled = true
-        
-        SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
-        AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-      
-        let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
-        changeRollLbl.addGestureRecognizer(redirectGesture)
-        
-        let profiletap = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
-        Profileimage.addGestureRecognizer(profiletap)
-        Profileimage.isUserInteractionEnabled = true
+        setTapgesture()
     }
     
     @IBAction func ViewDetailsBtn(_ sender: Any) {
         MenuRedirect.receiverAttendancereport(from: self)
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-     
+        
         view.applyGradient(
             colors: [
                 Colornames.gradientBlue,  // Green
@@ -149,70 +113,83 @@ class ParentHomePageVc: UIViewController {
     
     func ButtonUIupdate(){
         
-        configureButton(
-            homeworkView, homeworkBtn,
-            title: MenuStringFile.OnlineMeeting,
-            imageName: UIImage(named: "assignment"),
-            gradientColors:[UIColor.green,UIColor.purple],
-            opacity: 0.4, // 70% opacity
-            lightenFactor: 0.8// 40% lighter
-        )
-        // Configure assignmentkBtn
-        configureButton(
-            assignmentkView, assignmentkBtn,
-            title: MenuStringFile.NoticeBoard,
-            imageName: UIImage(named: "Notice Board"),
-            gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
-            lightenFactor: 0.6 // 40% lighter
-        )
-        assignmentkLbl.setFont(style: .body, size: 12)
-        onlineMeetingLbl.setFont(style: .body, size: 12)
-        homeworkLbl.setFont(style: .body, size: 12)
-        assignmentkLbl.text = MenuStringFile.Assignment.translated()
-        onlineMeetingLbl.text = MenuStringFile.OnlineMeeting.translated()
-        homeworkLbl.text = MenuStringFile.NoticeBoard.translated()
-        // Configure onlineMeetingBtn
-        configureButton(
-            onlineMeetingView, onlineMeetingBtn,
-            title: MenuStringFile.Assignment,
-            imageName: UIImage(named: "online_meeting"),
-            gradientColors:[UIColor.yellow,UIColor.red],opacity: 0.4, // 70% opacity
-            lightenFactor: 0.8// 40% lighter
-        )
+        configureView(assignmentView, gradientColors: [UIColor.blue,UIColor.gradient2],opacity: 0.6,lightenFactor: 0.6)
         
+        configureView(onlineMeetingView, gradientColors: [UIColor.yellow,UIColor.red],opacity: 0.6,lightenFactor: 0.8)
+        
+        configureView(homeworkView, gradientColors: [UIColor.green,UIColor.purple],opacity: 0.6,lightenFactor: 0.8)
     }
     
-    // Helper function to configure the button
-    func configureButton(
-        _ button: UIView,_ imgBtn:UIButton,
-        title: String,
-        imageName: UIImage?,
+    func configureView(
+        _ view: UIView,
         gradientColors: [UIColor],
         cornerRadius: CGFloat = 10,
-        imageSize: CGSize = CGSize(width: 40, height: 40),
-        spacing: CGFloat = 8.0,
         opacity: CGFloat = 0.5, // Opacity for the gradient
-        lightenFactor: CGFloat = 0.3
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
     ) {
         // Set corner radius
-        button.layer.cornerRadius = cornerRadius
-        button.layer.masksToBounds = true
+        view.layer.cornerRadius = cornerRadius
+        view.layer.masksToBounds = true
         
         // Adjust colors for lightening and opacity
         let adjustedColors = gradientColors.map { color in
             color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
         }
-        imgBtn.setImage(imageName, for: .normal)
-        // Apply gradient
-        button.applyGradient(
-            colors: adjustedColors,
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
         
+        // Apply gradient
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = adjustedColors.map { $0.cgColor }
+        gradientLayer.startPoint = CGPoint(x: 1, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.frame = view.bounds
+        gradientLayer.cornerRadius = cornerRadius
+        
+        // Remove existing gradient layers to prevent duplication
+        view.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+        
+        // Insert the gradient at the lowest index
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    
+    func StyleAndTranslater(){
+        //MARK: UI Changes
+        changeRollLbl.textColor = .link
+        templateview.layer.cornerRadius = 10 // Adjust as needed
+        templateview.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Top-left and Top-right corners
+        templateview.clipsToBounds = true // Ensures the corners are clipped
+        
+        reportView.layer.cornerRadius = 5
+        reportView.layer.shadowColor = UIColor.black.cgColor
+        reportView.layer.shadowOpacity = 0.5
+        reportView.layer.shadowOffset = CGSize(width: 4, height: 4)
+        reportView.layer.shadowRadius = 3
+        reportView.layer.masksToBounds = false
+        
+        profileFullview.layer.cornerRadius =  30
+        loginDetailView.layer.cornerRadius =  30
+        homeworkImgBtn.layer.cornerRadius = 10
+        assignmentImgBtn.layer.cornerRadius = 10
+        onlineMeetingImgBtn.layer.cornerRadius = 10
+        
+        assignmentImgBtn.setImage(UIImage(named: "receiver_assignment"), for: .normal)
+        onlineMeetingImgBtn.setImage(UIImage(named: "online_meeting"), for: .normal)
+        homeworkImgBtn.setImage(UIImage(named: "Notice Board"), for: .normal)
+        
+        
+        //MARK: Set Font Style
+        changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
+        SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
+        AddressLabel.setFont(style: .body, size: FontSize.BodySize)
+        assignmentLbl.setFont(style: .body, size: 12)
+        onlineMeetingLbl.setFont(style: .body, size: 12)
+        homeworkLbl.setFont(style: .body, size: 12)
+        assignmentLbl.text = MenuStringFile.Assignment.translated()
+        onlineMeetingLbl.text = MenuStringFile.OnlineMeeting.translated()
+        homeworkLbl.text = MenuStringFile.NoticeBoard.translated()
+        
+        //MARK: Translate
+        Searchbar.placeholder = CommonStringFile.Search.translated()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -266,12 +243,32 @@ class ParentHomePageVc: UIViewController {
         profileFullview.layer.masksToBounds = true
         
     }
-    
+    //MARK: Cell Registration
     func cellRegistration(){
         bottomCv.register(UINib(nibName: CellConfingName.HomePageBottomCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.HomePageBottomCell)
         bottomCv.register(UINib(nibName: CellConfingName.seeMore, bundle: nil), forCellWithReuseIdentifier: CellConfingName.seeMore)
         
     }
+    
+    //MARK: Set Tap Gesture
+    func setTapgesture(){
+        
+        let searchImage  = UITapGestureRecognizer(target: self, action:#selector(SearchViewHidden))
+        searchImgView.addGestureRecognizer(searchImage)
+        searchImgView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openNotification))
+        BellImage.addGestureRecognizer(tap)
+        BellImage.isUserInteractionEnabled = true
+        
+        let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
+        changeRollLbl.addGestureRecognizer(redirectGesture)
+        
+        let profiletap = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
+        Profileimage.addGestureRecognizer(profiletap)
+        Profileimage.isUserInteractionEnabled = true
+    }
+    
     
     @IBAction func openNotification(){
         let vc = NotificationViewController(nibName: nil, bundle: nil)
@@ -282,7 +279,7 @@ class ParentHomePageVc: UIViewController {
 }
 
 
-
+//MARK: Collectionview Delegate
 @available(iOS 14.0, *)
 extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -296,7 +293,7 @@ extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource
         if indexPath.row == 6 {
             // Handle the "seeMore" cell
             let adCell = collectionView.dequeueReusableCell(withReuseIdentifier:CellConfingName.seeMore, for: indexPath) as! seeMore
-          
+            
             adCell.advertisements = advertisements // Pass advertisement data to the ad cell
             adCell.adCollectionView.reloadData() // Refresh the embedded collection view
             adCell.seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
@@ -333,8 +330,9 @@ extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource
             heightStackview.constant = 110
             collectionBtn.isHidden = false
             homeworkView.layoutIfNeeded()
-            assignmentkView.layoutIfNeeded()
+            assignmentView.layoutIfNeeded()
             onlineMeetingView.layoutIfNeeded()
+            ButtonUIupdate()
             
         } else {
             // Expand to show all items
@@ -431,11 +429,11 @@ extension ParentHomePageVc: UICollectionViewDelegateFlowLayout {
         let width = (collectionView.frame.width) / 3.2
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
-
+        
         let label = filteredItems[indexPath.row].translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
         let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
-
+        
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height + 10)
     }
@@ -448,6 +446,7 @@ extension String {
     }
 }
 
+//MARK: Searchbar Delegate
 @available(iOS 14.0, *)
 extension ParentHomePageVc: UISearchBarDelegate{
     

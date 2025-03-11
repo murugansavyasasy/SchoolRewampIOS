@@ -149,6 +149,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
         clickTextView.text = CommonStringFile.TextMessage.translated()
         clickSchedule.text = CommonStringFile.ScheduleCall.translated()
+        BackBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
         
         //MARK: Label font style
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
@@ -185,6 +186,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         scheduleBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TxtMsgSendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
     }
     func setupPlaceholder() {
@@ -200,7 +202,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceSetTitleLbl.applyRightTxt()
         voiceTitleeTxt.applyRightTxt()
         TextMsgContent.applyRightTxt()
-        textCountLbl.applyRightTxt()
+      //  textCountLbl.applyRightTxt()
         informationcontent.applyRightTxt()
         informationcontent.applyRightTxt(with: placeholderLabel)
         informationcontent.addSubview(placeholderLabel)

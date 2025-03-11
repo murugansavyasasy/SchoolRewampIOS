@@ -27,7 +27,7 @@
                     <rect key="frame" x="0.0" y="99" width="393" height="719"/>
                     <subviews>
                         <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-kQ-6B9">
-                            <rect key="frame" x="10" y="0.0" width="373" height="60"/>
+                            <rect key="frame" x="2" y="0.0" width="389" height="60"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="60" id="7qV-On-Atx"/>
                             </constraints>
@@ -50,10 +50,10 @@
                         <constraint firstAttribute="trailing" secondItem="nxa-sv-jIe" secondAttribute="trailing" id="4wx-YF-1jT"/>
                         <constraint firstAttribute="bottom" secondItem="nxa-sv-jIe" secondAttribute="bottom" id="54v-C3-cXq"/>
                         <constraint firstItem="nxa-sv-jIe" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" id="EwH-Zg-RFx"/>
-                        <constraint firstAttribute="trailing" secondItem="gCb-kQ-6B9" secondAttribute="trailing" constant="10" id="IGk-qB-at3"/>
+                        <constraint firstAttribute="trailing" secondItem="gCb-kQ-6B9" secondAttribute="trailing" constant="2" id="IGk-qB-at3"/>
                         <constraint firstItem="gCb-kQ-6B9" firstAttribute="top" secondItem="21u-Ph-GdD" secondAttribute="top" id="kSq-yl-YzR"/>
                         <constraint firstItem="nxa-sv-jIe" firstAttribute="top" secondItem="gCb-kQ-6B9" secondAttribute="bottom" id="x20-jQ-N0c"/>
-                        <constraint firstItem="gCb-kQ-6B9" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" constant="10" id="yMB-44-FuD"/>
+                        <constraint firstItem="gCb-kQ-6B9" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" constant="2" id="yMB-44-FuD"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="atx-K4-uC7">

@@ -52,24 +52,36 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         CharCountLbl.applyRightTxt()
         titleTxtFld.applyRightTxt()
         // Add observers for keyboard notifications
-                NotificationCenter.default.addObserver(
-                    self,
-                    selector: #selector(keyboardWillShow),
-                    name: UIResponder.keyboardWillShowNotification,
-                    object: nil
-                )
-                NotificationCenter.default.addObserver(
-                    self,
-                    selector: #selector(keyboardWillHide),
-                    name: UIResponder.keyboardWillHideNotification,
-                    object: nil
-                )
+        NotificationCenter.default.addObserver(
+            
+            self,
+            
+            selector: #selector(keyboardWillShow),
+            
+            name: UIResponder.keyboardWillShowNotification,
+            
+            object: nil
+            
+        )
+        
+        NotificationCenter.default.addObserver(
+            
+            self,
+            
+            selector: #selector(keyboardWillHide),
+            
+            name: UIResponder.keyboardWillHideNotification,
+            
+            object: nil
+            
+        )
+        
         
         changeVideoBtn.isHidden = true
         ChangeVideoBtnHeight.constant = 0
         StyleAndTranslater()
         descTxtView.delegate = self
-        descTxtView.applyRightTxt()
+      //  descTxtView.applyRightTxt()
         
         let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
         VideoPlayer.addGestureRecognizer(PlayGesture)
@@ -116,6 +128,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
       
         chooseVideoLabel.setFont(style: .title, size: FontSize.TitleSize)
         sendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
     }
     
@@ -475,39 +488,31 @@ extension SenderSideVideoViewController : UITextViewDelegate{
        @objc func doneKeyboard() {
            view.endEditing(true)  // Dismiss the keyboard
        }
-    
+
+    // UITextViewDelegate Method: Adjust the height of the UITextView dynamically
     func textViewDidChange(_ textView: UITextView) {
-            let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-            let newHeight = min(max(size.height, initialHeight), maxHeight)
+        
+        textView.isScrollEnabled = false
 
-            // Update height constraint and scrolling
+           let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+       // let size = descTxtView.contentSize
+        print("SizeSize",size.height)
+        print("TextviewHeight",TextviewHeight)
+        // Check if the content exceeds the initial height
+        if size.height > initialHeight {
+            // Update the height constraint based on content size
+            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
             TextviewHeight.constant = newHeight
-            descTxtView.isScrollEnabled = size.height > maxHeight
-
-            // Ensure layout updates
-            UIView.animate(withDuration: 0.2) {
-                self.view.layoutIfNeeded()
-            }
-
-            // Adjust view position with keyboard
-            if descTxtView.isFirstResponder {
-                self.adjustForKeyboardHeight()
-            }
         }
-
-        // Helper to adjust outerView position dynamically
-        private func adjustForKeyboardHeight() {
-            guard let keyboardFrame = UIResponder.keyboardFrameEndUserInfoKey as? CGRect else { return }
-            let availableSpace = self.view.frame.height - keyboardFrame.height
-            let textViewBottom = outerView.frame.origin.y + outerView.frame.height
-
-            if textViewBottom > availableSpace {
-                let overlap = textViewBottom - availableSpace + 20 // Add some padding
-                UIView.animate(withDuration: 0.3) {
-                    self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
-                }
-            }
+        
+        // Animate the change for smoother UI
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
         }
+        
+        // Scroll to make the UITextView visible
+        scrollToView(descTxtView)
+    }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Current text in the UITextView
@@ -527,25 +532,29 @@ extension SenderSideVideoViewController : UITextViewDelegate{
         }
     }
     
-    @objc func keyboardWillShow(notification: Notification) {
-        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        
-        // Calculate new position considering the dynamic height
-        let availableSpace = self.view.frame.height - keyboardFrame.height
-        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
-        
-        if textViewBottom > availableSpace {
-            let overlap = textViewBottom - availableSpace + 20 // Add some padding
-            UIView.animate(withDuration: 0.3) {
-                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap)
-            }
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            
+            // Adjust the scroll view content inset
+            scrollview.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
+            scrollview.scrollIndicatorInsets = scrollview.contentInset
+            
+            // Ensure the UITextView is visible
+            scrollToView(descTxtView)
         }
     }
     
-    // Reset view when keyboard hides
-    @objc func keyboardWillHide(notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
-            self.outerView.transform = .identity
-        }
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // Reset the scroll view content inset
+        scrollview.contentInset = .zero
+        scrollview.scrollIndicatorInsets = .zero
+    }
+    
+    // Helper Method: Scroll to a specific view inside the UIScrollView
+    func scrollToView(_ view: UIView) {
+        // Calculate the frame of the view relative to the UIScrollView
+        let rect = view.convert(view.bounds, to: scrollview)
+        scrollview.scrollRectToVisible(rect, animated: true)
     }
 }

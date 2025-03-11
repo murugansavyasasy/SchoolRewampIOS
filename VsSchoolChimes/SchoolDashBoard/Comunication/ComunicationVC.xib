@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -635,13 +636,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQk-Ov-4jG">
-                                            <rect key="frame" x="283" y="390" width="90" height="40"/>
+                                            <rect key="frame" x="293" y="390" width="80" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="38v-uz-8m0"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" title="Send">
+                                            <buttonConfiguration key="configuration" style="plain" title="Send">
+                                                <imageReference key="image" image="paperplane" catalog="system" symbolScale="small"/>
                                                 <backgroundConfiguration key="background" cornerRadius="4">
                                                     <color key="backgroundColor" systemColor="systemMintColor"/>
                                                 </backgroundConfiguration>
@@ -712,14 +714,15 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ge9-GQ-MId">
-                                            <rect key="frame" x="293" y="442" width="90" height="40"/>
+                                            <rect key="frame" x="303" y="442" width="80" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="AxA-Mz-iLS"/>
                                                 <constraint firstAttribute="height" constant="40" id="skD-Om-9Bd"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" title="Send">
+                                            <buttonConfiguration key="configuration" style="plain" title="Send">
+                                                <imageReference key="image" image="paperplane" catalog="system" symbolScale="small"/>
                                                 <backgroundConfiguration key="background" cornerRadius="4">
                                                     <color key="backgroundColor" systemColor="systemMintColor"/>
                                                 </backgroundConfiguration>
@@ -728,7 +731,7 @@
                                                 <action selector="voiceview:" destination="-1" eventType="touchUpInside" id="jxS-Zr-kYI"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXD-4C-iTD">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXD-4C-iTD">
                                             <rect key="frame" x="16" y="60" width="361" height="23"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                             <nil key="textColor"/>
@@ -744,7 +747,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z8-G9-XF2">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z8-G9-XF2">
                                             <rect key="frame" x="16" y="131.66666666666663" width="361" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>

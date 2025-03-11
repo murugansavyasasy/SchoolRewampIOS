@@ -57,7 +57,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Present" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pHZ-PP-pXJ">
-                                <rect key="frame" x="250" y="-5" width="50" height="17"/>
+                                <rect key="frame" x="250" y="0.0" width="50" height="23.666666666666668"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="kmK-MF-0kQ"/>
@@ -136,8 +136,9 @@
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="9yA-sW-dvr" secondAttribute="bottom" constant="5" id="28B-KY-X2i"/>
                             <constraint firstItem="9yA-sW-dvr" firstAttribute="leading" secondItem="KUD-2W-S8K" secondAttribute="trailing" constant="5" id="5x2-Iz-2OR"/>
-                            <constraint firstItem="pHZ-PP-pXJ" firstAttribute="top" secondItem="gnB-h4-u5d" secondAttribute="top" constant="-5" id="CQX-T0-LK3"/>
+                            <constraint firstItem="pHZ-PP-pXJ" firstAttribute="top" secondItem="gnB-h4-u5d" secondAttribute="top" id="CQX-T0-LK3"/>
                             <constraint firstAttribute="trailing" secondItem="pHZ-PP-pXJ" secondAttribute="trailing" id="Egh-6k-zjH"/>
+                            <constraint firstItem="uVG-zh-AmQ" firstAttribute="top" secondItem="pHZ-PP-pXJ" secondAttribute="bottom" constant="40" id="Mig-pK-y8s"/>
                             <constraint firstAttribute="trailing" secondItem="uVG-zh-AmQ" secondAttribute="trailing" constant="10" id="SDG-wG-EkY"/>
                             <constraint firstItem="KUD-2W-S8K" firstAttribute="leading" secondItem="gnB-h4-u5d" secondAttribute="leading" id="XJN-Jn-B98"/>
                             <constraint firstItem="uVG-zh-AmQ" firstAttribute="centerY" secondItem="gnB-h4-u5d" secondAttribute="centerY" id="YQy-Lh-bkU"/>

@@ -32,6 +32,7 @@
                 <outlet property="pickerDateLbl" destination="Rq3-3R-Muu" id="VWO-db-Bxe"/>
                 <outlet property="placeLbl" destination="Fe3-dH-NGt" id="yuL-pf-u9U"/>
                 <outlet property="placeTxt" destination="al2-Hb-4Fn" id="6Eb-Vf-7CJ"/>
+                <outlet property="scrollView" destination="G4F-kd-bRK" id="nQq-qK-jA8"/>
                 <outlet property="subTitleLbl" destination="k8K-oc-uEw" id="n0B-6h-fz2"/>
                 <outlet property="textViewHeightConstraint" destination="WfN-Qb-F3Z" id="xpf-fJ-dB1"/>
                 <outlet property="timeBtn" destination="eZ9-KQ-0vB" id="3Fz-YG-y6l"/>

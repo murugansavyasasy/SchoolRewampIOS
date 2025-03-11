@@ -30,6 +30,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         super.viewDidLoad()
 
         BackBtn.applyBackButton()
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         textView.text = CommonStringFile.Description.translated()
         textView.textColor = .gray
         textView.layer.cornerRadius = 10

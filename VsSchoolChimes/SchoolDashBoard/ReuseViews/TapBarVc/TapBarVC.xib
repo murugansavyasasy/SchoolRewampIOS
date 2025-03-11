@@ -23,7 +23,7 @@
                 <tabBar contentMode="scaleToFill" fixedFrame="YES" barStyle="black" translucent="NO" itemPositioning="fill" translatesAutoresizingMaskIntoConstraints="NO" id="uSZ-6l-P7K">
                     <rect key="frame" x="-9" y="702" width="393" height="49"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <items>
                         <tabBarItem systemItem="favorites" id="5PB-pE-ctg">
                             <color key="badgeColor" name="Color"/>
@@ -51,9 +51,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

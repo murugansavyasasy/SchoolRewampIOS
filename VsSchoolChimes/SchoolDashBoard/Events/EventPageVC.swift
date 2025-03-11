@@ -59,6 +59,8 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         outerView.layer.cornerRadius = 20
         historyBtn.layer.cornerRadius = 20
         createEvent.layer.cornerRadius = 20
+        BackBtn.setTitle(titleLbl, for: .normal)
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         createEvent.setTitleFont(style: .body, size: FontSize.BodySize)
         historyBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         historyBtn.setTitle(button2, for: .normal)

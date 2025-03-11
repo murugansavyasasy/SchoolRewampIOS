@@ -172,6 +172,8 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
         LinkTxtfld.layer.borderWidth = 1
         LinkTxtfld.layer.borderColor = UIColor.gray.cgColor
         SubmitBtn.layer.cornerRadius = 10
+        backBtn.setTitle(MenuStringFile.OnlineMeeting.translated(), for: .normal)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         DescriptTxtview.text = TexviewStringFile.Enter_Meeting_Description.translated()
         DescriptTxtview.textColor = .lightGray
         CustomDateBtn.layer.cornerRadius = 10

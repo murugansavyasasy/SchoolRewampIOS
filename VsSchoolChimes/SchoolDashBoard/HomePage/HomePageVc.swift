@@ -22,16 +22,15 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
     @IBOutlet weak var heightStackview: NSLayoutConstraint!
-    @IBOutlet weak var homeworkBtn: UIButton!
-    @IBOutlet weak var assignmentkBtn: UIButton!
-    @IBOutlet weak var onlineMeetingBtn: UIButton!
+    @IBOutlet weak var homeworkImgBtn: UIButton!
+    @IBOutlet weak var assignmentImgBtn: UIButton!
+    @IBOutlet weak var onlineMeetingImgBtn: UIButton!
     @IBOutlet weak var homeworkLbl: UILabel!
-    @IBOutlet weak var assignmentkLbl: UILabel!
+    @IBOutlet weak var assignmentLbl: UILabel!
     @IBOutlet weak var onlineMeetingLbl: UILabel!
     @IBOutlet weak var homeworkView: UIView!
-    @IBOutlet weak var assignmentkView: UIView!
+    @IBOutlet weak var assignmentView: UIView!
     @IBOutlet weak var onlineMeetingView: UIView!
-    
     @IBOutlet weak var collectionBtn: UIView!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var reportView: UIView!
@@ -64,6 +63,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     deinit {
         timer?.invalidate()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,7 +71,6 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         setupVideoBackground()
         filteredItems = MenuRedirect.items
         displayedCategories = Array(filteredItems.prefix(6))
-        
         displayedCategories.insert(newString, at: 5)
         
         //startAutoScroll()
@@ -102,8 +101,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let profileTap =  UITapGestureRecognizer(target: self, action: #selector(OpenProfile))
         schoolLogoImg.addGestureRecognizer(profileTap)
         schoolLogoImg.isUserInteractionEnabled = true
-        ButtonUIupdate()
-        
+       
     }
     
     override func viewDidLayoutSubviews() {
@@ -119,6 +117,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+        ButtonUIupdate()
     }
     
     func StyleAndTranslater(){
@@ -136,80 +135,65 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         reportView.layer.masksToBounds = false
         changeRollLbl.textColor = .link
         
+        assignmentImgBtn.setImage(UIImage(named:"Assignment" ), for: .normal)
+        onlineMeetingImgBtn.setImage(UIImage(named:"online_meeting"), for: .normal)
+        homeworkImgBtn.setImage(UIImage(named:"Homework" ), for: .normal)
+        
         //MARK: Setting Font Style
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
+        assignmentLbl.setFont(style: .body, size: 12)
+        onlineMeetingLbl.setFont(style: .body, size: 12)
+        homeworkLbl.setFont(style: .body, size: 12)
         //MARK: Translation
         Searchbar.placeholder = CommonStringFile.Search.translated()
+        assignmentLbl.text = MenuStringFile.Assignment.translated()
+        onlineMeetingLbl.text = MenuStringFile.OnlineMeeting.translated()
+        homeworkLbl.text = MenuStringFile.Homework.translated()
     }
     
     
     //MARK: Apply gradient for the UIButton
     func ButtonUIupdate(){
-        configureButton(
-            homeworkView, homeworkBtn,
-            title: MenuStringFile.OnlineMeeting,
-            imageName: UIImage(named: "assignment"),
-            gradientColors:[UIColor.green,UIColor.blue],
-            opacity: 0.4, // 70% opacity
-            lightenFactor: 0.8// 40% lighter
-        )
-        // Configure assignmentkBtn
-        configureButton(
-            assignmentkView, assignmentkBtn,
-            title: MenuStringFile.Homework.translated(),
-            imageName: UIImage(named: "Homework"),
-            gradientColors: [UIColor.blue,UIColor.gradient2], opacity: 0.4, // 70% opacity
-            lightenFactor: 0.6 // 40% lighter
-        )
-        assignmentkLbl.setFont(style: .body, size: 12)
-        onlineMeetingLbl.setFont(style: .body, size: 12)
-        homeworkLbl.setFont(style: .body, size: 12)
-        assignmentkLbl.text = MenuStringFile.Assignment.translated()
-        onlineMeetingLbl.text = MenuStringFile.OnlineMeeting.translated()
-        homeworkLbl.text = MenuStringFile.Homework.translated()
-        // Configure onlineMeetingBtn
-        configureButton(
-            onlineMeetingView, onlineMeetingBtn,
-            title: MenuStringFile.Assignment,
-            imageName: UIImage(named: "online_meeting"),
-            gradientColors:[UIColor.blue,UIColor.systemPink],opacity: 0.4, // 70% opacity
-            lightenFactor: 0.8// 40% lighter
-        )
         
+        configureView(assignmentView, gradientColors: [UIColor.blue,UIColor.gradient2],opacity: 0.6,lightenFactor: 0.6)
+        
+        configureView(onlineMeetingView, gradientColors: [UIColor.blue,UIColor.systemPink],opacity: 0.6,lightenFactor: 0.6)
+        
+        configureView(homeworkView, gradientColors: [UIColor.green,UIColor.blue],opacity: 0.6,lightenFactor: 0.6)
     }
     
-    // Helper function to configure the button
-    func configureButton(
-        _ button: UIView,_ imgBtn:UIButton,
-        title: String,
-        imageName: UIImage?,
+    func configureView(
+        _ view: UIView,
         gradientColors: [UIColor],
         cornerRadius: CGFloat = 10,
-        imageSize: CGSize = CGSize(width: 40, height: 40),
-        spacing: CGFloat = 8.0,
         opacity: CGFloat = 0.5, // Opacity for the gradient
-        lightenFactor: CGFloat = 0.3
+        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
     ) {
         // Set corner radius
-        button.layer.cornerRadius = cornerRadius
-        button.layer.masksToBounds = true
+        view.layer.cornerRadius = cornerRadius
+        view.layer.masksToBounds = true
         
         // Adjust colors for lightening and opacity
         let adjustedColors = gradientColors.map { color in
             color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
         }
-        imgBtn.setImage(imageName, for: .normal)
-        // Apply gradient
-        button.applyGradient(
-            colors: adjustedColors,
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
         
+        // Apply gradient
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = adjustedColors.map { $0.cgColor }
+        gradientLayer.startPoint = CGPoint(x: 1, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.frame = view.bounds
+        gradientLayer.cornerRadius = cornerRadius
+        
+        // Remove existing gradient layers to prevent duplication
+        view.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
+        
+        // Insert the gradient at the lowest index
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
-    
     
     func setupVideoBackground() {
         guard let path = Bundle.main.path(forResource: "Mathematics", ofType: "mp4") else { return }
@@ -224,6 +208,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         player.play()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         bottomCv.delegate = self
@@ -235,6 +220,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         print("viewWillDisappear - View is about to disappear.")
         currentIndex = -1
     }
+    
     @IBAction func ViewDetailsAct(_ sender: Any) {
         
         let vc  = LocationHistoryVc(nibName: nil, bundle: nil)
@@ -284,15 +270,18 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     @objc func seeAllButtonTapped() {
         if isShowingAll {
+            
             // Collapse back to show only the first 6 items
             displayedCategories = Array(filteredItems.prefix(6))
             displayedCategories.insert(newString, at: 5)
             heightStackview.constant = 110
             collectionBtn.isHidden = false
-            homeworkView.layoutIfNeeded()
-            assignmentkView.layoutIfNeeded()
+            assignmentView.layoutIfNeeded()
             onlineMeetingView.layoutIfNeeded()
-        } else {
+            homeworkView.layoutIfNeeded()
+            view.layoutIfNeeded()
+            ButtonUIupdate()
+        }else {
             // Expand to show all items
             displayedCategories = filteredItems
             heightStackview.constant = 0
@@ -538,9 +527,7 @@ extension HomePageVc: UISearchBarDelegate{
         }else{
             heightStackview.constant = 110
             collectionBtn.isHidden = false
-            ButtonUIupdate()
             searchHeightCon.constant = 0
-            
         }
     }
     

@@ -16,18 +16,18 @@
                 <outlet property="Profileimage" destination="3l3-bI-6Dl" id="ybb-je-ZRM"/>
                 <outlet property="SchoolNameLabel" destination="2bI-D5-t0i" id="u8e-wd-DEn"/>
                 <outlet property="Searchbar" destination="e2q-6w-mLg" id="Lwa-hs-W7m"/>
-                <outlet property="assignmentkBtn" destination="p4Z-vr-aTw" id="io5-04-s3M"/>
-                <outlet property="assignmentkLbl" destination="P2p-N1-emA" id="bhu-Fd-5kB"/>
-                <outlet property="assignmentkView" destination="mWb-ow-pM3" id="GQB-tI-tM1"/>
+                <outlet property="assignmentImgBtn" destination="p4Z-vr-aTw" id="io5-04-s3M"/>
+                <outlet property="assignmentLbl" destination="P2p-N1-emA" id="bhu-Fd-5kB"/>
+                <outlet property="assignmentView" destination="mWb-ow-pM3" id="GQB-tI-tM1"/>
                 <outlet property="bottomCv" destination="Uqa-AK-Vqf" id="DQv-Ar-5Be"/>
                 <outlet property="changeRollLbl" destination="Se2-KB-Xty" id="Nfc-G9-X7l"/>
                 <outlet property="collectionBtn" destination="TxA-v2-e1b" id="DlZ-E8-6V3"/>
                 <outlet property="heightStackview" destination="5El-pQ-A4X" id="g6A-Kh-Rbz"/>
-                <outlet property="homeworkBtn" destination="Mro-IV-qjU" id="8bJ-qc-KxU"/>
+                <outlet property="homeworkImgBtn" destination="Mro-IV-qjU" id="8bJ-qc-KxU"/>
                 <outlet property="homeworkLbl" destination="xSa-Rl-ghZ" id="nxT-gT-Xbp"/>
                 <outlet property="homeworkView" destination="ZC3-dm-zbi" id="Kd9-WF-gEe"/>
                 <outlet property="loginDetailView" destination="rXa-CX-uKD" id="gjL-VA-pmV"/>
-                <outlet property="onlineMeetingBtn" destination="PkX-w7-471" id="dN7-54-U0D"/>
+                <outlet property="onlineMeetingImgBtn" destination="PkX-w7-471" id="dN7-54-U0D"/>
                 <outlet property="onlineMeetingLbl" destination="BPa-a3-cZH" id="3U3-lo-Mz7"/>
                 <outlet property="onlineMeetingView" destination="vS6-Z9-pjO" id="ReT-cb-07x"/>
                 <outlet property="profileFullview" destination="sDr-Oz-Afu" id="cbQ-62-akr"/>
@@ -95,12 +95,13 @@
                                                                         <constraint firstAttribute="height" constant="50" id="5HH-80-qaS"/>
                                                                         <constraint firstAttribute="width" constant="50" id="HCQ-pv-29J"/>
                                                                     </constraints>
+                                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Notice Board">
                                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2p-N1-emA">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P2p-N1-emA">
                                                                     <rect key="frame" x="5" y="65" width="104.33333333333333" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -137,12 +138,13 @@
                                                                         <constraint firstAttribute="width" constant="50" id="eFi-bQ-EU1"/>
                                                                         <constraint firstAttribute="height" constant="50" id="rwM-SW-sHL"/>
                                                                     </constraints>
+                                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Notice Board">
                                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPa-a3-cZH">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPa-a3-cZH">
                                                                     <rect key="frame" x="5" y="65" width="104.33333333333333" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -179,12 +181,13 @@
                                                                         <constraint firstAttribute="width" constant="50" id="AbO-47-inf"/>
                                                                         <constraint firstAttribute="height" constant="50" id="glY-Rc-oTh"/>
                                                                     </constraints>
+                                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Notice Board">
                                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSa-Rl-ghZ">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xSa-Rl-ghZ">
                                                                     <rect key="frame" x="5" y="65" width="104.33333333333333" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
