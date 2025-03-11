@@ -99,9 +99,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
        
-//        segment1.applyGradientWithAdjustedColors(gradientColors: [UIColor.green,UIColor.blue],lightenFactor: 0.6,opacity: 0.8)
-//        
-//        segment2.backgroundColor = .systemGray6
+
         ButtonStack.isLayoutMarginsRelativeArrangement = true
         ButtonStack.layoutMargins = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
         ButtonStack.layer.cornerRadius = 10
@@ -113,7 +111,6 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         calendarView.layer.cornerRadius = 10
         
         ButtonStack.backgroundColor = .systemGray4
-//        segment1.backgroundColor = .systemGreen.withAlphaComponent(0.8)
         segment1.backgroundColor = .white
         segment2.backgroundColor = .clear
         
@@ -123,9 +120,7 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         
         bookSlotBtn.layer.cornerRadius = 5
         bookSlotBtn.setTitleFont(style: .primary, size: FontSize.BodySize)
-//        tvLeading.constant = 0
-//        tvTralling.constant = 0
-       // tv.isHidden=true
+        BackBtn.applyBackButton()
         cv.register(UINib(nibName: CellConfingName.PTMCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.PTMCollectionViewCell)
         cv.register(UINib(nibName: "CalenderCVcell", bundle: nil), forCellWithReuseIdentifier: "CalenderCVcell")
         tv.register(UINib(nibName: "parentPTMcell", bundle: nil), forCellReuseIdentifier: "parentPTMcell")
@@ -139,8 +134,6 @@ class PTMViewController: UIViewController ,UITableViewDelegate,UITableViewDataSo
         segment2.addGestureRecognizer(segments2)
         noRecordsView.isHidden = true
         noRecordsLbl.isHidden =  true
-//        let backGesture = UITapGestureRecognizer(target: self, action: #selector(backVc))
-//        viewBack.addGestureRecognizer(backGesture)
         let dropDownGesture = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
         subView.addGestureRecognizer(dropDownGesture)
         cv.register(UINib(nibName: CellConfingName.CalendarCollectionViewCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.CalendarCollectionViewCell)

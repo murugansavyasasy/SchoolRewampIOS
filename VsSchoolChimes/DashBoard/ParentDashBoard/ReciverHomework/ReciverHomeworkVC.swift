@@ -30,13 +30,9 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         
         StyleAndTranslate()
         addDoneButton()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        backBtn.semanticContentAttribute = Language == "ar" ? .forceRightToLeft:.forceLeftToRight
-        backBtn.contentHorizontalAlignment = Language == "ar" ? .right:.left
-        backBtn.imageView?.applyRTLFlip(Language == "ar")
+        backBtn.applyBackButton()
+        searchBar.applyRightTxt()
         RegisterCell()
-//        TV.layoutMargins = UIEdgeInsets.zero
-//        TV.separatorInset = UIEdgeInsets.zero
         TV.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         TV.separatorInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         TV.delegate = self

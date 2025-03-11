@@ -51,7 +51,8 @@ class CertificateRequestVC: UIViewController {
 
         ButtonStackview.isLayoutMarginsRelativeArrangement = true
         ButtonStackview.layoutMargins = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
-        
+        BackBtn.applyBackButton()
+        ReasonTextView.applyRightTxt()
         ButtonStackview.layer.cornerRadius = 8
         RequestCertificateBtn.layer.cornerRadius = 8
         CertificatesBtn.layer.cornerRadius = 8

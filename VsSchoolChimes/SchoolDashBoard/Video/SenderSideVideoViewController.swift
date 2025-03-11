@@ -49,6 +49,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
+        CharCountLbl.applyRightTxt()
+        titleTxtFld.applyRightTxt()
         // Add observers for keyboard notifications
                 NotificationCenter.default.addObserver(
                     self,

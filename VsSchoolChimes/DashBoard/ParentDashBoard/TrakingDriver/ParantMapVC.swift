@@ -12,6 +12,7 @@ import CoreLocation
 
 class ParantMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var zoomOutBtn: UIButton!
     @IBOutlet weak var zoomInBtn: UIButton!
@@ -42,6 +43,7 @@ class ParantMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
     @IBAction func startTrip(_ sender: UIButton) {
     }
     private func setupUI() {
+        backBtn.applyBackButton()
         [zoomOutBtn, zoomInBtn, mapTypeBtn].forEach { $0?.buttonCornerRadius() }
     }
     
@@ -264,6 +266,9 @@ class ParantMapVC: UIViewController, MKMapViewDelegate, CLLocationManagerDelegat
     
     @IBAction func changeMap(_ sender: UIButton) {
         mapView.mapType = mapView.mapType == .standard ? .satellite : .standard
+    }
+    @IBAction func back(_ sender: UIButton) {
+        dismiss(animated: true)
     }
 }
 

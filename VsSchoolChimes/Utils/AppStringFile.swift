@@ -91,7 +91,7 @@ struct ReceiverMenuItems {
     static let ClassTimetable = "Class Timetable"
     static let CertificateRequest = "Certificate Request"
     static let PTM = "PTM"
-    static let Map = "Map"
+    static let Map = "MySchoolBus"
     
 }
 

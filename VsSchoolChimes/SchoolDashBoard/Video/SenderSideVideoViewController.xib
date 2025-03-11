@@ -134,7 +134,7 @@
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.84999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 0 of 500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PgU-zP-rDB">
-                                    <rect key="frame" x="68" y="558" width="290" height="20.333333333333371"/>
+                                    <rect key="frame" x="68" y="558" width="305" height="20.333333333333371"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20.329999999999998" id="Mfe-5e-mgK"/>
                                     </constraints>
@@ -186,7 +186,7 @@
                                 <constraint firstAttribute="trailing" secondItem="glm-PR-6xJ" secondAttribute="trailing" constant="100" id="iQf-Sf-4Q4"/>
                                 <constraint firstItem="PgU-zP-rDB" firstAttribute="top" secondItem="CEp-JK-AaV" secondAttribute="bottom" constant="5" id="mGi-V0-bVu"/>
                                 <constraint firstItem="Lf5-pm-GCi" firstAttribute="leading" secondItem="pSF-J5-ga7" secondAttribute="leading" id="nat-h0-Pn5"/>
-                                <constraint firstAttribute="trailing" secondItem="PgU-zP-rDB" secondAttribute="trailing" constant="35" id="tOM-BV-xnA"/>
+                                <constraint firstAttribute="trailing" secondItem="PgU-zP-rDB" secondAttribute="trailing" constant="20" id="tOM-BV-xnA"/>
                                 <constraint firstItem="NRQ-AW-2gc" firstAttribute="leading" secondItem="KoW-wW-A5E" secondAttribute="leading" constant="38" id="uV6-oY-uR4"/>
                             </constraints>
                         </view>
@@ -215,7 +215,7 @@
             <point key="canvasLocation" x="138.1679389312977" y="20.422535211267608"/>
         </view>
         <viewController id="4la-vR-Sbf">
-            <view key="view" contentMode="scaleToFill" ambiguous="YES" id="J2j-6s-JEH">
+            <view key="view" contentMode="scaleToFill" id="J2j-6s-JEH">
                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
@@ -300,7 +300,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

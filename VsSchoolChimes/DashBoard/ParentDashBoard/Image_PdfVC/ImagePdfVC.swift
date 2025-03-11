@@ -34,7 +34,8 @@ class ImagePdfVC: UIViewController {
             NameLbl.text = ""
             StandardLbl.text = ""
         }
-        search.placeholder = "Search".translated()
+        search.placeholder = CommonStringFile.Search.translated()
+        search.applyRightTxt()
         search.delegate = self
         addDoneButton()
         backBtn.applyBackButton()

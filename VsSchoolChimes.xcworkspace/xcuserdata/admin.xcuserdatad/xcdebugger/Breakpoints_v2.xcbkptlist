@@ -18,6 +18,36 @@
             endingLineNumber = "200"
             landmarkName = "uploadAWS(image:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "200"
+                  endingLineNumber = "200">
+               </Location>
+               <Location
+                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "200"
+                  endingLineNumber = "200">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -34,6 +64,36 @@
             endingLineNumber = "64"
             landmarkName = "settings()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FE58F554-5999-46C4-A88F-A65FF1414CF1 - 7b02944e1ca41965"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.AppBottomView.settings() -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/ReuseViews/ReuseBotmView/AppBottomView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65">
+               </Location>
+               <Location
+                  uuid = "FE58F554-5999-46C4-A88F-A65FF1414CF1 - 7b02944e1ca41965"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.AppBottomView.settings() -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/ReuseViews/ReuseBotmView/AppBottomView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -212,22 +272,36 @@
             endingLineNumber = "246"
             landmarkName = "SelectStandard()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6DDEBFAE-915F-42D5-8497-BC8F82743532"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Utils/MenuRedirect.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
-            landmarkName = "receiverHomework(from:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AA9EF57E-F1DF-4607-898E-EAF513F83B12 - 3c4160406b42365e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.SenderSideHomeWorkViewController.SelectStandard() -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246">
+               </Location>
+               <Location
+                  uuid = "AA9EF57E-F1DF-4607-898E-EAF513F83B12 - 3c4160406b42365e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.SenderSideHomeWorkViewController.SelectStandard() -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "246"
+                  endingLineNumber = "246">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

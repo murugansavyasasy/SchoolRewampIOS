@@ -37,6 +37,8 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         textView.layer.borderColor = UIColor.gray.cgColor
         textView.delegate = self
         textView.applyRightTxt()
+        CharCountLbl.applyRightTxt()
+        DescriptionLbl.applyRightTxt()
         TextViewHeight.constant = initialHeight
         SelectButton.layer.cornerRadius = 10
         imageSelection()

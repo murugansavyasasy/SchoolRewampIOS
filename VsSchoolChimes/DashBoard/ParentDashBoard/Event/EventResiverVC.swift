@@ -34,6 +34,7 @@ class EventResiverVC: UIViewController, SelectNotice{
         backBtn.setTitle(button1.translated(), for: .normal)
         backBtn.applyBackButton()
         searchbar.placeholder = CommonStringFile.Search.translated()
+        searchbar.applyRightTxt()
         searchbar.delegate = self
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
