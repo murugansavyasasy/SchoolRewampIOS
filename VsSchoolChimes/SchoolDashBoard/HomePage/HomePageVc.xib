@@ -18,19 +18,19 @@
                 <outlet property="Searchbar" destination="QYB-jp-54h" id="H99-Ox-d9W"/>
                 <outlet property="TopCv" destination="Lsi-XR-Teu" id="Xuc-JJ-caO"/>
                 <outlet property="ViewDetailsBtn" destination="6DV-7y-qm1" id="ele-YC-suB"/>
-                <outlet property="assignmentkBtn" destination="zbQ-gk-nd6" id="l3p-eq-CWu"/>
-                <outlet property="assignmentkLbl" destination="eG3-Zh-0Af" id="fHv-oh-Pi6"/>
-                <outlet property="assignmentkView" destination="XVw-ZF-wwn" id="2rc-dv-U1f"/>
+                <outlet property="assignmentImgBtn" destination="zbQ-gk-nd6" id="l3p-eq-CWu"/>
+                <outlet property="assignmentLbl" destination="eG3-Zh-0Af" id="fHv-oh-Pi6"/>
+                <outlet property="assignmentView" destination="XVw-ZF-wwn" id="2rc-dv-U1f"/>
                 <outlet property="bottomCv" destination="E3y-MD-bUI" id="dpr-iv-T0s"/>
                 <outlet property="bottomView" destination="KSz-Vq-FF8" id="YV1-cb-Zvn"/>
                 <outlet property="changeRollLbl" destination="YPb-Ky-jzz" id="5Ae-jS-pkG"/>
                 <outlet property="collectionBtn" destination="d68-Cq-oLs" id="f6e-j9-ZUz"/>
                 <outlet property="heightStackview" destination="jOd-ar-2RJ" id="aht-Ll-XfP"/>
-                <outlet property="homeworkBtn" destination="WWY-dH-tOG" id="Ezo-DI-KKW"/>
+                <outlet property="homeworkImgBtn" destination="WWY-dH-tOG" id="Ezo-DI-KKW"/>
                 <outlet property="homeworkLbl" destination="dcf-XG-XKF" id="Ryg-zR-5ed"/>
                 <outlet property="homeworkView" destination="KyL-s1-5mb" id="Kkk-J1-GcL"/>
                 <outlet property="loginDetailView" destination="jac-fc-67P" id="TOH-w4-Nds"/>
-                <outlet property="onlineMeetingBtn" destination="msu-fm-Zwn" id="XZL-IE-VxD"/>
+                <outlet property="onlineMeetingImgBtn" destination="msu-fm-Zwn" id="XZL-IE-VxD"/>
                 <outlet property="onlineMeetingLbl" destination="JKe-GC-cgG" id="X07-ec-Dja"/>
                 <outlet property="onlineMeetingView" destination="cbT-ju-qCz" id="pZn-tE-7N0"/>
                 <outlet property="pageContorler" destination="sco-PE-HIn" id="Zfn-iq-e3v"/>
@@ -101,12 +101,13 @@
                                                                         <constraint firstAttribute="height" constant="50" id="Iu3-7c-5Uj"/>
                                                                         <constraint firstAttribute="width" constant="50" id="JuH-lA-ODe"/>
                                                                     </constraints>
+                                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Notice Board">
                                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eG3-Zh-0Af">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eG3-Zh-0Af">
                                                                     <rect key="frame" x="5" y="65" width="101" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -143,12 +144,13 @@
                                                                         <constraint firstAttribute="width" constant="50" id="X3g-Q7-Z1F"/>
                                                                         <constraint firstAttribute="height" constant="50" id="fPB-xe-8Zk"/>
                                                                     </constraints>
+                                                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Notice Board">
                                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-GC-cgG">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JKe-GC-cgG">
                                                                     <rect key="frame" x="5" y="65" width="101" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
@@ -185,12 +187,13 @@
                                                                         <constraint firstAttribute="width" constant="50" id="HfV-t5-gO1"/>
                                                                         <constraint firstAttribute="height" constant="50" id="xtR-uQ-ZSr"/>
                                                                     </constraints>
+                                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Notice Board">
                                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     </state>
                                                                 </button>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcf-XG-XKF">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcf-XG-XKF">
                                                                     <rect key="frame" x="5" y="65" width="101" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>

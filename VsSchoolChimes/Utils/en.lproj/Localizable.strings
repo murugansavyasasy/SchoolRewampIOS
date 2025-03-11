@@ -5,23 +5,23 @@
   Created by admin on 08/11/24.
   
 */
- "welcome_message" = "Welcome";
- "change_language" = "Change Language";
+ "Welcome" = "Welcome";
+ "Change Language" = "Change Language";
  "Home" = "Home";
  "Help" = "Help";
  "Settings" = "Settings";
  "Profile" = "Profile";
-"ChooseYourRole" = "Choose your role";
-"LoginAsTeacherOrParent" = "Login as a teacher or parent";
+"Choose your role" = "Choose your role";
+"Login as a teacher or parent" = "Login as a teacher or parent";
 "Principal" = "Principal";
 "Parent" = "Parent";
 "Proceed" = "Proceed"; 
 "exam_test" = "ExamTest";
-"exam_marks" = "Exam Marks";
-"attendance" = "Attendance";
-"receiver_assignment" = "Receiver Assignment";
-"online_meeting" = "Online Meeting";
-"attendance_report" = "Attendance Report";
+"Exam Marks" = "Exam Marks";
+"Attendance" = "Attendance";
+"Receiver Assignment" = "Receiver Assignment";
+"Online Meeting" = "Online Meeting";
+"Attendance Report" = "Attendance Report";
 
 
 
@@ -185,66 +185,66 @@
 //MARK: Sender side Events
 //MARK: Attendence
 "Name" = "Name";
-"RollNo" = "Roll No";
+"Roll No" = "Roll No";
 "Status" = "Status";
-"LeaveRequests" = "Leave Requests";
+"Leave Requests" = "Leave Requests";
 "Section" = "Section '10th C'";
-"RollNo DESC" = "Roll No DESC";
-"RollNo ASC" = "Roll No ASC";
+"Roll No DESC" = "Roll No DESC";
+"Roll No ASC" = "Roll No ASC";
 "Name ASC" = "Name ASC";
 "Name DESC" = "Name DESC";
-"Apsent" = "Absent";
+"Absent" = "Absent";
 "Present" = "Present";
 "Filter" = "Filter";
 "Present" = "Present";
 "Absent" = "Absent";
-"RollNo_ASC" = "Roll Number Ascending";
-"RollNo_DESC" = "Roll Number Descending";
-"Name_ASC" = "Name Ascending";
-"Name_DESC" = "Name Descending";
-"getAllStudent" = "Get All Students";
-"completed" = "Completed";
-"pending" = "Pending";
+"Roll Number Ascending" = "Roll Number Ascending";
+"Roll Number Descending" = "Roll Number Descending";
+"Name Ascending" = "Name Ascending";
+"Name Descending" = "Name Descending";
+"Get All Students" = "Get All Students";
+"Completed" = "Completed";
+"Pending" = "Pending";
 
 //MARK: Event
 "Circulars" = "Circulars";
-"EnterPlace" = "Enter place";
-"EnterTitle" = "Enter Title";
-"EnterTextHere" = "Enter your Text here...";
-"AddPhotos1" = "Add Photos (Optional?)";
+"Enter place" = "Enter place";
+"Enter Title" = "Enter Title";
+"Enter your Text here..." = "Enter your Text here...";
+"Add Photos (Optional?)" = "Add Photos (Optional?)";
 "Add Pdf (Optional?)" = "Add Pdf (Optional?)";
 "Venue" = "Venue";
 "History" = "History";
 "Create" = "Create";
-"AddPhotos" = "Add Photos";
-"Optional" = "(Optional?)";
+"Add Photos" = "Add Photos";
+"(Optional?)" = "(Optional?)";
 "From" = "From";
 "To" = "To";
-"EventTitle" = "Event Title";
-"EventDetails" = "Event Details";
-"CreateEvent" = "Create Event";
-"EnterPlace" = "Enter place";
-"EnterTitle" = "Enter Title";
-"EnterTextHere" = "Enter your Text here...";
-"egYogaEvent" = "eg. Yoga event";
-"egChennai" = "eg. Chennai";
+"Event Title" = "Event Title";
+"Event Details" = "Event Details";
+"reate Event" = "Create Event";
+"Enter place" = "Enter place";
+"Enter Title" = "Enter Title";
+"Enter your Text here..." = "Enter your Text here...";
+"eg. Yoga event" = "eg. Yoga event";
+"eg. Chennai" = "eg. Chennai";
 //MARK: Comunication
-"BackToTextMessage" = "Back to Text Message";
-"BackToVoiceMessage" = "Back to Voice Message";
-"selectedText" = "Selected Text";
-"invalidSelection" = "Invalid Selection";
-"selectDatesWithinMonth" = "You can only select dates within the currently displayed month.";
-"text" = "Text";
-"voice" = "Voice";
+"Back to Text Message" = "Back to Text Message";
+"Back to Voice Message" = "Back to Voice Message";
+"Selected Text" = "Selected Text";
+"Invalid Selection" = "Invalid Selection";
+"You can only select dates within the currently displayed month." = "You can only select dates within the currently displayed month.";
+"Text" = "Text";
+"Voice" = "Voice";
 "Schedule a Call" = "Schedule a Call";
 
 //MARK: ScheduleExam
-"scheduleExam" = "Schedule Exam";
+"Schedule Exam" = "Schedule Exam";
 "Reasons" = "Reasons";
 "Days" = "Days";
 "Day" = "Day";
-"CreateLeaveRequest" = "Create Leave Request";
-"LeaveRequestInfo" = "Leave Request Info";
+"Create Leave Request" = "Create Leave Request";
+"Leave Request Info" = "Leave Request Info";
 
 
 

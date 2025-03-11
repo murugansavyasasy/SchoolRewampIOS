@@ -54,7 +54,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         // Create the gradient color for tab bar
      
         tabBar.tintColor = .white
-        tabBar.unselectedItemTintColor = .black.withAlphaComponent(0.5)
+        tabBar.unselectedItemTintColor = .black.withAlphaComponent(0.55)
         tabBar.items = [firstItem, secondItem, thirdItem, fourthItem]
         tabBar.delegate = self
         tabBar.selectedItem = firstItem
@@ -79,8 +79,8 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             Parent.getValue = passedValue
             selectViewController(Parent)
             
-            applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue, Colornames.gradientgreen])
-           
+            applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue.blendedWithWhiteColour(factor: 0.3), Colornames.gradientgreen.blendedWithWhiteColour(factor: 0.3)])
+            
         }else if passedValue == 1{
             
             firstVC.getValue = passedValue

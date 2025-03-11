@@ -16,6 +16,7 @@ class FAQViewController: UIViewController {
     var expandedIndexPaths: Set<IndexPath> = []
     var index : Int? = nil
     var passValue = 1
+    var selectedIndexPath: IndexPath?
     
     let qaList: [SchoolQA] = [
         SchoolQA(question: "Does the school have a library?", answer: "Yes, the school has a well-stocked library with various books and study materials."),
@@ -72,12 +73,23 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
         cell.QuestionLabel.text = qaList[indexPath.row].question
         cell.AnswerLbl.text = qaList[indexPath.row].answer
        // cell.AnswerLbl.isHidden = true
+        cell.toggleLabelVisibility(isSelected: selectedIndexPath == indexPath)
         return cell
     }
     
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            // Toggle selection state
+            if selectedIndexPath == indexPath {
+                selectedIndexPath = nil  // Deselect if already selected
+            } else {
+                selectedIndexPath = indexPath
+            }
+            
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+    
+    
+    /* func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! FAQTableViewCell
         
         cell.AnswerLbl.isHidden = false
@@ -92,7 +104,7 @@ extension FAQViewController: UITableViewDelegate, UITableViewDataSource {
         cell.QuestionLabel.isHidden = false
         tableview.reloadData()
         
-    }
+    }*/
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension

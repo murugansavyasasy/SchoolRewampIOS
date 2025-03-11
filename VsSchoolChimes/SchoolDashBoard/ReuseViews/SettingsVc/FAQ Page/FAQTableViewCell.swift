@@ -42,5 +42,9 @@ class FAQTableViewCell: UITableViewCell, UITextViewDelegate {
       
     }
     
+    func toggleLabelVisibility(isSelected: Bool) {
+        AnswerLbl.isHidden = !isSelected
+        }
+    
     
 }

@@ -13,35 +13,37 @@ protocol DeleteImge{
     func deleteImage(index:Int)
 }
 @available(iOS 14.0, *)
-class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UITextViewDelegate ,UIDocumentPickerDelegate, DeleteImge, Datepicker{
-   
+class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker{
+    
     func date(date: String) {
         
         // Change to output format
         let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd MMM yy"
-            let DayDate = dateFormatter.date(from: date)!
-            // Change to output format
-            dateFormatter.dateFormat = "EEE dd"
-            let outputDateString = dateFormatter.string(from: DayDate)
+        dateFormatter.dateFormat = "dd MMM yy"
+        let DayDate = dateFormatter.date(from: date)!
+        // Change to output format
+        dateFormatter.dateFormat = "EEE dd"
+        let outputDateString = dateFormatter.string(from: DayDate)
+        
+        if dateSelection == true{
+            todate.setTitle(date, for: .normal)
+            setFormattedDate(outputDateString, label: toDateLbl)
             
-            if dateSelection == true{
-                todate.setTitle(date, for: .normal)
-                setFormattedDate(outputDateString, label: toDateLbl)
-
-            }else{
-                dateBtn.setTitle(date, for: .normal)
-                setFormattedDate(outputDateString, label: pickerDateLbl)
-            }
+        }else{
+            dateBtn.setTitle(date, for: .normal)
+            setFormattedDate(outputDateString, label: pickerDateLbl)
         }
+    }
     
     func deleteImage(index: Int) {
         
         selectedImages.remove(at: index)
         costomView.imageCollectionview.reloadData()
     }
-    
     var effect:UIVisualEffect!
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var eventTxt: UITextField!
     @IBOutlet weak var EventTtleLbl: UILabel!
     @IBOutlet weak var placeTxt: UITextField!
@@ -84,10 +86,12 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var isKeyboardVisible = false
     let dateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
+    var initialHeight : CGFloat = 60
+    var maxHeight : CGFloat = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         eventTxt.applyRightTxt()
         EventTtleLbl.applyRightTxt()
         placeTxt.applyRightTxt()
@@ -109,9 +113,27 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         setupPlaceholder()
         keyboardDonebtn()
         imageSelection()
-
+        
+        // Add observers for keyboard notifications
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
- 
+    
+    deinit {
+        // Remove observers
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func imageSelection(){
         photoPickManager.onImagePicked = { [weak self] images in
             guard let self = self else { return }
@@ -160,7 +182,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         dateFormatter.dateFormat = "EEE d"
         let customDate = dateFormatter.string(from: currentDate)
-       
+        
         setFormattedDate(customDate, label: pickerDateLbl)
         setFormattedDate(customDate, label: toDateLbl)
         
@@ -223,65 +245,48 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
         contentTxtView.delegate = self
-       
+        
     }
     
-    @objc func keyboardWillShow(_ notification: Notification) {
-        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            isKeyboardVisible = true
-            UIView.animate(withDuration: 0.3) {
-                // Move outerView 20 points from the top
-                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
-        isKeyboardVisible = false
-        UIView.animate(withDuration: 0.3) {
-            self.outerView.transform = .identity // Reset position
-        }
-    }
+   
     
     func setFormattedDate(_ date: String, label: UILabel) {
-           let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-           let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
-           
-           // Function to create an attributed string from a given date
-           func createAttributedText(from date: String) -> NSMutableAttributedString {
-               let components = date.split(separator: " ")
-               guard components.count > 1 else {
-                   print("Error: Invalid date format")
-                   return NSMutableAttributedString()
-               }
-               
-               let day = components[0]
-               let month = components[1]
-               
-               let attributedText = NSMutableAttributedString()
-               attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
-                   .font: weekdayFont,
-                   .foregroundColor: UIColor.darkGray
-               ]))
-               attributedText.append(NSAttributedString(string: "\(month)", attributes: [
-                   .font: dayFont,
-                   .foregroundColor: UIColor.black
-               ]))
-               
-               // Set paragraph style for centered alignment
-               let paragraphStyle = NSMutableParagraphStyle()
-               paragraphStyle.alignment = .center
-               attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-               
-               return attributedText
-           }
-           
-           // Create attributed text and set to label
-           label.attributedText = createAttributedText(from: date)
-           label.numberOfLines = 0
-       }
+        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
+        
+        // Function to create an attributed string from a given date
+        func createAttributedText(from date: String) -> NSMutableAttributedString {
+            let components = date.split(separator: " ")
+            guard components.count > 1 else {
+                print("Error: Invalid date format")
+                return NSMutableAttributedString()
+            }
+            
+            let day = components[0]
+            let month = components[1]
+            
+            let attributedText = NSMutableAttributedString()
+            attributedText.append(NSAttributedString(string: "\(day)\n", attributes: [
+                .font: weekdayFont,
+                .foregroundColor: UIColor.darkGray
+            ]))
+            attributedText.append(NSAttributedString(string: "\(month)", attributes: [
+                .font: dayFont,
+                .foregroundColor: UIColor.black
+            ]))
+            
+            // Set paragraph style for centered alignment
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
+            
+            return attributedText
+        }
+        
+        // Create attributed text and set to label
+        label.attributedText = createAttributedText(from: date)
+        label.numberOfLines = 0
+    }
     
     func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
         print(text)
@@ -304,59 +309,7 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         label.attributedText = attributedString
     }
     
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        placeTxt.inputAccessoryView = toolbar
-        eventTxt.inputAccessoryView = toolbar
-        contentTxtView.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
-    }
     
-    func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
-        adjustTextViewHeightWithConstraint(textView)
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Calculate the new length of the text
-        let currentText = textView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        if updatedText.count <= 500 {
-            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
-            return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
-            return false // Reject the change
-        }
-    }
-    
-    // Helper function to count sentences
-    func countSentences(in text: String) -> Int {
-        let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        let sentences = trimmedText.components(separatedBy: CharacterSet(charactersIn: ".!?"))
-        return sentences.filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }.count
-    }
-    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
-        // Calculate the size needed for the text
-        if textView.text.isEmpty {
-            // Set default height to 60
-            textViewHeightConstraint.constant = 60
-        } else {
-            // Calculate the size needed for the text
-            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-            textViewHeightConstraint.constant = sizeThatFits.height
-        }
-        textView.layoutIfNeeded() // Refresh the layout
-    }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description.translated()
@@ -371,14 +324,83 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         placeholderLabel.isHidden = !contentTxtView.text.isEmpty // Hide if text exists
     }
     
+    func setupTimePicker() {
+        // Initialize the time picker
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            timePicker.preferredDatePickerStyle = .wheels
+        }
+        timePicker.backgroundColor = .white
+        timePicker.isHidden = true // Initially hidden
+        self.view.addSubview(timePicker)
+        
+        // Initialize and configure Done button
+        doneButton2 = UIButton(type: .system)
+        doneButton2.setTitle(AlertstringFile.Done, for: .normal)
+        doneButton2.isHidden = true
+        doneButton2.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton2.setTitleColor(.white, for: .normal)
+        doneButton2.layer.cornerRadius = 8
+        doneButton2.addTarget(self, action: #selector(selectedTime), for: .touchUpInside)
+        self.view.addSubview(doneButton2)
+    }
+    
+    @objc func selectedTime() {
+        let timeFormatter = DateFormatter()
+        timeFormatter.timeStyle = .short
+        let selectedTime = timePicker.date // Selected time from timePicker
+        
+        let formattedTime = timeFormatter.string(from: selectedTime)
+        
+        if dateSelection == true{
+            Totime.setTitle(formattedTime, for: .normal)
+        }else{
+            timeBtn.setTitle(formattedTime, for: .normal)
+        }
+        // Hide the picker and Done button after selection
+        timePicker.isHidden = true
+        doneButton2.isHidden = true
+        activeButton = nil
+    }
+    
+
+    func showTimePicker(for button: UIButton, date: Bool) {
+        activeButton = button // Track which button is being updated
+        
+        // Position the time picker or date picker below the button
+        let buttonFrame = button.convert(button.bounds, to: self.view)
+            // Show the time picker
+            timePicker.isHidden = false
+            doneButton2.isHidden = false
+
+            let pickerYPosition = buttonFrame.minY - 210
+            timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
+            
+            // Set appearance for timePicker
+            timePicker.backgroundColor = .white
+            timePicker.layer.shadowColor = UIColor.black.cgColor
+            timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+            timePicker.layer.shadowRadius = 5
+            timePicker.layer.shadowOpacity = 0.3
+            timePicker.layer.cornerRadius = 20
+            
+            // Position the Done button at the bottom-right of the picker
+            doneButton2.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + timePicker.frame.height - 40, width: 70, height: 30)
+            
+            // Add timePicker to the view (ensure it’s in the view hierarchy)
+            self.view.addSubview(timePicker)
+            self.view.addSubview(doneButton2)
+    }
+    
     @IBAction func datepicker(_ sender: UIButton) {
-            dateSelection = false
-            let vc = DatePickerVC(nibName: nil, bundle: nil)
-            vc.dateSelection = 2
-            vc.delegate = self
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-            self.present(vc, animated: false)
+        dateSelection = false
+        let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.dateSelection = 2
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        self.present(vc, animated: false)
     }
     @IBAction func Timepicker(_ sender: UIButton) {
         showTimePicker(for: sender, date: false)
@@ -411,10 +433,10 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         dismiss(animated: true)
     }
     
-    
-    
-    //MARK: Collectionview Delegate Functions
-    
+}
+//MARK: Collectionview Delegate Functions
+@available(iOS 14.0, *)
+extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -529,76 +551,92 @@ class EventsVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
     }
     
-    func setupTimePicker() {
-        // Initialize the time picker
-        timePicker = UIDatePicker()
-        timePicker.datePickerMode = .time
-        if #available(iOS 13.4, *) {
-            timePicker.preferredDatePickerStyle = .wheels
-        }
-        timePicker.backgroundColor = .white
-        timePicker.isHidden = true // Initially hidden
-        self.view.addSubview(timePicker)
-        
-        // Initialize and configure Done button
-        doneButton2 = UIButton(type: .system)
-        doneButton2.setTitle(AlertstringFile.Done, for: .normal)
-        doneButton2.isHidden = true
-        doneButton2.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
-        doneButton2.setTitleColor(.white, for: .normal)
-        doneButton2.layer.cornerRadius = 8
-        doneButton2.addTarget(self, action: #selector(selectedTime), for: .touchUpInside)
-        self.view.addSubview(doneButton2)
+}
+
+//MARK: Text view delegate Functions
+@available(iOS 14.0, *)
+extension EventsVC : UITextViewDelegate {
+
+    func keyboardDonebtn(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        placeTxt.inputAccessoryView = toolbar
+        eventTxt.inputAccessoryView = toolbar
+        contentTxtView.inputAccessoryView = toolbar
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)  // Dismiss the keyboard
     }
     
-    @objc func selectedTime() {
-        let timeFormatter = DateFormatter()
-        timeFormatter.timeStyle = .short
-        let selectedTime = timePicker.date // Selected time from timePicker
-        
-        let formattedTime = timeFormatter.string(from: selectedTime)
-        
-        if dateSelection == true{
-            Totime.setTitle(formattedTime, for: .normal)
-        }else{
-            timeBtn.setTitle(formattedTime, for: .normal)
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Calculate the new length of the text
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        if updatedText.count <= 500 {
+            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //            contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
         }
-        // Hide the picker and Done button after selection
-        timePicker.isHidden = true
-        doneButton2.isHidden = true
-        activeButton = nil
     }
     
-
-    func showTimePicker(for button: UIButton, date: Bool) {
-        activeButton = button // Track which button is being updated
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         
-        // Position the time picker or date picker below the button
-        let buttonFrame = button.convert(button.bounds, to: self.view)
-            // Show the time picker
-            timePicker.isHidden = false
-            doneButton2.isHidden = false
-
-            let pickerYPosition = buttonFrame.minY - 210
-            timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
+        let size = textView.contentSize
+        
+        // Check if the content exceeds the initial height
+        if size.height > initialHeight {
+            // Update the height constraint based on content size
+            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
+            textViewHeightConstraint.constant = newHeight
+        }
+        
+        // Animate the change for smoother UI
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+        
+        // Scroll to make the UITextView visible
+        scrollToView(textView)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
             
-            // Set appearance for timePicker
-            timePicker.backgroundColor = .white
-            timePicker.layer.shadowColor = UIColor.black.cgColor
-            timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-            timePicker.layer.shadowRadius = 5
-            timePicker.layer.shadowOpacity = 0.3
-            timePicker.layer.cornerRadius = 20
+            // Adjust the scroll view content inset
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
+            scrollView.scrollIndicatorInsets = scrollView.contentInset
             
-            // Position the Done button at the bottom-right of the picker
-            doneButton2.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + timePicker.frame.height - 40, width: 70, height: 30)
-            
-            // Add timePicker to the view (ensure it’s in the view hierarchy)
-            self.view.addSubview(timePicker)
-            self.view.addSubview(doneButton2)
+            // Ensure the UITextView is visible
+            scrollToView(contentTxtView)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // Reset the scroll view content inset
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
+    
+    func scrollToView(_ view: UIView) {
+        // Calculate the frame of the view relative to the UIScrollView
+        let rect = view.convert(view.bounds, to: scrollView)
+        scrollView.scrollRectToVisible(rect, animated: true)
     }
     
 }
+
+
+
 class HalfColorButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()

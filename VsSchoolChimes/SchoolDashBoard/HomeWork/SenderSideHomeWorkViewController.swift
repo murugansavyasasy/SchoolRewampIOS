@@ -17,6 +17,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var ToStdOrSecBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var CalenderViewTodateBtnTop: NSLayoutConstraint!
     @IBOutlet weak var outerView: UIView!
@@ -173,6 +176,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         homeworkBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         ReportBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
         //MARK: Label Font Style
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -337,14 +341,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     @IBAction func HomeworkBtnAct(_ sender: Any) {
-        
+
+        ToStdOrSecBtnBottom.constant = 50
         gradientcolours(button: homeworkBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         homeworkBtn.setTitleColor(.white, for:.normal)
         ReportBtn.backgroundColor = .clear
         
         gradientcolours(button: ReportBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ReportBtn.setTitleColor(.black, for:.normal)
-        
+       
         ReportView.isHidden = true
         ReportView.alpha = 0
         ComposeHomeworkView.isHidden = false
@@ -352,20 +357,21 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     @IBAction func ReportsBtnAct(_ sender: Any) {
-        
+        let screenHeight = UIScreen.main.bounds.height
+        //ToStdOrSecBtnBottom.constant = screenHeight - 600
+        ToStdOrSecBtnBottom.constant = screenHeight * 0.35  // 35% of screen height
         gradientcolours(button: ReportBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         ReportBtn.setTitleColor(.white, for:.normal)
         homeworkBtn.backgroundColor = .clear
         
         gradientcolours(button: homeworkBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         homeworkBtn.setTitleColor(.black, for:.normal)
-        
+       
         ComposeHomeworkView.isHidden = true
         ComposeHomeworkView.alpha = 0
         ReportView.isHidden = false
         ReportView.alpha = 1
         showDatepicker()
-        
     }
     
     @IBAction func backAction() {
@@ -782,67 +788,30 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
             return false // Reject the change
         }
     }
-    @objc func keyboardWillShow(notification: Notification) {
-        
-        guard let userInfo = notification.userInfo,
-              
-                let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
-              
-                let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-        
-        
-        
-        // Calculate the available space after keyboard shows
-        
-        let keyboardHeight = keyboardFrame.height
-        
-        let safeAreaBottom = self.view.safeAreaInsets.bottom
-        
-        let adjustedKeyboardHeight = keyboardHeight - safeAreaBottom
-        
-        
-        
-        // Get the bottom position of the outerView
-        
-        let textViewBottom = outerView.frame.origin.y + outerView.frame.height
-        
-        
-        
-        // Calculate the overlap
-        
-        let overlap = textViewBottom - (self.view.frame.height - adjustedKeyboardHeight)
-        
-        
-        
-        if overlap > 0 {
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
             
-            UIView.animate(withDuration: animationDuration) {
-                
-                self.outerView.transform = CGAffineTransform(translationX: 0, y: -overlap - 16) // Add padding
-                
-            }
+            // Adjust the scroll view content inset
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
+            scrollView.scrollIndicatorInsets = scrollView.contentInset
             
+            // Ensure the UITextView is visible
+            scrollToView(DetailsTxtview)
         }
-        
     }
     
-    
-    
-    @objc func keyboardWillHide(notification: Notification) {
-        
-        guard let userInfo = notification.userInfo,
-              
-                let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
-        
-        
-        
-        // Reset the outerView position
-        
-        UIView.animate(withDuration: animationDuration) {
-            
-            self.outerView.transform = .identity
-            
-        }
-        
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // Reset the scroll view content inset
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
     }
+    
+    func scrollToView(_ view: UIView) {
+        // Calculate the frame of the view relative to the UIScrollView
+        let rect = view.convert(view.bounds, to: scrollView)
+        scrollView.scrollRectToVisible(rect, animated: true)
+    }
+    
 }

@@ -12,7 +12,7 @@ import SDWebImage
 import SwiftUI
 
 @available(iOS 14.0, *)
-class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDelegate,UIDocumentPickerDelegate, DeleteImge, Datepicker {
+class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker {
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
@@ -32,6 +32,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
             }
         }
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var textview: UITextView!
@@ -69,6 +70,8 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     var desript = ""
     var url : URL?
     let dateFormatter = DateFormatter()
+    var initialHeight : CGFloat = 60
+    var maxHeight : CGFloat = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,10 +85,29 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         costomView.imageCollectionview.dataSource = self
         
         textview.delegate = self
+        eventTxt.delegate = self
         
         let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
         costomView.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
+        // Add observers for keyboard notifications
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    deinit {
+        // Remove observers
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -234,6 +256,27 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
     
+    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
+        print(text)
+        print(firstString)
+        print(secondString)
+        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
+        
+        // Find ranges of the substrings
+        let firstRange = (text as NSString).range(of: firstString)
+        let secondRange = (text as NSString).range(of: secondString)
+        
+        // Create a mutable attributed string
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        // Apply colors to the respective ranges
+        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
+        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
+        
+        // Set the attributed string to the label
+        label.attributedText = attributedString
+    }
+    
     
     @IBAction func SubmitAction(_ sender: Any) {
         
@@ -315,88 +358,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
         present(vc, animated: true)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() // Dismiss the keyboard
-        return true
-    }
     
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        eventTxt.inputAccessoryView = toolbar
-        textview.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
-    }
-    
-    
-    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
-        print(text)
-        print(firstString)
-        print(secondString)
-        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
-        
-        // Find ranges of the substrings
-        let firstRange = (text as NSString).range(of: firstString)
-        let secondRange = (text as NSString).range(of: secondString)
-        
-        // Create a mutable attributed string
-        let attributedString = NSMutableAttributedString(string: text)
-        
-        // Apply colors to the respective ranges
-        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
-        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
-        
-        // Set the attributed string to the label
-        label.attributedText = attributedString
-    }
-    
-   
-    func textViewDidEndEditing(_ textView: UITextView) {
-        
-        if textview.text.isEmpty == true{
-            textview.text = CommonStringFile.Description.translated()
-            textview.textColor = .lightGray
-        }
-    }
-    
-    
-    func textViewDidChange(_ textView: UITextView) {
-        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
-        adjustTextViewHeightWithConstraint(textView)
-    }
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Calculate the new length of the text
-        let currentText = textView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        if updatedText.count <= 500 {
-            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
-            return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
-            return false // Reject the change
-        }
-    }
-    
-    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
-        // Calculate the size needed for the text
-        if textView.text.isEmpty {
-            // Set default height to 60
-            textViewHeightConstraint.constant = 60
-        } else {
-            // Calculate the size needed for the text
-            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-            textViewHeightConstraint.constant = sizeThatFits.height
-        }
-        textView.layoutIfNeeded() // Refresh the layout
-    }
     // MARK: File Attachments Actions
     
     func selectImages() {
@@ -436,6 +398,7 @@ class SenderNoticeBoardVC: UIViewController, UITextViewDelegate, UITextFieldDele
     
 }
 
+//MARK: Collectionview Delegate Functions
 @available(iOS 14.0, *)
 extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
@@ -519,3 +482,99 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
     
 }
 
+//MARK: Textview and TextField Delegate Functions
+@available(iOS 14.0, *)
+extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // Dismiss the keyboard
+        return true
+    }
+    
+    func keyboardDonebtn(){
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolbar.setItems([flexibleSpace, doneButton], animated: false)
+        eventTxt.inputAccessoryView = toolbar
+        textview.inputAccessoryView = toolbar
+    }
+    @objc func doneKeyboard() {
+        view.endEditing(true)  // Dismiss the keyboard
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
+        if textview.text.isEmpty == true{
+            textview.text = CommonStringFile.Description.translated()
+            textview.textColor = .lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
+        adjustTextViewHeightWithConstraint(textView)
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Calculate the new length of the text
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        if updatedText.count <= 500 {
+            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Reach_Your_Limit, on: self)
+            //            contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    
+    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
+        let size = textView.contentSize
+        
+        // Check if the content exceeds the initial height
+        if size.height > initialHeight {
+            // Update the height constraint based on content size
+            let newHeight = min(size.height, maxHeight) // Cap the height to maxTextViewHeight
+            textViewHeightConstraint.constant = newHeight
+        }
+        
+        // Animate the change for smoother UI
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+        
+        // Scroll to make the UITextView visible
+        scrollToView(textView)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            
+            // Adjust the scroll view content inset
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
+            scrollView.scrollIndicatorInsets = scrollView.contentInset
+            
+            // Ensure the UITextView is visible
+            scrollToView(textview)
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        // Reset the scroll view content inset
+        scrollView.contentInset = .zero
+        scrollView.scrollIndicatorInsets = .zero
+    }
+    
+    func scrollToView(_ view: UIView) {
+        // Calculate the frame of the view relative to the UIScrollView
+        let rect = view.convert(view.bounds, to: scrollView)
+        scrollView.scrollRectToVisible(rect, animated: true)
+    }
+    
+}

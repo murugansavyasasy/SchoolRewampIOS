@@ -27,7 +27,8 @@ class LocationTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        
+        StatusLbl.layer.cornerRadius = 10
+        StatusLbl.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
         
     }
 
