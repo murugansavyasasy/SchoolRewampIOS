@@ -26,6 +26,7 @@ class ExameMarVC: UIViewController {
         addDoneButton()
         CellRegister()
         backBtn.applyBackButton()
+        SearchBar.applyRightTxt()
         // Do any additional setup after loading the view.
         tv.isHidden = true
         

@@ -26,6 +26,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         
         // Do any additional setup after loading the view.
         backBtn.applyBackButton()
+        searchbar.applyRightTxt()
         StyleAndTranslate()
         searchbar.delegate = self
         addDoneButton()

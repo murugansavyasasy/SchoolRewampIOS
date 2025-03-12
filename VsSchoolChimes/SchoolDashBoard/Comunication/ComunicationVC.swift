@@ -114,7 +114,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         keyboardDionebtn()
         setInitialButtonTitles()
         StyleAndTranslater()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)
         historytable.delegate = self
         historytable.dataSource = self
         DateSelection.delegate = self
@@ -631,18 +631,42 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             formatter.timeStyle = .short
             messageSendTime.text = "\(formatter.string(from: Date()))"
             
-            playerheight.constant = 60
-            voiceStackview.isHidden = false
-            dltbtn.isHidden = false
-            sendbtn.isEnabled = true
-            addfile.isHidden = true
-            //            moveTextmessage.isHidden = true
-            
+            playerheight.constant = voiceTiming.text == "00:00" ? 0:60
+            voiceStackview.isHidden = voiceTiming.text == "00:00" ? true:false
+            dltbtn.isHidden = voiceTiming.text == "00:00" ? true:false
+            sendbtn.isEnabled = voiceTiming.text == "00:00" ? false:true
+            addfile.isHidden = voiceTiming.text == "00:00" ? false:true
             playerItem = AVPlayerItem(url: urls)
             player = AVPlayer(playerItem: playerItem!)
         }
         
     }
+    @objc func handleWaveViewProgressChange(_ notification: Notification) {
+        guard let progress = notification.object as? CGFloat,
+              let player = player else { return }
+
+        let totalDuration = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime.zero)
+        let seekTime = CMTime(seconds: Double(progress) * totalDuration, preferredTimescale: 1)
+
+        // ❗️ No pause or play here, only seek time adjustment
+        player.seek(to: seekTime) { [weak self] _ in
+            self?.updateUIForSeekPosition(progress)
+        }
+    }
+
+    // MARK: - UI Update for Seek
+    private func updateUIForSeekPosition(_ progress: CGFloat) {
+        waveView.progress = progress
+
+        // Update the timer display
+        let totalDuration = CMTimeGetSeconds(player?.currentItem?.duration ?? CMTime.zero)
+        let currentSeconds = Int(progress * totalDuration)
+        let minutes = currentSeconds / 60
+        let seconds = currentSeconds % 60
+        voiceTiming.text = String(format: "%02d:%02d", minutes, seconds)
+    }
+
+
     //MARK: TIME PICKER
     func showTimePicker(for button: UIButton) {
         activeButton = button // Track which button is being updated
@@ -737,44 +761,52 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     // Update Slider Position as Audio Plays
     @objc func updateSlider() {
         guard let audioPlayer = player else { return }
-        
+
         if audioPlayer.isPlaying {
             audioRecorder?.updateMeters()
-            
+
             // Get average power for channel 0
             let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
             let normalizedPower = max(1, (averagePower + 160) / 160)
-            waveView.updateWithLevel(CGFloat(normalizedPower))
-            
+            waveView.updateWithLevel(CGFloat(normalizedPower))  // Update waveform animation
+
             // Update playback time
             if let currentItem = audioPlayer.currentItem {
                 let totalDuration = CMTimeGetSeconds(currentItem.duration)
+                
                 if totalDuration.isFinite {
+                    let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
+
+                    // Update WaveView progress
+                    let progress = CGFloat(elapsedTime / totalDuration)
+                    waveView.progress = progress
+                    waveView.setNeedsDisplay()  // Refresh WaveView to update colors
+
+                    // Time formatting for display
                     let totalMinutes = Int(totalDuration) / 60
                     let totalSeconds = Int(totalDuration) % 60
                     let totalDurationFormatted = String(format: "%02d:%02d", totalMinutes, totalSeconds)
-                    // Get the current playback time
-                    let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
+                    
                     let elapsedMinutes = Int(elapsedTime) / 60
                     let elapsedSeconds = Int(elapsedTime) % 60
                     let currentFormatted = String(format: "%02d:%02d", elapsedMinutes, elapsedSeconds)
                     
-                    // Update the label with current and total duration
+                    // Update the timing label
                     voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
                 }
             }
         } else {
             audioRecorder?.updateMeters()
-            
-            // Get average power for channel 0
+
+            // Get average power for channel 0 when paused or stopped
             let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
             let normalizedPower = max(0, (0) / 160)
-            
-            // Update wave view with the normalized power level
+
+            // Update wave view with low intensity when paused
             waveView.updateWithLevel(CGFloat(normalizedPower))
         }
-        
     }
+
     @IBAction func previousMont(_ sender: UIButton) {
         let currentPage = DateSelection.currentPage
         if let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentPage) {

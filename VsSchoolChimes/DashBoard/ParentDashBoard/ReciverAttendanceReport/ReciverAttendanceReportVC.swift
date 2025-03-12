@@ -22,6 +22,8 @@ class ReciverAttendanceReportVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
+        searchBar.applyRightTxt()
+        searchBar.placeholder = CommonStringFile.Search.translated()
         StyleAndTranslate()
         CellRigister()
         TV.delegate = self
