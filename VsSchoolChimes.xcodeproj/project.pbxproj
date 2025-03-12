@@ -1159,6 +1159,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
+		8491FFCF2D818A080060C22B /* ApiService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ApiService; sourceTree = "<group>"; };
 		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -2225,6 +2226,7 @@
 			isa = PBXGroup;
 			children = (
 				189E991D2CE3286600FE98A5 /* VsSchoolChimes.entitlements */,
+				8491FFCF2D818A080060C22B /* ApiService */,
 				849E57302C1FF6A9006119DA /* Fonts */,
 				849E572D2C1FF656006119DA /* Gif */,
 				84A5BE7E2C1973F400E32496 /* Utils */,
@@ -3112,6 +3114,7 @@
 			fileSystemSynchronizedGroups = (
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
+				8491FFCF2D818A080060C22B /* ApiService */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 			);
 			name = VsSchoolChimes;
