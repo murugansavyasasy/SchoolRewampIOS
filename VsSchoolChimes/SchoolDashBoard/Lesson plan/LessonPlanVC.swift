@@ -132,18 +132,7 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if  id == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonPlanTvCell, for: indexPath) as! LessonPlanTvCell
-            cell.getvalue(a: Int(complete[indexPath.row]), b: Int(pending[indexPath.row]))
-            cell.val1 = complete[indexPath.row]
-            cell.val2 = pending[indexPath.row]
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(ViewbtnAct))
-            cell.navigateview.addGestureRecognizer(tap)
-            cell.navigateview.isUserInteractionEnabled = true
-            return cell
-            
-        }else if id == 2{
+     if id == 2{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LessonDashboardTv, for: indexPath) as! LessonDashboardTv
             cell.SubjectLbl.text = lessonPlans[indexPath.row].subject
             cell.StandardLbl.text = lessonPlans[indexPath.row].className
@@ -259,9 +248,9 @@ extension LessonPlanVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if id == 0{
-            let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
-            
-            cell.animatePopUpEffect()
+//            let cell = tableView.cellForRow(at: indexPath) as! LessonPlanTvCell
+//            
+//            cell.animatePopUpEffect()
         }
     }
 }

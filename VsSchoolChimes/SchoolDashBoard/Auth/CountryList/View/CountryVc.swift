@@ -32,7 +32,7 @@ class CountryVc: UIViewController {
     @IBOutlet weak var fullview: UIView!
     
     
-    @IBOutlet weak var checkBoxView: CheckBox!
+//    @IBOutlet weak var checkBoxView: CheckBox!
     @IBOutlet weak var Canada: UIView!
     @IBOutlet weak var Indonasia: UIView!
     @IBOutlet weak var Uganda: UIView!
@@ -47,7 +47,7 @@ class CountryVc: UIViewController {
         StyleAndTranslater()
 
       
-        checkBoxView.isChecked = false
+//        checkBoxView.isChecked = false
         fullview.backgroundColor = Colornames.countryClr
         view.backgroundColor = Colornames.countryClr
         ClickArrowImg.layer.cornerRadius = ClickArrowImg.frame.width/2
@@ -130,21 +130,21 @@ class CountryVc: UIViewController {
     
     @IBAction  func GotToNextVc(){
         
-        if checkBoxView.isChecked == true {
-                        
-            
-            var term : String = "1"
-            
-            let userDefault = UserDefaults.standard
-            userDefault.set(term, forKey: DefaultsKeys.countryId)
-
-            let vc = LoginVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-            
-        }else{
-            view.makeToast(AlertstringFile.Terms_And_Conditions)
-        }
+//        if checkBoxView.isChecked == true {
+//                        
+//            
+//            var term : String = "1"
+//            
+//            let userDefault = UserDefaults.standard
+//            userDefault.set(term, forKey: DefaultsKeys.countryId)
+//
+//            let vc = LoginVc(nibName: nil, bundle: nil)
+//            vc.modalPresentationStyle = .fullScreen
+//            present(vc, animated: true)
+//            
+//        }else{
+//            view.makeToast(AlertstringFile.Terms_And_Conditions)
+//        }
     }
    
 

@@ -17,28 +17,11 @@ import AWSCore
 typealias progressBlock = (_ progress: Double) -> Void //2
 
 typealias completionBlock = (_ response: Any?, _ error: Error?) -> Void //3
-
-
-
-
-
-
-
 class AWSS3Manager {
-    
-    
-    
-    
-    
- 
+
     let S3BucketName = AwsCredentials.bucketNameIndia
-    
     let CognitoPoolID = AwsCredentials.CognitoPoolID
-    
     let Region = AWSRegionType.APSouth1
-    
-    
-    
     static let shared = AWSS3Manager() // 4
     private init () { }
     let bucketName = AwsCredentials.bucketNameIndia

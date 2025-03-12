@@ -328,3 +328,63 @@ class textFieldStringFile{
     static let Click_To_Choose_video = "Click To Choose Video From File".translated()
     static let Enter_Video_Title = "Enter Video Title".translated()
 }
+
+
+
+struct StringsName {
+   
+    var appname  = ""
+ 
+    static var Home = "Home"
+    static var Help = "Help"
+    static var Settings = "Settings"
+    static  var Profile = "Profile"
+   
+  
+    
+}
+
+
+
+extension String {
+    /// Translates the string using the language bundle defined in `UserDefaults`.
+    ///
+    ///
+    func translated() -> String {
+        let defaults = UserDefaults.standard
+        
+        // Retrieve the language code saved in UserDefaults
+        if let languageCode = defaults.string(forKey: DefaultsKeys.Language),
+           let path = Bundle.main.path(forResource: languageCode, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            
+    
+            // Translate using the specific language bundle
+            return NSLocalizedString(self, bundle: bundle, comment: "")
+        }
+        
+        // Return the key itself if no translation is available
+        return self
+    }
+}
+
+
+struct DefaultsKeys {
+    static let countryId = "countryId"
+    static let LoginId = "LoginId"
+//    static let Language = "Language"
+    static let Language = "Language"
+   
+    
+}
+
+
+class AwsCredentials {
+ 
+ static var bucketNameIndia = "schoolchimes-files-india"
+ static var bucketNameBangkok = "schoolchimes-files-bangkok"
+ static var UploadProfileBucket = "schoolchimes-student-images"
+ static var uploadprofileBrowes = "schoolchimes-docs"
+ static var CognitoPoolID = "ap-south-1:a8650d2e-79d6-4668-85db-110e9917583f"
+
+}

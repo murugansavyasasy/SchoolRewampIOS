@@ -189,8 +189,7 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])
             }
             
-            cell.checkbox.isUserInteractionEnabled = false
-            cell.checkbox.isChecked = (indexPath == selectedIndexPath)
+    
             
             
             return cell

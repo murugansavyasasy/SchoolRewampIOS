@@ -92,7 +92,6 @@
                 <outlet property="RoleLbl" destination="CkI-bO-Sv4" id="gTD-1D-bKK"/>
                 <outlet property="SchoolNamelbl" destination="XGT-Jn-C5K" id="R57-xu-na4"/>
                 <outlet property="cellview" destination="Woc-gL-PMQ" id="eFZ-Yy-E7K"/>
-                <outlet property="checkbox" destination="gdx-9O-8O9" id="xT1-Kr-Tcu"/>
                 <outlet property="imgview" destination="dxn-eI-W3X" id="SyC-Eu-44R"/>
             </connections>
             <point key="canvasLocation" x="168.70229007633588" y="61.971830985915496"/>

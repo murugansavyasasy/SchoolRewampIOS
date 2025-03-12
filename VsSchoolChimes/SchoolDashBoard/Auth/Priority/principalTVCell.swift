@@ -12,7 +12,7 @@ class principalTVCell: UITableViewCell {
     @IBOutlet weak var AddressLbl: UILabel!
     @IBOutlet weak var RoleLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var checkbox: CheckBox!
+ 
     @IBOutlet weak var SchoolNamelbl: UILabel!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var imgview: UIImageView!
@@ -32,7 +32,7 @@ class principalTVCell: UITableViewCell {
            
            imgview.layer.cornerRadius = Colornames.CORadius10
            
-           checkbox.isChecked = false
+           
            
            AddressLbl.setFont(style: .body, size: FontSize.BodySize)
            RoleLbl.setFont(style: .body, size: FontSize.BodySize)
