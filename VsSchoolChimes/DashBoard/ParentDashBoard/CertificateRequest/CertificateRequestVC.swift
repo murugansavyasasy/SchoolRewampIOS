@@ -10,6 +10,7 @@ import DropDown
 
 class CertificateRequestVC: UIViewController {
     
+    @IBOutlet weak var certificatesView: UIView!
     @IBOutlet weak var SegmentControl: UISegmentedControl!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
@@ -61,7 +62,7 @@ class CertificateRequestVC: UIViewController {
         
         ButtonStackview.backgroundColor = .lightGray
         CertificatesBtn.backgroundColor = .white
-        RequestBtn.backgroundColor = .white
+        RequestCertificateBtn.backgroundColor = .white
         
         RequestView.layer.cornerRadius = 10
         RequestView.layer.shadowColor = UIColor.black.cgColor
@@ -72,6 +73,7 @@ class CertificateRequestVC: UIViewController {
         StyleAndTranslate()
         
         tv.isHidden = true
+        certificatesView.isHidden = true
         
         RequestCertificateBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
         CertificatesBtn.setTitleFont(style: .primary, size: FontSize.TitleSize)
@@ -228,9 +230,11 @@ class CertificateRequestVC: UIViewController {
     func UpdateUI(){
         if SegmentControl.selectedSegmentIndex == 0{
             tv.isHidden = true
+            certificatesView.isHidden = true
             RequestView.isHidden = false
         }else {
             tv.isHidden = false
+            certificatesView.isHidden = false
             RequestView.isHidden = true
             tv.delegate = self
             tv.dataSource = self
@@ -248,6 +252,7 @@ class CertificateRequestVC: UIViewController {
         gradientcolours(button: CertificatesBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         
         tv.isHidden = true
+        certificatesView.isHidden = true
         RequestView.isHidden = false
     }
     
@@ -260,6 +265,7 @@ class CertificateRequestVC: UIViewController {
         gradientcolours(button: RequestCertificateBtn, colours: [UIColor.white.cgColor,UIColor.white.cgColor])
         
         tv.isHidden = false
+        certificatesView.isHidden = false
         RequestView.isHidden = true
         tv.delegate = self
         tv.dataSource = self

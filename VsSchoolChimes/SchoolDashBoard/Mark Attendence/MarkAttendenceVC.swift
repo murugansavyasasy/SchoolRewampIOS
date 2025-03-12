@@ -24,6 +24,10 @@ class MarkAttendenceVC: UIViewController, Datepicker {
 
         }
     
+    @IBOutlet weak var SearchbarHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var SearchBar: UISearchBar!
+    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var attendtypeStackToAttendmarkStackBottom: NSLayoutConstraint!
     @IBOutlet weak var AttendStackToStandardTop: NSLayoutConstraint!
@@ -95,6 +99,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
         
         SessionView.isHidden = true
+        SearchBar.isHidden = true
         
         let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
         standardView.addGestureRecognizer(standardTap)
@@ -231,7 +236,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             if self.id == 1 {
 //                self.calenderview.isHidden = true
 //                self.calenderHeight.constant = 0
-                
+                SearchBar.isHidden = false
                 self.TV.isHidden = false
                 self.TV.delegate = self
                 self.TV.dataSource = self
@@ -338,6 +343,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         id = 0
         TV.isHidden = true
+        SearchBar.isHidden = true
         
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         MarkAttendBtn.setTitleColor(UIColor.white, for: .normal)
@@ -362,6 +368,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         formatter.dateFormat = "EEE d MMM yyyy"
         let datelabel = formatter.string(from: Date())
 
+        SearchBar.isHidden = false
         TV.isHidden = false
         TV.delegate = self
         TV.dataSource = self

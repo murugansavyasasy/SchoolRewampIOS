@@ -222,7 +222,7 @@
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tjY-eC-2yf">
-                            <rect key="frame" x="0.0" y="259" width="393" height="465"/>
+                            <rect key="frame" x="0.0" y="257" width="393" height="467"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BwB-zO-qak">
@@ -231,7 +231,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <searchBar contentMode="redraw" text="" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="ZvU-35-ye9">
+                        <searchBar contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="ZvU-35-ye9">
                             <rect key="frame" x="0.0" y="196" width="393" height="56"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="pkC-95-6WR"/>
@@ -252,7 +252,7 @@
                         <constraint firstAttribute="trailing" secondItem="tjY-eC-2yf" secondAttribute="trailing" id="Gsg-5p-FFh"/>
                         <constraint firstAttribute="trailing" secondItem="ZvU-35-ye9" secondAttribute="trailing" id="Ix4-Lz-vgm"/>
                         <constraint firstItem="cOR-aS-JPY" firstAttribute="top" secondItem="wS2-BW-nNF" secondAttribute="bottom" constant="5" id="JgJ-AA-Ado"/>
-                        <constraint firstItem="tjY-eC-2yf" firstAttribute="top" secondItem="ZvU-35-ye9" secondAttribute="bottom" constant="7" id="PCx-IK-eb4"/>
+                        <constraint firstItem="tjY-eC-2yf" firstAttribute="top" secondItem="ZvU-35-ye9" secondAttribute="bottom" constant="5" id="PCx-IK-eb4"/>
                         <constraint firstItem="ZvU-35-ye9" firstAttribute="top" secondItem="cOR-aS-JPY" secondAttribute="bottom" constant="7" id="bpj-Sl-O6n"/>
                         <constraint firstItem="cOR-aS-JPY" firstAttribute="leading" secondItem="Ub3-EA-61m" secondAttribute="leading" constant="8" id="cDg-I3-HhS"/>
                         <constraint firstItem="BwB-zO-qak" firstAttribute="centerX" secondItem="Ub3-EA-61m" secondAttribute="centerX" id="gGk-Lk-UKV"/>

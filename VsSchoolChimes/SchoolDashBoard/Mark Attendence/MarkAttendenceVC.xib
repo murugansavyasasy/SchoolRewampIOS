@@ -31,6 +31,8 @@
                 <outlet property="HalfdayView" destination="7rv-6z-G4q" id="WED-MG-uVp"/>
                 <outlet property="MarkAbsentiesBtn" destination="rFq-GR-2GO" id="af1-6D-1u9"/>
                 <outlet property="MarkAttendBtn" destination="Ium-CF-GOZ" id="j4m-R4-643"/>
+                <outlet property="SearchBar" destination="No2-8Q-dst" id="Ja1-2O-92V"/>
+                <outlet property="SearchbarHeight" destination="CAk-0i-VTb" id="udl-dS-HY3"/>
                 <outlet property="SecondHalfView" destination="r5Y-f0-rTc" id="A40-cP-F3h"/>
                 <outlet property="SectionView" destination="8Bz-Ah-dNw" id="Gk7-9A-j6w"/>
                 <outlet property="SelectAttendanceTypeLbl" destination="IHO-75-tLw" id="Kkh-7x-CXI"/>
@@ -389,7 +391,7 @@
                                     </subviews>
                                 </stackView>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="NZG-wr-4Ha">
-                                    <rect key="frame" x="15" y="590" width="363" height="117"/>
+                                    <rect key="frame" x="15" y="630" width="363" height="77"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pf9-a7-QOJ" customClass="HalfColorButton" customModule="VsSchoolChimes" customModuleProvider="target">
@@ -443,18 +445,28 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="No2-8Q-dst">
+                                    <rect key="frame" x="8" y="585" width="377" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="CAk-0i-VTb"/>
+                                    </constraints>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="S3a-Zt-uy6"/>
+                                    </connections>
+                                </searchBar>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="5xq-g8-r82" firstAttribute="top" secondItem="71P-cl-GJZ" secondAttribute="bottom" constant="12" id="3YM-Tb-Sqd"/>
                                 <constraint firstItem="o9c-HF-ncc" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="15" id="5Ji-pt-Se4"/>
-                                <constraint firstItem="NZG-wr-4Ha" firstAttribute="top" secondItem="zvh-Wt-plI" secondAttribute="bottom" id="5LY-cP-QQz"/>
                                 <constraint firstItem="ywM-2U-Ifb" firstAttribute="trailing" secondItem="pf9-a7-QOJ" secondAttribute="trailing" id="6bf-v5-486"/>
                                 <constraint firstAttribute="trailing" secondItem="o9c-HF-ncc" secondAttribute="trailing" constant="15" id="8Bc-o2-iFw"/>
                                 <constraint firstItem="zvh-Wt-plI" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="15" id="8Z2-RN-YKE"/>
                                 <constraint firstItem="kO4-tS-alp" firstAttribute="top" secondItem="pf9-a7-QOJ" secondAttribute="top" id="J7a-N8-oWz"/>
                                 <constraint firstItem="5xq-g8-r82" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="15" id="JhP-Kr-laS"/>
                                 <constraint firstItem="kO4-tS-alp" firstAttribute="leading" secondItem="pf9-a7-QOJ" secondAttribute="trailing" constant="8" id="NNC-LP-Z41"/>
+                                <constraint firstAttribute="trailing" secondItem="No2-8Q-dst" secondAttribute="trailing" constant="8" id="NhL-Cn-XCq"/>
                                 <constraint firstItem="pf9-a7-QOJ" firstAttribute="top" secondItem="94N-D7-EPX" secondAttribute="bottom" constant="8" id="Oa5-Dw-lBb"/>
                                 <constraint firstAttribute="bottom" secondItem="NZG-wr-4Ha" secondAttribute="bottom" constant="8" id="PTw-zm-GNu"/>
                                 <constraint firstItem="ywM-2U-Ifb" firstAttribute="top" secondItem="pf9-a7-QOJ" secondAttribute="top" id="QN3-Wa-Dso"/>
@@ -464,6 +476,7 @@
                                 <constraint firstItem="94N-D7-EPX" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="15" id="fBI-eS-dQN"/>
                                 <constraint firstAttribute="trailing" secondItem="zvh-Wt-plI" secondAttribute="trailing" constant="15" id="hq6-Dp-qkt"/>
                                 <constraint firstAttribute="trailing" secondItem="kO4-tS-alp" secondAttribute="trailing" constant="20" id="iDG-1h-M8d"/>
+                                <constraint firstItem="No2-8Q-dst" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="8" id="ifW-JW-Ibp"/>
                                 <constraint firstItem="94N-D7-EPX" firstAttribute="top" secondItem="bzS-F5-uQD" secondAttribute="bottom" constant="20" id="ipi-5f-axT"/>
                                 <constraint firstItem="ywM-2U-Ifb" firstAttribute="leading" secondItem="pf9-a7-QOJ" secondAttribute="leading" id="jNH-Bl-kth"/>
                                 <constraint firstItem="bzS-F5-uQD" firstAttribute="top" secondItem="aUv-aO-1NJ" secondAttribute="top" constant="8" id="jjl-NB-7wb"/>
@@ -473,9 +486,11 @@
                                 <constraint firstItem="bzS-F5-uQD" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="39" id="nF7-FB-WFT"/>
                                 <constraint firstAttribute="trailing" secondItem="NZG-wr-4Ha" secondAttribute="trailing" constant="15" id="prg-K9-Q2F"/>
                                 <constraint firstItem="kO4-tS-alp" firstAttribute="bottom" secondItem="pf9-a7-QOJ" secondAttribute="bottom" id="q6x-Mw-MJ7"/>
+                                <constraint firstItem="NZG-wr-4Ha" firstAttribute="top" secondItem="No2-8Q-dst" secondAttribute="bottom" constant="5" id="tdS-oA-V96"/>
                                 <constraint firstItem="o9c-HF-ncc" firstAttribute="top" secondItem="5xq-g8-r82" secondAttribute="bottom" constant="20" id="uyE-ry-Wlb"/>
                                 <constraint firstAttribute="trailing" secondItem="bzS-F5-uQD" secondAttribute="trailing" constant="39.329999999999998" id="vCh-Nw-r6N"/>
                                 <constraint firstAttribute="trailing" secondItem="94N-D7-EPX" secondAttribute="trailing" constant="15" id="vyG-XT-rCP"/>
+                                <constraint firstItem="No2-8Q-dst" firstAttribute="top" secondItem="zvh-Wt-plI" secondAttribute="bottom" constant="-5" id="wBT-6W-B0B"/>
                                 <constraint firstItem="ywM-2U-Ifb" firstAttribute="bottom" secondItem="pf9-a7-QOJ" secondAttribute="bottom" id="wS0-pa-Xaa"/>
                                 <constraint firstItem="NZG-wr-4Ha" firstAttribute="leading" secondItem="aUv-aO-1NJ" secondAttribute="leading" constant="15" id="xzk-Es-8Df"/>
                             </constraints>
@@ -549,10 +564,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

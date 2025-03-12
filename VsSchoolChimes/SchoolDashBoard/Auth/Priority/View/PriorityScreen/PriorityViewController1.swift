@@ -131,8 +131,6 @@ class PriorityViewController1: UIViewController {
         let vc = TapBarVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         vc.passedValue = passedValue
-        print(vc.passedValue)
-        print(passedValue)
         present(vc, animated: true)
     }
     
@@ -174,7 +172,7 @@ extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
             cell.SchoolInfoView.backgroundColor = colour1
             cell.imgview.image = image
             if indexPath.row == 8{
-                cell.imgview.image = UIImage(systemName: "person.circle")
+                cell.imgview.image = ImageName.person_circle
             }
             if let color1 = colour1, let color2 = colour2 {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])

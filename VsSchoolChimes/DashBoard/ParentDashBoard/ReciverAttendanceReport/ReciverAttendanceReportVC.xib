@@ -51,26 +51,26 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bej-tn-ch4">
                     <rect key="frame" x="0.0" y="110" width="393" height="708"/>
                     <subviews>
-                        <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="cAn-d5-13C">
-                            <rect key="frame" x="10" y="15" width="373" height="56"/>
+                        <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="cAn-d5-13C">
+                            <rect key="frame" x="5" y="15" width="383" height="56"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="HPD-ip-e3J"/>
                             </connections>
                         </searchBar>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3lf-vv-7Re">
-                            <rect key="frame" x="0.0" y="91" width="393" height="617"/>
+                            <rect key="frame" x="0.0" y="79" width="393" height="629"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="3lf-vv-7Re" secondAttribute="trailing" id="BRf-Mi-vIs"/>
-                        <constraint firstItem="cAn-d5-13C" firstAttribute="leading" secondItem="bej-tn-ch4" secondAttribute="leading" constant="10" id="DLZ-iu-OxY"/>
+                        <constraint firstItem="cAn-d5-13C" firstAttribute="leading" secondItem="bej-tn-ch4" secondAttribute="leading" constant="5" id="DLZ-iu-OxY"/>
                         <constraint firstAttribute="bottom" secondItem="3lf-vv-7Re" secondAttribute="bottom" id="UhM-SW-HBU"/>
-                        <constraint firstAttribute="trailing" secondItem="cAn-d5-13C" secondAttribute="trailing" constant="10" id="Ukb-pJ-LTb"/>
+                        <constraint firstAttribute="trailing" secondItem="cAn-d5-13C" secondAttribute="trailing" constant="5" id="Ukb-pJ-LTb"/>
                         <constraint firstItem="3lf-vv-7Re" firstAttribute="leading" secondItem="bej-tn-ch4" secondAttribute="leading" id="dDN-tX-GcB"/>
-                        <constraint firstItem="3lf-vv-7Re" firstAttribute="top" secondItem="cAn-d5-13C" secondAttribute="bottom" constant="20" id="e1Y-bb-52t"/>
+                        <constraint firstItem="3lf-vv-7Re" firstAttribute="top" secondItem="cAn-d5-13C" secondAttribute="bottom" constant="8" id="e1Y-bb-52t"/>
                         <constraint firstItem="cAn-d5-13C" firstAttribute="top" secondItem="bej-tn-ch4" secondAttribute="top" constant="15" id="yBo-UL-Nw8"/>
                     </constraints>
                 </view>

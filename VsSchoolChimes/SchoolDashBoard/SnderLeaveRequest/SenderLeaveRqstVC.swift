@@ -36,6 +36,8 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         super.viewDidLoad()
         BackBtn.applyBackButton()
         filterStudent = leaveResuest
+        BackBtn.setTitle(MenuStringFile.LeaveRequests.translated(), for: .normal)
+        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.applyRightTxt()
         leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)

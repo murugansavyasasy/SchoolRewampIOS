@@ -74,6 +74,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
             
         )
         
+        //swipe to dismiss keyboard
+        //scrollview.keyboardDismissMode = .interactive
         
         changeVideoBtn.isHidden = true
         ChangeVideoBtnHeight.constant = 0

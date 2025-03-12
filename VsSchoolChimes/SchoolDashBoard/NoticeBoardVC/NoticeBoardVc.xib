@@ -29,7 +29,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                             <subviews>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="OZ7-nr-L1Y">
-                                    <rect key="frame" x="15" y="10" width="363" height="56"/>
+                                    <rect key="frame" x="5" y="10" width="383" height="56"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="56" id="iyI-KR-aHq"/>
                                     </constraints>
@@ -50,14 +50,14 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="OZ7-nr-L1Y" firstAttribute="top" secondItem="dHb-EU-pjT" secondAttribute="top" constant="10" id="9c8-Ar-2lR"/>
-                                <constraint firstAttribute="trailing" secondItem="OZ7-nr-L1Y" secondAttribute="trailing" constant="15" id="AtW-je-ioR"/>
+                                <constraint firstAttribute="trailing" secondItem="OZ7-nr-L1Y" secondAttribute="trailing" constant="5" id="AtW-je-ioR"/>
                                 <constraint firstItem="SKX-Pn-iin" firstAttribute="top" secondItem="OZ7-nr-L1Y" secondAttribute="bottom" constant="10" id="HrM-CS-U9A"/>
                                 <constraint firstItem="SKX-Pn-iin" firstAttribute="leading" secondItem="dHb-EU-pjT" secondAttribute="leading" id="PrI-53-E0t"/>
                                 <constraint firstAttribute="bottom" secondItem="G7p-It-k2L" secondAttribute="bottom" constant="60.670000000000002" id="RQ8-YK-SAp"/>
                                 <constraint firstAttribute="trailing" secondItem="G7p-It-k2L" secondAttribute="trailing" constant="15" id="Zcr-Dw-RtT"/>
                                 <constraint firstAttribute="trailing" secondItem="SKX-Pn-iin" secondAttribute="trailing" id="dRm-oW-HPZ"/>
                                 <constraint firstAttribute="bottom" secondItem="SKX-Pn-iin" secondAttribute="bottom" id="l6L-Qf-qWe"/>
-                                <constraint firstItem="OZ7-nr-L1Y" firstAttribute="leading" secondItem="dHb-EU-pjT" secondAttribute="leading" constant="15" id="zYo-Re-Os0"/>
+                                <constraint firstItem="OZ7-nr-L1Y" firstAttribute="leading" secondItem="dHb-EU-pjT" secondAttribute="leading" constant="5" id="zYo-Re-Os0"/>
                             </constraints>
                         </view>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NoticeBoard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6a-3N-Jeu">

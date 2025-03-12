@@ -19,6 +19,7 @@ class InteractionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backBtn.applyBackButton()
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         HeaderLbl.setFont(style: .header, size: 17)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -33,10 +34,11 @@ class InteractionVC: UIViewController {
     override func viewDidLayoutSubviews() {
         if passvalue == 1{
             view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+            backBtn.setTitle("Interact With Staff", for: .normal)
             NameStandardStackView.isHidden = false
         }
         else if passvalue == 2{
-            HeaderLbl.text = "Interact With Student"
+            backBtn.setTitle("Interact With Student", for: .normal)
             view.applyGradient(colors: [Colornames.stafGradient, Colornames.stafGradient1], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
             NameStandardStackView.isHidden = true
         }

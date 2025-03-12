@@ -38,7 +38,7 @@
                     <rect key="frame" x="0.0" y="104" width="393" height="56"/>
                     <subviews>
                         <searchBar contentMode="redraw" barStyle="blackTranslucent" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="WOf-iN-p5e">
-                            <rect key="frame" x="16" y="0.0" width="361" height="56"/>
+                            <rect key="frame" x="5" y="0.0" width="383" height="56"/>
                             <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
@@ -50,8 +50,8 @@
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="WOf-iN-p5e" secondAttribute="bottom" id="2Ne-Wn-XaQ"/>
                         <constraint firstItem="WOf-iN-p5e" firstAttribute="top" secondItem="yhm-Tl-Ua5" secondAttribute="top" id="3wu-sb-aeb"/>
-                        <constraint firstItem="WOf-iN-p5e" firstAttribute="leading" secondItem="yhm-Tl-Ua5" secondAttribute="leading" constant="16" id="Hf6-Br-UFY"/>
-                        <constraint firstAttribute="trailing" secondItem="WOf-iN-p5e" secondAttribute="trailing" constant="16" id="m6N-nn-F3a"/>
+                        <constraint firstItem="WOf-iN-p5e" firstAttribute="leading" secondItem="yhm-Tl-Ua5" secondAttribute="leading" constant="5" id="Hf6-Br-UFY"/>
+                        <constraint firstAttribute="trailing" secondItem="WOf-iN-p5e" secondAttribute="trailing" constant="5" id="m6N-nn-F3a"/>
                         <constraint firstAttribute="height" constant="56" id="mF3-bQ-D5A"/>
                     </constraints>
                 </view>

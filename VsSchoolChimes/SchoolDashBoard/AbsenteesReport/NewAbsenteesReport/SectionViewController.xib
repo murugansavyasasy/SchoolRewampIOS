@@ -52,14 +52,14 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rNS-Xd-Nfk">
-                            <rect key="frame" x="0.0" y="93" width="393" height="626"/>
+                            <rect key="frame" x="0.0" y="90" width="393" height="629"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="qwq-Qo-Lxd">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="626"/>
+                                    <rect key="frame" x="0.0" y="58" width="393" height="571"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x6R-U6-u6G">
-                                    <rect key="frame" x="76.666666666666686" y="288" width="240" height="50"/>
+                                    <rect key="frame" x="76.666666666666686" y="289.66666666666669" width="240" height="50"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V16-1C-B4d">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="50"/>
@@ -78,21 +78,31 @@
                                         <constraint firstAttribute="width" constant="240" id="yMy-6g-bsp"/>
                                     </constraints>
                                 </view>
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="JH3-0o-h0f">
+                                    <rect key="frame" x="10" y="0.0" width="373" height="56"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="RZK-6E-DgO"/>
+                                    </connections>
+                                </searchBar>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="qwq-Qo-Lxd" secondAttribute="bottom" id="8BC-w9-Y4p"/>
                                 <constraint firstAttribute="trailing" secondItem="qwq-Qo-Lxd" secondAttribute="trailing" id="Dth-7v-ezi"/>
                                 <constraint firstItem="x6R-U6-u6G" firstAttribute="centerY" secondItem="rNS-Xd-Nfk" secondAttribute="centerY" id="Ibq-O2-6u8"/>
-                                <constraint firstItem="qwq-Qo-Lxd" firstAttribute="top" secondItem="rNS-Xd-Nfk" secondAttribute="top" id="PKh-JB-rmR"/>
                                 <constraint firstItem="x6R-U6-u6G" firstAttribute="centerX" secondItem="rNS-Xd-Nfk" secondAttribute="centerX" id="R5B-h2-iax"/>
+                                <constraint firstAttribute="trailing" secondItem="JH3-0o-h0f" secondAttribute="trailing" constant="10" id="XW0-gH-37T"/>
+                                <constraint firstItem="JH3-0o-h0f" firstAttribute="leading" secondItem="rNS-Xd-Nfk" secondAttribute="leading" constant="10" id="glP-Hr-mh4"/>
+                                <constraint firstItem="qwq-Qo-Lxd" firstAttribute="top" secondItem="JH3-0o-h0f" secondAttribute="bottom" constant="2" id="mb7-Fo-mzO"/>
+                                <constraint firstItem="JH3-0o-h0f" firstAttribute="top" secondItem="rNS-Xd-Nfk" secondAttribute="top" id="r28-C1-DfB"/>
                                 <constraint firstItem="qwq-Qo-Lxd" firstAttribute="leading" secondItem="rNS-Xd-Nfk" secondAttribute="leading" id="zh4-5b-uYY"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="rNS-Xd-Nfk" firstAttribute="top" secondItem="fzQ-vS-yDz" secondAttribute="bottom" constant="8" id="1Jq-iY-sxZ"/>
+                        <constraint firstItem="rNS-Xd-Nfk" firstAttribute="top" secondItem="fzQ-vS-yDz" secondAttribute="bottom" constant="5" id="1Jq-iY-sxZ"/>
                         <constraint firstItem="fzQ-vS-yDz" firstAttribute="top" secondItem="pd7-cx-Y6s" secondAttribute="top" constant="5" id="6yH-AU-aCH"/>
                         <constraint firstItem="rNS-Xd-Nfk" firstAttribute="leading" secondItem="pd7-cx-Y6s" secondAttribute="leading" id="CDS-Ib-4kM"/>
                         <constraint firstAttribute="trailing" secondItem="rNS-Xd-Nfk" secondAttribute="trailing" id="TwL-nv-14O"/>

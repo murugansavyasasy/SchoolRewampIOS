@@ -57,13 +57,10 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     
     
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var createView: UIView!
-    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var toDateLbl: UILabel!
     @IBOutlet weak var calanderBtn: HalfColorButton!
-    @IBOutlet weak var nodatalabl: UILabel!
     @IBOutlet weak var slotView: UIView!
     @IBOutlet weak var todaSlotView: UIView!
     @IBOutlet weak var datePickerView: UIView!
@@ -103,7 +100,6 @@ class StaffPtmViewController: UIViewController,UITableViewDelegate,UITableViewDa
         tv.register(UINib(nibName: CellConfingName.StaffPtmTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.StaffPtmTableViewCell)
         let rownib2 = UINib(nibName: CellConfingName.SlotHeader, bundle: nil)
         tv.register(rownib2, forHeaderFooterViewReuseIdentifier: CellConfingName.SlotHeader)
-        nodatalabl.isHidden = true
         calanderBtn.layer.borderWidth = 1 // Border width
         calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
         calanderBtn.layer.cornerRadius = 10 // Add

@@ -17,8 +17,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var ToStdOrSecBtnBottom: NSLayoutConstraint!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var CalenderViewTodateBtnTop: NSLayoutConstraint!
@@ -95,6 +95,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         keyboardDonebtn()
         StyleAndTranslater()
+        SearchBar.isHidden = true
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
         
@@ -296,6 +297,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             CalendarView.isHidden = true
             calenderHeight.constant = 0
             CalenderViewTodateBtnTop.constant = 0
+            SearchBar.isHidden = false
             self.TV.isHidden = false
             self.TV.delegate = self
             self.TV.dataSource = self

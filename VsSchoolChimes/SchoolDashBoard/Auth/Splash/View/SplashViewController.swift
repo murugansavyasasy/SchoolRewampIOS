@@ -32,7 +32,6 @@ class SplashViewController: UIViewController {
         countryId = defaults.string(forKey:DefaultsKeys.countryId)
         loginId = defaults.string(forKey:DefaultsKeys.LoginId)
         
-        print("countryIdcountryId",countryId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
           
             if countryId == nil{
