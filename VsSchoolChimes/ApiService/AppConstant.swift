@@ -19,8 +19,8 @@ struct ServiceUrl{
     static var awsBucketName = "rgu-meet-files"
     
     
-    static let setupcountries           = "setup/countries"
-    static let version_check            = "version-check"
+    static let country_list             = "setup/countries"
+    static let version_check            = "/setup/version-check"
     static let validate_mobile_number   = "validate-mobile-number"
     static let initiate_otp             = "initiate-otp"
     static let validate_user            = "validate-user"
@@ -57,31 +57,3 @@ func isValidIndianMobileNumber(_ mobileNumber: String) -> Bool {
     return mobileNumberTest.evaluate(with: mobileNumber)
 }
 
-
-class Save_validate_user_data {
-    
-    func saveVerifyData(_ data: VerifyData) {
-        let encoder = JSONEncoder()
-        if let encodedData = try? encoder.encode(data) {
-            UserDefaults.standard.set(encodedData, forKey: "verifyData")
-        } else {
-            print("Failed to encode VerifyData")
-        }
-    }
-    
-    
-    
-    func saveToken(_ token: String,forKey: String) {
-        UserDefaults.standard.set(token, forKey: forKey)
-        print("Token saved successfully!")
-    }
-    static func removeToken(forKey: String) {
-        UserDefaults.standard.removeObject(forKey: forKey)
-        UserDefaults.standard.synchronize() // Ensures the change is saved immediately
-        print("Token removed successfully!")
-    }
-    func getToken(forKey: String) -> String? {
-        return UserDefaults.standard.string(forKey: forKey)
-    }
-    
-}

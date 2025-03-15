@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import StoreKit
 
 @available(iOS 14.0, *)
 class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
@@ -223,10 +224,33 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     @IBAction func ViewDetailsAct(_ sender: Any) {
         
-        let vc  = LocationHistoryVc(nibName: nil, bundle: nil)
+        /*let vc  = LocationHistoryVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        present(vc, animated: true)*/
+        
+        //openSafari()
+        OpenInside(from: self)
+       
     }
+    
+    func openSafari(){
+        if let url = URL(string: "https://apps.apple.com/in/app/school-chimes-vs/id700513732") {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+            
+    }
+    func OpenInside(from viewController: UIViewController){
+        let storeViewController = SKStoreProductViewController()
+            storeViewController.delegate = viewController as? SKStoreProductViewControllerDelegate
+            storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "YOUR_APP_ID"]) { (loaded, error) in
+                if loaded {
+                    viewController.present(storeViewController, animated: true)
+                }else{
+                    print("can't open the appstore ❤️")
+                }
+            }
+    }
+    
     @IBAction func redirectAct() {
         dismiss(animated: true)
         

@@ -8,7 +8,7 @@
 import Foundation
 struct VersionCeck {
     static let versionCode = "version_code"
-    static let device = "device_type"
+    static let device_type = "device_type"
 }
 struct MobileVerification {
     static let mobileNo = "mobile_number"
@@ -41,9 +41,6 @@ struct CreateMeetingList {
     static let longitude = "longitude"
     static let distance = "distance"
     static let location_id = "location_id"
-    
-  
-    
 }
 
 struct UpdateMeetingList {
