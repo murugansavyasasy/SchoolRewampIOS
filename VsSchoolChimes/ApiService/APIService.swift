@@ -8,7 +8,7 @@ class APIService: NSObject, URLSessionDelegate {
         super.init()
     }
     
-    func mackeApi<T: Codable>(url: String, parameters: [String: Any]?, type: String, token: String, completionHandler: @escaping (Swift.Result<T, Error>) -> Void) {
+    func makeApi<T: Codable>(url: String, parameters: [String: Any]?, type: String, token: String, completionHandler: @escaping (Swift.Result<T, Error>) -> Void) {
         if let url = URL(string: ServiceUrl.baseurl + url) {
             
             print("Request URL: \(url)")
@@ -67,11 +67,11 @@ class APIService: NSObject, URLSessionDelegate {
     
     // MARK: - PUT Request
     func putApi<T: Codable>(url: String, parameters: [String: Any], token: String, completionHandler: @escaping (Swift.Result<T, Error>) -> Void) {
-        mackeApi(url: url, parameters: parameters, type: "PUT", token: token, completionHandler: completionHandler)
+        makeApi(url: url, parameters: parameters, type: "PUT", token: token, completionHandler: completionHandler)
     }
     
     // MARK: - DELETE Request
     func deleteApi<T: Codable>(url: String, token: String, completionHandler: @escaping (Swift.Result<T, Error>) -> Void) {
-        mackeApi(url: url, parameters: nil, type: "DELETE", token: token, completionHandler: completionHandler)
+        makeApi(url: url, parameters: nil, type: "DELETE", token: token, completionHandler: completionHandler)
     }
 }
