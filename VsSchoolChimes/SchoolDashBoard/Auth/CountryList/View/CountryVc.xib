@@ -103,11 +103,22 @@
                                         <constraint firstAttribute="height" constant="50" id="V5t-e7-9H6"/>
                                     </constraints>
                                 </imageView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KAU-Cl-tH8" customClass="CheckBox" customModule="VsSchoolChimes" customModuleProvider="target">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KAU-Cl-tH8">
                                     <rect key="frame" x="40" y="333" width="30" height="30"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpi-OX-AAi">
+                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="CheckCircle"/>
+                                        </button>
+                                    </subviews>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="699-Yt-D4g"/>
+                                        <constraint firstItem="hpi-OX-AAi" firstAttribute="leading" secondItem="KAU-Cl-tH8" secondAttribute="leading" id="LVC-hc-RYo"/>
                                         <constraint firstAttribute="width" constant="30" id="OUQ-8z-xhZ"/>
+                                        <constraint firstItem="hpi-OX-AAi" firstAttribute="top" secondItem="KAU-Cl-tH8" secondAttribute="top" id="bQ1-jR-jo2"/>
+                                        <constraint firstAttribute="trailing" secondItem="hpi-OX-AAi" secondAttribute="trailing" id="h1x-6d-S8X"/>
+                                        <constraint firstAttribute="bottom" secondItem="hpi-OX-AAi" secondAttribute="bottom" id="iHi-KU-uwW"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5Q-Pt-DWf">
@@ -732,6 +743,7 @@
     </objects>
     <resources>
         <image name="ArrowImg" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="CheckCircle" width="42.666667938232422" height="42.666667938232422"/>
         <image name="Flag" width="512" height="512"/>
         <image name="USA" width="512" height="512"/>
         <image name="canada" width="64" height="64"/>
