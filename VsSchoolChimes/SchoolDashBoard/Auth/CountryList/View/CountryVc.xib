@@ -35,6 +35,7 @@
                 <outlet property="canadaLabel" destination="YQg-ON-vsC" id="j1u-0L-iiy"/>
                 <outlet property="checkBoxBtn" destination="hpi-OX-AAi" id="iHx-aS-ZIq"/>
                 <outlet property="countyNameBtn" destination="hHV-An-dtB" id="NZd-DS-fqE"/>
+                <outlet property="dropDownBtn" destination="NVM-Fo-ymT" id="yP9-rB-fyZ"/>
                 <outlet property="flagImg" destination="Lk8-1O-Fa6" id="Xbq-a8-Obq"/>
                 <outlet property="fullview" destination="QXP-e5-LaQ" id="uyc-go-W4R"/>
                 <outlet property="india" destination="h5Q-Pt-DWf" id="W8Z-eh-PJ6"/>
@@ -306,7 +307,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHV-An-dtB">
-                                                    <rect key="frame" x="43" y="0.0" width="303" height="33.666666666666664"/>
+                                                    <rect key="frame" x="43" y="0.0" width="273" height="33.666666666666664"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="India">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -314,6 +315,17 @@
                                                     <connections>
                                                         <action selector="selectCountry:" destination="-1" eventType="touchUpInside" id="0sm-lA-ewb"/>
                                                     </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVM-Fo-ymT">
+                                                    <rect key="frame" x="326" y="0.0" width="20" height="33.666666666666664"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="zRg-hm-68J"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="chevron.down" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
+                                                    </state>
                                                 </button>
                                             </subviews>
                                         </stackView>
@@ -783,6 +795,7 @@
         <image name="Flag" width="512" height="512"/>
         <image name="USA" width="512" height="512"/>
         <image name="canada" width="64" height="64"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="india (2)" width="512" height="512"/>
         <image name="india1" width="48" height="48"/>
         <image name="indonesia" width="64" height="64"/>

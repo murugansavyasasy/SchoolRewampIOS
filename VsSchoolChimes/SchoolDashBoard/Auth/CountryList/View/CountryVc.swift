@@ -24,6 +24,7 @@ class CountryVc: UIViewController {
     @IBOutlet weak var IndiaLbl: UILabel!
     
     @IBOutlet weak var checkBoxBtn: UIButton!
+    @IBOutlet weak var dropDownBtn: UIButton!
     @IBOutlet weak var UsaLbl: UILabel!
     
     @IBOutlet weak var flagImg: UIImageView!
@@ -127,6 +128,7 @@ class CountryVc: UIViewController {
     @IBAction func checkBox(_ sender: UIButton) {
         checkBoxBtn.isSelected.toggle()
         let image = checkBoxBtn.isSelected ? UIImage(named: "checked_Tick"):UIImage(named: "CheckCircle")
+
         checkBoxBtn.setImage(image, for: .normal)
     }
     
@@ -136,12 +138,17 @@ class CountryVc: UIViewController {
         dropDown.imageURLs = images
         dropDown.show()
         dropDown.bottomOffset = CGPoint(x: 0, y: CountryList.bounds.height)
-        
-        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+        dropDownBtn.setImage( UIImage(systemName: "chevron.up"), for: .normal)
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
-            self?.flagImg.image = self?.images[index]
-            self?.countyNameBtn.setTitle(item, for: .normal)
+            flagImg.image = images[index]
+            countyNameBtn.setTitle(item, for: .normal)
+            dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
+        dropDown.cancelAction = { [weak self] in
+            self?.dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        }
+        
     }
     func get_CountryListApi() {
         APIService.shared.makeApi(url: ServiceUrl.country_list, parameters: [:], type: ApitTypeSringFile.GET, token: "") { [self] (result: Result<CountryListSuccess, Error>) in
