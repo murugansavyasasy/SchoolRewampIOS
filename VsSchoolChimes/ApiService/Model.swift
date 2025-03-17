@@ -75,6 +75,19 @@ struct MobileNumberValidationData: Codable {
     
 }
 
+//MARK: Create New Password API
+struct CreateNewPasswordSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [String]?
+}
+
+//MARK: Reset Password API
+struct ResetPasswordSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [String]?
+}
 
 // MARK: Validate OTP
 

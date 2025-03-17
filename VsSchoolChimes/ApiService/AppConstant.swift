@@ -20,6 +20,9 @@ struct ServiceUrl{
     
     static let version_check            = "/setup/version-check"
     static let country_list             = "setup/countries"
+    static let validate_validate_user_for_password_update             = "validate/validate-user-for-password-update"
+    static let password_create_new_password = "/password/create-new-password"
+    static let password_reset_password = "/password/reset-password"
     static let validate_validate_user_for_password_update = "validate/validate-user-for-password-update"
     static let validate_validate_otp = "validate/validate-otp"
     
@@ -34,4 +37,5 @@ func isValidIndianMobileNumber(_ mobileNumber: String) -> Bool {
     let mobileNumberTest = NSPredicate(format: "SELF MATCHES %@", mobileNumberRegex)
     return mobileNumberTest.evaluate(with: mobileNumber)
 }
+
 

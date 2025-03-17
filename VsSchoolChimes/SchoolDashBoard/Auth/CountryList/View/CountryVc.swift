@@ -8,7 +8,6 @@
 import UIKit
 import DropDown
 import Kingfisher
-
 @available(iOS 14.0, *)
 class CountryVc: UIViewController {
     
@@ -47,7 +46,7 @@ class CountryVc: UIViewController {
     @IBOutlet weak var india: UIView!
     let dropDown = DropDown()
     var CountryCheck = 0
-    var images = [UIImage]()
+    var images = [String]()
     var dropDownList = [String]()
     var CountryListRespons : [CountryData]?
     
@@ -139,9 +138,10 @@ class CountryVc: UIViewController {
         dropDown.show()
         dropDown.bottomOffset = CGPoint(x: 0, y: CountryList.bounds.height)
         dropDownBtn.setImage( UIImage(systemName: "chevron.up"), for: .normal)
+        
         dropDown.selectionAction = { [self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
-            flagImg.image = images[index]
+            flagImg.kf.setImage(with: URL(string: images[index]))
             countyNameBtn.setTitle(item, for: .normal)
             dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
@@ -166,17 +166,8 @@ class CountryVc: UIViewController {
                         for i in 0..<(CountryListRespons?.count ?? 0) {
                             if let countryName = CountryListRespons?[i].country_name,
                                let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
-                               
-                                loadImage(from: flagURL) { image in
-                                    if let img = image {
-                                        images.append(img)  // Append loaded image to array
-                                    } else {
-                                        if let placeholder = UIImage(named: "placeholder") {
-                                            images.append(placeholder)  // Fallback image
-                                        }
-                                    }
+                                    images.append(flagURL)
                                     dropDownList.append(countryName)  // Ensuring the order is maintained
-                                }
                             }
                         }
 
@@ -190,24 +181,7 @@ class CountryVc: UIViewController {
         }
     }
     
-    func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
-        guard let url = URL(string: urlString) else {
-            completion(nil) // Invalid URL
-            return
-        }
-        
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                DispatchQueue.main.async {
-                    completion(image) // Return the image
-                }
-            } else {
-                DispatchQueue.main.async {
-                    completion(nil) // Failed to load
-                }
-            }
-        }
-    }
+
     
     
     @IBAction  func GotoTermsVc(){
