@@ -11,6 +11,8 @@ import UIKit
 class LoginVc: UIViewController, UITextFieldDelegate {
     
     
+    @IBOutlet weak var passwordStack: UIStackView!
+    @IBOutlet weak var mobileNumberStack: UIStackView!
     @IBOutlet weak var PasswordLabel: UILabel!
     @IBOutlet weak var MobilenumLabel: UILabel!
     @IBOutlet weak var forgetLbl: UILabel!
@@ -18,8 +20,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var MobilTextFld: UITextField!
     @IBOutlet weak var loginBtnNm: UIButton!
     
-    @IBOutlet weak var lineview: UIView!
-    @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var eyeImage: UIImageView!
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
@@ -30,12 +30,9 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         setupUI()
         addDoneButtonOnKeyboard() // ✅ Added Done button for both text fields
         
-        PasswordLabel.isHidden = true
-        passTextFld.isHidden = true
+       
+        passwordStack.isHidden = true
         forgetLbl.isHidden = true
-        eyeImage.isHidden = true
-        lockImage.isHidden = true
-        lineview.isHidden = true
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
@@ -133,14 +130,17 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             return
         }
         
-        if passTextFld.text!.isEmpty {
-            AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-            return
+        if passwordStack.isHidden == false {
+            if passTextFld.text!.isEmpty {
+                AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
+                return
+            }
+           
         }
         
         let userDefault = UserDefaults.standard
         userDefault.set("1", forKey: DefaultsKeys.LoginId)
-        
+       
         Validate_MobileNumber()
     }
     
@@ -167,11 +167,13 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                     if successMessage.status == true {
                         DispatchQueue.main.async { [self] in
                            
+                            
+                            
                             let userDefault = UserDefaults.standard
                             userDefault
                                 .set(
-                                    UserDefault_FILE.Mobile_number,
-                                    forKey: MobilTextFld.text ?? ""
+                                    MobilTextFld.text ?? "",
+                                    forKey: DefaultsKeys.mobileNumber
                                 )
                             
                             otp_Vc(valdiateResponse: successMessage.data ?? [])

@@ -55,21 +55,27 @@ struct CountryDetails: Codable {
 }
 
 //MARK: Check Mobile No for change password API
+
+
+
 struct MobileNumberValidationSuc: Codable {
     let status: Bool?
     let message: String?
     let data: [MobileNumberValidationData]?
 }
+
 struct MobileNumberValidationData: Codable {
     let is_number_exists: Bool?
     let is_password_updated: Bool?
     let otp_sent: Bool?
-    let otp: Int?
+    let otp: String?
     let message: String?
     let more_info: String?
     let dial_numbers: String?
     
 }
+
+
 // MARK: Validate OTP
 
 struct ValidateOTPSuc: Codable {

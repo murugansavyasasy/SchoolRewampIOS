@@ -39,12 +39,11 @@ class OTPVc: UIViewController,UITextFieldDelegate {
         
         setupOTPTextFields()
         
-        let MobileNumber : String = UserDefaults.standard.object(
-            forKey: UserDefault_FILE
-                .Mobile_number) as? String ?? ""
-        
-        mobile_number = MobileNumber
+       
     
+        let defaults = UserDefaults.standard
+        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
+        
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
         

@@ -220,10 +220,13 @@ class CountryVc: UIViewController {
     
     @IBAction  func GotToNextVc(){
         if checkBoxBtn.isSelected{
+            let userDefault = UserDefaults.standard
+            userDefault.set("1", forKey: DefaultsKeys.countryId)
             let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
+        
     }
     
     
