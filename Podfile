@@ -24,6 +24,7 @@ pod 'Charts'
 pod 'SDWebImage'
 pod 'FSCalendar'
 pod 'Firebase/Database'
+pod 'Kingfisher'
 
 
 

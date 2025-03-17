@@ -1,5 +1,5 @@
 {
-  "originHash" : "6fc75f78c2b29cf4236d3dd1b125ff18bab903f9d693e47f72a4a303b5a85fd3",
+  "originHash" : "be6b78b3c3c65afda27afc6059b130d3f379666f7e372e61a99806b9078f1694",
   "pins" : [
     {
       "identity" : "fscalendar",
@@ -11,12 +11,21 @@
       }
     },
     {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "b450a3b30e0767277a6eed7e02dbdebd7d173da0",
+        "version" : "8.3.0"
+      }
+    },
+    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",
       "state" : {
-        "revision" : "10d06f6a33bafae8c164fbfd1f03391f6d4692b3",
-        "version" : "5.20.0"
+        "revision" : "cac9a55a3ae92478a2c95042dcc8d9695d2129ca",
+        "version" : "5.21.0"
       }
     }
   ],
