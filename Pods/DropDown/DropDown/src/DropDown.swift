@@ -1114,7 +1114,7 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
         // Load image asynchronously
         if index < imageURLs.count {
             cell.imgBtn.isHidden = false
-            cell.imgBtn.setImage(imageURLs[index], for: .normal)
+            cell.imgBtn.image = imageURLs[index]
         } else {
             cell.imgBtn.isHidden = true
         }

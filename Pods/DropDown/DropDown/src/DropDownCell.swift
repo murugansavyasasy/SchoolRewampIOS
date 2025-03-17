@@ -11,7 +11,7 @@ import UIKit
 open class DropDownCell: UITableViewCell {
 		
 	//UI
-    @IBOutlet weak var imgBtn: UIButton!
+    @IBOutlet weak var imgBtn: UIImageView!
     @IBOutlet weak var listNameBtn: UIButton!
     @IBOutlet open weak var optionLabel: UILabel!
 	
@@ -29,6 +29,7 @@ extension DropDownCell {
 		super.awakeFromNib()
 		
 		backgroundColor = .clear
+        imgBtn.layer.cornerRadius = imgBtn.frame.width/2
 	}
 	
 	override open var isSelected: Bool {

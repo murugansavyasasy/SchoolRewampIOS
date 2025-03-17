@@ -33,6 +33,10 @@
                 <outlet property="UsaImg" destination="Swq-p7-aWB" id="2Dw-pz-AmN"/>
                 <outlet property="UsaLbl" destination="cKf-bM-vHW" id="HD3-3P-d22"/>
                 <outlet property="canadaLabel" destination="YQg-ON-vsC" id="j1u-0L-iiy"/>
+                <outlet property="checkBoxBtn" destination="hpi-OX-AAi" id="iHx-aS-ZIq"/>
+                <outlet property="countyNameBtn" destination="hHV-An-dtB" id="NZd-DS-fqE"/>
+                <outlet property="dropDownBtn" destination="NVM-Fo-ymT" id="yP9-rB-fyZ"/>
+                <outlet property="flagImg" destination="Lk8-1O-Fa6" id="Xbq-a8-Obq"/>
                 <outlet property="fullview" destination="QXP-e5-LaQ" id="uyc-go-W4R"/>
                 <outlet property="india" destination="h5Q-Pt-DWf" id="W8Z-eh-PJ6"/>
                 <outlet property="thailand" destination="Als-4n-Mru" id="Jww-fy-lZ8"/>
@@ -48,7 +52,7 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QXP-e5-LaQ">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="726.33333333333337"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="723.66666666666663"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcJ-he-mL8">
                                     <rect key="frame" x="23" y="18" width="350" height="28.666666666666671"/>
@@ -71,7 +75,7 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hay-KX-a6P">
-                                    <rect key="frame" x="78.666666666666657" y="337.66666666666669" width="304.33333333333337" height="20.333333333333314"/>
+                                    <rect key="frame" x="73.666666666666657" y="335" width="309.33333333333337" height="20.333333333333314"/>
                                     <attributedString key="attributedText">
                                         <fragment content="I agree to the terms and conditions">
                                             <attributes>
@@ -84,17 +88,17 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ArrowImg" translatesAutoresizingMaskIntoConstraints="NO" id="Msh-xK-JbK">
-                                    <rect key="frame" x="171.66666666666666" y="395.66666666666669" width="50" height="50"/>
+                                    <rect key="frame" x="171.66666666666666" y="393" width="50" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="4Jg-fv-qaG"/>
                                         <constraint firstAttribute="height" constant="50" id="V5t-e7-9H6"/>
                                     </constraints>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KAU-Cl-tH8">
-                                    <rect key="frame" x="40" y="332.66666666666669" width="30" height="30"/>
+                                    <rect key="frame" x="40" y="332.66666666666669" width="25" height="25"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpi-OX-AAi">
-                                            <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <state key="normal" image="CheckCircle"/>
                                             <connections>
@@ -103,16 +107,16 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="699-Yt-D4g"/>
+                                        <constraint firstAttribute="height" constant="25" id="699-Yt-D4g"/>
                                         <constraint firstItem="hpi-OX-AAi" firstAttribute="leading" secondItem="KAU-Cl-tH8" secondAttribute="leading" id="LVC-hc-RYo"/>
-                                        <constraint firstAttribute="width" constant="30" id="OUQ-8z-xhZ"/>
+                                        <constraint firstAttribute="width" constant="25" id="OUQ-8z-xhZ"/>
                                         <constraint firstItem="hpi-OX-AAi" firstAttribute="top" secondItem="KAU-Cl-tH8" secondAttribute="top" id="bQ1-jR-jo2"/>
                                         <constraint firstAttribute="trailing" secondItem="hpi-OX-AAi" secondAttribute="trailing" id="h1x-6d-S8X"/>
                                         <constraint firstAttribute="bottom" secondItem="hpi-OX-AAi" secondAttribute="bottom" id="iHi-KU-uwW"/>
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5Q-Pt-DWf">
-                                    <rect key="frame" x="-10" y="523.66666666666663" width="100" height="100"/>
+                                    <rect key="frame" x="-10" y="521" width="100" height="100"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="india1" translatesAutoresizingMaskIntoConstraints="NO" id="Wai-sy-Bns">
                                             <rect key="frame" x="30" y="15" width="40" height="30"/>
@@ -140,7 +144,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Als-4n-Mru">
-                                    <rect key="frame" x="146.66666666666666" y="523.66666666666663" width="100" height="100"/>
+                                    <rect key="frame" x="146.66666666666666" y="521" width="100" height="100"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thailand" translatesAutoresizingMaskIntoConstraints="NO" id="UtY-ld-15d">
                                             <rect key="frame" x="7" y="15" width="40" height="30"/>
@@ -168,7 +172,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QSi-le-e4s">
-                                    <rect key="frame" x="303" y="523.66666666666663" width="100" height="100"/>
+                                    <rect key="frame" x="303" y="521" width="100" height="100"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="USA" translatesAutoresizingMaskIntoConstraints="NO" id="Swq-p7-aWB">
                                             <rect key="frame" x="30" y="15" width="40" height="30"/>
@@ -198,7 +202,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c0k-qD-aK1">
-                                    <rect key="frame" x="146.66666666666666" y="666.33333333333337" width="100" height="100"/>
+                                    <rect key="frame" x="146.66666666666666" y="663.66666666666663" width="100" height="100"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uganda" translatesAutoresizingMaskIntoConstraints="NO" id="fRG-Or-wIo">
                                             <rect key="frame" x="30" y="15" width="40" height="30"/>
@@ -226,7 +230,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAm-ru-ai9">
-                                    <rect key="frame" x="301" y="661.33333333333337" width="100" height="100"/>
+                                    <rect key="frame" x="301" y="658.66666666666663" width="100" height="100"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="canada" translatesAutoresizingMaskIntoConstraints="NO" id="MIi-If-vm3">
                                             <rect key="frame" x="6" y="15" width="40" height="30"/>
@@ -254,7 +258,7 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iuK-Z2-OdG">
-                                    <rect key="frame" x="-8" y="661.33333333333337" width="100" height="100"/>
+                                    <rect key="frame" x="-8" y="658.66666666666663" width="100" height="100"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="indonesia" translatesAutoresizingMaskIntoConstraints="NO" id="N2D-HN-PFm">
                                             <rect key="frame" x="6" y="15" width="40" height="30"/>
@@ -284,15 +288,18 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZJ-74-f50">
                                     <rect key="frame" x="23" y="237" width="350" height="37.666666666666686"/>
                                     <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="india (2)" translatesAutoresizingMaskIntoConstraints="NO" id="Lk8-1O-Fa6">
+                                            <rect key="frame" x="2" y="2" width="33" height="33.666666666666664"/>
+                                        </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5QX-Ig-jXl">
                                             <rect key="frame" x="2" y="2" width="346" height="33.666666666666664"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tsh-Wo-BOQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="35" height="33.666666666666664"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="33" height="33.666666666666664"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="35" id="AIb-i2-oM2"/>
+                                                        <constraint firstAttribute="width" constant="33" id="AIb-i2-oM2"/>
                                                     </constraints>
-                                                    <state key="normal" image="india (2)">
+                                                    <state key="normal">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
@@ -300,22 +307,38 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hHV-An-dtB">
-                                                    <rect key="frame" x="45" y="0.0" width="301" height="33.666666666666664"/>
+                                                    <rect key="frame" x="43" y="0.0" width="273" height="33.666666666666664"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="India"/>
+                                                    <state key="normal" title="India">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="selectCountry:" destination="-1" eventType="touchUpInside" id="0sm-lA-ewb"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVM-Fo-ymT">
+                                                    <rect key="frame" x="326" y="0.0" width="20" height="33.666666666666664"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="zRg-hm-68J"/>
+                                                    </constraints>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="chevron.down" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" weight="bold"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="Lk8-1O-Fa6" firstAttribute="trailing" secondItem="Tsh-Wo-BOQ" secondAttribute="trailing" id="0XG-gs-ZBL"/>
                                         <constraint firstAttribute="height" constant="37.666666666666686" id="6Ps-E2-5tU"/>
+                                        <constraint firstItem="Lk8-1O-Fa6" firstAttribute="bottom" secondItem="Tsh-Wo-BOQ" secondAttribute="bottom" id="A2M-1M-PCV"/>
                                         <constraint firstItem="5QX-Ig-jXl" firstAttribute="leading" secondItem="IZJ-74-f50" secondAttribute="leading" constant="2" id="Bqn-bo-7c9"/>
+                                        <constraint firstItem="Lk8-1O-Fa6" firstAttribute="top" secondItem="Tsh-Wo-BOQ" secondAttribute="top" id="NUn-EM-V8B"/>
                                         <constraint firstAttribute="bottom" secondItem="5QX-Ig-jXl" secondAttribute="bottom" constant="2" id="S4x-KA-A6b"/>
                                         <constraint firstItem="5QX-Ig-jXl" firstAttribute="top" secondItem="IZJ-74-f50" secondAttribute="top" constant="2" id="Sjn-51-RTT"/>
+                                        <constraint firstItem="Lk8-1O-Fa6" firstAttribute="leading" secondItem="Tsh-Wo-BOQ" secondAttribute="leading" id="Wqp-jU-Ehp"/>
                                         <constraint firstAttribute="trailing" secondItem="5QX-Ig-jXl" secondAttribute="trailing" constant="2" id="li1-hA-fxZ"/>
                                     </constraints>
                                 </view>
@@ -772,6 +795,7 @@
         <image name="Flag" width="512" height="512"/>
         <image name="USA" width="512" height="512"/>
         <image name="canada" width="64" height="64"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="india (2)" width="512" height="512"/>
         <image name="india1" width="48" height="48"/>
         <image name="indonesia" width="64" height="64"/>
@@ -784,28 +808,28 @@
             <color red="0.25882352941176473" green="0.81176470588235294" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.1960784314" green="0.67843137249999996" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
