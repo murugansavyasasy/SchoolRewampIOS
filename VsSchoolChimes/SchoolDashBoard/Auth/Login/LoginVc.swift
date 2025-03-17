@@ -136,5 +136,37 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
+    
+    
+    func Validate_MobileNumber() {
+        APIService.shared
+            .makeApi(url: ServiceUrl.validate_validate_user_for_password_update, parameters: [
+                COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""
+        
+            ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                result: Result<MobileNumberValidationSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true {
+                        DispatchQueue.main.async { [self] in
+                           
+                        }
+                    }else{
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        
+    }
+ 
 }
 

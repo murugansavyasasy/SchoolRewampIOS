@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class CustomAlert{
+ class CustomAlert{
   
     func showAlert(title: String, message: String, on viewController: UIViewController) {
         
