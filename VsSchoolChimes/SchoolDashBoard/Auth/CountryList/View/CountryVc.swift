@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import DropDown
+import Kingfisher
 
 @available(iOS 14.0, *)
 class CountryVc: UIViewController {
@@ -24,7 +26,7 @@ class CountryVc: UIViewController {
     @IBOutlet weak var UsaLbl: UILabel!
     
     @IBOutlet weak var UgandaLbl: UILabel!
-    @IBOutlet weak var CountrynameLbl: UILabel!
+    @IBOutlet weak var CountryList: UIView!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var TermsLabel: UILabel!
@@ -39,11 +41,15 @@ class CountryVc: UIViewController {
     @IBOutlet weak var Usa: UIView!
     @IBOutlet weak var thailand: UIView!
     @IBOutlet weak var india: UIView!
-   
+    let dropDown = DropDown()
     var CountryCheck = 0
+    var images = [UIImage]()
+    var dropDownList = [String]()
+    var CountryListRespons : [CountryData]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        get_CountryListApi()
         StyleAndTranslater()
 
       
@@ -82,12 +88,8 @@ class CountryVc: UIViewController {
     }
     
     func StyleAndTranslater(){
-        
-        //MARK: Label font
-//        canadaLabel.setFont(style: .body, size: FontSize.BodySize)
-//        IndonasiaLabel.setFont(style: .body, size: FontSize.BodySize)
-//        ThaiLabel.setFont(style: .body, size: FontSize.BodySize)
-        CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
+
+//        CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         TermsLabel.setFont(style: .title, size: FontSize.TitleSize)
@@ -118,6 +120,79 @@ class CountryVc: UIViewController {
             button.imageView?.contentMode = .scaleAspectFill // Ensure the image scales to fit the button
         }
     }
+    @IBAction func checkBox(_ sender: UIButton) {
+    }
+    
+    @IBAction func selectCountry(_ sender: UIButton) {
+        dropDown.anchorView = CountryList
+           dropDown.dataSource = dropDownList
+        
+        dropDown.imageURLs = images
+        dropDown.show()
+           dropDown.bottomOffset = CGPoint(x: 0, y: CountryList.bounds.height)
+           
+           dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+               print("Selected item: \(item) at index: \(index)")
+           }
+    }
+    func get_CountryListApi() {
+        APIService.shared.makeApi(url: ServiceUrl.country_list, parameters: [:], type: ApitTypeSringFile.GET, token: "") { [self] (result: Result<CountryListSuccess, Error>) in
+            switch result {
+            case .success(let successMessage):
+                print("get_meeting_detailsApi", result)
+                print("successMessage", result)
+                
+                if successMessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                        CountryListRespons = successMessage.data
+                        dropDownList.removeAll()
+                        images.removeAll()
+                        
+                        for i in 0..<(CountryListRespons?.count ?? 0) {
+                            if let countryName = CountryListRespons?[i].country_name {
+                                dropDownList.append(countryName)
+                            }
+                            
+                            if let flagURL = CountryListRespons?[i].flag_url {
+                                loadImage(from: flagURL) { image in
+                                    if let img = image {
+                                        images.append(img)  // Append loaded image to array
+                                    } else {
+                                        images.append(UIImage(named: "placeholder")!) // Fallback image
+                                    }
+                                }
+                            } else {
+                                images.append(UIImage(named: "placeholder")!) // If no URL, use a placeholder
+                            }
+                        }
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("API Error: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(nil) // Invalid URL
+            return
+        }
+
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    completion(image) // Return the image
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(nil) // Failed to load
+                }
+            }
+        }
+    }
 
 
     @IBAction  func GotoTermsVc(){
@@ -130,21 +205,9 @@ class CountryVc: UIViewController {
     
     @IBAction  func GotToNextVc(){
         
-//        if checkBoxView.isChecked == true {
-//                        
-//            
-//            var term : String = "1"
-//            
-//            let userDefault = UserDefaults.standard
-//            userDefault.set(term, forKey: DefaultsKeys.countryId)
-//
-//            let vc = LoginVc(nibName: nil, bundle: nil)
-//            vc.modalPresentationStyle = .fullScreen
-//            present(vc, animated: true)
-//            
-//        }else{
-//            view.makeToast(AlertstringFile.Terms_And_Conditions)
-//        }
+        let vc = LoginVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
    
 
