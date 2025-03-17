@@ -5579,6 +5579,7 @@
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			packageReferences = (
 				18BAF3E22CE8A24400517441 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				847E21D32D855C4100E480FB /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 89945C534BB789780E336F9A2ED1CE46 /* Products */;
 			projectDirPath = "";
@@ -9403,6 +9404,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.8.4;
+			};
+		};
+		847E21D32D855C4100E480FB /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

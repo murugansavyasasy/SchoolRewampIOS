@@ -5,7 +5,6 @@
 //  Created by Kevin Hirsch on 28/07/15.
 //  Copyright (c) 2015 Kevin Hirsch. All rights reserved.
 //
-
 import UIKit
 
 public typealias Index = Int
@@ -376,7 +375,12 @@ public final class DropDown: UIView {
 			reloadAllComponents()
 		}
 	}
-
+    public var imageURLs = [UIImage]() {
+        didSet {
+            deselectRows(at: selectedRowIndices)
+            reloadAllComponents()
+        }
+    }
 	/**
 	The localization keys for the data source for the drop down.
 
@@ -475,17 +479,28 @@ public final class DropDown: UIView {
 
 	- returns: A new instance of a drop down customized with the above parameters.
 	*/
-	public convenience init(anchorView: AnchorView, selectionAction: SelectionClosure? = nil, dataSource: [String] = [], topOffset: CGPoint? = nil, bottomOffset: CGPoint? = nil, cellConfiguration: ConfigurationClosure? = nil, cancelAction: Closure? = nil) {
-		self.init(frame: .zero)
+    public convenience init(
+        anchorView: AnchorView,
+        selectionAction: SelectionClosure? = nil,
+        dataSource: [String] = [],
+        imageURLs: [UIImage] = [], // Accepts image URLs
+        topOffset: CGPoint? = nil,
+        bottomOffset: CGPoint? = nil,
+        cellConfiguration: ConfigurationClosure? = nil,
+        cancelAction: Closure? = nil
+    ) {
+        self.init(frame: .zero)
 
-		self.anchorView = anchorView
-		self.selectionAction = selectionAction
-		self.dataSource = dataSource
-		self.topOffset = topOffset ?? .zero
-		self.bottomOffset = bottomOffset ?? .zero
-		self.cellConfiguration = cellConfiguration
-		self.cancelAction = cancelAction
-	}
+        self.anchorView = anchorView
+        self.selectionAction = selectionAction
+        self.dataSource = dataSource
+        self.imageURLs = imageURLs // Store image URLs
+        self.topOffset = topOffset ?? .zero
+        self.bottomOffset = bottomOffset ?? .zero
+        self.cellConfiguration = cellConfiguration
+        self.cancelAction = cancelAction
+    }
+
 
 	override public init(frame: CGRect) {
 		super.init(frame: frame)
@@ -1061,26 +1076,52 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
 //        return UITableView.automaticDimension
 //    }
 	
-	fileprivate func configureCell(_ cell: DropDownCell, at index: Int) {
-		if index >= 0 && index < localizationKeysDataSource.count {
-			cell.accessibilityIdentifier = localizationKeysDataSource[index]
-		}
-		
-		cell.optionLabel.textColor = textColor
-		cell.optionLabel.font = textFont
-        cell.optionLabel.numberOfLines = 0
-		cell.selectedBackgroundColor = selectionBackgroundColor
+//	fileprivate func configureCell(_ cell: DropDownCell, at index: Int) {
+//		if index >= 0 && index < localizationKeysDataSource.count {
+//			cell.accessibilityIdentifier = localizationKeysDataSource[index]
+//		}
+//		
+//        cell.listNameBtn.tintColor = textColor
+//        cell.listNameBtn.titleLabel?.font = textFont
+////      cell.listNameBtn.numberOfLines = 0
+//		cell.selectedBackgroundColor = selectionBackgroundColor
+//        cell.highlightTextColor = selectedTextColor
+//        cell.normalTextColor = textColor
+//		
+//		if let cellConfiguration = cellConfiguration {
+//            cell.listNameBtn.setTitle(cellConfiguration(index, dataSource[index]), for: .normal)
+//		} else {
+//            cell.listNameBtn.setTitle(dataSource[index], for: .normal)
+//		}
+//		
+//		customCellConfiguration?(index, dataSource[index], cell)
+//	}
+    fileprivate func configureCell(_ cell: DropDownCell, at index: Int) {
+        if index >= 0 && index < localizationKeysDataSource.count {
+            cell.accessibilityIdentifier = localizationKeysDataSource[index]
+        }
+
+        cell.listNameBtn.tintColor = textColor
+        cell.listNameBtn.titleLabel?.font = textFont
+        cell.selectedBackgroundColor = selectionBackgroundColor
         cell.highlightTextColor = selectedTextColor
         cell.normalTextColor = textColor
-		
-		if let cellConfiguration = cellConfiguration {
-			cell.optionLabel.text = cellConfiguration(index, dataSource[index])
-		} else {
-			cell.optionLabel.text = dataSource[index]
-		}
-		
-		customCellConfiguration?(index, dataSource[index], cell)
-	}
+
+        // Set button title
+        let title = cellConfiguration?(index, dataSource[index]) ?? dataSource[index]
+        cell.listNameBtn.setTitle(title, for: .normal)
+
+        // Load image asynchronously
+        if index < imageURLs.count {
+            cell.imgBtn.isHidden = false
+            cell.imgBtn.setImage(imageURLs[index], for: .normal)
+        } else {
+            cell.imgBtn.isHidden = true
+        }
+
+        customCellConfiguration?(index, dataSource[index], cell)
+    }
+
 
 	public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.isSelected = selectedRowIndices.first{ $0 == (indexPath as NSIndexPath).row } != nil
@@ -1198,4 +1239,8 @@ private extension DispatchQueue {
 			main.async(execute: closure)
 		}
 	}
+}
+struct Droplist{
+    let name:String
+    let img:String
 }

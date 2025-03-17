@@ -1,5 +1,5 @@
 {
-  "originHash" : "6fc75f78c2b29cf4236d3dd1b125ff18bab903f9d693e47f72a4a303b5a85fd3",
+  "originHash" : "be6b78b3c3c65afda27afc6059b130d3f379666f7e372e61a99806b9078f1694",
   "pins" : [
     {
       "identity" : "fscalendar",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "0fbdec5172fccb90f707472eeaea4ffe095278f6",
         "version" : "2.8.4"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "b450a3b30e0767277a6eed7e02dbdebd7d173da0",
+        "version" : "8.3.0"
       }
     },
     {
