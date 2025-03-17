@@ -169,6 +169,7 @@
 		842FBABF2D0BEDBF007C0B51 /* ReportStudentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAB42D0BEDBF007C0B51 /* ReportStudentListVC.swift */; };
 		842FBAC02D0BEDBF007C0B51 /* StudentReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAB82D0BEDBF007C0B51 /* StudentReportVC.swift */; };
 		842FBAC22D0BEDDC007C0B51 /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */; };
+		842FDC202D854AD800DCE4FF /* HOTCODE_COMMON_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		84395FE92D10026100FC3242 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FE72D10026100FC3242 /* ChatVC.swift */; };
@@ -754,6 +755,7 @@
 		842FBAB82D0BEDBF007C0B51 /* StudentReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentReportVC.swift; sourceTree = "<group>"; };
 		842FBAB92D0BEDBF007C0B51 /* StudentReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentReportVC.xib; sourceTree = "<group>"; };
 		842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
+		842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOTCODE_COMMON_API.swift; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		84395FE72D10026100FC3242 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -2372,6 +2374,7 @@
 				849D72352D14272C0060E222 /* NetworkMoniter.swift */,
 				84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */,
 				8463D0EA2D6EF5CD00361F55 /* Extentions.swift */,
+				842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3889,6 +3892,7 @@
 				84A5BE422C19719700E32496 /* AppDelegate.swift in Sources */,
 				84EFFAEB2CCFA4A100C11C26 /* ReportBugVcViewController.swift in Sources */,
 				84A5BE9A2C197E0B00E32496 /* ResponseName.swift in Sources */,
+				842FDC202D854AD800DCE4FF /* HOTCODE_COMMON_API.swift in Sources */,
 				84395FE92D10026100FC3242 /* ChatVC.swift in Sources */,
 				84A5BE442C19719700E32496 /* SceneDelegate.swift in Sources */,
 				8497570D2D2BA575006A27FD /* SelectRecipientVC.swift in Sources */,
