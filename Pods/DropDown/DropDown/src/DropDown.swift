@@ -7,6 +7,7 @@
 //
 import UIKit
 
+
 public typealias Index = Int
 public typealias Closure = () -> Void
 public typealias SelectionClosure = (Index, String) -> Void
@@ -375,7 +376,7 @@ public final class DropDown: UIView {
 			reloadAllComponents()
 		}
 	}
-    public var imageURLs = [UIImage]() {
+    public var imageURLs = [String]() {
         didSet {
             deselectRows(at: selectedRowIndices)
             reloadAllComponents()
@@ -483,7 +484,7 @@ public final class DropDown: UIView {
         anchorView: AnchorView,
         selectionAction: SelectionClosure? = nil,
         dataSource: [String] = [],
-        imageURLs: [UIImage] = [], // Accepts image URLs
+        imageURLs: [String] = [], // Accepts image URLs
         topOffset: CGPoint? = nil,
         bottomOffset: CGPoint? = nil,
         cellConfiguration: ConfigurationClosure? = nil,
@@ -1114,7 +1115,7 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
         // Load image asynchronously
         if index < imageURLs.count {
             cell.imgBtn.isHidden = false
-            cell.imgBtn.setImage(imageURLs[index], for: .normal)
+            cell.loadImage(from: imageURLs[index])
         } else {
             cell.imgBtn.isHidden = true
         }

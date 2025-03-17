@@ -4266,6 +4266,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashStoryboard.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -4300,6 +4301,7 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to capture photos";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow to microphone access";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to select images.";
+				INFOPLIST_KEY_NSRemindersUsageDescription = "We need access to create reminders for you.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = SplashStoryboard.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
