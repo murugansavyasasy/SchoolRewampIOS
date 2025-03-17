@@ -11,41 +11,30 @@
     class PasswordVc: UIViewController {
 
     @IBOutlet weak var eyeImage: UIImageView!
-
     @IBOutlet weak var createPassDefaultLbl: UILabel!
-
-
     @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
-    @IBOutlet weak var confirmPass: UITextField!
-
     @IBOutlet weak var confirmPassBtnNam: UIButton!
     @IBOutlet weak var createPassTextFLd: UITextField!
 
     let alertModal = CustomAlert()
-
     var forgetType  = false
+        
     override func viewDidLoad() {
+        
     super.viewDidLoad()
 
     createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
     ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
-
     confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
 
-    // Do any additional setup after loading the view.
-
-
     if forgetType == true{
-
-
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
-
     }
-
 
     let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
     eyeImage.addGestureRecognizer(eyeImageTap)
+        
     }
 
     @IBAction func backBtn(_ sender: Any) {
@@ -56,20 +45,19 @@
 
     @IBAction func confirmBtn(_ sender: Any) {
 
-
-
-
     if createPassTextFLd.text != "" {
 
     if  confirmPassTextFld.text != "" {
 
     if createPassTextFLd.text == confirmPassTextFld.text{
 
-    view.makeToast(AlertstringFile.Successfully_password_created)
+    //view.makeToast(AlertstringFile.Successfully_password_created)
     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-    let vc = PriorityViewController1(nibName: nil, bundle: nil)
-    vc.modalPresentationStyle = .fullScreen
-    self.present(vc, animated: true)
+        
+        self.CretaeNewPasswordAPIcall()
+//    let vc = PriorityViewController1(nibName: nil, bundle: nil)
+//    vc.modalPresentationStyle = .fullScreen
+//    self.present(vc, animated: true)
     }
     }else{
     view.makeToast(AlertstringFile.Password_Missmatched)
@@ -79,7 +67,6 @@
     }
 
     }else{
-
 
     view.makeToast(AlertstringFile.Enter_the_new_password)
 
@@ -94,5 +81,69 @@
 
     }
 
+        func CretaeNewPasswordAPIcall(){
+            
+            APIService.shared.makeApi(url: ServiceUrl.password_create_new_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",CreateNewPasswordStringFile.old_password: "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<CreateNewPasswordSuc, Error>) in
+                
+                switch result {
+                    
+                case.success(let successMessage):
+                    
+                    if successMessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            alertModal.showAlert(title: "", message: "Password Changed Successfully", on: self)
+                        }
+                        
+                    }else{
+                        
+                        DispatchQueue.main.async {
+                            
+                            print("Try again later")
+                            
+                        }
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+            
+        }
+        
+        func ResetPasswordAPIcall(){
+            
+            APIService.shared.makeApi(url: ServiceUrl.password_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<ResetPasswordSuc, Error>) in
+                
+                switch result {
+                    
+                case.success(let successMessage):
+                    
+                    if successMessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            
+                            
+                        }
+                        
+                    }else{
+                        
+                        DispatchQueue.main.async {
+                            
+                        }
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+            
+        }
 
     }
