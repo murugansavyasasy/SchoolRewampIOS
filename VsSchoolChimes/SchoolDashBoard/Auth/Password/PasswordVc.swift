@@ -25,9 +25,12 @@
     let alertModal = CustomAlert()
 
     var forgetType  = false
+    var createPassText : String?
+    var confirmPassText : String?
     override func viewDidLoad() {
     super.viewDidLoad()
-
+        createPassDefaultLbl.text = createPassText
+        ConfirmPassLabel.text = confirmPassText
     createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
     ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
 
@@ -36,7 +39,7 @@
     // Do any additional setup after loading the view.
 
 
-    if forgetType == true{
+    if forgetType == false{
 
 
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password

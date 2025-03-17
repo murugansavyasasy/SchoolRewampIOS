@@ -18,6 +18,8 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var MobilTextFld: UITextField!
     @IBOutlet weak var loginBtnNm: UIButton!
     
+    @IBOutlet weak var lineview: UIView!
+    @IBOutlet weak var lockImage: UIImageView!
     @IBOutlet weak var eyeImage: UIImageView!
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
@@ -27,6 +29,13 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         setupUI()
         addDoneButtonOnKeyboard() // ✅ Added Done button for both text fields
+        
+        PasswordLabel.isHidden = true
+        passTextFld.isHidden = true
+        forgetLbl.isHidden = true
+        eyeImage.isHidden = true
+        lockImage.isHidden = true
+        lineview.isHidden = true
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
@@ -132,11 +141,17 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         let userDefault = UserDefaults.standard
         userDefault.set("1", forKey: DefaultsKeys.LoginId)
         
+        Validate_MobileNumber()
+    }
+    
+    
+    func otp_Vc(valdiateResponse : [MobileNumberValidationData]){
+        
         let vc = OTPVc(nibName: nil, bundle: nil)
+        vc.validateMobileData = valdiateResponse
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    
     
     func Validate_MobileNumber() {
         APIService.shared
@@ -152,6 +167,14 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                     if successMessage.status == true {
                         DispatchQueue.main.async { [self] in
                            
+                            let userDefault = UserDefaults.standard
+                            userDefault
+                                .set(
+                                    UserDefault_FILE.Mobile_number,
+                                    forKey: MobilTextFld.text ?? ""
+                                )
+                            
+                            otp_Vc(valdiateResponse: successMessage.data ?? [])
                         }
                     }else{
                         DispatchQueue.main.async {

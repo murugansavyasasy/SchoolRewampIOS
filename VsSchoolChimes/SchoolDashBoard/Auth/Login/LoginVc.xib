@@ -17,6 +17,8 @@
                 <outlet property="PasswordLabel" destination="B98-VS-j8f" id="xMs-zC-hZB"/>
                 <outlet property="eyeImage" destination="9Il-4r-rDD" id="eNJ-Il-DIc"/>
                 <outlet property="forgetLbl" destination="rNg-67-5YJ" id="fAj-9q-fh6"/>
+                <outlet property="lineview" destination="mxq-iH-M0x" id="yX9-Vq-cFC"/>
+                <outlet property="lockImage" destination="Wvr-kO-c4g" id="Q0Y-sl-Rry"/>
                 <outlet property="loginBtnNm" destination="VTA-af-yQq" id="6D7-FV-Y4A"/>
                 <outlet property="passTextFld" destination="uqU-Zt-Tg4" id="b6K-BZ-ZQV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

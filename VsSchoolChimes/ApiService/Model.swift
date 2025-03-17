@@ -70,5 +70,11 @@ struct MobileNumberValidationData: Codable {
     let dial_numbers: String?
     
 }
+// MARK: Validate OTP
 
+struct ValidateOTPSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [String]?
+}
 

@@ -10,11 +10,14 @@ import Foundation
 
 
 class COMMON_PARAMETER{
-    
     static var device_type = "device_type"
     static var version_code = "version_code"
     static var mobile_number = "mobile_number"
+}
+
+class OTP_PARAMETER{
     
+    static var otp = "otp"
 }
 
 class ApitTypeSringFile{

@@ -238,6 +238,7 @@
 		846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */; };
 		84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C622CEDE02400E7D367 /* SDWebImage */; };
 		84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C642CEDE02400E7D367 /* SDWebImageMapKit */; };
+		847688112D87F34800EAB9DB /* User_Default_File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847688102D87F34800EAB9DB /* User_Default_File.swift */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
@@ -833,6 +834,7 @@
 		846D83E12D02D91000B69344 /* Tvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tvcell.xib; sourceTree = "<group>"; };
 		846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
 		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
+		847688102D87F34800EAB9DB /* User_Default_File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User_Default_File.swift; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
@@ -2377,6 +2379,7 @@
 				84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */,
 				8463D0EA2D6EF5CD00361F55 /* Extentions.swift */,
 				842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */,
+				847688102D87F34800EAB9DB /* User_Default_File.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -3700,6 +3703,7 @@
 				18926C5A2D02DE81002BBB97 /* PreviewLsrwViewController.swift in Sources */,
 				18926C5B2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.swift in Sources */,
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
+				847688112D87F34800EAB9DB /* User_Default_File.swift in Sources */,
 				FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
