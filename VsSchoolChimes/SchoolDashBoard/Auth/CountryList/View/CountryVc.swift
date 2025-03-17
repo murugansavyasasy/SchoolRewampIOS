@@ -11,7 +11,7 @@ import Kingfisher
 
 @available(iOS 14.0, *)
 class CountryVc: UIViewController {
-
+    
     @IBOutlet weak var IndiaImg: UIImageView!
     @IBOutlet weak var ThailandImg: UIImageView!
     @IBOutlet weak var UsaImg: UIImageView!
@@ -23,8 +23,11 @@ class CountryVc: UIViewController {
     @IBOutlet weak var ThaiLabel: UILabel!
     @IBOutlet weak var IndiaLbl: UILabel!
     
+    @IBOutlet weak var checkBoxBtn: UIButton!
     @IBOutlet weak var UsaLbl: UILabel!
     
+    @IBOutlet weak var flagImg: UIImageView!
+    @IBOutlet weak var countyNameBtn: UIButton!
     @IBOutlet weak var UgandaLbl: UILabel!
     @IBOutlet weak var CountryList: UIView!
     @IBOutlet weak var DescriptionLbl: UILabel!
@@ -34,7 +37,7 @@ class CountryVc: UIViewController {
     @IBOutlet weak var fullview: UIView!
     
     
-//    @IBOutlet weak var checkBoxView: CheckBox!
+    //    @IBOutlet weak var checkBoxView: CheckBox!
     @IBOutlet weak var Canada: UIView!
     @IBOutlet weak var Indonasia: UIView!
     @IBOutlet weak var Uganda: UIView!
@@ -51,12 +54,13 @@ class CountryVc: UIViewController {
         super.viewDidLoad()
         get_CountryListApi()
         StyleAndTranslater()
-
-      
-//        checkBoxView.isChecked = false
+        
+        
+        //        checkBoxView.isChecked = false
         fullview.backgroundColor = Colornames.countryClr
         view.backgroundColor = Colornames.countryClr
         ClickArrowImg.layer.cornerRadius = ClickArrowImg.frame.width/2
+        flagImg.layer.cornerRadius = flagImg.frame.width/2
         ClickArrowImg.clipsToBounds = true
         india.layer.cornerRadius = india.frame.width/2
         Usa.layer.cornerRadius = Usa.frame.width/2
@@ -76,7 +80,7 @@ class CountryVc: UIViewController {
         canadaLabel.transform = CGAffineTransform(rotationAngle: -.pi / 4)
         CanadaImg.transform = CGAffineTransform(rotationAngle: -.pi / 4)
         Canada.layer.cornerRadius = 20
-       
+        
         let tap  = UITapGestureRecognizer(target: self, action:#selector(GotToNextVc))
         ClickArrowImg.isUserInteractionEnabled = true
         ClickArrowImg.addGestureRecognizer(tap)
@@ -88,12 +92,12 @@ class CountryVc: UIViewController {
     }
     
     func StyleAndTranslater(){
-
-//        CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        //        CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         TermsLabel.setFont(style: .title, size: FontSize.TitleSize)
-
+        
         IndiaLbl.setFont(style: .body, size: FontSize.BodySize)
         ThaiLabel.setFont(style: .body, size: FontSize.BodySize)
         UsaLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -111,7 +115,7 @@ class CountryVc: UIViewController {
         // Set corner radius
         button.layer.cornerRadius = cornerRadius
         button.layer.masksToBounds = true
-
+        
         // Set only the image
         if let image = imageName {
             button.setImage(image, for: .normal)
@@ -121,19 +125,23 @@ class CountryVc: UIViewController {
         }
     }
     @IBAction func checkBox(_ sender: UIButton) {
+        checkBoxBtn.isSelected.toggle()
+        let image = checkBoxBtn.isSelected ? UIImage(named: "checked_Tick"):UIImage(named: "CheckCircle")
+        checkBoxBtn.setImage(image, for: .normal)
     }
     
     @IBAction func selectCountry(_ sender: UIButton) {
         dropDown.anchorView = CountryList
-           dropDown.dataSource = dropDownList
-        
+        dropDown.dataSource = dropDownList
         dropDown.imageURLs = images
         dropDown.show()
-           dropDown.bottomOffset = CGPoint(x: 0, y: CountryList.bounds.height)
-           
-           dropDown.selectionAction = { [weak self] (index: Int, item: String) in
-               print("Selected item: \(item) at index: \(index)")
-           }
+        dropDown.bottomOffset = CGPoint(x: 0, y: CountryList.bounds.height)
+        
+        dropDown.selectionAction = { [weak self] (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+            self?.flagImg.image = self?.images[index]
+            self?.countyNameBtn.setTitle(item, for: .normal)
+        }
     }
     func get_CountryListApi() {
         APIService.shared.makeApi(url: ServiceUrl.country_list, parameters: [:], type: ApitTypeSringFile.GET, token: "") { [self] (result: Result<CountryListSuccess, Error>) in
@@ -149,22 +157,22 @@ class CountryVc: UIViewController {
                         images.removeAll()
                         
                         for i in 0..<(CountryListRespons?.count ?? 0) {
-                            if let countryName = CountryListRespons?[i].country_name {
-                                dropDownList.append(countryName)
-                            }
-                            
-                            if let flagURL = CountryListRespons?[i].flag_url {
+                            if let countryName = CountryListRespons?[i].country_name,
+                               let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
+                               
                                 loadImage(from: flagURL) { image in
                                     if let img = image {
                                         images.append(img)  // Append loaded image to array
                                     } else {
-                                        images.append(UIImage(named: "placeholder")!) // Fallback image
+                                        if let placeholder = UIImage(named: "placeholder") {
+                                            images.append(placeholder)  // Fallback image
+                                        }
                                     }
+                                    dropDownList.append(countryName)  // Ensuring the order is maintained
                                 }
-                            } else {
-                                images.append(UIImage(named: "placeholder")!) // If no URL, use a placeholder
                             }
                         }
+
                     }
                 }
             case .failure(let error):
@@ -174,13 +182,13 @@ class CountryVc: UIViewController {
             }
         }
     }
-
+    
     func loadImage(from urlString: String, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: urlString) else {
             completion(nil) // Invalid URL
             return
         }
-
+        
         DispatchQueue.global().async {
             if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
                 DispatchQueue.main.async {
@@ -193,22 +201,23 @@ class CountryVc: UIViewController {
             }
         }
     }
-
-
+    
+    
     @IBAction  func GotoTermsVc(){
         
         let vc = TermsAndCondVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
-    
+        
     }
     
     @IBAction  func GotToNextVc(){
-        
-        let vc = LoginVc(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        if checkBoxBtn.isSelected{
+            let vc = LoginVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
     }
-   
-
+    
+    
 }
