@@ -18,6 +18,7 @@ open class DropDownCell: UITableViewCell {
 	var selectedBackgroundColor: UIColor?
     var highlightTextColor: UIColor?
     var normalTextColor: UIColor?
+    var url:String? = nil
 
 }
 
@@ -27,11 +28,36 @@ extension DropDownCell {
 	
 	override open func awakeFromNib() {
 		super.awakeFromNib()
-		
+		print(url)
 		backgroundColor = .clear
         imgBtn.layer.cornerRadius = imgBtn.frame.width/2
 	}
-	
+    func loadImage(from urlString: String) {
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL:", urlString)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Image load error:", error.localizedDescription)
+                return
+            }
+            
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    self.imgBtn.image = image
+                }
+            } else {
+                print("Failed to decode image data")
+            }
+        }
+        task.resume()
+    }
+
+
 	override open var isSelected: Bool {
 		willSet {
 			setSelected(newValue, animated: false)
