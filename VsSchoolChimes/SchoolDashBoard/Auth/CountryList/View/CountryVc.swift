@@ -35,9 +35,6 @@ class CountryVc: UIViewController {
     @IBOutlet weak var TermsLabel: UILabel!
     @IBOutlet weak var ClickArrowImg: UIImageView!
     @IBOutlet weak var fullview: UIView!
-    
-    
-    //    @IBOutlet weak var checkBoxView: CheckBox!
     @IBOutlet weak var Canada: UIView!
     @IBOutlet weak var Indonasia: UIView!
     @IBOutlet weak var Uganda: UIView!
@@ -60,7 +57,6 @@ class CountryVc: UIViewController {
         fullview.backgroundColor = Colornames.countryClr
         view.backgroundColor = Colornames.countryClr
         ClickArrowImg.layer.cornerRadius = ClickArrowImg.frame.width/2
-        flagImg.layer.cornerRadius = flagImg.frame.width/2
         ClickArrowImg.clipsToBounds = true
         india.layer.cornerRadius = india.frame.width/2
         Usa.layer.cornerRadius = Usa.frame.width/2
@@ -140,7 +136,6 @@ class CountryVc: UIViewController {
         dropDownBtn.setImage( UIImage(systemName: "chevron.up"), for: .normal)
         
         dropDown.selectionAction = { [self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
             flagImg.kf.setImage(with: URL(string: images[index]))
             countyNameBtn.setTitle(item, for: .normal)
             dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
@@ -154,15 +149,11 @@ class CountryVc: UIViewController {
         APIService.shared.makeApi(url: ServiceUrl.country_list, parameters: [:], type: ApitTypeSringFile.GET, token: "") { [self] (result: Result<CountryListSuccess, Error>) in
             switch result {
             case .success(let successMessage):
-                print("get_meeting_detailsApi", result)
-                print("successMessage", result)
-                
                 if successMessage.status == true {
                     DispatchQueue.main.async { [self] in
                         CountryListRespons = successMessage.data
                         dropDownList.removeAll()
                         images.removeAll()
-                        
                         for i in 0..<(CountryListRespons?.count ?? 0) {
                             if let countryName = CountryListRespons?[i].country_name,
                                let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
@@ -170,7 +161,6 @@ class CountryVc: UIViewController {
                                     dropDownList.append(countryName)  // Ensuring the order is maintained
                             }
                         }
-
                     }
                 }
             case .failure(let error):
@@ -180,9 +170,6 @@ class CountryVc: UIViewController {
             }
         }
     }
-    
-
-    
     
     @IBAction  func GotoTermsVc(){
         

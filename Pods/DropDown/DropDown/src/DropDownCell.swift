@@ -28,9 +28,7 @@ extension DropDownCell {
 	
 	override open func awakeFromNib() {
 		super.awakeFromNib()
-		print(url)
 		backgroundColor = .clear
-        imgBtn.layer.cornerRadius = imgBtn.frame.width/2
 	}
     func loadImage(from urlString: String) {
         guard let url = URL(string: urlString) else {
