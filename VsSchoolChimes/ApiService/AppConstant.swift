@@ -19,6 +19,7 @@ struct ServiceUrl{
     static let password_create_new_password = "/password/create-new-password"
     static let password_reset_password = "/password/reset-password"
     static let validate_validate_otp = "validate/validate-otp"
+    static let validate_validate_user = "validate/validate-user"
     
 }
 

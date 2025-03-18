@@ -83,7 +83,9 @@ class CountryVc: UIViewController {
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(GotoTermsVc))
         TermsLabel.addGestureRecognizer(tap1)
         TermsLabel.isUserInteractionEnabled = true
+        let secureID = SecureIDManager.getSecureID()
         
+        print("secureID",secureID)
     }
     
     func StyleAndTranslater(){
@@ -194,9 +196,9 @@ class CountryVc: UIViewController {
 //            UserDefaultFileManager.saveCountryDetails(data: country_data!)
             ServiceUrl.baseurl = country_data?.base_url ?? ""
             ServiceUrl.report_url = country_data?.reporting_url ?? ""
-
             localData.country_data = country_data
             
+            print("lodaData",localData.country_data)
             let vc = LoginVc(nibName: nil, bundle: nil)
             vc.pageType = screenType.isMobileNumber
             vc.modalPresentationStyle = .fullScreen

@@ -222,9 +222,13 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     func Validate_MobileNumber() {
+        let secureID = SecureIDManager.getSecureID()
         APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_user_for_password_update, parameters: [
-                COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""
+            .makeApi(url: ServiceUrl.validate_validate_user, parameters: [
+                mobileNumber.mobile_number : MobilTextFld.text ?? "",
+                mobileNumber.device_type : "Iphone",
+                mobileNumber.password : passTextFld.text ?? "",
+                mobileNumber.secure_id : secureID
                 
             ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
                 result: Result<MobileNumberValidationSuc,

@@ -16,8 +16,19 @@ class COMMON_PARAMETER{
     static var new_password = "new_password"
 }
 
-class OTP_PARAMETER{
+class mobileNumber{
     
+   
+    static var mobile_number = "mobile_number"
+    static var password = "password"
+    static var device_type = "device_type"
+    static var secure_id = "secure_id"
+    
+  
+   
+}
+
+class OTP_PARAMETER{
     static var otp = "otp"
 }
 

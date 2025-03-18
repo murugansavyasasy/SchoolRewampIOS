@@ -34,7 +34,7 @@ class SplashViewController: UIViewController {
 //        }
         
         countryId = localData.country_data?.country_id
-        print("countryId",countryId)
+        print("countryId",localData.country_data?.country_id)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
             
             if(countryId != nil){
