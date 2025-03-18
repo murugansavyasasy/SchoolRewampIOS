@@ -26,6 +26,7 @@ class PriorityViewController1: UIViewController {
     let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
     var passedValue = 1
     var Language :String?
+    var validateUser : [UserData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)

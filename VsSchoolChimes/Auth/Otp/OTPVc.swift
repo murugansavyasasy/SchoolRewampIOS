@@ -29,7 +29,7 @@ class OTPVc: UIViewController,UITextFieldDelegate {
     var forgetType  = false
     var otpFields: [UITextField] = []
     var mobile_number:String?
-    var validateMobileData : [MobileNumberValidationData] = []
+    var validateMobileData : [UserData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,8 +44,8 @@ class OTPVc: UIViewController,UITextFieldDelegate {
         
        
     
-        let defaults = UserDefaults.standard
-        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
+//        let defaults = UserDefaults.standard
+//        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
@@ -156,6 +156,7 @@ class OTPVc: UIViewController,UITextFieldDelegate {
     
     func priotyScreenVC(){
         let vc = PriorityViewController1(nibName: nil, bundle: nil)
+        vc.validateUser = validateMobileData
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -196,7 +197,7 @@ class OTPVc: UIViewController,UITextFieldDelegate {
                                 confirmPassword: "Confirm Password",
                                 CreatePasswordValue: true
                             )
-                                : priotyScreenVC()
+                            : priotyScreenVC()
                            
                         }
                     }else{

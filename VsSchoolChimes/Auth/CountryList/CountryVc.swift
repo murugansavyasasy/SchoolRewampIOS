@@ -160,7 +160,7 @@ class CountryVc: UIViewController {
                         dropDownList.removeAll()
                         images.removeAll()
                         for i in 0..<(CountryListRespons?.count ?? 0) {
-                            if let countryName = CountryListRespons?[i].country_name,
+                            if let countryName = CountryListRespons?[i].name,
                                let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
                                 images.append(flagURL)
                                 dropDownList.append(countryName)  // Ensuring the order is maintained
@@ -187,12 +187,14 @@ class CountryVc: UIViewController {
     
     @IBAction  func GotToNextVc(){
         if checkBoxBtn.isSelected{
-//            UserDefaultFileManager.saveCountryDetails(data: country_data!)
+
+//            UserDefaults.standard
+//                .set(country_data?.id, forKey: "CountrySelectedId")
+            
+            UserDefaultFileManager.saveCountryDetails(data: country_data!)
             ServiceUrl.baseurl = country_data?.base_url ?? ""
             ServiceUrl.report_url = country_data?.reporting_url ?? ""
-            localData.country_data = country_data
             
-            print("lodaData",localData.country_data)
             let vc = LoginVc(nibName: nil, bundle: nil)
             vc.pageType = screenType.isMobileNumber
             vc.modalPresentationStyle = .fullScreen

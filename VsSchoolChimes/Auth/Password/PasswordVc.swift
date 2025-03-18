@@ -21,6 +21,7 @@
     var forgetType  = false
     var createPassText : String?
     var confirmPassText : String?
+    var  pageType : Int?
     override func viewDidLoad() {
         
     super.viewDidLoad()

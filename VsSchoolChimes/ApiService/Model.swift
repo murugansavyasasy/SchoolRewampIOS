@@ -16,16 +16,15 @@ struct CountryListSuccess : Codable{
 
 struct CountryData : Codable{
    
-    let country_id : String?
-    let country_name : String?
-    let country_code : String?
+    let id : Int?
+    let name : String?
+    let code : Int?
+    let mobile_number_length : Int?
+    let mobile_no_hint : String?
     let base_url : String?
-    let mobile_number_length : String?
-    let resend_otp_timer : String?
     let reporting_url : String?
     let flag_url : String?
-    let terms_and_condition_url : String?
-    let mobile_no_hint : String?
+   
 }
 
 //MARK: Version Check API
@@ -36,14 +35,18 @@ struct VersionCheckResponse: Codable {
 }
 
 struct VersionData: Codable {
-    let updateAvailable: Bool?
-    let forceUpdate: Bool?
-    let newVersion: String?
-    let newVersionUpdates: String?
-    let redirect_url: String?
-    let countryDetails: CountryData?
-    let toasterTitle: String?
+    let update_available: Bool?
+    let force_update: Bool?
+    let new_version: String?
+    let new_version_updates: String?
+    let country_details: CountryData?
+    let toaster_title: String?
+    let play_store_market_id: String?
+    let play_store_link: String?
 }
+
+
+            
 
 
 
@@ -91,65 +94,65 @@ struct ValidateOTPSuc: Codable {
 
 // MARK: Validate User
 
-struct UserValidationResponse: Codable {
+struct UserValidationResponseSuc: Codable {
     let status: Bool?
     let message: String?
     let data: [UserData]?
 }
 
 struct UserData: Codable {
-    let isNumberExists: Bool?
-    let isPasswordUpdated: Bool?
-    let otpSent: Bool?
+    let is_number_exists: Bool?
+    let is_password_updated: Bool?
+    let otp_sent: Bool?
     let message: String?
-    let moreInfo: String?
-    let dialNumbers: String?
-    let userDetails: UserDetails?
+    let more_info: String?
+    let dial_numbers: String?
+    let user_details: UserDetails?
 }
 
 struct UserDetails: Codable {
-    let isStaff: Bool?
-    let staffRole: String?
-    let roleName: String?
-    let staffDetails: [StaffDetail]?
-    let isParent: Bool?
-    let childDetails: [ChildDetail]?
-    let maxGeneralSmsCount: Int?
-    let maxHomeworkSmsCount: Int?
-    let maxEmergencyVoiceDuration: Int?
-    let maxGeneralVoiceDuration: Int?
-    let maxHwVoiceDuration: Int?
-    let imageCount: Int?
+    let is_staff: Bool?
+    let staff_role: String?
+    let role_name: String?
+    let staff_details: [StaffDetail]?
+    let is_parent: Bool?
+    let child_details: [ChildDetail]?
+    let max_general_sms_count: Int?
+    let max_homework_sms_count: Int?
+    let max_emergency_voice_duration: Int?
+    let max_general_voice_duration: Int?
+    let max_hw_voice_duration: Int?
+    let image_count: Int?
 }
 
 struct StaffDetail: Codable {
-    let staffID: String?
-    let staffName: String?
-    let schoolID: String?
-    let schoolName: String?
-    let schoolNameRegional: String?
+    let staff_id: String?
+    let staff_name: String?
+    let school_id: String?
+    let school_name: String?
+    let school_name_regional: String?
     let city: String?
-    let schoolLogo: String?
+    let school_logo: String?
     let role: String?
-    let isPaymentPending: String?
-    let scheduleCallType: Int?
-    let biometricEnable: Int?
-    let allowVideoDownload: Bool?
+    let is_payment_pending: String?
+    let schedule_call_type: Int?
+    let biometric_enable: Int?
+    let allow_video_download: Bool?
 }
 
 struct ChildDetail: Codable {
-    let childID: String?
-    let childName: String?
-    let standardName: String?
-    let sectionName: String?
-    let schoolID: String?
-    let schoolName: String?
-    let schoolNameRegional: String?
-    let schoolCity: String?
-    let schoolLogoURL: String?
-    let rollNumber: String?
-    let displayMessage: String?
-    let classID: Int?
-    let sectionID: Int?
+    let child_id: String?
+    let child_name: String?
+    let standard_name: String?
+    let section_name: String?
+    let school_id: String?
+    let school_name: String?
+    let school_name_regional: String?
+    let school_city: String?
+    let school_logo_url: String?
+    let roll_number: String?
+    let display_message: String?
+    let class_id: Int?
+    let section_id: Int?
 }
 

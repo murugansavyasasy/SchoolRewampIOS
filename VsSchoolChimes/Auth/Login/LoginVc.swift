@@ -44,13 +44,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             forgetLbl.isHidden = false
         }
       
-        mobile_number_length =  Int(
-            UserDefaultFileManager.getCountryDetails()?.mobile_number_length ?? ""
-        )
-       
-        mobile_no_hint = UserDefaultFileManager
-            .getCountryDetails()?.mobile_no_hint ?? ""
-        
         MobilTextFld.placeholder = mobile_no_hint
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
@@ -133,7 +126,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
             let newLength = (textField.text?.count ?? 0) + string.count - range.length
-            return newLength <= 10 // ✅ Ensures mobile number is max 10 digits
+            return newLength <= mobile_number_length ?? 0 // ✅ Ensures mobile number is max 10 digits
         }
         return true
     }
@@ -214,24 +207,33 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         Validate_MobileNumber()
     }
 
-    func otp_Vc(valdiateResponse : [MobileNumberValidationData]){
+    func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
+        vc.mobile_number = MobilTextFld.text ?? ""
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
     func Validate_MobileNumber() {
+        
         let secureID = SecureIDManager.getSecureID()
+        var parameters: [String: Any] = [
+            mobileNumber.mobile_number: MobilTextFld.text ?? "",
+            mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
+            mobileNumber.secure_id: secureID
+        ]
+
+        
+        if pageType == screenType.isLoginPage {
+            parameters[mobileNumber.password] = passTextFld.text ?? ""
+        }
+        
+       
         APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_user, parameters: [
-                mobileNumber.mobile_number : MobilTextFld.text ?? "",
-                mobileNumber.device_type : "Iphone",
-                mobileNumber.password : passTextFld.text ?? "",
-                mobileNumber.secure_id : secureID
-                
-            ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
-                result: Result<MobileNumberValidationSuc,
+            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
+                , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                result: Result<UserValidationResponseSuc,
                 Error>
             ) in
                 switch result {
@@ -241,28 +243,31 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                             
                             
                             
-                            //                            let userDefault = UserDefaults.standard
-                            //                            userDefault
-                            //                                .set(
-                            //                                    MobilTextFld.text ?? "",
-                            //                                    forKey: DefaultsKeys.mobileNumber
-                            //                                )
+                            let userDefault = UserDefaults.standard
+                            userDefault
+                                .set(
+                                    MobilTextFld.text ?? "",
+                                    forKey: DefaultsKeys.mobileNumber
+                                )
                             
-                            let data : MobileNumberValidationData = (
+//                            UserDefaults.standard.set(response.data, forKey: "isEmpty")
+                            
+                            
+                            let data : UserData = (
                                 response.data?.first
                             )!
                             
                             if(data.is_number_exists == true){
                                 
-                                if(data.is_password_updated == true){
-                                    //  go to the password screen
-                                    
-                                }
-                                else{
+//                                if(data.is_password_updated == true){
+//                                    //  go to the password screen
+//                                    
+//                                }
+//                                else{
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                     
                                     //go to the otp screen and then enter OTP then go to the create new password screen
-                                }
+//                                }
                             }
                             else {
                                 AlertModal

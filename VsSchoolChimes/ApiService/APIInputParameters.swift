@@ -14,6 +14,7 @@ class COMMON_PARAMETER{
     static var version_code = "version_code"
     static var mobile_number = "mobile_number"
     static var new_password = "new_password"
+    static var  country_id = "country_id"
 }
 
 class mobileNumber{

@@ -12,11 +12,7 @@ import UIKit
 @available(iOS 14.0, *)
 class SplashViewController: UIViewController {
     
-    
-    let loginAPI = Login()
-    var logindata : [LoginResponseData] = []
-   
-    var countryId : String?
+    var countryId : Int?
     var loginId : String!
     var version_Data : VersionData? = nil
     override func viewDidLoad() {
@@ -29,12 +25,12 @@ class SplashViewController: UIViewController {
         let isRTL = (Language == "ar")  // Replace with your language-checking logic
             UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
 
-//        if let countryDetails = UserDefaultFileManager.getCountryDetails() {
-//            countryId = countryDetails.country_id
-//        }
+        if let countryDetails =   UserDefaultFileManager.getCountryDetails() {
+            countryId = countryDetails.id
+        }
         
-        countryId = localData.country_data?.country_id
-        print("countryId",localData.country_data?.country_id)
+       
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
             
             if(countryId != nil){
@@ -52,8 +48,9 @@ class SplashViewController: UIViewController {
     func Version_Check() {
         APIService.shared
             .makeApi(url: ServiceUrl.version_check, parameters: [
-                COMMON_PARAMETER.device_type : API_CALL_HOTCODE.device_type,
-                COMMON_PARAMETER.version_code: API_CALL_HOTCODE.Version_Code
+                COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+                COMMON_PARAMETER.version_code: API_PARAMS_HOTCODE.Version_Code,
+                COMMON_PARAMETER.country_id: countryId  ?? 0 ,
             ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
                 result: Result<VersionCheckResponse,
                 Error>
@@ -65,13 +62,12 @@ class SplashViewController: UIViewController {
                             
                             version_Data = successMessage.data?.first
                             
-                            localData.country_data = version_Data?.countryDetails ?? nil
+                            localData.country_data = version_Data?.country_details ?? nil
+                            ServiceUrl.baseurl = version_Data?.country_details?.base_url ?? ""
+                            ServiceUrl.report_url = version_Data?.country_details?.reporting_url ?? ""
                             
-                            ServiceUrl.baseurl = version_Data?.countryDetails?.base_url ?? ""
-                            ServiceUrl.report_url = version_Data?.countryDetails?.reporting_url ?? ""
                             
-                            
-                            if(version_Data?.updateAvailable == true){
+                            if(version_Data?.update_available == true){
                                 showUpdatePopup()
                                 
                             }
@@ -104,6 +100,9 @@ class SplashViewController: UIViewController {
             if loginId == nil{
                 
                 let vc = LoginVc(nibName: nil, bundle: nil)
+                vc.pageType = screenType.isMobileNumber
+                vc.mobile_no_hint = version_Data?.country_details?.mobile_no_hint
+                vc.mobile_number_length = version_Data?.country_details?.mobile_number_length
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }else{
@@ -140,7 +139,7 @@ class SplashViewController: UIViewController {
         )
         
         if(
-            version_Data?.updateAvailable == true && version_Data?.forceUpdate == true
+            version_Data?.update_available == true && version_Data?.force_update == true
         ){
             
             forceUpdateAlert
@@ -149,12 +148,14 @@ class SplashViewController: UIViewController {
                         title: "Update",
                         style: .default,
                         handler: { [self] _ in
-                            self.callAppStore(AppStoreLink: version_Data?.redirect_url ?? "")
+                            self.callAppStore(
+                                AppStoreLink: version_Data?.play_store_link ?? ""
+                            )
                         })
                 )
         }
         else if(
-            version_Data?.updateAvailable == true && version_Data?.forceUpdate == false
+            version_Data?.update_available == true && version_Data?.force_update == false
         )
         {
             forceUpdateAlert.addAction(UIAlertAction(title: "Not Now", style: .default, handler: { _ in
@@ -169,7 +170,9 @@ class SplashViewController: UIViewController {
                         title: "Update",
                         style: .default,
                         handler: { [self] _ in
-                            self.callAppStore(AppStoreLink: version_Data?.redirect_url ?? "")
+                            self.callAppStore(
+                                AppStoreLink: version_Data?.play_store_link ?? ""
+                            )
                         })
                 )
         }

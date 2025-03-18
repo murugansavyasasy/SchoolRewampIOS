@@ -7,7 +7,7 @@
 
 import Foundation
 
-class API_CALL_HOTCODE {
+class API_PARAMS_HOTCODE {
     
     
     static var device_type = "Iphone"
