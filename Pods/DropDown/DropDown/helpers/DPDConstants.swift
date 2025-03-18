@@ -29,7 +29,7 @@ internal struct DPDConstant {
 		static let TextFont = UIFont.systemFont(ofSize: 15)
 		static let BackgroundColor = UIColor(white: 0.94, alpha: 1)
 		static let SelectionBackgroundColor = UIColor(white: 0.89, alpha: 1)
-		static let SeparatorColor = UIColor.clear
+        static let SeparatorColor = UIColor.lightGray
 		static let CornerRadius: CGFloat = 2
 		static let RowHeight: CGFloat = 44
 		static let HeightPadding: CGFloat = 20

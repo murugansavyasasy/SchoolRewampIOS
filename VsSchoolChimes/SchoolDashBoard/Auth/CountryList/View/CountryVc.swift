@@ -55,7 +55,6 @@ class CountryVc: UIViewController {
         fullview.backgroundColor = Colornames.countryClr
         view.backgroundColor = Colornames.countryClr
         ClickArrowImg.layer.cornerRadius = ClickArrowImg.frame.width/2
-        flagImg.layer.cornerRadius = flagImg.frame.width/2
         ClickArrowImg.clipsToBounds = true
         india.layer.cornerRadius = india.frame.width/2
         Usa.layer.cornerRadius = Usa.frame.width/2
@@ -134,7 +133,6 @@ class CountryVc: UIViewController {
         dropDownBtn.setImage( UIImage(systemName: "chevron.up"), for: .normal)
         
         dropDown.selectionAction = { [self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
             flagImg.kf.setImage(with: URL(string: images[index]))
             countyNameBtn.setTitle(item, for: .normal)
             dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
@@ -161,7 +159,6 @@ class CountryVc: UIViewController {
                         CountryListRespons = successMessage.data
                         dropDownList.removeAll()
                         images.removeAll()
-                        
                         for i in 0..<(CountryListRespons?.count ?? 0) {
                             if let countryName = CountryListRespons?[i].country_name,
                                let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
@@ -180,9 +177,6 @@ class CountryVc: UIViewController {
         }
         
     }
-    
-
-    
     
     @IBAction  func GotoTermsVc(){
         let vc = TermsAndCondVC(nibName: nil, bundle: nil)
