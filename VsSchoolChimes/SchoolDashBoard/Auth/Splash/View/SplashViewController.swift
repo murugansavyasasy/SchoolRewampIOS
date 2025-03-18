@@ -16,24 +16,35 @@ class SplashViewController: UIViewController {
     let loginAPI = Login()
     var logindata : [LoginResponseData] = []
    
-    var countryId : String!
+    var countryId : String?
     var loginId : String!
+    var version_Data : VersionData? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
  
-//        loginVerify()
-        let Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+
+        let Language = UserDefaults.standard.string(
+            forKey: DefaultsKeys.Language ?? ""
+        )
         let isRTL = (Language == "ar")  // Replace with your language-checking logic
             UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
 
-      
-        let defaults = UserDefaults.standard
+//        if let countryDetails = UserDefaultFileManager.getCountryDetails() {
+//            countryId = countryDetails.country_id
+//        }
         
-        countryId = defaults.string(forKey:DefaultsKeys.countryId)
-        loginId = defaults.string(forKey:DefaultsKeys.LoginId)
-        
+        countryId = localData.country_data?.country_id
+        print("countryId",countryId)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
-            Version_Check()
+            
+            if(countryId != nil){
+                Version_Check()
+             }
+            else{
+                let vc = CountryVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
         }
         
     }
@@ -51,59 +62,22 @@ class SplashViewController: UIViewController {
                 case .success(let successMessage):
                     if successMessage.status == true {
                         DispatchQueue.main.async { [self] in
-                            if successMessage.data?.first?.forceUpdate == true && successMessage.data?.first?.updateAvailable == true {
-                                
-                                let updateAlert = UIAlertController(
-                                    title: "Needs to Update",
-                                    message: "New updates are available. Would you like to update them now?",
-                                    preferredStyle: .alert
-                                )
-                                updateAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
-                                    self.callAppStore(AppStoreLink: successMessage.data?.first?.redirect_url ?? "")
-                                }))
-                                
-                                present(updateAlert, animated: true, completion: nil)
-                                
-                                
-                            }else if successMessage.data?.first?.forceUpdate == false && successMessage.data?.first?.updateAvailable == true{
-                                
-                                let forceUpdateAlert = UIAlertController(
-                                    title: "Needs to Update",
-                                    message: "New updates are available. Would you like to update them now?",
-                                    preferredStyle: .alert
-                                )
-                                forceUpdateAlert.addAction(UIAlertAction(title: "Not Now", style: .default, handler: { _ in
-                                    //                                    self.VerifyLogin()
-                                    self.AppFlowChecking()
-                                }))
-                                forceUpdateAlert.addAction(UIAlertAction(title: "Update", style: .default, handler: { _ in
-                                    self.callAppStore(AppStoreLink: successMessage.data?.first?.redirect_url ?? "")
-                                }))
-                                present(forceUpdateAlert, animated: true, completion: nil)
-                            }else{
-                                
-                                self.AppFlowChecking()
+                            
+                            version_Data = successMessage.data?.first
+                            
+                            localData.country_data = version_Data?.countryDetails ?? nil
+                            
+                            ServiceUrl.baseurl = version_Data?.countryDetails?.base_url ?? ""
+                            ServiceUrl.report_url = version_Data?.countryDetails?.reporting_url ?? ""
+                            
+                            
+                            if(version_Data?.updateAvailable == true){
+                                showUpdatePopup()
                                 
                             }
-                            
-                        }
-                    }else{
-                        DispatchQueue.main.async {
-                            
-                            let updateAlert = UIAlertController(
-                                title: "",
-                                message: successMessage.message,
-                                preferredStyle: .alert
-                            )
-                            updateAlert.addAction(UIAlertAction(title: "ok", style: .default, handler: { _ in
-                                self.dismiss(animated: true)
-                            }))
-                            
-                            self.present(
-                                updateAlert,
-                                animated: true,
-                                completion: nil
-                            )
+                            else{
+                                self.AppFlowChecking()
+                            }
                             
                         }
                     }
@@ -154,6 +128,55 @@ class SplashViewController: UIViewController {
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func showUpdatePopup ()
+    {
+        
+        let forceUpdateAlert = UIAlertController(
+            title: "Needs to Update",
+            message: "New updates are available. Would you like to update them now?",
+            preferredStyle: .alert
+        )
+        
+        if(
+            version_Data?.updateAvailable == true && version_Data?.forceUpdate == true
+        ){
+            
+            forceUpdateAlert
+                .addAction(
+                    UIAlertAction(
+                        title: "Update",
+                        style: .default,
+                        handler: { [self] _ in
+                            self.callAppStore(AppStoreLink: version_Data?.redirect_url ?? "")
+                        })
+                )
+        }
+        else if(
+            version_Data?.updateAvailable == true && version_Data?.forceUpdate == false
+        )
+        {
+            forceUpdateAlert.addAction(UIAlertAction(title: "Not Now", style: .default, handler: { _ in
+                //
+                self.AppFlowChecking()
+            }))
+            
+            
+            forceUpdateAlert
+                .addAction(
+                    UIAlertAction(
+                        title: "Update",
+                        style: .default,
+                        handler: { [self] _ in
+                            self.callAppStore(AppStoreLink: version_Data?.redirect_url ?? "")
+                        })
+                )
+        }
+        
+        present(forceUpdateAlert, animated: true, completion: nil)
+        
+        
     }
 }
     

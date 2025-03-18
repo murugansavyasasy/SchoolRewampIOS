@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class OTPVc: UIViewController,UITextFieldDelegate {
     
+    @IBOutlet weak var OtpContentLbl: UILabel!
     @IBOutlet weak var otpTextField1: UITextField!
     @IBOutlet weak var otpTextField2: UITextField!
     @IBOutlet weak var otpTextField3: UITextField!
@@ -37,6 +38,8 @@ class OTPVc: UIViewController,UITextFieldDelegate {
         validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
         validationBtnNm.backgroundColor = Colornames.ButtonColor
         
+        
+        OtpContentLbl.text = validateMobileData.first?.message
         setupOTPTextFields()
         
        
@@ -49,9 +52,7 @@ class OTPVc: UIViewController,UITextFieldDelegate {
         
         
     }
-    
-    
-    
+
     @IBAction func validationBtn(_ sender: Any) {
         
         
@@ -154,7 +155,6 @@ class OTPVc: UIViewController,UITextFieldDelegate {
     
     
     func priotyScreenVC(){
-        
         let vc = PriorityViewController1(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -167,7 +167,6 @@ class OTPVc: UIViewController,UITextFieldDelegate {
     ){
         
         let vc = PasswordVc(nibName: nil, bundle: nil)
-      
         vc.createPassText  = createPassword
         vc.confirmPassText = confirmPassword
         vc.forgetType = CreatePasswordValue

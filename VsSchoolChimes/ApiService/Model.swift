@@ -25,6 +25,7 @@ struct CountryData : Codable{
     let reporting_url : String?
     let flag_url : String?
     let terms_and_condition_url : String?
+    let mobile_no_hint : String?
 }
 
 //MARK: Version Check API
@@ -40,22 +41,13 @@ struct VersionData: Codable {
     let newVersion: String?
     let newVersionUpdates: String?
     let redirect_url: String?
-    let countryDetails: CountryDetails?
+    let countryDetails: CountryData?
     let toasterTitle: String?
 }
 
-struct CountryDetails: Codable {
-    let id: Int?
-    let countryName: String?
-    let mobileNumberLength: Int?
-    let countryCode: Int?
-    let reportingUrl: String?
-    let flagUrl: String?
-    let mobileNoHint: String?
-}
+
 
 //MARK: Check Mobile No for change password API
-
 
 
 struct MobileNumberValidationSuc: Codable {

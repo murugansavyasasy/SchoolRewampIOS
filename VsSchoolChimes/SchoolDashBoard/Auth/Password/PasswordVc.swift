@@ -31,8 +31,6 @@
     confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
 
     if forgetType == false{
-
-
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
     }
 

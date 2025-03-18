@@ -21,11 +21,9 @@ class CountryVc: UIViewController {
     @IBOutlet weak var IndonasiaLabel: UILabel!
     @IBOutlet weak var ThaiLabel: UILabel!
     @IBOutlet weak var IndiaLbl: UILabel!
-    
     @IBOutlet weak var checkBoxBtn: UIButton!
     @IBOutlet weak var dropDownBtn: UIButton!
     @IBOutlet weak var UsaLbl: UILabel!
-    
     @IBOutlet weak var flagImg: UIImageView!
     @IBOutlet weak var countyNameBtn: UIButton!
     @IBOutlet weak var UgandaLbl: UILabel!
@@ -35,9 +33,6 @@ class CountryVc: UIViewController {
     @IBOutlet weak var TermsLabel: UILabel!
     @IBOutlet weak var ClickArrowImg: UIImageView!
     @IBOutlet weak var fullview: UIView!
-    
-    
-    //    @IBOutlet weak var checkBoxView: CheckBox!
     @IBOutlet weak var Canada: UIView!
     @IBOutlet weak var Indonasia: UIView!
     @IBOutlet weak var Uganda: UIView!
@@ -49,14 +44,14 @@ class CountryVc: UIViewController {
     var images = [String]()
     var dropDownList = [String]()
     var CountryListRespons : [CountryData]?
-    
+    var country_data : CountryData? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
         get_CountryListApi()
         StyleAndTranslater()
         
         
-        //        checkBoxView.isChecked = false
+        
         fullview.backgroundColor = Colornames.countryClr
         view.backgroundColor = Colornames.countryClr
         ClickArrowImg.layer.cornerRadius = ClickArrowImg.frame.width/2
@@ -93,11 +88,9 @@ class CountryVc: UIViewController {
     
     func StyleAndTranslater(){
         
-        //        CountrynameLbl.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         TermsLabel.setFont(style: .title, size: FontSize.TitleSize)
-        
         IndiaLbl.setFont(style: .body, size: FontSize.BodySize)
         ThaiLabel.setFont(style: .body, size: FontSize.BodySize)
         UsaLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -127,7 +120,6 @@ class CountryVc: UIViewController {
     @IBAction func checkBox(_ sender: UIButton) {
         checkBoxBtn.isSelected.toggle()
         let image = checkBoxBtn.isSelected ? UIImage(named: "checked_Tick"):UIImage(named: "CheckCircle")
-
         checkBoxBtn.setImage(image, for: .normal)
     }
     
@@ -144,6 +136,10 @@ class CountryVc: UIViewController {
             flagImg.kf.setImage(with: URL(string: images[index]))
             countyNameBtn.setTitle(item, for: .normal)
             dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            country_data = CountryListRespons?[index]
+           
+            print("country_data",country_data)
+            
         }
         dropDown.cancelAction = { [weak self] in
             self?.dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
@@ -151,14 +147,15 @@ class CountryVc: UIViewController {
         
     }
     func get_CountryListApi() {
+        
         APIService.shared.makeApi(url: ServiceUrl.country_list, parameters: [:], type: ApitTypeSringFile.GET, token: "") { [self] (result: Result<CountryListSuccess, Error>) in
             switch result {
             case .success(let successMessage):
                 print("get_meeting_detailsApi", result)
-                print("successMessage", result)
                 
                 if successMessage.status == true {
                     DispatchQueue.main.async { [self] in
+                        CountryListRespons?.removeAll()
                         CountryListRespons = successMessage.data
                         dropDownList.removeAll()
                         images.removeAll()
@@ -166,11 +163,11 @@ class CountryVc: UIViewController {
                         for i in 0..<(CountryListRespons?.count ?? 0) {
                             if let countryName = CountryListRespons?[i].country_name,
                                let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
-                                    images.append(flagURL)
-                                    dropDownList.append(countryName)  // Ensuring the order is maintained
+                                images.append(flagURL)
+                                dropDownList.append(countryName)  // Ensuring the order is maintained
                             }
                         }
-
+                        
                     }
                 }
             case .failure(let error):
@@ -179,13 +176,13 @@ class CountryVc: UIViewController {
                 }
             }
         }
+        
     }
     
 
     
     
     @IBAction  func GotoTermsVc(){
-        
         let vc = TermsAndCondVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -194,14 +191,21 @@ class CountryVc: UIViewController {
     
     @IBAction  func GotToNextVc(){
         if checkBoxBtn.isSelected{
-            let userDefault = UserDefaults.standard
-            userDefault.set("1", forKey: DefaultsKeys.countryId)
+//            UserDefaultFileManager.saveCountryDetails(data: country_data!)
+            ServiceUrl.baseurl = country_data?.base_url ?? ""
+            ServiceUrl.report_url = country_data?.reporting_url ?? ""
+
+            localData.country_data = country_data
+            
             let vc = LoginVc(nibName: nil, bundle: nil)
+            vc.pageType = screenType.isMobileNumber
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
         
     }
     
+    
+   
     
 }
