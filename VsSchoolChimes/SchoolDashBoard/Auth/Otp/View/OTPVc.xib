@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OTPVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="OtpContentLbl" destination="OBE-wd-EDo" id="DHe-En-DmZ"/>
                 <outlet property="ResendLbl" destination="ZqE-or-ZXz" id="pzS-F7-IrY"/>
                 <outlet property="otpTextField1" destination="Mgc-Ss-E81" id="mZb-sP-24b"/>
                 <outlet property="otpTextField2" destination="76I-Ht-cxa" id="FA1-GR-Kto"/>

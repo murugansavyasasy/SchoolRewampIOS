@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class OTPVc: UIViewController,UITextFieldDelegate {
     
+    @IBOutlet weak var OtpContentLbl: UILabel!
     @IBOutlet weak var otpTextField1: UITextField!
     @IBOutlet weak var otpTextField2: UITextField!
     @IBOutlet weak var otpTextField3: UITextField!
@@ -27,6 +28,8 @@ class OTPVc: UIViewController,UITextFieldDelegate {
     var timeRemaining = 30
     var forgetType  = false
     var otpFields: [UITextField] = []
+    var mobile_number:String?
+    var validateMobileData : [MobileNumberValidationData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,27 +38,28 @@ class OTPVc: UIViewController,UITextFieldDelegate {
         validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
         validationBtnNm.backgroundColor = Colornames.ButtonColor
         
+        
+        OtpContentLbl.text = validateMobileData.first?.message
         setupOTPTextFields()
         
+       
+    
+        let defaults = UserDefaults.standard
+        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
         
         
     }
-    
-    
-    
+
     @IBAction func validationBtn(_ sender: Any) {
         
         
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
             
-            
-            let vc = PriorityViewController1(nibName: nil, bundle: nil)
-            
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
+          
         }else{
             
             view.makeToast(AlertstringFile.Enter_Otp)
@@ -149,4 +153,64 @@ class OTPVc: UIViewController,UITextFieldDelegate {
         
     }
     
+    
+    func priotyScreenVC(){
+        let vc = PriorityViewController1(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    func CreatePasswordScreenVC(
+        createPassword : String ,
+        confirmPassword : String,
+        CreatePasswordValue : Bool
+    ){
+        
+        let vc = PasswordVc(nibName: nil, bundle: nil)
+        vc.createPassText  = createPassword
+        vc.confirmPassText = confirmPassword
+        vc.forgetType = CreatePasswordValue
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    func Validate_OTP(mobileNumber : String , otp : String) {
+        APIService.shared
+            .makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
+                COMMON_PARAMETER.mobile_number :  mobileNumber,
+                OTP_PARAMETER.otp :  otp
+        
+            ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                result: Result<ValidateOTPSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true {
+                        DispatchQueue.main.async { [self] in
+                           
+                            
+                            validateMobileData.first?.is_password_updated == false
+                            ? CreatePasswordScreenVC(
+                                createPassword: "Create Password",
+                                confirmPassword: "Confirm Password",
+                                CreatePasswordValue: true
+                            )
+                                : priotyScreenVC()
+                           
+                        }
+                    }else{
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        
+    }
 }

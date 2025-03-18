@@ -372,12 +372,18 @@ extension String {
 struct DefaultsKeys {
     static let countryId = "countryId"
     static let LoginId = "LoginId"
-//    static let Language = "Language"
     static let Language = "Language"
-   
+    static let  mobileNumber = "mobileNumber"
+    
     
 }
 
+struct screenType{
+    
+    static let isMobileNumber  = 1
+    static let isLoginPage  = 2
+    static let isPassword  = 3
+}
 
 class AwsCredentials {
  

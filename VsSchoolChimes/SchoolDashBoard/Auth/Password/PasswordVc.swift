@@ -19,16 +19,18 @@
 
     let alertModal = CustomAlert()
     var forgetType  = false
-        
+    var createPassText : String?
+    var confirmPassText : String?
     override func viewDidLoad() {
         
     super.viewDidLoad()
-
+        createPassDefaultLbl.text = createPassText
+        ConfirmPassLabel.text = confirmPassText
     createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
     ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
     confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
 
-    if forgetType == true{
+    if forgetType == false{
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
     }
 
@@ -114,36 +116,68 @@
             
         }
         
-        func ResetPasswordAPIcall(){
-            
-            APIService.shared.makeApi(url: ServiceUrl.password_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<ResetPasswordSuc, Error>) in
-                
-                switch result {
-                    
-                case.success(let successMessage):
-                    
-                    if successMessage.status == true {
-                        
-                        DispatchQueue.main.async { [self] in
-                            
-                            
-                            
-                        }
-                        
-                    }else{
-                        
-                        DispatchQueue.main.async {
-                            
-                        }
-                    }
-                    
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-            
-        }
+//        func CretaeNewPasswordAPIcall(){
+//         
+//         APIService.shared.makeApi(url: ServiceUrl.password_create_new_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",CreateNewPasswordStringFile.old_password: "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<CreateNewPasswordSuc, Error>) in
+//         
+//         switch result {
+//         
+//         case.success(let successMessage):
+//         
+//         if successMessage.status == true {
+//         
+//         DispatchQueue.main.async { [self] in
+//         
+//         }
+//         
+//         }else{
+//         
+//         DispatchQueue.main.async {
+//         
+//         }
+//         }
+//         
+//         case .failure(let error):
+//         DispatchQueue.main.async {
+//         print(error.localizedDescription)
+//         }
+//         }
+//         }
+//         
+//         }
+//         
+//         func ResetPasswordAPIcall(){
+//         
+//         APIService.shared.makeApi(url: ServiceUrl.password_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<ResetPasswordSuc, Error>) in
+//         
+//         switch result {
+//         
+//         case.success(let successMessage):
+//         
+//         if successMessage.status == true {
+//         
+//         DispatchQueue.main.async { [self] in
+//         
+//         
+//         
+//         }
+//         
+//         }else{
+//         
+//         DispatchQueue.main.async {
+//         
+//         }
+//         }
+//         
+//         case .failure(let error):
+//         DispatchQueue.main.async {
+//         print(error.localizedDescription)
+//         }
+//         }
+//         }
+//         
+//         }
+//        
+//        
 
     }

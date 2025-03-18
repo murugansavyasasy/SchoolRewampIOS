@@ -238,6 +238,9 @@
 		846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */; };
 		84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C622CEDE02400E7D367 /* SDWebImage */; };
 		84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C642CEDE02400E7D367 /* SDWebImageMapKit */; };
+		8476882B2D88316C00EAB9DB /* userDefaultFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */; };
+		8476882D2D892D7D00EAB9DB /* keyChainFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882C2D892D7D00EAB9DB /* keyChainFile.swift */; };
+		8476882F2D892DBB00EAB9DB /* SecureidFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882E2D892DBB00EAB9DB /* SecureidFile.swift */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
@@ -358,11 +361,9 @@
 		84A5BF9A2C1AF19F00E32496 /* MethodName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BF992C1AF19F00E32496 /* MethodName.swift */; };
 		84A5BF9E2C1AF5EE00E32496 /* CountryListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BF9D2C1AF5EE00E32496 /* CountryListModel.swift */; };
 		84A5BFA22C1AF73200E32496 /* MobileNumberModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFA12C1AF73200E32496 /* MobileNumberModel.swift */; };
-		84A5BFA82C1AF8E000E32496 /* ValidateOtpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFA72C1AF8E000E32496 /* ValidateOtpModel.swift */; };
 		84A5BFCD2C1B059100E32496 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFCC2C1B059100E32496 /* SplashViewModel.swift */; };
 		84A5BFCF2C1B06D500E32496 /* CountryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFCE2C1B06D500E32496 /* CountryListViewModel.swift */; };
 		84A5BFD12C1B079A00E32496 /* MobileNumberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD02C1B079A00E32496 /* MobileNumberViewModel.swift */; };
-		84A5BFD32C1B084800E32496 /* OtpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A5BFD22C1B084800E32496 /* OtpViewModel.swift */; };
 		84A82F662D225A2000ACF7A1 /* RibbonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A82F652D225A2000ACF7A1 /* RibbonView.swift */; };
 		84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */; };
 		84B2E0622CEB412900561E4F /* SenderNoticeBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */; };
@@ -833,6 +834,9 @@
 		846D83E12D02D91000B69344 /* Tvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tvcell.xib; sourceTree = "<group>"; };
 		846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
 		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
+		8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultFileManager.swift; sourceTree = "<group>"; };
+		8476882C2D892D7D00EAB9DB /* keyChainFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = keyChainFile.swift; sourceTree = "<group>"; };
+		8476882E2D892DBB00EAB9DB /* SecureidFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureidFile.swift; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
@@ -957,11 +961,9 @@
 		84A5BF992C1AF19F00E32496 /* MethodName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodName.swift; sourceTree = "<group>"; };
 		84A5BF9D2C1AF5EE00E32496 /* CountryListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListModel.swift; sourceTree = "<group>"; };
 		84A5BFA12C1AF73200E32496 /* MobileNumberModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberModel.swift; sourceTree = "<group>"; };
-		84A5BFA72C1AF8E000E32496 /* ValidateOtpModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateOtpModel.swift; sourceTree = "<group>"; };
 		84A5BFCC2C1B059100E32496 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		84A5BFCE2C1B06D500E32496 /* CountryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListViewModel.swift; sourceTree = "<group>"; };
 		84A5BFD02C1B079A00E32496 /* MobileNumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberViewModel.swift; sourceTree = "<group>"; };
-		84A5BFD22C1B084800E32496 /* OtpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpViewModel.swift; sourceTree = "<group>"; };
 		84A82F652D225A2000ACF7A1 /* RibbonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RibbonView.swift; sourceTree = "<group>"; };
 		84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderNoticeBoardVC.swift; sourceTree = "<group>"; };
 		84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderNoticeBoardVC.xib; sourceTree = "<group>"; };
@@ -2344,8 +2346,6 @@
 			isa = PBXGroup;
 			children = (
 				84A5BFB82C1B020A00E32496 /* View */,
-				84A5BFB72C1B020000E32496 /* ViewModel */,
-				84A5BFA52C1AF8B900E32496 /* Model */,
 			);
 			path = Otp;
 			sourceTree = "<group>";
@@ -2377,6 +2377,9 @@
 				84CAE5BA2D5DEF7B0091C671 /* ColourManager.swift */,
 				8463D0EA2D6EF5CD00361F55 /* Extentions.swift */,
 				842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */,
+				8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */,
+				8476882C2D892D7D00EAB9DB /* keyChainFile.swift */,
+				8476882E2D892DBB00EAB9DB /* SecureidFile.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2466,14 +2469,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		84A5BFA52C1AF8B900E32496 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				84A5BFA72C1AF8E000E32496 /* ValidateOtpModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		84A5BFB12C1B012F00E32496 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -2525,14 +2520,6 @@
 				849E57212C1FF44B006119DA /* MobileNumberStoryboard.storyboard */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		84A5BFB72C1B020000E32496 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				84A5BFD22C1B084800E32496 /* OtpViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		84A5BFB82C1B020A00E32496 /* View */ = {
@@ -3625,6 +3612,7 @@
 				18D718592D0D471A00E9EDA3 /* DailyCollectionFeeModal.swift in Sources */,
 				18D7185A2D0D471A00E9EDA3 /* DailycollResp.swift in Sources */,
 				18D7185B2D0D471A00E9EDA3 /* DailyCollectionFeePaymentTypeTableViewCell.swift in Sources */,
+				8476882F2D892DBB00EAB9DB /* SecureidFile.swift in Sources */,
 				18D7185C2D0D471A00E9EDA3 /* StanderReq.swift in Sources */,
 				18D7185D2D0D471A00E9EDA3 /* DataCollectionTvHeaderView.swift in Sources */,
 				18D7185E2D0D471A00E9EDA3 /* PaymentListTableViewCell.swift in Sources */,
@@ -3683,6 +3671,7 @@
 				FAFF9DF72D6C7B7A00498368 /* StaffPtmViewController.swift in Sources */,
 				FAFF9DF82D6C7B7A00498368 /* CalenderCVcell.swift in Sources */,
 				8463D0EB2D6EF5CD00361F55 /* Extentions.swift in Sources */,
+				8476882D2D892D7D00EAB9DB /* keyChainFile.swift in Sources */,
 				FAFF9DF92D6C7B7A00498368 /* CreateSlotByStaffRequest.swift in Sources */,
 				FAFF9DFA2D6C7B7A00498368 /* TimeHeader.swift in Sources */,
 				849F4C772D24010300C9F4BF /* addCvCell.swift in Sources */,
@@ -3708,13 +3697,11 @@
 				1861BEED2CE61DE00095BF28 /* SenderSideVideoViewController.swift in Sources */,
 				8441887C2CC90E98006483C3 /* Colornames.swift in Sources */,
 				84EFF9F32CCCAFF800C11C26 /* HelpVc.swift in Sources */,
-				84A5BFA82C1AF8E000E32496 /* ValidateOtpModel.swift in Sources */,
 				84A5BF9A2C1AF19F00E32496 /* MethodName.swift in Sources */,
 				8442A9052CDC8A820006068E /* LogoutViewController.swift in Sources */,
 				84EFF9D92CCC862F00C11C26 /* TopCVCell.swift in Sources */,
 				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
 				84A5BFA22C1AF73200E32496 /* MobileNumberModel.swift in Sources */,
-				84A5BFD32C1B084800E32496 /* OtpViewModel.swift in Sources */,
 				84EFFA3F2CCCC98100C11C26 /* Shimmer.swift in Sources */,
 				84A5BFCD2C1B059100E32496 /* SplashViewModel.swift in Sources */,
 				84EFF9CF2CCC7A6000C11C26 /* PasswordVc.swift in Sources */,
@@ -3723,6 +3710,7 @@
 				840E44A92D1A85EC00D561E8 /* SenderLeaveTV.swift in Sources */,
 				84F9863A2D3A6E8E009FF065 /* PlayQuizVc.swift in Sources */,
 				84A2717C2CEDAB9F0033EB02 /* ImagePdfVC.swift in Sources */,
+				8476882B2D88316C00EAB9DB /* userDefaultFileManager.swift in Sources */,
 				849AD0072D1A837A002DEC07 /* ReciverHomeworkVC.swift in Sources */,
 				849AD0082D1A837A002DEC07 /* ReciverHomeworkHeader.swift in Sources */,
 				84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */,

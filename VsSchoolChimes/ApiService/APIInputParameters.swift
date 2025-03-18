@@ -16,6 +16,11 @@ class COMMON_PARAMETER{
     static var new_password = "new_password"
 }
 
+class OTP_PARAMETER{
+    
+    static var otp = "otp"
+}
+
 class ApitTypeSringFile{
     static var POST = "POST"
     static var GET = "GET"

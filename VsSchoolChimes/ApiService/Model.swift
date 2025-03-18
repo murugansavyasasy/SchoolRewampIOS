@@ -25,6 +25,7 @@ struct CountryData : Codable{
     let reporting_url : String?
     let flag_url : String?
     let terms_and_condition_url : String?
+    let mobile_no_hint : String?
 }
 
 //MARK: Version Check API
@@ -40,31 +41,26 @@ struct VersionData: Codable {
     let newVersion: String?
     let newVersionUpdates: String?
     let redirect_url: String?
-    let countryDetails: CountryDetails?
+    let countryDetails: CountryData?
     let toasterTitle: String?
 }
 
-struct CountryDetails: Codable {
-    let id: Int?
-    let countryName: String?
-    let mobileNumberLength: Int?
-    let countryCode: Int?
-    let reportingUrl: String?
-    let flagUrl: String?
-    let mobileNoHint: String?
-}
+
 
 //MARK: Check Mobile No for change password API
+
+
 struct MobileNumberValidationSuc: Codable {
     let status: Bool?
     let message: String?
     let data: [MobileNumberValidationData]?
 }
+
 struct MobileNumberValidationData: Codable {
     let is_number_exists: Bool?
     let is_password_updated: Bool?
     let otp_sent: Bool?
-    let otp: Int?
+    let otp: String?
     let message: String?
     let more_info: String?
     let dial_numbers: String?
@@ -83,5 +79,13 @@ struct ResetPasswordSuc : Codable {
     let status : Bool?
     let message : String?
     let data : [String]?
+}
+
+// MARK: Validate OTP
+
+struct ValidateOTPSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [String]?
 }
 
