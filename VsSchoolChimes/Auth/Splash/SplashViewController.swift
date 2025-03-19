@@ -15,10 +15,10 @@ class SplashViewController: UIViewController {
     var countryId : Int?
     var loginId : String!
     var version_Data : VersionData? = nil
+    var AlertModal = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
  
-
         let Language = UserDefaults.standard.string(
             forKey: DefaultsKeys.Language ?? ""
         )
@@ -28,14 +28,10 @@ class SplashViewController: UIViewController {
         if let countryDetails =   UserDefaultFileManager.getCountryDetails() {
             countryId = countryDetails.id
         }
-        
-       
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
-            
             if(countryId != nil){
                 Version_Check()
-             }
+            }
             else{
                 let vc = CountryVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
@@ -61,16 +57,18 @@ class SplashViewController: UIViewController {
                         DispatchQueue.main.async { [self] in
                             
                             version_Data = successMessage.data?.first
-                            
-                            localData.country_data = version_Data?.country_details ?? nil
-                            ServiceUrl.baseurl = version_Data?.country_details?.base_url ?? ""
-                            ServiceUrl.report_url = version_Data?.country_details?.reporting_url ?? ""
+                            UserDefaultFileManager
+                                .saveCountryDetails(
+                                    data: (version_Data?.country_details)!
+                                )
+
+//                            ServiceUrl.baseurl = version_Data?.country_details?.base_url ?? ""
+//                            ServiceUrl.report_url = version_Data?.country_details?.reporting_url ?? ""
                             
                             
                             if(version_Data?.update_available == true){
                                 showUpdatePopup()
-                                
-                            }
+                                }
                             else{
                                 self.AppFlowChecking()
                             }
@@ -86,34 +84,137 @@ class SplashViewController: UIViewController {
             }
         
     }
- 
-    func AppFlowChecking(){
+    
+    
+    func validate_user() {
         
-        if countryId == nil{
-            
-            let vc = CountryVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-            
-        }else{
-            
-            if loginId == nil{
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        let password = UserDefaultFileManager.getLoginCredentials()?.pwd
+        
+        let secureID = SecureIDManager.getSecureID()
+        var parameters: [String: Any] = [
+            mobileNumber.mobile_number: mobile_num,
+            mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
+            mobileNumber.secure_id: secureID,
+            mobileNumber.password:password
+        ]
+        APIService.shared
+            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
+                , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                result: Result<UserValidationResponseSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let response):
+                    if response.status == true {
+                        DispatchQueue.main.async { [self] in
+                            
+                            let data : UserData = (
+                                response.data?.first
+                            )!
+                            
+                            if(data.is_number_exists == true){
+                                
+                                if(data.otp_sent == true){
+                                   
+                                    otp_Vc(valdiateResponse: response.data ?? [])
+                                }
+                                else {
+                                    UserDefaultFileManager
+                                        .saveLoginCredentials(
+                                            mobile_number:mobile_num ?? "",
+                                            pwd:password ?? ""
+                                        )
+                                    
+                                    localData.user_details = data.user_details
+                            
+                                    if(data.user_details?.is_staff == true) &&  (
+                                     data.user_details?.is_parent == true
+                                    ){
+                                        let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                        
+                                    }
+                                    else if(data.user_details?.is_staff == true){
+                                        let vc = HomePageVc(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                        
+                                    }
+                                    else if(data.user_details?.is_parent == true){
+                                      
+                                     let vc = ParentHomePageVc(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
+  
+                                }
+
+                            }
+                            else {
+                                AlertModal
+                                    .showAlert(
+                                        title: "",
+                                        message: response.message ?? "",
+                                        on: self
+                                    )
+                            }
+                            
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            AlertModal
+                                .showAlert(
+                                    title: "",
+                                    message: response.message ?? "",
+                                    on: self
+                                )
+                            
+                        }
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        
+    }
+    
+    
+    func otp_Vc(valdiateResponse : [UserData]){
+        let vc = OTPVc(nibName: nil, bundle: nil)
+        vc.validateMobileData = valdiateResponse
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
+    }
+    
+    
+    func AppFlowChecking(){
+    
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        let password = UserDefaultFileManager.getLoginCredentials()?.pwd
+        
+        if (mobile_num != nil) && (password != nil){
+            validate_user()
+                
+               }
+          else{
                 
                 let vc = LoginVc(nibName: nil, bundle: nil)
-                vc.pageType = screenType.isMobileNumber
-                vc.mobile_no_hint = version_Data?.country_details?.mobile_no_hint
-                vc.mobile_number_length = version_Data?.country_details?.mobile_number_length
+                vc.pageType = screenType.isLoginPage
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
-            }else{
-                
-                let vc = PriorityViewController1(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+
             }
-            
-            
-        }
+
     }
     
     func callAppStore (AppStoreLink : String)
@@ -159,8 +260,7 @@ class SplashViewController: UIViewController {
         )
         {
             forceUpdateAlert.addAction(UIAlertAction(title: "Not Now", style: .default, handler: { _ in
-                //
-                self.AppFlowChecking()
+            self.AppFlowChecking()
             }))
             
             

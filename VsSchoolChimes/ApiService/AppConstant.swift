@@ -13,19 +13,23 @@ struct ServiceUrl{
     static var token = ""
     static var awsBucketName = ""
     
-    static let version_check            = "/setup/version-check"
+    static let version_check            = "setup/version-check"
     static let country_list             = "setup/countries"
    
-    static let password_create_new_password = "/password/create-new-password"
-    static let password_reset_password = "/password/reset-password"
-    static let validate_validate_otp = "validate/validate-otp"
-    static let validate_validate_user = "validate/validate-user"
+    static let password_create_new_password = "cred/change-password"
+    static let password_reset_password = "cred/reset-password"
+    static let validate_validate_otp = "auth/validate-otp"
+    static let validate_validate_user = "auth/validate-user"
     
 }
 
 struct localData{
     
     static var country_data : CountryData? = nil
+    static var staff_data: [StaffDetail]?
+    static var child_data: [ChildDetail]?
+    static var user_details : UserDetails? = nil
+
 }
 func isValidEmail(_ email: String) -> Bool {
     let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"

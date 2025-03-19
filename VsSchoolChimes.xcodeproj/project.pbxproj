@@ -185,8 +185,6 @@
 		8441887C2CC90E98006483C3 /* Colornames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441887B2CC90E98006483C3 /* Colornames.swift */; };
 		844188832CC91179006483C3 /* LoginVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844188822CC91179006483C3 /* LoginVc.xib */; };
 		844188842CC91179006483C3 /* LoginVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188812CC91179006483C3 /* LoginVc.swift */; };
-		844188872CC915FF006483C3 /* OTPVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844188862CC915FF006483C3 /* OTPVc.xib */; };
-		844188882CC915FF006483C3 /* OTPVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188852CC915FF006483C3 /* OTPVc.swift */; };
 		8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8442A85D2CDB726A0006068E /* GoogleService-Info.plist */; };
 		8442A8682CDB787A0006068E /* principalTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8612CDB787A0006068E /* principalTVCell.swift */; };
 		8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8632CDB787A0006068E /* PriorityViewController1.swift */; };
@@ -246,6 +244,12 @@
 		848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */; };
 		848BEEE32CFF093100581A55 /* PreviewImageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848BEEE22CFF093100581A55 /* PreviewImageVC.xib */; };
 		848BEEE42CFF093100581A55 /* PreviewImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BEEE12CFF093100581A55 /* PreviewImageVC.swift */; };
+		848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848CC1682D899E4000CD0255 /* OTPVc.swift */; };
+		848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848CC1692D899E4000CD0255 /* OTPVc.xib */; };
+		848CC1792D8A997200CD0255 /* MobileNumberVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848CC1772D8A997200CD0255 /* MobileNumberVc.swift */; };
+		848CC17A2D8A997200CD0255 /* MobileNumberVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848CC1782D8A997200CD0255 /* MobileNumberVc.xib */; };
+		848CC17E2D8A999A00CD0255 /* CreatePasswordVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848CC17C2D8A999A00CD0255 /* CreatePasswordVc.swift */; };
+		848CC17F2D8A999A00CD0255 /* CreatePasswordVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848CC17D2D8A999A00CD0255 /* CreatePasswordVc.xib */; };
 		848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848F7A6D2CF8CB85004EF617 /* AnimatView.xib */; };
 		848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
@@ -763,8 +767,6 @@
 		8441887B2CC90E98006483C3 /* Colornames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colornames.swift; sourceTree = "<group>"; };
 		844188812CC91179006483C3 /* LoginVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVc.swift; sourceTree = "<group>"; };
 		844188822CC91179006483C3 /* LoginVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVc.xib; sourceTree = "<group>"; };
-		844188852CC915FF006483C3 /* OTPVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPVc.swift; sourceTree = "<group>"; };
-		844188862CC915FF006483C3 /* OTPVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OTPVc.xib; sourceTree = "<group>"; };
 		8442A85D2CDB726A0006068E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8442A85F2CDB787A0006068E /* DemoTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTVCell.swift; sourceTree = "<group>"; };
 		8442A8602CDB787A0006068E /* DemoTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemoTVCell.xib; sourceTree = "<group>"; };
@@ -832,6 +834,12 @@
 		848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderImgPdfVC.xib; sourceTree = "<group>"; };
 		848BEEE12CFF093100581A55 /* PreviewImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageVC.swift; sourceTree = "<group>"; };
 		848BEEE22CFF093100581A55 /* PreviewImageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreviewImageVC.xib; sourceTree = "<group>"; };
+		848CC1682D899E4000CD0255 /* OTPVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPVc.swift; sourceTree = "<group>"; };
+		848CC1692D899E4000CD0255 /* OTPVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OTPVc.xib; sourceTree = "<group>"; };
+		848CC1772D8A997200CD0255 /* MobileNumberVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNumberVc.swift; sourceTree = "<group>"; };
+		848CC1782D8A997200CD0255 /* MobileNumberVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MobileNumberVc.xib; sourceTree = "<group>"; };
+		848CC17C2D8A999A00CD0255 /* CreatePasswordVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePasswordVc.swift; sourceTree = "<group>"; };
+		848CC17D2D8A999A00CD0255 /* CreatePasswordVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatePasswordVc.xib; sourceTree = "<group>"; };
 		848F7A6D2CF8CB85004EF617 /* AnimatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnimatView.xib; sourceTree = "<group>"; };
 		848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatView.swift; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
@@ -1912,6 +1920,33 @@
 			path = ImagePdf;
 			sourceTree = "<group>";
 		};
+		848CC16A2D899E4000CD0255 /* Otp */ = {
+			isa = PBXGroup;
+			children = (
+				848CC1682D899E4000CD0255 /* OTPVc.swift */,
+				848CC1692D899E4000CD0255 /* OTPVc.xib */,
+			);
+			path = Otp;
+			sourceTree = "<group>";
+		};
+		848CC1742D8A98AB00CD0255 /* MobileNumber */ = {
+			isa = PBXGroup;
+			children = (
+				848CC1772D8A997200CD0255 /* MobileNumberVc.swift */,
+				848CC1782D8A997200CD0255 /* MobileNumberVc.xib */,
+			);
+			path = MobileNumber;
+			sourceTree = "<group>";
+		};
+		848CC1802D8A9E2A00CD0255 /* Password */ = {
+			isa = PBXGroup;
+			children = (
+				84EFF9CD2CCC7A6000C11C26 /* PasswordVc.xib */,
+				84EFF9CC2CCC7A6000C11C26 /* PasswordVc.swift */,
+			);
+			path = Password;
+			sourceTree = "<group>";
+		};
 		848F7A6C2CF8CA5A004EF617 /* AnimationView */ = {
 			isa = PBXGroup;
 			children = (
@@ -2254,14 +2289,16 @@
 		84A5BE712C19728F00E32496 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				848CC1802D8A9E2A00CD0255 /* Password */,
+				848CC1742D8A98AB00CD0255 /* MobileNumber */,
 				848F7A6C2CF8CA5A004EF617 /* AnimationView */,
 				84C00E6A2CF6D79000E34A83 /* TermsAndCondition */,
-				84EFF9CB2CCBBC8B00C11C26 /* Password */,
+				84EFF9CB2CCBBC8B00C11C26 /* CreatePassword */,
 				8442A8672CDB787A0006068E /* Priority */,
 				849E57162C1FF2E9006119DA /* Login */,
+				848CC16A2D899E4000CD0255 /* Otp */,
 				84A5BE782C19732C00E32496 /* Splash */,
 				84A5BE792C19733D00E32496 /* CountryList */,
-				84A5BE7B2C19736200E32496 /* Otp */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -2308,15 +2345,6 @@
 				84EFF9952CCB5B0400C11C26 /* CountryVc.xib */,
 			);
 			path = CountryList;
-			sourceTree = "<group>";
-		};
-		84A5BE7B2C19736200E32496 /* Otp */ = {
-			isa = PBXGroup;
-			children = (
-				844188852CC915FF006483C3 /* OTPVc.swift */,
-				844188862CC915FF006483C3 /* OTPVc.xib */,
-			);
-			path = Otp;
 			sourceTree = "<group>";
 		};
 		84A5BE7E2C1973F400E32496 /* Utils */ = {
@@ -2597,13 +2625,13 @@
 			path = ProfilepageVc;
 			sourceTree = "<group>";
 		};
-		84EFF9CB2CCBBC8B00C11C26 /* Password */ = {
+		84EFF9CB2CCBBC8B00C11C26 /* CreatePassword */ = {
 			isa = PBXGroup;
 			children = (
-				84EFF9CC2CCC7A6000C11C26 /* PasswordVc.swift */,
-				84EFF9CD2CCC7A6000C11C26 /* PasswordVc.xib */,
+				848CC17C2D8A999A00CD0255 /* CreatePasswordVc.swift */,
+				848CC17D2D8A999A00CD0255 /* CreatePasswordVc.xib */,
 			);
-			path = Password;
+			path = CreatePassword;
 			sourceTree = "<group>";
 		};
 		84EFF9D02CCC7C8800C11C26 /* HomePage */ = {
@@ -3163,6 +3191,7 @@
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */,
 				849F313F2D00631600BACEC7 /* EventHistoryVC.xib in Resources */,
+				848CC17F2D8A999A00CD0255 /* CreatePasswordVc.xib in Resources */,
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
 				8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
@@ -3203,7 +3232,6 @@
 				84B57EC42D148C0A00E0EA29 /* ParentCommunicationVc.xib in Resources */,
 				849AD0552D1A858D002DEC07 /* SenderAssignmentTextViewController.xib in Resources */,
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
-				844188872CC915FF006483C3 /* OTPVc.xib in Resources */,
 				840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */,
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
 				845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */,
@@ -3232,6 +3260,7 @@
 				FAFF9E002D6C7B7A00498368 /* CheckAviableTv.xib in Resources */,
 				FAFF9E012D6C7B7A00498368 /* SltoCreationViewController.xib in Resources */,
 				FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */,
+				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
 				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
 				FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */,
 				FAFF9E052D6C7B7A00498368 /* cancelTableViewCell.xib in Resources */,
@@ -3321,6 +3350,7 @@
 				18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */,
 				FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */,
 				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
+				848CC17A2D8A997200CD0255 /* MobileNumberVc.xib in Resources */,
 				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
 				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
 				18D718E42D0D479B00E9EDA3 /* ClassTableViewCell.xib in Resources */,
@@ -3571,6 +3601,7 @@
 				18926C5B2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.swift in Sources */,
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
 				FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */,
+				848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
 				84EFF9DD2CCC864800C11C26 /* BottomCVCell.swift in Sources */,
 				84395FEE2D1002A900FC3242 /* ChatTVCell.swift in Sources */,
@@ -3584,7 +3615,6 @@
 				849D72362D14272C0060E222 /* NetworkMoniter.swift in Sources */,
 				84EFFA3F2CCCC98100C11C26 /* Shimmer.swift in Sources */,
 				84EFF9CF2CCC7A6000C11C26 /* PasswordVc.swift in Sources */,
-				844188882CC915FF006483C3 /* OTPVc.swift in Sources */,
 				84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */,
 				840E44A92D1A85EC00D561E8 /* SenderLeaveTV.swift in Sources */,
 				84F9863A2D3A6E8E009FF065 /* PlayQuizVc.swift in Sources */,
@@ -3615,6 +3645,7 @@
 				18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */,
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
 				18D718A72D0D477900E9EDA3 /* deleteVc.swift in Sources */,
+				848CC17E2D8A999A00CD0255 /* CreatePasswordVc.swift in Sources */,
 				18D718A82D0D477900E9EDA3 /* DeleteReq.swift in Sources */,
 				84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */,
 				18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */,
@@ -3655,6 +3686,7 @@
 				8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */,
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
 				187CF5DD2D142D06001422CE /* CertificateRequestViewController.swift in Sources */,
+				848CC1792D8A997200CD0255 /* MobileNumberVc.swift in Sources */,
 				840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */,
 				84BB5EB82D11467700AD0C87 /* SchedulePopupVC.swift in Sources */,
 				848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */,

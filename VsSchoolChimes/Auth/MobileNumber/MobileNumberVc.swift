@@ -1,80 +1,48 @@
-    //
-    //  PasswordVc.swift
-    //  VsSchoolChimes
-    //
-    //  Created by admin on 26/10/24.
-    //
+//
+//  MobileNumberVc.swift
+//  VsSchoolChimes
+//
+//  Created by admin on 19/03/25.
+//
 
-    import UIKit
+import UIKit
 
-    @available(iOS 14.0, *)
-class PasswordVc: UIViewController,UITextFieldDelegate {
+@available(iOS 14.0, *)
+class MobileNumberVc: UIViewController {
+
     
-    
-    @IBOutlet weak var passwordTxtFld: UITextField!
-    @IBOutlet weak var validateBtnName: UIButton!
-    @IBOutlet weak var eyeImage: UIImageView!
+    @IBOutlet weak var MobilenumLabel: UILabel!
+    @IBOutlet weak var MobilTextFld:
+    UITextField!
     var AlertModal = CustomAlert()
-    var mobile_number:String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
-        eyeImage.addGestureRecognizer(eyeImageTap)
-        
-    }
-    
-    @IBAction func togglePasswordVisibility() {
-        passwordTxtFld.isSecureTextEntry.toggle()
-        let imageName = passwordTxtFld.isSecureTextEntry ? "eye.fill" : "eye.slash.fill"
-        eyeImage.image = UIImage(systemName: imageName)
-    }
-    
-    
-    
-    
-    func setupUI() {
-        validateBtnName.backgroundColor = Colornames.ButtonColor
-        validateBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
-    
-        passwordTxtFld.delegate = self
-        passwordTxtFld.keyboardType = .default
-        passwordTxtFld.isSecureTextEntry = true
-    }
-    
-    @IBAction func ValidatePassBtn(_ sender: Any) {
-        
-        
-        if passwordTxtFld.text == nil{
-            
-            
-        }else{
-            
-            
-        }
-        
+
+       
     }
     
     
     func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
-        vc.mobile_number = mobile_number ?? ""
+        vc.mobile_number = MobilTextFld.text ?? ""
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
-    func validate_user(page_value : Int) {
+    func validate_user() {
         
         let secureID = SecureIDManager.getSecureID()
-     
+        var parameters: [String: Any] = [
+            mobileNumber.mobile_number: MobilTextFld.text ?? "",
+            mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
+            mobileNumber.secure_id: secureID
+        ]
+       
+        
+       
         APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_user, parameters:[
-                        mobileNumber.mobile_number: mobile_number ?? "",
-                                                                         mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
-                                                                         mobileNumber.secure_id: secureID,
-                                                                         mobileNumber.password : passwordTxtFld.text ?? ""]
+            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
                 , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
                 result: Result<UserValidationResponseSuc,
                 Error>
@@ -84,7 +52,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
-                          
+//                          
 //                            UserDefaultFileManager.saveLoginCredentials(mobile_number : MobilTextFld.text ?? "",pwd:passTextFld.text ?? "")
                             
                             let data : UserData = (
@@ -98,8 +66,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
-                                   
-                            
+                                    
+                                    
                                 }
 
                             }
@@ -132,8 +100,5 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
             }
         
     }
-    
-    
-    
-    
+
 }

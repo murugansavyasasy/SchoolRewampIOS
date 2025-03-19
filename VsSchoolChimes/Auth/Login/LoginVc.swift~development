@@ -26,21 +26,31 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     var pageType : Int?
     var mobile_number_length : Int?
     var mobile_no_hint : String?
-    var country_data : CountryData? = nil
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
         addDoneButtonOnKeyboard() // ✅ Added Done button for both text fields
         
-        country_data =   UserDefaultFileManager.getCountryDetails()
-        mobile_no_hint = country_data?.mobile_no_hint
-        mobile_number_length = country_data?.mobile_number_length
-       
-        
-        hiddenShowView()
+        if pageType == screenType.isMobileNumber {
+            passwordStack.isHidden = true
+            forgetLbl.isHidden = true
+        }else if pageType == screenType.isPassword {
+            mobileNumberStack.isHidden = true
+            forgetLbl.isHidden = false
+        }else{
+            mobileNumberStack.isHidden = false
+            passwordStack.isHidden = false
+            forgetLbl.isHidden = false
+        }
       
+        mobile_number_length =  Int(
+            UserDefaultFileManager.getCountryDetails()?.mobile_number_length ?? ""
+        )
+       
+        mobile_no_hint = UserDefaultFileManager
+            .getCountryDetails()?.mobile_no_hint ?? ""
+        
         MobilTextFld.placeholder = mobile_no_hint
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
@@ -57,22 +67,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    func hiddenShowView()
-    {
-        if pageType == screenType.isMobileNumber {
-            passwordStack.isHidden = true
-            forgetLbl.isHidden = true
-        }else if pageType == screenType.isPassword {
-            mobileNumberStack.isHidden = true
-            forgetLbl.isHidden = false
-        }else{
-            mobileNumberStack.isHidden = false
-            passwordStack.isHidden = false
-            forgetLbl.isHidden = false
-        }
-
     }
     
     func setupUI() {
@@ -139,7 +133,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
             let newLength = (textField.text?.count ?? 0) + string.count - range.length
-            return newLength <= mobile_number_length ?? 0 // ✅ Ensures mobile number is max 10 digits
+            return newLength <= 10 // ✅ Ensures mobile number is max 10 digits
         }
         return true
     }
@@ -164,7 +158,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
 //                return
 //            }
 //
-        
+        otp_Vc(valdiateResponse: [])
         
        
         
@@ -193,7 +187,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         
-        validate_user(page_value : pageType ?? 0)
+        Validate_MobileNumber()
     }
 
     func validatePassword() {
@@ -201,8 +195,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
         }
         
-        validate_user(page_value : pageType ?? 0)
-
+        Validate_MobileNumber()
     }
 
     func validateMobileAndPassword() {
@@ -218,34 +211,27 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
         }
         
-        validate_user(page_value : pageType ?? 0)
+        Validate_MobileNumber()
     }
 
-    func otp_Vc(valdiateResponse : [UserData]){
+    func otp_Vc(valdiateResponse : [MobileNumberValidationData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
-        vc.mobile_number = MobilTextFld.text ?? ""
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
-    func validate_user(page_value : Int) {
-        
+    func Validate_MobileNumber() {
         let secureID = SecureIDManager.getSecureID()
-        var parameters: [String: Any] = [
-            mobileNumber.mobile_number: MobilTextFld.text ?? "",
-            mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
-            mobileNumber.secure_id: secureID
-        ]
-        if page_value == screenType.isLoginPage {
-            parameters[mobileNumber.password] = passTextFld.text ?? ""
-        }
-        
-       
         APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
-                result: Result<UserValidationResponseSuc,
+            .makeApi(url: ServiceUrl.validate_validate_user, parameters: [
+                mobileNumber.mobile_number : MobilTextFld.text ?? "",
+                mobileNumber.device_type : "Iphone",
+                mobileNumber.password : passTextFld.text ?? "",
+                mobileNumber.secure_id : secureID
+                
+            ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                result: Result<MobileNumberValidationSuc,
                 Error>
             ) in
                 switch result {
@@ -253,37 +239,30 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
-                          
-                            UserDefaultFileManager.saveLoginCredentials(mobile_number : MobilTextFld.text ?? "",pwd:passTextFld.text ?? "")
                             
-                            let data : UserData = (
+                            
+                            //                            let userDefault = UserDefaults.standard
+                            //                            userDefault
+                            //                                .set(
+                            //                                    MobilTextFld.text ?? "",
+                            //                                    forKey: DefaultsKeys.mobileNumber
+                            //                                )
+                            
+                            let data : MobileNumberValidationData = (
                                 response.data?.first
                             )!
                             
                             if(data.is_number_exists == true){
                                 
-                                if(data.otp_sent == true){
-                                   
-                                    otp_Vc(valdiateResponse: response.data ?? [])
-                                }
-                                else {
-                                    if(page_value == screenType.isMobileNumber){
-                                        
-                                        pageType = screenType.isPassword
-                                        hiddenShowView()
-                                       
-                                    }
-                                    else if(
-                                        page_value == screenType.isLoginPage
-                                    ){
-                                        
-                                    }
-                                    else if(page_value == screenType.isPassword){
-                                        
-                                    }
+                                if(data.is_password_updated == true){
+                                    //  go to the password screen
                                     
                                 }
-
+                                else{
+                                    otp_Vc(valdiateResponse: response.data ?? [])
+                                    
+                                    //go to the otp screen and then enter OTP then go to the create new password screen
+                                }
                             }
                             else {
                                 AlertModal
