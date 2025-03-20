@@ -115,7 +115,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
         
         searchBar.placeholder = CommonStringFile.Search.translated()
         searchBar.delegate = self
-        addDoneButton()
+        searchBar.addDoneButton()
         backBtn.applyBackButton()
         
         let userDefaults = UserDefaults.standard
@@ -144,24 +144,7 @@ class LsrwListShowViewController: UIViewController ,UITableViewDelegate,UITableV
     override func viewWillAppear(_ animated: Bool) {
         print("dismiss")
         
-//        viewAllSkillByStudent()
-        
     }
-    
-    
-
-
-    // Delegate method to handle selected items
-
-   
-   
-                   
-          
- 
-
-
-    
-    
     @IBAction func takeReadingSkill() {
         let vc = LSRWTakingSkillViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
@@ -400,30 +383,6 @@ class LsrwListShowGesture : UITapGestureRecognizer {
     var getSkillId : String!
 }
 
-extension LsrwListShowViewController{
-    
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-            
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        searchBar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
-        searchBar.resignFirstResponder()
-    }
-
-}
 
 struct LSRW {
    var title : String

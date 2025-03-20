@@ -76,7 +76,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         //startAutoScroll()
         cellRegistration()
-        addDoneButton()
+        Searchbar.addDoneButton()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
         Searchbar.delegate = self
@@ -553,24 +553,6 @@ extension HomePageVc: UISearchBarDelegate{
             collectionBtn.isHidden = false
             searchHeightCon.constant = 0
         }
-    }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        Searchbar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
-        Searchbar.resignFirstResponder()
     }
     
 }

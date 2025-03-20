@@ -187,15 +187,16 @@ class CountryVc: UIViewController {
     
     @IBAction  func GotToNextVc(){
         if checkBoxBtn.isSelected{
-            UserDefaultFileManager.saveCountryDetails(data: country_data!)
-//            ServiceUrl.baseurl = country_data?.base_url ?? ""
-//            ServiceUrl.report_url = country_data?.reporting_url ?? ""
-            let vc = LoginVc(nibName: nil, bundle: nil)
-            vc.pageType = screenType.isMobileNumber
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            if let data = country_data{
+                UserDefaultFileManager.saveCountryDetails(data: data)
+                //            ServiceUrl.baseurl = country_data?.base_url ?? ""
+                //            ServiceUrl.report_url = country_data?.reporting_url ?? ""
+                let vc = LoginVc(nibName: nil, bundle: nil)
+                vc.pageType = screenType.isMobileNumber
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
         }
-        
     }
     
     

@@ -74,7 +74,7 @@ class ParentHomePageVc: UIViewController {
         
         cellRegistration()
         //startPlaceholderRotation()
-        addDoneButton()
+        Searchbar.addDoneButton()
         
         let midIndex = MenuRedirect.receiverItems.count / 2
         firstArray = Array(MenuRedirect.receiverItems.prefix(midIndex))  // First half
@@ -488,21 +488,7 @@ extension ParentHomePageVc: UISearchBarDelegate{
             
         }
     }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        Searchbar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
-        Searchbar.resignFirstResponder()
-    }
+
     
 }
 extension UICollectionViewCell{

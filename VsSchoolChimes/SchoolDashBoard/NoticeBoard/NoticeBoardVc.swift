@@ -28,7 +28,7 @@ class NoticeBoardVc: UIViewController, SelectNotice {
         )
         searchbar.placeholder = CommonStringFile.Search.translated()
         searchbar.delegate = self
-        addDoneButton()
+        searchbar.addDoneButton()
         HeadingLabel.text = MenuTapbar.Notifications
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         tableview.delegate = self
@@ -41,13 +41,10 @@ class NoticeBoardVc: UIViewController, SelectNotice {
         plusImgview.isHidden = true
         
     }
-    
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableview.reloadData()
     }
-    
     @IBAction func Plusclick(_ sender : Any){
     }
     
@@ -138,38 +135,13 @@ extension NoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     
     func didTapButton(title: String, content: String, items: [String]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
-        
     }
-    //scrol
 }
-
-
 
 @available(iOS 14.0, *)
 extension NoticeBoardVc: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        searchbar.resignFirstResponder()
-    }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        searchbar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
         searchbar.resignFirstResponder()
     }
     

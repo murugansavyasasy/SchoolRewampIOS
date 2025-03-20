@@ -37,7 +37,7 @@ class ImagePdfVC: UIViewController {
         search.placeholder = CommonStringFile.Search.translated()
         search.applyRightTxt()
         search.delegate = self
-        addDoneButton()
+        search.addDoneButton()
         backBtn.applyBackButton()
         backBtn.setTitle(ReceiverMenuItems.ImagePdf.translated(), for: .normal)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -153,25 +153,6 @@ extension ImagePdfVC: UISearchBarDelegate{
         
         search.resignFirstResponder()
     }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        search.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
-        search.resignFirstResponder()
-    }
-    
 }
 
 

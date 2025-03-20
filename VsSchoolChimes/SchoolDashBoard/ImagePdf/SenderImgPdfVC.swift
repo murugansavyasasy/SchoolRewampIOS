@@ -60,7 +60,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
                     object: nil
                 )
         
-        keyboardDonebtn()
+        textView.addDoneButton()
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -168,18 +168,6 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     @IBAction func BackBtnAct(_ sender: Any) {
         
         dismiss(animated: true)
-    }
-    
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        textView.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
     }
 }
 

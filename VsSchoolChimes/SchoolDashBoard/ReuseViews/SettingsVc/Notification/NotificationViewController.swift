@@ -35,7 +35,7 @@ class NotificationViewController: UIViewController {
         BackBtn.setTitleFont(style: .primary, size:FontSize.HeaderSize)
         
         searchbar.delegate = self
-        addDoneButton()
+        searchbar.addDoneButton()
         
         tableview.dataSource = self
         tableview.delegate = self
@@ -56,9 +56,7 @@ class NotificationViewController: UIViewController {
     }
     
     @IBAction func BackAct(_ sender: Any) {
-        
         dismiss(animated: true)
-        
     }
     
 }
@@ -103,26 +101,6 @@ extension NotificationViewController : UITableViewDelegate,UITableViewDataSource
 extension NotificationViewController: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        searchbar.resignFirstResponder()
-    }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        searchbar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
         
         searchbar.resignFirstResponder()
     }

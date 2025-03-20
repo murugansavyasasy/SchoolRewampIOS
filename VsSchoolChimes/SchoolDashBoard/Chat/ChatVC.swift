@@ -26,7 +26,7 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
        override func viewDidLoad() {
            super.viewDidLoad()
           
-           addDoneButtonToTextView()
+           MessgeTextview.addDoneButton()
            let nib = UINib(nibName: CellConfingName.ChatTVCell, bundle: nil)
            tableView.register(nib, forCellReuseIdentifier: CellConfingName.ChatTVCell)
            ReplyTextFild.layer.cornerRadius = Colornames.CORadius5
@@ -73,25 +73,6 @@ class ChatVC: UIViewController, UITableViewDelegate,UITableViewDataSource, ChatT
         super.viewWillAppear(animated)
         
     }
-    private func addDoneButtonToTextView() {
-           let toolbar = UIToolbar()
-           toolbar.sizeToFit()
-
-           // Create Done button
-           let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
-           let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-           // Add Done button and flexible space to toolbar
-           toolbar.items = [flexibleSpace, doneButton]
-
-           // Assign toolbar to the input accessory view of the textView
-        MessgeTextview.inputAccessoryView = toolbar
-       }
-
-       @objc private func doneButtonTapped() {
-           MessgeTextview.resignFirstResponder() // Dismiss the keyboard
-       }
-   
     @objc func keyboardWillShow(notification: NSNotification) {
       
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
