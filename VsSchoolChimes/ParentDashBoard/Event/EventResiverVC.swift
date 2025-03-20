@@ -39,7 +39,7 @@ class EventResiverVC: UIViewController, SelectNotice{
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        addDoneButton()
+        searchbar.addDoneButton()
         uiConficration()
         tabelViewRegister()
         configureButton(
@@ -324,25 +324,6 @@ extension EventResiverVC: UISearchBarDelegate{
         
         searchbar.resignFirstResponder()
     }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        searchbar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
-        searchbar.resignFirstResponder()
-    }
+
     
 }

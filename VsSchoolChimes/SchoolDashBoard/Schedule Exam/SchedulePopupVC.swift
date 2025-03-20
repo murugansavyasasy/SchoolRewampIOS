@@ -39,7 +39,8 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
         super.viewDidLoad()
         txtSyllobs.delegate = self
         uiConficuration()
-        keyboardDionebtn()
+        txtFld.addDoneButton()
+        txtSyllobs.addDoneButton()
         // Add observers for the keyboard notifications
          NotificationCenter.default.addObserver(self,
                                                 selector: #selector(keyboardWillShow(_:)),
@@ -104,21 +105,7 @@ class SchedulePopupVC: UIViewController,UITextViewDelegate {
         }
     }
 
-    func keyboardDionebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        txtFld.inputAccessoryView = toolbar
-        txtSyllobs.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
-        keyboardWillHide(Notification(name: UIResponder.keyboardWillHideNotification))
-    }
     func textViewDidChange(_ textView: UITextView) {
-//        placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         adjustTextViewHeightWithConstraint(textView)
     }
     func adjustTextViewHeightWithConstraint(_ textView: UITextView) {

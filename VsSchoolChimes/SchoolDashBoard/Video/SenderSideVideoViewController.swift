@@ -87,7 +87,8 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         
         let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
         VideoPlayer.addGestureRecognizer(PlayGesture)
-        keyboardDonebtn()
+        titleTxtFld.addDoneButton()
+        descTxtView.addDoneButton()
     }
     
     override func viewDidLayoutSubviews() {
@@ -476,21 +477,6 @@ extension SenderSideVideoViewController : UITextViewDelegate{
             descTxtView.textColor = .lightGray
         }
     }
-    
-    func keyboardDonebtn(){
-           let toolbar = UIToolbar()
-           toolbar.sizeToFit()
-           let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-           let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-           toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        descTxtView.inputAccessoryView = toolbar
-        titleTxtFld.inputAccessoryView = toolbar
-          
-       }
-       @objc func doneKeyboard() {
-           view.endEditing(true)  // Dismiss the keyboard
-       }
-
     // UITextViewDelegate Method: Adjust the height of the UITextView dynamically
     func textViewDidChange(_ textView: UITextView) {
         

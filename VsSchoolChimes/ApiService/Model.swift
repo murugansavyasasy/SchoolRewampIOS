@@ -102,6 +102,8 @@ struct ChildDetails: Codable {
     let school_logo_url: String?
     let roll_number: String?
     let display_message: String?
+    let class_id: Int?
+    let section_id: Int?
     let access_token: String?
 }
 

@@ -36,7 +36,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
         searchview.delegate = self
         searchview.layer.borderWidth = 0
         searchview.backgroundImage = UIImage()
-        keyboardDionebtn()
+        searchview.addDoneButton()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCliboard(_:)))
         
         view.isUserInteractionEnabled = true
@@ -64,18 +64,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
         // Compare dueDate with currentDate
         return dueDateObject < currentDate
     }
-    func keyboardDionebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        
-        searchview.inputAccessoryView = toolbar
-    }
-    @objc func doneButtonTapped() {
-        view.endEditing(true)  // Dismiss the keyboard
-    }
+
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         // Automatically show the keyboard when search bar is clicked
         searchBar.becomeFirstResponder()

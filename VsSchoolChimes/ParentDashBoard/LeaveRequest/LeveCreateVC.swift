@@ -88,7 +88,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         uiConfic()
         setupdatePicker()
         setInitialButtonTitles()
-        keyboardDionebtn()
+        contentTxtView.addDoneButton()
         selectedImages.removeAll()
         costomView.imageCollectionview.reloadData()
     }
@@ -305,22 +305,9 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         label.attributedText = createAttributedText(from: date)
         label.numberOfLines = 0
     }
-    
-    func keyboardDionebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        contentTxtView.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
-        keyboardWillHide(Notification(name: UIResponder.keyboardWillHideNotification))
-    }
+
     
     func textViewDidChange(_ textView: UITextView) {
-//        placeholderLabel.isHidden = !contentTxtView.text.isEmpty // Toggle visibility
         adjustTextViewHeightWithConstraint(textView)
     }
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

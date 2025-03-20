@@ -79,7 +79,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         StyleAndTranslater()
         setInitialDate()
         setupPlaceholder()
-        keyboardDonebtn()
+        eventTxt.addDoneButton()
+        textview.addDoneButton()
         imageSelection()
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
@@ -489,19 +490,6 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // Dismiss the keyboard
         return true
-    }
-    
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        eventTxt.inputAccessoryView = toolbar
-        textview.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {

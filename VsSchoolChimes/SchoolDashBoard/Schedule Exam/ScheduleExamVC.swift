@@ -23,23 +23,12 @@ class ScheduleExamVC: UIViewController,UICollectionViewDelegate,UICollectionView
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
-        keyboardDionebtn()
+        searchBar.addDoneButton()
         filterData = examArray
         subjectListCollection.register(UINib(nibName: CellConfingName.ExamsListCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ExamsListCVCell)
         tilteLbl.setFont(style: .header, size: FontSize.HeaderSize)
         tilteLbl.text = CommonStringFile.scheduleExam.translated()
         searchBar.placeholder = CommonStringFile.Search.translated()
-    }
-    func keyboardDionebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        searchBar.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -184,19 +173,6 @@ extension ScheduleExamVC: UISearchBarDelegate{
         subjectListCollection.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-    
-    func addDoneButton(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        searchBar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
         searchBar.resignFirstResponder()
     }
 }

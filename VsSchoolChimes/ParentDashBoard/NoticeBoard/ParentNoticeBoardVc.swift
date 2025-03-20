@@ -29,8 +29,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         searchbar.applyRightTxt()
         StyleAndTranslate()
         searchbar.delegate = self
-        addDoneButton()
-        
+        searchbar.addDoneButton()
         CellRegister()
         tableview.delegate = self
         tableview.dataSource = self
@@ -169,25 +168,4 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
         
         searchbar.resignFirstResponder()
     }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        searchbar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
-        searchbar.resignFirstResponder()
-    }
-    
 }

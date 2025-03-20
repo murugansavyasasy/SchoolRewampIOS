@@ -95,8 +95,8 @@ class OnlineMeetingVC: UIViewController, ReminderCellDelegate, Datepicker {
         backBtn.applyBackButton()
         StyleAndTranslater()
         setupTimePicker()
-        keyboardDonebtn()
-        
+        titleTxtfld.addDoneButton()
+        DescriptTxtview.addDoneButton()
         DescriptTxtview.delegate = self
         
         gradientcolours(button: createBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
@@ -530,20 +530,6 @@ extension OnlineMeetingVC : UITextViewDelegate {
             DescriptTxtview.textColor = .lightGray
         }
     }
-    
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        titleTxtfld.inputAccessoryView = toolbar
-        DescriptTxtview.inputAccessoryView = toolbar
-    }
-        @objc func doneKeyboard() {
-            view.endEditing(true)  // Dismiss the keyboard
-        }
-    
     func textViewDidChange(_ textView: UITextView) {
             let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
             let newHeight = min(max(size.height, initialHeight), maxHeight)

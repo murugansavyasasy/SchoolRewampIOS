@@ -97,7 +97,8 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             object: nil
         )
         
-        keyboardDonebtn()
+        assignTitleTxtFld.addDoneButton()
+        contentTextView.addDoneButton()
         contentTextView.delegate = self
         contentTextView.applyRightTxt()
         categoryLbl.applyRightTxt()
@@ -447,20 +448,6 @@ extension SenderAssignmentTextViewController : UITextViewDelegate{
             contentTextView.text = CommonStringFile.Description
             contentTextView.textColor = .lightGray
         }
-    }
-    
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        assignTitleTxtFld.inputAccessoryView = toolbar
-        contentTextView.inputAccessoryView = toolbar
-        
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

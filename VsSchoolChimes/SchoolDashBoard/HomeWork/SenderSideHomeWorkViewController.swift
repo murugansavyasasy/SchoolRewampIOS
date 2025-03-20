@@ -93,7 +93,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             
         )
         
-        keyboardDonebtn()
+        TitleTxtfield.addDoneButton()
+        DetailsTxtview.addDoneButton()
         StyleAndTranslater()
         SearchBar.isHidden = true
         uploadAttachmentView.imageCollectionview.delegate = self
@@ -725,21 +726,6 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
             DetailsTxtview.textColor = .gray
         }
     }
-    
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        DetailsTxtview.inputAccessoryView = toolbar
-        TitleTxtfield.inputAccessoryView = toolbar
-        
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
-    }
-    
     func textViewDidChange(_ textView: UITextView) {
         let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)

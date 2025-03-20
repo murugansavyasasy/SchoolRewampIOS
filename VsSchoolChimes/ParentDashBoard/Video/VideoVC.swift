@@ -51,7 +51,7 @@ class VideoVC: UIViewController {
         backBtn.applyBackButton()
         HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         filteredData = data
-        keyboardDionebtn()
+        searchview.addDoneButton()
         uiupdate()
         for i in 0..<data.count{
             if let url = URL(string: data[i].url ?? "https://www.w3schools.com/tags/mov_bbb.mp4") {
@@ -111,17 +111,7 @@ class VideoVC: UIViewController {
         activityIndicator.hidesWhenStopped = true // Hide it when stopped
         view.addSubview(activityIndicator)
     }
-    func keyboardDionebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        searchview.inputAccessoryView = toolbar
-    }
-    @objc func doneButtonTapped() {
-        view.endEditing(true)  // Dismiss the keyboard
-    }
+
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         // Automatically show the keyboard when search bar is clicked
         searchBar.becomeFirstResponder()

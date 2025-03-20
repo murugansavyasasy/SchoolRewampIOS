@@ -28,7 +28,7 @@ class ExamTmTblVCViewController: UIViewController {
         backBtn.applyBackButton()
         backBtn.setTitle(ReceiverMenuItems.ExamTest.translated(), for: .normal)
         Searchbar.placeholder = CommonStringFile.Search.translated()
-        addDoneButton()
+        Searchbar.addDoneButton()
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         let nib = UINib(nibName:CellConfingName.SideTvcell, bundle: nil)
@@ -159,26 +159,6 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
 extension ExamTmTblVCViewController: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        Searchbar.resignFirstResponder()
-    }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-            
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        Searchbar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
         
         Searchbar.resignFirstResponder()
     }

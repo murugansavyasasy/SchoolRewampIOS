@@ -45,7 +45,8 @@ class ExamCreatVC: UIViewController, UITextViewDelegate {
         setupUI()
         setupPlaceholder()
         resetExam()
-        keyboardDionebtn()
+        setExam.addDoneButton()
+        contentTxtView.addDoneButton()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -98,18 +99,6 @@ class ExamCreatVC: UIViewController, UITextViewDelegate {
         setExam.placeholder = "Enter Exam"
         titleLbl.text = "Create Exam"
         contentCount.text = "0 of 500"
-    }
-    func keyboardDionebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        setExam.inputAccessoryView = toolbar
-        contentTxtView.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)
     }
     // MARK: - Placeholder Setup
     func setupPlaceholder() {

@@ -59,13 +59,10 @@ class SplashViewController: UIViewController {
                             version_Data = successMessage.data?.first
                             UserDefaultFileManager
                                 .saveCountryDetails(
-                                    data: (version_Data?.country_details)!
-                                )
+                                    data: (version_Data?.country_details)!)
 
-//                            ServiceUrl.baseurl = version_Data?.country_details?.base_url ?? ""
-//                            ServiceUrl.report_url = version_Data?.country_details?.reporting_url ?? ""
-                            
-                            
+                            ServiceUrl.baseurl = version_Data?.country_details?.base_url ?? ""
+                            ServiceUrl.report_url = version_Data?.country_details?.reporting_url ?? ""
                             if(version_Data?.update_available == true){
                                 showUpdatePopup()
                                 }
@@ -100,10 +97,10 @@ class SplashViewController: UIViewController {
         ]
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
-                result: Result<UserValidationResponseSuc,
-                Error>
-            ) in
+                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                        result: Result<UserValidationResponseSuc,
+                        Error>
+                     ) in
                 switch result {
                 case .success(let response):
                     if response.status == true {
@@ -116,7 +113,7 @@ class SplashViewController: UIViewController {
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
-                                   
+                                    
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
@@ -127,9 +124,9 @@ class SplashViewController: UIViewController {
                                         )
                                     
                                     localData.user_details = data.user_details
-                            
+                                    
                                     if(data.user_details?.is_staff == true) &&  (
-                                     data.user_details?.is_parent == true
+                                        data.user_details?.is_parent == true
                                     ){
                                         let vc = PriorityViewController1(nibName: nil, bundle: nil)
                                         vc.modalPresentationStyle = .fullScreen
@@ -146,17 +143,17 @@ class SplashViewController: UIViewController {
                                         
                                     }
                                     else if(data.user_details?.is_parent == true){
-                                      
-                                     let vc = ParentHomePageVc(
+                                        
+                                        let vc = ParentHomePageVc(
                                             nibName: nil,
                                             bundle: nil
                                         )
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }
-  
+                                    
                                 }
-
+                                
                             }
                             else {
                                 AlertModal
@@ -219,7 +216,6 @@ class SplashViewController: UIViewController {
     
     func callAppStore (AppStoreLink : String)
     {
-        
         let myUrl = AppStoreLink
         if let url = URL(string: "\(myUrl)"), !url.absoluteString.isEmpty {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -242,18 +238,13 @@ class SplashViewController: UIViewController {
         if(
             version_Data?.update_available == true && version_Data?.force_update == true
         ){
-            
             forceUpdateAlert
                 .addAction(
                     UIAlertAction(
                         title: "Update",
                         style: .default,
                         handler: { [self] _ in
-                            self.callAppStore(
-                                AppStoreLink: version_Data?.play_store_link ?? ""
-                            )
-                        })
-                )
+                            self.callAppStore(AppStoreLink: version_Data?.play_store_link ?? "")}))
         }
         else if(
             version_Data?.update_available == true && version_Data?.force_update == false

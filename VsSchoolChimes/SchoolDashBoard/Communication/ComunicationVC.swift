@@ -111,7 +111,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         CellRegistre()
         setupWaveBars()
         setupTimePicker()
-        keyboardDionebtn()
+        TxtTitle.addDoneButton()
+        voiceTitleeTxt.addDoneButton()
+        informationcontent.addDoneButton()
         setInitialButtonTitles()
         StyleAndTranslater()
         NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)
@@ -721,21 +723,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         waveView.updateWithLevel(CGFloat(normalizedPower))
         playerItem?.seek(to: CMTime.zero)
     }
-    
-    func keyboardDionebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        TxtTitle.inputAccessoryView = toolbar
-        voiceTitleeTxt.inputAccessoryView = toolbar
-        informationcontent.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
-    }
-    
     
     func setupWaveBars() {
         // Define the width and spacing of each bar

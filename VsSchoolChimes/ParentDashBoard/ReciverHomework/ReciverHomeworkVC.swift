@@ -29,7 +29,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         super.viewDidLoad()
         
         StyleAndTranslate()
-        addDoneButton()
+        searchBar.addDoneButton()
         backBtn.applyBackButton()
         searchBar.applyRightTxt()
         RegisterCell()
@@ -252,26 +252,6 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
 extension ReciverHomeworkVC: UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        searchBar.resignFirstResponder()
-    }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-            
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        searchBar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
         
         searchBar.resignFirstResponder()
     }
