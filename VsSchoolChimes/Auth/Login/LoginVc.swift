@@ -27,7 +27,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     var mobile_number_length : Int?
     var mobile_no_hint : String?
     var country_data : CountryData? = nil
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,10 +37,10 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         country_data =   UserDefaultFileManager.getCountryDetails()
         mobile_no_hint = country_data?.mobile_no_hint
         mobile_number_length = country_data?.mobile_number_length
-       
+        
         
         hiddenShowView()
-      
+        
         MobilTextFld.placeholder = mobile_no_hint
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
@@ -72,7 +72,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             passwordStack.isHidden = false
             forgetLbl.isHidden = false
         }
-
+        
     }
     
     func setupUI() {
@@ -145,45 +145,11 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-//        if MobilTextFld.text!.isEmpty {
-//            AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-//            print("MobilTextFld")
-//            return
-//        }
-//        
-//        if MobilTextFld.text?.count !=  mobile_number_length {
-//            AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-//            print("MobilTextFldCount")
-//            return
-//        }
-//        
-//       
-//            if passTextFld.text!.isEmpty {
-//                AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-//                print("passTextFld")
-//                return
-//            }
-//
-        
-        
        
+        validateMobileNumber()
         
-        if pageType == screenType.isMobileNumber {
-            
-            validateMobileNumber()
-            
-        }else if pageType == screenType.isPassword {
-            
-            validatePassword()
-            
-        }else{
-            
-            validateMobileAndPassword()
-            
-        }
-       
     }
-   
+    
     func validateMobileNumber() {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
@@ -192,35 +158,33 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         guard mobile.count == mobile_number_length else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
-        
-        validate_user(page_value : pageType ?? 0)
     }
-
-    func validatePassword() {
-        guard let password = passTextFld.text, !password.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-        }
-        
-        validate_user(page_value : pageType ?? 0)
-
-    }
-
-    func validateMobileAndPassword() {
-        guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-        }
-        
-        guard mobile.count == mobile_number_length else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-        }
-        
-        guard let password = passTextFld.text, !password.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-        }
-        
-        validate_user(page_value : pageType ?? 0)
-    }
-
+    
+//    func validatePassword() {
+//        guard let password = passTextFld.text, !password.isEmpty else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
+//        }
+//        
+//
+//        
+//    }
+//    
+//    func validateMobileAndPassword() {
+//        guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+//        }
+//        
+//        guard mobile.count == mobile_number_length else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+//        }
+//        
+//        guard let password = passTextFld.text, !password.isEmpty else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
+//        }
+//        
+//        validate_user(page_value : pageType ?? 0)
+//    }
+    
     func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
@@ -241,19 +205,19 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             parameters[mobileNumber.password] = passTextFld.text ?? ""
         }
         
-       
+        
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
-                result: Result<UserValidationResponseSuc,
-                Error>
-            ) in
+                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                        result: Result<UserValidationResponseSuc,
+                        Error>
+                     ) in
                 switch result {
                 case .success(let response):
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
-                          
+                            
                             UserDefaultFileManager.saveLoginCredentials(mobile_number : MobilTextFld.text ?? "",pwd:passTextFld.text ?? "")
                             
                             let data : UserData = (
@@ -263,27 +227,33 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
-                                   
+                                    
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
-                                    if(page_value == screenType.isMobileNumber){
+                                    
+                                    if data.is_password_updated == true {
                                         
-                                        pageType = screenType.isPassword
-                                        hiddenShowView()
-                                       
-                                    }
-                                    else if(
-                                        page_value == screenType.isLoginPage
-                                    ){
+                                        let vc = CreatePasswordVc(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
                                         
-                                    }
-                                    else if(page_value == screenType.isPassword){
+                                    }else{
                                         
+                                        let vc = PasswordVc(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
                                     }
                                     
+                                    
                                 }
-
+                                
                             }
                             else {
                                 AlertModal
@@ -315,10 +285,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
     }
     
-    
-    func getUserDetails() {
-        
-    }
     
 }
 

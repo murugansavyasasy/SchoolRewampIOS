@@ -106,6 +106,7 @@ class AlertstringFile{
     static let Submit = "Submit".translated()
     static let Successfully_password_created = "Successfully password created".translated()
     static let Password_Missmatched = "Password Missmatched".translated()
+    static let enter_valid_password = "Enter valid password".translated()
     
     static let Enter_the_new_password = "Enter the new password".translated()
     static let Enterthe_confirm_password = "Enter the confirm password".translated()

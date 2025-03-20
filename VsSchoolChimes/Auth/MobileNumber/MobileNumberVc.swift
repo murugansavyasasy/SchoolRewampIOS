@@ -8,19 +8,33 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class MobileNumberVc: UIViewController {
+class MobileNumberVc: UIViewController,UITextFieldDelegate {
 
     
+    @IBOutlet weak var continueBtnName: UIButton!
     @IBOutlet weak var MobilenumLabel: UILabel!
     @IBOutlet weak var MobilTextFld:
     UITextField!
     var AlertModal = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
        
     }
     
+    
+    func setupUI() {
+        continueBtnName.backgroundColor = Colornames.ButtonColor
+        continueBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
+    
+        MobilTextFld.delegate = self
+        MobilTextFld.keyboardType = .numberPad
+    }
+    @IBAction func continueBtn(_ sender: Any) {
+        
+        
+        
+    }
     
     func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
@@ -62,12 +76,13 @@ class MobileNumberVc: UIViewController {
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
-                                   
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
-                                    
-                                    
+                                
+//                                    let vc = PasswordVc(nibName: nil, bundle: nil)
+//                                    vc.modalPresentationStyle = .fullScreen
+//                                    present(vc, animated: true)
                                 }
 
                             }

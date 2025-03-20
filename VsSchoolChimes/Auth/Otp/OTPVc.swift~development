@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import LocalAuthentication
+
 @available(iOS 14.0, *)
 class OTPVc: UIViewController {
     
@@ -32,12 +32,7 @@ class OTPVc: UIViewController {
     var forgetType  = false
     var otpFields: [UITextField] = []
     var mobile_number:String?
-    var validateMobileData : [UserData] = []
-    var AlertModal = CustomAlert()
-    var pageType : Int?
-    
-   
-
+    var validateMobileData : [MobileNumberValidationData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,7 +63,7 @@ class OTPVc: UIViewController {
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
-        checkAutoFillPermission()
+        
     }
     
     deinit {
@@ -92,8 +87,6 @@ class OTPVc: UIViewController {
         otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
         
         for (index, textField) in otpFields.enumerated() {
-            textField.textContentType = .oneTimeCode // Enables OTP Auto-Fill from SMS
-            textField.isSecureTextEntry = false // Ensure OTP is visible
             textField.delegate = self
             textField.tag = index // Assign a tag to each text field
             textField.textAlignment = .center
@@ -101,8 +94,8 @@ class OTPVc: UIViewController {
             textField.font = UIFont.systemFont(ofSize: 24)
             textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
-        
-        otpTextField1.becomeFirstResponder() // Auto-focus on the first OTP field
+        otpTextField1.becomeFirstResponder()
+        addDoneButtonOnKeyboard()
     }
     
     // Optionally, collect the entire OTP when needed (for submission)
@@ -159,12 +152,12 @@ class OTPVc: UIViewController {
         CreatePasswordValue : Bool
     ){
         
-//        let vc = PasswordVc(nibName: nil, bundle: nil)
-//        vc.createPassText  = createPassword
-//        vc.confirmPassText = confirmPassword
-//        vc.forgetType = CreatePasswordValue
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
+        let vc = PasswordVc(nibName: nil, bundle: nil)
+        vc.createPassText  = createPassword
+        vc.confirmPassText = confirmPassword
+        vc.forgetType = CreatePasswordValue
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func Validate_OTP(mobileNumber : String , otp : String) {
@@ -183,27 +176,19 @@ class OTPVc: UIViewController {
                         DispatchQueue.main.async { [self] in
                            
                             
-                            if  validateMobileData.first?.is_password_updated == false{
-                                let vc = PasswordVc(nibName: nil, bundle: nil)
-                                 vc.modalPresentationStyle = .fullScreen
-                                 present(vc, animated: true)
-                            }else{
-                                
-                                 priotyScreenVC()
-                            }
-                             
-                                
+                            validateMobileData.first?.is_password_updated == false
+                            ? CreatePasswordScreenVC(
+                                createPassword: "Create Password",
+                                confirmPassword: "Confirm Password",
+                                CreatePasswordValue: true
+                            )
+                                : priotyScreenVC()
                            
                         }
                     }else{
                         DispatchQueue.main.async {
                             
-                            self.AlertModal
-                                .showAlert(
-                                    title: "",
-                                    message: successMessage.message ?? "",
-                                    on: self
-                                )
+                            
                         }
                     }
                 case .failure(let error):
@@ -239,36 +224,27 @@ extension OTPVc : UITextFieldDelegate{
        view.endEditing(true)
    }
    
-
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        let text = textField.text ?? ""
-
-        if text.count == 1 {
-            let nextTag = textField.tag + 1
-            if nextTag < otpFields.count {
-                otpFields[nextTag].becomeFirstResponder() // Move to next field
-            } else {
-                textField.resignFirstResponder() // Hide keyboard if last digit entered
-            }
-        } else if text.count == 0 {
-            let prevTag = textField.tag - 1
-            if prevTag >= 0 {
-                otpFields[prevTag].becomeFirstResponder() // Move back if deleted
-            }
-        }
-        
-        if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
-            
-            Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
-          
-        }
-    }
-    
+   @objc func textFieldDidChange(_ textField: UITextField) {
+       let text = textField.text ?? ""
+       
+       // Ensure only 1 character per field
+       if text.count > 1 {
+           textField.text = String(text.prefix(1))
+       }
+       
+       // Move to the next text field if current text field has 1 character
+       if text.count == 1 {
+           let nextTag = textField.tag + 1
+           if nextTag < otpFields.count {
+               otpFields[nextTag].becomeFirstResponder()
+           } else {
+               textField.resignFirstResponder() // Hide keyboard if last field
+           }
+       }
+   }
    
    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
        // Allow backspace for first two fields and move focus to the previous field
-       
-       print("rrrrr")
        if string.isEmpty {
            if textField.tag == 0 /*|| textField.tag == 1*/ {
                return true // Allow backspace on first two fields
@@ -317,39 +293,4 @@ extension OTPVc : UITextFieldDelegate{
        scrollView.contentInset = .zero
        scrollView.scrollIndicatorInsets = .zero
    }
-    
-    
-    func checkAutoFillPermission() {
-        let context = LAContext()
-        var error: NSError?
-
-        if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            print("🔹 Auto-Fill is enabled.")
-        } else {
-            print("❌ Auto-Fill is disabled.")
-            showAutoFillAlert()
-        }
-    }
-    func showAutoFillAlert() {
-        let alert = UIAlertController(
-            title: "Enable Auto-Fill",
-            message: "To automatically fill your OTP, please enable Auto-Fill in Settings:\n\nSettings → Passwords & Accounts → AutoFill Passwords",
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: "Open Settings", style: .default, handler: { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-        DispatchQueue.main.async {
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
-        }
-    }
-
-    
-    
 }

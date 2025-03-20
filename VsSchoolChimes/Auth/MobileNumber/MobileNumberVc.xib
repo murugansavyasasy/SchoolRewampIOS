@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="MobilTextFld" destination="6zC-OE-Zt6" id="LmT-5y-rG6"/>
                 <outlet property="MobilenumLabel" destination="sWB-0U-QUb" id="nuJ-DP-Va0"/>
+                <outlet property="continueBtnName" destination="gim-Kp-auq" id="fuK-Pd-qzf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -155,6 +156,9 @@
                                             </fragment>
                                         </attributedString>
                                     </buttonConfiguration>
+                                    <connections>
+                                        <action selector="continueBtn:" destination="-1" eventType="touchUpInside" id="tCd-wy-Yxw"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

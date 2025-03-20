@@ -125,6 +125,8 @@ struct UserDetails: Codable {
     let image_count: Int?
 }
 
+
+
 struct StaffDetail: Codable {
     let staff_id: String?
     let staff_name: String?
@@ -138,6 +140,7 @@ struct StaffDetail: Codable {
     let schedule_call_type: Int?
     let biometric_enable: Int?
     let allow_video_download: Bool?
+    let access_token: String?
 }
 
 struct ChildDetail: Codable {
@@ -154,5 +157,6 @@ struct ChildDetail: Codable {
     let display_message: String?
     let class_id: Int?
     let section_id: Int?
+    let access_token: String?
 }
 
