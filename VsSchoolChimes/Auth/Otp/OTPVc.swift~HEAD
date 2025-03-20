@@ -183,16 +183,13 @@ class OTPVc: UIViewController {
                         DispatchQueue.main.async { [self] in
                            
                             
-                            if  validateMobileData.first?.is_password_updated == false{
-                                let vc = PasswordVc(nibName: nil, bundle: nil)
-                                 vc.modalPresentationStyle = .fullScreen
-                                 present(vc, animated: true)
-                            }else{
-                                
-                                 priotyScreenVC()
-                            }
-                             
-                                
+                            validateMobileData.first?.is_password_updated == false
+                            ? CreatePasswordScreenVC(
+                                createPassword: "Create Password",
+                                confirmPassword: "Confirm Password",
+                                CreatePasswordValue: true
+                            )
+                                : priotyScreenVC()
                            
                         }
                     }else{

@@ -37,7 +37,10 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         country_data =   UserDefaultFileManager.getCountryDetails()
         mobile_no_hint = country_data?.mobile_no_hint
         mobile_number_length = country_data?.mobile_number_length
+        
+        
         hiddenShowView()
+        
         MobilTextFld.placeholder = mobile_no_hint
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
@@ -125,14 +128,9 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-        if pageType == screenType.isMobileNumber {
-            validateMobileNumber()
-        }else if pageType == screenType.isPassword {
-            validatePassword()
-        }else{
-            validateMobileAndPassword()
-            
-        }
+       
+        validateMobileNumber()
+        
     }
     
     func validateMobileNumber() {
@@ -165,6 +163,31 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         validate_user(page_value : pageType ?? 0)
     }
+    
+//    func validatePassword() {
+//        guard let password = passTextFld.text, !password.isEmpty else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
+//        }
+//        
+//
+//        
+//    }
+//    
+//    func validateMobileAndPassword() {
+//        guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+//        }
+//        
+//        guard mobile.count == mobile_number_length else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
+//        }
+//        
+//        guard let password = passTextFld.text, !password.isEmpty else {
+//            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
+//        }
+//        
+//        validate_user(page_value : pageType ?? 0)
+//    }
     
     func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
@@ -214,6 +237,8 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                     }else if(page_value == screenType.isPassword){
                                         
                                     }
+                                    
+                                    
                                 }
                             }else{
                                 AlertModal.showAlert(
@@ -239,10 +264,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    func getUserDetails() {
-        
-    }
     
 }
 

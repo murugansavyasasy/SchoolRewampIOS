@@ -30,6 +30,7 @@ class PriorityViewController1: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
+        
         UserDefaults.standard.set(passedValue, forKey: "passvalue")
     
         StyleAndTranslate()
