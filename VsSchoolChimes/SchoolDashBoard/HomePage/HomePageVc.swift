@@ -573,4 +573,72 @@ extension HomePageVc: UISearchBarDelegate{
         Searchbar.resignFirstResponder()
     }
     
+    func ForgotPasswordAPIcall () {
+        
+        APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (result : Result<ForgotPasswordResponeSuc,Error>) in
+            
+            switch result {
+                
+            case.success(let successmessage):
+                
+                if successmessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        print("Success,Success")
+                        
+                    }
+                    
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        
+                        print("Try again later")
+                    }
+                }
+                
+            case.failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+           
+            }
+            
+        }
+    }
+    
+   // var ChangePassparameter : [String : Any] = [COMMON_PARAMETER.mobile_number : "" ?? "",CreateNewPasswordStringFile.old_password : "" ?? "", COMMON_PARAMETER.new_password : "" ?? ""]
+    
+    func ChangePasswordAPIcall() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: ["": ""] /*ChangePassparameter*/, type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (result : Result<ChangePasswordSuc,Error>) in
+            
+            
+            switch result {
+                
+            case.success(let successMessage):
+                
+                if successMessage.status == true {
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        print("Succuess")
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        print("Failed")
+                    }
+                }
+                
+            case.failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
 }

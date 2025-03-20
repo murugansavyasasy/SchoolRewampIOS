@@ -13,21 +13,23 @@ struct ServiceUrl{
     static var token = ""
     static var awsBucketName = ""
     
-    static let version_check            = "setup/version-check"
-    static let country_list             = "setup/countries"
-   
-    static let password_create_new_password = "cred/change-password"
-    static let password_reset_password = "cred/reset-password"
-    static let validate_validate_otp = "auth/validate-otp"
-    static let validate_validate_user = "auth/validate-user"
+    static let country_list              = "setup/countries"
+    static let version_check             = "setup/version-check"
+    static let validate_validate_user    = "auth/validate-user"
+    static let validate_validate_otp     = "auth/validate-otp"
+    static let cred_change_password      = "cred/change-password"
+    static let cred_forgot_password      = "cred/forgot-password"
+    static let cred_reset_password       = "cred/reset-password"
+    static let  cred_create_new_password = " cred/create-new-password"
+    static let global_global_variables   = "global/global-variables"
     
 }
 
 struct localData{
     
     static var country_data : CountryData? = nil
-    static var staff_data: [StaffDetail]?
-    static var child_data: [ChildDetail]?
+    static var staff_data: [StaffDetails]?
+    static var child_data: [ChildDetails]?
     static var user_details : UserDetails? = nil
 
 }
