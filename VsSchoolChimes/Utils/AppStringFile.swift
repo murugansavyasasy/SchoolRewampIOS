@@ -290,6 +290,8 @@ class CommonStringFile{
 class ChangePasswordStringFile{
     
     static let Reset_the_new_password = "Reset the new password".translated()
+    static let create_newpassword = "Create the new password".translated()
+    static let confirm_password = "Re-enter the new  password".translated()
 }
 class OTPScreenStringFile{
     

@@ -37,7 +37,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         mobile_no_hint = country_data?.mobile_no_hint
         mobile_number_length = country_data?.mobile_number_length
         
-    
+        
         MobilTextFld.placeholder = mobile_no_hint
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
@@ -104,7 +104,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         return true
     }
     
- 
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
@@ -115,28 +115,12 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-       
-        validateCredentials()
+        
+        validateMobileAndPassword()
         
     }
     
-    func validateCredentials() {
-        
-        guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-        }
-        guard mobile.count == mobile_number_length else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-        }
-        validate_user(page_value : pageType ?? 0)
-    }
-    
-    func validatePassword() {
-        guard let password = passTextFld.text, !password.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-        }
-        validate_user(page_value : pageType ?? 0)
-    }
+   
     
     func validateMobileAndPassword() {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
@@ -148,26 +132,10 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         guard let password = passTextFld.text, !password.isEmpty else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
         }
-        
-        guard mobile.count == mobile_number_length else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-        }
-        
-        guard let pass = passTextFld.text, !pass.isEmpty else {
-            return AlertModal
-                .showAlert(
-                    title: "",
-                    message: AlertstringFile.enter_valid_password,
-                    on: self
-                )
-        }
-        
         validate_user()
-        
-        
     }
     
-
+    
     
     func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
@@ -188,9 +156,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             mobileNumber.secure_id: secureID,
             mobileNumber.password:passTextFld.text ?? ""
         ]
-        if page_value == screenType.isLoginPage {
-            parameters[mobileNumber.password] = passTextFld.text ?? ""
-        }
         
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
@@ -230,7 +195,10 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                         if(data.user_details?.is_staff == true) &&  (
                                             data.user_details?.is_parent == true
                                         ){
-                                            let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                                            let vc = PriorityVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
@@ -260,30 +228,39 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                     }
                                     
                                 }
-                            }else{
-                                AlertModal.showAlert(
+                                
+                            }
+                            else {
+                                AlertModal
+                                    .showAlert(
+                                        title: "",
+                                        message: response.message ?? "",
+                                        on: self
+                                    )
+                            }
+                            
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            AlertModal
+                                .showAlert(
                                     title: "",
                                     message: response.message ?? "",
-                                    on: self)
-                            }
+                                    on: self
+                                )
+                            
                         }
                     }
-                }else{
-                    DispatchQueue.main.async { [self] in
-                        AlertModal.showAlert(
-                            title: "",
-                            message: response.message ?? "",
-                            on: self)
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
                     }
                 }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
             }
-        }
+        
     }
-    
-    
 }
+    
+
+
 

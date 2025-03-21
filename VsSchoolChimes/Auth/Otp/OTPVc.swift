@@ -42,10 +42,17 @@ class OTPVc: UIViewController {
         super.viewDidLoad()
         
         
+        
         ResendLbl.isUserInteractionEnabled = true
         validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
         validationBtnNm.backgroundColor = Colornames.ButtonColor
         
+        OtpContentLbl.text = validateMobileData.first?.more_info ?? "" + (
+            mobile_number ?? "")
+        
+        setDialNumbers(
+            dialNumbersString:validateMobileData.first?.dial_numbers ?? ""
+        )
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
@@ -75,6 +82,33 @@ class OTPVc: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+    
+    func setDialNumbers(dialNumbersString: String) {
+        let dialNumbers = dialNumbersString.components(separatedBy: ",")
+
+        if dialNumbers.count > 0 {
+            PhoneBtn1.setTitle(dialNumbers[0], for: .normal)
+            PhoneBtn1.isHidden = false // Show the button if hidden
+        } else {
+            PhoneBtn1.isHidden = true // Hide if no number
+        }
+
+        if dialNumbers.count > 1 {
+            PhoneBtn2.setTitle(dialNumbers[1], for: .normal)
+            PhoneBtn2.isHidden = false
+        } else {
+            PhoneBtn2.isHidden = true
+        }
+    }
+
+    // Function to handle button taps
+    @IBAction func phoneButtonTapped(_ sender: UIButton) {
+        if let phoneNumber = sender.titleLabel?.text, let url = URL(string: "tel://\(phoneNumber)"),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
     @IBAction func validationBtn(_ sender: Any) {
         
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
@@ -205,7 +239,10 @@ class OTPVc: UIViewController {
                                 if(localData.user_data?.user_details?.is_staff == true) &&  (
                                     localData.user_data?.user_details?.is_parent == true
                                 ){
-                                    let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                                    let vc = PriorityVC(
+                                        nibName: nil,
+                                        bundle: nil
+                                    )
                                     vc.modalPresentationStyle = .fullScreen
                                     present(vc, animated: true)
                                     

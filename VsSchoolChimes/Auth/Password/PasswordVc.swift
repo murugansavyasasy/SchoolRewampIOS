@@ -87,6 +87,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         vc.validateMobileData = valdiateResponse
         vc.mobile_number = mobile_number ?? ""
         vc.pageType = screenType.isPassword
+        
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -167,7 +168,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                         if(data.user_details?.is_staff == true) &&  (
                                             data.user_details?.is_parent == true
                                         ){
-                                            let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                                            let vc = PriorityVC(nibName: nil, bundle: nil)
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }
@@ -215,6 +216,49 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         
     }
     
+    
+    
+    func ForgotPasswordAPIcall () {
+            
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+                result : Result<ForgotPasswordResponeSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successmessage):
+                    
+                    if successmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            print("Success,Success")
+                            
+                            
+                            
+                        }
+                        
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            print("Try again later")
+                        }
+                    }
+                    
+                case.failure(let error):
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+               
+                }
+                
+            }
+        }
+        
     
     
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreatePasswordVc: UIViewController {
+class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
     @IBOutlet weak var eyeImage: UIImageView!
     @IBOutlet weak var createPassDefaultLbl: UILabel!
@@ -26,14 +26,22 @@ class CreatePasswordVc: UIViewController {
     override func viewDidLoad() {
         
     super.viewDidLoad()
-        createPassDefaultLbl.text = createPassText
-        ConfirmPassLabel.text = confirmPassText
+        
+        createPassDefaultLbl.text = ChangePasswordStringFile.create_newpassword
+        ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
+        
+        createPassTextFLd.delegate = self
+        confirmPassTextFld.delegate = self
+        confirmPassTextFld.addDoneButton()
+        createPassTextFLd.addDoneButton()
+        
     createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
     ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
     confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
 
     if createNewPassword == false{
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
+    ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
     }
 
     let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
@@ -56,13 +64,11 @@ class CreatePasswordVc: UIViewController {
     if createPassTextFLd.text == confirmPassTextFld.text{
 
     //view.makeToast(AlertstringFile.Successfully_password_created)
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+   
         
         self.CretaeNewPasswordAPIcall()
-//    let vc = PriorityViewController1(nibName: nil, bundle: nil)
-//    vc.modalPresentationStyle = .fullScreen
-//    self.present(vc, animated: true)
-    }
+
+   
     }else{
     view.makeToast(AlertstringFile.Password_Missmatched)
     }
@@ -80,8 +86,8 @@ class CreatePasswordVc: UIViewController {
 
     @IBAction func togglePasswordVisibility() {
     confirmPassTextFld.isSecureTextEntry.toggle()
-    let imageName = confirmPassTextFld.isSecureTextEntry ? "eye.fill" : "eye.slash.fill"
-    eyeImage.image = UIImage(named: imageName)
+        let imageName = confirmPassTextFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
+    eyeImage.image = imageName
 
     }
 
@@ -91,7 +97,7 @@ class CreatePasswordVc: UIViewController {
                 .makeApi(url: ServiceUrl.cred_create_new_password, parameters: [
 
                 COMMON_PARAMETER.mobile_number: mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""
-                ], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                ], type: ApitTypeSringFile.POST, token: ""){ [self] (
                     result: Result<CreateNewPasswordSuc,
                     Error>
                 ) in
@@ -104,16 +110,28 @@ class CreatePasswordVc: UIViewController {
                         
                         DispatchQueue.main.async { [self] in
                             
-                            alertModal.showAlert(title: "", message: "Password Changed Successfully", on: self)
+                            alertModal
+                                .showAlert(
+                                    title: "",
+                                    message:successMessage.message ?? "" ,
+                                    on: self
+                                )
                         }
                         
                     }else{
                         
                         DispatchQueue.main.async {
                             
-                            print("Try again later")
+                            alertModal
+                                .showAlert(
+                                    title: "",
+                                    message:successMessage.message ?? "" ,
+                                    on: self
+                                )
                             
                         }
+                        
+                        
                     }
                     
                 case .failure(let error):
@@ -128,7 +146,11 @@ class CreatePasswordVc: UIViewController {
 
          func ResetPasswordAPIcall(){
 
-         APIService.shared.makeApi(url: ServiceUrl.password_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<ResetPasswordSuc, Error>) in
+             APIService.shared
+                 .makeApi(url: ServiceUrl.cred_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                    result: Result<ResetPasswordSuc,
+                    Error>
+                 ) in
 
          switch result {
 
@@ -158,6 +180,47 @@ class CreatePasswordVc: UIViewController {
 
          }
 
+    
+        func ForgotPasswordAPIcall () {
+    
+                APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (result : Result<ForgotPasswordResponeSuc,Error>) in
+    
+                    switch result {
+    
+                    case.success(let successmessage):
+    
+                        if successmessage.status == true {
+    
+                            DispatchQueue.main.async { [self] in
+    
+                                print("Success,Success")
+    
+                            }
+    
+                        }else {
+    
+                            DispatchQueue.main.async {
+    
+                                print("Try again later")
+                            }
+                        }
+    
+                    case.failure(let error):
+    
+                        DispatchQueue.main.async {
+                            print(error.localizedDescription)
+                        }
+    
+                    }
+    
+                }
+            }
+    
+         
+    
+           
+    
+        
 
 
     }
