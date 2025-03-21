@@ -8,7 +8,7 @@
 import UIKit
 
 @available(iOS 14.0, *)
-class PriorityViewController1: UIViewController {
+class PriorityVC: UIViewController {
     
     @IBOutlet weak var TeacherParentlbl: UILabel!
     @IBOutlet weak var ChooseRoleLabel: UILabel!
@@ -140,7 +140,7 @@ class PriorityViewController1: UIViewController {
 }
 
 @available(iOS 14.0, *)
-extension PriorityViewController1: UITableViewDelegate, UITableViewDataSource {
+extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -85,7 +85,7 @@ class CreatePasswordVc: UIViewController {
 
         func CretaeNewPasswordAPIcall(){
             
-            APIService.shared.makeApi(url: ServiceUrl.password_create_new_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",CreateNewPasswordStringFile.old_password: "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<CreateNewPasswordSuc, Error>) in
+            APIService.shared.makeApi(url: ServiceUrl.cred_create_new_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",CreateNewPasswordStringFile.old_password: "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<CreateNewPasswordSuc, Error>) in
                 
                 switch result {
                     

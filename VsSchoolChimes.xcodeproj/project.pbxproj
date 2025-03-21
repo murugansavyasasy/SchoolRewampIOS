@@ -187,10 +187,10 @@
 		844188842CC91179006483C3 /* LoginVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188812CC91179006483C3 /* LoginVc.swift */; };
 		8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8442A85D2CDB726A0006068E /* GoogleService-Info.plist */; };
 		8442A8682CDB787A0006068E /* principalTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8612CDB787A0006068E /* principalTVCell.swift */; };
-		8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8632CDB787A0006068E /* PriorityViewController1.swift */; };
+		8442A8692CDB787A0006068E /* PriorityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8632CDB787A0006068E /* PriorityVC.swift */; };
 		8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A85F2CDB787A0006068E /* DemoTVCell.swift */; };
 		8442A86C2CDB787A0006068E /* DemoTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8602CDB787A0006068E /* DemoTVCell.xib */; };
-		8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8642CDB787A0006068E /* PriorityViewController1.xib */; };
+		8442A86D2CDB787A0006068E /* PriorityVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8642CDB787A0006068E /* PriorityVC.xib */; };
 		8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A8622CDB787A0006068E /* principalTVCell.xib */; };
 		8442A8F42CDC83860006068E /* BanerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8E52CDC83860006068E /* BanerTableViewCell.swift */; };
 		8442A8F52CDC83860006068E /* GifImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8E72CDC83860006068E /* GifImage.swift */; };
@@ -772,8 +772,8 @@
 		8442A8602CDB787A0006068E /* DemoTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DemoTVCell.xib; sourceTree = "<group>"; };
 		8442A8612CDB787A0006068E /* principalTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = principalTVCell.swift; sourceTree = "<group>"; };
 		8442A8622CDB787A0006068E /* principalTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = principalTVCell.xib; sourceTree = "<group>"; };
-		8442A8632CDB787A0006068E /* PriorityViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityViewController1.swift; sourceTree = "<group>"; };
-		8442A8642CDB787A0006068E /* PriorityViewController1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PriorityViewController1.xib; sourceTree = "<group>"; };
+		8442A8632CDB787A0006068E /* PriorityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityVC.swift; sourceTree = "<group>"; };
+		8442A8642CDB787A0006068E /* PriorityVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PriorityVC.xib; sourceTree = "<group>"; };
 		8442A8E52CDC83860006068E /* BanerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BanerTableViewCell.swift; sourceTree = "<group>"; };
 		8442A8E62CDC83860006068E /* BanerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BanerTableViewCell.xib; sourceTree = "<group>"; };
 		8442A8E72CDC83860006068E /* GifImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifImage.swift; sourceTree = "<group>"; };
@@ -1787,8 +1787,8 @@
 				8442A8602CDB787A0006068E /* DemoTVCell.xib */,
 				8442A8612CDB787A0006068E /* principalTVCell.swift */,
 				8442A8622CDB787A0006068E /* principalTVCell.xib */,
-				8442A8632CDB787A0006068E /* PriorityViewController1.swift */,
-				8442A8642CDB787A0006068E /* PriorityViewController1.xib */,
+				8442A8632CDB787A0006068E /* PriorityVC.swift */,
+				8442A8642CDB787A0006068E /* PriorityVC.xib */,
 			);
 			path = Priority;
 			sourceTree = "<group>";
@@ -3166,7 +3166,7 @@
 				18D718BB2D0D477900E9EDA3 /* PunchHistTableViewCell.xib in Resources */,
 				18D718BC2D0D477900E9EDA3 /* LocationViewController.xib in Resources */,
 				18D718BD2D0D477900E9EDA3 /* LocationHistoryVc.xib in Resources */,
-				8442A86D2CDB787A0006068E /* PriorityViewController1.xib in Resources */,
+				8442A86D2CDB787A0006068E /* PriorityVC.xib in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */,
 				8442A86F2CDB787A0006068E /* principalTVCell.xib in Resources */,
@@ -3683,7 +3683,7 @@
 				840A7CF02D24FDAA0061EAEA /* ExamMarkCV.swift in Sources */,
 				84A5BE8E2C197C3000E32496 /* Toast.swift in Sources */,
 				8442A8682CDB787A0006068E /* principalTVCell.swift in Sources */,
-				8442A8692CDB787A0006068E /* PriorityViewController1.swift in Sources */,
+				8442A8692CDB787A0006068E /* PriorityVC.swift in Sources */,
 				8442A86A2CDB787A0006068E /* DemoTVCell.swift in Sources */,
 				187CF5DD2D142D06001422CE /* CertificateRequestViewController.swift in Sources */,
 				848CC1792D8A997200CD0255 /* MobileNumberVc.swift in Sources */,

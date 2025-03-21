@@ -128,7 +128,7 @@ class SplashViewController: UIViewController {
                                     if(data.user_details?.is_staff == true) &&  (
                                         data.user_details?.is_parent == true
                                     ){
-                                        let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                                        let vc = PriorityVC(nibName: nil, bundle: nil)
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                         
