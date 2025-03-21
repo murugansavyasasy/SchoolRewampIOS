@@ -126,6 +126,34 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                 }
                                 else {
                                     
+                                    UserDefaultFileManager
+                                        .saveLoginCredentials(
+                                            mobile_number:mobile_number ?? "",
+                                            pwd:passwordTxtFld.text ?? ""
+                                        )
+                                    
+                                    localData.user_details = data.user_details
+                                    
+                                    if(data.user_details?.is_staff == true) &&  (
+                                        data.user_details?.is_parent == true
+                                    ){
+                                        let vc = PriorityVC(nibName: nil, bundle: nil)
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
+                                    else if(data.user_details?.is_staff == true){
+                                        let vc = HomePageVc(nibName: nil,bundle: nil)
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                        
+                                    }
+                                    else if(data.user_details?.is_parent == true){
+                                        let vc = ParentHomePageVc(nibName: nil,bundle: nil)
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
+                                    
+                                    
                                     if(data.is_password_updated == true){
                                         
                                         UserDefaultFileManager

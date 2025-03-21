@@ -194,7 +194,6 @@ class CountryVc: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
-        
     }
     
     

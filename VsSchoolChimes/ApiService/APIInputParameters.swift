@@ -24,8 +24,6 @@ class mobileNumber{
     static var password = "password"
     static var device_type = "device_type"
     static var secure_id = "secure_id"
-    
-  
    
 }
 
@@ -42,6 +40,13 @@ class ApitTypeSringFile{
  
 class CreateNewPasswordStringFile{
     static var old_password = "old_password"
+}
+
+class GlobalVariablesStringFile {
+    
+    static var key_names = "key_names"
+    static var new_version = "new_version"
+    static var new_updates = "new_updates"
 }
 
 

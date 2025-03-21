@@ -42,7 +42,7 @@ class SenderLeaveRqstVC: UIViewController, ConfirmDelegate {
         searchBar.applyRightTxt()
         leaveRequestTable.register(UINib(nibName: CellConfingName.SenderLeaveTV, bundle: nil), forCellReuseIdentifier: CellConfingName.SenderLeaveTV)
         if #available(iOS 14.0, *) {
-            addDoneButton()
+            searchBar.addDoneButton()
             searchBar.delegate = self
         }
     }
@@ -110,20 +110,6 @@ extension SenderLeaveRqstVC: UISearchBarDelegate{
         leaveRequestTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-    
-    func addDoneButton(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        searchBar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
         searchBar.resignFirstResponder()
     }
 }

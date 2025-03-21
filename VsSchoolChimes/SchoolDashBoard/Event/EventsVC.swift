@@ -111,7 +111,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         setInitialButtonTitles()
         registerCell()
         setupPlaceholder()
-        keyboardDonebtn()
+        placeTxt.addDoneButton()
+        eventTxt.addDoneButton()
+        contentTxtView.addDoneButton()
         imageSelection()
         
         // Add observers for keyboard notifications
@@ -556,20 +558,6 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
 //MARK: Text view delegate Functions
 @available(iOS 14.0, *)
 extension EventsVC : UITextViewDelegate {
-
-    func keyboardDonebtn(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(doneKeyboard))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        placeTxt.inputAccessoryView = toolbar
-        eventTxt.inputAccessoryView = toolbar
-        contentTxtView.inputAccessoryView = toolbar
-    }
-    @objc func doneKeyboard() {
-        view.endEditing(true)  // Dismiss the keyboard
-    }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Calculate the new length of the text

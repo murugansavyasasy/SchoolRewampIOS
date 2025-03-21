@@ -76,7 +76,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         //startAutoScroll()
         cellRegistration()
-        addDoneButton()
+        Searchbar.addDoneButton()
         let value = UserDefaults.standard.integer(forKey: "passvalue")
         getValue = value
         Searchbar.delegate = self
@@ -555,22 +555,72 @@ extension HomePageVc: UISearchBarDelegate{
         }
     }
     
-    func addDoneButton(){
+    func ForgotPasswordAPIcall () {
         
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        
-        let doneButton = UIBarButtonItem(title: AlertstringFile.Done, style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        Searchbar.inputAccessoryView = toolbar
+        APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (result : Result<ForgotPasswordResponeSuc,Error>) in
+            
+            switch result {
+                
+            case.success(let successmessage):
+                
+                if successmessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        print("Success,Success")
+                        
+                    }
+                    
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        
+                        print("Try again later")
+                    }
+                }
+                
+            case.failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+           
+            }
+            
+        }
     }
     
-    @IBAction func DoneBtnAct(){
+   // var ChangePassparameter : [String : Any] = [COMMON_PARAMETER.mobile_number : "" ?? "",CreateNewPasswordStringFile.old_password : "" ?? "", COMMON_PARAMETER.new_password : "" ?? ""]
+    
+    func ChangePasswordAPIcall() {
         
-        Searchbar.resignFirstResponder()
+        APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: ["": ""] /*ChangePassparameter*/, type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (result : Result<ChangePasswordSuc,Error>) in
+            
+            
+            switch result {
+                
+            case.success(let successMessage):
+                
+                if successMessage.status == true {
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        print("Succuess")
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        print("Failed")
+                    }
+                }
+                
+            case.failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
 }

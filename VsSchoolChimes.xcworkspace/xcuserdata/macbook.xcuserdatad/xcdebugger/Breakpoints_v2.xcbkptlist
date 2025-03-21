@@ -1,118 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   uuid = "6680C1BA-08FE-452A-BA80-8911E5CCE861"
+   uuid = "FADA2DEF-649A-44EF-9A98-DEEE09B1C5C6"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D558C400-E8AA-4C07-8B5A-532E6E9519C9"
-            shouldBeEnabled = "No"
+            uuid = "D88CD709-A824-48E7-9B5C-2838B52C062E"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/DashBoard/ParentDashBoard/ParentHomePage/ParentHomePageVc.swift"
+            filePath = "VsSchoolChimes/Auth/Login/LoginVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "529"
-            endingLineNumber = "529"
-            landmarkName = "applyGradient(colors:startPoint:endPoint:)"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "validate_user(page_value:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B04E5849-15F6-485C-A81A-DEA3FB20A4AC"
-            shouldBeEnabled = "No"
+            uuid = "8F268341-A07A-4FF2-90BD-DC55B6BB34DC"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
+            filePath = "VsSchoolChimes/Auth/Login/LoginVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "745"
-            endingLineNumber = "745"
-            landmarkName = "textViewDidChange(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9FFF8D9C-94E3-4363-BC64-E0C53F2B6FF0"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
-            landmarkName = "ReportsBtnAct(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "48FBDDA3-E005-4256-B799-27EB9A0F0359"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Video/SenderSideVideoViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "505"
-            endingLineNumber = "505"
-            landmarkName = "textViewDidChange(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9F9363C3-EFEB-445B-8C26-FFE7D95DDE91"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Video/SenderSideVideoViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "514"
-            endingLineNumber = "514"
-            landmarkName = "textViewDidChange(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7C7A8144-B221-4A80-8FBA-0F10A36A6A93"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Video/SenderSideVideoViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "498"
-            endingLineNumber = "498"
-            landmarkName = "textViewDidChange(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8F63D1C4-43A7-4773-806A-4E0359BFC663"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Events/EventHistoryVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "tableView(_:heightForRowAt:)"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "validate_user(page_value:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

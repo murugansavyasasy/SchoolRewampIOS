@@ -23,7 +23,7 @@ class ExameMarVC: UIViewController {
         super.viewDidLoad()
        
         StyleAndTranslate()
-        addDoneButton()
+        SearchBar.addDoneButton()
         CellRegister()
         backBtn.applyBackButton()
         SearchBar.applyRightTxt()
@@ -229,25 +229,4 @@ extension ExameMarVC: UISearchBarDelegate{
         
         SearchBar.resignFirstResponder()
     }
-    
-    func addDoneButton(){
-        
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-            
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
-
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        
-        SearchBar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
-        SearchBar.resignFirstResponder()
-    }
-
 }

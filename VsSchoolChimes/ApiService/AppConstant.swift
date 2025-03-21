@@ -13,13 +13,15 @@ struct ServiceUrl{
     static var token = ""
     static var awsBucketName = ""
     
-    static let version_check            = "setup/version-check"
-    static let country_list             = "setup/countries"
-   
-    static let cred_create_new_password = "cred/create-new-password"
-    static let password_reset_password = "cred/reset-password"
-    static let validate_validate_otp = "auth/validate-otp"
-    static let validate_validate_user = "auth/validate-user"
+    static let country_list              = "setup/countries"
+    static let version_check             = "setup/version-check"
+    static let validate_validate_user    = "auth/validate-user"
+    static let validate_validate_otp     = "auth/validate-otp"
+    static let cred_change_password      = "cred/change-password"
+    static let cred_forgot_password      = "cred/forgot-password"
+    static let cred_reset_password       = "cred/reset-password"
+    static let  cred_create_new_password = " cred/create-new-password"
+    static let global_global_variables   = "global/global-variables"
     
 }
 

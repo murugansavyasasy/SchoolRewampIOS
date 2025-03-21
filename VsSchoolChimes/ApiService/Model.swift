@@ -45,55 +45,7 @@ struct VersionData: Codable {
     let play_store_link: String?
 }
 
-
-            
-
-
-
-//MARK: Check Mobile No for change password API
-
-
-struct MobileNumberValidationSuc: Codable {
-    let status: Bool?
-    let message: String?
-    let data: [MobileNumberValidationData]?
-}
-
-struct MobileNumberValidationData: Codable {
-    let is_number_exists: Bool?
-    let is_password_updated: Bool?
-    let otp_sent: Bool?
-    let otp: String?
-    let message: String?
-    let more_info: String?
-    let dial_numbers: String?
-    
-}
-
-//MARK: Create New Password API
-struct CreateNewPasswordSuc : Codable {
-    let status : Bool?
-    let message : String?
-    let data : [String]?
-}
-
-//MARK: Reset Password API
-struct ResetPasswordSuc : Codable {
-    let status : Bool?
-    let message : String?
-    let data : [String]?
-}
-
-// MARK: Validate OTP
-
-struct ValidateOTPSuc: Codable {
-    let status: Bool?
-    let message: String?
-    let data: [String]?
-}
-
 // MARK: Validate User
-
 struct UserValidationResponseSuc: Codable {
     let status: Bool?
     let message: String?
@@ -152,4 +104,59 @@ struct ChildDetails: Codable {
     let access_token: String?
 }
 
+// MARK: Validate OTP
+struct ValidateOTPSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [String]?
+}
 
+//MARK: Change Password API
+struct ChangePasswordSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [String]?
+}
+
+
+//MARK: Forgot Password API
+struct ForgotPasswordResponeSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [ForgotPasswordData]?
+}
+
+struct ForgotPasswordData : Codable {
+    let dial_numbers: String?
+    let more_info: String?
+    let forgot_otp_message: String?
+}
+
+//MARK: Reset Password API
+struct ResetPasswordSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [String]?
+}
+
+//MARK: Create New Password API
+struct CreateNewPasswordSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [String]?
+}
+
+//MARK: Global Variables API
+struct GlobalVariablesResponseSuc : Codable {
+    
+    let status : Bool?
+    let message : String?
+    let data : [GlobalVariablesData]?
+}
+
+struct GlobalVariablesData : Codable {
+    
+    let new_version : String?
+    let new_updates : String?
+}
+    

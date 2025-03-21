@@ -41,7 +41,7 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         textview.layer.cornerRadius = Colornames.CORadius10
         textview.layer.borderWidth = 1
         textview.layer.borderColor = UIColor.lightGray.cgColor
-        keyboardDonebtn()
+        textview.addDoneButton()
     }
     func Uiupdate(){
         
@@ -54,19 +54,6 @@ class RatingTypeTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColl
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 10, right: 5)
         collectionview.collectionViewLayout = layout
     }
-    
-    func keyboardDonebtn(){
-            let toolbar = UIToolbar()
-            toolbar.sizeToFit()
-            let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneKeyboard))
-            let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            toolbar.setItems([flexibleSpace, doneButton], animated: false)
-        textview.inputAccessoryView = toolbar
-            
-        }
-        @objc func doneKeyboard() {
-            contentView.endEditing(true)  // Dismiss the keyboard
-        }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

@@ -64,4 +64,25 @@ extension UIView {
         placeholderLabel.frame.origin = CGPoint(x: xPosition, y: 8) // Adjust padding
     }
 }
+extension UIView {
+    func addDoneButton() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(dismissKeyboard))
+        
+        toolbar.items = [flexSpace, doneButton]
+        
+        if let textField = self as? UITextField {
+            textField.inputAccessoryView = toolbar
+        } else if let textView = self as? UITextView {
+            textView.inputAccessoryView = toolbar
+        }
+    }
+    
+    @objc private func dismissKeyboard() {
+        self.endEditing(true)
+    }
+}
 

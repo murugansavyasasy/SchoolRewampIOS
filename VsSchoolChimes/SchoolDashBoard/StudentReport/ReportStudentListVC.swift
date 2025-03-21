@@ -48,7 +48,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sortedStudent = studentList
         uiConfic()
         if #available(iOS 14.0, *) {
-            addDoneButton()
+            searchBar.addDoneButton()
             searchBar.delegate = self
         }
         classSelection.alpha = 0
@@ -338,20 +338,6 @@ extension ReportStudentListVC: UISearchBarDelegate{
         reportTable.reloadData()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-    
-    func addDoneButton(){
-        let toolbar = UIToolbar()
-        toolbar.sizeToFit()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(DoneBtnAct))
-        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolbar.setItems([flexibleSpace,doneButton], animated: false)
-        searchBar.inputAccessoryView = toolbar
-    }
-    
-    @IBAction func DoneBtnAct(){
-        
         searchBar.resignFirstResponder()
     }
 }
