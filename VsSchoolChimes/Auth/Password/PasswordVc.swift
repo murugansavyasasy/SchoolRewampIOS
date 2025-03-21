@@ -1,19 +1,20 @@
-    //
-    //  PasswordVc.swift
-    //  VsSchoolChimes
-    //
-    //  Created by admin on 26/10/24.
-    //
+//
+//  PasswordVc.swift
+//  VsSchoolChimes
+//
+//  Created by admin on 26/10/24.
+//
 
-    import UIKit
+import UIKit
 
-    @available(iOS 14.0, *)
+@available(iOS 14.0, *)
 class PasswordVc: UIViewController,UITextFieldDelegate {
     
     
     @IBOutlet weak var passwordTxtFld: UITextField!
     @IBOutlet weak var validateBtnName: UIButton!
     @IBOutlet weak var eyeImage: UIImageView!
+    @IBOutlet weak var forgetLbl: UILabel!
     var AlertModal = CustomAlert()
     var mobile_number:String?
     override func viewDidLoad() {
@@ -23,21 +24,44 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
         eyeImage.addGestureRecognizer(eyeImageTap)
         
+        
+        let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
+        forgetLbl.addGestureRecognizer(forgetTap)
+        
+        
+    }
+    
+    
+    @IBAction func forgetClick() {
+        if mobile_number != ""  {
+            
+            //call forgot api and then navigate to the OTP screen
+            
+            let vc = OTPVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            vc.pageType = screenType.isForgotPassword
+            present(vc, animated: true)
+            
+        } else {
+            AlertModal
+                .showAlert(
+                    title: "",
+                    message: AlertstringFile.Enter_valid_Mobile ,
+                    on: self)
+        }
     }
     
     @IBAction func togglePasswordVisibility() {
+        
         passwordTxtFld.isSecureTextEntry.toggle()
-        let imageName = passwordTxtFld.isSecureTextEntry ? "eye.fill" : "eye.slash.fill"
-        eyeImage.image = UIImage(systemName: imageName)
+        let imageName = passwordTxtFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
+        eyeImage.image = imageName
     }
-    
-    
-    
-    
+ 
     func setupUI() {
         validateBtnName.backgroundColor = Colornames.ButtonColor
         validateBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
-    
+        
         passwordTxtFld.delegate = self
         passwordTxtFld.keyboardType = .default
         passwordTxtFld.isSecureTextEntry = true
@@ -62,6 +86,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
         vc.mobile_number = mobile_number ?? ""
+        vc.pageType = screenType.isPassword
+        
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -69,6 +95,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     func validate_user() {
         
         let secureID = SecureIDManager.getSecureID()
+        
         
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:[
@@ -88,11 +115,11 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                         DispatchQueue.main.async { [self] in
                             
                             
-                            //                            UserDefaultFileManager.saveLoginCredentials(mobile_number : MobilTextFld.text ?? "",pwd:passTextFld.text ?? "")
-                            
                             let data : UserData = (
                                 response.data?.first
                             )!
+                            localData.user_data = data
+                            
                             
                             if(data.is_number_exists == true){
                                 if(data.otp_sent == true){
@@ -128,14 +155,44 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                     }
                                     
                                     
+                                    if(data.is_password_updated == true){
+                                        
+                                        UserDefaultFileManager
+                                            .saveLoginCredentials(
+                                                mobile_number:mobile_number ?? "",
+                                                pwd:passwordTxtFld.text ?? ""
+                                            )
+                                        
+                                        localData.user_details = data.user_details
+                                        
+                                        if(data.user_details?.is_staff == true) &&  (
+                                            data.user_details?.is_parent == true
+                                        ){
+                                            let vc = PriorityVC(nibName: nil, bundle: nil)
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        else if(data.user_details?.is_staff == true){
+                                            let vc = HomePageVc(nibName: nil,bundle: nil)
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                            
+                                        }
+                                        else if(data.user_details?.is_parent == true){
+                                            let vc = ParentHomePageVc(nibName: nil,bundle: nil)
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        
+                                    }
                                 }
                                 
                             }
                             else {
                                 AlertModal.showAlert(
-                                        title: "",
-                                        message: response.message ?? "",
-                                        on: self
+                                    title: "",
+                                    message: response.message ?? "",
+                                    on: self
                                 )
                             }
                             
@@ -159,6 +216,49 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         
     }
     
+    
+    
+    func ForgotPasswordAPIcall () {
+            
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+                result : Result<ForgotPasswordResponeSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successmessage):
+                    
+                    if successmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            print("Success,Success")
+                            
+                            
+                            
+                        }
+                        
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            print("Try again later")
+                        }
+                    }
+                    
+                case.failure(let error):
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+               
+                }
+                
+            }
+        }
+        
     
     
     

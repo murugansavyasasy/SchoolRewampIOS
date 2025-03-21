@@ -23,7 +23,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var eyeImage: UIImageView!
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
-    var pageType : Int?
     var mobile_number_length : Int?
     var mobile_no_hint : String?
     var country_data : CountryData? = nil
@@ -38,8 +37,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         mobile_no_hint = country_data?.mobile_no_hint
         mobile_number_length = country_data?.mobile_number_length
         
-        
-        hiddenShowView()
         
         MobilTextFld.placeholder = mobile_no_hint
         
@@ -59,21 +56,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func hiddenShowView()
-    {
-        if pageType == screenType.isMobileNumber {
-            passwordStack.isHidden = true
-            forgetLbl.isHidden = true
-        }else if pageType == screenType.isPassword {
-            mobileNumberStack.isHidden = true
-            forgetLbl.isHidden = false
-        }else{
-            mobileNumberStack.isHidden = false
-            passwordStack.isHidden = false
-            forgetLbl.isHidden = false
-        }
-        
-    }
+    
     
     func setupUI() {
         loginBtnNm.backgroundColor = Colornames.ButtonColor
@@ -88,11 +71,15 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func forgetClick() {
-        if MobilTextFld.text != "" && MobilTextFld.text?.count == 10 {
+        if MobilTextFld.text != "" && MobilTextFld.text?.count == country_data?.mobile_number_length {
+            
+            //call forgot api and then navigate to the OTP screen
+            
             let vc = OTPVc(nibName: nil, bundle: nil)
-            vc.forgetType = true
             vc.modalPresentationStyle = .fullScreen
+            vc.pageType = screenType.isForgotPassword
             present(vc, animated: true)
+            
         } else {
             view.makeToast(AlertstringFile.Enter_the_10_digit)
         }
@@ -117,7 +104,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         return true
     }
     
- 
+    
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
@@ -128,27 +115,12 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-       
-        validateMobileNumber()
+        
+        validateMobileAndPassword()
         
     }
     
-    func validateMobileNumber() {
-        guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-        }
-        guard mobile.count == mobile_number_length else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-        }
-        validate_user(page_value : pageType ?? 0)
-    }
-    
-    func validatePassword() {
-        guard let password = passTextFld.text, !password.isEmpty else {
-            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-        }
-        validate_user(page_value : pageType ?? 0)
-    }
+   
     
     func validateMobileAndPassword() {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
@@ -160,110 +132,135 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         guard let password = passTextFld.text, !password.isEmpty else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
         }
-        
-        validate_user(page_value : pageType ?? 0)
+        validate_user()
     }
     
-//    func validatePassword() {
-//        guard let password = passTextFld.text, !password.isEmpty else {
-//            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-//        }
-//        
-//
-//        
-//    }
-//    
-//    func validateMobileAndPassword() {
-//        guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
-//            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-//        }
-//        
-//        guard mobile.count == mobile_number_length else {
-//            return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
-//        }
-//        
-//        guard let password = passTextFld.text, !password.isEmpty else {
-//            return AlertModal.showAlert(title: "", message: AlertstringFile.Invalid, on: self)
-//        }
-//        
-//        validate_user(page_value : pageType ?? 0)
-//    }
+    
     
     func otp_Vc(valdiateResponse : [UserData]){
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
         vc.mobile_number = MobilTextFld.text ?? ""
+        vc.pageType = screenType.isLoginPage
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
-    func validate_user(page_value : Int) {
+    func validate_user() {
         
         let secureID = SecureIDManager.getSecureID()
         var parameters: [String: Any] = [
+            
             mobileNumber.mobile_number: MobilTextFld.text ?? "",
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
-            mobileNumber.secure_id: secureID
+            mobileNumber.secure_id: secureID,
+            mobileNumber.password:passTextFld.text ?? ""
         ]
-        if page_value == screenType.isLoginPage {
-            parameters[mobileNumber.password] = passTextFld.text ?? ""
-        }
         
-        APIService.shared.makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                                  , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
-                                    result: Result<UserValidationResponseSuc,
-                                    Error>
-                                  ) in
-            switch result {
-            case .success(let response):
-                if response.status == true {
-                    DispatchQueue.main.async { [self] in
-                        
-                        UserDefaultFileManager.saveLoginCredentials(mobile_number : MobilTextFld.text ?? "",pwd:passTextFld.text ?? "")
-                        
-                        if let data = response.data?.first{
+        APIService.shared
+            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
+                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                        result: Result<UserValidationResponseSuc,
+                        Error>
+                     ) in
+                switch result {
+                case .success(let response):
+                    if response.status == true {
+                        DispatchQueue.main.async { [self] in
+                            
+                            let data : UserData = (
+                                response.data?.first
+                            )!
+                            localData.user_data = data
+                            
                             
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
                                     
                                     otp_Vc(valdiateResponse: response.data ?? [])
-                                }else {
-                                    if(page_value == screenType.isMobileNumber){
-                                        pageType = screenType.isPassword
-                                        hiddenShowView()
-                                    }else if(page_value == screenType.isLoginPage){
+                                }
+                                else {
+                                    
+                                    if data.is_password_updated == true {
                                         
-                                    }else if(page_value == screenType.isPassword){
+                                        UserDefaultFileManager
+                                            .saveLoginCredentials(
+                                                mobile_number:MobilTextFld.text ?? "",
+                                                pwd:passTextFld.text ?? ""
+                                            )
+                                        
+                                        localData.user_details = data.user_details
+                                        
+                                        if(data.user_details?.is_staff == true) &&  (
+                                            data.user_details?.is_parent == true
+                                        ){
+                                            let vc = PriorityVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                            
+                                        }
+                                        else if(data.user_details?.is_staff == true){
+                                            let vc = HomePageVc(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                            
+                                        }
+                                        else if(data.user_details?.is_parent == true){
+                                            
+                                            let vc = ParentHomePageVc(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        
+                                    }
+                                    else{
                                         
                                     }
                                     
-                                    
                                 }
-                            }else{
-                                AlertModal.showAlert(
+                                
+                            }
+                            else {
+                                AlertModal
+                                    .showAlert(
+                                        title: "",
+                                        message: response.message ?? "",
+                                        on: self
+                                    )
+                            }
+                            
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            AlertModal
+                                .showAlert(
                                     title: "",
                                     message: response.message ?? "",
-                                    on: self)
-                            }
+                                    on: self
+                                )
+                            
                         }
                     }
-                }else{
-                    DispatchQueue.main.async { [self] in
-                        AlertModal.showAlert(
-                            title: "",
-                            message: response.message ?? "",
-                            on: self)
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
                     }
                 }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
             }
-        }
+        
     }
-    
-    
 }
+    
+
+
 
