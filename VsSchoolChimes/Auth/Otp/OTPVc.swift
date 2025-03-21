@@ -170,7 +170,7 @@ class OTPVc: UIViewController {
     func Validate_OTP(mobileNumber : String , otp : String) {
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
-                COMMON_PARAMETER.mobile_number :  mobileNumber,
+                COMMON_PARAMETER.mobile_number :  "7070707070"/*mobileNumber*/,
                 OTP_PARAMETER.otp :  otp
         
             ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (

@@ -184,7 +184,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             
         } else {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.principalTVCell, for: indexPath) as! principalTVCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.principalTVCell, for: indexPath) as! SchoolTVCell
             
             
             if let color1 = colour1, let color2 = colour2 {
