@@ -47,6 +47,7 @@ class CountryVc: UIViewController {
     var country_data : CountryData? = nil
     override func viewDidLoad() {
         super.viewDidLoad()
+        CountryList.isUserInteractionEnabled = false
         get_CountryListApi()
         StyleAndTranslater()
         
@@ -126,8 +127,6 @@ class CountryVc: UIViewController {
     
     @IBAction func selectCountry(_ sender: UIButton) {
         dropDown.anchorView = CountryList
-        dropDown.dataSource = dropDownList
-        dropDown.imageURLs = images
         dropDown.show()
         dropDown.bottomOffset = CGPoint(x: 0, y: CountryList.bounds.height)
         dropDownBtn.setImage( UIImage(systemName: "chevron.up"), for: .normal)
@@ -137,9 +136,6 @@ class CountryVc: UIViewController {
             countyNameBtn.setTitle(item, for: .normal)
             dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             country_data = CountryListRespons?[index]
-           
-            print("country_data",country_data)
-            
         }
         dropDown.cancelAction = { [weak self] in
             self?.dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
@@ -164,9 +160,17 @@ class CountryVc: UIViewController {
                                let flagURL = CountryListRespons?[i].flag_url {  // Fixed missing comma and variable name
                                 images.append(flagURL)
                                 dropDownList.append(countryName)  // Ensuring the order is maintained
+
                             }
                         }
-                        
+                        dropDown.dataSource = dropDownList
+                        dropDown.imageURLs = images
+                            for j in 0..<images.count {
+                                if let cell = dropDown.tableView.cellForRow(at: IndexPath(row: j, section: 0)) as? DropDownCell {
+                                    dropDown.configureCell(cell, at: j)
+                                }
+                            }
+                        CountryList.isUserInteractionEnabled = true
                     }
                 }
             case .failure(let error):

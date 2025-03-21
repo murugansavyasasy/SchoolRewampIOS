@@ -28,7 +28,7 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var playerView: WaveView!
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var outerview: UIView!
-    var audioURL: String = "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav"
+    var audioURL: String = " https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg"
     override func awakeFromNib() {
         super.awakeFromNib()
         outerview.layer.shadowColor = UIColor.black.cgColor
@@ -132,9 +132,11 @@ class HistoryTC: UITableViewCell {
                 player = AVPlayer(url: url)
             }
             player?.play()
+            player?.volume = 1
             playBtn.setImage(UIImage(named: "pausebutton"), for: .normal)
         } else {
             player?.pause()
+            updateAudioLevels(int: 0)
             playBtn.setImage(UIImage(named: "playbutton"), for: .normal)
         }
     }

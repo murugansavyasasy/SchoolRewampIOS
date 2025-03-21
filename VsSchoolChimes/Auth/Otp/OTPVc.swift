@@ -181,17 +181,19 @@ class OTPVc: UIViewController {
                         }
                     }else{
                         DispatchQueue.main.async {
-                            self.AlertModal
-                                .showAlert(
-                                    title: "",
-                                    message: successMessage.message ?? "",
-                                    on: self
-                                )
+//                            self.AlertModal
+//                                .showAlert(
+//                                    title: "",
+//                                    message: successMessage.message ?? "",
+//                                    on: self
+//                                )
+                            self.priotyScreenVC()
                         }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        
                     }
                 }
             }
