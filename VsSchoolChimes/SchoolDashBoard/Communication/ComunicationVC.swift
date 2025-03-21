@@ -5,7 +5,7 @@ import UniformTypeIdentifiers
 import AVFAudio
 
 protocol reloadDelegate{
-    func reload(index: Int,playToggle:Bool)
+    func reload(index: Int)
     func deleteDelegate(index:Int)
 }
 
@@ -460,8 +460,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 audioRecorder?.isMeteringEnabled = true
                 audioRecorder?.record(forDuration: 180.00) // record for 3 minutes
                 audioRecorder?.prepareToRecord()
-                
-                print("Recording started at \(fileURL.absoluteString)")
             } catch {
                 print("Error setting up recorder: \(error.localizedDescription)")
             }
@@ -489,8 +487,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 }
                 
                 // Optional: Use the destinationURL for further processing
-                AudioPlayUrl = destinationURL.absoluteString // Assuming AudioPlayUrl is declared
-                
+                AudioPlayUrl = destinationURL.absoluteString
                 // UI updates (e.g., show player)
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
@@ -646,11 +643,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @objc func handleWaveViewProgressChange(_ notification: Notification) {
         guard let progress = notification.object as? CGFloat,
               let player = player else { return }
-
         let totalDuration = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime.zero)
         let seekTime = CMTime(seconds: Double(progress) * totalDuration, preferredTimescale: 1)
-
-        // ❗️ No pause or play here, only seek time adjustment
         player.seek(to: seekTime) { [weak self] _ in
             self?.updateUIForSeekPosition(progress)
         }
@@ -674,19 +668,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         activeButton = button // Track which button is being updated
         timePicker.isHidden = false
         doneButton.isHidden = false
-        
-        // Position the time picker below the button
         let buttonFrame = button.convert(button.bounds, to: self.view)
         timePicker.frame = CGRect(x: (self.view.frame.width - 200) / 2, y: buttonFrame.maxY + 10, width: 250, height: 200)
-        
-        // Set background color to pink
         timePicker.backgroundColor = .white
         timePicker.layer.shadowColor = UIColor.black.cgColor
         timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
         timePicker.layer.shadowRadius = 5
         timePicker.layer.shadowOpacity = 0.3
         timePicker.layer.cornerRadius = 20
-        // Position the Done button at the bottom-right of the time picker
         doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: timePicker.frame.maxY - 40, width: 70, height: 30)
     }
     
@@ -694,13 +683,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @objc func updateRecordingTime() {
         if let startTime = recordingStartTime {
             let elapsed = Date().timeIntervalSince(startTime)
-            
-            // Limit recording time to a maximum of 3 minutes (180 seconds)
             if elapsed >= 180 {
                 stopRecording()
-                Timinglbl.text = "03:00" // Display 03:00 when maximum time is reached
+                Timinglbl.text = "03:00"
             } else {
-                // Display elapsed time in "mm:ss" format
                 let minutes = Int(elapsed) / 60
                 let seconds = Int(elapsed) % 60
                 Timinglbl.text = String(format: "%02d:%02d", minutes, seconds)
@@ -714,12 +700,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         player?.pause()
         updateTimer?.invalidate()
         audioRecorder?.updateMeters()
-        
-        // Get average power for channel 0
         let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
         let normalizedPower = max(0, (averagePower + 160) / 160)
-        
-        // Update wave view with the normalized power level
         waveView.updateWithLevel(CGFloat(normalizedPower))
         playerItem?.seek(to: CMTime.zero)
     }
@@ -818,7 +800,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
         }else{
             showVoiceMessageView()
-            
         }
     }
     
@@ -949,7 +930,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             let supportedTypes: [UTType] = [.audio, .pdf, .text, .plainText]
             let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes)
             documentPicker.delegate = self
-            documentPicker.allowsMultipleSelection = false  // Set to true if you want to allow multiple selections
+            documentPicker.allowsMultipleSelection = false
             present(documentPicker, animated: true, completion: nil)
         }
     }
@@ -990,7 +971,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2 // Replace with the actual number of sections
+        return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return section == 0 ? 5:5
@@ -1000,12 +981,10 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-            
-            
             cell.descriptContent.attributedText = descript(for:"Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.", expanded: false)
             cell.delegate = self
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-            cell.descriptContent.tag = indexPath.row // Tag the label with the row index
+            cell.descriptContent.tag = indexPath.row
             cell.descriptContent.isUserInteractionEnabled = true
             cell.descriptContent.addGestureRecognizer(tapGesture)
             
@@ -1019,8 +998,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
             // Update play state
             let isPlaying = (playIndex == indexPath.row)
-            //        var urls = URL(string: AudioPlayUrl)
-            cell.updatePlayState(isPlaying: isPlaying, url: AudioPlayUrl)
+            cell.updatePlayState(isPlaying: isPlaying)
             cell.delegate = self
             cell.playBtn.setImage(image, for: .normal)
             return cell
@@ -1037,12 +1015,8 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         guard let label = sender.view as? UILabel else { return }
         let indexPath = IndexPath(row: label.tag, section: 0)
         let fullDescription = "Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1."
-        
-        // Toggle the label between expanded and collapsed states
         let isExpanded = label.numberOfLines == 0
         label.numberOfLines = isExpanded ? 3 : 0
-        
-        // Update the label text with the appropriate "See more" or "See less" state
         label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
         
         // Animate the cell height change
@@ -1081,16 +1055,12 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     
     
-    func reload(index: Int,playToggle:Bool) {
+    func reload(index: Int) {
         // Stop playback in the currently playing cell (if any)
         if let currentIndex = playIndex, currentIndex != index {
-            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-            if let previousCell = historytable.cellForRow(at: previousIndexPath) as? HistoryTC {
-                previousCell.updatePlayState(isPlaying: false, url: previousCell.AudioPlayUrl)
-            }
-        }
-        
-        // Update the currently playing index and reload the table view
+                   let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+                   (historytable.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false)
+               }
         playIndex = (playIndex == index) ? nil : index
         historytable.reloadData()
     }
@@ -1120,14 +1090,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         // Format the time
         let formatter = DateFormatter()
         formatter.timeStyle = .short
-        
         if let activeButton = activeButton {
             // Update the respective button's title
             let selectedTime = formatter.string(from: timePicker.date)
             activeButton.setTitle(selectedTime, for: .normal)
         }
-        
-        // Hide the picker and Done button
         timePicker.isHidden = true
         doneButton.isHidden = true
         activeButton = nil
@@ -1145,8 +1112,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         // Get the current visible month
         let firstDayOfCurrentMonth = calendar.currentPage
         let lastDayOfCurrentMonth = Calendar.current.date(byAdding: .month, value: 1, to: firstDayOfCurrentMonth)?.addingTimeInterval(-1) ?? firstDayOfCurrentMonth
-        
-        // Check if the selected date is within the current month
         if !(date >= firstDayOfCurrentMonth && date <= lastDayOfCurrentMonth) {
             // Deselect the date and notify the user
             calendar.deselect(date)
@@ -1201,11 +1166,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     func deleteDelegate(index: Int) {
         //        selectedDates.remove(at: index)
         let dateToRemove = selectedDates[index]
-        
-        // Then remove it from the array
         selectedDates.remove(at: index)
-        
-        // Deselect the date on the calendar
         DateSelection.deselect(dateToRemove)
         if selectedDates.count == 0{
             dateSelectedViewHeight.constant = 0

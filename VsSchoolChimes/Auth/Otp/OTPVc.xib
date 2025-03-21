@@ -173,10 +173,10 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <action selector="PhoneNo1BtnAct:" destination="-1" eventType="touchUpInside" id="QT1-wi-vPK"/>
+                                                        <action selector="customerSupport:" destination="-1" eventType="touchUpInside" id="XJO-nB-lun"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSU-eu-dgj">
+                                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BSU-eu-dgj">
                                                     <rect key="frame" x="186.66666666666663" y="0.0" width="186.33333333333337" height="19"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="phone" catalog="system">
@@ -192,7 +192,7 @@
                                                         </attributedString>
                                                     </state>
                                                     <connections>
-                                                        <action selector="PhoneNo2BtnAct:" destination="-1" eventType="touchUpInside" id="gyC-wv-Zr9"/>
+                                                        <action selector="customerSupport:" destination="-1" eventType="touchUpInside" id="R9h-jA-etC"/>
                                                     </connections>
                                                 </button>
                                             </subviews>

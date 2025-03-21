@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Contacts
 
 @available(iOS 14.0, *)
 class LoginVc: UIViewController, UITextFieldDelegate {
@@ -30,7 +31,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        fetchUserPhoneNumber()
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
@@ -48,6 +49,9 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
         eyeImage.addGestureRecognizer(eyeImageTap)
+        MobilTextFld.textContentType = .telephoneNumber
+        MobilTextFld.keyboardType = .phonePad
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,6 +59,30 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         MobilTextFld.becomeFirstResponder() // ✅ Forces keyboard to appear faster
     }
     
+
+    func fetchUserPhoneNumber() {
+        let store = CNContactStore()
+        store.requestAccess(for: .contacts) { granted, error in
+            if granted {
+                let keys = [CNContactPhoneNumbersKey] as [CNKeyDescriptor]
+                let request = CNContactFetchRequest(keysToFetch: keys)
+                
+                do {
+                    try store.enumerateContacts(with: request) { (contact, stop) in
+                        for phoneNumber in contact.phoneNumbers {
+                            DispatchQueue.main.async {
+                                self.MobilTextFld.text = phoneNumber.value.stringValue
+                            }
+                            stop.pointee = true  // Stop after getting the first number
+                        }
+                    }
+                } catch {
+                    print("Error fetching contacts: \(error)")
+                }
+            }
+        }
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -72,16 +100,13 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             passwordStack.isHidden = false
             forgetLbl.isHidden = false
         }
-        
     }
     
     func setupUI() {
         loginBtnNm.backgroundColor = Colornames.ButtonColor
         loginBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
-        
         MobilTextFld.delegate = self
         MobilTextFld.keyboardType = .numberPad
-        
         passTextFld.delegate = self
         passTextFld.keyboardType = .default
         passTextFld.isSecureTextEntry = true
@@ -117,8 +142,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         return true
     }
     
- 
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
             let newLength = (textField.text?.count ?? 0) + string.count - range.length
@@ -128,9 +151,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-       
         validateMobileNumber()
-        
     }
     
     func validateMobileNumber() {
@@ -237,8 +258,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                     }else if(page_value == screenType.isPassword){
                                         
                                     }
-                                    
-                                    
                                 }
                             }else{
                                 AlertModal.showAlert(
