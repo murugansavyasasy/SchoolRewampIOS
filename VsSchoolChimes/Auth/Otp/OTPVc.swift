@@ -38,10 +38,19 @@ class OTPVc: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         ResendLbl.isUserInteractionEnabled = true
         validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
         validationBtnNm.backgroundColor = Colornames.ButtonColor
         
+        OtpContentLbl.text = validateMobileData.first?.more_info ?? "" + (
+            mobile_number ?? "")
+        
+        setDialNumbers(
+            dialNumbersString:validateMobileData.first?.dial_numbers ?? ""
+        )
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
@@ -58,8 +67,8 @@ class OTPVc: UIViewController {
         //OtpContentLbl.text = validateMobileData.first?.message
         setupOTPTextFields()
         
-        let defaults = UserDefaults.standard
-        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
+//        let defaults = UserDefaults.standard
+//        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
@@ -69,9 +78,29 @@ class OTPVc: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    @IBAction func customerSupport(_ sender: UIButton) {
-        let phoneNumber = sender.titleLabel?.text ?? "" // Replace with the actual support number
-        if let url = URL(string: "tel://\(phoneNumber)"),
+
+    
+    func setDialNumbers(dialNumbersString: String) {
+        let dialNumbers = dialNumbersString.components(separatedBy: ",")
+
+        if dialNumbers.count > 0 {
+            PhoneBtn1.setTitle(dialNumbers[0], for: .normal)
+            PhoneBtn1.isHidden = false // Show the button if hidden
+        } else {
+            PhoneBtn1.isHidden = true // Hide if no number
+        }
+
+        if dialNumbers.count > 1 {
+            PhoneBtn2.setTitle(dialNumbers[1], for: .normal)
+            PhoneBtn2.isHidden = false
+        } else {
+            PhoneBtn2.isHidden = true
+        }
+    }
+
+    // Function to handle button taps
+    @IBAction func phoneButtonTapped(_ sender: UIButton) {
+        if let phoneNumber = sender.titleLabel?.text, let url = URL(string: "tel://\(phoneNumber)"),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         } else {
@@ -149,12 +178,7 @@ class OTPVc: UIViewController {
         CreatePasswordValue : Bool
     ){
         
-        //        let vc = PasswordVc(nibName: nil, bundle: nil)
-        //        vc.createPassText  = createPassword
-        //        vc.confirmPassText = confirmPassword
-        //        vc.forgetType = CreatePasswordValue
-        //        vc.modalPresentationStyle = .fullScreen
-        //        present(vc, animated: true)
+
     }
     
     func Validate_OTP(mobileNumber : String , otp : String) {
@@ -171,15 +195,68 @@ class OTPVc: UIViewController {
                 case .success(let successMessage):
                     if successMessage.status == true {
                         DispatchQueue.main.async { [self] in
-                            if  validateMobileData.first?.is_password_updated == false{
-                                let vc = PasswordVc(nibName: nil, bundle: nil)
+                            
+                            if(pageType == screenType.isForgotPassword){
+                                
+                                let vc = CreatePasswordVc(
+                                    nibName: nil,
+                                    bundle: nil
+                                )
                                 vc.modalPresentationStyle = .fullScreen
+                                vc.createNewPassword = false
+                                vc.mobile_number = mobileNumber
                                 present(vc, animated: true)
-                            }else{
-                                priotyScreenVC()
+                                
                             }
-                        }
-                    }else{
+                           
+                            else if(localData.user_data?.is_password_updated == false){
+                               
+                                let vc = CreatePasswordVc(
+                                    nibName: nil,
+                                    bundle: nil
+                                )
+                                vc.modalPresentationStyle = .fullScreen
+                                vc.createNewPassword = true
+                                vc.mobile_number = mobileNumber
+                                present(vc, animated: true)
+                            }
+                            else {
+                                if(localData.user_data?.user_details?.is_staff == true) &&  (
+                                    localData.user_data?.user_details?.is_parent == true
+                                ){
+                                    let vc = PriorityVC(
+                                        nibName: nil,
+                                        bundle: nil
+                                    )
+                                    vc.modalPresentationStyle = .fullScreen
+                                    present(vc, animated: true)
+                                    
+                                }
+                                else if(localData.user_data?.user_details?.is_staff == true){
+                                    let vc = HomePageVc(
+                                        nibName: nil,
+                                        bundle: nil
+                                    )
+                                    vc.modalPresentationStyle = .fullScreen
+                                    present(vc, animated: true)
+                                    
+                                }
+                                else if(localData.user_data?.user_details?.is_parent == true){
+                                    
+                                    let vc = ParentHomePageVc(
+                                        nibName: nil,
+                                        bundle: nil
+                                    )
+                                    vc.modalPresentationStyle = .fullScreen
+                                    present(vc, animated: true)
+                                }
+                                
+                            }
+                            
+                                                
+                         }
+                    }
+                    else{
                         DispatchQueue.main.async {
 //                            self.AlertModal
 //                                .showAlert(

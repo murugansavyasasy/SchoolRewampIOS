@@ -20,7 +20,7 @@ struct ServiceUrl{
     static let cred_change_password      = "cred/change-password"
     static let cred_forgot_password      = "cred/forgot-password"
     static let cred_reset_password       = "cred/reset-password"
-    static let  cred_create_new_password = " cred/create-new-password"
+    static let  cred_create_new_password = "cred/create-new-password"
     static let global_global_variables   = "global/global-variables"
     
 }
@@ -31,6 +31,7 @@ struct localData{
     static var staff_data: [StaffDetails]?
     static var child_data: [ChildDetails]?
     static var user_details : UserDetails? = nil
+    static var user_data : UserData? = nil
 
 }
 func isValidEmail(_ email: String) -> Bool {
