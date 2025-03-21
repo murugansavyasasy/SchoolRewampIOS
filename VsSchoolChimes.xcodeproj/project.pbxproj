@@ -235,7 +235,7 @@
 		84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C622CEDE02400E7D367 /* SDWebImage */; };
 		84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C642CEDE02400E7D367 /* SDWebImageMapKit */; };
 		8476882B2D88316C00EAB9DB /* userDefaultFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */; };
-		8476882D2D892D7D00EAB9DB /* keyChainFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882C2D892D7D00EAB9DB /* keyChainFile.swift */; };
+		8476882D2D892D7D00EAB9DB /* DeviceUUIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */; };
 		8476882F2D892DBB00EAB9DB /* SecureidFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882E2D892DBB00EAB9DB /* SecureidFile.swift */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
@@ -825,7 +825,7 @@
 		846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
 		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
 		8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultFileManager.swift; sourceTree = "<group>"; };
-		8476882C2D892D7D00EAB9DB /* keyChainFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = keyChainFile.swift; sourceTree = "<group>"; };
+		8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUUIDManager.swift; sourceTree = "<group>"; };
 		8476882E2D892DBB00EAB9DB /* SecureidFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureidFile.swift; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
@@ -2375,7 +2375,7 @@
 				8463D0EA2D6EF5CD00361F55 /* Extentions.swift */,
 				842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */,
 				8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */,
-				8476882C2D892D7D00EAB9DB /* keyChainFile.swift */,
+				8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */,
 				8476882E2D892DBB00EAB9DB /* SecureidFile.swift */,
 			);
 			path = Utils;
@@ -3582,7 +3582,7 @@
 				FAFF9DF72D6C7B7A00498368 /* StaffPtmViewController.swift in Sources */,
 				FAFF9DF82D6C7B7A00498368 /* CalenderCVcell.swift in Sources */,
 				8463D0EB2D6EF5CD00361F55 /* Extentions.swift in Sources */,
-				8476882D2D892D7D00EAB9DB /* keyChainFile.swift in Sources */,
+				8476882D2D892D7D00EAB9DB /* DeviceUUIDManager.swift in Sources */,
 				FAFF9DF92D6C7B7A00498368 /* CreateSlotByStaffRequest.swift in Sources */,
 				FAFF9DFA2D6C7B7A00498368 /* TimeHeader.swift in Sources */,
 				849F4C772D24010300C9F4BF /* addCvCell.swift in Sources */,

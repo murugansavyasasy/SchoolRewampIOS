@@ -86,4 +86,7 @@ class ImageName{
     static let questionmark = UIImage(systemName: "questionmark.circle.fill")
     static let gearshape = UIImage(systemName: "gearshape.fill")
     static let person = UIImage(systemName: "person.crop.circle")
+    static let eye_fill = UIImage(systemName: "eye.fill")
+    static let eye_slash = UIImage(systemName: "eye.slash.fill")
+    
 }

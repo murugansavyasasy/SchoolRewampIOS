@@ -28,6 +28,8 @@ class SplashViewController: UIViewController {
         if let countryDetails =   UserDefaultFileManager.getCountryDetails() {
             countryId = countryDetails.id
         }
+        let secureID = SecureIDManager.getSecureID()
+        print("secureIDsecureID",secureID)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
             if(countryId != nil){
                 Version_Check()
@@ -60,7 +62,6 @@ class SplashViewController: UIViewController {
                             UserDefaultFileManager
                                 .saveCountryDetails(
                                     data: (version_Data?.country_details)!)
-
                             ServiceUrl.baseurl = version_Data?.country_details?.base_url ?? ""
                             ServiceUrl.report_url = version_Data?.country_details?.reporting_url ?? ""
                             if(version_Data?.update_available == true){
@@ -109,6 +110,8 @@ class SplashViewController: UIViewController {
                             let data : UserData = (
                                 response.data?.first
                             )!
+                            localData.user_data = data
+
                             
                             if(data.is_number_exists == true){
                                 
@@ -117,39 +120,46 @@ class SplashViewController: UIViewController {
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
-                                    UserDefaultFileManager
-                                        .saveLoginCredentials(
-                                            mobile_number:mobile_num ?? "",
-                                            pwd:password ?? ""
-                                        )
                                     
-                                    localData.user_details = data.user_details
-                                    
-                                    if(data.user_details?.is_staff == true) &&  (
-                                        data.user_details?.is_parent == true
-                                    ){
-                                        let vc = PriorityViewController1(nibName: nil, bundle: nil)
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
+                                    if data.is_password_updated == true {
                                         
+                                        UserDefaultFileManager
+                                            .saveLoginCredentials(
+                                                mobile_number:mobile_num ?? "",
+                                                pwd:password ?? ""
+                                            )
+                                        
+                                        localData.user_details = data.user_details
+                                        
+                                        if(data.user_details?.is_staff == true) &&  (
+                                            data.user_details?.is_parent == true
+                                        ){
+                                            let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                            
+                                        }
+                                        else if(data.user_details?.is_staff == true){
+                                            let vc = HomePageVc(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                            
+                                        }
+                                        else if(data.user_details?.is_parent == true){
+                                            
+                                            let vc = ParentHomePageVc(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
                                     }
-                                    else if(data.user_details?.is_staff == true){
-                                        let vc = HomePageVc(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
+                                    else{
                                         
-                                    }
-                                    else if(data.user_details?.is_parent == true){
-                                        
-                                        let vc = ParentHomePageVc(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
                                     }
                                     
                                 }
@@ -187,8 +197,12 @@ class SplashViewController: UIViewController {
     
     
     func otp_Vc(valdiateResponse : [UserData]){
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
+        vc.pageType = screenType.isSplash
+        vc.mobile_number = mobile_num
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -200,13 +214,11 @@ class SplashViewController: UIViewController {
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd
         
         if (mobile_num != nil) && (password != nil){
-            validate_user()
-                
-               }
-          else{
-                
+               validate_user()
+                }
+         
+            else{
                 let vc = LoginVc(nibName: nil, bundle: nil)
-                vc.pageType = screenType.isLoginPage
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
 

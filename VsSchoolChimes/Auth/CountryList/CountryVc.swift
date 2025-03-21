@@ -190,8 +190,7 @@ class CountryVc: UIViewController {
             UserDefaultFileManager.saveCountryDetails(data: country_data!)
             ServiceUrl.baseurl = country_data?.base_url ?? ""
             ServiceUrl.report_url = country_data?.reporting_url ?? ""
-            let vc = LoginVc(nibName: nil, bundle: nil)
-            vc.pageType = screenType.isMobileNumber
+            let vc = MobileNumberVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

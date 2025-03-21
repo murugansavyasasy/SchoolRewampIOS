@@ -17,10 +17,12 @@ class CreatePasswordVc: UIViewController {
     @IBOutlet weak var createPassTextFLd: UITextField!
 
     let alertModal = CustomAlert()
-    var forgetType  = false
+  
     var createPassText : String?
     var confirmPassText : String?
-    var  pageType : Int?
+    var createNewPassword : Bool?
+    var mobile_number : String?
+    
     override func viewDidLoad() {
         
     super.viewDidLoad()
@@ -30,7 +32,7 @@ class CreatePasswordVc: UIViewController {
     ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
     confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
 
-    if forgetType == false{
+    if createNewPassword == false{
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
     }
 
@@ -85,7 +87,14 @@ class CreatePasswordVc: UIViewController {
 
         func CretaeNewPasswordAPIcall(){
             
-            APIService.shared.makeApi(url: ServiceUrl.password_create_new_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",CreateNewPasswordStringFile.old_password: "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<CreateNewPasswordSuc, Error>) in
+            APIService.shared
+                .makeApi(url: ServiceUrl.cred_create_new_password, parameters: [
+
+                COMMON_PARAMETER.mobile_number: mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""
+                ], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                    result: Result<CreateNewPasswordSuc,
+                    Error>
+                ) in
                 
                 switch result {
                     
@@ -116,68 +125,39 @@ class CreatePasswordVc: UIViewController {
             
         }
         
-//        func CretaeNewPasswordAPIcall(){
-//
-//         APIService.shared.makeApi(url: ServiceUrl.password_create_new_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? "",CreateNewPasswordStringFile.old_password: "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<CreateNewPasswordSuc, Error>) in
-//
-//         switch result {
-//
-//         case.success(let successMessage):
-//
-//         if successMessage.status == true {
-//
-//         DispatchQueue.main.async { [self] in
-//
-//         }
-//
-//         }else{
-//
-//         DispatchQueue.main.async {
-//
-//         }
-//         }
-//
-//         case .failure(let error):
-//         DispatchQueue.main.async {
-//         print(error.localizedDescription)
-//         }
-//         }
-//         }
-//
-//         }
-//
-//         func ResetPasswordAPIcall(){
-//
-//         APIService.shared.makeApi(url: ServiceUrl.password_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<ResetPasswordSuc, Error>) in
-//
-//         switch result {
-//
-//         case.success(let successMessage):
-//
-//         if successMessage.status == true {
-//
-//         DispatchQueue.main.async { [self] in
-//
-//
-//
-//         }
-//
-//         }else{
-//
-//         DispatchQueue.main.async {
-//
-//         }
-//         }
-//
-//         case .failure(let error):
-//         DispatchQueue.main.async {
-//         print(error.localizedDescription)
-//         }
-//         }
-//         }
-//
-//         }
-//
-//
+
+         func ResetPasswordAPIcall(){
+
+         APIService.shared.makeApi(url: ServiceUrl.password_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result: Result<ResetPasswordSuc, Error>) in
+
+         switch result {
+
+         case.success(let successMessage):
+
+         if successMessage.status == true {
+
+         DispatchQueue.main.async { [self] in
+
+
+
+         }
+
+         }else{
+
+         DispatchQueue.main.async {
+
+         }
+         }
+
+         case .failure(let error):
+         DispatchQueue.main.async {
+         print(error.localizedDescription)
+         }
+         }
+         }
+
+         }
+
+
 
     }

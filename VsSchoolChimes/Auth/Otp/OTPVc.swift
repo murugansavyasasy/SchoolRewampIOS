@@ -63,8 +63,8 @@ class OTPVc: UIViewController {
         //OtpContentLbl.text = validateMobileData.first?.message
         setupOTPTextFields()
         
-        let defaults = UserDefaults.standard
-        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
+//        let defaults = UserDefaults.standard
+//        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
@@ -159,12 +159,7 @@ class OTPVc: UIViewController {
         CreatePasswordValue : Bool
     ){
         
-//        let vc = PasswordVc(nibName: nil, bundle: nil)
-//        vc.createPassText  = createPassword
-//        vc.confirmPassText = confirmPassword
-//        vc.forgetType = CreatePasswordValue
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
+
     }
     
     func Validate_OTP(mobileNumber : String , otp : String) {
@@ -181,21 +176,65 @@ class OTPVc: UIViewController {
                 case .success(let successMessage):
                     if successMessage.status == true {
                         DispatchQueue.main.async { [self] in
-                           
                             
-                            if  validateMobileData.first?.is_password_updated == false{
-                                let vc = PasswordVc(nibName: nil, bundle: nil)
-                                 vc.modalPresentationStyle = .fullScreen
-                                 present(vc, animated: true)
-                            }else{
+                            if(pageType == screenType.isForgotPassword){
                                 
-                                 priotyScreenVC()
+                                let vc = CreatePasswordVc(
+                                    nibName: nil,
+                                    bundle: nil
+                                )
+                                vc.modalPresentationStyle = .fullScreen
+                                vc.createNewPassword = false
+                                vc.mobile_number = mobileNumber
+                                present(vc, animated: true)
+                                
                             }
-                             
-                                
                            
-                        }
-                    }else{
+                            else if(localData.user_data?.is_password_updated == false){
+                               
+                                let vc = CreatePasswordVc(
+                                    nibName: nil,
+                                    bundle: nil
+                                )
+                                vc.modalPresentationStyle = .fullScreen
+                                vc.createNewPassword = true
+                                vc.mobile_number = mobileNumber
+                                present(vc, animated: true)
+                            }
+                            else {
+                                if(localData.user_data?.user_details?.is_staff == true) &&  (
+                                    localData.user_data?.user_details?.is_parent == true
+                                ){
+                                    let vc = PriorityViewController1(nibName: nil, bundle: nil)
+                                    vc.modalPresentationStyle = .fullScreen
+                                    present(vc, animated: true)
+                                    
+                                }
+                                else if(localData.user_data?.user_details?.is_staff == true){
+                                    let vc = HomePageVc(
+                                        nibName: nil,
+                                        bundle: nil
+                                    )
+                                    vc.modalPresentationStyle = .fullScreen
+                                    present(vc, animated: true)
+                                    
+                                }
+                                else if(localData.user_data?.user_details?.is_parent == true){
+                                    
+                                    let vc = ParentHomePageVc(
+                                        nibName: nil,
+                                        bundle: nil
+                                    )
+                                    vc.modalPresentationStyle = .fullScreen
+                                    present(vc, animated: true)
+                                }
+                                
+                            }
+                            
+                                                
+                         }
+                    }
+                    else{
                         DispatchQueue.main.async {
                             
                             self.AlertModal

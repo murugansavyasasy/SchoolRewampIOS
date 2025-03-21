@@ -114,9 +114,9 @@ struct UserDetails: Codable {
     let is_staff: Bool?
     let staff_role: String?
     let role_name: String?
-    let staff_details: [StaffDetail]?
+    let staff_details: [StaffDetails]? // Can remain empty
     let is_parent: Bool?
-    let child_details: [ChildDetail]?
+    let child_details: [ChildDetails]?
     let max_general_sms_count: Int?
     let max_homework_sms_count: Int?
     let max_emergency_voice_duration: Int?
@@ -125,38 +125,31 @@ struct UserDetails: Codable {
     let image_count: Int?
 }
 
-
-
-struct StaffDetail: Codable {
-    let staff_id: String?
+struct StaffDetails: Codable {
     let staff_name: String?
-    let school_id: String?
     let school_name: String?
     let school_name_regional: String?
     let city: String?
     let school_logo: String?
     let role: String?
-    let is_payment_pending: String?
+    let is_payment_pending: Int?  // Changed from String? to Bool?
     let schedule_call_type: Int?
     let biometric_enable: Int?
     let allow_video_download: Bool?
     let access_token: String?
 }
 
-struct ChildDetail: Codable {
-    let child_id: String?
+struct ChildDetails: Codable {
     let child_name: String?
     let standard_name: String?
     let section_name: String?
-    let school_id: String?
     let school_name: String?
     let school_name_regional: String?
     let school_city: String?
     let school_logo_url: String?
     let roll_number: String?
     let display_message: String?
-    let class_id: Int?
-    let section_id: Int?
     let access_token: String?
 }
+
 
