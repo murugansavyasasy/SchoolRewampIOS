@@ -40,11 +40,11 @@ class PriorityVC: UIViewController {
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         teacherButton.tintColor = .white
         
-        let nib = UINib(nibName: CellConfingName.DemoTVCell, bundle: nil)
-        tableview.register(nib, forCellReuseIdentifier: CellConfingName.DemoTVCell)
+        let nib = UINib(nibName: CellConfingName.ParentTVCell, bundle: nil)
+        tableview.register(nib, forCellReuseIdentifier: CellConfingName.ParentTVCell)
         
-        let nib1 = UINib(nibName: CellConfingName.principalTVCell, bundle: nil)
-        tableview.register(nib1, forCellReuseIdentifier: CellConfingName.principalTVCell)
+        let nib1 = UINib(nibName: CellConfingName.SchoolTVCell, bundle: nil)
+        tableview.register(nib1, forCellReuseIdentifier: CellConfingName.SchoolTVCell)
         
         tableview.delegate = self
         tableview.dataSource = self
@@ -169,7 +169,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         let image = UIImage(named: ProfileImage[indexPath.row % ProfileImage.count])
         
         if passedValue  == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.DemoTVCell, for: indexPath) as! DemoTVCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ParentTVCell, for: indexPath) as! ParentTVCell
             
             cell.SchoolInfoView.backgroundColor = colour1
             cell.imgview.image = image
@@ -184,7 +184,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             
         } else {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.principalTVCell, for: indexPath) as! SchoolTVCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SchoolTVCell, for: indexPath) as! SchoolTVCell
             
             
             if let color1 = colour1, let color2 = colour2 {

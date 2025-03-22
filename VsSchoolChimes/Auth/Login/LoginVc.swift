@@ -204,20 +204,22 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                             
                                         }
                                         else if(data.user_details?.is_staff == true){
-                                            let vc = HomePageVc(
+                                            let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
                                             )
+                                            vc.passedValue = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
                                         }
                                         else if(data.user_details?.is_parent == true){
                                             
-                                            let vc = ParentHomePageVc(
+                                            let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
                                             )
+                                            vc.passedValue = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }
