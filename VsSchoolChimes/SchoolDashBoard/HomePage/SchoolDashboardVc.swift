@@ -10,7 +10,7 @@ import AVFoundation
 import StoreKit
 
 @available(iOS 14.0, *)
-class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
+class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     @IBOutlet weak var ViewDetailsBtn: UIButton!
     @IBOutlet weak var changeRollLbl: UILabel!
@@ -136,7 +136,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         reportView.layer.masksToBounds = false
         changeRollLbl.textColor = .link
         
-        assignmentImgBtn.setImage(UIImage(named:"Assignment" ), for: .normal)
+        assignmentImgBtn.setImage(UIImage(named:"assignment"), for: .normal)
         onlineMeetingImgBtn.setImage(UIImage(named:"online_meeting"), for: .normal)
         homeworkImgBtn.setImage(UIImage(named:"Homework" ), for: .normal)
         
@@ -345,7 +345,7 @@ class HomePageVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
 
 
 @available(iOS 14.0, *)
-extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
+extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
@@ -494,7 +494,7 @@ extension HomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 @available(iOS 14.0, *)
-extension HomePageVc: UICollectionViewDelegateFlowLayout {
+extension SchoolDashboardVc: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.row == 6{
@@ -516,7 +516,7 @@ extension HomePageVc: UICollectionViewDelegateFlowLayout {
 
 
 @available(iOS 14.0, *)
-extension HomePageVc: UISearchBarDelegate{
+extension SchoolDashboardVc: UISearchBarDelegate{
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         Searchbar.endEditing(true)
@@ -590,7 +590,7 @@ extension HomePageVc: UISearchBarDelegate{
         }
     }
     
-   // var ChangePassparameter : [String : Any] = [COMMON_PARAMETER.mobile_number : "" ?? "",CreateNewPasswordStringFile.old_password : "" ?? "", COMMON_PARAMETER.new_password : "" ?? ""]
+    //var ChangePassparameter : [String : Any] = [COMMON_PARAMETER.mobile_number : "" ?? "",CreateNewPasswordStringFile.old_password : "" ?? "", COMMON_PARAMETER.new_password : "" ?? ""]
     
     func ChangePasswordAPIcall() {
         

@@ -143,13 +143,15 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                         present(vc, animated: true)
                                     }
                                     else if(data.user_details?.is_staff == true){
-                                        let vc = HomePageVc(nibName: nil,bundle: nil)
+                                        let vc = TapBarVC(nibName: nil,bundle: nil)
+                                        vc.passedValue = 1
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                         
                                     }
                                     else if(data.user_details?.is_parent == true){
-                                        let vc = ParentHomePageVc(nibName: nil,bundle: nil)
+                                        let vc = TapBarVC(nibName: nil,bundle: nil)
+                                        vc.passedValue = 2
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }
@@ -173,13 +175,15 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                             present(vc, animated: true)
                                         }
                                         else if(data.user_details?.is_staff == true){
-                                            let vc = HomePageVc(nibName: nil,bundle: nil)
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
+                                            vc.passedValue = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
                                         }
                                         else if(data.user_details?.is_parent == true){
-                                            let vc = ParentHomePageVc(nibName: nil,bundle: nil)
+                                            let vc = TapBarVC(nibName: nil,bundle: nil)
+                                            vc.passedValue = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DemoTVCell: UITableViewCell {
+class ParentTVCell: UITableViewCell {
     
     @IBOutlet weak var arrowImg: UIImageView!
     @IBOutlet weak var namelabel: UILabel!

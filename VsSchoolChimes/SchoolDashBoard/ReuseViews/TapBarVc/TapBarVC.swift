@@ -27,8 +27,8 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     
     private let tabBar = UITabBar()
     private var containerView = UIView()
-    private lazy var firstVC = HomePageVc()
-    private lazy var Parent = ParentHomePageVc()
+    private lazy var firstVC = SchoolDashboardVc()
+    private lazy var Parent = ParentDashboardVc()
     private lazy var secondVC = HelpVc()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = ProfileViewController()
@@ -123,7 +123,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         } else if let profileVC = viewController as? ProfileViewController, passedValue == 2 {
             profileVC.passvalue = passedValue
 
-        }else if let profileVC = viewController as? ParentHomePageVc, passedValue == 2 {
+        }else if let profileVC = viewController as? ParentDashboardVc, passedValue == 2 {
             profileVC.getValue = passedValue
             
         }else if let HelpVc = viewController as? HelpVc, passedValue == 2 {

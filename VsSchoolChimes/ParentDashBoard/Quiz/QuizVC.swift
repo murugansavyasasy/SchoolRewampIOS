@@ -150,7 +150,7 @@ class QuizVC: UIViewController {
     
     @available(iOS 14.0, *)
     @IBAction func BackAct(_ sender: Any) {
-//        let vc = HomePageVc(nibName: nil, bundle: nil)
+//        let vc = SchoolDashboardVc(nibName: nil, bundle: nil)
 //        vc.modalPresentationStyle = .fullScreen
 //        present(vc, animated: true)
         dismiss(animated: true)

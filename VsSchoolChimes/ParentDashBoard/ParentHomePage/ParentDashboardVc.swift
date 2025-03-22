@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 
 @available(iOS 14.0, *)
-class ParentHomePageVc: UIViewController {
+class ParentDashboardVc: UIViewController {
     
     @IBOutlet weak var Profileimage: UIImageViewX!
     @IBOutlet weak var changeRollLbl: UILabel!
@@ -281,7 +281,7 @@ class ParentHomePageVc: UIViewController {
 
 //MARK: Collectionview Delegate
 @available(iOS 14.0, *)
-extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return displayedCategories.count // Ensure ItemnCount matches your data source
@@ -418,7 +418,7 @@ extension ParentHomePageVc: UICollectionViewDelegate, UICollectionViewDataSource
 }
 
 @available(iOS 14.0, *)
-extension ParentHomePageVc: UICollectionViewDelegateFlowLayout {
+extension ParentDashboardVc: UICollectionViewDelegateFlowLayout {
     
     // Set item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -448,7 +448,7 @@ extension String {
 
 //MARK: Searchbar Delegate
 @available(iOS 14.0, *)
-extension ParentHomePageVc: UISearchBarDelegate{
+extension ParentDashboardVc: UISearchBarDelegate{
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         Searchbar.endEditing(true)
