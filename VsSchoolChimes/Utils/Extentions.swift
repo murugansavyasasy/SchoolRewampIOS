@@ -85,4 +85,11 @@ extension UIView {
         self.endEditing(true)
     }
 }
+class Custom:UIButton{
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layer.cornerRadius = 8
+        self.backgroundColor = .button
+    }
+}
 

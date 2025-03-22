@@ -138,7 +138,7 @@
                                         </label>
                                     </subviews>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gim-Kp-auq">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gim-Kp-auq" customClass="Custom" customModule="VsSchoolChimes" customModuleProvider="target">
                                     <rect key="frame" x="20" y="418.33333333333331" width="353" height="40"/>
                                     <color key="backgroundColor" name="ButtonColor"/>
                                     <constraints>

@@ -9,7 +9,6 @@ import UIKit
 
 class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
-    @IBOutlet weak var eyeImage: UIImageView!
     @IBOutlet weak var createPassDefaultLbl: UILabel!
     @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
@@ -43,9 +42,6 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
     ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
     }
-
-    let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
-    eyeImage.addGestureRecognizer(eyeImageTap)
         
     }
 
@@ -83,13 +79,19 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
 
     }
-
-    @IBAction func togglePasswordVisibility() {
-    confirmPassTextFld.isSecureTextEntry.toggle()
-        let imageName = confirmPassTextFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
-    eyeImage.image = imageName
-
+    
+    @IBAction func showPassword(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        let img = sender.isSelected ? ImageName.eye_fill : ImageName.eye_slash
+       if sender.tag != 0{
+           confirmPassTextFld.isSecureTextEntry = !sender.isSelected
+           sender.setImage(img, for: .normal)
+        }else{
+            createPassTextFLd.isSecureTextEntry = !sender.isSelected
+            sender.setImage(img, for: .normal)
+        }
     }
+    
 
         func CretaeNewPasswordAPIcall(){
             
