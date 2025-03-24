@@ -240,6 +240,10 @@
 		8476882F2D892DBB00EAB9DB /* SecureidFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882E2D892DBB00EAB9DB /* SecureidFile.swift */; };
 		847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */; };
 		847AB6F82CF09A9900952AC1 /* SheduleExamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */; };
+		848126D82D91820500BE6979 /* CountryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126D72D91820500BE6979 /* CountryListVC.xib */; };
+		848126D92D91820500BE6979 /* CountryListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848126D62D91820500BE6979 /* CountryListVC.swift */; };
+		848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848126DB2D9182E100BE6979 /* CountryListCVC.xib */; };
+		848126DD2D9182E100BE6979 /* CountryListCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848126DA2D9182E100BE6979 /* CountryListCVC.swift */; };
 		8489D86F2D09563F008D9CE9 /* MenuRedirect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */; };
 		848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */; };
 		848B946A2CFD728400FFC5C2 /* SenderImgPdfVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */; };
@@ -830,6 +834,10 @@
 		8476882E2D892DBB00EAB9DB /* SecureidFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureidFile.swift; sourceTree = "<group>"; };
 		847AB6F52CF09A9900952AC1 /* SheduleExamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheduleExamVC.swift; sourceTree = "<group>"; };
 		847AB6F62CF09A9900952AC1 /* SheduleExamVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SheduleExamVC.xib; sourceTree = "<group>"; };
+		848126D62D91820500BE6979 /* CountryListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListVC.swift; sourceTree = "<group>"; };
+		848126D72D91820500BE6979 /* CountryListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListVC.xib; sourceTree = "<group>"; };
+		848126DA2D9182E100BE6979 /* CountryListCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryListCVC.swift; sourceTree = "<group>"; };
+		848126DB2D9182E100BE6979 /* CountryListCVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryListCVC.xib; sourceTree = "<group>"; };
 		8489D86E2D09563F008D9CE9 /* MenuRedirect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRedirect.swift; sourceTree = "<group>"; };
 		848B94672CFD728400FFC5C2 /* SenderImgPdfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderImgPdfVC.swift; sourceTree = "<group>"; };
 		848B94682CFD728400FFC5C2 /* SenderImgPdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderImgPdfVC.xib; sourceTree = "<group>"; };
@@ -2345,6 +2353,10 @@
 			children = (
 				84EFF9942CCB5B0400C11C26 /* CountryVc.swift */,
 				84EFF9952CCB5B0400C11C26 /* CountryVc.xib */,
+				848126D62D91820500BE6979 /* CountryListVC.swift */,
+				848126D72D91820500BE6979 /* CountryListVC.xib */,
+				848126DA2D9182E100BE6979 /* CountryListCVC.swift */,
+				848126DB2D9182E100BE6979 /* CountryListCVC.xib */,
 			);
 			path = CountryList;
 			sourceTree = "<group>";
@@ -3179,6 +3191,8 @@
 				849757112D2BA575006A27FD /* RecipientTvCell.xib in Resources */,
 				849757122D2BA575006A27FD /* Std_Grp_header.xib in Resources */,
 				84EFF9962CCB5B0400C11C26 /* CountryVc.xib in Resources */,
+				848126DC2D9182E100BE6979 /* CountryListCVC.xib in Resources */,
+				848126D82D91820500BE6979 /* CountryListVC.xib in Resources */,
 				849E57392C1FF6BD006119DA /* RobotoSlab-LightItalic.ttf in Resources */,
 				84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */,
 				84EFF9D82CCC862F00C11C26 /* TopCVCell.xib in Resources */,
@@ -3654,6 +3668,7 @@
 				18D718A82D0D477900E9EDA3 /* DeleteReq.swift in Sources */,
 				84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */,
 				18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */,
+				848126D92D91820500BE6979 /* CountryListVC.swift in Sources */,
 				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
 				18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */,
 				18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */,
@@ -3709,6 +3724,7 @@
 				84EFFAE12CCF9EEA00C11C26 /* NotificationTableViewCell.swift in Sources */,
 				843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */,
 				84EFFAF52CCFB68A00C11C26 /* ImageCvCell.swift in Sources */,
+				848126DD2D9182E100BE6979 /* CountryListCVC.swift in Sources */,
 				84EFF4962CE388B800E39BEA /* ProfileViewController.swift in Sources */,
 				84EFFAE22CCF9EEA00C11C26 /* NotificationViewController.swift in Sources */,
 				8442A90C2CDC8B2D0006068E /* FAQViewController.swift in Sources */,
