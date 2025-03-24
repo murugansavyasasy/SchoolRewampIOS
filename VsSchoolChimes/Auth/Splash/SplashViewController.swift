@@ -226,7 +226,6 @@ class SplashViewController: UIViewController {
                 let vc = LoginVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
-
             }
 
     }

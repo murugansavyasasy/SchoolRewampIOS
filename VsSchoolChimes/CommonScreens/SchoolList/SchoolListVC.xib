@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SchoolListVC" customModule="VsSchoolChimes" customModuleProvider="target">
+            <connections>
+                <outlet property="listTable" destination="lz4-Bq-biI" id="dT3-Gm-iUi"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sF9-Kc-In7">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qP0-UU-5aC">
+                            <rect key="frame" x="10" y="10" width="75" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="9lV-sc-79d"/>
+                                <constraint firstAttribute="width" constant="75" id="x4Q-oY-TNH"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Back" image="chevron.left" catalog="system">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="back:" destination="-1" eventType="touchUpInside" id="lz9-HC-7Jf"/>
+                            </connections>
+                        </button>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lz4-Bq-biI">
+                            <rect key="frame" x="0.0" y="45" width="393" height="649"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="6nC-ZP-Z8p"/>
+                                <outlet property="delegate" destination="-1" id="ph0-7d-QPB"/>
+                            </connections>
+                        </tableView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="372-tS-5PB">
+                            <rect key="frame" x="50" y="704" width="293" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="h9Q-y1-jE4"/>
+                            </constraints>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Selected Schools">
+                                <backgroundConfiguration key="background" cornerRadius="20">
+                                    <color key="backgroundColor" name="ButtonColor"/>
+                                </backgroundConfiguration>
+                            </buttonConfiguration>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="lz4-Bq-biI" firstAttribute="top" secondItem="qP0-UU-5aC" secondAttribute="bottom" id="2PN-Cr-LfO"/>
+                        <constraint firstItem="lz4-Bq-biI" firstAttribute="leading" secondItem="sF9-Kc-In7" secondAttribute="leading" id="5jl-Fc-op7"/>
+                        <constraint firstAttribute="trailing" secondItem="372-tS-5PB" secondAttribute="trailing" constant="50" id="Ia7-Pr-iNE"/>
+                        <constraint firstAttribute="bottom" secondItem="372-tS-5PB" secondAttribute="bottom" constant="15" id="Jwg-0c-Wni"/>
+                        <constraint firstItem="qP0-UU-5aC" firstAttribute="top" secondItem="sF9-Kc-In7" secondAttribute="top" constant="10" id="KqM-vy-wVL"/>
+                        <constraint firstItem="372-tS-5PB" firstAttribute="top" secondItem="lz4-Bq-biI" secondAttribute="bottom" constant="10" id="P7c-Qu-0U8"/>
+                        <constraint firstItem="qP0-UU-5aC" firstAttribute="leading" secondItem="sF9-Kc-In7" secondAttribute="leading" constant="10" id="aoR-l6-0Aw"/>
+                        <constraint firstAttribute="trailing" secondItem="lz4-Bq-biI" secondAttribute="trailing" id="huk-8P-ZeI"/>
+                        <constraint firstItem="372-tS-5PB" firstAttribute="leading" secondItem="sF9-Kc-In7" secondAttribute="leading" constant="50" id="q8H-4I-Tje"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="sF9-Kc-In7" secondAttribute="bottom" id="1xX-Fv-FAX"/>
+                <constraint firstItem="sF9-Kc-In7" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="2QG-O5-1SK"/>
+                <constraint firstItem="sF9-Kc-In7" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="DHd-aQ-pAM"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sF9-Kc-In7" secondAttribute="trailing" id="pJZ-rU-Aq1"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <namedColor name="ButtonColor">
+            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
