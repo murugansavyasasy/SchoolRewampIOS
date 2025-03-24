@@ -169,7 +169,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
         if passedValue  == 1 {
            
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.principalTVCell, for: indexPath) as! principalTVCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SchoolTVCell, for: indexPath) as! SchoolTVCell
             
             
             if let color1 = colour1, let color2 = colour2 {
@@ -178,7 +178,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.DemoTVCell, for: indexPath) as! DemoTVCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ParentTVCell, for: indexPath) as! ParentTVCell
             
             cell.SchoolInfoView.backgroundColor = colour1
             cell.imgview.image = image

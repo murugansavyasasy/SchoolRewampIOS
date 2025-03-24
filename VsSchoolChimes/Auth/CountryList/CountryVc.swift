@@ -44,15 +44,12 @@ class CountryVc: UIViewController {
     var images = [String]()
     var dropDownList = [String]()
     var CountryListRespons : [CountryData]?
-    var country_data : CountryData? = nil
+    var country_data : CountryData?
     override func viewDidLoad() {
         super.viewDidLoad()
         CountryList.isUserInteractionEnabled = false
         get_CountryListApi()
         StyleAndTranslater()
-        
-        
-        
         fullview.backgroundColor = Colornames.countryClr
         view.backgroundColor = Colornames.countryClr
         ClickArrowImg.layer.cornerRadius = ClickArrowImg.frame.width/2

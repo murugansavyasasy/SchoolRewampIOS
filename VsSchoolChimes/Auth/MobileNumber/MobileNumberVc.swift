@@ -16,7 +16,7 @@ class MobileNumberVc: UIViewController {
     @IBOutlet weak var MobilTextFld:
     UITextField!
     var AlertModal = CustomAlert()
-    var country_data : CountryData? = nil
+    var country_data : CountryData?
     var mobile_number_length : Int?
     var mobile_no_hint : String?
     var activeTextField: UITextField?
@@ -24,14 +24,8 @@ class MobileNumberVc: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-        
-        
-               
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-       
-        
-       
     }
 
     
@@ -57,10 +51,7 @@ class MobileNumberVc: UIViewController {
        }
     func setupUI() {
         
-        
         country_data =   UserDefaultFileManager.getCountryDetails()
-        mobile_no_hint = country_data?.mobile_no_hint
-        mobile_number_length = country_data?.mobile_number_length
         MobilTextFld.addDoneButton()
         BottomView.layer.cornerRadius = 30
         BottomView.backgroundColor = Colornames.auth_screen_color
@@ -74,7 +65,7 @@ class MobileNumberVc: UIViewController {
         continueBtnName.layer.shadowOffset = CGSize(width: 0, height: 5)
         continueBtnName.layer.shadowOpacity = 0.3
         continueBtnName.layer.shadowRadius = 6
-        
+        MobilTextFld.placeholder = country_data?.mobile_no_hint
         MobilTextFld.delegate = self
         MobilTextFld.keyboardType = .numberPad
     }
@@ -106,7 +97,7 @@ class MobileNumberVc: UIViewController {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         
-        guard mobile.count == mobile_number_length else {
+        guard mobile.count == country_data?.mobile_number_length else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         

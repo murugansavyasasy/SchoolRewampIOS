@@ -25,28 +25,23 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var eyeImage: UIImageView!
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
-    var mobile_number_length : Int?
-    var mobile_no_hint : String?
-    var country_data : CountryData? = nil
+    var country_data : CountryData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUserPhoneNumber()
+        country_data =   UserDefaultFileManager.getCountryDetails()
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
-        country_data =   UserDefaultFileManager.getCountryDetails()
-        mobile_no_hint = country_data?.mobile_no_hint
-        mobile_number_length = country_data?.mobile_number_length
-      
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
         let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
         eyeImage.addGestureRecognizer(eyeImageTap)
         
-      NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
@@ -54,38 +49,34 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         super.viewDidAppear(animated)
         MobilTextFld.becomeFirstResponder() // ✅ Forces keyboard to appear faster
     }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.3) { // Smooth animation
+                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
+            }
+        }
+    }
     
-  
-    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
-    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-    if self.view.frame.origin.y == 0 {
-    self.view.frame.origin.y -= keyboardSize.height-91
-    print("keyboardSize.height",keyboardSize.height)
-    }
-    }
-    }
-
     @objc func keyboardWillHide(notification: NSNotification) {
-    if self.view.frame.origin.y != 0 {
-    self.view.frame.origin.y = 0
-    }
+        UIView.animate(withDuration: 0.3) { // Smooth animation
+            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+        }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
     func setupUI() {
         
-        MobilTextFld.placeholder = mobile_no_hint
-               
-    BottomView.layer.cornerRadius = 30
-    BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        MobilTextFld.placeholder = country_data?.mobile_no_hint
+        
+        BottomView.layer.cornerRadius = 30
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         BottomView.backgroundColor = Colornames.auth_screen_color
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
         loginBtnNm.backgroundColor = Colornames.auth_screen_color
-                // Adding shadow for a popped-up effect
+        // Adding shadow for a popped-up effect
         loginBtnNm.layer.shadowColor = UIColor.black.cgColor
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 5)
         loginBtnNm.layer.shadowOpacity = 0.3
@@ -136,7 +127,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
             let newLength = (textField.text?.count ?? 0) + string.count - range.length
-            return newLength <= mobile_number_length ?? 0 // ✅ Ensures mobile number is max 10 digits
+            return newLength <= country_data?.mobile_number_length ?? 0
         }
         return true
     }
@@ -144,12 +135,12 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBAction func loginBtn(_ sender: Any) {
         validateMobileAndPassword()
     }
-
+    
     func validateMobileAndPassword() {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
-        guard mobile.count == mobile_number_length else {
+        guard mobile.count == country_data?.mobile_number_length else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
         guard let password = passTextFld.text, !password.isEmpty else {
@@ -285,7 +276,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
     }
 }
-    
+
 
 
 
