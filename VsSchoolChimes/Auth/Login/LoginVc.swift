@@ -12,17 +12,19 @@ import Contacts
 class LoginVc: UIViewController, UITextFieldDelegate {
     
     
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var BottomView: UIView!
-    @IBOutlet weak var passwordStack: UIStackView!
-    @IBOutlet weak var mobileNumberStack: UIStackView!
     @IBOutlet weak var PasswordLabel: UILabel!
     @IBOutlet weak var MobilenumLabel: UILabel!
     @IBOutlet weak var forgetLbl: UILabel!
     @IBOutlet weak var passTextFld: UITextField!
     @IBOutlet weak var MobilTextFld: UITextField!
     @IBOutlet weak var loginBtnNm: UIButton!
-    
     @IBOutlet weak var eyeImage: UIImageView!
+    @IBOutlet weak var BannerImgview: UIImageView!
+    @IBOutlet weak var WelcomeLbl: UILabel!
+    @IBOutlet weak var DescriptionLbl: UILabel!
+    
     var activeTextField: UITextField?
     var AlertModal = CustomAlert()
     var country_data : CountryData?
@@ -33,6 +35,8 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
+        country_data =   UserDefaultFileManager.getCountryDetails()
+       
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
@@ -75,8 +79,8 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         BottomView.backgroundColor = Colornames.auth_screen_color
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
-        loginBtnNm.backgroundColor = Colornames.auth_screen_color
-        // Adding shadow for a popped-up effect
+        //loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+                // Adding shadow for a popped-up effect
         loginBtnNm.layer.shadowColor = UIColor.black.cgColor
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 5)
         loginBtnNm.layer.shadowOpacity = 0.3
@@ -86,6 +90,14 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         passTextFld.delegate = self
         passTextFld.keyboardType = .default
         passTextFld.isSecureTextEntry = true
+        
+        BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        loginBtnNm.setTitleFont(style: .primary, size: FontSize.TitleSize)
+        WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+        MobilenumLabel.setFont(style: .title, size: FontSize.TitleSize)
+        PasswordLabel.setFont(style: .title, size: FontSize.TitleSize)
+        forgetLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     
     @IBAction func forgetClick() {
@@ -274,6 +286,12 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                 }
             }
         
+    }
+    
+    
+    @IBAction func BackAct(_ sender: Any) {
+        
+        dismiss(animated: true)
     }
 }
 

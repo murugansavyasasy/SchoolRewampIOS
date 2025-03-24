@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OTPVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="BackBtn" destination="r5r-Au-mkI" id="1UA-NE-HGZ"/>
                 <outlet property="BottomView" destination="HE0-f9-3HJ" id="2E8-EA-8Lw"/>
                 <outlet property="DidnotReciveOtpLbl" destination="WnE-5F-x4a" id="eQn-cm-21R"/>
                 <outlet property="OtpContentLbl" destination="WOL-oW-HOC" id="HL9-Nt-iCO"/>
@@ -48,6 +49,9 @@
                             <state key="normal" title="Back" image="chevron.backward" catalog="system">
                                 <color key="titleColor" systemColor="labelColor"/>
                             </state>
+                            <connections>
+                                <action selector="BackBtn:" destination="-1" eventType="touchUpInside" id="Icp-jz-LuK"/>
+                            </connections>
                         </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="T1d-1G-18v">
                             <rect key="frame" x="0.0" y="60" width="393" height="733"/>
@@ -115,13 +119,14 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="h1X-Ei-KKi">
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="h1X-Ei-KKi">
                                             <rect key="frame" x="20" y="215.99999999999994" width="353" height="34.333333333333343"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mcA-58-2C9">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mcA-58-2C9">
                                                     <rect key="frame" x="0.0" y="0.0" width="174" height="34.333333333333336"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="Button" image="phone" catalog="system">
+                                                    <state key="normal" title="0446796387" image="phone" catalog="system">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="0446796387">
                                                                 <attributes>
@@ -131,14 +136,11 @@
                                                             </fragment>
                                                         </attributedString>
                                                     </state>
-                                                    <buttonConfiguration key="configuration" style="plain" image="phone" catalog="system" title="0446796387">
-                                                        <fontDescription key="titleFontDescription" type="system" pointSize="17"/>
-                                                    </buttonConfiguration>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDN-3o-DSn">
                                                     <rect key="frame" x="179" y="0.0" width="174" height="34.333333333333336"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" image="phone" catalog="system" title="0446796387"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="0446796387" image="phone" catalog="system"/>
                                                 </button>
                                             </subviews>
                                         </stackView>
