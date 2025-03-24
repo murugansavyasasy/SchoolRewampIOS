@@ -33,6 +33,18 @@
                                 <constraint firstAttribute="height" constant="200" id="VKC-k8-U6x"/>
                             </constraints>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME BACK !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTt-du-JTn">
+                            <rect key="frame" x="8" y="298" width="377" height="20.333333333333314"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seamless school communication, anytime, anywhere.effortlessly connecting students, teachers, and parents at all times." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahe-W4-TNj">
+                            <rect key="frame" x="8" y="333.33333333333331" width="377" height="61"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fmz-2a-syV">
                             <rect key="frame" x="0.0" y="409.33333333333326" width="393" height="383.66666666666674"/>
                             <subviews>
@@ -94,18 +106,6 @@
                                 <constraint firstItem="aDv-RE-MaU" firstAttribute="leading" secondItem="fmz-2a-syV" secondAttribute="leading" id="kRc-8Z-OBY"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WELCOME BACK !" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PTt-du-JTn">
-                            <rect key="frame" x="8" y="298" width="377" height="20.333333333333314"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seamless school communication, anytime, anywhere.effortlessly connecting students, teachers, and parents at all times." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahe-W4-TNj">
-                            <rect key="frame" x="8" y="333.33333333333331" width="377" height="61"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -140,7 +140,7 @@
     <resources>
         <image name="online-work-meetings" width="7000" height="5000"/>
         <namedColor name="auth_screenClr">
-            <color red="0.10980392156862745" green="0.63921568627450975" blue="0.84313725490196079" alpha="0.75" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.11764705882352941" green="0.74117647058823533" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="menuIconColour">
             <color red="0.25882352941176473" green="0.81176470588235294" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

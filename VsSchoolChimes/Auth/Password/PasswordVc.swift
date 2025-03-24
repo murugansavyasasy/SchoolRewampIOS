@@ -32,26 +32,28 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
-
-
-    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-    if self.view.frame.origin.y == 0 {
-    self.view.frame.origin.y -= keyboardSize.height-91
-    print("keyboardSize.height",keyboardSize.height)
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.3) { // Smooth animation
+                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
+            }
+        }
     }
-    }
-    }
-
+    
     @objc func keyboardWillHide(notification: NSNotification) {
-    if self.view.frame.origin.y != 0 {
-    self.view.frame.origin.y = 0
+        UIView.animate(withDuration: 0.3) { // Smooth animation
+            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+        }
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func SetpUI(){
