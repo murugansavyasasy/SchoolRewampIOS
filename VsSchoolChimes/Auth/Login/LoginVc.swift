@@ -36,8 +36,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
         country_data =   UserDefaultFileManager.getCountryDetails()
-        mobile_no_hint = country_data?.mobile_no_hint
-        mobile_number_length = country_data?.mobile_number_length
+       
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
