@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Contacts
 
 @available(iOS 14.0, *)
 class LoginVc: UIViewController, UITextFieldDelegate {
@@ -30,7 +31,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        fetchUserPhoneNumber()
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
@@ -226,20 +227,22 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                             
                                         }
                                         else if(data.user_details?.is_staff == true){
-                                            let vc = HomePageVc(
+                                            let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
                                             )
+                                            vc.passedValue = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
                                         }
                                         else if(data.user_details?.is_parent == true){
                                             
-                                            let vc = ParentHomePageVc(
+                                            let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
                                             )
+                                            vc.passedValue = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }

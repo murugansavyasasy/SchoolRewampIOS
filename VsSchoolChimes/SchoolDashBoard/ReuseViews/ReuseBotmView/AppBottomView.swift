@@ -22,8 +22,6 @@ class AppBottomView: UIView {
         
         commonInit()
         
-      
-        
         let settingsTap = UITapGestureRecognizer(target: self, action: #selector(settings))
         settingsView.addGestureRecognizer(settingsTap)
         let HomeTap = UITapGestureRecognizer(target: self, action: #selector(HomeVc))
@@ -72,11 +70,10 @@ class AppBottomView: UIView {
     
     @IBAction func HomeVc(){
         let nagivate = self.getCurrentViewController()
-        let vc = HomePageVc(nibName: nil, bundle: nil)
+        let vc = SchoolDashboardVc(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         nagivate?.present(vc, animated: true)
       
-    
     }
     
 }

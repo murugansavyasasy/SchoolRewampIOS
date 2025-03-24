@@ -8,16 +8,11 @@
 import UIKit
 
 class ParentCommunicationVc: UIViewController, reloadDelegate {
-    func reload(index: Int,playToggle:Bool) {
-        // Stop playback in the currently playing cell (if any)
+    func reload(index: Int) {
         if let currentIndex = playIndex, currentIndex != index {
             let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-            if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
-                previousCell.updatePlayState(isPlaying: false, url: previousCell.AudioPlayUrl)
-            }
+            (tv.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false)
         }
-        
-        // Update the currently playing index and reload the table view
         playIndex = (playIndex == index) ? nil : index
         tv.reloadData()
     }
@@ -243,10 +238,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.playBtn.tag = indexPath.row
             cell.datelbl.textAlignment = .right
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
-            // Update play state
-            let isPlaying = (playIndex == indexPath.row)
-            //        var urls = URL(string: AudioPlayUrl)
-            cell.updatePlayState(isPlaying: isPlaying, url: "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav")
+            cell.updatePlayState(isPlaying: playIndex == indexPath.row)
             cell.delegate = self
             cell.playBtn.setImage(image, for: .normal)
             return cell

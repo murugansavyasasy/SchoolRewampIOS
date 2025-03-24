@@ -534,6 +534,7 @@
 		83E718A6D1EB3F06F65AC86085B41267 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C9D8ECF69C8BF961ADE8DEB11633BB5D /* PrivacyInfo.xcprivacy */; };
 		840439606CFA702353D42B5BE9D461FB /* NSArray+AWSMTLManipulationAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = B040A803BA55F7DB9CC489C4BA10A731 /* NSArray+AWSMTLManipulationAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		84459C4824533C9C4FD12AFC941F3CE1 /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD84DEF9AD7A6D478E71D861AD27FE54 /* DropDown.swift */; };
+		847DBA792D8D330A00ED05D2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 847DBA782D8D330A00ED05D2 /* Kingfisher */; };
 		84BEB9E439780B1E0DEF56459E3D3352 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1EEB87F2034296981AD6ECE64BB35D0 /* Foundation.framework */; };
 		8500ABD23BBD3CB277E6E195BC0F170E /* FBLPromise+Catch.m in Sources */ = {isa = PBXBuildFile; fileRef = 404EB2378BD402EE5653D64C0120F2C6 /* FBLPromise+Catch.m */; };
 		85D1099CC4AC7028508FDD2DD1D1E995 /* FABKitProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = FE3CCACE2893F7824E8C8672D79224CB /* FABKitProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -2630,6 +2631,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				847DBA792D8D330A00ED05D2 /* Kingfisher in Frameworks */,
 				34D86F4481D9328BF45B637B906B3122 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9415,6 +9417,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		847DBA782D8D330A00ED05D2 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 847E21D32D855C4100E480FB /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 }

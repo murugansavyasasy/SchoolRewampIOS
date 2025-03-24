@@ -63,7 +63,7 @@ class HomeworkreportTV: UITableViewCell {
         
         sender.isSelected.toggle()
         let play = sender.isSelected
-        delegate?.reload(index: sender.tag, playToggle: play)
+        delegate?.reload(index: sender.tag)
     }
     
     @objc func playerDidFinishPlaying() {

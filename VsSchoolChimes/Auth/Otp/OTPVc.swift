@@ -37,8 +37,6 @@ class OTPVc: UIViewController {
     var AlertModal = CustomAlert()
     var pageType : Int?
     
-   
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -107,17 +105,16 @@ class OTPVc: UIViewController {
         if let phoneNumber = sender.titleLabel?.text, let url = URL(string: "tel://\(phoneNumber)"),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
+        } else {
+            print("Cannot open dial pad")
         }
     }
     
     @IBAction func validationBtn(_ sender: Any) {
-        
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
             
             Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
-          
         }else{
-            
             view.makeToast(AlertstringFile.Enter_Otp)
         }
         
@@ -136,8 +133,7 @@ class OTPVc: UIViewController {
             textField.font = UIFont.systemFont(ofSize: 24)
             textField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         }
-        
-        otpTextField1.becomeFirstResponder() // Auto-focus on the first OTP field
+        otpTextField1.becomeFirstResponder()
     }
     
     // Optionally, collect the entire OTP when needed (for submission)
@@ -164,21 +160,11 @@ class OTPVc: UIViewController {
                 timer.invalidate()
                 //VerificationTimeVal is a UI element to display the time
                 self?.ResendLbl.text = OTPScreenStringFile.Resend
-                
             }
-            
         }
         
         // Add the timer to the current RunLoop
         RunLoop.current.add(myTimer!, forMode: .common)
-        
-    }
-    
-    @IBAction func PhoneNo1BtnAct(_ sender: Any) {
-        
-    }
-    
-    @IBAction func PhoneNo2BtnAct(_ sender: Any) {
         
     }
     
@@ -202,7 +188,7 @@ class OTPVc: UIViewController {
             .makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
                 COMMON_PARAMETER.mobile_number :  mobileNumber,
                 OTP_PARAMETER.otp :  otp
-        
+                
             ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
                 result: Result<ValidateOTPSuc,
                 Error>
@@ -277,18 +263,19 @@ class OTPVc: UIViewController {
                     }
                     else{
                         DispatchQueue.main.async {
-                            
-                            self.AlertModal
-                                .showAlert(
-                                    title: "",
-                                    message: successMessage.message ?? "",
-                                    on: self
-                                )
+//                            self.AlertModal
+//                                .showAlert(
+//                                    title: "",
+//                                    message: successMessage.message ?? "",
+//                                    on: self
+//                                )
+                            self.priotyScreenVC()
                         }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        
                     }
                 }
             }
@@ -299,30 +286,30 @@ class OTPVc: UIViewController {
 @available(iOS 14.0, *)
 extension OTPVc : UITextFieldDelegate{
     
-   func addDoneButtonOnKeyboard() {
-       let doneToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 50))
-       doneToolbar.barStyle = .black
-       doneToolbar.isTranslucent = true
-       
-       let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-       let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
-       
-       doneToolbar.items = [flexSpace, doneButton]
-       doneToolbar.sizeToFit()
-       
-       for textfield in otpFields{
-           textfield.inputAccessoryView = doneToolbar
-       }
-   }
-   
-   @objc func doneButtonAction() {
-       view.endEditing(true)
-   }
-   
-
+    func addDoneButtonOnKeyboard() {
+        let doneToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 50))
+        doneToolbar.barStyle = .black
+        doneToolbar.isTranslucent = true
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
+        
+        doneToolbar.items = [flexSpace, doneButton]
+        doneToolbar.sizeToFit()
+        
+        for textfield in otpFields{
+            textfield.inputAccessoryView = doneToolbar
+        }
+    }
+    
+    @objc func doneButtonAction() {
+        view.endEditing(true)
+    }
+    
+    
     @objc func textFieldDidChange(_ textField: UITextField) {
         let text = textField.text ?? ""
-
+        
         if text.count == 1 {
             let nextTag = textField.tag + 1
             if nextTag < otpFields.count {
@@ -340,26 +327,19 @@ extension OTPVc : UITextFieldDelegate{
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
             
             Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
-          
+            
         }
     }
     
-   
-   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-       // Allow backspace for first two fields and move focus to the previous field
-       
-       print("rrrrr")
-       if string.isEmpty {
-           if textField.tag == 0 /*|| textField.tag == 1*/ {
-               return true // Allow backspace on first two fields
-           } else {
-               // Move focus to the previous text field if it's not the first field
-//                if let previousTextField = view.viewWithTag(textField.tag - 1) as? UITextField {
-//                    DispatchQueue.main.async {
-//                        previousTextField.becomeFirstResponder()
-//                    }
-//                }
-               
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Allow backspace for first two fields and move focus to the previous field
+        
+        print("rrrrr")
+        if string.isEmpty {
+            if textField.tag == 0 /*|| textField.tag == 1*/ {
+                return true // Allow backspace on first two fields
+            } else {
                 let previousTextField = otpFields[textField.tag - 1]
                
                DispatchQueue.main.async {
@@ -397,7 +377,7 @@ extension OTPVc : UITextFieldDelegate{
     func checkAutoFillPermission() {
         let context = LAContext()
         var error: NSError?
-
+        
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
             print("🔹 Auto-Fill is enabled.")
         } else {
@@ -419,12 +399,9 @@ extension OTPVc : UITextFieldDelegate{
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
+        
         DispatchQueue.main.async {
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
         }
     }
-
-    
-    
 }

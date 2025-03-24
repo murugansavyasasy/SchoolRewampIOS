@@ -7,7 +7,7 @@
 
 import UIKit
 
-class principalTVCell: UITableViewCell {
+class SchoolTVCell: UITableViewCell {
 
     @IBOutlet weak var AddressLbl: UILabel!
     @IBOutlet weak var RoleLbl: UILabel!
