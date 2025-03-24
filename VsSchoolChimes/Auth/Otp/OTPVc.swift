@@ -21,10 +21,9 @@ class OTPVc: UIViewController {
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var ResendLbl: UILabel!
     @IBOutlet weak var DidnotReciveOtpLbl: UILabel!
-    @IBOutlet weak var PhoneNoStack: UIStackView!
-    @IBOutlet weak var PhoneBtn1: UIButton!
-    @IBOutlet weak var PhoneBtn2: UIButton!
     
+    
+    @IBOutlet weak var callUsLbl: UILabel!
     var secondsRemaining = 30 //5 minutes
     var myTimer : Timer?
     var timer: Timer?
@@ -35,7 +34,6 @@ class OTPVc: UIViewController {
     var validateMobileData : [UserData] = []
     var AlertModal = CustomAlert()
     var pageType : Int?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,8 +41,7 @@ class OTPVc: UIViewController {
         BottomView.backgroundColor = Colornames.auth_screen_color
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
         
-        PhoneBtn1.setTitleFont(style: .body, size: FontSize.BodySize)
-        PhoneBtn2.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         OtpContentLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -55,9 +52,7 @@ class OTPVc: UIViewController {
         OtpContentLbl.text = "  " + (validateMobileData.first?.more_info ?? "") + (
             mobile_number ?? "") + "  "
         
-        setDialNumbers(
-            dialNumbersString:validateMobileData.first?.dial_numbers ?? ""
-        )
+       
         
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
@@ -77,6 +72,12 @@ class OTPVc: UIViewController {
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
+        
+        let callUsGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(showDialOptions)
+        )
+        callUsLbl.addGestureRecognizer(callUsGesture)
         checkAutoFillPermission()
     }
     
@@ -88,34 +89,41 @@ class OTPVc: UIViewController {
         dismiss(animated: true)
     }
     
-    func setDialNumbers(dialNumbersString: String) {
+    
+    
+    
+    @objc func showDialOptions() {
+        
+        doneButtonAction()
+        let dialNumbersString = validateMobileData.first?.dial_numbers ?? ""  // Example numbers
         let dialNumbers = dialNumbersString.components(separatedBy: ",")
-
-        if dialNumbers.count > 0 {
-            PhoneBtn1.setTitle(dialNumbers[0], for: .normal)
-            PhoneBtn1.isHidden = false // Show the button if hidden
-        } else {
-            PhoneBtn1.isHidden = true // Hide if no number
+        guard !dialNumbers.isEmpty else {
+            print("No numbers available")
+            return
         }
 
-        if dialNumbers.count > 1 {
-            PhoneBtn2.setTitle(dialNumbers[1], for: .normal)
-            PhoneBtn2.isHidden = false
-        } else {
-            PhoneBtn2.isHidden = true
+        let alertController = UIAlertController(title: "Choose a Number", message: nil, preferredStyle: .actionSheet)
+        for number in dialNumbers {
+            let action = UIAlertAction(title: number, style: .default) { _ in
+                self.callNumber(phoneNumber: number)
+            }
+            alertController.addAction(action)
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+           present(alertController, animated: true, completion: nil)
+        
     }
 
-    // Function to handle button taps
-    @IBAction func phoneButtonTapped(_ sender: UIButton) {
-        if let phoneNumber = sender.titleLabel?.text, let url = URL(string: "tel://\(phoneNumber)"),
+    // Function to dial the selected number
+    func callNumber(phoneNumber: String) {
+        if let url = URL(string: "tel://\(phoneNumber)"),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         } else {
             print("Cannot open dial pad")
         }
     }
-    
     @IBAction func validationBtn(_ sender: Any) {
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
             
@@ -282,25 +290,8 @@ class OTPVc: UIViewController {
 @available(iOS 14.0, *)
 extension OTPVc : UITextFieldDelegate{
     
-    func addDoneButtonOnKeyboard() {
-        let doneToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 50))
-        doneToolbar.barStyle = .black
-        doneToolbar.isTranslucent = true
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
-        
-        doneToolbar.items = [flexSpace, doneButton]
-        doneToolbar.sizeToFit()
-        
-        for textfield in otpFields{
-            textfield.inputAccessoryView = doneToolbar
-        }
-    }
-    
-    @objc func doneButtonAction() {
-        view.endEditing(true)
-    }
+  
+   
     
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -367,7 +358,9 @@ extension OTPVc : UITextFieldDelegate{
     }
     }
 
-      
+    @objc func doneButtonAction() {
+        view.endEditing(true)
+    }
     
     
     func checkAutoFillPermission() {

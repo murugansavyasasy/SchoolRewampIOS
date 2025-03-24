@@ -58,16 +58,16 @@
                                     </subviews>
                                 </stackView>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0000-000-000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1CN-mN-3VO">
-                                    <rect key="frame" x="20" y="101.00000000000006" width="353" height="50"/>
+                                    <rect key="frame" x="20" y="101.00000000000006" width="353" height="45"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="FMd-26-sce"/>
+                                        <constraint firstAttribute="height" constant="45" id="FMd-26-sce"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsy-78-Mgn">
-                                    <rect key="frame" x="35" y="211.00000000000006" width="323" height="45"/>
+                                    <rect key="frame" x="35" y="206.00000000000006" width="323" height="45"/>
                                     <color key="backgroundColor" name="menuIconColour"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="45" id="Eja-Hl-8O8"/>
@@ -144,7 +144,7 @@
     <resources>
         <image name="online-work-meetings" width="7000" height="5000"/>
         <namedColor name="auth_screenClr">
-            <color red="0.10999999940395355" green="0.63899999856948853" blue="0.84299999475479126" alpha="0.75" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.11800000071525574" green="0.74099999666213989" blue="0.90200001001358032" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="menuIconColour">
             <color red="0.25882352941176473" green="0.81176470588235294" blue="0.9882352941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
