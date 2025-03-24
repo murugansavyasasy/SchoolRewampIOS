@@ -12,6 +12,7 @@ import Contacts
 class LoginVc: UIViewController, UITextFieldDelegate {
     
     
+    @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var passwordStack: UIStackView!
     @IBOutlet weak var mobileNumberStack: UIStackView!
     @IBOutlet weak var PasswordLabel: UILabel!
@@ -37,18 +38,16 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         country_data =   UserDefaultFileManager.getCountryDetails()
         mobile_no_hint = country_data?.mobile_no_hint
         mobile_number_length = country_data?.mobile_number_length
-        
-        
-        MobilTextFld.placeholder = mobile_no_hint
+      
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
-        
         let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
         eyeImage.addGestureRecognizer(eyeImageTap)
-        MobilTextFld.textContentType = .telephoneNumber
-        MobilTextFld.keyboardType = .phonePad
-
+        
+      NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,39 +55,41 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         MobilTextFld.becomeFirstResponder() // ✅ Forces keyboard to appear faster
     }
     
-
-    func fetchUserPhoneNumber() {
-        let store = CNContactStore()
-        store.requestAccess(for: .contacts) { granted, error in
-            if granted {
-                let keys = [CNContactPhoneNumbersKey] as [CNKeyDescriptor]
-                let request = CNContactFetchRequest(keysToFetch: keys)
-                
-                do {
-                    try store.enumerateContacts(with: request) { (contact, stop) in
-                        for phoneNumber in contact.phoneNumbers {
-                            DispatchQueue.main.async {
-                                self.MobilTextFld.text = phoneNumber.value.stringValue
-                            }
-                            stop.pointee = true  // Stop after getting the first number
-                        }
-                    }
-                } catch {
-                    print("Error fetching contacts: \(error)")
-                }
-            }
-        }
+  
+    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+    if self.view.frame.origin.y == 0 {
+    self.view.frame.origin.y -= keyboardSize.height-91
+    print("keyboardSize.height",keyboardSize.height)
+    }
+    }
     }
 
+    @objc func keyboardWillHide(notification: NSNotification) {
+    if self.view.frame.origin.y != 0 {
+    self.view.frame.origin.y = 0
+    }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-    
-    
     func setupUI() {
-        loginBtnNm.backgroundColor = Colornames.ButtonColor
-        loginBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
+        
+        MobilTextFld.placeholder = mobile_no_hint
+               
+    BottomView.layer.cornerRadius = 30
+    BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        BottomView.backgroundColor = Colornames.auth_screen_color
+        loginBtnNm.layer.cornerRadius = 15
+        loginBtnNm.layer.masksToBounds = false
+        loginBtnNm.backgroundColor = Colornames.auth_screen_color
+                // Adding shadow for a popped-up effect
+        loginBtnNm.layer.shadowColor = UIColor.black.cgColor
+        loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 5)
+        loginBtnNm.layer.shadowOpacity = 0.3
+        loginBtnNm.layer.shadowRadius = 6
         MobilTextFld.delegate = self
         MobilTextFld.keyboardType = .numberPad
         passTextFld.delegate = self
@@ -113,8 +114,8 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     
     @IBAction func togglePasswordVisibility() {
         passTextFld.isSecureTextEntry.toggle()
-        let imageName = passTextFld.isSecureTextEntry ? "eye.fill" : "eye.slash.fill"
-        eyeImage.image = UIImage(systemName: imageName)
+        let imageName = passTextFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
+        eyeImage.image = imageName
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -141,13 +142,9 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginBtn(_ sender: Any) {
-        
         validateMobileAndPassword()
-        
     }
-    
-   
-    
+
     func validateMobileAndPassword() {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)

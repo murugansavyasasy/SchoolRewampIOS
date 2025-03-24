@@ -9,6 +9,8 @@ import UIKit
 
 class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
+    @IBOutlet weak var BottomView: UIView!
+    @IBOutlet weak var eyeImage: UIImageView!
     @IBOutlet weak var createPassDefaultLbl: UILabel!
     @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
@@ -25,6 +27,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         
     super.viewDidLoad()
+        
+        setUpUI()
         
         createPassDefaultLbl.text = ChangePasswordStringFile.create_newpassword
         ConfirmPassLabel.text = ChangePasswordStringFile.confirm_password
@@ -45,6 +49,45 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
     }
 
+    
+    func setUpUI(){
+        BottomView.layer.cornerRadius = 30
+        BottomView.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+
+        confirmPassBtnNam.layer.cornerRadius = 15
+        confirmPassBtnNam.layer.masksToBounds = false
+
+        // Adding shadow for a popped-up effect
+        confirmPassBtnNam.layer.shadowColor = UIColor.black.cgColor
+        confirmPassBtnNam.layer.shadowOffset = CGSize(width: 0, height: 5)
+        confirmPassBtnNam.layer.shadowOpacity = 0.3
+        confirmPassBtnNam.layer.shadowRadius = 6
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
+
+
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+    if self.view.frame.origin.y == 0 {
+    self.view.frame.origin.y -= keyboardSize.height-91
+    print("keyboardSize.height",keyboardSize.height)
+    }
+    }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+    if self.view.frame.origin.y != 0 {
+    self.view.frame.origin.y = 0
+    }
+    }
+
+       deinit {
+           NotificationCenter.default.removeObserver(self)
+       }
     @IBAction func backBtn(_ sender: Any) {
 
     //        dismiss(animated: true)

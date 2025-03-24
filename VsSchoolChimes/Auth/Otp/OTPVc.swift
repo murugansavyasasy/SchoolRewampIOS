@@ -16,6 +16,7 @@ class OTPVc: UIViewController {
     @IBOutlet weak var otpTextField2: UITextField!
     @IBOutlet weak var otpTextField3: UITextField!
     @IBOutlet weak var otpTextField4: UITextField!
+    @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var otpTextField5: UITextField!
     @IBOutlet weak var otpTextField6: UITextField!
     @IBOutlet weak var validationBtnNm: UIButton!
@@ -40,11 +41,14 @@ class OTPVc: UIViewController {
         super.viewDidLoad()
         
         
-        
+        BottomView.layer.cornerRadius = 30
+        BottomView.backgroundColor = Colornames.auth_screen_color
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+
         ResendLbl.isUserInteractionEnabled = true
-        validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
-        validationBtnNm.backgroundColor = Colornames.ButtonColor
-        
+//        validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
+//        validationBtnNm.backgroundColor = Colornames.ButtonColor
+//        
         OtpContentLbl.text = validateMobileData.first?.more_info ?? "" + (
             mobile_number ?? "")
         
@@ -64,11 +68,9 @@ class OTPVc: UIViewController {
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
-        //OtpContentLbl.text = validateMobileData.first?.message
-        setupOTPTextFields()
         
-//        let defaults = UserDefaults.standard
-//        mobile_number = defaults.string(forKey:DefaultsKeys.mobileNumber) ?? ""
+        
+        setupOTPTextFields()
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
         ResendLbl.addGestureRecognizer(resendGesture)
@@ -195,6 +197,7 @@ class OTPVc: UIViewController {
                 case .success(let successMessage):
                     if successMessage.status == true {
                         DispatchQueue.main.async { [self] in
+                            
                             
                             if(pageType == screenType.isForgotPassword){
                                 
@@ -338,42 +341,37 @@ extension OTPVc : UITextFieldDelegate{
                 return true // Allow backspace on first two fields
             } else {
                 let previousTextField = otpFields[textField.tag - 1]
-                
-                DispatchQueue.main.async {
-                    previousTextField.becomeFirstResponder()
-                }
-                
-                return true
-            }
-        }
-        
-        // Allow only one character per field
-        return textField.text?.count == 0
+               
+               DispatchQueue.main.async {
+                   previousTextField.becomeFirstResponder()
+               }
+               
+               return true
+           }
+       }
+       
+       // Allow only one character per field
+       return textField.text?.count == 0
+   }
+
+    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
+
+
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+    if self.view.frame.origin.y == 0 {
+    self.view.frame.origin.y -= keyboardSize.height-91
+    print("keyboardSize.height",keyboardSize.height)
     }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        
-        let screenHeight = UIScreen.main.bounds.height
-        
-        if screenHeight <= 667{
-            scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
-        }else if screenHeight > 667 && screenHeight <= 812{
-            scrollView.setContentOffset(CGPoint(x: 0, y: 100), animated: true)
-        }else{
-            scrollView.setContentOffset(CGPoint(x: 0, y: 100), animated: true)
-        }
-        
-        let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: 300, right: 0)
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
     }
-    
+    }
+
     @objc func keyboardWillHide(notification: NSNotification) {
-        
-        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        scrollView.contentInset = .zero
-        scrollView.scrollIndicatorInsets = .zero
+    if self.view.frame.origin.y != 0 {
+    self.view.frame.origin.y = 0
     }
+    }
+
+      
     
     
     func checkAutoFillPermission() {

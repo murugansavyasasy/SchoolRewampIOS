@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class MobileNumberVc: UIViewController {
 
+    @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var continueBtnName: UIButton!
     @IBOutlet weak var MobilenumLabel: UILabel!
     @IBOutlet weak var MobilTextFld:
@@ -23,24 +24,76 @@ class MobileNumberVc: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+        
+        
+               
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+       
+        
        
     }
 
+    
+    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
+
+
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+    if self.view.frame.origin.y == 0 {
+    self.view.frame.origin.y -= keyboardSize.height-91
+    print("keyboardSize.height",keyboardSize.height)
+    }
+    }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+    if self.view.frame.origin.y != 0 {
+    self.view.frame.origin.y = 0
+    }
+    }
+
+       deinit {
+           NotificationCenter.default.removeObserver(self)
+       }
     func setupUI() {
+        
         
         country_data =   UserDefaultFileManager.getCountryDetails()
         mobile_no_hint = country_data?.mobile_no_hint
         mobile_number_length = country_data?.mobile_number_length
+        MobilTextFld.addDoneButton()
+        BottomView.layer.cornerRadius = 30
+        BottomView.backgroundColor = Colornames.auth_screen_color
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+
+      continueBtnName.layer.cornerRadius = 15
+      continueBtnName.layer.masksToBounds = false
+        continueBtnName.backgroundColor = Colornames.auth_screen_color
+        // Adding shadow for a popped-up effect
+        continueBtnName.layer.shadowColor = UIColor.black.cgColor
+        continueBtnName.layer.shadowOffset = CGSize(width: 0, height: 5)
+        continueBtnName.layer.shadowOpacity = 0.3
+        continueBtnName.layer.shadowRadius = 6
         
-        continueBtnName.backgroundColor = Colornames.ButtonColor
-        continueBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
-    
         MobilTextFld.delegate = self
         MobilTextFld.keyboardType = .numberPad
     }
     
     @IBAction func continueBtn(_ sender: Any) {
         
+        guard let button = sender as? UIButton else { return }
+
+          // Animate the button when it is tapped
+          UIView.animate(withDuration: 0.1, animations: {
+              button.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+              button.layer.shadowOffset = CGSize(width: 0, height: 2)
+          }) { _ in
+              // Animate the button back to its original state after the first animation
+              UIView.animate(withDuration: 0.1) {
+                  button.transform = .identity
+                  button.layer.shadowOffset = CGSize(width: 0, height: 5)
+              }
+          }
         
         validateCredentials()
         
@@ -72,14 +125,13 @@ class MobileNumberVc: UIViewController {
     func validate_user() {
         
         let secureID = SecureIDManager.getSecureID()
+        
         var parameters: [String: Any] = [
             mobileNumber.mobile_number: MobilTextFld.text ?? "",
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID
         ]
-        
-        
-        
+    
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
                      , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
@@ -150,13 +202,7 @@ class MobileNumberVc: UIViewController {
 extension MobileNumberVc : UITextFieldDelegate {
     
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField // ✅ Now dynamically tracks the active field
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        activeTextField = nil
-    }
+  
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -186,7 +232,7 @@ extension MobileNumberVc : UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
             let newLength = (textField.text?.count ?? 0) + string.count - range.length
-            return newLength <= mobile_number_length ?? 0 // ✅ Ensures mobile number is max 10 digits
+            return newLength <= country_data?.mobile_number_length ?? 0 // ✅ Ensures mobile number is max 10 digits
         }
         return true
     }
