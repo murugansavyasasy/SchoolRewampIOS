@@ -9,7 +9,11 @@ import UIKit
 
 @available(iOS 14.0, *)
 class MobileNumberVc: UIViewController {
-
+ 
+    @IBOutlet weak var LoginTitleLbl: UILabel!
+    @IBOutlet weak var DescriptionLbl: UILabel!
+    @IBOutlet weak var WelcomeLbl: UILabel!
+    @IBOutlet weak var BannerImageview: UIImageView!
     @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var continueBtnName: UIButton!
     @IBOutlet weak var MobilenumLabel: UILabel!
@@ -62,6 +66,7 @@ class MobileNumberVc: UIViewController {
         mobile_no_hint = country_data?.mobile_no_hint
         mobile_number_length = country_data?.mobile_number_length
         MobilTextFld.addDoneButton()
+        MobilTextFld.layer.cornerRadius = 10
         BottomView.layer.cornerRadius = 30
         BottomView.backgroundColor = Colornames.auth_screen_color
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
@@ -77,6 +82,21 @@ class MobileNumberVc: UIViewController {
         
         MobilTextFld.delegate = self
         MobilTextFld.keyboardType = .numberPad
+        
+        WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+        LoginTitleLbl.setFont(style: .header, size: 25)
+        MobilenumLabel.setFont(style: .title, size: FontSize.TitleSize)
+        continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
+        
+        addPadding(to: MobilTextFld, amount: 10)
+        
+    }
+    
+    func addPadding(to textField: UITextField, amount: CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: textField.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
     }
     
     @IBAction func continueBtn(_ sender: Any) {

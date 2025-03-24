@@ -10,7 +10,6 @@ import LocalAuthentication
 @available(iOS 14.0, *)
 class OTPVc: UIViewController {
     
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var OtpContentLbl: UILabel!
     @IBOutlet weak var otpTextField1: UITextField!
     @IBOutlet weak var otpTextField2: UITextField!
@@ -19,7 +18,7 @@ class OTPVc: UIViewController {
     @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var otpTextField5: UITextField!
     @IBOutlet weak var otpTextField6: UITextField!
-    @IBOutlet weak var validationBtnNm: UIButton!
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var ResendLbl: UILabel!
     @IBOutlet weak var DidnotReciveOtpLbl: UILabel!
     @IBOutlet weak var PhoneNoStack: UIStackView!
@@ -40,21 +39,26 @@ class OTPVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         BottomView.layer.cornerRadius = 30
         BottomView.backgroundColor = Colornames.auth_screen_color
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+        
+        PhoneBtn1.setTitleFont(style: .body, size: FontSize.BodySize)
+        PhoneBtn2.setTitleFont(style: .body, size: FontSize.BodySize)
+        BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        OtpContentLbl.setFont(style: .title, size: FontSize.TitleSize)
+        ResendLbl.setFont(style: .body, size: FontSize.BodySize)
+        DidnotReciveOtpLbl.setFont(style: .body, size: FontSize.BodySize)
 
         ResendLbl.isUserInteractionEnabled = true
-//        validationBtnNm.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
-//        validationBtnNm.backgroundColor = Colornames.ButtonColor
-//        
-        OtpContentLbl.text = validateMobileData.first?.more_info ?? "" + (
-            mobile_number ?? "")
+        OtpContentLbl.text = "  " + (validateMobileData.first?.more_info ?? "") + (
+            mobile_number ?? "") + "  "
         
         setDialNumbers(
             dialNumbersString:validateMobileData.first?.dial_numbers ?? ""
         )
+        
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
@@ -69,7 +73,6 @@ class OTPVc: UIViewController {
             object: nil
         )
         
-        
         setupOTPTextFields()
         
         let resendGesture = UITapGestureRecognizer(target: self, action: #selector(controlTimer))
@@ -80,7 +83,10 @@ class OTPVc: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
+    @IBAction func BackBtn(_ sender: Any) {
+        dismiss(animated: true)
+    }
     
     func setDialNumbers(dialNumbersString: String) {
         let dialNumbers = dialNumbersString.components(separatedBy: ",")
@@ -140,10 +146,6 @@ class OTPVc: UIViewController {
     func collectOTP() -> String {
         let otpFields = [otpTextField1, otpTextField2, otpTextField3, otpTextField4, otpTextField5, otpTextField6]
         return otpFields.compactMap { $0?.text }.joined()
-    }
-    
-    @IBAction func BackAct(_ sender: Any) {
-        dismiss(animated: true)
     }
     
     //    MARK: Resend Timer Set
@@ -263,12 +265,6 @@ class OTPVc: UIViewController {
                     }
                     else{
                         DispatchQueue.main.async {
-//                            self.AlertModal
-//                                .showAlert(
-//                                    title: "",
-//                                    message: successMessage.message ?? "",
-//                                    on: self
-//                                )
                             self.priotyScreenVC()
                         }
                     }
