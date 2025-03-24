@@ -223,10 +223,12 @@ class SplashViewController: UIViewController {
                 }
          
             else{
-                let vc = LoginVc(nibName: nil, bundle: nil)
+//                let vc = LoginVc(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true)
+                let vc = SchoolListVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
-
+                present(vc, animated: true)
             }
 
     }

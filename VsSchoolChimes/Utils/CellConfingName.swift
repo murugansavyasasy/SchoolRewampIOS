@@ -100,5 +100,6 @@ class CellConfingName {
     static let  TakeReadingSkillTableViewCell = "TakeReadingSkillTableViewCell"
     static let  LessonDashboardTv = "LessonDashboardTv"
     static let  LessonProgressCell = "LessonProgressCell"
+    static let  SchoolListTVC = "SchoolListTVC"
     
 }
