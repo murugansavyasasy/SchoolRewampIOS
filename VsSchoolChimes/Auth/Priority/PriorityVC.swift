@@ -26,7 +26,6 @@ class PriorityVC: UIViewController {
     let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
     var passedValue = 1
     var Language :String?
-    var validateUser : [UserData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
@@ -147,10 +146,10 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
         if passedValue == 1 {
             
-            return 5
+            return localData.user_data?.user_details?.staff_details?.count ?? 0
         }else{
             
-            return 10
+            return localData.user_data?.user_details?.child_details?.count ?? 0
             
         }
         
@@ -168,7 +167,17 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
         let image = UIImage(named: ProfileImage[indexPath.row % ProfileImage.count])
         
-        if passedValue  == 2 {
+        if passedValue  == 1 {
+           
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.principalTVCell, for: indexPath) as! principalTVCell
+            
+            
+            if let color1 = colour1, let color2 = colour2 {
+                cell.setGradientColors([color2.cgColor, color1.cgColor])
+            }
+            return cell
+        } else {
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.DemoTVCell, for: indexPath) as! DemoTVCell
             
             cell.SchoolInfoView.backgroundColor = colour1
@@ -181,20 +190,8 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             }
             cell.arrowImg.applyRTLFlip(Language == "ar")
             return cell
-            
-        } else {
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.principalTVCell, for: indexPath) as! principalTVCell
-            
-            
-            if let color1 = colour1, let color2 = colour2 {
-                cell.setGradientColors([color2.cgColor, color1.cgColor])
-            }
-            
-    
-            
-            
-            return cell
+        
+          
             
         }
     }

@@ -11,6 +11,7 @@ import UIKit
 class PasswordVc: UIViewController,UITextFieldDelegate {
     
     
+    @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var passwordTxtFld: UITextField!
     @IBOutlet weak var validateBtnName: UIButton!
     @IBOutlet weak var eyeImage: UIImageView!
@@ -21,6 +22,9 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         
         
+        SetpUI()
+        
+        
         let eyeImageTap = UITapGestureRecognizer(target: self, action: #selector(togglePasswordVisibility))
         eyeImage.addGestureRecognizer(eyeImageTap)
         
@@ -28,19 +32,49 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
         forgetLbl.addGestureRecognizer(forgetTap)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     
+    @objc func keyboardWillShow(notification: NSNotification) { // -----> to set key board set height
+
+
+    if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+    if self.view.frame.origin.y == 0 {
+    self.view.frame.origin.y -= keyboardSize.height-91
+    print("keyboardSize.height",keyboardSize.height)
+    }
+    }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+    if self.view.frame.origin.y != 0 {
+    self.view.frame.origin.y = 0
+    }
+    }
     
+    func SetpUI(){
+        passwordTxtFld.addDoneButton()
+        BottomView.layer.cornerRadius = 30
+        BottomView.backgroundColor = Colornames.auth_screen_color
+        BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
+
+        validateBtnName.layer.cornerRadius = 15
+        validateBtnName.layer.masksToBounds = false
+        validateBtnName.backgroundColor = Colornames.auth_screen_color
+        // Adding shadow for a popped-up effect
+        validateBtnName.layer.shadowColor = UIColor.black.cgColor
+        validateBtnName.layer.shadowOffset = CGSize(width: 0, height: 5)
+        validateBtnName.layer.shadowOpacity = 0.3
+        validateBtnName.layer.shadowRadius = 6
+    }
     @IBAction func forgetClick() {
         if mobile_number != ""  {
             
             //call forgot api and then navigate to the OTP screen
+            ForgotPasswordAPIcall()
             
-            let vc = OTPVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            vc.pageType = screenType.isForgotPassword
-            present(vc, animated: true)
             
         } else {
             AlertModal
@@ -55,7 +89,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         
         passwordTxtFld.isSecureTextEntry.toggle()
         let imageName = passwordTxtFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
-        eyeImage.image = imageName
+            eyeImage.image = imageName
     }
  
     func setupUI() {
@@ -87,7 +121,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         vc.validateMobileData = valdiateResponse
         vc.mobile_number = mobile_number ?? ""
         vc.pageType = screenType.isPassword
-        
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -218,7 +251,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     
     
     
-    func ForgotPasswordAPIcall () {
+    func ForgotPasswordAPIcall() {
             
         APIService.shared
             .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
@@ -236,7 +269,11 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                             
                             print("Success,Success")
                             
-                            
+                            let vc = OTPVc(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            vc.mobile_number = mobile_number
+                            vc.pageType = screenType.isForgotPassword
+                            present(vc, animated: true)
                             
                         }
                         

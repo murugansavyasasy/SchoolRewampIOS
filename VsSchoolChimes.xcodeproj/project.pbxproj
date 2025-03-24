@@ -179,6 +179,7 @@
 		84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84395FED2D1002A900FC3242 /* ChatTVCell.xib */; };
 		843960252D11938000FC3242 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960242D11938000FC3242 /* LanguageManager.swift */; };
 		843960272D1193AD00FC3242 /* Bundle+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843960262D1193AD00FC3242 /* Bundle+Language.swift */; };
+		843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE472C19719700E32496 /* Main.storyboard */; };
 		843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */; };
 		843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
@@ -3263,6 +3264,7 @@
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
 				FAFF9E032D6C7B7A00498368 /* CalendarCollectionViewCell.xib in Resources */,
 				FAFF9E042D6C7B7A00498368 /* TimeHeader.xib in Resources */,
+				843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */,
 				FAFF9E052D6C7B7A00498368 /* cancelTableViewCell.xib in Resources */,
 				FAFF9E062D6C7B7A00498368 /* TimeCollectionViewCell.xib in Resources */,
 				FAFF9E072D6C7B7A00498368 /* StaffPtmTableViewCell.xib in Resources */,

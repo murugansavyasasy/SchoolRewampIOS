@@ -33,7 +33,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = ProfileViewController()
     var languages : String!
-    var passedValue : Int!
+    var passedValue : Int?
     var languageCode : String!
     var profile:Bool = false
     override func viewDidLoad() {
@@ -118,16 +118,16 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         // Apply gradient if necessary
         if let settingsVC = viewController as? SettingsViewController, passedValue == 2 {
             settingsVC.delegate = self
-            settingsVC.passVale = passedValue
+            settingsVC.passVale = passedValue ?? 0
             
         } else if let profileVC = viewController as? ProfileViewController, passedValue == 2 {
-            profileVC.passvalue = passedValue
+            profileVC.passvalue = passedValue ?? 0
 
         }else if let profileVC = viewController as? ParentHomePageVc, passedValue == 2 {
             profileVC.getValue = passedValue
             
         }else if let HelpVc = viewController as? HelpVc, passedValue == 2 {
-            HelpVc.passVale = passedValue
+            HelpVc.passVale = passedValue ?? 0
             
         }
 

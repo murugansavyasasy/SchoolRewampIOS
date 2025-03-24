@@ -138,7 +138,6 @@ class CountryVc: UIViewController {
             dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             country_data = CountryListRespons?[index]
            
-            print("country_data",country_data)
             
         }
         dropDown.cancelAction = { [weak self] in
@@ -187,10 +186,15 @@ class CountryVc: UIViewController {
     
     @IBAction  func GotToNextVc(){
         if checkBoxBtn.isSelected{
-            UserDefaultFileManager.saveCountryDetails(data: country_data!)
+           
+            UserDefaultFileManager
+                .saveCountryDetails(
+                    data: (country_data)!)
+            
             ServiceUrl.baseurl = country_data?.base_url ?? ""
             ServiceUrl.report_url = country_data?.reporting_url ?? ""
             let vc = MobileNumberVc(nibName: nil, bundle: nil)
+            vc.country_data = country_data
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }
