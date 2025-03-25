@@ -265,7 +265,8 @@ class OTPVc: UIViewController {
                     }
                     else{
                         DispatchQueue.main.async {
-                            self.priotyScreenVC()
+                         
+                            self.AlertModal.showAlert(title: "", message: successMessage.message ?? "", on: self)
                         }
                     }
                 case .failure(let error):

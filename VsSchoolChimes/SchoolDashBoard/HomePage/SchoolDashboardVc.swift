@@ -623,4 +623,36 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         }
     }
     
+    
+    func DeviceTokenAPIcall(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.auth_device_token, parameters:[COMMON_PARAMETER.mobile_number : "" ?? "",DeviceTokenStringFile.device_token: "" ?? "",COMMON_PARAMETER.device_type : "" ?? ""] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result : Result<DeviceTokenResponseSuc,Error>) in
+            
+            switch result {
+                
+            case.success(let succesmessage) :
+                
+                if succesmessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        print("Status true")
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        print(" status false")
+                    }
+                }
+                
+            case.failure(let error) :
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+            
+        }
+    }
+    
 }
