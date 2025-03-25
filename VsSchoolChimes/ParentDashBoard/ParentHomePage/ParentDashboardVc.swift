@@ -65,10 +65,11 @@ class ParentDashboardVc: UIViewController {
     let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        collectionBtn.isHidden = true
+        heightStackview.constant = 0
         StyleAndTranslater()
         
-        displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
+        displayedCategories = Array(MenuRedirect.receiverItems.prefix(9))
         displayedCategories.insert(newString, at: 5)
         filteredItems = MenuRedirect.items
         
@@ -325,10 +326,10 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
     @objc func seeAllButtonTapped() {
         if isShowingAll {
             // Collapse back to show only the first 6 items
-            displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
+            displayedCategories = Array(MenuRedirect.receiverItems.prefix(9))
             displayedCategories.insert(newString, at: 5)
-            heightStackview.constant = 110
-            collectionBtn.isHidden = false
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
             homeworkView.layoutIfNeeded()
             assignmentView.layoutIfNeeded()
             onlineMeetingView.layoutIfNeeded()

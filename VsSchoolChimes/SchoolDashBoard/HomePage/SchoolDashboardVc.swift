@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import StoreKit
+import Kingfisher
 
 @available(iOS 14.0, *)
 class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
@@ -67,11 +68,17 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        collectionBtn.isHidden = true
+        heightStackview.constant = 0
+        if let staff = localData.staff_data{
+            SchoolNameLabel.text = staff.first?.school_name
+            AddressLabel.text = staff.first?.city
+            schoolLogoImg.kf.setImage(with: URL(string:staff.first?.school_logo ?? ""))
+        }
         StyleAndTranslater()
         setupVideoBackground()
         filteredItems = MenuRedirect.items
-        displayedCategories = Array(filteredItems.prefix(6))
+        displayedCategories = Array(filteredItems.prefix(9))
         displayedCategories.insert(newString, at: 5)
         
         //startAutoScroll()
@@ -223,12 +230,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     @IBAction func ViewDetailsAct(_ sender: Any) {
-        
-        /*let vc  = LocationHistoryVc(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)*/
-        
-        //openSafari()
         OpenInside(from: self)
        
     }
@@ -296,10 +297,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         if isShowingAll {
             
             // Collapse back to show only the first 6 items
-            displayedCategories = Array(filteredItems.prefix(6))
+            displayedCategories = Array(filteredItems.prefix(9))
             displayedCategories.insert(newString, at: 5)
-            heightStackview.constant = 110
-            collectionBtn.isHidden = false
+            heightStackview.constant = 0
+            collectionBtn.isHidden = true
             assignmentView.layoutIfNeeded()
             onlineMeetingView.layoutIfNeeded()
             homeworkView.layoutIfNeeded()
@@ -531,7 +532,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         if searchText.isEmpty {
             
             filteredItems = MenuRedirect.items // Show all items if no search text
-            displayedCategories = Array(filteredItems.prefix(6))
+            displayedCategories = Array(filteredItems.prefix(9))
             displayedCategories.insert(newString, at: 5)
         } else {
             filteredItems = MenuRedirect.items.filter { $0.lowercased().contains(searchText.lowercased()) }
