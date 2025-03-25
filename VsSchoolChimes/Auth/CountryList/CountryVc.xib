@@ -791,25 +791,6 @@
             </constraints>
             <point key="canvasLocation" x="1660" y="-40"/>
         </view>
-        <view contentMode="scaleToFill" id="pyA-Th-Umh">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nbO-9i-LYC">
-                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </view>
-            </subviews>
-            <viewLayoutGuide key="safeArea" id="dU4-T4-lxB"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <constraints>
-                <constraint firstItem="dU4-T4-lxB" firstAttribute="trailing" secondItem="nbO-9i-LYC" secondAttribute="trailing" id="Ji0-ei-dDY"/>
-                <constraint firstItem="dU4-T4-lxB" firstAttribute="bottom" secondItem="nbO-9i-LYC" secondAttribute="bottom" id="dMs-DD-CCE"/>
-                <constraint firstItem="nbO-9i-LYC" firstAttribute="leading" secondItem="dU4-T4-lxB" secondAttribute="leading" id="iYO-nA-fNf"/>
-                <constraint firstItem="nbO-9i-LYC" firstAttribute="top" secondItem="dU4-T4-lxB" secondAttribute="top" id="xKn-lV-fGC"/>
-            </constraints>
-            <point key="canvasLocation" x="932" y="20"/>
-        </view>
     </objects>
     <resources>
         <image name="ArrowImg" width="170.66667175292969" height="170.66667175292969"/>

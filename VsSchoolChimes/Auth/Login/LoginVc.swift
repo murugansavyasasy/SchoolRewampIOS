@@ -105,13 +105,17 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             
             //call forgot api and then navigate to the OTP screen
             
-            let vc = OTPVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            vc.pageType = screenType.isForgotPassword
-            present(vc, animated: true)
+            ForgotPasswordAPIcall()
             
         } else {
-            view.makeToast(AlertstringFile.Enter_the_10_digit)
+            
+            AlertModal
+                .showAlert(
+                    title: "",
+                    message: AlertstringFile.Enter_valid_Mobile,
+                    on: self
+                )
+            
         }
     }
     
@@ -292,6 +296,52 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBAction func BackAct(_ sender: Any) {
         
         dismiss(animated: true)
+    }
+    
+    
+    func ForgotPasswordAPIcall() {
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+                result : Result<ForgotPasswordResponeSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successmessage):
+
+                    if successmessage.status == true {
+                        DispatchQueue.main.async { [self] in
+                            let vc = OTPVc(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            vc.mobile_number = MobilTextFld.text
+                            vc.pageType = screenType.isForgotPassword
+                            present(vc, animated: true)
+                            
+                        }
+                        
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            AlertModal
+                                .showAlert(
+                                    title: "",
+                                    message: successmessage.message ?? "",
+                                    on: self
+                                )
+                        }
+                    }
+                    
+                case.failure(let error):
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+                
+            }
     }
 }
 

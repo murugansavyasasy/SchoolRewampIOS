@@ -184,15 +184,7 @@ class OTPVc: UIViewController {
         present(vc, animated: true)
     }
     
-    func CreatePasswordScreenVC(
-        createPassword : String ,
-        confirmPassword : String,
-        CreatePasswordValue : Bool
-    ){
-        
-
-    }
-    
+   
     func Validate_OTP(mobileNumber : String , otp : String) {
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
@@ -221,9 +213,9 @@ class OTPVc: UIViewController {
                                 present(vc, animated: true)
                                 
                             }
-                           
+                            
                             else if(localData.user_data?.is_password_updated == false){
-                               
+                                
                                 let vc = CreatePasswordVc(
                                     nibName: nil,
                                     bundle: nil
@@ -268,8 +260,8 @@ class OTPVc: UIViewController {
                                 
                             }
                             
-                                                
-                         }
+                            
+                        }
                     }
                     else{
                         DispatchQueue.main.async {

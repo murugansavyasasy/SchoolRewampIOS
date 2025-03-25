@@ -7,6 +7,7 @@
 
 import UIKit
 
+@available(iOS 14.0, *)
 class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
     @IBOutlet weak var BottomView: UIView!
@@ -54,10 +55,10 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         BottomView.layer.cornerRadius = 30
         BottomView.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-
+        
         confirmPassBtnNam.layer.cornerRadius = 15
         confirmPassBtnNam.layer.masksToBounds = false
-
+        
         // Adding shadow for a popped-up effect
         confirmPassBtnNam.layer.shadowColor = UIColor.black.cgColor
         confirmPassBtnNam.layer.shadowOffset = CGSize(width: 0, height: 5)
@@ -93,32 +94,31 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
 
     @IBAction func confirmBtn(_ sender: Any) {
-
-    if createPassTextFLd.text != "" {
-
-    if  confirmPassTextFld.text != "" {
-
-    if createPassTextFLd.text == confirmPassTextFld.text{
-
-    //view.makeToast(AlertstringFile.Successfully_password_created)
-   
         
-        self.CretaeNewPasswordAPIcall()
-
-   
-    }else{
-    view.makeToast(AlertstringFile.Password_Missmatched)
-    }
-    }else{
-    view.makeToast(AlertstringFile.Enterthe_confirm_password)
-    }
-
-    }else{
-
-    view.makeToast(AlertstringFile.Enter_the_new_password)
-
-    }
-
+        if createPassTextFLd.text != "" {
+            
+            if  confirmPassTextFld.text != "" {
+                
+                if createPassTextFLd.text == confirmPassTextFld.text{
+                    if createNewPassword == false{
+                        ResetPasswordAPIcall()
+                    }else{
+                        self.CretaeNewPasswordAPIcall()
+                    }
+                    
+                }else{
+                    view.makeToast(AlertstringFile.Password_Missmatched)
+                }
+            }else{
+                view.makeToast(AlertstringFile.Enterthe_confirm_password)
+            }
+            
+        }else{
+            
+            view.makeToast(AlertstringFile.Enter_the_new_password)
+            
+        }
+        
     }
     
     @IBAction func showPassword(_ sender: UIButton) {
@@ -134,7 +134,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
     
 
-        func CretaeNewPasswordAPIcall(){
+    @available(iOS 14.0, *)
+    func CretaeNewPasswordAPIcall(){
             
             APIService.shared
                 .makeApi(url: ServiceUrl.cred_create_new_password, parameters: [
@@ -159,6 +160,10 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                     message:successMessage.message ?? "" ,
                                     on: self
                                 )
+                            
+                            let vc = LoginVc(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            present(vc, animated: true, completion: nil)
                         }
                         
                     }else{
@@ -203,14 +208,28 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
          DispatchQueue.main.async { [self] in
 
-
+             alertModal
+                 .showAlert(
+                     title: "",
+                     message:successMessage.message ?? "" ,
+                     on: self
+                 )
+             
+             let vc = LoginVc(nibName: nil, bundle: nil)
+             vc.modalPresentationStyle = .fullScreen
+             present(vc, animated: true, completion: nil)
 
          }
 
          }else{
 
          DispatchQueue.main.async {
-
+             alertModal
+                 .showAlert(
+                     title: "",
+                     message:successMessage.message ?? "" ,
+                     on: self
+                 )
          }
          }
 
@@ -224,46 +243,5 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
          }
 
     
-        func ForgotPasswordAPIcall () {
-    
-                APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (result : Result<ForgotPasswordResponeSuc,Error>) in
-    
-                    switch result {
-    
-                    case.success(let successmessage):
-    
-                        if successmessage.status == true {
-    
-                            DispatchQueue.main.async { [self] in
-    
-                                print("Success,Success")
-    
-                            }
-    
-                        }else {
-    
-                            DispatchQueue.main.async {
-    
-                                print("Try again later")
-                            }
-                        }
-    
-                    case.failure(let error):
-    
-                        DispatchQueue.main.async {
-                            print(error.localizedDescription)
-                        }
-    
-                    }
-    
-                }
-            }
-    
-         
-    
-           
-    
-        
-
-
+       
     }

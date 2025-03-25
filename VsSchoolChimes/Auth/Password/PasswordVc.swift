@@ -130,8 +130,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     func validate_user() {
         
         let secureID = SecureIDManager.getSecureID()
-        
-        
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:[
                 
@@ -154,8 +152,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                 response.data?.first
                             )!
                             localData.user_data = data
-                            
-                            
                             if(data.is_number_exists == true){
                                 if(data.otp_sent == true){
                                     otp_Vc(valdiateResponse: response.data ?? [])
@@ -258,7 +254,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     
     
     func ForgotPasswordAPIcall() {
-            
+        
         APIService.shared
             .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
                 result : Result<ForgotPasswordResponeSuc,
@@ -287,7 +283,13 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                         
                         DispatchQueue.main.async {
                             
-                            print("Try again later")
+                            AlertModal
+                                .showAlert(
+                                    title: "",
+                                    message: successmessage.message ?? "",
+                                    on: self
+                                )
+                           
                         }
                     }
                     
@@ -296,11 +298,11 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
                     }
-               
+                    
                 }
                 
             }
-        }
+    }
         
     
     

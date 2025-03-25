@@ -35,7 +35,7 @@ class SplashViewController: UIViewController {
                 Version_Check()
             }
             else{
-                let vc = CountryListVC(nibName: nil, bundle: nil)
+                let vc = CountryVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
@@ -223,7 +223,7 @@ class SplashViewController: UIViewController {
                 }
          
             else{
-                let vc = LoginVc(nibName: nil, bundle: nil)
+                let vc = MobileNumberVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
