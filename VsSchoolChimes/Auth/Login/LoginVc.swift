@@ -79,7 +79,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         BottomView.backgroundColor = Colornames.auth_screen_color
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
-        //loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+        loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
                 // Adding shadow for a popped-up effect
         loginBtnNm.layer.shadowColor = UIColor.black.cgColor
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 5)
@@ -105,14 +105,17 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             
             //call forgot api and then navigate to the OTP screen
             
-            let vc = OTPVc(nibName: nil, bundle: nil)
-            vc.mobile_number = MobilTextFld.text
-            vc.modalPresentationStyle = .fullScreen
-            vc.pageType = screenType.isForgotPassword
-            present(vc, animated: true)
+            ForgotPasswordAPIcall()
             
         } else {
-            view.makeToast(AlertstringFile.Enter_the_10_digit)
+            
+            AlertModal
+                .showAlert(
+                    title: "",
+                    message: AlertstringFile.Enter_valid_Mobile,
+                    on: self
+                )
+            
         }
     }
     
@@ -186,7 +189,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                     , type: ApitTypeSringFile.POST, token: "") { [self] (
                         result: Result<UserValidationResponseSuc,
                         Error>
                      ) in
@@ -293,6 +296,52 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     @IBAction func BackAct(_ sender: Any) {
         
         dismiss(animated: true)
+    }
+    
+    
+    func ForgotPasswordAPIcall() {
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+                result : Result<ForgotPasswordResponeSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successmessage):
+
+                    if successmessage.status == true {
+                        DispatchQueue.main.async { [self] in
+                            let vc = OTPVc(nibName: nil, bundle: nil)
+                            vc.modalPresentationStyle = .fullScreen
+                            vc.mobile_number = MobilTextFld.text
+                            vc.pageType = screenType.isForgotPassword
+                            present(vc, animated: true)
+                            
+                        }
+                        
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            AlertModal
+                                .showAlert(
+                                    title: "",
+                                    message: successmessage.message ?? "",
+                                    on: self
+                                )
+                        }
+                    }
+                    
+                case.failure(let error):
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+                
+            }
     }
 }
 

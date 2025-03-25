@@ -31,8 +31,8 @@ class PriorityVC: UIViewController {
     var childDetails = localData.user_data?.user_details?.child_details
     override func viewDidLoad() {
         super.viewDidLoad()
+       
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        
         UserDefaults.standard.set(passedValue, forKey: "passvalue")
     
         StyleAndTranslate()

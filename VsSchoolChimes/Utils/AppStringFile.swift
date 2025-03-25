@@ -110,7 +110,7 @@ class AlertstringFile{
     
     static let Enter_the_new_password = "Enter the new password".translated()
     static let Enterthe_confirm_password = "Enter the confirm password".translated()
-    static let Enter_valid_Mobile = "Enter valid MobileNumber".translated()
+    static let Enter_valid_Mobile = "Enter valid Mobile Number".translated()
     static let Invalid = "Invalid Password".translated()
     static let Enter_the_10_digit = "Enter the 10 digit mobile number".translated()
     static let Terms_And_Conditions = "Please agree to the terms and conditions".translated()
@@ -293,6 +293,7 @@ class ChangePasswordStringFile{
     static let Reset_the_new_password = "Reset the new password".translated()
     static let create_newpassword = "Create the new password".translated()
     static let confirm_password = "Re-enter the new  password".translated()
+    static let change_password = "Change password".translated()
 }
 class OTPScreenStringFile{
     

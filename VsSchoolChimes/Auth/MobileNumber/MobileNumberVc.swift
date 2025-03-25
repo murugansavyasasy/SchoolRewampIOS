@@ -75,7 +75,6 @@ class MobileNumberVc: UIViewController {
         LoginTitleLbl.setFont(style: .header, size: 25)
         MobilenumLabel.setFont(style: .title, size: FontSize.TitleSize)
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
-        
         addPadding(to: MobilTextFld, amount: 10)
         
     }
@@ -133,7 +132,8 @@ class MobileNumberVc: UIViewController {
         
         let secureID = SecureIDManager.getSecureID()
         
-        var parameters: [String: Any] = [
+        let parameters: [String: Any] = [
+            
             mobileNumber.mobile_number: MobilTextFld.text ?? "",
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID
@@ -216,26 +216,7 @@ extension MobileNumberVc : UITextFieldDelegate {
         return true
     }
     
-    // MARK: - ✅ Done Button for Keyboard
-    func addDoneButtonOnKeyboard() {
-        let doneToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 50))
-        doneToolbar.barStyle = .blackTranslucent
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonAction))
-        
-        doneToolbar.items = [flexSpace, doneButton]
-        doneToolbar.sizeToFit()
-        
-        MobilTextFld.inputAccessoryView = doneToolbar // ✅ Added Done button for MobilTextFld
-       
-        
-    }
-    
-    @objc func doneButtonAction() {
-        view.endEditing(true) // ✅ Dismisses the keyboard for all text fields
-    }
-    
+   
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === MobilTextFld {
             let newLength = (textField.text?.count ?? 0) + string.count - range.length
