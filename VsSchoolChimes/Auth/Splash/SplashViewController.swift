@@ -35,7 +35,7 @@ class SplashViewController: UIViewController {
                 Version_Check()
             }
             else{
-                let vc = CountryListVC(nibName: nil, bundle: nil)
+                let vc = CountryVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
@@ -90,11 +90,11 @@ class SplashViewController: UIViewController {
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd
         
         let secureID = SecureIDManager.getSecureID()
-        var parameters: [String: Any] = [
-            mobileNumber.mobile_number: mobile_num,
+        let parameters: [String: Any] = [
+            mobileNumber.mobile_number: mobile_num ?? "" ,
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID,
-            mobileNumber.password:password
+            mobileNumber.password: password ?? ""
         ]
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
@@ -111,7 +111,7 @@ class SplashViewController: UIViewController {
                                 response.data?.first
                             )!
                             localData.user_data = data
-
+                            
                             
                             if(data.is_number_exists == true){
                                 
@@ -175,10 +175,8 @@ class SplashViewController: UIViewController {
                                     .showAlert(
                                         title: "",
                                         message: response.message ?? "",
-                                        on: self
-                                    )
+                                        on: self)
                             }
-                            
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
@@ -188,7 +186,6 @@ class SplashViewController: UIViewController {
                                     message: response.message ?? "",
                                     on: self
                                 )
-                            
                         }
                     }
                 case .failure(let error):
@@ -203,7 +200,6 @@ class SplashViewController: UIViewController {
     
     func otp_Vc(valdiateResponse : [UserData]){
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
-
         let vc = OTPVc(nibName: nil, bundle: nil)
         vc.validateMobileData = valdiateResponse
         vc.pageType = screenType.isSplash
@@ -217,17 +213,14 @@ class SplashViewController: UIViewController {
         
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd
-        
         if (mobile_num != nil) && (password != nil){
-            validate_user()
-        }
-        
-        else{
-            let vc = LoginVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-        }
-        
+               validate_user()
+            }
+            else{
+                let vc = MobileNumberVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
     }
     
     func callAppStore (AppStoreLink : String)
@@ -246,8 +239,8 @@ class SplashViewController: UIViewController {
     {
         
         let forceUpdateAlert = UIAlertController(
-            title: "Needs to Update",
-            message: "New updates are available. Would you like to update them now?",
+            title: version_Data?.toaster_title,
+            message: version_Data?.new_version_updates,
             preferredStyle: .alert
         )
         

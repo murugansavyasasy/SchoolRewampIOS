@@ -37,5 +37,17 @@ import UIKit
         // Present the alert
         viewController.present(alert, animated: true, completion: nil)
     }
+     
+     
+     static func showAlert(title: String, message: String, on viewController: UIViewController, okAction: (() -> Void)? = nil) {
+             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+             
+             let okButton = UIAlertAction(title: "OK", style: .default) { _ in
+                 okAction?() // Executes the closure if provided
+             }
+             
+             alert.addAction(okButton)
+             viewController.present(alert, animated: true, completion: nil)
+         }
     
 }

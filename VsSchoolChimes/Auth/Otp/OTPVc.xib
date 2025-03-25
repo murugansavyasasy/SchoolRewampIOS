@@ -13,12 +13,10 @@
             <connections>
                 <outlet property="BackBtn" destination="r5r-Au-mkI" id="1UA-NE-HGZ"/>
                 <outlet property="BottomView" destination="HE0-f9-3HJ" id="2E8-EA-8Lw"/>
-                <outlet property="DidnotReciveOtpLbl" destination="WnE-5F-x4a" id="eQn-cm-21R"/>
+                <outlet property="DidnotReciveOtpLbl" destination="93I-6J-po5" id="SRv-ns-ce2"/>
                 <outlet property="OtpContentLbl" destination="WOL-oW-HOC" id="HL9-Nt-iCO"/>
-                <outlet property="PhoneBtn1" destination="mcA-58-2C9" id="VR9-Ea-qSW"/>
-                <outlet property="PhoneBtn2" destination="wDN-3o-DSn" id="rr4-aX-K2Z"/>
-                <outlet property="PhoneNoStack" destination="h1X-Ei-KKi" id="CjG-Ef-uaS"/>
                 <outlet property="ResendLbl" destination="UrQ-ed-Icg" id="AQa-C2-cTf"/>
+                <outlet property="callUsLbl" destination="1MI-uo-N54" id="zqS-a4-Vmn"/>
                 <outlet property="otpTextField1" destination="1A4-KG-zQT" id="vdC-QR-xSu"/>
                 <outlet property="otpTextField2" destination="CpQ-Zy-SFR" id="ofJ-vF-tNg"/>
                 <outlet property="otpTextField3" destination="jiZ-gs-uVe" id="wUm-xG-UFp"/>
@@ -57,17 +55,17 @@
                             <rect key="frame" x="0.0" y="60" width="393" height="733"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="online-work-meetings" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U48-hr-SHa">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="232"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="230"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium"/>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Verification code has been sent to your registered mobile number" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOL-oW-HOC">
-                                    <rect key="frame" x="0.0" y="236.99999999999997" width="393" height="40.666666666666657"/>
+                                    <rect key="frame" x="0.0" y="235" width="393" height="40.666666666666686"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HE0-f9-3HJ">
-                                    <rect key="frame" x="0.0" y="282.66666666666674" width="393" height="450.33333333333326"/>
+                                    <rect key="frame" x="0.0" y="280.66666666666674" width="393" height="452.33333333333326"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Kf6-0D-tdz">
                                             <rect key="frame" x="20" y="50" width="353" height="50"/>
@@ -113,64 +111,49 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you didn't recive the otp please call any of the below numbers" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WnE-5F-x4a">
-                                            <rect key="frame" x="20" y="160.33333333333331" width="353" height="40.666666666666657"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="h1X-Ei-KKi">
-                                            <rect key="frame" x="20" y="215.99999999999994" width="353" height="34.333333333333343"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="lTa-Ra-tGM">
+                                            <rect key="frame" x="10" y="165.33333333333331" width="373" height="66"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mcA-58-2C9">
-                                                    <rect key="frame" x="0.0" y="0.0" width="174" height="34.333333333333336"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="If you didn't recive the otp please call any of the below numbers" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93I-6J-po5">
+                                                    <rect key="frame" x="0.0" y="0.0" width="373" height="41.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="0446796387" image="phone" catalog="system">
-                                                        <attributedString key="attributedTitle">
-                                                            <fragment content="0446796387">
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="Helvetica"/>
-                                                                    <font key="NSOriginalFont" size="12" name="Helvetica"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                    </state>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wDN-3o-DSn">
-                                                    <rect key="frame" x="179" y="0.0" width="174" height="34.333333333333336"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal" title="0446796387" image="phone" catalog="system"/>
-                                                    <buttonConfiguration key="configuration" style="plain" image="phone" catalog="system">
-                                                        <attributedString key="attributedTitle">
-                                                            <fragment content="0446796387">
-                                                                <attributes>
-                                                                    <font key="NSFont" size="12" name="Helvetica"/>
-                                                                    <font key="NSOriginalFont" size="12" name="Helvetica"/>
-                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                </attributes>
-                                                            </fragment>
-                                                        </attributedString>
-                                                    </buttonConfiguration>
-                                                </button>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FLj-1v-fZX">
+                                                    <rect key="frame" x="0.0" y="46.333333333333371" width="373" height="19.666666666666671"/>
+                                                    <subviews>
+                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1MI-uo-N54">
+                                                            <rect key="frame" x="0.0" y="0.0" width="373" height="19.666666666666668"/>
+                                                            <attributedString key="attributedText">
+                                                                <fragment content="Call Us ? ">
+                                                                    <attributes>
+                                                                        <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                                        <font key="NSFont" size="17" name="Helvetica-Bold"/>
+                                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                        <integer key="NSUnderline" value="1"/>
+                                                                    </attributes>
+                                                                </fragment>
+                                                            </attributedString>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                         </stackView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemPinkColor"/>
                                     <constraints>
-                                        <constraint firstItem="WnE-5F-x4a" firstAttribute="leading" secondItem="HE0-f9-3HJ" secondAttribute="leading" constant="20" id="5Ua-Gg-oCy"/>
+                                        <constraint firstItem="lTa-Ra-tGM" firstAttribute="top" secondItem="UrQ-ed-Icg" secondAttribute="bottom" constant="20" id="4bd-pr-dVJ"/>
                                         <constraint firstAttribute="trailing" secondItem="UrQ-ed-Icg" secondAttribute="trailing" constant="20" id="6dl-Pt-LMw"/>
-                                        <constraint firstAttribute="trailing" secondItem="WnE-5F-x4a" secondAttribute="trailing" constant="20" id="D46-MS-AyH"/>
+                                        <constraint firstItem="lTa-Ra-tGM" firstAttribute="leading" secondItem="HE0-f9-3HJ" secondAttribute="leading" constant="10" id="89d-x8-lNe"/>
                                         <constraint firstItem="UrQ-ed-Icg" firstAttribute="top" secondItem="Kf6-0D-tdz" secondAttribute="bottom" constant="25" id="I8i-G2-oNg"/>
-                                        <constraint firstItem="WnE-5F-x4a" firstAttribute="top" secondItem="UrQ-ed-Icg" secondAttribute="bottom" constant="15" id="Jhh-xM-DNv"/>
                                         <constraint firstItem="Kf6-0D-tdz" firstAttribute="leading" secondItem="HE0-f9-3HJ" secondAttribute="leading" constant="20" id="LSg-9P-yf2"/>
-                                        <constraint firstAttribute="bottom" secondItem="h1X-Ei-KKi" secondAttribute="bottom" constant="200" id="Mio-2X-tR4"/>
-                                        <constraint firstItem="h1X-Ei-KKi" firstAttribute="leading" secondItem="HE0-f9-3HJ" secondAttribute="leading" constant="20" id="XSm-fW-PNe"/>
                                         <constraint firstItem="UrQ-ed-Icg" firstAttribute="leading" secondItem="HE0-f9-3HJ" secondAttribute="leading" constant="20" id="cMz-Te-SUE"/>
+                                        <constraint firstAttribute="bottom" secondItem="lTa-Ra-tGM" secondAttribute="bottom" constant="221" id="dm7-I2-lkS"/>
                                         <constraint firstAttribute="trailing" secondItem="Kf6-0D-tdz" secondAttribute="trailing" constant="20" id="gKn-h0-4rh"/>
                                         <constraint firstItem="Kf6-0D-tdz" firstAttribute="top" secondItem="HE0-f9-3HJ" secondAttribute="top" constant="50" id="hDq-33-hPV"/>
-                                        <constraint firstItem="h1X-Ei-KKi" firstAttribute="top" secondItem="WnE-5F-x4a" secondAttribute="bottom" constant="15" id="lPy-M5-Qba"/>
-                                        <constraint firstAttribute="trailing" secondItem="h1X-Ei-KKi" secondAttribute="trailing" constant="20" id="odq-nA-dLI"/>
+                                        <constraint firstAttribute="trailing" secondItem="lTa-Ra-tGM" secondAttribute="trailing" constant="10" id="pHt-IS-HIl"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -205,7 +188,6 @@
     <resources>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="online-work-meetings" width="7000" height="5000"/>
-        <image name="phone" catalog="system" width="128" height="115"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

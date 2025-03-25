@@ -65,7 +65,7 @@ class ParentDashboardVc: UIViewController {
     let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        DeviceTokenAPIcall()
         StyleAndTranslater()
         
         displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
@@ -488,6 +488,52 @@ extension ParentDashboardVc: UISearchBarDelegate{
             
         }
     }
+    
+    func DeviceTokenAPIcall(){
+        
+        var deviceToken: String? // Use var instead of let
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            deviceToken = appDelegate.DeviceToken
+        }
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.auth_device_token, parameters:[
+                 COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
+                 DeviceTokenStringFile.device_token : deviceToken ?? "",
+                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type
+                 
+            ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                result : Result<DeviceTokenResponseSuc,
+                Error>
+            ) in
+            
+            switch result {
+                
+            case.success(let succesmessage) :
+                
+                if succesmessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        print("Status true5656565656565656")
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        print(" status false")
+                    }
+                }
+                
+            case.failure(let error) :
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+            
+        }
+    }
 
     
 }
@@ -570,6 +616,9 @@ extension UIColor {
             alpha: alpha
         )
     }
+    
+    
+    
 }
 
 
