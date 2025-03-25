@@ -49,4 +49,7 @@ class GlobalVariablesStringFile {
     static var new_updates = "new_updates"
 }
 
-
+class  DeviceTokenStringFile {
+    
+    static var device_token = "device_token"
+}

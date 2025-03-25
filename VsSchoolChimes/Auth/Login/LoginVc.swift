@@ -106,6 +106,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
             //call forgot api and then navigate to the OTP screen
             
             let vc = OTPVc(nibName: nil, bundle: nil)
+            vc.mobile_number = MobilTextFld.text
             vc.modalPresentationStyle = .fullScreen
             vc.pageType = screenType.isForgotPassword
             present(vc, animated: true)
