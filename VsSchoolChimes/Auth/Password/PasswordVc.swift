@@ -233,7 +233,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     func ForgotPasswordAPIcall() {
         
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : mobile_number ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
                 result : Result<ForgotPasswordResponeSuc,
                 Error>
             ) in

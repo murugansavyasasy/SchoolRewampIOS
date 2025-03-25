@@ -583,7 +583,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                     
                     DispatchQueue.main.async { [self] in
                         
-                        print("Status true")
+                        print("Status true5656565656565656")
                     }
                 }else {
                     

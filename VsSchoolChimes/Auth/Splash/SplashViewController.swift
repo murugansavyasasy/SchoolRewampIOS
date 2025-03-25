@@ -239,8 +239,8 @@ class SplashViewController: UIViewController {
     {
         
         let forceUpdateAlert = UIAlertController(
-            title: "Needs to Update",
-            message: "New updates are available. Would you like to update them now?",
+            title: version_Data?.toaster_title,
+            message: version_Data?.new_version_updates,
             preferredStyle: .alert
         )
         

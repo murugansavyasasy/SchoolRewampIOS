@@ -79,7 +79,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         BottomView.backgroundColor = Colornames.auth_screen_color
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
-        //loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+        loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
                 // Adding shadow for a popped-up effect
         loginBtnNm.layer.shadowColor = UIColor.black.cgColor
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 5)
@@ -302,7 +302,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     func ForgotPasswordAPIcall() {
         
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
+            .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
                 result : Result<ForgotPasswordResponeSuc,
                 Error>
             ) in
