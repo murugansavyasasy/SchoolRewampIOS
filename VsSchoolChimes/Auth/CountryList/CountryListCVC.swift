@@ -8,12 +8,14 @@
 import UIKit
 
 class CountryListCVC: UICollectionViewCell {
-
+    
+    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var countryName: UILabel!
     @IBOutlet weak var countryImg: UIImageView!
+    private var savedColor: UIColor?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
 }
+

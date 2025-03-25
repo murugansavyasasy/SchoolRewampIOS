@@ -13,6 +13,8 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
 
     
 
+    @IBOutlet weak var viewTermsAndCondition: UILabel!
+    @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var dropDownBtn: UIButton!
     @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var checkBoxBtn: UIButton!
@@ -26,6 +28,8 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
     var dropDownList = [String]()
     var CountryListRespons : [CountryData]?
     var country_data : CountryData?
+    var timer: Timer?
+        var currentIndex = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         get_CountryListApi()
@@ -36,7 +40,71 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         if flagImg.image == nil {
             flagImg.isHidden = true
             }
+        nextBtn.layer.cornerRadius = 15
+        CountryList.layer.cornerRadius = 8
+        CountryList.layer.masksToBounds = false
+        CountryList.layer.shadowColor = UIColor.black.cgColor
+        CountryList.layer.shadowOffset = CGSize(width: 0, height: 5)
+        CountryList.layer.shadowOpacity = 0.3
+        CountryList.layer.shadowRadius = 6
+        nextBtn.layer.masksToBounds = false
+        nextBtn.layer.shadowColor = UIColor.black.cgColor
+        nextBtn.layer.shadowOffset = CGSize(width: 0, height: 5)
+        nextBtn.layer.shadowOpacity = 0.3
+        nextBtn.layer.shadowRadius = 6
+        nextBtn.applyRightButton()
+        startAutoScroll()
+        // Underline text
+        let attributes: [NSAttributedString.Key: Any] = [
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+            .foregroundColor: UIColor.blue
+        ]
+        let attributedString = NSAttributedString(string: "View Terms and Conditions", attributes: attributes)
+        viewTermsAndCondition.attributedText = attributedString
     }
+    func startAutoScroll() {
+            timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(autoScroll), userInfo: nil, repeats: true)
+        }
+
+        @objc func autoScroll() {
+            let totalItems = countryCV.numberOfItems(inSection: 0)
+            if totalItems == 0 { return }
+            
+            currentIndex += 1
+            if currentIndex >= totalItems {
+                currentIndex = 0 // Reset to the first item
+            }
+            
+            let indexPath = IndexPath(item: currentIndex, section: 0)
+            countryCV.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
+        
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            let centerX = scrollView.contentOffset.x + (scrollView.frame.size.width / 2)
+            
+            for cell in countryCV.visibleCells {
+                guard let indexPath = countryCV.indexPath(for: cell) else { continue }
+                
+                let cellFrame = countryCV.layoutAttributesForItem(at: indexPath)?.frame ?? .zero
+                let cellCenterX = cellFrame.midX
+                let distance = abs(cellCenterX - centerX)
+                
+                // Scale effect (center cell is bigger, side cells shrink)
+                let scale = max(0.85, 1 - (distance / scrollView.frame.size.width) * 0.3)
+                
+                // Apply scale transformation
+                cell.transform = CGAffineTransform(scaleX: scale, y: scale)
+                
+                // Adjust opacity for smooth effect
+                let alpha = max(0.5, 1 - (distance / scrollView.frame.size.width))
+                cell.alpha = alpha
+            }
+        }
+        
+        override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            timer?.invalidate() // Stop timer when leaving screen
+        }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return CountryListRespons?.count ?? 0
     }
@@ -51,30 +119,10 @@ class CountryListVC: UIViewController,UICollectionViewDelegate,UICollectionViewD
         let width = (collectionView.frame.width - 20)/2.3
         return CGSize(width: width, height: collectionView.frame.height)
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let centerX = scrollView.contentOffset.x + (scrollView.frame.size.width / 2)
-        
-        for cell in countryCV.visibleCells {
-            guard let indexPath = countryCV.indexPath(for: cell) else { continue }
-            
-            let cellFrame = countryCV.layoutAttributesForItem(at: indexPath)?.frame ?? .zero
-            let cellCenterX = cellFrame.midX
-            let distance = abs(cellCenterX - centerX)
-            
-            // Scale effect (center cell is bigger, side cells shrink)
-            let scale = max(0.85, 1 - (distance / scrollView.frame.size.width) * 0.3)
-            
-            // Apply scale transformation
-            cell.transform = CGAffineTransform(scaleX: scale, y: scale)
-            
-            // Adjust opacity for smooth effect
-            let alpha = max(0.5, 1 - (distance / scrollView.frame.size.width))
-            cell.alpha = alpha
-        }
-    }
+
     @IBAction func togel(_ sender: UIButton) {
         checkBoxBtn.isSelected.toggle()
-        let image = checkBoxBtn.isSelected ? UIImage(named: "checked_Tick"):UIImage(named: "CheckCircle")
+        let image = checkBoxBtn.isSelected ? UIImage(named: "checkedSquare"):UIImage(named: "uncheckedSquare")
         checkBoxBtn.setImage(image, for: .normal)
     }
     @IBAction func openTermsCondition(_ sender: UIButton) {
