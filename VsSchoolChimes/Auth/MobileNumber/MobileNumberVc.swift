@@ -75,7 +75,6 @@ class MobileNumberVc: UIViewController {
         LoginTitleLbl.setFont(style: .header, size: 25)
         MobilenumLabel.setFont(style: .title, size: FontSize.TitleSize)
         continueBtnName.setTitleFont(style: .primary, size: FontSize.TitleSize)
-        
         addPadding(to: MobilTextFld, amount: 10)
         
     }
@@ -133,7 +132,8 @@ class MobileNumberVc: UIViewController {
         
         let secureID = SecureIDManager.getSecureID()
         
-        var parameters: [String: Any] = [
+        let parameters: [String: Any] = [
+            
             mobileNumber.mobile_number: MobilTextFld.text ?? "",
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID

@@ -189,7 +189,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
+                     , type: ApitTypeSringFile.POST, token: "") { [self] (
                         result: Result<UserValidationResponseSuc,
                         Error>
                      ) in

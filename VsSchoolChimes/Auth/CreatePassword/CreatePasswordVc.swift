@@ -205,7 +205,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
          func ResetPasswordAPIcall(){
 
              APIService.shared
-                 .makeApi(url: ServiceUrl.cred_reset_password, parameters: [COMMON_PARAMETER.mobile_number: "" ?? "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                 .makeApi(url: ServiceUrl.cred_reset_password, parameters: [COMMON_PARAMETER.mobile_number: mobile_number ??  "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
                     result: Result<ResetPasswordSuc,
                     Error>
                  ) in

@@ -61,7 +61,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         BottomView.layer.cornerRadius = 30
         BottomView.backgroundColor = Colornames.auth_screen_color
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-
+        
         validateBtnName.layer.cornerRadius = 15
         validateBtnName.layer.masksToBounds = false
         validateBtnName.backgroundColor = Colornames.auth_screen_color
@@ -73,11 +73,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     }
     @IBAction func forgetClick() {
         if mobile_number != ""  {
-            
             //call forgot api and then navigate to the OTP screen
             ForgotPasswordAPIcall()
-            
-            
         } else {
             AlertModal
                 .showAlert(
@@ -91,9 +88,9 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
         
         passwordTxtFld.isSecureTextEntry.toggle()
         let imageName = passwordTxtFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
-            eyeImage.image = imageName
+        eyeImage.image = imageName
     }
- 
+    
     func setupUI() {
         validateBtnName.backgroundColor = Colornames.ButtonColor
         validateBtnName.layer.cornerRadius = CGFloat(Colornames.ButtoncornerRadius)
@@ -146,8 +143,6 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                 case .success(let response):
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
-                            
-                            
                             let data : UserData = (
                                 response.data?.first
                             )!
@@ -155,75 +150,60 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                             if(data.is_number_exists == true){
                                 if(data.otp_sent == true){
                                     otp_Vc(valdiateResponse: response.data ?? [])
-                                }
-                                else {
-                                    
+                                } else {
                                     UserDefaultFileManager
                                         .saveLoginCredentials(
                                             mobile_number:mobile_number ?? "",
                                             pwd:passwordTxtFld.text ?? ""
                                         )
-                                    
                                     localData.user_details = data.user_details
-                                    
                                     if(data.user_details?.is_staff == true) &&  (
                                         data.user_details?.is_parent == true
                                     ){
                                         let vc = PriorityVC(nibName: nil, bundle: nil)
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
-                                    }
-                                    else if(data.user_details?.is_staff == true){
+                                    } else if(data.user_details?.is_staff == true){
                                         let vc = TapBarVC(nibName: nil,bundle: nil)
                                         vc.passedValue = 1
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                         
-                                    }
-                                    else if(data.user_details?.is_parent == true){
+                                    } else if(data.user_details?.is_parent == true){
                                         let vc = TapBarVC(nibName: nil,bundle: nil)
                                         vc.passedValue = 2
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }
                                     
-                                    
                                     if(data.is_password_updated == true){
-                                        
                                         UserDefaultFileManager
                                             .saveLoginCredentials(
                                                 mobile_number:mobile_number ?? "",
                                                 pwd:passwordTxtFld.text ?? ""
                                             )
-                                        
                                         localData.user_details = data.user_details
-                                        
                                         if(data.user_details?.is_staff == true) &&  (
                                             data.user_details?.is_parent == true
                                         ){
                                             let vc = PriorityVC(nibName: nil, bundle: nil)
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
-                                        }
-                                        else if(data.user_details?.is_staff == true){
+                                        } else if(data.user_details?.is_staff == true){
                                             let vc = TapBarVC(nibName: nil,bundle: nil)
                                             vc.passedValue = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
-                                        }
-                                        else if(data.user_details?.is_parent == true){
+                                        } else if(data.user_details?.is_parent == true){
                                             let vc = TapBarVC(nibName: nil,bundle: nil)
                                             vc.passedValue = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                         }
-                                        
                                     }
                                 }
-                                
-                            }
-                            else {
+                            } else {
                                 AlertModal.showAlert(
                                     title: "",
                                     message: response.message ?? "",
@@ -248,10 +228,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                     }
                 }
             }
-        
     }
-    
-    
     
     func ForgotPasswordAPIcall() {
         
@@ -281,15 +258,13 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                         
                     }else {
                         
-                        DispatchQueue.main.async {
-                            
+                        DispatchQueue.main.async { [self] in
                             AlertModal
                                 .showAlert(
                                     title: "",
                                     message: successmessage.message ?? "",
                                     on: self
                                 )
-                           
                         }
                     }
                     
@@ -298,13 +273,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
                     }
-                    
                 }
-                
             }
     }
-        
-    
-    
-    
 }

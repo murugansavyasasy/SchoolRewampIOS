@@ -48,6 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(String(describing: fcmToken))")
+        
+        DeviceToken = String(describing: fcmToken)
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

@@ -73,7 +73,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         filteredItems = MenuRedirect.items
         displayedCategories = Array(filteredItems.prefix(6))
         displayedCategories.insert(newString, at: 5)
-        
+        DeviceTokenAPIcall()
         //startAutoScroll()
         cellRegistration()
         Searchbar.addDoneButton()
@@ -554,79 +554,26 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             searchHeightCon.constant = 0
         }
     }
-    
-    func ForgotPasswordAPIcall () {
-        
-        APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: [COMMON_PARAMETER.mobile_number : "" ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (result : Result<ForgotPasswordResponeSuc,Error>) in
-            
-            switch result {
-                
-            case.success(let successmessage):
-                
-                if successmessage.status == true {
-                    
-                    DispatchQueue.main.async { [self] in
-                        
-                        print("Success,Success")
-                        
-                    }
-                    
-                }else {
-                    
-                    DispatchQueue.main.async {
-                        
-                        print("Try again later")
-                    }
-                }
-                
-            case.failure(let error):
-                
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
-           
-            }
-            
-        }
-    }
-    
-    //var ChangePassparameter : [String : Any] = [COMMON_PARAMETER.mobile_number : "" ?? "",CreateNewPasswordStringFile.old_password : "" ?? "", COMMON_PARAMETER.new_password : "" ?? ""]
-    
-    func ChangePasswordAPIcall() {
-        
-        APIService.shared.makeApi(url: ServiceUrl.cred_change_password, parameters: ["": ""] /*ChangePassparameter*/, type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (result : Result<ChangePasswordSuc,Error>) in
-            
-            
-            switch result {
-                
-            case.success(let successMessage):
-                
-                if successMessage.status == true {
-                    
-                    DispatchQueue.main.async {[self] in
-                        
-                        print("Succuess")
-                    }
-                }else {
-                    
-                    DispatchQueue.main.async {
-                        print("Failed")
-                    }
-                }
-                
-            case.failure(let error):
-                
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
-    
-    
+  
     func DeviceTokenAPIcall(){
         
-        APIService.shared.makeApi(url: ServiceUrl.auth_device_token, parameters:[COMMON_PARAMETER.mobile_number : "" ?? "",DeviceTokenStringFile.device_token: "" ?? "",COMMON_PARAMETER.device_type : "" ?? ""] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (result : Result<DeviceTokenResponseSuc,Error>) in
+        var deviceToken: String? // Use var instead of let
+        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            deviceToken = appDelegate.DeviceToken
+        }
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.auth_device_token, parameters:[
+                
+                 COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
+                 DeviceTokenStringFile.device_token : deviceToken ?? "",
+                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type
+                 
+            ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                result : Result<DeviceTokenResponseSuc,
+                Error>
+            ) in
             
             switch result {
                 
