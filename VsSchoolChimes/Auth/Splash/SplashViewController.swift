@@ -214,20 +214,20 @@ class SplashViewController: UIViewController {
     
     
     func AppFlowChecking(){
-    
+        
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd
         
         if (mobile_num != nil) && (password != nil){
-               validate_user()
-                }
-         
-            else{
-                let vc = LoginVc(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
-            }
-
+            validate_user()
+        }
+        
+        else{
+            let vc = LoginVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
+        
     }
     
     func callAppStore (AppStoreLink : String)

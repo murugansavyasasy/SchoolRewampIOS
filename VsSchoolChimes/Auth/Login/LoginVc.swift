@@ -63,7 +63,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
         }
     }
     

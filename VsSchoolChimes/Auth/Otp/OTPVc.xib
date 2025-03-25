@@ -141,6 +141,17 @@
                                                     <rect key="frame" x="179" y="0.0" width="174" height="34.333333333333336"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="0446796387" image="phone" catalog="system"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="phone" catalog="system">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="0446796387">
+                                                                <attributes>
+                                                                    <font key="NSFont" size="12" name="Helvetica"/>
+                                                                    <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                    </buttonConfiguration>
                                                 </button>
                                             </subviews>
                                         </stackView>
