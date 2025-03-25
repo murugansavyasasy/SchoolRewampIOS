@@ -10,6 +10,10 @@ import UIKit
 @available(iOS 14.0, *)
 class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
+    @IBOutlet weak var BackBtn: UIButton!
+    @IBOutlet weak var WelcomeLbl: UILabel!
+    @IBOutlet weak var DescriptionLbl: UILabel!
+    @IBOutlet weak var CreatePassTitleLbl: UILabel!
     @IBOutlet weak var BottomView: UIView!
     @IBOutlet weak var eyeImage: UIImageView!
     @IBOutlet weak var createPassDefaultLbl: UILabel!
@@ -52,6 +56,12 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
     
     func setUpUI(){
+        
+        BackBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+        CreatePassTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        
         BottomView.layer.cornerRadius = 30
         BottomView.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
@@ -80,7 +90,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
         }
     }
     
@@ -89,7 +99,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     }
     @IBAction func backBtn(_ sender: Any) {
 
-    //        dismiss(animated: true)
+           dismiss(animated: true)
 
     }
 

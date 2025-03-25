@@ -22,6 +22,7 @@ struct ServiceUrl{
     static let cred_reset_password       = "cred/reset-password"
     static let  cred_create_new_password = "cred/create-new-password"
     static let global_global_variables   = "global/global-variables"
+    static let  auth_device_token        = "auth/device-token"
     
 }
 

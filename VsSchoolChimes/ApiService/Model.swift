@@ -160,3 +160,9 @@ struct GlobalVariablesData : Codable {
     let new_updates : String?
 }
     
+//MARK: Device Token API
+struct DeviceTokenResponseSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [String]?
+}
