@@ -76,10 +76,10 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         BottomView.layer.cornerRadius = 30
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        BottomView.backgroundColor = Colornames.auth_screen_color
+        BottomView.backgroundColor = .gradient1
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
-        //loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
+        loginBtnNm.backgroundColor = .gradient1
                 // Adding shadow for a popped-up effect
         loginBtnNm.layer.shadowColor = UIColor.black.cgColor
         loginBtnNm.layer.shadowOffset = CGSize(width: 0, height: 5)

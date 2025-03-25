@@ -58,8 +58,8 @@ class MobileNumberVc: UIViewController {
         BottomView.backgroundColor = Colornames.auth_screen_color
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
 
-      continueBtnName.layer.cornerRadius = 15
-      continueBtnName.layer.masksToBounds = false
+        continueBtnName.layer.cornerRadius = 15
+        continueBtnName.layer.masksToBounds = false
         continueBtnName.backgroundColor = Colornames.auth_screen_color
         // Adding shadow for a popped-up effect
         continueBtnName.layer.shadowColor = UIColor.black.cgColor
@@ -68,8 +68,8 @@ class MobileNumberVc: UIViewController {
         continueBtnName.layer.shadowRadius = 6
         MobilTextFld.placeholder = country_data?.mobile_no_hint
         MobilTextFld.delegate = self
-        MobilTextFld.keyboardType = .numberPad
-        
+        MobilTextFld.keyboardType = .phonePad
+        MobilTextFld.textContentType = .telephoneNumber
         WelcomeLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         LoginTitleLbl.setFont(style: .header, size: 25)
