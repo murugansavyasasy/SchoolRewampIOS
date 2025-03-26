@@ -295,7 +295,11 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                         pwd:confirmPassTextFld.text ?? ""
                                     )
                                 
-                                localData.user_details = data.user_details
+                                
+                                UserDefaultFileManager
+                                    .saveUserDetails(
+                                        data: (data))
+//                                localData.user_details = data.user_details
                                 
                                 if(data.user_details?.is_staff == true) &&  (
                                     data.user_details?.is_parent == true

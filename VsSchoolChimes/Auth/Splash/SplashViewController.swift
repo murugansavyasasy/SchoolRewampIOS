@@ -107,21 +107,24 @@ class SplashViewController: UIViewController {
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
-                            let data : UserData = (
-                                response.data?.first
-                            )!
-                            localData.user_data = data
+                            guard let Data = response.data?.first else {
+                                print("No data available")
+                                return
+                            }
+                          
+                            UserDefaultFileManager
+                                .saveUserDetails(
+                                    data: (Data))
                             
-                            
-                            if(data.is_number_exists == true){
+                            if(Data.is_number_exists == true){
                                 
-                                if(data.otp_sent == true){
+                                if(Data.otp_sent == true){
                                     
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
                                     
-                                    if data.is_password_updated == true {
+                                    if Data.is_password_updated == true {
                                         
                                         UserDefaultFileManager
                                             .saveLoginCredentials(
@@ -129,10 +132,10 @@ class SplashViewController: UIViewController {
                                                 pwd:password ?? ""
                                             )
                                         
-                                        localData.user_details = data.user_details
+//                                        localData.user_details = Data.user_details
                                         
-                                        if(data.user_details?.is_staff == true) &&  (
-                                            data.user_details?.is_parent == true
+                                        if(Data.user_details?.is_staff == true) &&  (
+                                            Data.user_details?.is_parent == true
                                         ){
                                             let vc = PriorityVC(
                                                 nibName: nil,
@@ -142,7 +145,7 @@ class SplashViewController: UIViewController {
                                             present(vc, animated: true)
                                             
                                         }
-                                        else if(data.user_details?.is_staff == true){
+                                        else if(Data.user_details?.is_staff == true){
                                             let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
@@ -152,7 +155,7 @@ class SplashViewController: UIViewController {
                                             present(vc, animated: true)
                                             
                                         }
-                                        else if(data.user_details?.is_parent == true){
+                                        else if(Data.user_details?.is_parent == true){
                                             
                                             let vc = TapBarVC(
                                                 nibName: nil,

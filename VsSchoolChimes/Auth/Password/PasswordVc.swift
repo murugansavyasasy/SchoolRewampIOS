@@ -143,10 +143,15 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                 case .success(let response):
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
-                            let data : UserData = (
-                                response.data?.first
-                            )!
-                            localData.user_data = data
+                            guard let data = response.data?.first else {
+                                print("No data available")
+                                return
+                            }
+                            
+                            UserDefaultFileManager
+                                .saveUserDetails(
+                                    data: (data))
+                            
                             if(data.is_number_exists == true){
                                 if(data.otp_sent == true){
                                     otp_Vc(valdiateResponse: response.data ?? [])
@@ -156,7 +161,8 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                             mobile_number:mobile_number ?? "",
                                             pwd:passwordTxtFld.text ?? ""
                                         )
-                                    localData.user_details = data.user_details
+                                   
+                                   
                                     if(data.user_details?.is_staff == true) &&  (
                                         data.user_details?.is_parent == true
                                     ){

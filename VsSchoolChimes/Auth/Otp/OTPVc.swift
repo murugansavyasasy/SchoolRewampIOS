@@ -214,7 +214,8 @@ class OTPVc: UIViewController {
                                 
                             }
                             
-                            else if(localData.user_data?.is_password_updated == false){
+                            else if(UserDefaultFileManager
+                                .getUserDetails()?.is_password_updated == false){
                                 
                                 let vc = CreatePasswordVc(
                                     nibName: nil,
@@ -226,8 +227,8 @@ class OTPVc: UIViewController {
                                 present(vc, animated: true)
                             }
                             else {
-                                if(localData.user_data?.user_details?.is_staff == true) &&  (
-                                    localData.user_data?.user_details?.is_parent == true
+                                if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true) &&  (
+                                    UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true
                                 ){
                                     let vc = PriorityVC(
                                         nibName: nil,
@@ -237,7 +238,7 @@ class OTPVc: UIViewController {
                                     present(vc, animated: true)
                                     
                                 }
-                                else if(localData.user_data?.user_details?.is_staff == true){
+                                else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
                                     let vc = TapBarVC(
                                         nibName: nil,
                                         bundle: nil
@@ -247,7 +248,7 @@ class OTPVc: UIViewController {
                                     present(vc, animated: true)
                                     
                                 }
-                                else if(localData.user_data?.user_details?.is_parent == true){
+                                else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true){
                                     
                                     let vc = TapBarVC(
                                         nibName: nil,

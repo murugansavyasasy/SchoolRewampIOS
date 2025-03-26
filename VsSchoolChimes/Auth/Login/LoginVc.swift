@@ -198,10 +198,14 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
-                            let data : UserData = (
-                                response.data?.first
-                            )!
-                            localData.user_data = data
+                            guard let data = response.data?.first else {
+                                print("No data available")
+                                return
+                            }
+                            
+                            UserDefaultFileManager
+                                .saveUserDetails(
+                                    data: (data))
                             
                             
                             if(data.is_number_exists == true){

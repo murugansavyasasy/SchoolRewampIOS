@@ -89,6 +89,7 @@ struct StaffDetails: Codable {
     let biometric_enable: Int?
     let allow_video_download: Bool?
     let access_token: String?
+    let school_address : String?
 }
 
 struct ChildDetails: Codable {

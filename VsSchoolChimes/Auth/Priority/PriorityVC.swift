@@ -27,8 +27,8 @@ class PriorityVC: UIViewController {
     var passedValue = 1
     var Language :String?
     
-    var staffDetails = localData.user_data?.user_details?.staff_details
-    var childDetails = localData.user_data?.user_details?.child_details
+    var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     override func viewDidLoad() {
         super.viewDidLoad()
        

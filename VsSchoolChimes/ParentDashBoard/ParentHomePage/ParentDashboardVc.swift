@@ -501,7 +501,8 @@ extension ParentDashboardVc: UISearchBarDelegate{
             .makeApi(url: ServiceUrl.auth_device_token, parameters:[
                  COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
                  DeviceTokenStringFile.device_token : deviceToken ?? "",
-                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type
+                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+                 DeviceTokenStringFile.secure_id : deviceToken ?? ""
                  
             ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
                 result : Result<DeviceTokenResponseSuc,
