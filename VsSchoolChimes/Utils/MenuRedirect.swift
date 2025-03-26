@@ -294,8 +294,8 @@ class MenuRedirectHandler {
 //        vc.modalPresentationStyle = .fullScreen
 //        vc.getValue = getValue
 //        viewController.present(vc, animated: true)
-        let vc = InteractionVC(nibName: nil, bundle: nil)
-        vc.passvalue = 1
+        let vc = SchoolListVC(nibName: nil, bundle: nil)
+//        vc.passvalue = 1
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

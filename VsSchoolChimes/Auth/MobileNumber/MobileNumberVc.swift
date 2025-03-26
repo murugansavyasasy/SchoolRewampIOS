@@ -113,7 +113,6 @@ class MobileNumberVc: UIViewController {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
-        
         guard mobile.count == country_data?.mobile_number_length else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
@@ -140,7 +139,7 @@ class MobileNumberVc: UIViewController {
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID
         ]
-    
+        
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
                      , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
@@ -151,12 +150,12 @@ class MobileNumberVc: UIViewController {
                 case .success(let response):
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
-                           
+                            
                             guard let data = response.data?.first else {
                                 print("No data available")
                                 return
                             }
-                          
+                            
                             UserDefaultFileManager
                                 .saveUserDetails(
                                     data: (data))
@@ -173,7 +172,7 @@ class MobileNumberVc: UIViewController {
                                     vc.modalPresentationStyle = .fullScreen
                                     vc.mobile_number = MobilTextFld.text ?? ""
                                     present(vc, animated: true)
-                                
+                                    
                                 }
                                 
                             }
@@ -213,38 +212,6 @@ class MobileNumberVc: UIViewController {
 
 @available(iOS 14.0, *)
 extension MobileNumberVc : UITextFieldDelegate {
-    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        print("User finished typing")
-//        
-//    }
-//    
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//       
-//        textField.resignFirstResponder()
-//        return true
-//    }
-//    
-////
-
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        print("Started Editing",textField.text ?? "")
-    }
-    
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//       
-//        let currentText = MobilTextFld.text
-//        let formattedText = removeCountryCodeAndSpaces(from: currentText ?? "")
-//        
-//        if formattedText != currentText {
-//            MobilTextFld.text = formattedText
-//        }
-//        let newLength = ((MobilTextFld.text?.count ?? 0) + string.count - range.length)
-//        return newLength <= country_data?.mobile_number_length ?? 0
-//        //return true
-//    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Allow autofill suggestion (detected when string has more than 1 character)

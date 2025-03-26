@@ -75,7 +75,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         BottomView.layer.cornerRadius = 30
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        BottomView.backgroundColor = .gradient1
+        BottomView.backgroundColor =  Colornames.auth_screen_color
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
         loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
@@ -206,7 +206,11 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                 .saveUserDetails(
                                     data: (data))
                             
-                            
+                            UserDefaultFileManager
+                                .saveLoginCredentials(
+                                    mobile_number:MobilTextFld.text ?? "",
+                                    pwd:passTextFld.text ?? ""
+                                )
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
@@ -217,11 +221,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                     
                                     if data.is_password_updated == true {
                                         
-                                        UserDefaultFileManager
-                                            .saveLoginCredentials(
-                                                mobile_number:MobilTextFld.text ?? "",
-                                                pwd:passTextFld.text ?? ""
-                                            )
+                                        
                                         
                                         
                                         if(data.user_details?.is_staff == true) &&  (
