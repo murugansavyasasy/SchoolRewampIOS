@@ -43,6 +43,7 @@ struct VersionData: Codable {
     let toaster_title: String?
     let play_store_market_id: String?
     let play_store_link: String?
+    let app_store_link: String?
 }
 
 // MARK: Validate User

@@ -116,7 +116,7 @@ class SplashViewController: UIViewController {
                                 .saveUserDetails(
                                     data: (Data))
                             
-                            if(Data.is_number_exists == true){
+                            if(Data.is_password_updated == true){
                                 
                                 if(Data.otp_sent == true){
                                     
@@ -124,15 +124,13 @@ class SplashViewController: UIViewController {
                                 }
                                 else {
                                     
-                                    if Data.is_password_updated == true {
                                         
-                                        UserDefaultFileManager
+                                UserDefaultFileManager
                                             .saveLoginCredentials(
                                                 mobile_number:mobile_num ?? "",
                                                 pwd:password ?? ""
                                             )
                                         
-//                                        localData.user_details = Data.user_details
                                         
                                         if(Data.user_details?.is_staff == true) &&  (
                                             Data.user_details?.is_parent == true
@@ -150,23 +148,35 @@ class SplashViewController: UIViewController {
                                                 nibName: nil,
                                                 bundle: nil
                                             )
-                                            vc.passedValue = 1
+                                            vc.login_astype = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
                                         }
                                         else if(Data.user_details?.is_parent == true){
                                             
-                                            let vc = TapBarVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
-                                            vc.passedValue = 2
-                                            vc.childDetail = localData.user_data?.user_details?.child_details?.first
-                                            vc.modalPresentationStyle = .fullScreen
-                                            present(vc, animated: true)
+                                            if(
+                                                Data.user_details?.child_details?.count ?? 0 > 1
+                                            ){
+                                                let vc = PriorityVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            else{
+                                                
+                                                let vc = TapBarVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.login_astype = 2
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
                                         }
-                                    }
+                                    
                                     else{
                                         
                                     }
@@ -221,7 +231,7 @@ class SplashViewController: UIViewController {
                validate_user()
             }
             else{
-                let vc = MobileNumberVc(nibName: nil, bundle: nil)
+                let vc = LoginVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
@@ -257,7 +267,11 @@ class SplashViewController: UIViewController {
                         title: "Update",
                         style: .default,
                         handler: { [self] _ in
-                            self.callAppStore(AppStoreLink: version_Data?.play_store_link ?? "")}))
+                            self.callAppStore(
+                                AppStoreLink: version_Data?.app_store_link ?? ""
+                            )
+                        })
+                )
         }
         else if(
             version_Data?.update_available == true && version_Data?.force_update == false
@@ -275,7 +289,7 @@ class SplashViewController: UIViewController {
                         style: .default,
                         handler: { [self] _ in
                             self.callAppStore(
-                                AppStoreLink: version_Data?.play_store_link ?? ""
+                                AppStoreLink: version_Data?.app_store_link ?? ""
                             )
                         })
                 )

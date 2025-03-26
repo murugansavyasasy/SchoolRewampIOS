@@ -243,7 +243,7 @@ class OTPVc: UIViewController {
                                         nibName: nil,
                                         bundle: nil
                                     )
-                                    vc.passedValue = 1
+                                    vc.login_astype = 1
                                     vc.modalPresentationStyle = .fullScreen
                                     present(vc, animated: true)
                                     
@@ -254,7 +254,7 @@ class OTPVc: UIViewController {
                                         nibName: nil,
                                         bundle: nil
                                     )
-                                    vc.passedValue = 2
+                                    vc.login_astype = 2
                                     vc.childDetail = localData.user_data?.user_details?.child_details?.first
                                     vc.modalPresentationStyle = .fullScreen
                                     present(vc, animated: true)

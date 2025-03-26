@@ -56,6 +56,7 @@ class ParentDashboardVc: UIViewController {
     var displayedCategories: [String] = []
     var indexNo = 0
     let newString = "Add"
+    var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +66,14 @@ class ParentDashboardVc: UIViewController {
             AddressLabel.text = child.school_city
             Profileimage.kf.setImage(with: URL(string: child.school_logo_url ?? ""))
         }
+        
+        if childDetails?.count ?? 0 > 1{
+            
+            changeRollLbl.isHidden = false
+        }else{
+            changeRollLbl.isHidden = true
+        }
+        
         DeviceTokenAPIcall()
         StyleAndTranslater()
         
@@ -300,8 +309,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         }
     }
     @IBAction func seeAllShow(_ sender: UIButton) {
-        isShowingAll.toggle()
-        seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
+        sender.isSelected.toggle()
+        seeAllButton.setTitle(sender.isSelected ? "See Less" : "See All", for: .normal)
         if isShowingAll {
             // Collapse back to show only the first 6 items
             displayedCategories = Array(MenuRedirect.receiverItems.prefix(9))
@@ -458,7 +467,7 @@ extension ParentDashboardVc: UISearchBarDelegate{
     }
     
     func DeviceTokenAPIcall(){
-        
+        let secureID = SecureIDManager.getSecureID()
         var deviceToken: String? // Use var instead of let
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -470,7 +479,7 @@ extension ParentDashboardVc: UISearchBarDelegate{
                  COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
                  DeviceTokenStringFile.device_token : deviceToken ?? "",
                  COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
-                 DeviceTokenStringFile.secure_id : deviceToken ?? ""
+                 DeviceTokenStringFile.secure_id : secureID
                  
             ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
                 result : Result<DeviceTokenResponseSuc,

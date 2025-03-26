@@ -165,12 +165,13 @@ class MobileNumberVc: UIViewController {
                                     
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
-                                else{
+                                else if(data.is_password_updated == true) {
                                     
                                     let vc = PasswordVc(nibName: nil, bundle: nil)
                                     vc.modalPresentationStyle = .fullScreen
                                     vc.mobile_number = MobilTextFld.text ?? ""
                                     present(vc, animated: true)
+                                
                                 }
                                 
                             }
