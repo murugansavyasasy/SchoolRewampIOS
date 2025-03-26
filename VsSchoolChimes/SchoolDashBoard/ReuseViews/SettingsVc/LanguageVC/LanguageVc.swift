@@ -107,8 +107,6 @@ class LanguageVc: UIViewController {
     
         
         let window = UIApplication.shared.windows.first
-
-        // Instantiate the ViewController from the XIB file
         let homeVC = TapBarVC(nibName: "TapBarVC", bundle: nil)
         homeVC.passedValue = value
         // Set the new rootViewController to the window

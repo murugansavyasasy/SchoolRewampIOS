@@ -255,6 +255,7 @@ class OTPVc: UIViewController {
                                         bundle: nil
                                     )
                                     vc.passedValue = 2
+                                    vc.childDetail = localData.user_data?.user_details?.child_details?.first
                                     vc.modalPresentationStyle = .fullScreen
                                     present(vc, animated: true)
                                 }

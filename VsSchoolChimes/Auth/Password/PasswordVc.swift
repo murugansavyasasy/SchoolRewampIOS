@@ -178,6 +178,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                     } else if(data.user_details?.is_parent == true){
                                         let vc = TapBarVC(nibName: nil,bundle: nil)
                                         vc.passedValue = 2
+                                        vc.childDetail = localData.user_data?.user_details?.child_details?.first
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }
