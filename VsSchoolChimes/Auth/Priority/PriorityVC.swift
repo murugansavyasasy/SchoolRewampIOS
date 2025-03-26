@@ -226,6 +226,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             let vc = TapBarVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             vc.passedValue = passedValue
+            vc.childDetail = localData.child_data?[indexPath.row]
             present(vc, animated: true)
         }
     }
