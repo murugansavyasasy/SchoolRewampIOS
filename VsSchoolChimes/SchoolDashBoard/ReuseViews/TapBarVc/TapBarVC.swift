@@ -36,6 +36,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     var passedValue : Int?
     var languageCode : String!
     var profile:Bool = false
+    var childDetail:ChildDetails?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -125,6 +126,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
 
         }else if let profileVC = viewController as? ParentDashboardVc, passedValue == 2 {
             profileVC.getValue = passedValue
+            profileVC.ChildDetail = childDetail
             
         }else if let HelpVc = viewController as? HelpVc, passedValue == 2 {
             HelpVc.passVale = passedValue ?? 0

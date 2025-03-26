@@ -7,10 +7,13 @@
 
 import UIKit
 import AVFoundation
+import Kingfisher
 
 @available(iOS 14.0, *)
 class ParentDashboardVc: UIViewController {
     
+    @IBOutlet weak var collectionHeight: NSLayoutConstraint!
+    @IBOutlet weak var seeAllButton: UIButton!
     @IBOutlet weak var Profileimage: UIImageViewX!
     @IBOutlet weak var changeRollLbl: UILabel!
     @IBOutlet weak var reportView: UIView!
@@ -24,18 +27,7 @@ class ParentDashboardVc: UIViewController {
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
     @IBOutlet weak var bottomCv: UICollectionView!
-    @IBOutlet weak var collectionBtn: UIView!
-    @IBOutlet weak var homeworkImgBtn: UIButton!
-    @IBOutlet weak var assignmentImgBtn: UIButton!
-    @IBOutlet weak var onlineMeetingImgBtn: UIButton!
-    @IBOutlet weak var homeworkLbl: UILabel!
-    @IBOutlet weak var assignmentLbl: UILabel!
-    @IBOutlet weak var onlineMeetingLbl: UILabel!
-    @IBOutlet weak var homeworkView: UIView!
-    @IBOutlet weak var assignmentView: UIView!
-    @IBOutlet weak var onlineMeetingView: UIView!
-    @IBOutlet weak var heightStackview: NSLayoutConstraint!
-    
+    @IBOutlet weak var userNameLbl: UILabel!
     var filteredItems: [String] = []
     var getValue : Int!
     var searchItem = 0
@@ -54,6 +46,7 @@ class ParentDashboardVc: UIViewController {
     var isShowingAll = false
     private var firstArray: [String] = []
     private var secondArray: [String] = []
+    var ChildDetail : ChildDetails?
     let advertisements = [
         "Ad 1: Special Offer",
         "Ad 2: Final Sale",
@@ -65,10 +58,17 @@ class ParentDashboardVc: UIViewController {
     let newString = "Add"
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let child = ChildDetail{
+            userNameLbl.text = child.child_name
+            SchoolNameLabel.text = child.school_name
+            AddressLabel.text = child.school_city
+            Profileimage.kf.setImage(with: URL(string: child.school_logo_url ?? ""))
+        }
         DeviceTokenAPIcall()
         StyleAndTranslater()
         
-        displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
+        displayedCategories = Array(MenuRedirect.receiverItems.prefix(9))
         displayedCategories.insert(newString, at: 5)
         filteredItems = MenuRedirect.items
         
@@ -91,6 +91,7 @@ class ParentDashboardVc: UIViewController {
         Searchbar.delegate = self
         
         setTapgesture()
+        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
     }
     
     @IBAction func ViewDetailsBtn(_ sender: Any) {
@@ -108,16 +109,6 @@ class ParentDashboardVc: UIViewController {
             startPoint: CGPoint(x: 1, y: 0.5),  // Right-center
             endPoint: CGPoint(x: 0, y: 0.5)     // Left-center
         )
-        ButtonUIupdate()
-    }
-    
-    func ButtonUIupdate(){
-        
-        configureView(assignmentView, gradientColors: [UIColor.blue,UIColor.gradient2],opacity: 0.6,lightenFactor: 0.6)
-        
-        configureView(onlineMeetingView, gradientColors: [UIColor.yellow,UIColor.red],opacity: 0.6,lightenFactor: 0.8)
-        
-        configureView(homeworkView, gradientColors: [UIColor.green,UIColor.purple],opacity: 0.6,lightenFactor: 0.8)
     }
     
     func configureView(
@@ -167,25 +158,13 @@ class ParentDashboardVc: UIViewController {
         
         profileFullview.layer.cornerRadius =  30
         loginDetailView.layer.cornerRadius =  30
-        homeworkImgBtn.layer.cornerRadius = 10
-        assignmentImgBtn.layer.cornerRadius = 10
-        onlineMeetingImgBtn.layer.cornerRadius = 10
-        
-        assignmentImgBtn.setImage(UIImage(named: "receiver_assignment"), for: .normal)
-        onlineMeetingImgBtn.setImage(UIImage(named: "online_meeting"), for: .normal)
-        homeworkImgBtn.setImage(UIImage(named: "Notice Board"), for: .normal)
+       
         
         
         //MARK: Set Font Style
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-        assignmentLbl.setFont(style: .body, size: 12)
-        onlineMeetingLbl.setFont(style: .body, size: 12)
-        homeworkLbl.setFont(style: .body, size: 12)
-        assignmentLbl.text = MenuStringFile.Assignment.translated()
-        onlineMeetingLbl.text = MenuStringFile.OnlineMeeting.translated()
-        homeworkLbl.text = MenuStringFile.NoticeBoard.translated()
         
         //MARK: Translate
         Searchbar.placeholder = CommonStringFile.Search.translated()
@@ -296,8 +275,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             
             adCell.advertisements = advertisements // Pass advertisement data to the ad cell
             adCell.adCollectionView.reloadData() // Refresh the embedded collection view
-            adCell.seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
-            adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
+//            adCell.seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
+//            adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
             return adCell
         } else {
             // Handle regular cells
@@ -320,30 +299,23 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             return cell
         }
     }
-    
-    
-    @objc func seeAllButtonTapped() {
+    @IBAction func seeAllShow(_ sender: UIButton) {
+        isShowingAll.toggle()
+        seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
         if isShowingAll {
             // Collapse back to show only the first 6 items
-            displayedCategories = Array(MenuRedirect.receiverItems.prefix(6))
+            displayedCategories = Array(MenuRedirect.receiverItems.prefix(9))
             displayedCategories.insert(newString, at: 5)
-            heightStackview.constant = 110
-            collectionBtn.isHidden = false
-            homeworkView.layoutIfNeeded()
-            assignmentView.layoutIfNeeded()
-            onlineMeetingView.layoutIfNeeded()
-            ButtonUIupdate()
             
         } else {
             // Expand to show all items
             displayedCategories = MenuRedirect.receiverItems
-            heightStackview.constant = 0
-            collectionBtn.isHidden = true
         }
         
-        isShowingAll.toggle() // Toggle the state
-        bottomCv.reloadData() // Refresh the collection view
-        //        updateCollectionViewHeight()
+         // Toggle the state
+        bottomCv.reloadData()
+        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+        collectionHeight.constant = contentViewHeight
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -478,12 +450,8 @@ extension ParentDashboardVc: UISearchBarDelegate{
     //MARK: Searchview Hide
     @objc func SearchViewHidden() {
         if searchHeightCon.constant == 0{
-            heightStackview.constant = 0
-            collectionBtn.isHidden = true
             searchHeightCon.constant = 56
         }else{
-            heightStackview.constant = 110
-            collectionBtn.isHidden = false
             searchHeightCon.constant = 0
             
         }
