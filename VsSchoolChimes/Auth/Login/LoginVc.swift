@@ -62,7 +62,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
         }
     }
     
@@ -75,7 +75,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         BottomView.layer.cornerRadius = 30
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        BottomView.backgroundColor = Colornames.auth_screen_color
+        BottomView.backgroundColor = .gradient1
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
         loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor

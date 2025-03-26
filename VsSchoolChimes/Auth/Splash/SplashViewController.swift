@@ -224,7 +224,7 @@ class SplashViewController: UIViewController {
     
     
     func AppFlowChecking(){
-    
+        
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd
         if (mobile_num != nil) && (password != nil){
