@@ -11,16 +11,16 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     @IBOutlet weak var listTable: UITableView!
     var schools: [School] = [
-        School(name: "ABC Public School", address: "123, Main Street, Chennai", isSelected: false),
-        School(name: "XYZ International School", address: "45, Park Road, Coimbatore", isSelected: false),
-        School(name: "Sunrise Academy", address: "78, MG Road, Madurai", isSelected: false),
-        School(name: "Greenwood High", address: "56, Anna Nagar, Trichy", isSelected: false),
-        School(name: "Bluebell School", address: "90, Gandhi Street, Salem", isSelected: false),
-        School(name: "Oakridge School", address: "12, Nelson Road, Erode", isSelected: false),
-        School(name: "Little Angels Academy", address: "67, Cross Road, Tirunelveli", isSelected: false),
-        School(name: "Springfield High", address: "34, Lake View, Vellore", isSelected: false),
-        School(name: "Elite Public School", address: "89, New Colony, Thanjavur", isSelected: false),
-        School(name: "St. Joseph's Matric", address: "23, Temple Road, Kanyakumari", isSelected: false)
+        School(name: "ABC Public School", address: "123, Main Street, Chennai", isSelected: true),
+        School(name: "XYZ International School", address: "45, Park Road, Coimbatore", isSelected: true),
+        School(name: "Sunrise Academy", address: "78, MG Road, Madurai", isSelected: true),
+        School(name: "Greenwood High", address: "56, Anna Nagar, Trichy", isSelected: true),
+        School(name: "Bluebell School", address: "90, Gandhi Street, Salem", isSelected: true),
+        School(name: "Oakridge School", address: "12, Nelson Road, Erode", isSelected: true),
+        School(name: "Little Angels Academy", address: "67, Cross Road, Tirunelveli", isSelected: true),
+        School(name: "Springfield High", address: "34, Lake View, Vellore", isSelected: true),
+        School(name: "Elite Public School", address: "89, New Colony, Thanjavur", isSelected: true),
+        School(name: "St. Joseph's Matric", address: "23, Temple Road, Kanyakumari", isSelected: true)
     ]
     override func viewDidLoad() {
         super.viewDidLoad()

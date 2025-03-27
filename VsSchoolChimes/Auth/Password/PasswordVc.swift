@@ -87,8 +87,9 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
     @IBAction func togglePasswordVisibility() {
         
         passwordTxtFld.isSecureTextEntry.toggle()
-        let imageName = passwordTxtFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
+        let imageName = passwordTxtFld.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
         eyeImage.image = imageName
+        
     }
     
     func setupUI() {
@@ -194,7 +195,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                                     nibName: nil,
                                                     bundle: nil
                                                 )
-                                                vc.login_astype = 2
+                                                vc.login_astype = 2    
                                                 vc.modalPresentationStyle = .fullScreen
                                                 present(vc, animated: true)
                                             }

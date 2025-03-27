@@ -94,7 +94,7 @@ struct StaffDetails: Codable {
 }
 
 struct ChildDetails: Codable {
-    let child_name: String?
+    let name: String?
     let standard_name: String?
     let section_name: String?
     let school_name: String?

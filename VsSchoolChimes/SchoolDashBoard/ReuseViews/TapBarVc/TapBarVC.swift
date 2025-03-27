@@ -78,6 +78,9 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         super.viewWillAppear(animated)
         if login_astype == 2{
             Parent.getValue = login_astype
+            Parent.ChildDetail =  UserDefaultFileManager
+                .getUserDetails()?.user_details?.child_details?.first
+           
             selectViewController(Parent)
             
             applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue.blendedWithWhiteColour(factor: 0.3), Colornames.gradientgreen.blendedWithWhiteColour(factor: 0.3)])

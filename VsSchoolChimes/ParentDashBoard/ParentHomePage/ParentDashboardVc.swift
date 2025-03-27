@@ -59,8 +59,8 @@ class ParentDashboardVc: UIViewController {
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let child = ChildDetail{
+       
+        if let child = childDetails?.first{
             userNameLbl.text = child.name
             SchoolNameLabel.text = child.school_name
             AddressLabel.text = child.school_city

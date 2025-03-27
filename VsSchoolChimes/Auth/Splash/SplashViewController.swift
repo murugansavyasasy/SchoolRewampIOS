@@ -286,8 +286,8 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func AppFlowChecking(){
         
-        let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
-        let password = UserDefaultFileManager.getLoginCredentials()?.pwd
+        let mobile_num = /*"707070707070"*/ UserDefaultFileManager.getLoginCredentials()?.mobile_number
+        let password = /*"1234"*/ UserDefaultFileManager.getLoginCredentials()?.pwd
         if (mobile_num != nil) && (password != nil){
             validate_user()
         }

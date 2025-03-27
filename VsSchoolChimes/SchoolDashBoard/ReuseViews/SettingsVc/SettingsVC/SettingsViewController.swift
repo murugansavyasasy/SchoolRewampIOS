@@ -19,12 +19,23 @@ class SettingsViewController: UIViewController, BaktoHome {
     @IBOutlet weak var topView: UIView!
     var menuname = SettingStringFile()
     lazy var sections: [Section] = [
-        Section(title: menuname.general, items: [menuname.notifications, menuname.faq, menuname.contactUs, menuname.termsAndConditions,menuname.changeAppLanguage]),
+        Section(
+            title: menuname.general,
+            items: [
+                menuname.notifications,
+                menuname.faq,
+                menuname.contactUs,
+                menuname.termsAndConditions,
+                menuname.changeAppLanguage,
+                menuname.termsAndConditions,
+                menuname.faceID
+            ]
+        ),
         Section(title: menuname.feedback, items: [menuname.reportABug, menuname.feedback, menuname.logout])
     ]
     var section:[Section]?
     let Images: [Image] = [
-        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja"]),
+        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid.circle.fill"]),
         Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
     ]
     

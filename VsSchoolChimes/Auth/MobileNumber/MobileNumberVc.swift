@@ -151,10 +151,13 @@ class MobileNumberVc: UIViewController {
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
+                           
                             guard let data = response.data?.first else {
                                 print("No data available")
                                 return
                             }
+                            
+                            print("Responce Data : ",data)
                             
                             UserDefaultFileManager
                                 .saveUserDetails(
