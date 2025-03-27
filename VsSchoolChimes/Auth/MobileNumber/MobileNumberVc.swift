@@ -113,7 +113,6 @@ class MobileNumberVc: UIViewController {
         guard let mobile = MobilTextFld.text, !mobile.isEmpty else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
-        
         guard mobile.count == country_data?.mobile_number_length else {
             return AlertModal.showAlert(title: "", message: AlertstringFile.Enter_valid_Mobile, on: self)
         }
@@ -140,7 +139,7 @@ class MobileNumberVc: UIViewController {
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID
         ]
-    
+        
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
                      , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
@@ -152,11 +151,14 @@ class MobileNumberVc: UIViewController {
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
-                            let data : UserData = (
-                                response.data?.first
-                            )!
-                            localData.user_data = data
+                            guard let data = response.data?.first else {
+                                print("No data available")
+                                return
+                            }
                             
+                            UserDefaultFileManager
+                                .saveUserDetails(
+                                    data: (data))
                             
                             if(data.is_number_exists == true){
                                 
@@ -164,12 +166,13 @@ class MobileNumberVc: UIViewController {
                                     
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
-                                else{
+                                else if(data.is_password_updated == true) {
                                     
                                     let vc = PasswordVc(nibName: nil, bundle: nil)
                                     vc.modalPresentationStyle = .fullScreen
                                     vc.mobile_number = MobilTextFld.text ?? ""
                                     present(vc, animated: true)
+                                    
                                 }
                                 
                             }

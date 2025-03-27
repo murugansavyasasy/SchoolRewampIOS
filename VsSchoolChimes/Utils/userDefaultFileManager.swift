@@ -15,6 +15,7 @@ struct UserDefaultFileManager {
     static let countryKey = "country_data"
     static let  mobileNumber = "mobile_number"
     static let  password = "password"
+    static let  User_details = "User_details"
     
     static func saveCountryDetails(data: CountryData) {
         if let encoded = try? JSONEncoder().encode(data) {
@@ -56,6 +57,20 @@ struct UserDefaultFileManager {
         return (mobile_number,pwd)
     }
     
+    
+    static func saveUserDetails(data: UserData) {
+        if let encoded = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encoded, forKey: User_details)
+        }
+    }
+
+    static func getUserDetails() -> UserData? {
+        if let savedData = UserDefaults.standard.data(forKey: User_details),
+           let user = try? JSONDecoder().decode(UserData.self, from: savedData) {
+            return user
+        }
+        return nil
+    }
     
 }
 

@@ -44,7 +44,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                             <subviews>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B0t-3O-np3">
-                                    <rect key="frame" x="0.0" y="157.33333333333331" width="393" height="601.66666666666674"/>
+                                    <rect key="frame" x="0.0" y="157.33333333333331" width="393" height="601.66666666666652"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSz-Vq-FF8" userLabel="BaseView">
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="677"/>
@@ -70,7 +70,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="E3y-MD-bUI">
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="E3y-MD-bUI">
                                                     <rect key="frame" x="16" y="112.66666666666663" width="361" height="500"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -84,7 +84,7 @@
                                                     </collectionViewFlowLayout>
                                                 </collectionView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ECZ-JP-iMK">
-                                                    <rect key="frame" x="296.66666666666669" y="622.66666666666663" width="76.333333333333314" height="34.333333333333371"/>
+                                                    <rect key="frame" x="306.66666666666669" y="622.66666666666663" width="76.333333333333314" height="34.333333333333371"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" title="See All"/>
                                                     <connections>
@@ -92,7 +92,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="12x-Ku-420">
-                                                    <rect key="frame" x="296.66666666666669" y="656" width="76.333333333333314" height="1"/>
+                                                    <rect key="frame" x="306.66666666666669" y="656" width="76.333333333333314" height="1"/>
                                                     <color key="backgroundColor" systemColor="systemIndigoColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="2Cs-o4-a6g"/>
@@ -115,7 +115,7 @@
                                                 <constraint firstItem="E3y-MD-bUI" firstAttribute="leading" secondItem="KSz-Vq-FF8" secondAttribute="leading" constant="16" id="eHL-Qk-1eQ"/>
                                                 <constraint firstItem="QYB-jp-54h" firstAttribute="top" secondItem="KSz-Vq-FF8" secondAttribute="top" constant="25" id="gkY-6M-rbn"/>
                                                 <constraint firstAttribute="trailing" secondItem="QYB-jp-54h" secondAttribute="trailing" constant="10" id="i4H-Qw-7Wh"/>
-                                                <constraint firstAttribute="trailing" secondItem="ECZ-JP-iMK" secondAttribute="trailing" constant="20" id="iFq-5N-GlM"/>
+                                                <constraint firstAttribute="trailing" secondItem="ECZ-JP-iMK" secondAttribute="trailing" constant="10" id="iFq-5N-GlM"/>
                                                 <constraint firstItem="12x-Ku-420" firstAttribute="leading" secondItem="ECZ-JP-iMK" secondAttribute="leading" id="rSB-pq-Ic2"/>
                                                 <constraint firstItem="E3y-MD-bUI" firstAttribute="top" secondItem="jVf-Ad-Gy9" secondAttribute="bottom" constant="5" id="tOn-QF-AcV"/>
                                                 <constraint firstItem="12x-Ku-420" firstAttribute="bottom" secondItem="ECZ-JP-iMK" secondAttribute="bottom" id="v7K-KW-4bU"/>

@@ -24,16 +24,16 @@ class PriorityVC: UIViewController {
     let assetColors: [String] = ["Priority", "priortitClr1", "PriorityClr2"]
     let gradientcolour : [String] = ["gradient1", "gradient2", "gradient3"]
     let ProfileImage : [String] = ["Default_profile", "Default_profile_Male", "Default_profile_Female"]
-    var passedValue = 1
+    var login_astype = 1
     var Language :String?
     
-    var staffDetails = localData.user_data?.user_details?.staff_details
-    var childDetails = localData.user_data?.user_details?.child_details
+    var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     override func viewDidLoad() {
         super.viewDidLoad()
        
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
-        UserDefaults.standard.set(passedValue, forKey: "passvalue")
+        UserDefaults.standard.set(login_astype, forKey: "passvalue")
     
         StyleAndTranslate()
         
@@ -92,8 +92,8 @@ class PriorityVC: UIViewController {
         gradientcolours(button: ParentButton,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ParentButton.setTitleColor(.black, for:.normal)
         
-        passedValue = 1
-        UserDefaults.standard.set(passedValue, forKey: "passvalue")
+        login_astype = 1
+        UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
     }
     
@@ -110,8 +110,8 @@ class PriorityVC: UIViewController {
         teacherButton.setTitleColor(.black, for:.normal)
         
         
-        passedValue = 2
-        UserDefaults.standard.set(passedValue, forKey: "passvalue")
+        login_astype = 2
+        UserDefaults.standard.set(login_astype, forKey: "passvalue")
         tableview.reloadData()
     }
     
@@ -137,7 +137,7 @@ class PriorityVC: UIViewController {
     @IBAction func NextAction(_ sender: Any) {
         let vc = TapBarVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
-        vc.passedValue = passedValue
+        vc.login_astype = login_astype
         present(vc, animated: true)
     }
     
@@ -150,7 +150,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if passedValue == 1 {
+        if login_astype == 1 {
             
             return localData.user_data?.user_details?.staff_details?.count ?? 0
         }else{
@@ -173,7 +173,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
         let image = UIImage(named: ProfileImage[indexPath.row % ProfileImage.count])
         
-        if passedValue  == 1 {
+        if login_astype  == 1 {
            
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SchoolTVCell, for: indexPath) as! SchoolTVCell
             
@@ -221,12 +221,12 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if passedValue  == 2 {
+        if login_astype  == 2 {
             
             let vc = TapBarVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
-            vc.passedValue = passedValue
-            vc.childDetail = localData.child_data?[indexPath.row]
+            vc.login_astype = login_astype
+            vc.childDetail = childDetails?[indexPath.row]
             present(vc, animated: true)
         }
     }

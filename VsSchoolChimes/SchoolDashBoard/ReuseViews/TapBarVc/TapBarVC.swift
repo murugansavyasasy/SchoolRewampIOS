@@ -12,13 +12,13 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     func backtohome() {
         setupTabBar()
         setupContainerView()
-        if passedValue == 1{
+        if login_astype == 1{
             
-            firstVC.getValue = passedValue
+            firstVC.getValue = login_astype
             selectViewController(firstVC)
             
-        }else if passedValue == 2{
-            Parent.getValue = passedValue
+        }else if login_astype == 2{
+            Parent.getValue = login_astype
             selectViewController(Parent)
         }
     }
@@ -33,7 +33,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = ProfileViewController()
     var languages : String!
-    var passedValue : Int?
+    var login_astype : Int?
     var languageCode : String!
     var profile:Bool = false
     var childDetail:ChildDetails?
@@ -76,15 +76,15 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if passedValue == 2{
-            Parent.getValue = passedValue
+        if login_astype == 2{
+            Parent.getValue = login_astype
             selectViewController(Parent)
             
             applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue.blendedWithWhiteColour(factor: 0.3), Colornames.gradientgreen.blendedWithWhiteColour(factor: 0.3)])
             
-        }else if passedValue == 1{
+        }else if login_astype == 1{
             
-            firstVC.getValue = passedValue
+            firstVC.getValue = login_astype
             selectViewController(firstVC)
             
             applyGradientToTabBar(tabBar, colors: [Colornames.stafGradient, Colornames.stafGradient1])
@@ -117,19 +117,19 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         viewController.hidesBottomBarWhenPushed = false
 
         // Apply gradient if necessary
-        if let settingsVC = viewController as? SettingsViewController, passedValue == 2 {
+        if let settingsVC = viewController as? SettingsViewController, login_astype == 2 {
             settingsVC.delegate = self
-            settingsVC.passVale = passedValue ?? 0
+            settingsVC.passVale = login_astype ?? 0
             
-        } else if let profileVC = viewController as? ProfileViewController, passedValue == 2 {
-            profileVC.passvalue = passedValue ?? 0
+        } else if let profileVC = viewController as? ProfileViewController, login_astype == 2 {
+            profileVC.passvalue = login_astype ?? 0
 
-        }else if let profileVC = viewController as? ParentDashboardVc, passedValue == 2 {
-            profileVC.getValue = passedValue
+        }else if let profileVC = viewController as? ParentDashboardVc, login_astype == 2 {
+            profileVC.getValue = login_astype
             profileVC.ChildDetail = childDetail
             
-        }else if let HelpVc = viewController as? HelpVc, passedValue == 2 {
-            HelpVc.passVale = passedValue ?? 0
+        }else if let HelpVc = viewController as? HelpVc, login_astype == 2 {
+            HelpVc.passVale = login_astype ?? 0
             
         }
 
@@ -145,11 +145,11 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         
         switch item.tag {
         case 0:
-            if passedValue == 1{
+            if login_astype == 1{
                 selectViewController(firstVC)
                 firstVC.bottomCv.reloadData()
                 
-            }else if passedValue == 2{
+            }else if login_astype == 2{
                 
                 selectViewController(Parent)
                 Parent.bottomCv.reloadData()

@@ -52,4 +52,5 @@ class GlobalVariablesStringFile {
 class  DeviceTokenStringFile {
     
     static var device_token = "device_token"
+    static var secure_id = "secure_id"
 }
