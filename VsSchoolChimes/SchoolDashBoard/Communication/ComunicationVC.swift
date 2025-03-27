@@ -204,7 +204,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceSetTitleLbl.applyRightTxt()
         voiceTitleeTxt.applyRightTxt()
         TextMsgContent.applyRightTxt()
-      //  textCountLbl.applyRightTxt()
         informationcontent.applyRightTxt()
         informationcontent.applyRightTxt(with: placeholderLabel)
         informationcontent.addSubview(placeholderLabel)
@@ -215,14 +214,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             isKeyboardVisible = true
             UIView.animate(withDuration: 0.3) {
-                // Move outerView 20 points from the top
                 self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
             }
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
+        guard isKeyboardVisible else { return }
         isKeyboardVisible = false
         UIView.animate(withDuration: 0.3) {
             self.outerView.transform = .identity // Reset position
@@ -237,12 +235,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         if updatedText.count <= 500 {
-            textCountLbl.text = "\(updatedText.count) of 500" // Update the character count label
+            textCountLbl.text = "\(updatedText.count) of 500"
             return true // Allow the change
         } else {
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
             return false // Reject the change
         }
     }

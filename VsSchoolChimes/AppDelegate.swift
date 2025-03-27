@@ -163,10 +163,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
 }
 
-
-
-
-
 //MARK: -  UNUserNotificationCenterDelegate
 
 @available(iOS 10, *)

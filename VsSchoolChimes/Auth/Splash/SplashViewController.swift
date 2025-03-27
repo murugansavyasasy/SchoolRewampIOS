@@ -22,58 +22,86 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     var loginId : String!
     var version_Data : VersionData? = nil
     var AlertModal = CustomAlert()
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isDeveloperModeEnabled() {
-            bottumSheet.isHidden = false
-            bottumSheet.layer.cornerRadius = 30
-            bottumSheet.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Rounds top corners only
-            bottumSheet.backgroundColor = Colornames.auth_screen_color
-
-            // Ensure the shadow appears correctly
-            bottumSheet.layer.masksToBounds = false
-            bottumSheet.layer.shadowColor = UIColor.black.cgColor
-            bottumSheet.layer.shadowOffset = CGSize(width: 0, height: 5)
-            bottumSheet.layer.shadowOpacity = 0.3
-            bottumSheet.layer.shadowRadius = 6
-            developerDescript.text = "Developer Mode is currently ON. Please turn it OFF to proceed.\n\nTo disable:\n1. Open Settings.\n2. Go to Privacy & Security.\n3. Tap Developer Mode.\n4. Turn it OFF and restart your device."
-        }else{
-            if let countryDetails =   UserDefaultFileManager.getCountryDetails() {
-                countryId = countryDetails.id
-            }
-            let secureID = SecureIDManager.getSecureID()
-            print("secureIDsecureID",secureID)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
-                if(countryId != nil){
-                    Version_Check()
-                }
-                else{
-                    let vc = CountryVc(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                }
-            }
-        }
-        let Language = UserDefaults.standard.string(
-            forKey: DefaultsKeys.Language ?? ""
-        )
-        let isRTL = (Language == "ar")  // Replace with your language-checking logic
-            UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
-
-       
+        
+        // Configure language and layout
+        configureLanguageLayout()
+        checkDeveloperMode()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//            let vc = SchoolListVC(nibName: nil, bundle: nil)
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true)
+//        }
     }
-    func isDeveloperModeEnabled() -> Bool {
-        var info = kinfo_proc()
-        var mib: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
-        var size = MemoryLayout.stride(ofValue: info)
+    func checkDeveloperMode() {
+           if isDeveloperModeEnabled() {
+//               showDeveloperModePopup()
+               proceedWithAppFlow()
+           } else {
+               proceedWithAppFlow()
+           }
+       }
 
-        if sysctl(&mib, u_int(mib.count), &info, &size, nil, 0) != 0 {
-            return false
-        }
-        return (info.kp_proc.p_flag & P_TRACED) != 0
-    }
+       func isDeveloperModeEnabled() -> Bool {
+           var devMode: Int32 = 0
+           var size = MemoryLayout<Int32>.size
+           let result = sysctlbyname("hw.optional.arm64", &devMode, &size, nil, 0)
+
+           if result == 0 {
+               return devMode == 1
+           }
+           return false
+       }
+      // Show Developer Mode Popup
+      private func showDeveloperModePopup() {
+          // Configure bottom sheet
+          configureBottomSheet()
+          
+          // Set developer description
+          developerDescript.text = """
+          Developer Mode is currently ON. 
+          Please turn it OFF to proceed.
+
+          To disable:
+          1. Open Settings
+          2. Go to Privacy & Security
+          3. Tap Developer Mode
+          4. Turn it OFF and restart your device
+          """
+          
+          // Additional UI configurations
+          bottumSheet.isHidden = false
+      }
+      
+      // Configure Bottom Sheet
+      private func configureBottomSheet() {
+          bottumSheet.layer.cornerRadius = 30
+          bottumSheet.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+          bottumSheet.backgroundColor = Colornames.auth_screen_color
+          
+          // Shadow configuration
+          bottumSheet.layer.masksToBounds = false
+          bottumSheet.layer.shadowColor = UIColor.black.cgColor
+          bottumSheet.layer.shadowOffset = CGSize(width: 0, height: 5)
+          bottumSheet.layer.shadowOpacity = 0.3
+          bottumSheet.layer.shadowRadius = 6
+      }
+      
+      // Configure Language and Layout
+      private func configureLanguageLayout() {
+          guard let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) else {
+              return
+          }
+          
+          let isRTL = (language == "ar")
+          UIView.appearance().semanticContentAttribute = isRTL
+              ? .forceRightToLeft
+              : .forceLeftToRight
+      }
     @IBAction func okAction(_ sender: UIButton) {
-        exit(0)
+        UIApplication.shared.performSelector(onMainThread: #selector(NSXPCConnection.suspend), with: nil, waitUntilDone: false)
     }
     
     func Version_Check() {
@@ -99,7 +127,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                             ServiceUrl.report_url = version_Data?.country_details?.reporting_url ?? ""
                             if(version_Data?.update_available == true){
                                 showUpdatePopup()
-                                }
+                            }
                             else{
                                 self.AppFlowChecking()
                             }
@@ -144,7 +172,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                 print("No data available")
                                 return
                             }
-                          
+                            
                             UserDefaultFileManager
                                 .saveUserDetails(
                                     data: (Data))
@@ -157,16 +185,39 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                 }
                                 else {
                                     
+                                    
+                                    UserDefaultFileManager
+                                        .saveLoginCredentials(
+                                            mobile_number:mobile_num ?? "",
+                                            pwd:password ?? ""
+                                        )
+                                    
+                                    
+                                    if(Data.user_details?.is_staff == true) &&  (
+                                        Data.user_details?.is_parent == true
+                                    ){
+                                        let vc = PriorityVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
                                         
-                                UserDefaultFileManager
-                                            .saveLoginCredentials(
-                                                mobile_number:mobile_num ?? "",
-                                                pwd:password ?? ""
-                                            )
+                                    }
+                                    else if(Data.user_details?.is_staff == true){
+                                        let vc = TapBarVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.login_astype = 1
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
                                         
+                                    }
+                                    else if(Data.user_details?.is_parent == true){
                                         
-                                        if(Data.user_details?.is_staff == true) &&  (
-                                            Data.user_details?.is_parent == true
+                                        if(
+                                            Data.user_details?.child_details?.count ?? 0 > 1
                                         ){
                                             let vc = PriorityVC(
                                                 nibName: nil,
@@ -174,41 +225,18 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                             )
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
-                                            
                                         }
-                                        else if(Data.user_details?.is_staff == true){
+                                        else{
+                                            
                                             let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
                                             )
-                                            vc.login_astype = 1
+                                            vc.login_astype = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
-                                            
                                         }
-                                        else if(Data.user_details?.is_parent == true){
-                                            
-                                            if(
-                                                Data.user_details?.child_details?.count ?? 0 > 1
-                                            ){
-                                                let vc = PriorityVC(
-                                                    nibName: nil,
-                                                    bundle: nil
-                                                )
-                                                vc.modalPresentationStyle = .fullScreen
-                                                present(vc, animated: true)
-                                            }
-                                            else{
-                                                
-                                                let vc = TapBarVC(
-                                                    nibName: nil,
-                                                    bundle: nil
-                                                )
-                                                vc.login_astype = 2
-                                                vc.modalPresentationStyle = .fullScreen
-                                                present(vc, animated: true)
-                                            }
-                                        }
+                                    }
                                     
                                     else{
                                         
@@ -261,14 +289,29 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd
         if (mobile_num != nil) && (password != nil){
-               validate_user()
-            }
-            else{
-                let vc = LoginVc(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
-            }
+            validate_user()
+        }
+        else{
+            let vc = LoginVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
     }
+    func proceedWithAppFlow() {
+           if let countryDetails = UserDefaultFileManager.getCountryDetails() {
+               countryId = countryDetails.id
+           }
+           
+           DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+               if self.countryId != nil {
+                   self.Version_Check()
+               } else {
+                   let vc = CountryVc(nibName: nil, bundle: nil)
+                   vc.modalPresentationStyle = .fullScreen
+                   self.present(vc, animated: true)
+               }
+           }
+       }
     
     func callAppStore (AppStoreLink : String)
     {
@@ -294,14 +337,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         if(
             version_Data?.update_available == true && version_Data?.force_update == true
         ){
-            
-//            forceUpdateAlert
-//                .addAction(
-//                    UIAlertAction(
-//                        title: "Update",
-//                        style: .default,
-//                        handler: { [self] _ in
-//                            self.callAppStore(AppStoreLink: version_Data?.play_store_link ?? "")}))
             showCustomPopup()
             
         }
@@ -310,28 +345,17 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         )
         {
             forceUpdateAlert.addAction(UIAlertAction(title: "Not Now", style: .default, handler: { _ in
-            self.AppFlowChecking()
+                self.AppFlowChecking()
             }))
             
             showCustomPopup()
-//            forceUpdateAlert
-//                .addAction(
-//                    UIAlertAction(
-//                        title: "Update",
-//                        style: .default,
-//                        handler: { [self] _ in
-//                            self.callAppStore(
-//                                AppStoreLink: version_Data?.play_store_link ?? ""
-//                            )
-//                        })
-//                )
         }
         
         present(forceUpdateAlert, animated: true, completion: nil)
         
         
     }
-
+    
     func showCustomPopup() {
         // Create the overlay view
         let overlay = UIView(frame: self.view.bounds)
@@ -352,20 +376,72 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             popoverPresentationController.permittedArrowDirections = []
             popoverPresentationController.passthroughViews = nil // Prevent dismissing on tap outside
         }
-
+        
         self.present(popoverContentVC, animated: false)
     }
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none // Keeps popover style on all devices
     }
-
+    
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         return false
     }
-
-}
     
+}
 
-
-  
-
+class DeveloperModeDetector {
+    /// Checks if Developer Mode is currently enabled on the device
+    static func isDeveloperModeEnabled() -> Bool {
+        // Method 1: Check if debugger is attached
+        var info = kinfo_proc()
+        var size = MemoryLayout<kinfo_proc>.size
+        var mib: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, getpid()]
+        
+        guard sysctl(&mib, u_int(mib.count), &info, &size, nil, 0) == 0 else {
+            return false
+        }
+        
+        let isDebuggerAttached = (info.kp_proc.p_flag & P_TRACED) != 0
+        
+        // Method 2: Check for common developer-related settings
+        let defaults = UserDefaults.standard
+        let developerModeSettings = [
+            "WebKitDeveloperExtras",
+            "DebugSwiftUIView",
+            "UIViewLayoutFeedbackLoopDebuggingThreshold"
+        ]
+        
+        let hasDeveloperSettings = developerModeSettings.contains { setting in
+            return defaults.object(forKey: setting) != nil
+        }
+        
+        return isDebuggerAttached || hasDeveloperSettings
+    }
+    
+    /// Continuously monitors developer mode status
+    static func startDeveloperModeMonitoring(handler: @escaping (Bool) -> Void) {
+        // Create a timer to check developer mode status periodically
+        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
+            let isEnabled = isDeveloperModeEnabled()
+            handler(isEnabled)
+        }
+    }
+    
+    /// Example usage demonstrating how to use the detection methods
+    static func demonstrateUsage() {
+        // One-time check
+        if isDeveloperModeEnabled() {
+            print("Developer mode is currently ON")
+        } else {
+            print("Developer mode is currently OFF")
+        }
+        
+        // Continuous monitoring
+        startDeveloperModeMonitoring { status in
+            if status {
+                print("Developer mode detected!")
+                // Optionally take action like logging or alerting
+            }
+        }
+    }
+}
