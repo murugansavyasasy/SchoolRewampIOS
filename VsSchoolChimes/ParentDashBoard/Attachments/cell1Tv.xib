@@ -17,20 +17,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="336" height="314"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-kh-yLG">
-                        <rect key="frame" x="20" y="14" width="240" height="287.33333333333331"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pqU-kh-yLG">
+                        <rect key="frame" x="5" y="5" width="151" height="304"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13/10/2000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USm-VT-TGn">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="20.333333333333332"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="0.0" width="151" height="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Fi-Iv-WOh">
-                                <rect key="frame" x="0.0" y="30.333333333333329" width="240" height="127.99999999999999"/>
+                                <rect key="frame" x="0.0" y="33" width="151" height="128"/>
                             </imageView>
                             <wkWebView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aiy-CG-Ezj">
-                                <rect key="frame" x="0.0" y="163.33333333333334" width="240" height="0.0"/>
+                                <rect key="frame" x="0.0" y="166" width="151" height="0.0"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -38,25 +38,26 @@
                                 </wkWebViewConfiguration>
                             </wkWebView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SportsMeeting" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgh-lV-d1G">
-                                <rect key="frame" x="0.0" y="168.33333333333334" width="240" height="20.333333333333343"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="177" width="151" height="17"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13/10/2000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZS-Kc-fM9">
-                                <rect key="frame" x="0.0" y="198.66666666666666" width="240" height="20.333333333333343"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZS-Kc-fM9">
+                                <rect key="frame" x="0.0" y="210" width="151" height="50.333333333333314"/>
+                                <string key="text">Join us for an exhilarating sports meeting where athletes from various disciplines come together to showcase their skills, determination, and teamwork. Experience the thrill of competition, witness outstanding performances, and celebrate the spirit of sportsmanship.</string>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sendby : PreethiSaran" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8r5-eP-szH">
-                                <rect key="frame" x="0.0" y="229" width="240" height="20.333333333333343"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <rect key="frame" x="0.0" y="276.33333333333331" width="151" height="11.666666666666686"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7w5-Bb-u7K">
-                                <rect key="frame" x="0.0" y="259.33333333333331" width="240" height="28"/>
+                                <rect key="frame" x="0.0" y="304" width="151" height="0.0"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain">
                                     <attributedString key="attributedTitle">
@@ -73,10 +74,25 @@
                                 </buttonConfiguration>
                             </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="Aiy-CG-Ezj" firstAttribute="top" secondItem="5Fi-Iv-WOh" secondAttribute="bottom" constant="5" id="oAE-tW-Sm4"/>
+                            <constraint firstItem="qgh-lV-d1G" firstAttribute="top" secondItem="Aiy-CG-Ezj" secondAttribute="bottom" constant="11" id="zZF-E4-fc3"/>
+                        </constraints>
                     </stackView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="pqU-kh-yLG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="JKe-Qd-Taa"/>
+                    <constraint firstAttribute="bottom" secondItem="pqU-kh-yLG" secondAttribute="bottom" constant="5" id="Yf6-4W-InH"/>
+                    <constraint firstItem="pqU-kh-yLG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="bhO-E9-6EB"/>
+                    <constraint firstAttribute="trailing" secondItem="pqU-kh-yLG" secondAttribute="trailing" constant="180" id="iXB-Zh-0mX"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="ImageView" destination="5Fi-Iv-WOh" id="Tpb-xr-Otm"/>
+                <outlet property="dateLbl" destination="USm-VT-TGn" id="RW9-Hi-9mJ"/>
+                <outlet property="titleLbl" destination="qgh-lV-d1G" id="Be5-nP-MjO"/>
+            </connections>
             <point key="canvasLocation" x="149.61832061068702" y="97.887323943661983"/>
         </tableViewCell>
     </objects>
