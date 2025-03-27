@@ -108,7 +108,7 @@ class LanguageVc: UIViewController {
         
         let window = UIApplication.shared.windows.first
         let homeVC = TapBarVC(nibName: "TapBarVC", bundle: nil)
-        homeVC.passedValue = value
+        homeVC.login_astype = value
         // Set the new rootViewController to the window
         window?.rootViewController = homeVC
         window?.makeKeyAndVisible()

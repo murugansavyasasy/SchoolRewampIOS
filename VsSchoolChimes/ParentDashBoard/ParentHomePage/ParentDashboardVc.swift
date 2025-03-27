@@ -56,6 +56,7 @@ class ParentDashboardVc: UIViewController {
     var displayedCategories: [String] = []
     var indexNo = 0
     let newString = "Add"
+    var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,6 +72,14 @@ class ParentDashboardVc: UIViewController {
             AddressLabel.text = child?.first?.school_city
             Profileimage.kf.setImage(with: URL(string: child?.first?.school_logo_url ?? ""))
         }
+        
+        if childDetails?.count ?? 0 > 1{
+            
+            changeRollLbl.isHidden = false
+        }else{
+            changeRollLbl.isHidden = true
+        }
+        
         DeviceTokenAPIcall()
         StyleAndTranslater()
         
@@ -464,7 +473,7 @@ extension ParentDashboardVc: UISearchBarDelegate{
     }
     
     func DeviceTokenAPIcall(){
-        
+        let secureID = SecureIDManager.getSecureID()
         var deviceToken: String? // Use var instead of let
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -475,7 +484,8 @@ extension ParentDashboardVc: UISearchBarDelegate{
             .makeApi(url: ServiceUrl.auth_device_token, parameters:[
                  COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
                  DeviceTokenStringFile.device_token : deviceToken ?? "",
-                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type
+                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+                 DeviceTokenStringFile.secure_id : secureID
                  
             ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
                 result : Result<DeviceTokenResponseSuc,

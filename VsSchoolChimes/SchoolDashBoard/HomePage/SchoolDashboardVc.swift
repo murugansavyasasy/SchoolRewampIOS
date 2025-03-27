@@ -57,13 +57,19 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     deinit {
         timer?.invalidate()
     }
-    
+    var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let staff = localData.user_data?.user_details?.staff_details{
+        if let staff = staffDetails{
             SchoolNameLabel.text = staff.first?.school_name
             AddressLabel.text = staff.first?.city
             schoolLogoImg.kf.setImage(with: URL(string:staff.first?.school_logo ?? ""))
+        }
+        if staffDetails?.count ?? 0 > 1{
+            
+            changeRollLbl.isHidden = false
+        }else{
+            changeRollLbl.isHidden = true
         }
         StyleAndTranslater()
         setupVideoBackground()
@@ -511,6 +517,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
     }
   
     func DeviceTokenAPIcall(){
+        let secureID = SecureIDManager.getSecureID()
         
         var deviceToken: String? // Use var instead of let
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
@@ -523,7 +530,8 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                 
                  COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
                  DeviceTokenStringFile.device_token : deviceToken ?? "",
-                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type
+                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+                 DeviceTokenStringFile.secure_id : secureID
                  
             ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
                 result : Result<DeviceTokenResponseSuc,

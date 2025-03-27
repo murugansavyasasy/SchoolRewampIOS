@@ -35,7 +35,6 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         setupUI()
         passTextFld.addDoneButton()
         MobilTextFld.addDoneButton()
-        country_data =   UserDefaultFileManager.getCountryDetails()
        
         
         let forgetTap = UITapGestureRecognizer(target: self, action: #selector(forgetClick))
@@ -63,7 +62,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     
     @objc func keyboardWillHide(notification: NSNotification) {
         UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height
+            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
         }
     }
     
@@ -76,7 +75,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         
         BottomView.layer.cornerRadius = 30
         BottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
-        BottomView.backgroundColor = Colornames.auth_screen_color
+        BottomView.backgroundColor =  Colornames.auth_screen_color
         loginBtnNm.layer.cornerRadius = 15
         loginBtnNm.layer.masksToBounds = false
         loginBtnNm.layer.backgroundColor = Colornames.auth_screen_color?.cgColor
@@ -198,12 +197,20 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             
-                            let data : UserData = (
-                                response.data?.first
-                            )!
-                            localData.user_data = data
+                            guard let data = response.data?.first else {
+                                print("No data available")
+                                return
+                            }
                             
+                            UserDefaultFileManager
+                                .saveUserDetails(
+                                    data: (data))
                             
+                            UserDefaultFileManager
+                                .saveLoginCredentials(
+                                    mobile_number:MobilTextFld.text ?? "",
+                                    pwd:passTextFld.text ?? ""
+                                )
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
@@ -214,13 +221,8 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                     
                                     if data.is_password_updated == true {
                                         
-                                        UserDefaultFileManager
-                                            .saveLoginCredentials(
-                                                mobile_number:MobilTextFld.text ?? "",
-                                                pwd:passTextFld.text ?? ""
-                                            )
                                         
-                                        localData.user_details = data.user_details
+                                        
                                         
                                         if(data.user_details?.is_staff == true) &&  (
                                             data.user_details?.is_parent == true
@@ -238,27 +240,37 @@ class LoginVc: UIViewController, UITextFieldDelegate {
                                                 nibName: nil,
                                                 bundle: nil
                                             )
-                                            vc.passedValue = 1
+                                            vc.login_astype = 1
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
                                         }
                                         else if(data.user_details?.is_parent == true){
                                             
-                                            let vc = TapBarVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
-                                            vc.passedValue = 2
-                                            vc.childDetail = localData.user_data?.user_details?.child_details?.first
-                                            vc.modalPresentationStyle = .fullScreen
-                                            present(vc, animated: true)
+                                            if(
+                                                data.user_details?.child_details?.count ?? 0 > 1
+                                            ){
+                                                let vc = PriorityVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            else{
+                                                
+                                                let vc = TapBarVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.login_astype = 2
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
                                         }
                                         
                                     }
-                                    else{
-                                        
-                                    }
+                                   
                                     
                                 }
                                 

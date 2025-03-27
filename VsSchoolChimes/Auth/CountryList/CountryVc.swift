@@ -80,9 +80,11 @@ class CountryVc: UIViewController {
         let tap1 = UITapGestureRecognizer(target: self, action: #selector(GotoTermsVc))
         TermsLabel.addGestureRecognizer(tap1)
         TermsLabel.isUserInteractionEnabled = true
-        let secureID = SecureIDManager.getSecureID()
         
+        let secureID = SecureIDManager.getSecureID()
         print("secureID",secureID)
+        
+        
     }
     
     func StyleAndTranslater(){
