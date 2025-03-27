@@ -9,7 +9,7 @@ import UIKit
 import Contacts
 
 @available(iOS 14.0, *)
-class LoginVc: UIViewController, UITextFieldDelegate {
+class LoginVc: UIViewController {
     
     
     @IBOutlet weak var BackBtn: UIButton!
@@ -53,23 +53,11 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         super.viewDidAppear(animated)
         MobilTextFld.becomeFirstResponder() // ✅ Forces keyboard to appear faster
     }
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 0.3) { // Smooth animation
-                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
-            }
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3) { // Smooth animation
-            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
-        }
-    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
     func setupUI() {
         
         MobilTextFld.placeholder = country_data?.mobile_no_hint
@@ -86,7 +74,9 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         loginBtnNm.layer.shadowOpacity = 0.3
         loginBtnNm.layer.shadowRadius = 6
         MobilTextFld.delegate = self
-        MobilTextFld.keyboardType = .numberPad
+        MobilTextFld.keyboardType = .phonePad
+        MobilTextFld.textContentType = .telephoneNumber
+        MobilTextFld.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         passTextFld.delegate = self
         passTextFld.keyboardType = .default
         passTextFld.isSecureTextEntry = true
@@ -119,34 +109,7 @@ class LoginVc: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func togglePasswordVisibility() {
-        passTextFld.isSecureTextEntry.toggle()
-        let imageName = passTextFld.isSecureTextEntry ? ImageName.eye_fill : ImageName.eye_slash
-        eyeImage.image = imageName
-    }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        activeTextField = textField // ✅ Now dynamically tracks the active field
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        activeTextField = nil
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField === MobilTextFld {
-            let newLength = (textField.text?.count ?? 0) + string.count - range.length
-            return newLength <= country_data?.mobile_number_length ?? 0
-        }
-        return true
-    }
     
     @IBAction func loginBtn(_ sender: Any) {
         validateMobileAndPassword()
@@ -346,6 +309,98 @@ class LoginVc: UIViewController, UITextFieldDelegate {
     }
 }
 
+@available(iOS 14.0, *)
+extension LoginVc: UITextFieldDelegate {
+    
+    @IBAction func togglePasswordVisibility() {
+        passTextFld.isSecureTextEntry.toggle()
+        let imageName = passTextFld.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
+        eyeImage.image = imageName
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField // ✅ Now dynamically tracks the active field
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeTextField = nil
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === MobilTextFld {
+            if string.count > 1 {
+                return true
+            }
+            
+            // Get current text
+            let currentText = textField.text ?? ""
+            let formattedText = removeCountryCodeAndSpaces(from: currentText)
+            
+            // Ensure correct formatting
+            if formattedText != currentText {
+                textField.text = formattedText
+            }
 
+            // Check length restriction
+            let newLength = (formattedText.count + string.count - range.length)
+            return newLength <= (country_data?.mobile_number_length ?? 10)
+        }
+        return true
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+
+        // Remove country code & spaces
+        let cleanedText = removeCountryCodeAndSpaces(from: text)
+
+        // Limit to max length
+        let maxLength = country_data?.mobile_number_length ?? 10
+        let finalText = String(cleanedText.prefix(maxLength))
+
+        // Set cleaned text back to textField
+        textField.text = finalText
+    }
+
+    
+    func removeCountryCodeAndSpaces(from phone: String) -> String {
+        // Define a regex pattern that matches a leading '+' followed by 1-3 digits and any optional whitespace.
+        let pattern = "^\\+\\d{1,3}\\s*"
+        var phoneWithoutCountryCode = phone
+
+        // Remove the country code using the regular expression.
+        if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+            let range = NSRange(location: 0, length: phone.utf16.count)
+            phoneWithoutCountryCode = regex.stringByReplacingMatches(in: phone,
+                                                                     options: [],
+                                                                     range: range,
+                                                                     withTemplate: "")
+        }
+        
+        // Remove all whitespace (spaces, newlines, etc.) from the remaining phone number.
+        let trimmedPhone = phoneWithoutCountryCode.components(separatedBy: .whitespacesAndNewlines).joined()
+        return trimmedPhone
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.3) { // Smooth animation
+                self.BottomView.frame.origin.y = self.view.frame.height - keyboardFrame.height - self.BottomView.frame.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        UIView.animate(withDuration: 0.3) { // Smooth animation
+            self.BottomView.frame.origin.y = self.view.frame.height - self.BottomView.frame.height - 30
+        }
+    }
+    
+}
 
 

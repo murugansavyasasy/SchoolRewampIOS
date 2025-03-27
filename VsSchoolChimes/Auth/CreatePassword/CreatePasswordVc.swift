@@ -16,7 +16,8 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var CreatePassTitleLbl: UILabel!
     @IBOutlet weak var BottomView: UIView!
-    @IBOutlet weak var eyeImage: UIImageView!
+    @IBOutlet weak var NewPassEyeImage: UIImageView!
+    @IBOutlet weak var ConfirmPassEyeImage: UIImageView!
     @IBOutlet weak var createPassDefaultLbl: UILabel!
     @IBOutlet weak var ConfirmPassLabel: UILabel!
     @IBOutlet weak var confirmPassTextFld: UITextField!
@@ -46,9 +47,20 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         confirmPassTextFld.addDoneButton()
         createPassTextFLd.addDoneButton()
         
-    createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
-    ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
-    confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
+       createPassDefaultLbl.setFont(style: .title, size: FontSize.TitleSize)
+       ConfirmPassLabel.setFont(style: .title, size: FontSize.TitleSize)
+       confirmPassBtnNam.setTitleFont(style: .body, size: FontSize.BodySize)
+        
+        createPassTextFLd.isSecureTextEntry = true
+        confirmPassTextFld.isSecureTextEntry = true
+        
+        let eyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
+        ConfirmPassEyeImage.addGestureRecognizer(eyeTap)
+        ConfirmPassEyeImage.isUserInteractionEnabled = true
+        
+        let NeweyeTap = UITapGestureRecognizer(target: self, action: #selector(showPassword))
+        NewPassEyeImage.addGestureRecognizer(NeweyeTap)
+        NewPassEyeImage.isUserInteractionEnabled = true
 
     if createNewPassword == false{
     createPassDefaultLbl.text = ChangePasswordStringFile.Reset_the_new_password
@@ -140,15 +152,16 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
         
     }
     
-    @IBAction func showPassword(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        let img = sender.isSelected ? ImageName.eye_fill : ImageName.eye_slash
-       if sender.tag != 0{
-           confirmPassTextFld.isSecureTextEntry = !sender.isSelected
-           sender.setImage(img, for: .normal)
-        }else{
-            createPassTextFLd.isSecureTextEntry = !sender.isSelected
-            sender.setImage(img, for: .normal)
+    @IBAction func showPassword(_ sender: UITapGestureRecognizer) {
+        
+        if sender.view == NewPassEyeImage{
+            createPassTextFLd.isSecureTextEntry.toggle()
+            let imageName = createPassTextFLd.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
+            NewPassEyeImage.image = imageName
+        }else if sender.view == ConfirmPassEyeImage{
+            confirmPassTextFld.isSecureTextEntry.toggle()
+            let imageName = confirmPassTextFld.isSecureTextEntry ? ImageName.eye_slash : ImageName.eye_fill
+            ConfirmPassEyeImage.image = imageName
         }
     }
     

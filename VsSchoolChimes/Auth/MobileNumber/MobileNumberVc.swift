@@ -210,38 +210,6 @@ class MobileNumberVc: UIViewController {
 @available(iOS 14.0, *)
 extension MobileNumberVc : UITextFieldDelegate {
     
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        print("User finished typing")
-//        
-//    }
-//    
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//       
-//        textField.resignFirstResponder()
-//        return true
-//    }
-//    
-////
-
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        print("Started Editing",textField.text ?? "")
-    }
-    
-    
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//       
-//        let currentText = MobilTextFld.text
-//        let formattedText = removeCountryCodeAndSpaces(from: currentText ?? "")
-//        
-//        if formattedText != currentText {
-//            MobilTextFld.text = formattedText
-//        }
-//        let newLength = ((MobilTextFld.text?.count ?? 0) + string.count - range.length)
-//        return newLength <= country_data?.mobile_number_length ?? 0
-//        //return true
-//    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         // Allow autofill suggestion (detected when string has more than 1 character)
         if string.count > 1 {
