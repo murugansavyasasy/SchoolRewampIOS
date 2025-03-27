@@ -65,6 +65,12 @@ class ParentDashboardVc: UIViewController {
             SchoolNameLabel.text = child.school_name
             AddressLabel.text = child.school_city
             Profileimage.kf.setImage(with: URL(string: child.school_logo_url ?? ""))
+        }else{
+            let child = localData.user_data?.user_details?.child_details
+            userNameLbl.text = child?.first?.child_name
+            SchoolNameLabel.text = child?.first?.school_name
+            AddressLabel.text = child?.first?.school_city
+            Profileimage.kf.setImage(with: URL(string: child?.first?.school_logo_url ?? ""))
         }
         
         if childDetails?.count ?? 0 > 1{

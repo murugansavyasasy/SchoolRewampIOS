@@ -1174,6 +1174,7 @@
 		840540952D701A5200D0CA60 /* TrakingDriver */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TrakingDriver; sourceTree = "<group>"; };
 		84759C662CEDEF3300E7D367 /* ImageViewer */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ImageViewer; sourceTree = "<group>"; };
 		8491FFCF2D818A080060C22B /* ApiService */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ApiService; sourceTree = "<group>"; };
+		84C4159C2D94073F007BF478 /* CustomPopup */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CustomPopup; sourceTree = "<group>"; };
 		84D2D5742CE4B8CD00606CE8 /* GIFASSETS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GIFASSETS; sourceTree = "<group>"; };
 		84E0FBF72D8E73D800CACCFE /* SchoolList */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SchoolList; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -2635,6 +2636,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				84C4159C2D94073F007BF478 /* CustomPopup */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
 				84E70DCE2D49F5F700E916D1 /* DatePicker */,
 				8497570C2D2BA575006A27FD /* SelectRecipient */,
@@ -3058,6 +3060,7 @@
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				84759C662CEDEF3300E7D367 /* ImageViewer */,
 				8491FFCF2D818A080060C22B /* ApiService */,
+				84C4159C2D94073F007BF478 /* CustomPopup */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
 			);
