@@ -24,20 +24,20 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     var AlertModal = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isDeveloperModeEnabled() {
-            bottumSheet.isHidden = false
-            bottumSheet.layer.cornerRadius = 30
-            bottumSheet.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Rounds top corners only
-            bottumSheet.backgroundColor = Colornames.auth_screen_color
-
-            // Ensure the shadow appears correctly
-            bottumSheet.layer.masksToBounds = false
-            bottumSheet.layer.shadowColor = UIColor.black.cgColor
-            bottumSheet.layer.shadowOffset = CGSize(width: 0, height: 5)
-            bottumSheet.layer.shadowOpacity = 0.3
-            bottumSheet.layer.shadowRadius = 6
-            developerDescript.text = "Developer Mode is currently ON. Please turn it OFF to proceed.\n\nTo disable:\n1. Open Settings.\n2. Go to Privacy & Security.\n3. Tap Developer Mode.\n4. Turn it OFF and restart your device."
-        }else{
+//        if isDeveloperModeEnabled() {
+//            bottumSheet.isHidden = false
+//            bottumSheet.layer.cornerRadius = 30
+//            bottumSheet.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner] // Rounds top corners only
+//            bottumSheet.backgroundColor = Colornames.auth_screen_color
+//
+//            // Ensure the shadow appears correctly
+//            bottumSheet.layer.masksToBounds = false
+//            bottumSheet.layer.shadowColor = UIColor.black.cgColor
+//            bottumSheet.layer.shadowOffset = CGSize(width: 0, height: 5)
+//            bottumSheet.layer.shadowOpacity = 0.3
+//            bottumSheet.layer.shadowRadius = 6
+//            developerDescript.text = "Developer Mode is currently ON. Please turn it OFF to proceed.\n\nTo disable:\n1. Open Settings.\n2. Go to Privacy & Security.\n3. Tap Developer Mode.\n4. Turn it OFF and restart your device."
+//        }else{
             if let countryDetails =   UserDefaultFileManager.getCountryDetails() {
                 countryId = countryDetails.id
             }
@@ -53,7 +53,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                     self.present(vc, animated: true)
                 }
             }
-        }
+//        }
         let Language = UserDefaults.standard.string(
             forKey: DefaultsKeys.Language ?? ""
         )

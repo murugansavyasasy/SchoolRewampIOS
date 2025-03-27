@@ -302,14 +302,30 @@ class OTPVc: UIViewController {
                                 }
                                 else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true){
                                     
-                                    let vc = TapBarVC(
-                                        nibName: nil,
-                                        bundle: nil
-                                    )
-                                    vc.login_astype = 2
-                                    vc.childDetail = localData.user_data?.user_details?.child_details?.first
-                                    vc.modalPresentationStyle = .fullScreen
-                                    present(vc, animated: true)
+//
+                                    if(
+                                        UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
+                                    ){
+                                        let vc = PriorityVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
+                                    else{
+                                        
+                                        let vc = TapBarVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.login_astype = 2
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
+                                    
+                                    
+                                    
                                 }
                                 
                             }

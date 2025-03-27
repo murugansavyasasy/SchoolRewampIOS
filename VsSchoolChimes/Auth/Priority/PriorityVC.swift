@@ -195,9 +195,9 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.SchoolInfoView.backgroundColor = colour1
             cell.imgview.image = image
             //cell.imgview.image = UIImage(named: childDetails?[indexPath.row].school_logo_url ?? "")
-            cell.namelabel.text = childDetails?[indexPath.row].child_name
+            cell.namelabel.text = childDetails?[indexPath.row].name
             cell.REgisterNoLbl.text = CommonStringFile.RollNo + " : " + (childDetails?[indexPath.row].roll_number ?? "")
-            cell.namelabel.text = childDetails?[indexPath.row].child_name
+            cell.namelabel.text = childDetails?[indexPath.row].name
             cell.StdSecLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
             cell.SchoolnameLbl.text = childDetails?[indexPath.row].school_name
             cell.AddressLbl.text = childDetails?[indexPath.row].school_city
