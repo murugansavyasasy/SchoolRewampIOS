@@ -8,35 +8,25 @@
 import UIKit
 
 class ExamTmTblVCViewController: UIViewController {
-
-    @IBOutlet weak var Searchbar: UISearchBar!
-    @IBOutlet weak var sideTv: UITableView!
     
-    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var sideTv: UITableView!
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var StandardLbl: UILabel!
-    var SideItemArry = ["QuatalyExamQuatalyExam","SSlC ExamQuatalyExam","Hsc ExamQuatalyExam","HalfYearExamQuatalyExam"]
+    var SideItemArry = ["Quaterly Exam","Half yearly exam","Internal Assesment Exam","Modal exam","Class Test"]
     var  TvSide = [""]
     var isCellSelected = false
-    var selectedIdex : Int!
+    var selectedIndex : IndexPath?
     var  count = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        backBtn.applyBackButton()
-        backBtn.setTitle(ReceiverMenuItems.ExamTest.translated(), for: .normal)
-        Searchbar.placeholder = CommonStringFile.Search.translated()
-        Searchbar.addDoneButton()
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
+        
         let nib = UINib(nibName:CellConfingName.SideTvcell, bundle: nil)
         sideTv.register(nib, forCellReuseIdentifier: CellConfingName.SideTvcell)
         
         let nib1 = UINib(nibName:CellConfingName.Tvcell, bundle: nil)
         tv.register(nib1, forCellReuseIdentifier: CellConfingName.Tvcell)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        
+        selectedIndex = IndexPath(row: 0, section: 0)
+        
         sideTv.delegate = self
         sideTv.dataSource = self
         tv.delegate = self
@@ -46,29 +36,20 @@ class ExamTmTblVCViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
-
-  
+    
     @IBAction func backBtn(_ sender: Any) {
-        
         dismiss(animated: true)
     }
 }
+
 extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
-    
-    
-    
-   
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if tableView == sideTv{
-            
-            
             return SideItemArry.count
         }else{
             return count
-            
         }
     }
     
@@ -78,29 +59,17 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
             
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SideTvcell, for: indexPath) as! SideTvcell
             
-            if selectedIdex == indexPath.row{
-                
-                cell.layer.cornerRadius = 10
-                                 cell.clipsToBounds = true
-                cell.backgroundColor = .parentClr
-                
-                count = indexPath.row+1
-                tv.reloadData()
-                
-            }else{
-                
-                
-                cell.backgroundColor = .white // Default background color
-                       cell.layer.cornerRadius = 0  // Reset corner radius for reuse
-                       cell.clipsToBounds = true    // Ensures corner radius is applied
-            }
-           
-            
-            
             cell.ExameLbl.text = SideItemArry[indexPath.row]
+            
+            if selectedIndex == indexPath {
+                cell.isSelected = true
+            } else {
+                cell.isSelected = false
+            }
+            
             return cell
-        }else{
-           
+            
+        }else {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.Tvcell, for: indexPath) as! Tvcell
             return cell
@@ -112,55 +81,15 @@ extension ExamTmTblVCViewController : UITableViewDelegate,UITableViewDataSource{
         
         if tableView == sideTv{
             
-//            if isCellSelected { return }
-//              isCellSelected = true
-//
-//              if let cell = tableView.cellForRow(at: indexPath) {
-//                  // Example: Change cell appearance
-//                  cell.layer.cornerRadius = 10
-//                  cell.clipsToBounds = true
-//                  cell.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
-//              }
-//
-//              // Simulate a delay for the action and reset the flag
-//              DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//                  self.isCellSelected = false
-//                  tableView.deselectRow(at: indexPath, animated: true)
-//              }
-            
-            
-            selectedIdex = indexPath.row
-            
-            sideTv.reloadData()
-            
-            
+            selectedIndex = indexPath
+            count = Int.random(in: 1...5)
+           // sideTv.reloadData()
+            tv.reloadData()
         }
-        
-        else{
-     
-        }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        
-        if tableView == sideTv{
-            
-            
-            return UITableView.automaticDimension
-        }else{
-            return 150
-            
-        }
+        return UITableView.automaticDimension
     }
 }
 
-extension ExamTmTblVCViewController: UISearchBarDelegate{
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        Searchbar.resignFirstResponder()
-    }
-
-}

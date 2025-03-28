@@ -4,8 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,11 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExameMarVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
-                <outlet property="HeaderLbl" destination="kAh-K6-11C" id="c4J-B3-E91"/>
-                <outlet property="NameLbl" destination="ljZ-CY-aDu" id="apT-My-mP8"/>
                 <outlet property="SearchBar" destination="OXc-83-TMa" id="auM-Uj-fsd"/>
-                <outlet property="StandardLbl" destination="FCM-Qc-veT" id="g6E-yj-dFR"/>
-                <outlet property="backBtn" destination="o2h-l2-5CP" id="WrB-XM-3di"/>
                 <outlet property="cv" destination="mH4-ng-0SF" id="1sI-ki-OG8"/>
                 <outlet property="tv" destination="7by-2i-e2O" id="j5t-wd-kmT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -29,20 +23,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBN-7F-8Ax">
-                    <rect key="frame" x="0.0" y="124" width="393" height="694"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="OXc-83-TMa">
-                            <rect key="frame" x="8" y="10" width="377" height="56"/>
+                            <rect key="frame" x="8" y="5" width="377" height="56"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="uCi-gt-4Jk"/>
                             </constraints>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7by-2i-e2O">
-                            <rect key="frame" x="8" y="76" width="377" height="599"/>
+                            <rect key="frame" x="8" y="71" width="377" height="669"/>
                         </tableView>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="mH4-ng-0SF">
-                            <rect key="frame" x="15" y="76" width="363" height="599"/>
+                            <rect key="frame" x="15" y="71" width="363" height="669"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="iE3-pr-PlB">
                                 <size key="itemSize" width="128" height="128"/>
@@ -56,7 +50,7 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="7by-2i-e2O" secondAttribute="trailing" constant="8" id="4qX-qt-dPh"/>
                         <constraint firstItem="mH4-ng-0SF" firstAttribute="leading" secondItem="VBN-7F-8Ax" secondAttribute="leading" constant="15" id="Atj-pS-Wnv"/>
-                        <constraint firstItem="OXc-83-TMa" firstAttribute="top" secondItem="VBN-7F-8Ax" secondAttribute="top" constant="10" id="B3G-fj-s5T"/>
+                        <constraint firstItem="OXc-83-TMa" firstAttribute="top" secondItem="VBN-7F-8Ax" secondAttribute="top" constant="5" id="B3G-fj-s5T"/>
                         <constraint firstItem="7by-2i-e2O" firstAttribute="top" secondItem="OXc-83-TMa" secondAttribute="bottom" constant="10" id="Gm6-7F-sQH"/>
                         <constraint firstItem="OXc-83-TMa" firstAttribute="leading" secondItem="VBN-7F-8Ax" secondAttribute="leading" constant="8" id="LAs-zJ-c1L"/>
                         <constraint firstAttribute="bottom" secondItem="mH4-ng-0SF" secondAttribute="bottom" constant="19" id="hne-OP-q4D"/>
@@ -67,72 +61,19 @@
                         <constraint firstAttribute="trailing" secondItem="OXc-83-TMa" secondAttribute="trailing" constant="8" id="vV3-YB-K4u"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2h-l2-5CP">
-                    <rect key="frame" x="15" y="64" width="197.66666666666666" height="35"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="35" id="YIa-7p-e0Z"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Exam Mark">
-                        <imageReference key="image" image="chevron.left" catalog="system" symbolScale="large"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
-                    </state>
-                    <connections>
-                        <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="342-5x-Eoj"/>
-                    </connections>
-                </button>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="9p6-w1-bgo">
-                    <rect key="frame" x="220.66666666666663" y="69" width="167.33333333333337" height="45"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chandhru Veeramalai" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ljZ-CY-aDu">
-                            <rect key="frame" x="0.0" y="0.0" width="167.33333333333334" height="20.333333333333332"/>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FCM-Qc-veT">
-                            <rect key="frame" x="0.0" y="25.333333333333329" width="167.33333333333334" height="19.666666666666671"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="19.666666666666671" id="tJt-oY-TBr"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                </stackView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAh-K6-11C">
-                    <rect key="frame" x="220.66666666666666" y="68" width="0.0" height="0.0"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" name="ParentClr"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="kAh-K6-11C" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="9" id="23c-TB-fMx"/>
-                <constraint firstItem="o2h-l2-5CP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="5F5-Fg-YMt"/>
-                <constraint firstItem="kAh-K6-11C" firstAttribute="leading" secondItem="o2h-l2-5CP" secondAttribute="trailing" constant="8" id="ECY-o5-KKI"/>
-                <constraint firstItem="9p6-w1-bgo" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="KPa-uq-GQ2"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="L9d-6y-Ecu"/>
-                <constraint firstItem="o2h-l2-5CP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="LsE-lg-zgA"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="Xsl-v2-iWC"/>
-                <constraint firstItem="9p6-w1-bgo" firstAttribute="leading" secondItem="kAh-K6-11C" secondAttribute="trailing" id="Ycl-p7-Iwx"/>
                 <constraint firstItem="VBN-7F-8Ax" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="crT-Rd-iGv"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9p6-w1-bgo" secondAttribute="trailing" constant="5" id="fwx-Hr-PES"/>
-                <constraint firstItem="VBN-7F-8Ax" firstAttribute="top" secondItem="9p6-w1-bgo" secondAttribute="bottom" constant="10" id="z8z-dE-lQs"/>
+                <constraint firstItem="VBN-7F-8Ax" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="nEs-mx-NIj"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
         </view>
     </objects>
     <resources>
-        <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="ParentClr">
-            <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

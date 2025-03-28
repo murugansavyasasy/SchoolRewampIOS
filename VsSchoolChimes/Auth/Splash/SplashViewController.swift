@@ -38,29 +38,38 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
 //            bottumSheet.layer.shadowRadius = 6
 //            developerDescript.text = "Developer Mode is currently ON. Please turn it OFF to proceed.\n\nTo disable:\n1. Open Settings.\n2. Go to Privacy & Security.\n3. Tap Developer Mode.\n4. Turn it OFF and restart your device."
 //        }else{
-            if let countryDetails =   UserDefaultFileManager.getCountryDetails() {
-                countryId = countryDetails.id
-            }
-            let secureID = SecureIDManager.getSecureID()
-            print("secureIDsecureID",secureID)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
-                if(countryId != nil){
-                    Version_Check()
-                }
-                else{
-                    let vc = CountryVc(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                }
-            }
+//            if let countryDetails =   UserDefaultFileManager.getCountryDetails() {
+//                countryId = countryDetails.id
+//            }
+//            let secureID = SecureIDManager.getSecureID()
+//            print("secureIDsecureID",secureID)
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
+//                if(countryId != nil){
+//                    Version_Check()
+//                }
+//                else{
+//                    let vc = CountryVc(nibName: nil, bundle: nil)
+//                    vc.modalPresentationStyle = .fullScreen
+//                    self.present(vc, animated: true)
+//                }
+//            }
 //        }
-        let Language = UserDefaults.standard.string(
-            forKey: DefaultsKeys.Language ?? ""
-        )
-        let isRTL = (Language == "ar")  // Replace with your language-checking logic
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
+            let vc = TapBarVC(
+                nibName: nil,
+                bundle: nil
+            )
+            vc.login_astype = 2
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+            
+            let Language = UserDefaults.standard.string(
+                forKey: DefaultsKeys.Language ?? ""
+            )
+            let isRTL = (Language == "ar")  // Replace with your language-checking logic
             UIView.appearance().semanticContentAttribute = isRTL ? .forceRightToLeft : .forceLeftToRight
-
-       
+            
+        }
     }
     func isDeveloperModeEnabled() -> Bool {
         var info = kinfo_proc()
