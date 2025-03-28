@@ -203,16 +203,11 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     @IBAction func ViewDetailsAct(_ sender: Any) {
-        OpenInside(from: self)
-       
+      
+        MenuRedirect.senderMarkAttendanceNavigate(from: self)
     }
     
-    func openSafari(){
-        if let url = URL(string: "https://apps.apple.com/in/app/school-chimes-vs/id700513732") {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-        }
-            
-    }
+    
     func OpenInside(from viewController: UIViewController){
         let storeViewController = SKStoreProductViewController()
             storeViewController.delegate = viewController as? SKStoreProductViewControllerDelegate

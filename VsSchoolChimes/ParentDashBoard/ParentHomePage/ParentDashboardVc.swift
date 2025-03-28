@@ -59,15 +59,15 @@ class ParentDashboardVc: UIViewController {
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let child = ChildDetail{
-            userNameLbl.text = child.child_name
+       
+        if let child = childDetails?.first{
+            userNameLbl.text = child.name
             SchoolNameLabel.text = child.school_name
             AddressLabel.text = child.school_city
             Profileimage.kf.setImage(with: URL(string: child.school_logo_url ?? ""))
         }else{
             let child = localData.user_data?.user_details?.child_details
-            userNameLbl.text = child?.first?.child_name
+            userNameLbl.text = child?.first?.name
             SchoolNameLabel.text = child?.first?.school_name
             AddressLabel.text = child?.first?.school_city
             Profileimage.kf.setImage(with: URL(string: child?.first?.school_logo_url ?? ""))

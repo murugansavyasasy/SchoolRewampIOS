@@ -195,7 +195,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                                     nibName: nil,
                                                     bundle: nil
                                                 )
-                                                vc.login_astype = 2
+                                                vc.login_astype = 2    
                                                 vc.modalPresentationStyle = .fullScreen
                                                 present(vc, animated: true)
                                             }
