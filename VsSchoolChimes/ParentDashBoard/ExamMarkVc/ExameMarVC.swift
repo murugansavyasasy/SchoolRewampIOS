@@ -2,34 +2,28 @@
 //  ExameMarVC.swift
 //  VsSchoolChimes
 //
-//  Created by Lakshmanan on 09/12/24.
+//  Created by Admin on 09/12/24.
 //
 
 import UIKit
 
 class ExameMarVC: UIViewController {
-
-    @IBOutlet weak var HeaderLbl: UILabel!
+    
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var NameLbl: UILabel!
-    @IBOutlet weak var StandardLbl: UILabel!
     let marks = ["85 / 100","70 / 100","75 / 100","49 / 100","93 / 100"]
     let status = [0.85,0.70,0.75,0.49,0.93]
     let subject = ["Tamil","English","Maths","Science","Social Science"]
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         StyleAndTranslate()
         SearchBar.addDoneButton()
         CellRegister()
-        backBtn.applyBackButton()
         SearchBar.applyRightTxt()
-        // Do any additional setup after loading the view.
-        tv.isHidden = true
         
+        tv.isHidden = true
         cv.dataSource = self
         cv.delegate = self
     }
@@ -37,18 +31,11 @@ class ExameMarVC: UIViewController {
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
-
+    
     //MARK: UI Changes
     func StyleAndTranslate(){
         
-        backBtn.setTitle(ReceiverMenuItems.ExamMarks.translated(), for: .normal)
-        HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
         SearchBar.placeholder = CommonStringFile.Search.translated()
-        
-        NameLbl.setFont(style: .body, size: FontSize.BodySize)
-        StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-     
     }
     
     //MARK: Cell Registration
@@ -64,19 +51,6 @@ class ExameMarVC: UIViewController {
         let nib1 = UINib(nibName:CellConfingName.ExamMarkTV, bundle: nil)
         tv.register(nib1, forCellReuseIdentifier: CellConfingName.ExamMarkTV)
     }
- 
-    @IBAction func backBtn(_ sender: Any) {
-        
-        if tv.isHidden == true{
-            dismiss(animated: true)
-        }
-        else{
-            tv.isHidden = true
-            cv.isHidden = false
-            cv.reloadData()
-        }
-       
-    }
     
     @IBAction func ViewMarks(_ sender: Any) {
         
@@ -86,7 +60,6 @@ class ExameMarVC: UIViewController {
         tv.dataSource = self
         tv.reloadData()
     }
-    
 }
 
 //MARK: Tableview Functions
@@ -94,13 +67,12 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
-        return 4
     }
-  
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier:CellConfingName.SettingHeaderView) as! SettingHeaderView
         cell.headerLabel.text = "Exam Marks"
-//        cell.headerLabel.text = sections[section].title.translated()
+        //        cell.headerLabel.text = sections[section].title.translated()
         cell.headerLabel.setFont(style: .title, size: FontSize.TitleSize)
         
         return cell
@@ -118,7 +90,7 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-//        let  cell  = tableView.dequeueReusableCell(withIdentifier: "MarkTvCell" , for: indexPath) as! MarkTvCell
+        //        let  cell  = tableView.dequeueReusableCell(withIdentifier: "MarkTvCell" , for: indexPath) as! MarkTvCell
         let  cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ExamMarkTV , for: indexPath) as! ExamMarkTV
         cell.SubjectLbl.text = subject[indexPath.row]
         cell.MarkLbl.text = marks[indexPath.row]
@@ -128,9 +100,9 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
         } else {
             // Fallback on earlier versions
         }
-//        cell.TheoryLbl.isHidden = true
-//        cell.PracticalLbl.isHidden = true
-      
+        //        cell.TheoryLbl.isHidden = true
+        //        cell.PracticalLbl.isHidden = true
+        
         return cell
         
     }
@@ -153,18 +125,18 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
         return 150
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = tv.cellForRow(at: indexPath) as! ExamMarkTV
-//        cell.TheoryLbl.isHidden = false
-//        cell.PracticalLbl.isHidden = false
-//        tv.reloadRows(at: [indexPath], with: .automatic)
-//    }
-//    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-//        let cell = tv.cellForRow(at: indexPath) as! ExamMarkTV
-//        cell.TheoryLbl.isHidden = true
-//        cell.PracticalLbl.isHidden = true
-//        tv.reloadRows(at: [indexPath], with: .automatic)
-//    }
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        let cell = tv.cellForRow(at: indexPath) as! ExamMarkTV
+    //        cell.TheoryLbl.isHidden = false
+    //        cell.PracticalLbl.isHidden = false
+    //        tv.reloadRows(at: [indexPath], with: .automatic)
+    //    }
+    //    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    //        let cell = tv.cellForRow(at: indexPath) as! ExamMarkTV
+    //        cell.TheoryLbl.isHidden = true
+    //        cell.PracticalLbl.isHidden = true
+    //        tv.reloadRows(at: [indexPath], with: .automatic)
+    //    }
     
     // MARK: Updated didSelectRowAt Implementation
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -175,18 +147,18 @@ extension ExameMarVC : UITableViewDataSource,UITableViewDelegate{
             cell.PracticalLbl.isHidden = !shouldExpand
             
             if cell.TheoryLbl.isHidden == false {
-            cell.ArrowImageview.image = UIImage(named: "arrow_up")
+                cell.ArrowImageview.image = UIImage(named: "arrow_up")
             }else{
                 cell.ArrowImageview.image = UIImage(named: "arrow_down")
             }
-
+            
             // Use beginUpdates and endUpdates to refresh the row height without reloading the cell
             tableView.beginUpdates()
             tableView.endUpdates()
         }
     }
-
-
+    
+    
     
 }
 
@@ -209,16 +181,16 @@ extension ExameMarVC : UICollectionViewDelegate,UICollectionViewDataSource,UICol
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = cv.frame.width / 2.2
-           return CGSize(width: width, height: 160)
-       }
-
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-           return 2 // No spacing between items
-       }
-
-       func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-           return 10 // No spacing between rows
-       }
+        return CGSize(width: width, height: 160)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2 // No spacing between items
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10 // No spacing between rows
+    }
     
 }
 
