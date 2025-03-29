@@ -995,7 +995,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
             // Update play state
             let isPlaying = (playIndex == indexPath.row)
-            cell.updatePlayState(isPlaying: isPlaying)
+            cell.updatePlayState(isPlaying: isPlaying, url: "file:///Users/admin/Library/Developer/CoreSimulator/Devices/2B90BDE8-D068-4A12-BD7E-7E942461DEA2/data/Containers/Data/Application/F581A644-A9BE-4291-B7E0-733CD151F829/Documents/myRecording.mp4")
             cell.delegate = self
             cell.playBtn.setImage(image, for: .normal)
             return cell
@@ -1056,7 +1056,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         // Stop playback in the currently playing cell (if any)
         if let currentIndex = playIndex, currentIndex != index {
                    let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-                   (historytable.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false)
+            (historytable.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false, url: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg")
                }
         playIndex = (playIndex == index) ? nil : index
         historytable.reloadData()

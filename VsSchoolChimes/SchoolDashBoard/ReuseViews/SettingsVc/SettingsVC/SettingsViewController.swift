@@ -26,16 +26,14 @@ class SettingsViewController: UIViewController, BaktoHome {
                 menuname.faq,
                 menuname.contactUs,
                 menuname.termsAndConditions,
-                menuname.changeAppLanguage,
-                menuname.termsAndConditions,
-                menuname.faceID
+                menuname.changeAppLanguage,menuname.faceID
             ]
         ),
         Section(title: menuname.feedback, items: [menuname.reportABug, menuname.feedback, menuname.logout])
     ]
     var section:[Section]?
     let Images: [Image] = [
-        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid.circle.fill"]),
+        Image(title: "GENERAL", Imageitems: ["bell.fill", "person.crop.circle.badge.questionmark.fill", "phone.arrow.up.right.circle.fill", "chart.line.uptrend.xyaxis","character.bubble.ja","faceid"]),
         Image(title: "FEEDBACK", Imageitems: ["questionmark.diamond.fill", "paperplane.fill", "iphone.and.arrow.forward"])
     ]
     
@@ -127,8 +125,11 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SettingsTableViewCell, for: indexPath) as! SettingsTableViewCell
         cell.nameLbl.text = sections[indexPath.section].items[indexPath.row].translated()
         cell.nameLbl.textColor = sections[indexPath.section].items[indexPath.row].translated() == menuname.logout ? .red : .black
+        cell.faceIdSwitch.isHidden = sections[indexPath.section].items[indexPath.row].translated() != menuname.faceID ? true:false
+        cell.arrowImg.isHidden = sections[indexPath.section].items[indexPath.row].translated() != menuname.faceID ? false:true
         cell.imgView.image = Images[indexPath.section].uiImages[indexPath.row]
         cell.imgView.tintColor =  Images[indexPath.section].uiImages[indexPath.row] == UIImage(systemName: "iphone.and.arrow.forward") ? .red : .black
+        
         cell.arrowImg.applyRTLFlip(Language == "ar")
         cell.imgView.applyRTLFlip(Language == "ar")
         cell.selectionStyle = .none

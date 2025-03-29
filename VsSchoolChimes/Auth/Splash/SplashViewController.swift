@@ -7,6 +7,7 @@
 
 import UIKit
 import Darwin
+import LocalAuthentication
 
 
 @available(iOS 14.0, *)
@@ -25,81 +26,99 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Configure language and layout
         configureLanguageLayout()
-        checkDeveloperMode()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//            let vc = SchoolListVC(nibName: nil, bundle: nil)
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: true)
-//        }
+        proceedWithAppFlow()
+        //        checkDeveloperMode()
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        //            let vc = SchoolListVC(nibName: nil, bundle: nil)
+        //            vc.modalPresentationStyle = .fullScreen
+        //            self.present(vc, animated: true)
+        //            self.showCustomPopup()
+        //        }
     }
+    func checkBiometricStatus() {
+        if BiometricAuthentication.shared.isBiometricEnabledInApp(){
+            if BiometricAuthentication.shared.isBiometricAvailable() {
+                BiometricAuthentication.shared.authenticateUser(from: self) { [self] success in
+                    if success {
+                        Version_Check()
+                    } else {
+                        print("❌ Authentication Failed!")
+                    }
+                }
+            }
+        }else{
+            Version_Check()
+        }
+    }
+    
+    
     func checkDeveloperMode() {
-           if isDeveloperModeEnabled() {
-//               showDeveloperModePopup()
-               proceedWithAppFlow()
-           } else {
-               proceedWithAppFlow()
-           }
-       }
-
-       func isDeveloperModeEnabled() -> Bool {
-           var devMode: Int32 = 0
-           var size = MemoryLayout<Int32>.size
-           let result = sysctlbyname("hw.optional.arm64", &devMode, &size, nil, 0)
-
-           if result == 0 {
-               return devMode == 1
-           }
-           return false
-       }
-      // Show Developer Mode Popup
-      private func showDeveloperModePopup() {
-          // Configure bottom sheet
-          configureBottomSheet()
-          
-          // Set developer description
-          developerDescript.text = """
+        if isDeveloperModeEnabled() {
+            showDeveloperModePopup()
+            //               proceedWithAppFlow()
+        } else {
+            proceedWithAppFlow()
+        }
+    }
+    
+    func isDeveloperModeEnabled() -> Bool {
+        var devMode: Int32 = 0
+        var size = MemoryLayout<Int32>.size
+        let result = sysctlbyname("hw.optional.arm64", &devMode, &size, nil, 0)
+        
+        if result == 0 {
+            return devMode == 1
+        }
+        return false
+    }
+    // Show Developer Mode Popup
+    private func showDeveloperModePopup() {
+        // Configure bottom sheet
+        configureBottomSheet()
+        
+        // Set developer description
+        developerDescript.text = """
           Developer Mode is currently ON. 
           Please turn it OFF to proceed.
-
+          
           To disable:
           1. Open Settings
           2. Go to Privacy & Security
           3. Tap Developer Mode
           4. Turn it OFF and restart your device
           """
-          
-          // Additional UI configurations
-          bottumSheet.isHidden = false
-      }
-      
-      // Configure Bottom Sheet
-      private func configureBottomSheet() {
-          bottumSheet.layer.cornerRadius = 30
-          bottumSheet.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-          bottumSheet.backgroundColor = Colornames.auth_screen_color
-          
-          // Shadow configuration
-          bottumSheet.layer.masksToBounds = false
-          bottumSheet.layer.shadowColor = UIColor.black.cgColor
-          bottumSheet.layer.shadowOffset = CGSize(width: 0, height: 5)
-          bottumSheet.layer.shadowOpacity = 0.3
-          bottumSheet.layer.shadowRadius = 6
-      }
-      
-      // Configure Language and Layout
-      private func configureLanguageLayout() {
-          guard let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) else {
-              return
-          }
-          
-          let isRTL = (language == "ar")
-          UIView.appearance().semanticContentAttribute = isRTL
-              ? .forceRightToLeft
-              : .forceLeftToRight
-      }
+        
+        // Additional UI configurations
+        bottumSheet.isHidden = false
+    }
+    
+    // Configure Bottom Sheet
+    private func configureBottomSheet() {
+        bottumSheet.layer.cornerRadius = 30
+        bottumSheet.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        bottumSheet.backgroundColor = Colornames.auth_screen_color
+        
+        // Shadow configuration
+        bottumSheet.layer.masksToBounds = false
+        bottumSheet.layer.shadowColor = UIColor.black.cgColor
+        bottumSheet.layer.shadowOffset = CGSize(width: 0, height: 5)
+        bottumSheet.layer.shadowOpacity = 0.3
+        bottumSheet.layer.shadowRadius = 6
+    }
+    
+    // Configure Language and Layout
+    private func configureLanguageLayout() {
+        guard let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) else {
+            return
+        }
+        
+        let isRTL = (language == "ar")
+        UIView.appearance().semanticContentAttribute = isRTL
+        ? .forceRightToLeft
+        : .forceLeftToRight
+    }
     @IBAction func okAction(_ sender: UIButton) {
         UIApplication.shared.performSelector(onMainThread: #selector(NSXPCConnection.suspend), with: nil, waitUntilDone: false)
     }
@@ -238,10 +257,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                         }
                                     }
                                     
-                                    else{
-                                        
-                                    }
-                                    
                                 }
                                 
                             }
@@ -298,20 +313,20 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     func proceedWithAppFlow() {
-           if let countryDetails = UserDefaultFileManager.getCountryDetails() {
-               countryId = countryDetails.id
-           }
-           
-           DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-               if self.countryId != nil {
-                   self.Version_Check()
-               } else {
-                   let vc = CountryVc(nibName: nil, bundle: nil)
-                   vc.modalPresentationStyle = .fullScreen
-                   self.present(vc, animated: true)
-               }
-           }
-       }
+        if let countryDetails = UserDefaultFileManager.getCountryDetails() {
+            countryId = countryDetails.id
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
+            if self.countryId != nil {
+                checkBiometricStatus()
+            } else {
+                let vc = CountryVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
+        }
+    }
     
     func callAppStore (AppStoreLink : String)
     {
@@ -443,5 +458,5 @@ class DeveloperModeDetector {
                 // Optionally take action like logging or alerting
             }
         }
-    }
+    } 
 }

@@ -40,7 +40,9 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        if !BiometricAuthentication.shared.isBiometricEnabledInApp() {
+            BiometricAuthentication.shared.showEnableBiometricPopup(from: self, message: "Would you like to enable Face ID / Touch ID for this app?")
+        }
         setupTabBar()
         setupContainerView()
     }

@@ -105,8 +105,8 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let profileTap =  UITapGestureRecognizer(target: self, action: #selector(OpenProfile))
         schoolLogoImg.addGestureRecognizer(profileTap)
         schoolLogoImg.isUserInteractionEnabled = true
-        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
-        collectionHeight.constant = contentViewHeight
+//        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+//        collectionHeight.constant = contentViewHeight
     }
     
     override func viewDidLayoutSubviews() {
