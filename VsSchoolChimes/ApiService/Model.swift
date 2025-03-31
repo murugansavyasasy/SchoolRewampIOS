@@ -15,7 +15,7 @@ struct CountryListSuccess : Codable{
 }
 
 struct CountryData : Codable{
-   
+    
     let id : Int?
     let name : String?
     let code : Int?
@@ -24,7 +24,7 @@ struct CountryData : Codable{
     let base_url : String?
     let reporting_url : String?
     let flag_url : String?
-   
+    
 }
 
 //MARK: Version Check API
@@ -161,7 +161,7 @@ struct GlobalVariablesData : Codable {
     let new_version : String?
     let new_updates : String?
 }
-    
+
 //MARK: Device Token API
 struct DeviceTokenResponseSuc : Codable {
     let status : Bool?
@@ -227,6 +227,7 @@ struct GetStaffDetails:Codable{
     let id:String?
     let name:String?
 }
+
 //MARK: Dashboard API
     struct DashboardResponse: Codable {
         let status: Bool?
@@ -254,3 +255,8 @@ struct GetStaffDetails:Codable{
         let unread_count: Int?
     }
 
+struct MenuDetail: Codable {
+    let id: Int?
+    let name: String?
+    let unread_count: Int?
+}

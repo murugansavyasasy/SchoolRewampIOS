@@ -36,8 +36,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
                                     "Ad 2: Final Sale",
                                     "Ad 3: New Arrivals",
                                     "Ad 4: Discount Up to 50%"]
-    var filteredItems: [String] = []
+    var filteredItems: [MenuDetail]?
     let menuName = MenuStringFile()
+    var menu_details: [MenuDetail]?
+    var Dummymenu_details: [MenuDetail]?
     var getValue : Int!
     var searchItem = 0
     var currentIndex = 0
@@ -73,9 +75,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         }
         StyleAndTranslater()
         setupVideoBackground()
-        filteredItems = MenuRedirect.items
-        displayedCategories = Array(filteredItems.prefix(9))
-        displayedCategories.insert(newString, at: 5)
         DeviceTokenAPIcall()
         //startAutoScroll()
         cellRegistration()
@@ -194,7 +193,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         super.viewWillAppear(animated)
         bottomCv.delegate = self
         bottomCv.dataSource = self
-        filteredItems = MenuRedirect.items
+        get_dashboard_details()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -262,16 +261,22 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         MenuRedirect.senderHomeWorkNavigate(from: self)
     }
     @IBAction func seeAllShow(_ sender: UIButton) {
-        isShowingAll.toggle()
-        seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
-        if isShowingAll {
-            displayedCategories = Array(filteredItems.prefix(9))
-            displayedCategories.insert(newString, at: 5)
-            view.layoutIfNeeded()
-        }else {
-            // Expand to show all items
-            displayedCategories = filteredItems
-        }
+        sender.isSelected.toggle()
+           seeAllButton.setTitle(!sender.isSelected ? "See Less" : "See All", for: .normal)
+           
+           if sender.isSelected {
+               // Collapse back to show only the first 9 items
+               if let menuDetails = menu_details {
+                   Dummymenu_details = Array(menuDetails.prefix(9))
+                   if Dummymenu_details?.count ?? 0 > 5 {
+                       Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                   }
+               }
+           } else {
+               // Expand to show all items
+               Dummymenu_details = menu_details
+           }
+
         bottomCv.reloadData() // Refresh the
         let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
         collectionHeight.constant = contentViewHeight
@@ -310,7 +315,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
             
-            return displayedCategories.count
+            return Dummymenu_details?.count ?? 0
             
         }else{
             return 5
@@ -324,16 +329,14 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             if indexPath.row == 6 {
                 let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.seeMore, for: indexPath) as! seeMore
                 adCell.advertisements = advertisements
-//                adCell.seeAllButton.setTitle(isShowingAll ? "See Less" : "See All", for: .normal)
-//                adCell.seeAllButton.addTarget(self, action: #selector(seeAllButtonTapped), for: .touchUpInside)
                 return adCell
             }else{
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
                 
-                let label = filteredItems[indexPath.row].translated()
-                let img = UIImage(named: MenuRedirect.Imgitems[indexPath.row])
+                let label = Dummymenu_details?[indexPath.row].name?.translated()
+                let img = UIImage(named: Dummymenu_details?[indexPath.row].name?.removingSlashComponent() ?? "")
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
                 cell.MenuImgView.image  = img
@@ -368,79 +371,82 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         }
         if collectionView == bottomCv{
             
-            let menuItem = MenuRedirect.items[indexPath.row].translated()
+            let menuItem = Dummymenu_details?[indexPath.row].id
             
             switch menuItem {
-            case MenuStringFile.VideoUpload.translated():
+            case 0:
+                MenuRedirect.senderCommunicationNavigate(from: self)
+            case 1:
                 MenuRedirect.senderVideoNavigate(from: self)
                 
-            case MenuStringFile.Communication.translated():
-                MenuRedirect.senderCommunicationNavigate(from: self)
-                
-            case MenuStringFile.ImagePdf.translated():
+            case 2:
                 MenuRedirect.senderImgPDfNavigate(from: self)
                 
-            case MenuStringFile.Circulars.translated():
+            case 3:
+               
+                MenuRedirect.senderNoticeboardNavigate(from: self)
+            case 4:
                 MenuRedirect.senderEventNavigate(from: self)
                 
-            case MenuStringFile.NoticeBoard.translated():
-                MenuRedirect.senderNoticeboardNavigate(from: self)
-                
-            case MenuStringFile.PTM.translated():
+            case 5:
                 MenuRedirect.senderPtmNavigate(from: self)
                 
-            case MenuStringFile.LeaveRequests.translated():
-                MenuRedirect.senderLeaveRequestNavigate(from: self)
-                
-            case MenuStringFile.Assignment.translated():
-                MenuRedirect.senderAssignmentNavigate(from: self)
-                
-            case MenuStringFile.OnlineMeeting.translated():
-                MenuRedirect.senderOnlineNavigate(from: self)
-                
-            case MenuStringFile.Homework.translated():
-                MenuRedirect.senderHomeWorkNavigate(from: self)
-                
-                
-            case MenuStringFile.LessonPlan.translated():
-                MenuRedirect.senderLessonplanNavigate(from: self)
-                
-            case MenuStringFile.AbsenteesReport.translated():
+            case 6:
                 MenuRedirect.senderAbsenteesNavigate(from: self)
                 
-            case MenuStringFile.FeePendingReport.translated():
-                MenuRedirect.senderFeePendingNavigate(from: self)
                 
-            case MenuStringFile.StudentReport.translated():
-                MenuRedirect.senderStudentreportNavigate(from: self)
-                
-            case MenuStringFile.VeryImportantInfo.translated():
-                MenuRedirect.senderImportantInfoNavigate(from: self)
-            case MenuStringFile.SchoolNeeds.translated() :
-                MenuRedirect.senderSchoolNeedsNavigate(from: self)
-                
-            case MenuStringFile.SchoolClassEvents.translated():
-                MenuRedirect.senderEventNavigate(from: self)
-            case MenuStringFile.SchoolStrength.translated():
+            case 7:
                 MenuRedirect.senderSchoolStrength(from: self)
                 
-            case MenuStringFile.MarkYourAttendance.translated():
-                print("Mark your Attendance")
                 
-            case MenuStringFile.InteractionWithStudent.translated():
+            case 8:
+                MenuRedirect.senderOnlineNavigate(from: self)
+                
+            case 9:
+                MenuRedirect.senderHomeWorkNavigate(from: self)
+                
+            case 10:
+                MenuRedirect.senderLessonplanNavigate(from: self)
+                
+            case 11:
+                MenuRedirect.ScheduleExamVCNavigat(from: self)
+               
+            case 12:
+               
+                MenuRedirect.senderLeaveRequestNavigate(from: self)
+               
+                
+            case 13:
+               
+                MenuRedirect.senderMgmt(from: self)
+            case 14:
+                MenuRedirect.senderImportantInfoNavigate(from: self)
+            case 15:
+                MenuRedirect.senderSchoolNeedsNavigate(from: self)
+                
+            case 16:
+                MenuRedirect.senderEventNavigate(from: self)
+            case 17:
+                
+                MenuRedirect.StaffWiseAttendance(from: self)
+            case 18:
+                print("Mark your Attendance")
+                MenuRedirect.senderFeePendingNavigate(from: self)
+            case 19:
                 MenuRedirect.Senderchat(from: self)
                 MenuRedirect.getValue = getValue
-            case MenuStringFile.ScheduleExamTest.translated():
-                MenuRedirect.ScheduleExamVCNavigat(from: self)
-            case MenuStringFile.DailyCollection:
+            case 20:
+                MenuRedirect.senderStudentreportNavigate(from: self)
+            case 21:
                 MenuRedirect.dailyCollectionNavigate(from: self)
-            case MenuStringFile.StaffWiseAttendanceReport:
-                MenuRedirect.StaffWiseAttendance(from: self)
+            case 22:
+                MenuRedirect.senderAssignmentNavigate(from: self)
                 
-            case MenuStringFile.MessagesFromManagement.translated():
+                
+            case 23:
                 MenuRedirect.senderMgmt(from: self)
                 
-            case MenuStringFile.AttendanceMarking:
+            case 24:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 break
                 
@@ -465,9 +471,9 @@ extension SchoolDashboardVc: UICollectionViewDelegateFlowLayout {
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
         
-        let label = filteredItems[indexPath.row].translated()
+        let label = Dummymenu_details?[indexPath.row].name?.translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
-        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
+        let textHeight = label?.height(withConstrainedWidth: maxTextWidth, font: font) ?? 0
         
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height + 10)
@@ -489,14 +495,12 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         
         searchItem = 1
         if searchText.isEmpty {
-            
-            filteredItems = MenuRedirect.items // Show all items if no search text
-            displayedCategories = Array(filteredItems.prefix(9))
-            displayedCategories.insert(newString, at: 5)
+            filteredItems = menu_details
+            Dummymenu_details = menu_details.map { Array($0.prefix(9)) }
         } else {
-            filteredItems = MenuRedirect.items.filter { $0.lowercased().contains(searchText.lowercased()) }
-            displayedCategories = filteredItems
+            filteredItems = menu_details?.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
         }
+        
         bottomCv.reloadData()
     }
     
@@ -559,5 +563,59 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             
         }
     }
-    
+    func get_dashboard_details(){
+      
+        print("tokenefrfrdfrfdx",ServiceUrl.token)
+       
+        APIService.shared
+            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=staff", parameters: [:] , type: ApitTypeSringFile.GET, token: ServiceUrl.token){ [self] (
+                result : Result<DashboardResponse,
+                Error>
+            ) in
+            
+            switch result {
+                
+            case.success(let succesmessage) :
+                
+                print("succesmessagesdsds",succesmessage)
+                if succesmessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                      
+                        menu_details = succesmessage.data?.first?.menu_details
+                        if let menu_details = menu_details {
+                            // Extract names from menu_details
+                            displayedCategories = menu_details.prefix(9).map {
+                                $0.name ?? ""
+                            }
+                            Dummymenu_details =  Array(menu_details.prefix(9))
+                            if Dummymenu_details?.count ?? 0 > 5 {
+                                Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                            }
+                            filteredItems = menu_details
+                        } else {
+                            displayedCategories = []
+                            filteredItems = []
+                        }
+                        bottomCv.reloadData()
+                        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+                        collectionHeight.constant = contentViewHeight
+                        
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        
+                    }
+                }
+                
+            case.failure(let error) :
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+            
+        }
+    }
 }

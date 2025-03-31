@@ -321,6 +321,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
+            
         }
     }
     func proceedWithAppFlow() {
