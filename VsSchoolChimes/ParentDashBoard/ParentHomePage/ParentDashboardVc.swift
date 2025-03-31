@@ -28,7 +28,7 @@ class ParentDashboardVc: UIViewController {
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
     @IBOutlet weak var bottomCv: UICollectionView!
     @IBOutlet weak var userNameLbl: UILabel!
-    var filteredItems: [String] = []
+    var filteredItems: [MenuDetail]?
     var getValue : Int!
     var searchItem = 0
     var currentIndex = 0
@@ -40,6 +40,7 @@ class ParentDashboardVc: UIViewController {
     private lazy var fourthVC = SettingsViewController()
     let MenuRedirect = MenuRedirectHandler.shared
     var menu_details: [MenuDetail]?
+    var Dummymenu_details: [MenuDetail]?
     var currentPlaceholderIndex = 0
     var timer: Timer?
     let alert = CustomAlert()
@@ -61,7 +62,8 @@ class ParentDashboardVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-       
+        bottomCv.delegate = self
+        bottomCv.dataSource = self
         if let child = childDetails?.first{
             userNameLbl.text = child.name
             SchoolNameLabel.text = child.school_name
@@ -111,7 +113,6 @@ class ParentDashboardVc: UIViewController {
         Searchbar.delegate = self
         
         setTapgesture()
-        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
     }
     
     @IBAction func ViewDetailsBtn(_ sender: Any) {
@@ -281,7 +282,7 @@ class ParentDashboardVc: UIViewController {
 extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return displayedCategories.count // Ensure ItemnCount matches your data source
+        return Dummymenu_details?.count ?? 0 // Ensure ItemnCount matches your data source
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -301,8 +302,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             cell.MenuImgView.image = nil
             
             
-            let label = displayedCategories[indexPath.row].translated()
-            let img = UIImage(named: displayedCategories[indexPath.row])
+            let label = Dummymenu_details?[indexPath.row].name?.translated()
+            let img = UIImage(named: Dummymenu_details?[indexPath.row].name?.removingSlashComponent() ?? "")
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
             cell.MenuImgView.image = img
@@ -317,21 +318,25 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     @IBAction func seeAllShow(_ sender: UIButton) {
         sender.isSelected.toggle()
-        seeAllButton.setTitle(!sender.isSelected ? "See Less" : "See All", for: .normal)
-        if sender.isSelected {
-            // Collapse back to show only the first 6 items
-            displayedCategories = Array(MenuRedirect.receiverItems.prefix(9))
-            displayedCategories.insert(newString, at: 5)
-            
-        } else {
-            // Expand to show all items
-            displayedCategories = MenuRedirect.receiverItems
-        }
-        
-         // Toggle the state
-        bottomCv.reloadData()
-        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
-        collectionHeight.constant = contentViewHeight
+           seeAllButton.setTitle(!sender.isSelected ? "See Less" : "See All", for: .normal)
+           
+           if sender.isSelected {
+               // Collapse back to show only the first 9 items
+               if let menuDetails = menu_details {
+                   Dummymenu_details = Array(menuDetails.prefix(9))
+                   if Dummymenu_details?.count ?? 0 > 5 {
+                       Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                   }
+               }
+           } else {
+               // Expand to show all items
+               Dummymenu_details = menu_details
+           }
+           
+           // Toggle the state
+           bottomCv.reloadData()
+           let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+           collectionHeight.constant = contentViewHeight
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -342,51 +347,46 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         
         if indexPath.row < MenuRedirect.receiverItems.count {
             
-            let menuItem = MenuRedirect.receiverItems[indexPath.row].translated()
+            let menuItem = Dummymenu_details?[indexPath.row].id
             
             switch menuItem {
-            case ReceiverMenuItems.Video.translated():
-                MenuRedirect.receiverVideoNavigate(from: self)
-            case ReceiverMenuItems.Communication.translated():
+            case 0:
                 MenuRedirect.receiverCommunicationNavigate(from: self)
-            case ReceiverMenuItems.ImagePdf.translated():
-                MenuRedirect.receiverImgPdfNavigate(from: self)
-            case ReceiverMenuItems.PTM.translated():
-                MenuRedirect.receiverPtmNavigate(from: self)
-            case ReceiverMenuItems.NoticeBoard.translated():
-                MenuRedirect.receiverNoticeBoardNavigate(from: self)
-            case ReceiverMenuItems.Assignment.translated():
-                MenuRedirect.receiverAssignmentNavigate(from: self)
-            case ReceiverMenuItems.ExamTest.translated():
-                MenuRedirect.receiverExamTestNavigate(from: self)
-            case ReceiverMenuItems.LSRW.translated():
-                MenuRedirect.receiverLsrwNavigate(from: self)
-            case ReceiverMenuItems.EventsHolidays.translated():
-                MenuRedirect.receiverEvent(from: self)
-            case ReceiverMenuItems.RequestLeave.translated():
-                MenuRedirect.LeaveRquest(from: self)
-            case ReceiverMenuItems.FeeDetails.translated():
-                print("fee details")//MenuRedirect.receiverchat(from: self)
-            case ReceiverMenuItems.InteractionWithStaff.translated():
-                MenuRedirect.receiverchat(from: self)
-                print(getValue)
-                MenuRedirect.getValue = getValue
-            case ReceiverMenuItems.ClassTimetable.translated():
-                MenuRedirect.receiverclassTimeTable(from: self)
-            case ReceiverMenuItems.Homework.translated():
+            case 3:
                 MenuRedirect.receiverHomework(from: self)
-            case ReceiverMenuItems.AttendanceReport.translated():
-                MenuRedirect.receiverAttendancereport(from: self)
-            case ReceiverMenuItems.ExamMarks.translated():
+            case 5:
                 MenuRedirect.resiverExamMark(from: self)
-            case ReceiverMenuItems.CertificateRequest.translated():
-                MenuRedirect.receiverCertificateRequest(from: self)
-            case ReceiverMenuItems.QuizExam.translated():
-                MenuRedirect.QuizExam(from: self)
-            case ReceiverMenuItems.OnlineMeeting.translated():
+            case 6:
+                MenuRedirect.receiverExamTestNavigate(from: self)
+            case 7:
+                MenuRedirect.receiverNoticeBoardNavigate(from: self)
+            case 8:
+                MenuRedirect.receiverEvent(from: self)
+            case 9:
+                MenuRedirect.receiverAttendancereport(from: self)
+            case 10:
+                MenuRedirect.LeaveRquest(from: self)
+            case 13:
+                MenuRedirect.receiverHomework(from: self)
+            case 14:
+                MenuRedirect.receiverchat(from: self)
+                MenuRedirect.getValue = getValue
+            case 15:
+                MenuRedirect.resiverExamMark(from: self)
+            case 18:
+                MenuRedirect.receiverAssignmentNavigate(from: self)
+            case 19:
+                MenuRedirect.receiverImgPdfNavigate(from: self)
+            case 20:
                 MenuRedirect.receiverOnlineNavigate(from: self)
-            case ReceiverMenuItems.Map:
-                MenuRedirect.parantMapVC(from: self)
+            case 21:
+                MenuRedirect.QuizExam(from: self)
+            case 22:
+                MenuRedirect.receiverLsrwNavigate(from: self)
+            case 23:
+                MenuRedirect.receiverclassTimeTable(from: self)
+            case 25:
+                MenuRedirect.receiverCertificateRequest(from: self)
             default:
                 break
             }
@@ -418,9 +418,9 @@ extension ParentDashboardVc: UICollectionViewDelegateFlowLayout {
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
         
-        let label = displayedCategories[indexPath.row].translated()
+        let label = Dummymenu_details?[indexPath.row].name?.translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
-        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
+        let textHeight = label?.height(withConstrainedWidth: maxTextWidth, font: font) ?? 0
         
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height + 10)
@@ -449,16 +449,15 @@ extension ParentDashboardVc: UISearchBarDelegate{
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         searchItem = 1
+        
         if searchText.isEmpty {
-            filteredItems = MenuRedirect.items // Show all items if no search text
-            displayedCategories = Array(filteredItems.prefix(6))
-            displayedCategories.insert(newString, at: 5)
+            filteredItems = menu_details
+            Dummymenu_details = menu_details.map { Array($0.prefix(9)) }
         } else {
-            filteredItems = MenuRedirect.items.filter { $0.lowercased().contains(searchText.lowercased()) }
-            displayedCategories = filteredItems
+            filteredItems = menu_details?.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
         }
+        
         bottomCv.reloadData()
     }
     
@@ -545,21 +544,19 @@ extension ParentDashboardVc: UISearchBarDelegate{
                             displayedCategories = menu_details.prefix(9).map {
                                 $0.name ?? ""
                             }
-                            
-                            if displayedCategories.count > 5 {
-                                displayedCategories.insert(newString, at: 5)
+                            Dummymenu_details =  Array(menu_details.prefix(9))
+                            if Dummymenu_details?.count ?? 0 > 5 {
+                                Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
                             }
-
-                            // Extract names for filteredItems as well
-                            filteredItems = menu_details.map { $0.name ?? "" }
+                            filteredItems = menu_details
                         } else {
                             displayedCategories = []
                             filteredItems = []
                         }
-                        bottomCv.delegate = self
-                        bottomCv.dataSource = self
                         bottomCv.reloadData()
-                      
+                        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+                        collectionHeight.constant = contentViewHeight
+                        
                     }
                 }else {
                     

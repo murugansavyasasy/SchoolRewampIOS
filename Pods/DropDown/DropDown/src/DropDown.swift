@@ -1101,23 +1101,22 @@ extension DropDown: UITableViewDataSource, UITableViewDelegate {
         if index >= 0 && index < localizationKeysDataSource.count {
             cell.accessibilityIdentifier = localizationKeysDataSource[index]
         }
-
-        cell.listNameBtn.tintColor = textColor
-        cell.listNameBtn.titleLabel?.font = textFont
         cell.selectedBackgroundColor = selectionBackgroundColor
         cell.highlightTextColor = selectedTextColor
         cell.normalTextColor = textColor
 
         // Set button title
         let title = cellConfiguration?(index, dataSource[index]) ?? dataSource[index]
-        cell.listNameBtn.setTitle(title, for: .normal)
+        cell.optionLabel.text = title
 
         // Load image asynchronously
         if index < imageURLs.count {
             cell.imgBtn.isHidden = false
+            cell.imgWidth.constant = 40
             cell.loadImage(from: imageURLs[index])
         } else {
             cell.imgBtn.isHidden = true
+            cell.imgWidth.constant = 0
         }
 
         customCellConfiguration?(index, dataSource[index], cell)

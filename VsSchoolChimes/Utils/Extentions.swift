@@ -123,3 +123,9 @@ extension UITapGestureRecognizer {
         return NSLocationInRange(characterIndex, targetRange)
     }
 }
+extension String {
+    func removingSlashComponent() -> String {
+        let components = self.split(separator: "/").map { String($0) }
+        return components.joined(separator: "")
+    }
+}

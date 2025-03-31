@@ -11,8 +11,8 @@ import UIKit
 open class DropDownCell: UITableViewCell {
 		
 	//UI
+    @IBOutlet weak var imgWidth: NSLayoutConstraint!
     @IBOutlet weak var imgBtn: UIImageView!
-    @IBOutlet weak var listNameBtn: UIButton!
     @IBOutlet open weak var optionLabel: UILabel!
 	
 	var selectedBackgroundColor: UIColor?
@@ -80,11 +80,9 @@ extension DropDownCell {
 				if selected {
 					self.backgroundColor = selectedBackgroundColor
                     self.optionLabel.textColor = self.highlightTextColor
-                    self.listNameBtn.tintColor = self.highlightTextColor
 				} else {
 					self.backgroundColor = .clear
                     self.optionLabel.textColor = self.normalTextColor
-                    self.listNameBtn.tintColor = self.normalTextColor
 				}
 			}
 		}
