@@ -39,14 +39,9 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
     let dropDown = DropDown()
     let StdDropdown = DropDown()
     var flag = 0
+    var selectedId : IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        fullview.applyGradient(
-//            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
-//            startPoint: CGPoint(x: 1, y: 0.5),
-//            endPoint: CGPoint(x: 0, y: 0.5)
-//        )
         
         selectStandardDropDown.layer.cornerRadius = 10
         selectStandardDropDown.layer.shadowColor = UIColor.black.cgColor
@@ -132,6 +127,7 @@ extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        selectedId = indexPath
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipientCVcell", for: indexPath) as! RecipientCVcell
         
         cell.btnName.setTitle(cv_itemsarry[indexPath.item], for: .normal)
@@ -145,23 +141,20 @@ extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
     func didTapButtonInCell(at indexPath: IndexPath,button: UIButton) {
             // Handle button tap action here
         
-        if let lastButton = lastSelectedButton, lastButton != button {
-            lastButton.backgroundColor = .white
-                   lastButton.setTitleColor(.blue, for: .normal)
-               }
-
-               // Update the color of the new tapped button
-        button.backgroundColor = button.backgroundColor == .gradient1 ? .clear : .gradient1
-               button.setTitleColor(button.backgroundColor == .gradient1 ? .white : .blue, for: .normal)
-
-           button.layer.cornerRadius = 10
-           button.layer.shadowColor = UIColor.black.cgColor
-           button.layer.shadowOffset = CGSize(width: 1, height: 1)
-           button.layer.shadowOpacity = 0.5
-           button.layer.shadowRadius = 2
+        button.layer.cornerRadius = 10
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 1, height: 1)
+        button.layer.shadowOpacity = 0.5
+        button.layer.shadowRadius = 2
         
-               // Store the current button as the last selected button
-               lastSelectedButton = button
+        if indexPath == selectedId {
+            
+            button.backgroundColor = .systemBlue
+        }else{
+            
+            button.backgroundColor = .gray
+        }
+      
         
         let selectedItem = cv_itemsarry[indexPath.item]
         if selectedItem == "Entier School"{

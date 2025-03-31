@@ -61,45 +61,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBAction func selectedSchool(_ sender: Any) {
         
-        let detailViewController = RecipientVc()
-        let nav = UINavigationController(rootViewController: detailViewController)
-
-        // 1 - Set modal presentation style
-        nav.modalPresentationStyle = .pageSheet
-
-        // 2 - Configure bottom sheet
-        if #available(iOS 15.0, *) {
-            if let sheet = nav.sheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    sheet.detents = [.custom { _ in 470 }, .large()]
-                } else {
-                    // Fallback on earlier versions
-                }
-                sheet.prefersGrabberVisible = true // Hide grabber
-                sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
-            }
-        } else {
-            // Fallback on earlier versions
-        }
-
-        // 3 - Prevent dismiss on swipe down
-        nav.isModalInPresentation = true
-
-        // 4 - Add Blur Effect to Background
-        if let window = UIApplication.shared.windows.first {
-            let blurEffect = UIBlurEffect(style: .light) // Use .light or any other style
-            let blurView = UIVisualEffectView(effect: blurEffect)
-            blurView.frame = window.bounds
-            window.addSubview(blurView)
-            blurView.alpha = 0.5 // Adjust transparency for the blur effect
-            
-            // Optional: Add tap gesture to prevent interaction with the background
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissBlurEffect))
-            blurView.addGestureRecognizer(tapGesture)
-        }
-
-        // 5 - Present the bottom sheet
-        present(nav, animated: true)
+        let vc = RecipientVc(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
 
                 
     }

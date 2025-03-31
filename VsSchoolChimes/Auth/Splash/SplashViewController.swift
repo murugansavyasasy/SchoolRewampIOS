@@ -230,6 +230,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                             bundle: nil
                                         )
                                         vc.login_astype = 1
+                                        ServiceUrl.token = Data.user_details?.staff_details?.first?.access_token ?? ""
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                         
@@ -252,6 +253,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                                 nibName: nil,
                                                 bundle: nil
                                             )
+                                            ServiceUrl.token = Data.user_details?.child_details?.first?.access_token ?? ""
                                             vc.login_astype = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)

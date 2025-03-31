@@ -312,6 +312,7 @@ class OTPVc: UIViewController {
                                         bundle: nil
                                     )
                                     vc.login_astype = 1
+                                    ServiceUrl.token = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first?.access_token ?? ""
                                     vc.modalPresentationStyle = .fullScreen
                                     present(vc, animated: true)
                                     
@@ -336,6 +337,7 @@ class OTPVc: UIViewController {
                                             bundle: nil
                                         )
                                         vc.login_astype = 2
+                                        ServiceUrl.token = UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first?.access_token ?? ""
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }

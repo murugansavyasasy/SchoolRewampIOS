@@ -254,9 +254,3 @@ struct GetStaffDetails:Codable{
         let name: String?
         let unread_count: Int?
     }
-
-struct MenuDetail: Codable {
-    let id: Int?
-    let name: String?
-    let unread_count: Int?
-}

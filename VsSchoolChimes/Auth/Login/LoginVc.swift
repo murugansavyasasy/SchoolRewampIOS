@@ -204,6 +204,7 @@ class LoginVc: UIViewController {
                                                 bundle: nil
                                             )
                                             vc.login_astype = 1
+                                            ServiceUrl.token = data.user_details?.staff_details?.first?.access_token ?? ""
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)
                                             
@@ -226,6 +227,7 @@ class LoginVc: UIViewController {
                                                     nibName: nil,
                                                     bundle: nil
                                                 )
+                                                ServiceUrl.token = data.user_details?.child_details?.first?.access_token ?? ""
                                                 vc.login_astype = 2
                                                 vc.modalPresentationStyle = .fullScreen
                                                 present(vc, animated: true)

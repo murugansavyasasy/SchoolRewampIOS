@@ -440,9 +440,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 21:
                 MenuRedirect.dailyCollectionNavigate(from: self)
             case 22:
-                MenuRedirect.senderAssignmentNavigate(from: self)
-                
-                
+                MenuRedirect.senderNoticeboardNavigate(from: self)
             case 23:
                 MenuRedirect.senderMgmt(from: self)
                 
