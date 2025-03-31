@@ -25,8 +25,14 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var screen_type : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
+    }
+    override func viewDidLayoutSubviews() {
+        view.applyGradient(
+            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return schools.count

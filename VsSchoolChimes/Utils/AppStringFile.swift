@@ -201,7 +201,7 @@ class SettingStringFile{
      let reportABug = "Report a bug"
      let sendFeedback = "Send Feedback"
      let logout = "Logout"
-    let faceID  = "Face ID"
+    let faceID  = "Face ID/Tuch ID"
     
     
 }

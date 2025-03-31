@@ -265,7 +265,8 @@ class MenuRedirectHandler {
     }
     
     func receiverExamTestNavigate(from viewController: UIViewController) {
-        let vc = ExamTmTblVCViewController(nibName: nil, bundle: nil)
+        
+        let vc = ExamDetailsVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
@@ -275,7 +276,6 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    
     
     func receiverclassTimeTable(from viewController: UIViewController) {
         //let vc = ClassTimeTableViewController(nibName: nil, bundle: nil)

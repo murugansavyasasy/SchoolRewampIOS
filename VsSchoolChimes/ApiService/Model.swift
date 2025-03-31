@@ -168,6 +168,64 @@ struct DeviceTokenResponseSuc : Codable {
     let message : String?
     let data : [String]?
 }
+//MARK: Grouplist API
+struct  GrouplistSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [GroupDetail]?
+}
+struct GroupDetail:Codable{
+    let id:String?
+    let name:String?
+}
+//MARK: GetStandard API
+struct  GetStandardsSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [GroupDetail]?
+}
+struct StandardDetail:Codable{
+    let id:String?
+    let name:String?
+    let sections:[sectionsDetail]?
+}
+struct sectionsDetail:Codable{
+    let id:String?
+    let name:String?
+}
+
+
+//MARK: GetStudentlist API
+struct  GetStudentlistSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [StudentDetails]?
+}
+struct StudentDetails:Codable{
+    let id:String?
+    let name:String?
+}
+
+//MARK: GetSubjectlist API
+struct  GetSubjectlistSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [GetSubjectDetails]?
+}
+struct GetSubjectDetails:Codable{
+    let id:String?
+    let name:String?
+}
+
+//MARK: GetStafflist API
+struct  GetStafflistSuc : Codable {
+    let status : Bool?
+    let message : String?
+    let data : [GetStaffDetails]?
+}
+struct GetStaffDetails:Codable{
+    let id:String?
+    let name:String?
 
 //MARK: Dashboard API
 

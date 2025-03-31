@@ -20,12 +20,14 @@ class Tvcell: UITableViewCell {
         fullView.layer.shadowRadius = 3
         fullView.layer.masksToBounds = false
         fullView.layer.cornerRadius = Colornames.CORadius10
+        fullView.layer.borderWidth = 1
+        fullView.layer.borderColor = UIColor.lightGray.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+       
     }
     
 }

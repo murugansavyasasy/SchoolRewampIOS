@@ -11,7 +11,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     func reload(index: Int) {
         if let currentIndex = playIndex, currentIndex != index {
             let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-            (tv.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false)
+            (tv.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false, url: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg")
         }
         playIndex = (playIndex == index) ? nil : index
         tv.reloadData()
@@ -223,7 +223,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.sendBtn.isHidden = true
             cell.descriptContent.attributedText = descript(for:"Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.", expanded: false)
 //            cell.delegate = self
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
             cell.descriptContent.addGestureRecognizer(tapGesture)
@@ -238,7 +238,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.playBtn.tag = indexPath.row
             cell.datelbl.textAlignment = .right
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
-            cell.updatePlayState(isPlaying: playIndex == indexPath.row)
+            cell.updatePlayState(isPlaying: playIndex == indexPath.row, url: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg")
             cell.delegate = self
             cell.playBtn.setImage(image, for: .normal)
             return cell
@@ -249,21 +249,26 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+    // MARK: - Tap Gesture for "See More" / "See Less"
+    @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel, let text = label.text else { return }
+        
+        let seeMoreRange = (text as NSString).range(of: CommonStringFile.seemore.translated())
+        let seeLessRange = (text as NSString).range(of: CommonStringFile.seeLess.translated())
+        
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) ||
+            gesture.didTapAttributedTextInLabel(label: label, inRange: seeLessRange) {
+            handleSeeMoreTap(gesture)
+        }
+    }
     //MARK: EXPANDABLE LABLE
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
         let indexPath = IndexPath(row: label.tag, section: 0)
         let fullDescription = "Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1."
-        
-        // Toggle the label between expanded and collapsed states
         let isExpanded = label.numberOfLines == 0
         label.numberOfLines = isExpanded ? 3 : 0
-        
-        // Update the label text with the appropriate "See more" or "See less" state
         label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
-        
-        // Animate the cell height change
         tv.beginUpdates()
         tv.endUpdates()
     }
@@ -274,10 +279,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         if expanded {
             let fullString = fullDescription + CommonStringFile.seeLess.translated()
             let attributedText = NSMutableAttributedString(string: fullString)
-            // Set "See less" text to blue and underline it
             let seeLessRange = (fullString as NSString).range(of: "See less")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            
             return attributedText
         } else {
             var fullString = ""

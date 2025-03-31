@@ -204,7 +204,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceSetTitleLbl.applyRightTxt()
         voiceTitleeTxt.applyRightTxt()
         TextMsgContent.applyRightTxt()
-      //  textCountLbl.applyRightTxt()
         informationcontent.applyRightTxt()
         informationcontent.applyRightTxt(with: placeholderLabel)
         informationcontent.addSubview(placeholderLabel)
@@ -215,14 +214,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             isKeyboardVisible = true
             UIView.animate(withDuration: 0.3) {
-                // Move outerView 20 points from the top
                 self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
             }
         }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
+        guard isKeyboardVisible else { return }
         isKeyboardVisible = false
         UIView.animate(withDuration: 0.3) {
             self.outerView.transform = .identity // Reset position
@@ -237,12 +235,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         if updatedText.count <= 500 {
-            textCountLbl.text = "\(updatedText.count) of 500" // Update the character count label
+            textCountLbl.text = "\(updatedText.count) of 500"
             return true // Allow the change
         } else {
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
             return false // Reject the change
         }
     }
@@ -998,7 +995,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
             // Update play state
             let isPlaying = (playIndex == indexPath.row)
-            cell.updatePlayState(isPlaying: isPlaying)
+            cell.updatePlayState(isPlaying: isPlaying, url: "file:///Users/admin/Library/Developer/CoreSimulator/Devices/2B90BDE8-D068-4A12-BD7E-7E942461DEA2/data/Containers/Data/Application/F581A644-A9BE-4291-B7E0-733CD151F829/Documents/myRecording.mp4")
             cell.delegate = self
             cell.playBtn.setImage(image, for: .normal)
             return cell
@@ -1059,7 +1056,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         // Stop playback in the currently playing cell (if any)
         if let currentIndex = playIndex, currentIndex != index {
                    let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-                   (historytable.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false)
+            (historytable.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false, url: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg")
                }
         playIndex = (playIndex == index) ? nil : index
         historytable.reloadData()
