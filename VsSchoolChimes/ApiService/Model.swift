@@ -226,34 +226,31 @@ struct  GetStafflistSuc : Codable {
 struct GetStaffDetails:Codable{
     let id:String?
     let name:String?
-
+}
 //MARK: Dashboard API
+    struct DashboardResponse: Codable {
+        let status: Bool?
+        let message: String?
+        let data: [DashboardData]?
+    }
+    
+    struct DashboardData: Codable {
+        let contact_details: ContactDetails?
+        let menu_details: [MenuDetail]?
+    }
+    
+    struct ContactDetails: Codable {
+        let alert_message: String?
+        let alert_content: String?
+        let alert_title: String?
+        let display_name: String?
+        let numbers: String?
+        let button_content: String?
+    }
+    
+    struct MenuDetail: Codable {
+        let id: Int?
+        let name: String?
+        let unread_count: Int?
+    }
 
-
-import Foundation
-
-struct DashboardResponse: Codable {
-    let status: Bool?
-    let message: String?
-    let data: [DashboardData]?
-}
-
-struct DashboardData: Codable {
-    let contact_details: ContactDetails?
-    let menu_details: [MenuDetail]?
-}
-
-struct ContactDetails: Codable {
-    let alert_message: String?
-    let alert_content: String?
-    let alert_title: String?
-    let display_name: String?
-    let numbers: String?
-    let button_content: String?
-}
-
-struct MenuDetail: Codable {
-    let id: Int?
-    let name: String?
-    let unread_count: Int?
-}

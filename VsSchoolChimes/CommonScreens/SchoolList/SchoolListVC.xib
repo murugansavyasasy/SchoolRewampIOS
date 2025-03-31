@@ -58,6 +58,9 @@
                                             <color key="backgroundColor" name="AccentColor"/>
                                         </backgroundConfiguration>
                                     </buttonConfiguration>
+                                    <connections>
+                                        <action selector="selectedSchool:" destination="-1" eventType="touchUpInside" id="q38-ag-anU"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

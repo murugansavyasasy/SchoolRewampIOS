@@ -308,9 +308,19 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             validate_user()
         }
         else{
-            let vc = LoginVc(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
+            let is_login :Bool?
+            let userDefaults = UserDefaults.standard
+            is_login = userDefaults.bool(forKey: "Logout")
+           
+            if is_login ==  true{
+                let vc = LoginVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }else{
+                let vc = MobileNumberVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+            }
         }
     }
     func proceedWithAppFlow() {
@@ -327,23 +337,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                 self.present(vc, animated: true)
                validate_user()
             }
-            else{
-                
-                let is_login :Bool?
-                let userDefaults = UserDefaults.standard
-                is_login = userDefaults.bool(forKey: "Logout")
-               
-                if is_login ==  true{
-                    let vc = LoginVc(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                }else{
-                    let vc = MobileNumberVc(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    self.present(vc, animated: true)
-                }
-                
-            }
+           
         }
     }
     

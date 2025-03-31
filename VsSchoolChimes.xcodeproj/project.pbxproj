@@ -237,6 +237,10 @@
 		846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83DD2D02D91000B69344 /* SideTvcell.swift */; };
 		846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E02D02D91000B69344 /* Tvcell.swift */; };
 		846D83EB2D02D91000B69344 /* ExamTmTblVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */; };
+		8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8474CB9C2D9A6D0400DA0951 /* RecipientVc.xib */; };
+		8474CB9E2D9A6D0400DA0951 /* RecipientVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CB9B2D9A6D0400DA0951 /* RecipientVc.swift */; };
+		8474CBA22D9A6F6000DA0951 /* RecipientCVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CBA02D9A6F6000DA0951 /* RecipientCVcell.swift */; };
+		8474CBA32D9A6F6000DA0951 /* RecipientCVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8474CBA12D9A6F6000DA0951 /* RecipientCVcell.xib */; };
 		84759C632CEDE02400E7D367 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C622CEDE02400E7D367 /* SDWebImage */; };
 		84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 84759C642CEDE02400E7D367 /* SDWebImageMapKit */; };
 		8476882B2D88316C00EAB9DB /* userDefaultFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */; };
@@ -841,6 +845,10 @@
 		846D83E12D02D91000B69344 /* Tvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tvcell.xib; sourceTree = "<group>"; };
 		846D83E32D02D91000B69344 /* ExamTmTblVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamTmTblVCViewController.swift; sourceTree = "<group>"; };
 		846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamTmTblVCViewController.xib; sourceTree = "<group>"; };
+		8474CB9B2D9A6D0400DA0951 /* RecipientVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientVc.swift; sourceTree = "<group>"; };
+		8474CB9C2D9A6D0400DA0951 /* RecipientVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientVc.xib; sourceTree = "<group>"; };
+		8474CBA02D9A6F6000DA0951 /* RecipientCVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientCVcell.swift; sourceTree = "<group>"; };
+		8474CBA12D9A6F6000DA0951 /* RecipientCVcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientCVcell.xib; sourceTree = "<group>"; };
 		8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userDefaultFileManager.swift; sourceTree = "<group>"; };
 		8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUUIDManager.swift; sourceTree = "<group>"; };
 		8476882E2D892DBB00EAB9DB /* SecureidFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureidFile.swift; sourceTree = "<group>"; };
@@ -1945,6 +1953,15 @@
 			path = ExamTimeTable;
 			sourceTree = "<group>";
 		};
+		8474CB9F2D9A6F3A00DA0951 /* Cv */ = {
+			isa = PBXGroup;
+			children = (
+				8474CBA02D9A6F6000DA0951 /* RecipientCVcell.swift */,
+				8474CBA12D9A6F6000DA0951 /* RecipientCVcell.xib */,
+			);
+			path = Cv;
+			sourceTree = "<group>";
+		};
 		847AB6E12CF09A3000952AC1 /* SheduleExam */ = {
 			isa = PBXGroup;
 			children = (
@@ -2026,9 +2043,12 @@
 		8497570C2D2BA575006A27FD /* SelectRecipient */ = {
 			isa = PBXGroup;
 			children = (
+				8474CB9F2D9A6F3A00DA0951 /* Cv */,
 				849757092D2BA575006A27FD /* selectRecipientTvCell */,
 				8497570A2D2BA575006A27FD /* SelectRecipientVC.swift */,
 				8497570B2D2BA575006A27FD /* SelectRecipientVC.xib */,
+				8474CB9B2D9A6D0400DA0951 /* RecipientVc.swift */,
+				8474CB9C2D9A6D0400DA0951 /* RecipientVc.xib */,
 			);
 			path = SelectRecipient;
 			sourceTree = "<group>";
@@ -3292,6 +3312,7 @@
 				84A5BEC12C198DF600E32496 /* SplashStoryboard.storyboard in Resources */,
 				845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */,
 				1861BEEC2CE61DE00095BF28 /* SenderSideVideoViewController.xib in Resources */,
+				8474CB9D2D9A6D0400DA0951 /* RecipientVc.xib in Resources */,
 				8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */,
 				84BB5EAF2D11337E00AD0C87 /* ExamsListCVCell.xib in Resources */,
 				849970B42CF8750B00800B07 /* AssignmentListVC.xib in Resources */,
@@ -3384,6 +3405,7 @@
 				8442A8FB2CDC83860006068E /* BanerTableViewCell.xib in Resources */,
 				84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */,
 				84B2E0612CEB412900561E4F /* SenderNoticeBoardVC.xib in Resources */,
+				8474CBA32D9A6F6000DA0951 /* RecipientCVcell.xib in Resources */,
 				84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */,
 				84C00E6D2CF6D7C500E34A83 /* TermsAndCondVC.xib in Resources */,
 				849F313B2D00613B00BACEC7 /* EventPageVC.xib in Resources */,
@@ -3733,6 +3755,7 @@
 				18D718AB2D0D477900E9EDA3 /* StaffListResp.swift in Sources */,
 				18D718AC2D0D477900E9EDA3 /* PunchHistryResp.swift in Sources */,
 				84B57EBB2D1437EC00E0EA29 /* EventResiverVC.swift in Sources */,
+				8474CBA22D9A6F6000DA0951 /* RecipientCVcell.swift in Sources */,
 				18D718AD2D0D477900E9EDA3 /* deleteTV.swift in Sources */,
 				18D718AE2D0D477900E9EDA3 /* DeleteResp.swift in Sources */,
 				18D718AF2D0D477900E9EDA3 /* PreviousCvcell.swift in Sources */,
@@ -3817,6 +3840,7 @@
 				84EFF9972CCB5B0400C11C26 /* CountryVc.swift in Sources */,
 				84EFFACE2CCF90DE00C11C26 /* SettingHeaderView.swift in Sources */,
 				84EFFACF2CCF90DE00C11C26 /* SettingsTableViewCell.swift in Sources */,
+				8474CB9E2D9A6D0400DA0951 /* RecipientVc.swift in Sources */,
 				84EFFAD02CCF90DE00C11C26 /* SettingsViewController.swift in Sources */,
 				8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */,
 				84EFF9D42CCC7CD000C11C26 /* SchoolDashboardVc.swift in Sources */,
