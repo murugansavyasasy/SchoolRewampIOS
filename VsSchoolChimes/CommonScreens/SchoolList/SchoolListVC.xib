@@ -58,6 +58,9 @@
                                     <color key="backgroundColor" name="ButtonColor"/>
                                 </backgroundConfiguration>
                             </buttonConfiguration>
+                            <connections>
+                                <action selector="selectedSchool:" destination="-1" eventType="touchUpInside" id="Yhc-s1-XxC"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>

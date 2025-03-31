@@ -22,6 +22,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         School(name: "Elite Public School", address: "89, New Colony, Thanjavur", isSelected: true),
         School(name: "St. Joseph's Matric", address: "23, Temple Road, Kanyakumari", isSelected: true)
     ]
+    var screen_type : String?
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,6 +44,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         schools[indexPath.row].isSelected.toggle()
         listTable.reloadData()
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -50,6 +52,37 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         dismiss(animated: true)
     }
     
+    
+    @IBAction func selectedSchool(_ sender: Any) {
+        
+                let detailViewController = SelectRecipientVC()
+                let nav = UINavigationController(rootViewController: detailViewController)
+        
+                // 1 - Set modal presentation style
+                nav.modalPresentationStyle = .pageSheet
+        
+                // 2 - Configure bottom sheet
+                if #available(iOS 15.0, *) {
+                    if let sheet = nav.sheetPresentationController {
+                        if #available(iOS 16.0, *) {
+                            sheet.detents = [.custom { _ in 470 }, .large()]
+                        } else {
+                            // Fallback on earlier versions
+                        }
+                        sheet.prefersGrabberVisible = false // Hide grabber
+                        sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
+                    }
+                } else {
+                    // Fallback on earlier versions
+                }
+        
+                // 3 - Prevent dismiss on swipe down
+                nav.isModalInPresentation = true
+        
+                // 4 - Present the bottom sheet
+                present(nav, animated: true)
+                
+    }
 }
 struct School {
     let name: String

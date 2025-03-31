@@ -169,11 +169,7 @@ class LoginVc: UIViewController {
                                 .saveUserDetails(
                                     data: (data))
                             
-                            UserDefaultFileManager
-                                .saveLoginCredentials(
-                                    mobile_number:MobilTextFld.text ?? "",
-                                    pwd:passTextFld.text ?? ""
-                                )
+                           
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
@@ -185,7 +181,11 @@ class LoginVc: UIViewController {
                                     if data.is_password_updated == true {
                                         
                                         
-                                        
+                                        UserDefaultFileManager
+                                            .saveLoginCredentials(
+                                                mobile_number:MobilTextFld.text ?? "",
+                                                pwd:passTextFld.text ?? ""
+                                            )
                                         
                                         if(data.user_details?.is_staff == true) &&  (
                                             data.user_details?.is_parent == true
@@ -293,6 +293,7 @@ class LoginVc: UIViewController {
                             vc.modalPresentationStyle = .fullScreen
                             vc.mobile_number = MobilTextFld.text
                             vc.pageType = screenType.isForgotPassword
+                            vc.otpContent = successmessage.data?.first?.more_info ?? ""
                             present(vc, animated: true)
                             
                         }

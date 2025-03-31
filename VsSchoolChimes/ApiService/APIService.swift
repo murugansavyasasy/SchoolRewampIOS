@@ -13,6 +13,7 @@ class APIService: NSObject, URLSessionDelegate {
             
             print("Request URL: \(url)")
             print("Parameters: \(parameters ?? [:])")
+            print("URLSS", url)
             
             session.dataTask(with: getUrl(url: url, parameter: parameters, type: type, token: token)) { (data, response, error) in
                 if let httpResponse = response as? HTTPURLResponse, let data = data {

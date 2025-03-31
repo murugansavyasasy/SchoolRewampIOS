@@ -124,6 +124,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         
         let secureID = SecureIDManager.getSecureID()
         let parameters: [String: Any] = [
+            
             mobileNumber.mobile_number: mobile_num ?? "" ,
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
             mobileNumber.secure_id: secureID,
@@ -264,9 +265,21 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                validate_user()
             }
             else{
-                let vc = LoginVc(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+                
+                let is_login :Bool?
+                let userDefaults = UserDefaults.standard
+                is_login = userDefaults.bool(forKey: "Logout")
+               
+                if is_login ==  true{
+                    let vc = LoginVc(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }else{
+                    let vc = MobileNumberVc(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
+                
             }
     }
     

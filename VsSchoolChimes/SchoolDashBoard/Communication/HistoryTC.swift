@@ -7,7 +7,7 @@
 
 import UIKit
 import AVFoundation
-import UniformTypeIdentifiers
+
 import AVFAudio
 
 class HistoryTC: UITableViewCell {
@@ -28,7 +28,7 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var playerView: WaveView!
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var outerview: UIView!
-    var audioURL: String = " https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg"
+    var audioURL: String = "http://api.schoolchimes.com/nodejs/voice/VS_1742889307660.mp3"
     override func awakeFromNib() {
         super.awakeFromNib()
         outerview.layer.shadowColor = UIColor.black.cgColor
@@ -128,7 +128,7 @@ class HistoryTC: UITableViewCell {
     
     func updatePlayState(isPlaying: Bool) {
         if isPlaying {
-            if player == nil, let url = URL(string: audioURL) {
+            if player != nil, let url = URL(string: audioURL) {
                 player = AVPlayer(url: url)
             }
             player?.play()

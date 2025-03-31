@@ -39,6 +39,7 @@ class ParentDashboardVc: UIViewController {
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
     let MenuRedirect = MenuRedirectHandler.shared
+    var menu_details: [MenuDetail]?
     var currentPlaceholderIndex = 0
     var timer: Timer?
     let alert = CustomAlert()
@@ -60,18 +61,23 @@ class ParentDashboardVc: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
+       
         if let child = childDetails?.first{
             userNameLbl.text = child.name
             SchoolNameLabel.text = child.school_name
             AddressLabel.text = child.school_city
-            Profileimage.kf.setImage(with: URL(string: child.school_logo_url ?? ""))
+            Profileimage.kf.setImage(with: URL(string: child.school_logo_url ?? "Default_profile"))
+            
+            ServiceUrl.token = child.access_token ?? ""
         }else{
-            let child = localData.user_data?.user_details?.child_details
+            let child = childDetails
             userNameLbl.text = child?.first?.name
             SchoolNameLabel.text = child?.first?.school_name
             AddressLabel.text = child?.first?.school_city
             Profileimage.kf.setImage(with: URL(string: child?.first?.school_logo_url ?? ""))
         }
+        
+        
         
         if childDetails?.count ?? 0 > 1{
             
@@ -81,17 +87,16 @@ class ParentDashboardVc: UIViewController {
         }
         
         DeviceTokenAPIcall()
+        get_dashboard_details()
         StyleAndTranslater()
         
-        displayedCategories = Array(MenuRedirect.receiverItems.prefix(9))
-        displayedCategories.insert(newString, at: 5)
-        filteredItems = MenuRedirect.items
+       
         
         cellRegistration()
         //startPlaceholderRotation()
         Searchbar.addDoneButton()
         
-        let midIndex = MenuRedirect.receiverItems.count / 2
+        let midIndex = displayedCategories.count / 2
         firstArray = Array(MenuRedirect.receiverItems.prefix(midIndex))  // First half
         secondArray = Array(MenuRedirect.receiverItems.suffix(from: midIndex))  // Second half
         
@@ -188,8 +193,6 @@ class ParentDashboardVc: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print("viewDidAppear - View has appeared on the screen.")
-        bottomCv.delegate = self
-        bottomCv.dataSource = self
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -300,8 +303,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             cell.MenuImgView.image = nil
             
             
-            let label = MenuRedirect.receiverItems[indexPath.row].translated()
-            let img = UIImage(named: MenuRedirect.receiverImageItems[indexPath.row])
+            let label = displayedCategories[indexPath.row].translated()
+            let img = UIImage(named: displayedCategories[indexPath.row])
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
             cell.MenuImgView.image = img
@@ -417,7 +420,7 @@ extension ParentDashboardVc: UICollectionViewDelegateFlowLayout {
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
         
-        let label = filteredItems[indexPath.row].translated()
+        let label = displayedCategories[indexPath.row].translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
         let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
         
@@ -519,6 +522,64 @@ extension ParentDashboardVc: UISearchBarDelegate{
         }
     }
 
+    func get_dashboard_details(){
+      
+        print("tokenefrfrdfrfdx",ServiceUrl.token)
+       
+        APIService.shared
+            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=parent", parameters: [:] , type: ApitTypeSringFile.GET, token: ServiceUrl.token){ [self] (
+                result : Result<DashboardResponse,
+                Error>
+            ) in
+            
+            switch result {
+                
+            case.success(let succesmessage) :
+                
+                print("succesmessagesdsds",succesmessage)
+                if succesmessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                      
+                        menu_details = succesmessage.data?.first?.menu_details
+                        if let menu_details = menu_details {
+                            // Extract names from menu_details
+                            displayedCategories = menu_details.prefix(9).map {
+                                $0.name ?? ""
+                            }
+                            
+                            if displayedCategories.count > 5 {
+                                displayedCategories.insert(newString, at: 5)
+                            }
+
+                            // Extract names for filteredItems as well
+                            filteredItems = menu_details.map { $0.name ?? "" }
+                        } else {
+                            displayedCategories = []
+                            filteredItems = []
+                        }
+                        bottomCv.delegate = self
+                        bottomCv.dataSource = self
+                        bottomCv.reloadData()
+                      
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        
+                    }
+                }
+                
+            case.failure(let error) :
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+            
+        }
+    }
+    
     
 }
 extension UICollectionViewCell{

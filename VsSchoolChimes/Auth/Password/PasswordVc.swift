@@ -251,6 +251,7 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                             let vc = OTPVc(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             vc.mobile_number = mobile_number
+                            vc.otpContent = successmessage.data?.first?.more_info ?? ""
                             vc.pageType = screenType.isForgotPassword
                             present(vc, animated: true)
                             

@@ -8,21 +8,22 @@
 import Foundation
 
 struct ServiceUrl{
-    static var baseurl = "http://apiv7.schoolchimes.net/app/"
+    static var baseurl = "http://apiv7.schoolchimes.net/"
     static var report_url = ""
     static var token = ""
     static var awsBucketName = ""
     
-    static let country_list              = "setup/countries"
-    static let version_check             = "setup/version-check"
-    static let validate_validate_user    = "auth/validate-user"
-    static let validate_validate_otp     = "auth/validate-otp"
-    static let cred_change_password      = "cred/change-password"
-    static let cred_forgot_password      = "cred/forgot-password"
-    static let cred_reset_password       = "cred/reset-password"
-    static let  cred_create_new_password = "cred/create-new-password"
-    static let global_global_variables   = "global/global-variables"
-    static let  auth_device_token        = "auth/device-token"
+    static let country_list              = "app/setup/countries"
+    static let version_check             = "app/setup/version-check"
+    static let validate_validate_user    = "app/auth/validate-user"
+    static let validate_validate_otp     = "app/auth/validate-otp"
+    static let cred_change_password      = "app/cred/change-password"
+    static let cred_forgot_password      = "app/cred/forgot-password"
+    static let cred_reset_password       = "app/cred/reset-password"
+    static let  cred_create_new_password = "app/cred/create-new-password"
+    static let global_global_variables   = "app/global/global-variables"
+    static let  auth_device_token        = "app/auth/device-token"
+    static let  get_dashboard_details    = "dashboard/dashboard/get-dashboard-details"
     
 }
 

@@ -392,6 +392,7 @@ struct screenType{
     static let isPassword  = 3
     static let isSplash  = 4
     static let isForgotPassword  = 5
+    static let is_noticeboard = "notice_board"
 }
 
 class AwsCredentials {

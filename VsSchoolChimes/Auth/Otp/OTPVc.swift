@@ -34,6 +34,7 @@ class OTPVc: UIViewController {
     var validateMobileData : [UserData] = []
     var AlertModal = CustomAlert()
     var pageType : Int?
+    var otpContent:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,8 +50,17 @@ class OTPVc: UIViewController {
         DidnotReciveOtpLbl.setFont(style: .body, size: FontSize.BodySize)
 
         ResendLbl.isUserInteractionEnabled = true
-        OtpContentLbl.text = "  " + (validateMobileData.first?.more_info ?? "") + (
-            mobile_number ?? "") + "  "
+        
+        
+        if  pageType == screenType.isForgotPassword{
+            
+            OtpContentLbl.text =  otpContent
+            
+        }else{
+            OtpContentLbl.text = "  " + (validateMobileData.first?.more_info ?? "") + (
+                mobile_number ?? "") + "  "
+        }
+       
         
        
         
@@ -94,11 +104,11 @@ class OTPVc: UIViewController {
           let number2 = "9876543210"
           
           let callAction1 = UIAlertAction(title: number1, style: .default) { _ in
-              self.callNumber(number: number1)
+//              self.callNumber(number: number1)
           }
           
           let callAction2 = UIAlertAction(title: number2, style: .default) { _ in
-              self.callNumber(number: number2)
+//              self.callNumber(number: number2)
           }
           
           let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -279,6 +289,12 @@ class OTPVc: UIViewController {
                                 present(vc, animated: true)
                             }
                             else {
+                                
+                                UserDefaultFileManager
+                                    .saveLoginCredentials(
+                                        mobile_number:mobile_number ?? "",
+                                        pwd: ""
+                                    )
                                 if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true) &&  (
                                     UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true
                                 ){

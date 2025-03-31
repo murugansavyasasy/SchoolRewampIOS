@@ -57,6 +57,13 @@ struct UserDefaultFileManager {
         return (mobile_number,pwd)
     }
     
+    static func removeLoginCredentials() {
+            let userDefault = UserDefaults.standard
+            userDefault.removeObject(forKey: mobileNumber)
+            userDefault.removeObject(forKey: password)
+            userDefault.synchronize() // Optional, ensures changes are saved immediately
+        }
+    
     
     static func saveUserDetails(data: UserData) {
         if let encoded = try? JSONEncoder().encode(data) {

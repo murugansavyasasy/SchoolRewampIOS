@@ -152,10 +152,10 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
         if login_astype == 1 {
             
-            return localData.user_data?.user_details?.staff_details?.count ?? 0
+            return staffDetails?.count ?? 0
         }else{
             
-            return localData.user_data?.user_details?.child_details?.count ?? 0
+            return childDetails?.count ?? 0
             
         }
         

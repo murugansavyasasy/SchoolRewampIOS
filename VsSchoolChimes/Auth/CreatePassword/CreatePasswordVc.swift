@@ -252,7 +252,61 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                     on: self
                                 ) { [self] in
                                     
-                                    validate_user()
+                                    UserDefaultFileManager
+                                        .saveLoginCredentials(
+                                            mobile_number:mobile_number ?? "",
+                                            pwd:confirmPassTextFld.text ?? ""
+                                        )
+                                    
+                                    if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true) &&  (
+                                        UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true
+                                    ){
+                                        let vc = PriorityVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                        
+                                    }
+                                    else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
+                                        let vc = TapBarVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.login_astype = 1
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                        
+                                    }
+                                    else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true){
+                                        
+    //
+                                        if(
+                                            UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
+                                        ){
+                                            let vc = PriorityVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        else{
+                                            
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 2
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        
+                                        
+                                        
+                                    }
+                                    
                                 }
                         }
                         
