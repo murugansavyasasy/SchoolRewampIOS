@@ -10,8 +10,8 @@ import Foundation
 
 struct UserDefaultFileManager {
     
-   
-
+    
+    
     static let countryKey = "country_data"
     static let  mobileNumber = "mobile_number"
     static let  password = "password"
@@ -23,7 +23,7 @@ struct UserDefaultFileManager {
             UserDefaults.standard.set(encoded, forKey: countryKey)
         }
     }
-
+    
     static func getCountryDetails() -> CountryData? {
         if let savedData = UserDefaults.standard.data(forKey: countryKey),
            let user = try? JSONDecoder().decode(CountryData.self, from: savedData) {
@@ -59,11 +59,11 @@ struct UserDefaultFileManager {
     }
     
     static func removeLoginCredentials() {
-            let userDefault = UserDefaults.standard
-            userDefault.removeObject(forKey: mobileNumber)
-            userDefault.removeObject(forKey: password)
-            userDefault.synchronize() // Optional, ensures changes are saved immediately
-        }
+        let userDefault = UserDefaults.standard
+        userDefault.removeObject(forKey: mobileNumber)
+        userDefault.removeObject(forKey: password)
+        userDefault.synchronize() // Optional, ensures changes are saved immediately
+    }
     
     
     static func saveUserDetails(data: UserData) {
@@ -95,7 +95,7 @@ struct UserDefaultFileManager {
     }
     static func saveChildDetails(data: ChildDetails) {
         if let encoded = try? JSONEncoder().encode(data) {
-            UserDefaults.standard.set(encoded, forKey: User_details)
+            UserDefaults.standard.set(encoded, forKey: childDetails)
         }
     }
     
