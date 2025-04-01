@@ -16,7 +16,7 @@ struct UserDefaultFileManager {
     static let  mobileNumber = "mobile_number"
     static let  password = "password"
     static let  User_details = "User_details"
-    static let stsffDetails = "staff_details"
+    static let staffDetails = "staff_details"
     static let childDetails = "child_details"
     static func saveCountryDetails(data: CountryData) {
         if let encoded = try? JSONEncoder().encode(data) {
@@ -82,12 +82,12 @@ struct UserDefaultFileManager {
     
     static func saveStaffDetails(data: StaffDetails) {
         if let encoded = try? JSONEncoder().encode(data) {
-            UserDefaults.standard.set(encoded, forKey: User_details)
+            UserDefaults.standard.set(encoded, forKey: staffDetails)
         }
     }
     
     static func get_staff_Details() -> StaffDetails? {
-        if let savedData = UserDefaults.standard.data(forKey: stsffDetails),
+        if let savedData = UserDefaults.standard.data(forKey: staffDetails),
            let user = try? JSONDecoder().decode(StaffDetails.self, from: savedData) {
             return user
         }

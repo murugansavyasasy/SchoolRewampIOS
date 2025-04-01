@@ -13,11 +13,11 @@ class TextHistoryTVCell: UITableViewCell {
     
     @IBOutlet weak var sendBtnheight: NSLayoutConstraint!
     @IBOutlet weak var sendBtnWidth: NSLayoutConstraint!
-    @IBOutlet weak var DateLabel: UILabel!
-    @IBOutlet weak var MessageTitle: UILabel!
-    @IBOutlet weak var descriptContent: UILabel!
+    @IBOutlet weak var DateLabel: ShimmerLabel!
+    @IBOutlet weak var MessageTitle: ShimmerLabel!
+    @IBOutlet weak var descriptContent: ShimmerLabel!
     @IBOutlet weak var sendBtn: UIButton!
-    @IBOutlet weak var outerview: UIView!
+    @IBOutlet weak var outerview: ShimmerView2!
     var delegate : SelectedTextDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,4 +44,11 @@ class TextHistoryTVCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configureShimmer() {
+        
+        MessageTitle.removeShimmer()
+        descriptContent.removeShimmer()
+        DateLabel.removeShimmer()
+        outerview.removeShimmer()
+    }
 }

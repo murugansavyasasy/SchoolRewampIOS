@@ -228,6 +228,10 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.descriptContent.isUserInteractionEnabled = true
             cell.descriptContent.addGestureRecognizer(tapGesture)
             
+            DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                
+                cell.configureShimmer()
+            }
             return cell
         }else{
             
@@ -241,6 +245,10 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.updatePlayState(isPlaying: playIndex == indexPath.row, url: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg")
             cell.delegate = self
             cell.playBtn.setImage(image, for: .normal)
+            DispatchQueue.main.asyncAfter(deadline: .now()+2.5){
+                
+                cell.configureShimmer()
+            }
             return cell
         }
     }

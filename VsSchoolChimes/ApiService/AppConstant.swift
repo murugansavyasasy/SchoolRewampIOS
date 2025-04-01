@@ -24,12 +24,11 @@ struct ServiceUrl{
     static let global_global_variables   = "app/global/global-variables"
     static let  auth_device_token        = "app/auth/device-token"
     static let  get_dashboard_details    = "dashboard/dashboard/get-dashboard-details"
-     static let recipient_get_group_list = "recipient/get-group-list"
-     static let recipient_get_standards = "recipient/get-standards"
-     static let recipient_get_student_list = "recipient/get-student-list"
-     static let recipient_get_subject_list = "recipient/get-subject-list"
-     static let recipient_get_staff_list = "recipient/get-staff-list"
-    
+    static let recipient_get_group_list  = "recipient/get-group-list"
+    static let recipient_get_standards   = "recipient/get-standards"
+    static let recipient_get_student_list  = "recipient/get-student-list"
+    static let recipient_get_subject_list  = "recipient/get-subject-list"
+    static let recipient_get_staff_list  = "recipient/get-staff-list"
 }
 
 struct localData{
