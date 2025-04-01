@@ -158,31 +158,32 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
-                                  
-                                    if(data.is_password_updated == true){
-                                        UserDefaultFileManager
-                                            .saveLoginCredentials(
-                                                mobile_number:mobile_number ?? "",
-                                                pwd:passwordTxtFld.text ?? ""
-                                            )
-                                        localData.user_details = data.user_details
-                                        if(data.user_details?.is_staff == true) &&  (
-                                            data.user_details?.is_parent == true
+                                    UserDefaultFileManager
+                                        .saveLoginCredentials(
+                                            mobile_number:mobile_number ?? "",
+                                            pwd:passwordTxtFld.text ?? ""
+                                        )
+                                    
+                                    if(data.user_details?.is_staff == true) &&  (
+                                        data.user_details?.is_parent == true
+                                    ){
+                                        let vc = PriorityVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                        
+                                    }
+                                    else if(data.user_details?.is_staff == true){
+                                        
+                                        if(
+                                            data.user_details?.staff_role == PriorityType.is_staff
                                         ){
-                                            let vc = PriorityVC(nibName: nil, bundle: nil)
-                                            vc.modalPresentationStyle = .fullScreen
-                                            present(vc, animated: true)
-                                        } else if(data.user_details?.is_staff == true){
-                                            let vc = TapBarVC(nibName: nil,bundle: nil)
-                                            ServiceUrl.token = data.user_details?.staff_details?.first?.access_token ?? ""
-                                            vc.login_astype = 1
-                                            vc.modalPresentationStyle = .fullScreen
-                                            present(vc, animated: true)
-                                            
-                                        } else if(data.user_details?.is_parent == true){
                                             if(
-                                                data.user_details?.child_details?.count ?? 0 > 1
-                                            ){
+                                                data.user_details?.staff_details?.count ?? 0 > 1
+                                            )
+                                            {
                                                 let vc = PriorityVC(
                                                     nibName: nil,
                                                     bundle: nil
@@ -191,20 +192,67 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                                 present(vc, animated: true)
                                             }
                                             else{
+                                                if let data = data.user_details?.staff_details?.first{
+                                                    UserDefaultFileManager.saveStaffDetails(data: data)}
                                                 
                                                 let vc = TapBarVC(
                                                     nibName: nil,
                                                     bundle: nil
                                                 )
-                                                ServiceUrl.token = data.user_details?.child_details?.first?.access_token ?? ""
-                                                vc.login_astype = 2
+                                                vc.login_astype = 1
                                                 vc.modalPresentationStyle = .fullScreen
                                                 present(vc, animated: true)
                                             }
+                                            
+                                        }
+                                        else{
+                                            
+                                            //
+                                            if let data = data.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: data)}
+                                            
+                                            
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 1
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        
+                                    }
+                                    else if(data.user_details?.is_parent == true){
+                                        
+                                        if(
+                                            data.user_details?.child_details?.count ?? 0 > 1
+                                        ){
+                                            let vc = PriorityVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        else{
+                                            
+                                            if let data = data.user_details?.child_details?.first{
+                                                UserDefaultFileManager.saveChildDetails(data: data)
+                                            }
+                                            
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 2
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
                                         }
                                     }
-                                
+                                    
                                 }
+                                
+                                
                             } else {
                                 AlertModal.showAlert(
                                     title: "",

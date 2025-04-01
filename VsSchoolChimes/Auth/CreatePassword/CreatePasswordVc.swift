@@ -168,73 +168,13 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
 
     @available(iOS 14.0, *)
     func CretaeNewPasswordAPIcall(){
-            
-            APIService.shared
-                .makeApi(url: ServiceUrl.cred_create_new_password, parameters: [
-
-                COMMON_PARAMETER.mobile_number: mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""
-                ], type: ApitTypeSringFile.POST, token: ""){ [self] (
-                    result: Result<CreateNewPasswordSuc,
-                    Error>
-                ) in
-                
-                switch result {
-                    
-                case.success(let successMessage):
-                    
-                    if successMessage.status == true {
-                        
-                        DispatchQueue.main.async { [self] in
-                           
-                            
-                            
-                            CustomAlert
-                                .showAlert(
-                                    title: "Success",
-                                    message: successMessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.validate_user()
-                                    
-                            }
-                            
-                           
-                            
-                            
-                            
-                        }
-                        
-                    }else{
-                        
-                        DispatchQueue.main.async { [self] in
-                            
-                            alertModal
-                                .showAlert(
-                                    title: "",
-                                    message:successMessage.message ?? "" ,
-                                    on: self
-                                )
-                            
-                        }
-                        
-                        
-                    }
-                    
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-            
-        }
-        
-
-    func ResetPasswordAPIcall(){
         
         APIService.shared
-            .makeApi(url: ServiceUrl.cred_reset_password, parameters: [COMMON_PARAMETER.mobile_number: mobile_number ??  "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
-                result: Result<ResetPasswordSuc,
+            .makeApi(url: ServiceUrl.cred_create_new_password, parameters: [
+                
+                COMMON_PARAMETER.mobile_number: mobile_number ?? "" ,COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""
+            ], type: ApitTypeSringFile.POST, token: ""){ [self] (
+                result: Result<CreateNewPasswordSuc,
                 Error>
             ) in
                 
@@ -243,7 +183,10 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                 case.success(let successMessage):
                     
                     if successMessage.status == true {
+                        
                         DispatchQueue.main.async { [self] in
+                            
+                            
                             
                             CustomAlert
                                 .showAlert(
@@ -270,18 +213,49 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                         
                                     }
                                     else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
-                                        let vc = TapBarVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        vc.login_astype = 1
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
+                                        if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == PriorityType.is_staff){
+                                            if(
+                                                UserDefaultFileManager
+                                                    .getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1
+                                            )
+                                            {
+                                                let vc = PriorityVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            else{
+                                                if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
+                                                    UserDefaultFileManager.saveStaffDetails(data: data)}
+                                                
+                                                let vc = TapBarVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.login_astype = 1
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            
+                                        }
+                                        else{
+                                            
+                                            //
+                                            if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: data)}
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 1
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
                                         
                                     }
                                     else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true){
-                                        
-    //
                                         if(
                                             UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
                                         ){
@@ -293,6 +267,154 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                             present(vc, animated: true)
                                         }
                                         else{
+                                            
+                                            if let data =                                             UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first{
+                                                UserDefaultFileManager.saveChildDetails(data: data)
+                                            }
+                        
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 2
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                    }
+                                    
+                                }
+                        }
+                        
+                    }else{
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            alertModal
+                                .showAlert(
+                                    title: "",
+                                    message:successMessage.message ?? "" ,
+                                    on: self
+                                )
+                        }
+                        
+                        
+                    }
+                    
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        
+    }
+        
+
+    func ResetPasswordAPIcall(){
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.cred_reset_password, parameters: [COMMON_PARAMETER.mobile_number: mobile_number ??  "",COMMON_PARAMETER.new_password:confirmPassTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                result: Result<ResetPasswordSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let successMessage):
+                    
+                    if successMessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            
+                            
+                            
+                            CustomAlert
+                                .showAlert(
+                                    title: "Success",
+                                    message: successMessage.message ?? "",
+                                    on: self
+                                ) { [self] in
+                                    
+                                    UserDefaultFileManager
+                                        .saveLoginCredentials(
+                                            mobile_number:mobile_number ?? "",
+                                            pwd:confirmPassTextFld.text ?? ""
+                                        )
+                                    
+                                    if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true) &&  (
+                                        UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true
+                                    ){
+                                        let vc = PriorityVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                        
+                                    }
+                                    else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
+                                        if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_role == "p3"){
+                                            if(
+                                                UserDefaultFileManager
+                                                    .getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1
+                                            )
+                                            {
+                                                let vc = PriorityVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            else{
+                                                if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
+                                                    UserDefaultFileManager.saveStaffDetails(data: data)}
+                                                
+                                                let vc = TapBarVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.login_astype = 1
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            
+                                        }
+                                        else{
+                                            
+                                            //
+                                            if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: data)}
+                                            
+                                            
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 1
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        
+                                    }
+                                    else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true){
+                                        
+                                        //
+                                        if(
+                                            UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
+                                        ){
+                                            let vc = PriorityVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        else{
+                                            
+                                            if let data =              UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first{
+                                                UserDefaultFileManager.saveChildDetails(data: data)
+                                            }
                                             
                                             let vc = TapBarVC(
                                                 nibName: nil,
@@ -308,18 +430,27 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                                     }
                                     
                                 }
+                            
+                            
+                            
+                            
+                            
                         }
                         
                     }else{
                         
-                        DispatchQueue.main.async {
-                            self.alertModal
+                        DispatchQueue.main.async { [self] in
+                            
+                            alertModal
                                 .showAlert(
                                     title: "",
                                     message:successMessage.message ?? "" ,
                                     on: self
                                 )
+                            
                         }
+                        
+                        
                     }
                     
                 case .failure(let error):
@@ -329,110 +460,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                 }
             }
         
-    }
-
-    
-    func validate_user() {
-        
-      
-        
-        let secureID = SecureIDManager.getSecureID()
-        let parameters: [String: Any] = [
-            mobileNumber.mobile_number: mobile_number ?? "" ,
-            mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
-            mobileNumber.secure_id: secureID,
-            mobileNumber.password: confirmPassTextFld.text ?? ""
-        ]
-        APIService.shared
-            .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
-                     , type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
-                        result: Result<UserValidationResponseSuc,
-                        Error>
-                     ) in
-                switch result {
-                case .success(let response):
-                    if response.status == true {
-                        DispatchQueue.main.async { [self] in
-                            
-                            if let data  = response.data?.first{
-                                localData.user_data = data
-                                UserDefaultFileManager
-                                    .saveLoginCredentials(
-                                        mobile_number:mobile_number ?? "",
-                                        pwd:confirmPassTextFld.text ?? ""
-                                    )
-                                
-                                
-                                UserDefaultFileManager
-                                    .saveUserDetails(
-                                        data: (data))
-//                                localData.user_details = data.user_details
-                                
-                                if(data.user_details?.is_staff == true) &&  (
-                                    data.user_details?.is_parent == true
-                                ){
-                                    let vc = PriorityVC(
-                                        nibName: nil,
-                                        bundle: nil
-                                    )
-                                    vc.modalPresentationStyle = .fullScreen
-                                    present(vc, animated: true)
-                                    
-                                }
-                                else if(data.user_details?.is_staff == true){
-                                    let vc = TapBarVC(
-                                        nibName: nil,
-                                        bundle: nil
-                                    )
-                                    vc.login_astype = 1
-                                    vc.modalPresentationStyle = .fullScreen
-                                    present(vc, animated: true)
-                                    
-                                }
-                                else if(data.user_details?.is_parent == true){
-                                    
-                                    if(
-                                        data.user_details?.child_details?.count ?? 0 > 1
-                                    ){
-                                        let vc = PriorityVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
-                                    }
-                                    else{
-                                        
-                                        let vc = TapBarVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        vc.login_astype = 2
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
-                                    }
-                                }
-                                
-                            }
-                        }
-                    }else{
-                        DispatchQueue.main.async { [self] in
-                            alertModal
-                                .showAlert(
-                                    title: "",
-                                    message: response.message ?? "",
-                                    on: self
-                                )
-                        }
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
-                    }
-                }
-            }
         
     }
-    
        
     }
