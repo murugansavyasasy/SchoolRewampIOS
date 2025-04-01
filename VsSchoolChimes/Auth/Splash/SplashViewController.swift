@@ -225,14 +225,48 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                         
                                     }
                                     else if(Data.user_details?.is_staff == true){
-                                        let vc = TapBarVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        vc.login_astype = 1
-                                        ServiceUrl.token = Data.user_details?.staff_details?.first?.access_token ?? ""
-                                        vc.modalPresentationStyle = .fullScreen
-                                        present(vc, animated: true)
+                                        
+                                        if(Data.user_details?.staff_role == PriorityType.is_staff){
+                                            if(
+                                                Data.user_details?.staff_details?.count ?? 0 > 1
+                                            )
+                                            {
+                                                let vc = PriorityVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            else{
+                                                if let data = Data.user_details?.staff_details?.first{
+                                                    UserDefaultFileManager.saveStaffDetails(data: data)}
+                                                    
+                                                let vc = TapBarVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.login_astype = 1
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            
+                                        }
+                                        else{
+                                            
+//
+                                            if let data = Data.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: data)}
+                                            
+                                            
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 1
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
                                         
                                     }
                                     else if(Data.user_details?.is_parent == true){
@@ -249,11 +283,14 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                         }
                                         else{
                                             
+                                            if let data = Data.user_details?.child_details?.first{
+                                             UserDefaultFileManager.saveChildDetails(data: data)
+                                             }
+                                            
                                             let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
                                             )
-                                            ServiceUrl.token = Data.user_details?.child_details?.first?.access_token ?? ""
                                             vc.login_astype = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)

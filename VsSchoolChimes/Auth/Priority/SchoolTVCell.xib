@@ -11,14 +11,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="166" id="KGk-i7-Jjw" customClass="SchoolTVCell" customModule="VsSchoolChimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="361" height="166"/>
+            <rect key="frame" x="0.0" y="0.0" width="386" height="166"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="361" height="166"/>
+                <rect key="frame" x="0.0" y="0.0" width="386" height="166"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Woc-gL-PMQ">
-                        <rect key="frame" x="10" y="10" width="341" height="146"/>
+                        <rect key="frame" x="10" y="10" width="366" height="146"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schoolss" translatesAutoresizingMaskIntoConstraints="NO" id="dxn-eI-W3X">
                                 <rect key="frame" x="20" y="38" width="70" height="70"/>
@@ -29,52 +29,54 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="g39-2J-LKm">
-                                <rect key="frame" x="98" y="18" width="203" height="113"/>
+                                <rect key="frame" x="98" y="18" width="228" height="113"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Lakshminarayanan Sathiyanaraynan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWB-OP-hHk">
-                                        <rect key="frame" x="0.0" y="0.0" width="203" height="38.333333333333336"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lakshminarayanan Sathiyanaraynan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWB-OP-hHk">
+                                        <rect key="frame" x="0.0" y="0.0" width="228" height="38.333333333333336"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Siga Higher Secondary School" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGT-Jn-C5K">
-                                        <rect key="frame" x="0.0" y="43.333333333333329" width="203" height="38.333333333333329"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Siga Higher Secondary School" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XGT-Jn-C5K">
+                                        <rect key="frame" x="0.0" y="44.333333333333329" width="228" height="19.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Staff" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkI-bO-Sv4">
-                                        <rect key="frame" x="0.0" y="86.666666666666671" width="203" height="20.333333333333329"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Staff" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkI-bO-Sv4">
+                                        <rect key="frame" x="0.0" y="69.666666666666671" width="228" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Chennai" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xay-IG-qtc">
-                                        <rect key="frame" x="0.0" y="112" width="203" height="1"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chennai" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xay-IG-qtc">
+                                        <rect key="frame" x="0.0" y="96" width="228" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gdx-9O-8O9" customClass="CheckBox" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="309" y="73" width="24" height="0.0"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevron.right.square" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="DT5-2S-sBi">
+                                <rect key="frame" x="334" y="56.333333333333314" width="30" height="33.666666666666686"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="EyD-wa-vBA"/>
-                                    <constraint firstAttribute="width" constant="24" id="iMt-Sb-flT"/>
+                                    <constraint firstAttribute="width" constant="30" id="nZF-ie-1qH"/>
+                                    <constraint firstAttribute="height" constant="30" id="uca-Bb-3hs"/>
                                 </constraints>
-                            </view>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="semibold"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.8784313725490196" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="g39-2J-LKm" firstAttribute="top" secondItem="Woc-gL-PMQ" secondAttribute="top" constant="18" id="2GB-of-1nK"/>
+                            <constraint firstItem="DT5-2S-sBi" firstAttribute="leading" secondItem="g39-2J-LKm" secondAttribute="trailing" constant="8" symbolic="YES" id="6CA-r1-yLz"/>
                             <constraint firstItem="dxn-eI-W3X" firstAttribute="leading" secondItem="Woc-gL-PMQ" secondAttribute="leading" constant="20" id="8sS-dx-y5X"/>
+                            <constraint firstAttribute="trailing" secondItem="g39-2J-LKm" secondAttribute="trailing" constant="40" id="B4t-BW-oJq"/>
                             <constraint firstAttribute="bottom" secondItem="g39-2J-LKm" secondAttribute="bottom" constant="15" id="BlY-jn-402"/>
-                            <constraint firstAttribute="trailing" secondItem="gdx-9O-8O9" secondAttribute="trailing" constant="8" id="OfG-7v-Ztt"/>
-                            <constraint firstItem="gdx-9O-8O9" firstAttribute="centerY" secondItem="Woc-gL-PMQ" secondAttribute="centerY" id="Pb8-g8-RRi"/>
-                            <constraint firstItem="gdx-9O-8O9" firstAttribute="leading" secondItem="g39-2J-LKm" secondAttribute="trailing" constant="8" id="W59-db-5C7"/>
                             <constraint firstItem="dxn-eI-W3X" firstAttribute="centerY" secondItem="Woc-gL-PMQ" secondAttribute="centerY" id="gkA-VF-VQs"/>
                             <constraint firstItem="g39-2J-LKm" firstAttribute="leading" secondItem="dxn-eI-W3X" secondAttribute="trailing" constant="8" id="jCZ-MH-ej7"/>
+                            <constraint firstItem="DT5-2S-sBi" firstAttribute="centerY" secondItem="Woc-gL-PMQ" secondAttribute="centerY" id="k1h-mG-DhF"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -91,13 +93,15 @@
                 <outlet property="NameLbl" destination="UWB-OP-hHk" id="0bI-1d-f20"/>
                 <outlet property="RoleLbl" destination="CkI-bO-Sv4" id="gTD-1D-bKK"/>
                 <outlet property="SchoolNamelbl" destination="XGT-Jn-C5K" id="R57-xu-na4"/>
+                <outlet property="arrowImage" destination="DT5-2S-sBi" id="dak-pr-WKH"/>
                 <outlet property="cellview" destination="Woc-gL-PMQ" id="eFZ-Yy-E7K"/>
                 <outlet property="imgview" destination="dxn-eI-W3X" id="SyC-Eu-44R"/>
             </connections>
-            <point key="canvasLocation" x="168.70229007633588" y="61.971830985915496"/>
+            <point key="canvasLocation" x="187.78625954198472" y="61.971830985915496"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="chevron.right.square" catalog="system" width="128" height="114"/>
         <image name="schoolss" width="42.666667938232422" height="42.666667938232422"/>
     </resources>
 </document>

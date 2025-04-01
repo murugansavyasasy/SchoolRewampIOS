@@ -274,8 +274,8 @@ class CommonStringFile{
     static let Day = "Day"
     static let CreateLeaveRequest = "Create Leave Request"
     static let LeaveRequestInfo = "LeaveRequestInfo"
-    static let Parent = "Parent"
-    static let OrParent = "or Parent"
+    static let Parent = "Student"
+    static let OrParent = "or Student"
     static let Principal = "Principal"
     static let LoginAsTeacherOrParent = "Login As Teacher Or Parent"
     static let LoginAs = "Login As"
@@ -385,15 +385,6 @@ struct DefaultsKeys {
     
 }
 
-struct screenType{
-    
-    static let isMobileNumber  = 1
-    static let isLoginPage  = 2
-    static let isPassword  = 3
-    static let isSplash  = 4
-    static let isForgotPassword  = 5
-    static let is_noticeboard = "notice_board"
-}
 
 class AwsCredentials {
  

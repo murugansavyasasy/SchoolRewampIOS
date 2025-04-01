@@ -136,56 +136,7 @@ class OTPVc: UIViewController {
       }
     
     
-//    
-//    @objc func showDialOptions() {
-//        doneButtonAction()
-//        
-//        let dialNumbersString = validateMobileData.first?.dial_numbers ?? ""  // Example numbers
-//        let dialNumbers = dialNumbersString.components(separatedBy: ",")
-//        
-//        guard !dialNumbers.isEmpty else {
-//            print("No numbers available")
-//            return
-//        }
-//
-//        // Show action sheet with numbers
-//        let alertController = UIAlertController(title: "Choose a Number", message: nil, preferredStyle: .actionSheet)
-//        
-////        for number in dialNumbers {
-////            let action = UIAlertAction(title: number, style: .default) { _ in
-////                self.callNumber(phoneNumber: number)  // Directly call the selected number
-////            }
-////            alertController.addAction(action)
-////        }
-//        
-//        let number1 = UIAlertAction(title: "123456789", style: .default){ _ in
-//            
-//            self.callNumber(phoneNumber: dialNumbers.first ?? "")
-//        }
-//        let number2 = UIAlertAction(title: dialNumbers.last, style: .default){ [self] _ in
-//             
-//            callNumber(phoneNumber: title ?? "")
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//        
-//        alertController.addAction(number1)
-//        alertController.addAction(number2)
-//        alertController.addAction(cancelAction)
-//        
-//        present(alertController, animated: true, completion: nil)
-//    }
-//
-//
-//    // Function to dial the selected number
-//    func callNumber(phoneNumber: String) {
-//        if let url = URL(string: "tel://\(phoneNumber)"),
-//           UIApplication.shared.canOpenURL(url) {
-//            UIApplication.shared.open(url,options: [:],completionHandler: nil)
-//        } else {
-//            print("Cannot open dial pad")
-//        }
-//    }
+
     @IBAction func validationBtn(_ sender: Any) {
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
             
@@ -289,14 +240,15 @@ class OTPVc: UIViewController {
                                 present(vc, animated: true)
                             }
                             else {
-                                
                                 UserDefaultFileManager
                                     .saveLoginCredentials(
-                                        mobile_number:mobile_number ?? "",
-                                        pwd: ""
+                                        mobile_number:mobile_number ?? "", pwd: ""
                                     )
-                                if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true) &&  (
-                                    UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true
+                                
+                                if(UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.is_staff == true) &&  (
+                                    UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.is_parent == true
                                 ){
                                     let vc = PriorityVC(
                                         nibName: nil,
@@ -306,22 +258,62 @@ class OTPVc: UIViewController {
                                     present(vc, animated: true)
                                     
                                 }
-                                else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_staff == true){
-                                    let vc = TapBarVC(
-                                        nibName: nil,
-                                        bundle: nil
-                                    )
-                                    vc.login_astype = 1
-                                    ServiceUrl.token = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first?.access_token ?? ""
-                                    vc.modalPresentationStyle = .fullScreen
-                                    present(vc, animated: true)
+                                else if(UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.is_staff == true){
+                                    
+                                    if(UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.staff_role == PriorityType.is_staff){
+                                        if(
+                                            UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1
+                                        )
+                                        {
+                                            let vc = PriorityVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        else{
+                                            if let data = UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: data)}
+                                            
+                                            let vc = TapBarVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.login_astype = 1
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                        
+                                    }
+                                    else{
+                                        
+                                        //
+                                        if let data = UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.staff_details?.first{
+                                            UserDefaultFileManager.saveStaffDetails(data: data)}
+                                        
+                                        
+                                        let vc = TapBarVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.login_astype = 1
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
                                     
                                 }
-                                else if(UserDefaultFileManager.getUserDetails()?.user_details?.is_parent == true){
+                                else if(UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.is_parent == true){
                                     
-//
                                     if(
-                                        UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
+                                        UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.child_details?.count ?? 0 > 1
                                     ){
                                         let vc = PriorityVC(
                                             nibName: nil,
@@ -332,18 +324,19 @@ class OTPVc: UIViewController {
                                     }
                                     else{
                                         
+                                        if let data = UserDefaultFileManager
+                                    .getUserDetails()?.user_details?.child_details?.first{
+                                            UserDefaultFileManager.saveChildDetails(data: data)
+                                        }
+                                        
                                         let vc = TapBarVC(
                                             nibName: nil,
                                             bundle: nil
                                         )
                                         vc.login_astype = 2
-                                        ServiceUrl.token = UserDefaultFileManager.getUserDetails()?.user_details?.child_details?.first?.access_token ?? ""
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }
-                                    
-                                    
-                                    
                                 }
                                 
                             }

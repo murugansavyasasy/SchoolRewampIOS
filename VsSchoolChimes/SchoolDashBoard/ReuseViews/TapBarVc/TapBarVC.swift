@@ -37,6 +37,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     var languageCode : String!
     var profile:Bool = false
     var childDetail:ChildDetails?
+    var staffDetail:StaffDetails?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,9 +81,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         super.viewWillAppear(animated)
         if login_astype == 2{
             Parent.getValue = login_astype
-            Parent.ChildDetail =  UserDefaultFileManager
-                .getUserDetails()?.user_details?.child_details?.first
-           
+            
             selectViewController(Parent)
             
             applyGradientToTabBar(tabBar, colors: [Colornames.gradientBlue.blendedWithWhiteColour(factor: 0.3), Colornames.gradientgreen.blendedWithWhiteColour(factor: 0.3)])
@@ -131,7 +130,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
 
         }else if let profileVC = viewController as? ParentDashboardVc, login_astype == 2 {
             profileVC.getValue = login_astype
-            profileVC.ChildDetail = childDetail
             
         }else if let HelpVc = viewController as? HelpVc, login_astype == 2 {
             HelpVc.passVale = login_astype ?? 0
