@@ -277,8 +277,9 @@ class OTPVc: UIViewController {
                                         }
                                         else{
                                             if let data = UserDefaultFileManager
-                                    .getUserDetails()?.user_details?.staff_details?.first{
-                                                UserDefaultFileManager.saveStaffDetails(data: data)}
+                                                .getUserDetails()?.user_details?.staff_details?.first{
+                                                UserDefaultFileManager.saveStaffDetails(data: data)
+                                            }
                                             
                                             let vc = TapBarVC(
                                                 nibName: nil,
@@ -294,8 +295,9 @@ class OTPVc: UIViewController {
                                         
                                         //
                                         if let data = UserDefaultFileManager
-                                    .getUserDetails()?.user_details?.staff_details?.first{
-                                            UserDefaultFileManager.saveStaffDetails(data: data)}
+                                            .getUserDetails()?.user_details?.staff_details?.first{
+                                            UserDefaultFileManager.saveStaffDetails(data: data)
+                                        }
                                         
                                         
                                         let vc = TapBarVC(
