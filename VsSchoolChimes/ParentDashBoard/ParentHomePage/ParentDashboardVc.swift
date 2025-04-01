@@ -48,7 +48,7 @@ class ParentDashboardVc: UIViewController {
     var isShowingAll = false
     private var firstArray: [String] = []
     private var secondArray: [String] = []
-    var ChildDetail : ChildDetails?
+   
     let advertisements = [
         "Ad 1: Special Offer",
         "Ad 2: Final Sale",
@@ -58,35 +58,25 @@ class ParentDashboardVc: UIViewController {
     var displayedCategories: [String] = []
     var indexNo = 0
     let newString = "Add"
-    var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
+    var childDetailscount = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
+    var childDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
        
         bottomCv.delegate = self
         bottomCv.dataSource = self
-        if let child = childDetails?.first{
-            userNameLbl.text = child.name
-            SchoolNameLabel.text = child.school_name
-            AddressLabel.text = child.school_city
-            Profileimage.kf.setImage(with: URL(string: child.school_logo_url ?? "Default_profile"))
-            
-            ServiceUrl.token = child.access_token ?? ""
-        }else{
-            let child = childDetails
-            userNameLbl.text = child?.first?.name
-            SchoolNameLabel.text = child?.first?.school_name
-            AddressLabel.text = child?.first?.school_city
-            Profileimage.kf.setImage(with: URL(string: child?.first?.school_logo_url ?? ""))
-        }
-        
-        
-        
-        if childDetails?.count ?? 0 > 1{
+      
+        if childDetailscount?.count ?? 0 > 1{
             
             changeRollLbl.isHidden = false
         }else{
             changeRollLbl.isHidden = true
         }
+        
+        userNameLbl.text = childDetails?.name
+            SchoolNameLabel.text = childDetails?.school_name
+            AddressLabel.text = childDetails?.school_city
+            Profileimage.kf.setImage(with: URL(string: childDetails?.school_logo_url ?? ""))
         
         DeviceTokenAPIcall()
         get_dashboard_details()
@@ -525,7 +515,7 @@ extension ParentDashboardVc: UISearchBarDelegate{
       
         print("tokenefrfrdfrfdx",ServiceUrl.token)
         APIService.shared
-            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=parent", parameters: [:] , type: ApitTypeSringFile.GET, token: ServiceUrl.token){ [self] (
+            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=parent", parameters: [:] , type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
                 result : Result<DashboardResponse,
                 Error>
             ) in

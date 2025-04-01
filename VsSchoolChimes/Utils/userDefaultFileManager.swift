@@ -16,9 +16,8 @@ struct UserDefaultFileManager {
     static let  mobileNumber = "mobile_number"
     static let  password = "password"
     static let  User_details = "User_details"
-    static let  stsffDetails = "staff_details"
-    static let  childDetails = "child_details"
-    
+    static let stsffDetails = "staff_details"
+    static let childDetails = "child_details"
     static func saveCountryDetails(data: CountryData) {
         if let encoded = try? JSONEncoder().encode(data) {
             UserDefaults.standard.set(encoded, forKey: countryKey)
@@ -72,16 +71,7 @@ struct UserDefaultFileManager {
             UserDefaults.standard.set(encoded, forKey: User_details)
         }
     }
-    static func saveStaffDetails(data: StaffDetails) {
-        if let encoded = try? JSONEncoder().encode(data) {
-            UserDefaults.standard.set(encoded, forKey: User_details)
-        }
-    }
-    static func saveChildDetails(data: ChildDetails) {
-        if let encoded = try? JSONEncoder().encode(data) {
-            UserDefaults.standard.set(encoded, forKey: User_details)
-        }
-    }
+    
     static func getUserDetails() -> UserData? {
         if let savedData = UserDefaults.standard.data(forKey: User_details),
            let user = try? JSONDecoder().decode(UserData.self, from: savedData) {
@@ -89,20 +79,36 @@ struct UserDefaultFileManager {
         }
         return nil
     }
-    static func getUserDetails() -> ChildDetails? {
-        if let savedData = UserDefaults.standard.data(forKey: childDetails),
-           let user = try? JSONDecoder().decode(ChildDetails.self, from: savedData) {
-            return user
+    
+    static func saveStaffDetails(data: StaffDetails) {
+        if let encoded = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encoded, forKey: User_details)
         }
         return nil
     }
-    static func getUserDetails() -> StaffDetails? {
+    
+    static func get_staff_Details() -> StaffDetails? {
         if let savedData = UserDefaults.standard.data(forKey: stsffDetails),
            let user = try? JSONDecoder().decode(StaffDetails.self, from: savedData) {
             return user
         }
         return nil
     }
+    static func saveChildDetails(data: ChildDetails) {
+        if let encoded = try? JSONEncoder().encode(data) {
+            UserDefaults.standard.set(encoded, forKey: User_details)
+        }
+    }
+    
+    static func get_child_Details() -> ChildDetails? {
+        if let savedData = UserDefaults.standard.data(forKey: childDetails),
+           let user = try? JSONDecoder().decode(ChildDetails.self, from: savedData) {
+            return user
+        }
+        return nil
+    }
+    
+    
 }
 
 

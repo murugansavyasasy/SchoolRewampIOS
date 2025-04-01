@@ -29,9 +29,12 @@ class PriorityVC: UIViewController {
     
     var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
+    var staff_role = localData.user_data?.user_details?.staff_role
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        
+        
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
     
@@ -78,6 +81,33 @@ class PriorityVC: UIViewController {
        //MARK: Translate
        let rollname = localData.user_data?.user_details?.role_name
        ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
+       
+       let isstaff = localData.user_data?.user_details?.is_staff
+       let isParent = localData.user_data?.user_details?.is_parent
+      
+       
+       if(isstaff == true && isParent == true ){
+           ParentButton.isHidden = false
+           teacherButton.isHidden = false
+       }
+       else if(isstaff == true){
+           
+           ParentButton.isHidden = true
+           teacherButton.isHidden = false
+       }
+       else if(isParent == true){
+           ParentButton.isHidden = false
+           teacherButton.isHidden = true
+       }
+       
+       if staff_role == PriorityType.is_staff{
+           NextButtonView.isHidden = true
+       }else{
+           NextButtonView.isHidden = false
+       }
+       
+       
+       
        TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\(rollname ?? "") \(CommonStringFile.OrParent.translated())"
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
        teacherButton.setTitle(rollname, for: .normal)
@@ -175,7 +205,9 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
         if login_astype  == 1 {
            
+           
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SchoolTVCell, for: indexPath) as! SchoolTVCell
+            
             
             cell.NameLbl.text = staffDetails?[indexPath.row].staff_name
             cell.RoleLbl.text = staffDetails?[indexPath.row].role
@@ -185,6 +217,10 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             
             if let color1 = colour1, let color2 = colour2 {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])
+            }
+            
+            if staff_role != PriorityType.is_staff{
+                cell.arrowImage.isHidden = true
             }
             
             return cell
@@ -223,14 +259,24 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
         
         if login_astype  == 2 {
             if let data = childDetails?[indexPath.row]{
-                UserDefaultFileManager.saveChildDetails(data: data)
-            }
-            
+                UserDefaultFileManager.saveChildDetails(data: data)}
             let vc = TapBarVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             vc.login_astype = login_astype
             vc.childDetail = childDetails?[indexPath.row]
             present(vc, animated: true)
+        }else if login_astype  == 1 {
+            if staff_role == PriorityType.is_staff{
+                if let data = staffDetails?[indexPath.row]{
+                    UserDefaultFileManager.saveStaffDetails(data: data)}
+                let vc = TapBarVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                vc.login_astype = login_astype
+                
+                
+            }
+            
+            
         }
     }
     

@@ -9,6 +9,8 @@ import UIKit
 
 class SchoolTVCell: UITableViewCell {
 
+    
+    @IBOutlet weak var arrowImage: UIImageView!
     @IBOutlet weak var AddressLbl: UILabel!
     @IBOutlet weak var RoleLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!

@@ -9,7 +9,8 @@ import UIKit
 import DropDown
 
 class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
-
+   
+    @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var contentLbl: UILabel!
     @IBOutlet weak var speficBtnName: UIButton!
@@ -18,7 +19,7 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
     @IBOutlet weak var selectStandardDropDown: UIView!
     @IBOutlet weak var selectSectionDropdown: UIView!
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var cv: UICollectionView!
+  
     var cv_itemsarry : [String] = ["Entier School","Group","Standard","Section/Student"]
     var lastSelectedButton: UIButton?
     
@@ -36,12 +37,16 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
            Section(title: "Section", items: ["A section", "B section", "C section", "D section", "E section"])
        ]
     
+    let segmentTitles: [String] = ["Entier School","Group","Standard","Section/Student"]
+    
     let dropDown = DropDown()
     let StdDropdown = DropDown()
     var flag = 0
     var selectedId : IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
+        sendbtnName.layer.cornerRadius = 10
+        speficBtnName.layer.cornerRadius = 10
         
         selectStandardDropDown.layer.cornerRadius = 10
         selectStandardDropDown.layer.shadowColor = UIColor.black.cgColor
@@ -50,9 +55,9 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
         selectStandardDropDown.layer.shadowRadius = 4
         selectStandardDropDown.backgroundColor = .white
         
-        cv.register(UINib(nibName: "RecipientCVcell", bundle: nil), forCellWithReuseIdentifier: "RecipientCVcell")
-        cv.dataSource = self
-        cv.delegate = self
+//        cv.register(UINib(nibName: "RecipientCVcell", bundle: nil), forCellWithReuseIdentifier: "RecipientCVcell")
+//        cv.dataSource = self
+//        cv.delegate = self
         
         
         selectSectionDropdown.isHidden = true
@@ -68,10 +73,48 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
         tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
         
         tv.register(UINib(nibName:"Std_Grp_header", bundle: nil), forHeaderFooterViewReuseIdentifier: "Std_Grp_header")
+        
+        
+     
+               
     }
 
     
-    
+   
+    @IBAction func segmentAction(_ sender: Any) {
+        
+        
+        if segmentName.selectedSegmentIndex == 0{
+            contentLbl.isHidden = false
+            speficBtnName.isHidden = true
+            selectStandardDropDown.isHidden = true
+            tv.isHidden = true
+        }else if segmentName.selectedSegmentIndex == 1{
+            contentLbl.isHidden = true
+            speficBtnName.isHidden = true
+            flag = 1
+            selectStandardDropDown.isHidden = true
+            tv.isHidden = false
+            tv.dataSource = self
+            tv.delegate = self
+            tv.reloadData()
+        }else if segmentName.selectedSegmentIndex == 2{
+            contentLbl.isHidden = true
+            speficBtnName.isHidden = true
+            flag = 3
+            selectStandardDropDown.isHidden = true
+            tv.isHidden = false
+            tv.dataSource = self
+            tv.delegate = self
+            tv.reloadData()
+        }else if segmentName.selectedSegmentIndex == 3{
+            speficBtnName.isHidden = false
+            contentLbl.isHidden = true
+            flag = 2
+            tv.isHidden = false
+            selectStandardDropDown.isHidden = false
+        }
+    }
     
     @IBAction func selectStd(){
         setupStdDropdown ()
@@ -127,11 +170,12 @@ extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        selectedId = indexPath
+       
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipientCVcell", for: indexPath) as! RecipientCVcell
         
         cell.btnName.setTitle(cv_itemsarry[indexPath.item], for: .normal)
         cell.delegate = self
+        
         cell.configureCell(indexPath: indexPath)
         return cell
         
@@ -146,15 +190,6 @@ extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
         button.layer.shadowOffset = CGSize(width: 1, height: 1)
         button.layer.shadowOpacity = 0.5
         button.layer.shadowRadius = 2
-        
-        if indexPath == selectedId {
-            
-            button.backgroundColor = .systemBlue
-        }else{
-            
-            button.backgroundColor = .gray
-        }
-      
         
         let selectedItem = cv_itemsarry[indexPath.item]
         if selectedItem == "Entier School"{

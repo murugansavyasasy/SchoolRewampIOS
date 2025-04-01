@@ -59,21 +59,21 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     deinit {
         timer?.invalidate()
     }
-    var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-        get_dashboard_details()
-        if let staff = staffDetails{
-            SchoolNameLabel.text = staff.first?.school_name
-            AddressLabel.text = staff.first?.city
-            schoolLogoImg.kf.setImage(with: URL(string:staff.first?.school_logo ?? ""))
-        }
-        if staffDetails?.count ?? 0 > 1{
-            
+       
+            SchoolNameLabel.text = staffDetails?.school_name
+            AddressLabel.text = staffDetails?.city
+            schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
+       
+        if staffDetailsCount?.count ?? 0 > 1{
             changeRollLbl.isHidden = false
         }else{
             changeRollLbl.isHidden = true
         }
+        
         StyleAndTranslater()
         setupVideoBackground()
         DeviceTokenAPIcall()
@@ -563,11 +563,11 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             }
     }
     func get_dashboard_details(){
-        
-        print("tokenefrfrdfrfdx",ServiceUrl.token)
-        
+      
+        print("tokenefrfrdfrfdx",staffDetails?.access_token ?? "")
+       
         APIService.shared
-            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=staff", parameters: [:] , type: ApitTypeSringFile.GET, token: ServiceUrl.token){ [self] (
+            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=staff", parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
                 result : Result<DashboardResponse,
                 Error>
             ) in
