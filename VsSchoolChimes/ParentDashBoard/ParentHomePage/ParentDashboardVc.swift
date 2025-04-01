@@ -40,7 +40,7 @@ class ParentDashboardVc: UIViewController {
     private lazy var fourthVC = SettingsViewController()
     let MenuRedirect = MenuRedirectHandler.shared
     var menu_details: [MenuDetail]?
-    var Dummymenu_details: [MenuDetail]?
+    var filteredMenu_details: [MenuDetail]?
     var currentPlaceholderIndex = 0
     var timer: Timer?
     let alert = CustomAlert()
@@ -282,7 +282,7 @@ class ParentDashboardVc: UIViewController {
 extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Dummymenu_details?.count ?? 0 // Ensure ItemnCount matches your data source
+        return filteredMenu_details?.count ?? 0 // Ensure ItemnCount matches your data source
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -302,11 +302,14 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             cell.MenuImgView.image = nil
             
             
-            let label = Dummymenu_details?[indexPath.row].name?.translated()
-            let img = UIImage(named: Dummymenu_details?[indexPath.row].name?.removingSlashComponent() ?? "")
+            let label = filteredMenu_details?[indexPath.row].name?.translated()
+            if let name = filteredMenu_details?[indexPath.row].id {
+                let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name}
+                let img = UIImage(named: filteredItems.first?.name ?? "")
+                cell.MenuImgView.image = img
+            }
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
-            cell.MenuImgView.image = img
             cell.GradientView.backgroundColor = .clr
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -323,16 +326,15 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
            if sender.isSelected {
                // Collapse back to show only the first 9 items
                if let menuDetails = menu_details {
-                   Dummymenu_details = Array(menuDetails.prefix(9))
-                   if Dummymenu_details?.count ?? 0 > 5 {
-                       Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                   filteredMenu_details = Array(menuDetails.prefix(9))
+                   if filteredMenu_details?.count ?? 0 > 5 {
+                       filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
                    }
                }
            } else {
                // Expand to show all items
-               Dummymenu_details = menu_details
+               filteredMenu_details = menu_details
            }
-           
            // Toggle the state
            bottomCv.reloadData()
            let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
@@ -347,7 +349,7 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         
         if indexPath.row < MenuRedirect.receiverItems.count {
             
-            let menuItem = Dummymenu_details?[indexPath.row].id
+            let menuItem = filteredMenu_details?[indexPath.row].id
             
             switch menuItem {
             case 0:
@@ -418,7 +420,7 @@ extension ParentDashboardVc: UICollectionViewDelegateFlowLayout {
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
         
-        let label = Dummymenu_details?[indexPath.row].name?.translated()
+        let label = filteredMenu_details?[indexPath.row].name?.translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
         let textHeight = label?.height(withConstrainedWidth: maxTextWidth, font: font) ?? 0
         
@@ -453,7 +455,7 @@ extension ParentDashboardVc: UISearchBarDelegate{
         
         if searchText.isEmpty {
             filteredItems = menu_details
-            Dummymenu_details = menu_details.map { Array($0.prefix(9)) }
+            filteredMenu_details = menu_details.map { Array($0.prefix(9)) }
         } else {
             filteredItems = menu_details?.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
         }
@@ -522,7 +524,6 @@ extension ParentDashboardVc: UISearchBarDelegate{
     func get_dashboard_details(){
       
         print("tokenefrfrdfrfdx",ServiceUrl.token)
-       
         APIService.shared
             .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=parent", parameters: [:] , type: ApitTypeSringFile.GET, token: ServiceUrl.token){ [self] (
                 result : Result<DashboardResponse,
@@ -544,9 +545,9 @@ extension ParentDashboardVc: UISearchBarDelegate{
                             displayedCategories = menu_details.prefix(9).map {
                                 $0.name ?? ""
                             }
-                            Dummymenu_details =  Array(menu_details.prefix(9))
-                            if Dummymenu_details?.count ?? 0 > 5 {
-                                Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                            filteredMenu_details =  Array(menu_details.prefix(9))
+                            if filteredMenu_details?.count ?? 0 > 5 {
+                                filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
                             }
                             filteredItems = menu_details
                         } else {

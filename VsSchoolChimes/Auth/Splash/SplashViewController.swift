@@ -229,6 +229,10 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                             nibName: nil,
                                             bundle: nil
                                         )
+                                        if Data.user_details?.staff_details?.count ?? 0 == 1 , let data = Data.user_details?.staff_details?.first{
+                                            UserDefaultFileManager.saveStaffDetails(data: data)
+                                        }
+                                        
                                         vc.login_astype = 1
                                         ServiceUrl.token = Data.user_details?.staff_details?.first?.access_token ?? ""
                                         vc.modalPresentationStyle = .fullScreen
@@ -248,11 +252,14 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                             present(vc, animated: true)
                                         }
                                         else{
-                                            
+                                            if let data = Data.user_details?.child_details?.first{
+                                                UserDefaultFileManager.saveChildDetails(data: data)
+                                            }
                                             let vc = TapBarVC(
                                                 nibName: nil,
                                                 bundle: nil
                                             )
+                                            
                                             ServiceUrl.token = Data.user_details?.child_details?.first?.access_token ?? ""
                                             vc.login_astype = 2
                                             vc.modalPresentationStyle = .fullScreen
