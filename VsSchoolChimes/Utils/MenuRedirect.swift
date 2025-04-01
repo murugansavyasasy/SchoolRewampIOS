@@ -323,7 +323,8 @@ class MenuRedirectHandler {
     }
     
     func resiverExamMark(from viewController: UIViewController){
-        let vc = ExameMarVC(nibName: nil, bundle: nil)
+//        let vc = ExameMarVC(nibName: nil, bundle: nil)
+        let vc = ExamDetailsVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

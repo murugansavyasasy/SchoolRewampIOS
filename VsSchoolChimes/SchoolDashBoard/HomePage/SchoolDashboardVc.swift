@@ -616,4 +616,134 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             
         }
     }
+    
+    
+    func getGrouplistAPI(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_group_list + "school_id=6018" + "staff_id=10067890", parameters: [:],type: ApitTypeSringFile.GET , token: ServiceUrl.token) {
+            [self] (result: Result<GrouplistSuc,Error>) in
+            
+            switch result {
+                
+            case .success(let successmessage):
+                
+                if successmessage.status == true{
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        print("Success")
+                    }
+                    
+                }else{
+                    
+                    DispatchQueue.main.async {
+                        print("failure")
+                    }
+                }
+                
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+            
+        }
+    }
+    
+    func getStandardsAPI(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards + "school_id=6018" + "staff_id=10067890", parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token) { (result:Result <GetStandardsSuc,Error>) in
+            
+            switch result {
+                
+            case .success(let successMessage):
+                
+                if successMessage.status == true{
+                    
+                    DispatchQueue.main.async { [self] in
+                        print("success")
+                    }
+                }else{
+                    print("Failure")
+                }
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
+    
+    func getStudentListAPI(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list + "school_id=6018" + "staff_id=10067890", parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token){ (result:Result <GetStudentlistSuc,Error>) in
+            
+            switch result {
+                
+            case .success(let successMessage):
+                
+                if successMessage.status == true{
+                    
+                    DispatchQueue.main.async { [self] in
+                        print("success")
+                    }
+                }else{
+                    print("Failure")
+                }
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
+    
+    func getSubjectListAPI(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list + "school_id=6018" + "staff_id=10067890", parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token){ (result:Result <GetSubjectlistSuc,Error>) in
+            
+            switch result {
+                
+            case .success(let successMessage):
+                
+                if successMessage.status == true{
+                    
+                    DispatchQueue.main.async { [self] in
+                        print("success")
+                    }
+                }else{
+                    print("Failure")
+                }
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
+    
+    func getStaffListAPI(){
+        
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list + "school_id=6018", parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token){ (result:Result <GetStafflistSuc,Error>) in
+            
+            switch result {
+                
+            case .success(let successMessage):
+                
+                if successMessage.status == true{
+                    
+                    DispatchQueue.main.async { [self] in
+                        print("success")
+                    }
+                }else{
+                    print("Failure")
+                }
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
 }
