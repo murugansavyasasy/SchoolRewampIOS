@@ -39,7 +39,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var filteredItems: [MenuDetail]?
     let menuName = MenuStringFile()
     var menu_details: [MenuDetail]?
-    var Dummymenu_details: [MenuDetail]?
+    var filteredMenu_details: [MenuDetail]?
     var getValue : Int!
     var searchItem = 0
     var currentIndex = 0
@@ -105,8 +105,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let profileTap =  UITapGestureRecognizer(target: self, action: #selector(OpenProfile))
         schoolLogoImg.addGestureRecognizer(profileTap)
         schoolLogoImg.isUserInteractionEnabled = true
-//        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
-//        collectionHeight.constant = contentViewHeight
     }
     
     override func viewDidLayoutSubviews() {
@@ -149,8 +147,8 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         _ view: UIView,
         gradientColors: [UIColor],
         cornerRadius: CGFloat = 10,
-        opacity: CGFloat = 0.5, // Opacity for the gradient
-        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
+        opacity: CGFloat = 0.5,
+        lightenFactor: CGFloat = 0.3
     ) {
         // Set corner radius
         view.layer.cornerRadius = cornerRadius
@@ -194,7 +192,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         super.viewWillAppear(animated)
         bottomCv.delegate = self
         bottomCv.dataSource = self
-        get_dashboard_details()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -203,21 +200,21 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     @IBAction func ViewDetailsAct(_ sender: Any) {
-      
+        
         MenuRedirect.senderMarkAttendanceNavigate(from: self)
     }
     
     
     func OpenInside(from viewController: UIViewController){
         let storeViewController = SKStoreProductViewController()
-            storeViewController.delegate = viewController as? SKStoreProductViewControllerDelegate
-            storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "YOUR_APP_ID"]) { (loaded, error) in
-                if loaded {
-                    viewController.present(storeViewController, animated: true)
-                }else{
-                    print("can't open the appstore ❤️")
-                }
+        storeViewController.delegate = viewController as? SKStoreProductViewControllerDelegate
+        storeViewController.loadProduct(withParameters: [SKStoreProductParameterITunesItemIdentifier: "YOUR_APP_ID"]) { (loaded, error) in
+            if loaded {
+                viewController.present(storeViewController, animated: true)
+            }else{
+                print("can't open the appstore ❤️")
             }
+        }
     }
     
     @IBAction func redirectAct() {
@@ -263,21 +260,21 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     @IBAction func seeAllShow(_ sender: UIButton) {
         sender.isSelected.toggle()
-           seeAllButton.setTitle(!sender.isSelected ? "See Less" : "See All", for: .normal)
-           
-           if sender.isSelected {
-               // Collapse back to show only the first 9 items
-               if let menuDetails = menu_details {
-                   Dummymenu_details = Array(menuDetails.prefix(9))
-                   if Dummymenu_details?.count ?? 0 > 5 {
-                       Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
-                   }
-               }
-           } else {
-               // Expand to show all items
-               Dummymenu_details = menu_details
-           }
-
+        seeAllButton.setTitle(!sender.isSelected ? "See Less" : "See All", for: .normal)
+        
+        if sender.isSelected {
+            // Collapse back to show only the first 9 items
+            if let menuDetails = menu_details {
+                filteredMenu_details = Array(menuDetails.prefix(9))
+                if filteredMenu_details?.count ?? 0 > 5 {
+                    filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                }
+            }
+        } else {
+            // Expand to show all items
+            filteredMenu_details = menu_details
+        }
+        
         bottomCv.reloadData() // Refresh the
         let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
         collectionHeight.constant = contentViewHeight
@@ -316,7 +313,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
             
-            return Dummymenu_details?.count ?? 0
+            return filteredMenu_details?.count ?? 0
             
         }else{
             return 5
@@ -336,11 +333,14 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 cell.MenuLbl.text = nil
                 cell.MenuImgView.image  = nil
                 
-                let label = Dummymenu_details?[indexPath.row].name?.translated()
-                let img = UIImage(named: Dummymenu_details?[indexPath.row].name?.removingSlashComponent() ?? "")
+                let label = filteredMenu_details?[indexPath.row].name?.translated()
+                if let name = filteredMenu_details?[indexPath.row].id {
+                    let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name}
+                    let img = UIImage(named: filteredItems.first?.name ?? "")
+                    cell.MenuImgView.image = img
+                }
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
-                cell.MenuImgView.image  = img
                 cell.GradientView.backgroundColor = .clr
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     cell.GradientView.animateView(enable: false)
@@ -372,7 +372,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         }
         if collectionView == bottomCv{
             
-            let menuItem = Dummymenu_details?[indexPath.row].id
+            let menuItem = filteredMenu_details?[indexPath.row].id
             
             switch menuItem {
             case 0:
@@ -384,7 +384,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderImgPDfNavigate(from: self)
                 
             case 3:
-               
+                
                 MenuRedirect.senderNoticeboardNavigate(from: self)
             case 4:
                 MenuRedirect.senderEventNavigate(from: self)
@@ -411,14 +411,14 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 
             case 11:
                 MenuRedirect.ScheduleExamVCNavigat(from: self)
-               
+                
             case 12:
-               
+                
                 MenuRedirect.senderLeaveRequestNavigate(from: self)
-               
+                
                 
             case 13:
-               
+                
                 MenuRedirect.senderMgmt(from: self)
             case 14:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
@@ -470,7 +470,7 @@ extension SchoolDashboardVc: UICollectionViewDelegateFlowLayout {
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
         
-        let label = Dummymenu_details?[indexPath.row].name?.translated()
+        let label = filteredMenu_details?[indexPath.row].name?.translated()
         let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
         let textHeight = label?.height(withConstrainedWidth: maxTextWidth, font: font) ?? 0
         
@@ -495,7 +495,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         searchItem = 1
         if searchText.isEmpty {
             filteredItems = menu_details
-            Dummymenu_details = menu_details.map { Array($0.prefix(9)) }
+            filteredMenu_details = menu_details.map { Array($0.prefix(9)) }
         } else {
             filteredItems = menu_details?.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
         }
@@ -513,7 +513,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             searchHeightCon.constant = 0
         }
     }
-  
+    
     func DeviceTokenAPIcall(){
         let secureID = SecureIDManager.getSecureID()
         
@@ -526,41 +526,41 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         APIService.shared
             .makeApi(url: ServiceUrl.auth_device_token, parameters:[
                 
-                 COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
-                 DeviceTokenStringFile.device_token : deviceToken ?? "",
-                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
-                 DeviceTokenStringFile.secure_id : secureID
-                 
+                COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
+                DeviceTokenStringFile.device_token : deviceToken ?? "",
+                COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+                DeviceTokenStringFile.secure_id : secureID
+                
             ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
                 result : Result<DeviceTokenResponseSuc,
                 Error>
             ) in
-            
-            switch result {
                 
-            case.success(let succesmessage) :
-                
-                if succesmessage.status == true {
+                switch result {
                     
-                    DispatchQueue.main.async { [self] in
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
                         
-                        print("Status true5656565656565656")
+                        DispatchQueue.main.async { [self] in
+                            
+                            print("Status true5656565656565656")
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            print(" status false")
+                        }
                     }
-                }else {
+                    
+                case.failure(let error) :
                     
                     DispatchQueue.main.async {
-                        print(" status false")
+                        print(error.localizedDescription)
                     }
                 }
                 
-            case.failure(let error) :
-                
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
             }
-            
-        }
     }
     func get_dashboard_details(){
       
@@ -571,50 +571,43 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                 result : Result<DashboardResponse,
                 Error>
             ) in
-            
-            switch result {
                 
-            case.success(let succesmessage) :
-                
-                print("succesmessagesdsds",succesmessage)
-                if succesmessage.status == true {
+                switch result {
                     
-                    DispatchQueue.main.async { [self] in
-                      
-                        menu_details = succesmessage.data?.first?.menu_details
-                        if let menu_details = menu_details {
-                            // Extract names from menu_details
-                            displayedCategories = menu_details.prefix(9).map {
-                                $0.name ?? ""
-                            }
-                            Dummymenu_details =  Array(menu_details.prefix(9))
-                            if Dummymenu_details?.count ?? 0 > 5 {
-                                Dummymenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
-                            }
-                            filteredItems = menu_details
-                        } else {
-                            displayedCategories = []
-                            filteredItems = []
-                        }
-                        bottomCv.reloadData()
-                        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
-                        collectionHeight.constant = contentViewHeight
+                case.success(let succesmessage) :
+                    
+                    print("succesmessagesdsds",succesmessage)
+                    if succesmessage.status == true {
                         
+                        DispatchQueue.main.async { [self] in
+                            
+                            menu_details = succesmessage.data?.first?.menu_details
+                            if let menu_details = menu_details {
+                                // Extract names from menu_details
+                                displayedCategories = menu_details.prefix(9).map {
+                                    $0.name ?? ""
+                                }
+                                filteredMenu_details =  Array(menu_details.prefix(9))
+                                if filteredMenu_details?.count ?? 0 > 5 {
+                                    filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+                                }
+                                filteredItems = menu_details
+                            } else {
+                                displayedCategories = []
+                                filteredItems = []
+                            }
+                            bottomCv.reloadData()
+                            let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+                            collectionHeight.constant = contentViewHeight
+                            
+                        }
                     }
-                }else {
+                case.failure(let error) :
                     
                     DispatchQueue.main.async {
-                        
+                        print(error.localizedDescription)
                     }
                 }
-                
-            case.failure(let error) :
-                
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
             }
-            
-        }
     }
 }

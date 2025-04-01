@@ -27,7 +27,46 @@ class MenuRedirectHandler {
     var getValue = 1
     var items : [String] = [ MenuStringFile.Communication,MenuStringFile.ImagePdf,MenuStringFile.VideoUpload,MenuStringFile.NoticeBoard,MenuStringFile.LeaveRequests,MenuStringFile.Assignment,MenuStringFile.OnlineMeeting,MenuStringFile.Homework,MenuStringFile.AttendanceMarking,MenuStringFile.MessagesFromManagement,MenuStringFile.InteractionWithStudent,MenuStringFile.LessonPlan,MenuStringFile.PTM,MenuStringFile.SchoolClassEvents,MenuStringFile.SchoolNeeds,MenuStringFile.VeryImportantInfo,MenuStringFile.AbsenteesReport,MenuStringFile.SchoolStrength,MenuStringFile.DailyCollection,MenuStringFile.StudentReport,MenuStringFile.FeePendingReport,MenuStringFile.MarkYourAttendance,MenuStringFile.StaffWiseAttendanceReport]
     
-    var Imgitems : [String] = [ "Communication","ImagePdf","Upload Video","Notice Board","Request Leave","assignment","Online Meeting","Homework","Attendance marking","Messages from management","Interaction with student","Lesson Plan","PTM","Events","School Needs","Very Important Info","Absentees Report","School strength","Daily Collection","Student Report","Fee Pending Report","Mark Your Attendance","Staff Wise Attendance Report"]
+    var Imgitems: [MenuImage] = [
+        MenuImage(id: 0, name: "Communication"),
+        MenuImage(id: 1, name: "Video"),
+        MenuImage(id: 2, name: "Certificate Request"),
+        MenuImage(id: 3, name: "Notice Board"),
+        MenuImage(id: 4, name: "EventsHolidays"),
+        MenuImage(id: 5, name: "PTM"),
+        MenuImage(id: 6, name: "Absentees Report"),
+        MenuImage(id: 7, name: "School strength"),
+        MenuImage(id: 8, name: "Daily Collection"),
+        MenuImage(id: 9, name: "Homework"),
+        MenuImage(id: 10, name: "ImagePdf"),
+        MenuImage(id: 11, name: "ExamTest"),
+        MenuImage(id: 12, name: "Events"),
+        MenuImage(id: 13, name: "Interaction with Staff"),
+        MenuImage(id: 14, name: "Staff Wise Attendance Report"),
+        MenuImage(id: 15, name: "Online Meeting"),
+        MenuImage(id: 16, name: "MySchoolBus"),
+        MenuImage(id: 17, name: "QuizExam"),
+        MenuImage(id: 18, name: "Exam Marks"),
+        MenuImage(id: 19, name: "Class Timetable"),
+        MenuImage(id: 20, name: "Messages from management"),
+        MenuImage(id: 21, name: "Very Important Info"),
+        MenuImage(id: 22, name: "Assignment"),
+        MenuImage(id: 23, name: "Upload Video"),
+        MenuImage(id: 24, name: "Attendance marking"),
+        MenuImage(id: 25, name: "School Needs"),
+        MenuImage(id: 26, name: "online_meeting"),
+        MenuImage(id: 27, name: "LSRW"),
+        MenuImage(id: 28, name: "Daily Collection"),
+        MenuImage(id: 29, name: "Student Report"),
+        MenuImage(id: 30, name: "Lesson Plan"),
+        MenuImage(id: 31, name: "Fee Pending Report"),
+        MenuImage(id: 32, name: "Interaction with student"),
+        MenuImage(id: 33, name: "attendance_report"),
+        MenuImage(id: 34, name: "Fee Details"),
+        MenuImage(id: 35, name: "receiver_assignment")
+    ]
+
+
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
     
@@ -356,3 +395,7 @@ class MenuRedirectHandler {
     }
 }
 
+struct MenuImage{
+    let id:Int
+    let name:String
+}
