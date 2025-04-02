@@ -9,6 +9,7 @@ import UIKit
 
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var listTable: UITableView!
     var schools: [School] = [
         School(name: "ABC Public School", address: "123, Main Street, Chennai", isSelected: true),
@@ -33,6 +34,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+    }
+    
+    @IBAction func segment_action(_ sender: Any) {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return schools.count

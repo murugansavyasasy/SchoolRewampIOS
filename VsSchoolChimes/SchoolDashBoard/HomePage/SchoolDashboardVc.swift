@@ -61,18 +61,47 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+  
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+
+        
             SchoolNameLabel.text = staffDetails?.school_name
             AddressLabel.text = staffDetails?.city
             schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
        
-        if staffDetailsCount?.count ?? 0 > 1{
+        
+        let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
+        let is_parent =  UserDefaultFileManager.getUserDetails()?.user_details?.is_parent
+        let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
+        
+        
+        
+        
+        if is_staff == true && is_parent == true{
+          
             changeRollLbl.isHidden = false
-        }else{
-            changeRollLbl.isHidden = true
+            
+        }else if is_staff == true{
+            
+            if staff_roll == PriorityType.is_staff{
+                if staffDetailsCount?.count ?? 0 > 1{
+                    changeRollLbl.isHidden = false
+                }else{
+                    changeRollLbl.isHidden = true
+                }
+            }else{
+                if staffDetailsCount?.count ?? 0 == 1{
+                    changeRollLbl.isHidden = false
+                }else{
+                    
+                    changeRollLbl.isHidden = true
+                }
+            }
         }
+        
+       
+       
         
         StyleAndTranslater()
         setupVideoBackground()
@@ -192,6 +221,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         super.viewWillAppear(animated)
         bottomCv.delegate = self
         bottomCv.dataSource = self
+        get_dashboard_details()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -610,4 +640,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                 }
             }
     }
+    
+    
+   
 }

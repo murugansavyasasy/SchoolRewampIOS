@@ -217,49 +217,75 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7ACDA70B-CBEB-4E92-8732-186012E6BAB7"
+            uuid = "037A0C48-E3F1-40FB-9756-B6E5F98609C9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
+            filePath = "VsSchoolChimes/Utils/Colornames.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "950"
-            endingLineNumber = "950"
-            landmarkName = "playButtonTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B56BAE33-F15A-4CB3-9CF2-FB1C824B4FCF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Auth/Otp/OTPVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
-            landmarkName = "Validate_OTP(mobileNumber:otp:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F50A3E68-85C9-48A6-A49E-FE4CBC71D444"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Auth/Otp/OTPVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
-            landmarkName = "Validate_OTP(mobileNumber:otp:)"
-            landmarkType = "7">
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "ImageName"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "037A0C48-E3F1-40FB-9756-B6E5F98609C9 - c58548e8522b779"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.ImageName.deinit"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%203/VsSchoolChimes/Utils/Colornames.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "037A0C48-E3F1-40FB-9756-B6E5F98609C9 - 7f70d704b6f27c66"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.ImageName.__deallocating_deinit"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%203/VsSchoolChimes/Utils/Colornames.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "037A0C48-E3F1-40FB-9756-B6E5F98609C9 - 5cef84336b3db506"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.ImageName.__allocating_init() -&gt; VsSchoolChimes.ImageName"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%203/VsSchoolChimes/Utils/Colornames.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "037A0C48-E3F1-40FB-9756-B6E5F98609C9 - c7df64ca624c3ce"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.ImageName.init() -&gt; VsSchoolChimes.ImageName"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/SCHOOL_REWANP/SchoolRewampIOS%203/VsSchoolChimes/Utils/Colornames.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -66,14 +66,22 @@ class ParentDashboardVc: UIViewController {
         bottomCv.delegate = self
         bottomCv.dataSource = self
       
-        if childDetailscount?.count ?? 0 > 1{
-            
+        let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
+        let is_parent =  UserDefaultFileManager.getUserDetails()?.user_details?.is_parent
+        
+        if(is_staff == true) &&  (is_parent == true){
             changeRollLbl.isHidden = false
+        
         }else{
-            changeRollLbl.isHidden = true
+            if childDetailscount?.count ?? 0 > 1{
+                changeRollLbl.isHidden = false
+            }else{
+                changeRollLbl.isHidden = true
+            }
+            
         }
         
-        userNameLbl.text = childDetails?.name
+            userNameLbl.text = childDetails?.name
             SchoolNameLabel.text = childDetails?.school_name
             AddressLabel.text = childDetails?.school_city
             Profileimage.kf.setImage(with: URL(string: childDetails?.school_logo_url ?? ""))

@@ -54,12 +54,6 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
         selectStandardDropDown.layer.shadowOpacity = 0.5
         selectStandardDropDown.layer.shadowRadius = 4
         selectStandardDropDown.backgroundColor = .white
-        
-//        cv.register(UINib(nibName: "RecipientCVcell", bundle: nil), forCellWithReuseIdentifier: "RecipientCVcell")
-//        cv.dataSource = self
-//        cv.delegate = self
-        
-        
         selectSectionDropdown.isHidden = true
         selectStandardDropDown.isHidden = true
         selectGroupsDropDown.isHidden = true
@@ -75,7 +69,7 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
         tv.register(UINib(nibName:"Std_Grp_header", bundle: nil), forHeaderFooterViewReuseIdentifier: "Std_Grp_header")
         
         
-     
+        
                
     }
 
@@ -84,21 +78,20 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
     @IBAction func segmentAction(_ sender: Any) {
         
         
-        if segmentName.selectedSegmentIndex == 0{
+        if segmentName.selectedSegmentIndex == 0{ // Entier
             contentLbl.isHidden = false
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
-        }else if segmentName.selectedSegmentIndex == 1{
+        }else if segmentName.selectedSegmentIndex == 1{ // group
+            getGrouplistAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             flag = 1
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-        }else if segmentName.selectedSegmentIndex == 2{
+            
+        }else if segmentName.selectedSegmentIndex == 2{ // standard
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             flag = 3
@@ -107,7 +100,7 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
             tv.dataSource = self
             tv.delegate = self
             tv.reloadData()
-        }else if segmentName.selectedSegmentIndex == 3{
+        }else if segmentName.selectedSegmentIndex == 3{ // section / spefic student
             speficBtnName.isHidden = false
             contentLbl.isHidden = true
             flag = 2
@@ -319,221 +312,108 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
 
     
     func getGrouplistAPI(){
-
-            
-
         APIService.shared
             .makeApi(
-                url: ServiceUrl.recipient_get_group_list + "school_id=6018" + "staff_id=10067890",
+                url: ServiceUrl.recipient_get_group_list,
                 parameters: [:],
                 type: ApitTypeSringFile.GET ,
                 token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
             ) {
-
                 [self] (result: Result<GrouplistSuc,Error>) in
-
-                
-
                 switch result {
-
-                    
-
                 case .success(let successmessage):
-
                     
-
                     if successmessage.status == true{
-
                         
-
                         DispatchQueue.main.async {[self] in
-
-                            
-
                             print("Success")
-
+                            
+                            tv.dataSource = self
+                            tv.delegate = self
+                            tv.reloadData()
+                            
                         }
-
-                        
-
                     }else{
-
-                        
-
                         DispatchQueue.main.async {
-
                             print("failure")
-
                         }
-
                     }
-
                     
-
+                    
+                    
                 case .failure(let error):
-
-                    
-
                     DispatchQueue.main.async {
-
                         print(error.localizedDescription)
-
                     }
-
                 }
-
-                
-
             }
-
-        }
+        
+    }
 
         
 
-        func getStandardsAPI(){
-
-            
-
-            APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards + "school_id=6018" + "staff_id=10067890", parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token) { (result:Result <GetStandardsSuc,Error>) in
-
-                
-
-                switch result {
-
-                    
-
-                case .success(let successMessage):
-
-                    
-
-                    if successMessage.status == true{
-
-                        
-
-                        DispatchQueue.main.async { [self] in
-
-                            print("success")
-
-                        }
-
-                    }else{
-
-                        print("Failure")
-
+    func getStandardsAPI(){
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { (result:Result <GetStandardsSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        print("success")
                     }
-
-                case .failure(let error):
-
                     
-
-                    print(error.localizedDescription)
-
+                }else{
+                    print("Failure")
                 }
-
                 
-
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-
         }
+        
+    }
 
         
 
-        func getStudentListAPI(){
-
-            
-
-            APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list + "school_id=6018" + "staff_id=10067890", parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token){ (result:Result <GetStudentlistSuc,Error>) in
-
-                
-
-                switch result {
-
-                    
-
-                case .success(let successMessage):
-
-                    
-
-                    if successMessage.status == true{
-
-                        
-
-                        DispatchQueue.main.async { [self] in
-
-                            print("success")
-
-                        }
-
-                    }else{
-
-                        print("Failure")
-
+    func getStudentListAPI(){
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ (result:Result <GetStudentlistSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        print("success")
                     }
-
-                case .failure(let error):
-
-                    
-
-                    print(error.localizedDescription)
-
+                }else{
+                    print("Failure")
                 }
-
                 
-
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-
         }
+        
+    }
 
         
 
-        func getSubjectListAPI(){
-
-            
-
-            APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list + "school_id=6018" + "staff_id=10067890", parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token){ (result:Result <GetSubjectlistSuc,Error>) in
-
-                
-
-                switch result {
-
-                    
-
-                case .success(let successMessage):
-
-                    
-
-                    if successMessage.status == true{
-
-                        
-
-                        DispatchQueue.main.async { [self] in
-
-                            print("success")
-
-                        }
-
-                    }else{
-
-                        print("Failure")
-
+    func getSubjectListAPI(){
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ (result:Result <GetSubjectlistSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        print("success")
                     }
-
-                case .failure(let error):
-
                     
-
-                    print(error.localizedDescription)
-
+                }else{
+                    print("Failure")
+                    
                 }
-
                 
-
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-
         }
-
         
+    }
 
-
-    
 }

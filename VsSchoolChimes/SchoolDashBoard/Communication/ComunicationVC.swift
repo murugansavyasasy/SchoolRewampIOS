@@ -98,9 +98,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBOutlet weak var voiceSetTitleLbl: UILabel!
     
-    
+    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
+        emengencyCall.isHidden = true
         sendbtn.isEnabled = true
         check_record_permission()
         printCurrentMonth()

@@ -20,15 +20,19 @@ class HistoryTC: UITableViewCell {
     var audioRecorder: AVAudioRecorder?
     var playerItem : AVPlayerItem?
     var delegate : reloadDelegate?
+    
+    @IBOutlet weak var NewImageView: UIView!
+    @IBOutlet weak var PlayerFullview: ShimmerView2!
     @IBOutlet weak var sentBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var sentBtnHeight: NSLayoutConstraint!
-    @IBOutlet weak var datelbl: UILabel!
-    @IBOutlet weak var contentlbl: UILabel!
+    @IBOutlet weak var datelbl: ShimmerLabel!
+    @IBOutlet weak var contentlbl: ShimmerLabel!
     @IBOutlet weak var totaltime: UILabel!
-    @IBOutlet weak var playBtn: UIButton!
+    @IBOutlet weak var playBtn: ShimmerButton!
     @IBOutlet weak var playerView: WaveView!
     @IBOutlet weak var sendbtn: UIButton!
-    @IBOutlet weak var outerview: UIView!
+    @IBOutlet weak var outerview: ShimmerView2!
+    
     var audioURL: String = "http://api.schoolchimes.com/nodejs/voice/VS_1742889307660.mp3"
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,6 +47,9 @@ class HistoryTC: UITableViewCell {
         contentlbl.setFont(style: .title, size: FontSize.TitleSize)
         totaltime.setFont(style: .body, size: FontSize.BodySize)
         
+        playerView.isHidden = true
+        totaltime.isHidden = true
+        NewImageView.isHidden = true
     }
     func setupPlayer(with url: URL) {
         player = AVPlayer(url: url)
@@ -176,4 +183,17 @@ class HistoryTC: UITableViewCell {
             }
         }
     }
+    
+    func configureShimmer() {
+        outerview.removeShimmer()
+        datelbl.removeShimmer()
+        contentlbl.removeShimmer()
+        PlayerFullview.removeShimmer()
+        playBtn.removeShimmer()
+
+        NewImageView.isHidden = false
+        totaltime.isHidden = false
+        playerView.isHidden = false
+    }
+
 }

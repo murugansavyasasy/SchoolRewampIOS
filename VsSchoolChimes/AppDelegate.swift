@@ -14,7 +14,7 @@ import AWSCore
 class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate,MessagingDelegate {
     
     
-    var DeviceToken : String!
+    var DeviceToken : String?
     var window: UIWindow?
     var languages : String!
     
@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(String(describing: fcmToken))")
         
-        DeviceToken = String(describing: fcmToken)
+        DeviceToken = fcmToken
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

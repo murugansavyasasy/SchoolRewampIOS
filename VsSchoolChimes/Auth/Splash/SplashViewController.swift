@@ -225,13 +225,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                         
                                     }
                                     else if(Data.user_details?.is_staff == true){
-                                        let vc = TapBarVC(
-                                            nibName: nil,
-                                            bundle: nil
-                                        )
-                                        if Data.user_details?.staff_details?.count ?? 0 == 1 , let data = Data.user_details?.staff_details?.first{
-                                            UserDefaultFileManager.saveStaffDetails(data: data)
-                                        }
                                         
                                         if(Data.user_details?.staff_role == PriorityType.is_staff){
                                             if(
