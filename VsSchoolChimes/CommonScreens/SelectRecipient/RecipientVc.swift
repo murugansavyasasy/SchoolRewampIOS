@@ -167,8 +167,6 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell , for: indexPath) as! RecipientTvCell
         
-        
-        
         if segmentName.selectedSegmentIndex == 1{
             cell.checkboxImg.isUserInteractionEnabled = true
             cell.cellLabel.text = groupDetails?[indexPath.row].name
@@ -191,12 +189,13 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
 
     
     func getGrouplistAPI(){
+        
         APIService.shared
             .makeApi(
                 url: ServiceUrl.recipient_get_group_list,
                 parameters: [:],
                 type: ApitTypeSringFile.GET ,
-                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                token: ServiceUrl.token
             ) {
                 [self] (result: Result<GrouplistSuc,Error>) in
                 switch result {
@@ -231,9 +230,10 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
         
 
     func getStandardsAPI(){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { (result:Result <GetStandardsSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token) { (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
+                print("successsuccess",successMessage.data)
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         sectionsDetails = successMessage.data
@@ -251,7 +251,7 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
         
     }
     func getStudentListAPI(){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ (result:Result <GetStudentlistSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token){ (result:Result <GetStudentlistSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
@@ -273,7 +273,7 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
         
 
     func getSubjectListAPI(){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ (result:Result <GetSubjectlistSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list, parameters: [:], type: ApitTypeSringFile.GET, token: ServiceUrl.token){ (result:Result <GetSubjectlistSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{

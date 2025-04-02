@@ -25,6 +25,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         School(name: "St. Joseph's Matric", address: "23, Temple Road, Kanyakumari", isSelected: true)
     ]
     var screen_type : String?
+    var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     override func viewDidLoad() {
         super.viewDidLoad()
         sendBtnName.isHidden = true
@@ -51,13 +52,16 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return schools.count
+        return school_details?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.SchoolListTVC, for: indexPath) as! SchoolListTVC
-        cell.name.text = schools[indexPath.row].name
-        cell.address.text = schools[indexPath.row].address
+        let schools_details  = school_details?[indexPath.row]
+        cell.name.text = schools_details?.school_name
+        cell.address.text = schools_details?.city
+        cell.schoolRelignLangLbl.text = schools_details?.school_name_regional
+        
         if segmentName.selectedSegmentIndex == 0{
             let img = schools[indexPath.row].isSelected ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
             cell.selectedBtn.setImage(img, for: .normal)
@@ -77,7 +81,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             schools[indexPath.row].isSelected.toggle()
             listTable.reloadData()
         }else{
-            
+            ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)

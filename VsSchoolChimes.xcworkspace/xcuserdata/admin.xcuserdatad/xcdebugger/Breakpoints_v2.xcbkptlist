@@ -224,8 +224,8 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "950"
-            endingLineNumber = "950"
+            startingLineNumber = "952"
+            endingLineNumber = "952"
             landmarkName = "playButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -240,8 +240,8 @@
             filePath = "VsSchoolChimes/Auth/Otp/OTPVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "Validate_OTP(mobileNumber:otp:)"
             landmarkType = "7">
          </BreakpointContent>

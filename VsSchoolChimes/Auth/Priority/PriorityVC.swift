@@ -173,6 +173,12 @@ class PriorityVC: UIViewController {
     }
     
     @IBAction func NextAction(_ sender: Any) {
+        
+       
+        
+        if let data = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.first{
+            UserDefaultFileManager.saveStaffDetails(data: data)}
+        
         let vc = TapBarVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         vc.login_astype = login_astype

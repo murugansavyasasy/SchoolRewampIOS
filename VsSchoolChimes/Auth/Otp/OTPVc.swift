@@ -250,12 +250,38 @@ class OTPVc: UIViewController {
                                     UserDefaultFileManager
                                     .getUserDetails()?.user_details?.is_parent == true
                                 ){
-                                    let vc = PriorityVC(
-                                        nibName: nil,
-                                        bundle: nil
-                                    )
-                                    vc.modalPresentationStyle = .fullScreen
-                                    present(vc, animated: true)
+                                    if( UserDefaultFileManager
+                                        .getUserDetails()?.user_details?.staff_role == PriorityType.is_staff){
+                                        if(
+                                             UserDefaultFileManager
+                                        .getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1
+                                        )
+                                        {
+                                            let vc = PriorityVC(
+                                                nibName: nil,
+                                                bundle: nil
+                                            )
+                                            vc.modalPresentationStyle = .fullScreen
+                                            present(vc, animated: true)
+                                        }
+                                       
+                                    }
+                                    
+                                    else{
+                                        
+                                        if let data =  UserDefaultFileManager
+                                        .getUserDetails()?.user_details?.staff_details?.first{
+                                            UserDefaultFileManager.saveStaffDetails(data: data)}
+                                            
+                                        let vc = TapBarVC(
+                                            nibName: nil,
+                                            bundle: nil
+                                        )
+                                        vc.login_astype = 1
+                                        vc.modalPresentationStyle = .fullScreen
+                                        present(vc, animated: true)
+                                    }
+                                   
                                     
                                 }
                                 else if(UserDefaultFileManager

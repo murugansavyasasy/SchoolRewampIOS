@@ -104,7 +104,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         
         
-        emengencyCall.isHidden = true
+//        emengencyCall.isHidden = true
+//        EnableCallLbl.isHidden = true
+        
         sendbtn.isEnabled = true
         check_record_permission()
         printCurrentMonth()
