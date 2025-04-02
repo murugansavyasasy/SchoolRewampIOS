@@ -54,12 +54,6 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
         selectStandardDropDown.layer.shadowOpacity = 0.5
         selectStandardDropDown.layer.shadowRadius = 4
         selectStandardDropDown.backgroundColor = .white
-        
-//        cv.register(UINib(nibName: "RecipientCVcell", bundle: nil), forCellWithReuseIdentifier: "RecipientCVcell")
-//        cv.dataSource = self
-//        cv.delegate = self
-        
-        
         selectSectionDropdown.isHidden = true
         selectStandardDropDown.isHidden = true
         selectGroupsDropDown.isHidden = true
@@ -75,7 +69,7 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
         tv.register(UINib(nibName:"Std_Grp_header", bundle: nil), forHeaderFooterViewReuseIdentifier: "Std_Grp_header")
         
         
-        getGrouplistAPI()
+        
                
     }
 
@@ -84,21 +78,20 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
     @IBAction func segmentAction(_ sender: Any) {
         
         
-        if segmentName.selectedSegmentIndex == 0{
+        if segmentName.selectedSegmentIndex == 0{ // Entier
             contentLbl.isHidden = false
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
-        }else if segmentName.selectedSegmentIndex == 1{
+        }else if segmentName.selectedSegmentIndex == 1{ // group
+            getGrouplistAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             flag = 1
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-        }else if segmentName.selectedSegmentIndex == 2{
+            
+        }else if segmentName.selectedSegmentIndex == 2{ // standard
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             flag = 3
@@ -107,7 +100,7 @@ class RecipientVc: UIViewController, CustomCollectionViewCellDelegate {
             tv.dataSource = self
             tv.delegate = self
             tv.reloadData()
-        }else if segmentName.selectedSegmentIndex == 3{
+        }else if segmentName.selectedSegmentIndex == 3{ // section / spefic student
             speficBtnName.isHidden = false
             contentLbl.isHidden = true
             flag = 2
@@ -334,6 +327,11 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
                         
                         DispatchQueue.main.async {[self] in
                             print("Success")
+                            
+                            tv.dataSource = self
+                            tv.delegate = self
+                            tv.reloadData()
+                            
                         }
                     }else{
                         DispatchQueue.main.async {

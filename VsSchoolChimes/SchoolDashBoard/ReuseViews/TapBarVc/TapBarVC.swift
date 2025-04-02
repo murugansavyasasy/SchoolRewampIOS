@@ -36,8 +36,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     var login_astype : Int?
     var languageCode : String!
     var profile:Bool = false
-    var childDetail:ChildDetails?
-    var staffDetail:StaffDetails?
     override func viewDidLoad() {
         super.viewDidLoad()
         

@@ -29,7 +29,8 @@ class PriorityVC: UIViewController {
     
     var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
-    var staff_role = localData.user_data?.user_details?.staff_role
+    var staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -54,9 +55,7 @@ class PriorityVC: UIViewController {
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
-        
-        print("Staff Details",localData.user_data?.user_details?.staff_details as Any)
-        print("Student Details",localData.user_data?.user_details?.child_details as Any)
+    
     }
 
  
@@ -79,11 +78,11 @@ class PriorityVC: UIViewController {
        ParentButton.setTitleFont(style: .body, size: FontSize.BodySize)
        
        //MARK: Translate
-       let rollname = localData.user_data?.user_details?.role_name
+       let rollname = UserDefaultFileManager.getUserDetails()?.user_details?.role_name ?? ""
        ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
        
-       let isstaff = localData.user_data?.user_details?.is_staff
-       let isParent = localData.user_data?.user_details?.is_parent
+       let isstaff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff ?? false
+       let isParent = UserDefaultFileManager.getUserDetails()?.user_details?.is_parent ?? false
       
        
        if(isstaff == true && isParent == true ){
@@ -114,7 +113,12 @@ class PriorityVC: UIViewController {
     }
     
     @IBAction func teacherAct(_ sender: Any) {
-        NextButtonView.isHidden = false
+        if staff_role == PriorityType.is_staff{
+            NextButtonView.isHidden = true
+        }else{
+            NextButtonView.isHidden = false
+        }
+        
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         teacherButton.setTitleColor(.white, for:.normal)
         
@@ -129,7 +133,11 @@ class PriorityVC: UIViewController {
     
     
     @IBAction func ParentAct(_ sender: Any) {
-        NextButtonView.isHidden = true
+        
+       
+            NextButtonView.isHidden = true
+       
+        
         gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         ParentButton.setTitleColor(.white, for:.normal)
         
@@ -219,9 +227,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])
             }
             
-            if staff_role != PriorityType.is_staff{
-                cell.arrowImage.isHidden = true
-            }
+            cell.arrowImage.isHidden = PriorityType.is_staff == staff_role ? false : true
             
             return cell
         } else {
@@ -263,20 +269,18 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             let vc = TapBarVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
             vc.login_astype = login_astype
-            vc.childDetail = childDetails?[indexPath.row]
             present(vc, animated: true)
         }else if login_astype  == 1 {
             if staff_role == PriorityType.is_staff{
                 if let data = staffDetails?[indexPath.row]{
-                    UserDefaultFileManager.saveStaffDetails(data: data)}
-                let vc = TapBarVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                vc.login_astype = login_astype
-                
-                
+                    UserDefaultFileManager.saveStaffDetails(data: data)
+                    let vc = TapBarVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.login_astype = login_astype
+                    present(vc, animated: true)
+                }
             }
-            
-            
+        
         }
     }
     

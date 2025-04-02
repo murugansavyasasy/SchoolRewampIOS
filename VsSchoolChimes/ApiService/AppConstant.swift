@@ -24,11 +24,11 @@ struct ServiceUrl{
     static let global_global_variables   = "app/global/global-variables"
     static let  auth_device_token        = "app/auth/device-token"
     static let  get_dashboard_details    = "dashboard/dashboard/get-dashboard-details"
-    static let recipient_get_group_list  = "recipient/get-group-list"
-    static let recipient_get_standards   = "recipient/get-standards"
-    static let recipient_get_student_list  = "recipient/get-student-list"
-    static let recipient_get_subject_list  = "recipient/get-subject-list"
-    static let recipient_get_staff_list  = "recipient/get-staff-list"
+    static let recipient_get_group_list  = "comm/recipient/get-group-list"
+    static let recipient_get_standards   = "comm/recipient/get-standards"
+    static let recipient_get_student_list  = "comm/recipient/get-student-list"
+    static let recipient_get_subject_list  = "comm/recipient/get-subject-list"
+    static let recipient_get_staff_list  = "comm/recipient/get-staff-list"
 }
 
 struct localData{
@@ -50,10 +50,12 @@ struct screenType{
     static let is_noticeboard = "notice_board"
 }
 struct PriorityType{
-    
-    static let is_principal  = "high"
+    static let is_grouphead  = "p1"
+    static let is_principal  = "p2"
     static let is_staff  = "p3"
-    static let is_student  = "low"
+    static let is_admin = "p4"
+    static let is_non_teaching_staff = "p5"
+   
 }
 func isValidEmail(_ email: String) -> Bool {
     let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
