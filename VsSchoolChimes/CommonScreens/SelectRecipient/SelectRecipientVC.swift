@@ -224,7 +224,6 @@ class SelectRecipientVC: UIViewController {
         StdDropdown.dataSource = ["LKG", "UKG", "1st Standard", "2nd Standard", "3rd Standard", "4th Standard", "5th Standard"]
         StdDropdown.bottomOffset = CGPoint(x: 0, y: StdorSec.bounds.height)
         StdDropdown.show()
-//        DropDown.Direction = .bottom
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
                print("Selected item: \(item) at index: \(index)")
                
@@ -244,10 +243,6 @@ class SelectRecipientVC: UIViewController {
     
 
     @IBAction func BackClk(_ sender: Any) {
-       
-       // dismiss(animated: true)
-
-        print("ok",SelectSchoolLabel.text)
         if SelectSchoolLabel.text == "Select your school" {
             
             dismiss(animated: true)
