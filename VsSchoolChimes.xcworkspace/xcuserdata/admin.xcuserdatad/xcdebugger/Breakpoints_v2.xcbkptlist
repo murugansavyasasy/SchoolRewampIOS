@@ -257,9 +257,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "350"
-            endingLineNumber = "350"
-            landmarkName = "getSubjectListAPI()"
-            landmarkType = "7">
+            endingLineNumber = "350">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

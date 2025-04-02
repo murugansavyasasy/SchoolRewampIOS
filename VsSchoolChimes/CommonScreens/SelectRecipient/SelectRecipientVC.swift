@@ -314,10 +314,7 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
         if flag == 1{
             cell.checkboxImg.isUserInteractionEnabled = true
             cell.cellLabel.text = Group[indexPath.section].items[indexPath.row]
-            let checkClick = checkClick(target: self, action: #selector(CheckBoxclick))
-            checkClick.index = indexPath.row
-            checkClick.indexs = indexPath
-            cell.checkboxImg.addGestureRecognizer(checkClick)
+           
         }
         else{
             cell.cellLabel.text = sections[indexPath.section].items[indexPath.row]
@@ -326,12 +323,7 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
     }
     
     
-    @IBAction func CheckBoxclick(ges : checkClick){
-        
-        let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell , for: ges.indexs) as! RecipientTvCell
-        
-        cell.checkboxImg.image = ImageName.checkedsquare
-    }
+  
     
  
     
@@ -342,10 +334,4 @@ extension SelectRecipientVC : UITableViewDelegate,UITableViewDataSource {
 }
 
 
-class  checkClick : UITapGestureRecognizer{
-    
-    
-    var index : Int!
-    var click : Bool!
-    var indexs : IndexPath!
-}
+

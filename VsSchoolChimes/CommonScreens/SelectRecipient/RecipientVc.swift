@@ -25,30 +25,9 @@ class RecipientVc: UIViewController{
     var studentsDetails: [StudentDetails]?
     var sectionsDetails: [sectionsDetail]?
     var groupDetails: [GroupDetail]?
-    
-    
-    
     var lastSelectedButton: UIButton?
-    
-    var Group: [Section] = [
-           Section(title: "Group", items: ["Teachers group", "Students group"])
-       ]
-    
-   var standard : [Section] = [
-    Section(title: "Standard", items: ["LKG", "UKG", "1st Standard", "2nd Standard", "3rd Standard", "4th Standard", "5th Standard"])
-]
-    
-    
-    
-    var sections: [Section] = [
-           Section(title: "Section", items: ["A section", "B section", "C section", "D section", "E section"])
-       ]
-    
-    let segmentTitles: [String] = ["Entier School","Group","Standard","Section/Student"]
-    
     let dropDown = DropDown()
     let StdDropdown = DropDown()
-    var flag = 0
     var selectedId : IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,17 +46,23 @@ class RecipientVc: UIViewController{
         
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         selectStandardDropDown.addGestureRecognizer(tap2)
-        let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectSec))
-        selectSectionDropdown.addGestureRecognizer(tap3)
+      
         let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
         
-        tv.register(UINib(nibName:"Std_Grp_header", bundle: nil), forHeaderFooterViewReuseIdentifier: "Std_Grp_header")
-        tv.delegate = self
-        tv.dataSource = self
+        tv
+            .register(
+                UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),
+                forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header
+            )
+       
     }
 
     
+    @IBAction func backbtn(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
    
     @IBAction func segmentAction(_ sender: Any) {
         
@@ -91,7 +76,6 @@ class RecipientVc: UIViewController{
             getGrouplistAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
-            flag = 1
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
@@ -99,14 +83,12 @@ class RecipientVc: UIViewController{
             getStandardsAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
-            flag = 2
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
         }else if segmentName.selectedSegmentIndex == 3{ // section / spefic student
             getStudentListAPI()
             speficBtnName.isHidden = false
             contentLbl.isHidden = true
-            flag = 3
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
         }
@@ -116,10 +98,6 @@ class RecipientVc: UIViewController{
         setupStdDropdown ()
     }
     
-    @IBAction func selectSec(){
-        
-//        setupSecDropdown()
-    }
     func setupStdDropdown (){
         
         StdDropdown.anchorView = selectStandardDropDown
@@ -148,106 +126,21 @@ class RecipientVc: UIViewController{
    
 
 }
-extension RecipientVc : UICollectionViewDelegateFlowLayout{
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-      
-       
-        
-        return CGSize(width: 180, height: 50)
-    }
-}
-extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return cv_itemsarry.count
-    }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-       
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecipientCVcell", for: indexPath) as! RecipientCVcell
-        
-        cell.btnName.setTitle(cv_itemsarry[indexPath.item], for: .normal)
-//        cell.delegate = self
-        
-        cell.configureCell(indexPath: indexPath)
-        return cell
-        
-    }
-    
-    
-    func didTapButtonInCell(at indexPath: IndexPath,button: UIButton) {
-            // Handle button tap action here
-        
-        button.layer.cornerRadius = 10
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 1, height: 1)
-        button.layer.shadowOpacity = 0.5
-        button.layer.shadowRadius = 2
-        
-        let selectedItem = cv_itemsarry[indexPath.item]
-        if selectedItem == "Entier School"{ //  Entier School falg 0
-            
-            contentLbl.isHidden = false
-            speficBtnName.isHidden = true
-            selectStandardDropDown.isHidden = true
-            tv.isHidden = true
-        }else if selectedItem == "Group"{ //  Group  falg 1
-            contentLbl.isHidden = true
-            speficBtnName.isHidden = true
-            flag = 1
-            selectStandardDropDown.isHidden = true
-            tv.isHidden = false
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-        }else if selectedItem == "Standard"{  //  Standard  falg 3
-            contentLbl.isHidden = true
-            speficBtnName.isHidden = true
-            flag = 3
-            selectStandardDropDown.isHidden = true
-            tv.isHidden = false
-            tv.dataSource = self
-            tv.delegate = self
-            tv.reloadData()
-        }else if selectedItem == "Section/Student"{  //  Standard  falg 2
-            speficBtnName.isHidden = false
-            contentLbl.isHidden = true
-            flag = 2
-            tv.isHidden = false
-            selectStandardDropDown.isHidden = false
-        }
-        
-        }
-}
 
 extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if flag == 1 {
-            return Group.count
-        }
-        else if flag == 2{
-            return sections.count
-        }else if flag == 3{
-            return standard.count
-        }
-        return 0
-    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let head = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Std_Grp_header") as! Std_Grp_header
         
-        if flag == 1 {
-            head.HeaderLabel.text = Group[section].title
+        if segmentName.selectedSegmentIndex == 1 {
+            head.HeaderLabel.text = "Group"
         }
-        else if flag == 2{
-            head.HeaderLabel.text = sections[section].title
+        else if segmentName.selectedSegmentIndex == 2{
+            head.HeaderLabel.text =  "Standard"
         }
-        else if flag == 3{
-            head.HeaderLabel.text = standard[section].title
+        else if segmentName.selectedSegmentIndex == 3{
+            head.HeaderLabel.text = "Section"
         }
         return head
     }
@@ -258,13 +151,13 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if flag == 1 {
+        if segmentName.selectedSegmentIndex == 1 {
             return groupDetails?.count ?? 0
         }
-        else if flag == 2{
+        else if segmentName.selectedSegmentIndex == 2{
             return sectionsDetails?.count ?? 0
         }
-        else if flag == 3{
+        else if segmentName.selectedSegmentIndex == 3{
             return studentsDetails?.count ?? 0
         }
         return 0
@@ -276,11 +169,11 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
         
         
         
-        if flag == 1{
+        if segmentName.selectedSegmentIndex == 1{
             cell.checkboxImg.isUserInteractionEnabled = true
             cell.cellLabel.text = groupDetails?[indexPath.row].name
         }
-        else if flag == 2{
+        else if segmentName.selectedSegmentIndex ==  2{
             cell.cellLabel.text = sectionsDetails?[indexPath.row].name
         }else{
             cell.cellLabel.text = studentsDetails?[indexPath.row].name
@@ -289,16 +182,7 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
     }
     
     
-    @IBAction func CheckBoxclick(ges : checkClick){
-        
-        let cell = tv.dequeueReusableCell(
-            withIdentifier: CellConfingName.RecipientTvCell ,
-            for: ges.indexs
-        ) as! RecipientTvCell
-        
-        cell.checkboxImg.image = ImageName.checkedsquare
-    }
-    
+   
  
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -322,6 +206,8 @@ extension RecipientVc : UITableViewDelegate,UITableViewDataSource {
                         
                         DispatchQueue.main.async {[self] in
                             groupDetails = successmessage.data
+                            tv.delegate = self
+                            tv.dataSource = self
                             tv.reloadData()
                             
                         }
