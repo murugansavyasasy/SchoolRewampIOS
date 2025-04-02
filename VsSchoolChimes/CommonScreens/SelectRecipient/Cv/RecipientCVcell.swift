@@ -33,13 +33,10 @@ class RecipientCVcell: UICollectionViewCell {
 
     
     @objc func buttonTapped() {
-           // Call delegate method when the button is tapped
-        
-               
-        
-        if let indexPath = indexPath {
-                    delegate?.didTapButtonInCell(at: indexPath, button: btnName)
-                }
+//        
+//        if let indexPath = indexPath {
+//                    delegate?.didTapButtonInCell(at: indexPath, button: btnName)
+//                }
        }
 
        // Set index path for the cell

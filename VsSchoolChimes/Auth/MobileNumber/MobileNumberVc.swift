@@ -134,11 +134,9 @@ class MobileNumberVc: UIViewController {
         let secureID = SecureIDManager.getSecureID()
         
         let parameters: [String: Any] = [
-            
             mobileNumber.mobile_number: MobilTextFld.text ?? "",
             mobileNumber.device_type: API_PARAMS_HOTCODE.device_type,
-            mobileNumber.secure_id: secureID
-        ]
+            mobileNumber.secure_id: secureID ]
         
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_user, parameters:parameters
@@ -197,12 +195,17 @@ class MobileNumberVc: UIViewController {
                                     message: response.message ?? "",
                                     on: self
                                 )
-                            
                         }
                     }
                 case .failure(let error):
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [self] in
                         print(error.localizedDescription)
+                        AlertModal
+                            .showAlert(
+                                title: "",
+                                message: error.localizedDescription,
+                                on: self
+                            )
                     }
                 }
             }

@@ -182,15 +182,15 @@ struct GroupDetail:Codable{
 struct  GetStandardsSuc : Codable {
     let status : Bool?
     let message : String?
-    let data : [GroupDetail]?
+    let data : [sectionsDetail]?
 }
 struct StandardDetail:Codable{
-    let id:String?
+    let id:Int?
     let name:String?
     let sections:[sectionsDetail]?
 }
 struct sectionsDetail:Codable{
-    let id:String?
+    let id:Int?
     let name:String?
 }
 
