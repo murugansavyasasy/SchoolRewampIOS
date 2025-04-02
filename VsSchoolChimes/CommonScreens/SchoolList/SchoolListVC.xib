@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="listTable" destination="d71-Gb-zpY" id="rVe-S1-jO7"/>
                 <outlet property="segmentName" destination="vG8-IU-045" id="eLO-uS-8tH"/>
+                <outlet property="sendBtnName" destination="hIj-m3-g5V" id="JJ4-O7-X6t"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -67,11 +68,14 @@
                                 </label>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Qt-z4x">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Qt-z4x">
                             <rect key="frame" x="10" y="84" width="373" height="667"/>
                             <subviews>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vG8-IU-045">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="35"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="373" height="39"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="38" id="VV0-ZL-oF4"/>
+                                    </constraints>
                                     <segments>
                                         <segment title="Send to multiple school"/>
                                         <segment title="Send to single school"/>
@@ -81,7 +85,7 @@
                                     </connections>
                                 </segmentedControl>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="d71-Gb-zpY">
-                                    <rect key="frame" x="0.0" y="51" width="373" height="559"/>
+                                    <rect key="frame" x="0.0" y="53" width="373" height="559"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="sbl-9r-91f"/>
@@ -95,7 +99,7 @@
                                     </constraints>
                                     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" title="Selected Schools">
+                                    <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" imagePlacement="trailing" title="Send to mutilple school" imagePadding="6">
                                         <backgroundConfiguration key="background" cornerRadius="10">
                                             <color key="backgroundColor" name="AccentColor"/>
                                         </backgroundConfiguration>
@@ -136,6 +140,7 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="schoolss" width="42.666667938232422" height="42.666667938232422"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

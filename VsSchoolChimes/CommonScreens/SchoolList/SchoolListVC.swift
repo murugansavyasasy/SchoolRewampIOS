@@ -9,6 +9,7 @@ import UIKit
 
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var sendBtnName: UIButton!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var listTable: UITableView!
     var schools: [School] = [
@@ -26,6 +27,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var screen_type : String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        sendBtnName.isHidden = true
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
     }
     override func viewDidLayoutSubviews() {
@@ -37,8 +39,18 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     
     @IBAction func segment_action(_ sender: Any) {
+       
+        if segmentName.selectedSegmentIndex == 0 {
+            sendBtnName.isHidden = false
+            listTable.reloadData()
+        }else{
+            sendBtnName.isHidden = true
+            listTable.reloadData()
+        }
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return schools.count
     }
     
@@ -46,13 +58,31 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.SchoolListTVC, for: indexPath) as! SchoolListTVC
         cell.name.text = schools[indexPath.row].name
         cell.address.text = schools[indexPath.row].address
-        let img = schools[indexPath.row].isSelected ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
-        cell.selectedBtn.setImage(img, for: .normal)
+        if segmentName.selectedSegmentIndex == 0{
+            let img = schools[indexPath.row].isSelected ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
+            cell.selectedBtn.setImage(img, for: .normal)
+        }else{
+            
+            cell.selectedBtn.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        }
+       
+        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        schools[indexPath.row].isSelected.toggle()
-        listTable.reloadData()
+       
+        
+        if segmentName.selectedSegmentIndex == 0{
+           
+            schools[indexPath.row].isSelected.toggle()
+            listTable.reloadData()
+        }else{
+            
+            let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

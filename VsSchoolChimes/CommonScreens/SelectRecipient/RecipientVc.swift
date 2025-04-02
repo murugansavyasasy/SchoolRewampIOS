@@ -185,13 +185,13 @@ extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
         button.layer.shadowRadius = 2
         
         let selectedItem = cv_itemsarry[indexPath.item]
-        if selectedItem == "Entier School"{
+        if selectedItem == "Entier School"{ //  Entier School falg 0
             
             contentLbl.isHidden = false
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
-        }else if selectedItem == "Group"{
+        }else if selectedItem == "Group"{ //  Group  falg 1
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             flag = 1
@@ -200,7 +200,7 @@ extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
             tv.dataSource = self
             tv.delegate = self
             tv.reloadData()
-        }else if selectedItem == "Standard"{
+        }else if selectedItem == "Standard"{  //  Standard  falg 3
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             flag = 3
@@ -209,7 +209,7 @@ extension RecipientVc : UICollectionViewDelegate,UICollectionViewDataSource{
             tv.dataSource = self
             tv.delegate = self
             tv.reloadData()
-        }else if selectedItem == "Section/Student"{
+        }else if selectedItem == "Section/Student"{  //  Standard  falg 2
             speficBtnName.isHidden = false
             contentLbl.isHidden = true
             flag = 2
