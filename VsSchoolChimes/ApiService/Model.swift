@@ -177,21 +177,24 @@ struct  GrouplistSuc : Codable {
 struct GroupDetail:Codable{
     let id:String?
     let name:String?
+    var isSelect:Bool?
 }
 //MARK: GetStandard API
 struct  GetStandardsSuc : Codable {
     let status : Bool?
     let message : String?
-    let data : [sectionsDetail]?
+    let data : [StandardDetail]?
 }
 struct StandardDetail:Codable{
     let id:Int?
     let name:String?
-    let sections:[sectionsDetail]?
+    var sections:[sectionsDetail]?
+    var isSelect:Bool?
 }
 struct sectionsDetail:Codable{
     let id:Int?
     let name:String?
+    var isSelect:Bool?
 }
 
 
@@ -204,6 +207,7 @@ struct  GetStudentlistSuc : Codable {
 struct StudentDetails:Codable{
     let id:String?
     let name:String?
+    var isSelect:Bool?
 }
 
 //MARK: GetSubjectlist API
@@ -215,6 +219,7 @@ struct  GetSubjectlistSuc : Codable {
 struct GetSubjectDetails:Codable{
     let id:String?
     let name:String?
+    var isSelect:Bool?
 }
 
 //MARK: GetStafflist API

@@ -91,6 +91,7 @@ class ImageName{
     static let person = UIImage(systemName: "person.crop.circle")
     static let eye_fill = UIImage(systemName: "eye.fill")
     static let eye_slash = UIImage(systemName: "eye.slash.fill")
+    static let uncheckedSquare = UIImage(systemName: "uncheckedSquare")
     
   
 }
