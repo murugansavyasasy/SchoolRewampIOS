@@ -43,8 +43,9 @@ extension UIView {
         } else if let textField = self as? UITextField {
             textField.textAlignment = isRTL ? .right : .left
         } else if let label = self as? UILabel {
-//            label.textAlignment = isRTL ? .left : .right
-            label.textAlignment = (label.textAlignment == .left) ? .right : .left
+            if isRTL{
+                label.textAlignment = (label.textAlignment == .left) ? .right : .left
+            }
         }else if let searchBar = self as? UISearchBar {
             if let textField = searchBar.value(forKey: "searchField") as? UITextField {
                 textField.textAlignment = isRTL ? .right : .left

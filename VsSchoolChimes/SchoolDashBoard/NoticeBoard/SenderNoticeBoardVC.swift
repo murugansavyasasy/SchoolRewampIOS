@@ -354,12 +354,12 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         if school_count?.count ?? 0 > 1{
             let vc = SchoolListVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
-            vc.screen_type = screenType.is_emergencyvoice
             present(vc, animated: true)
         }else{
             
             ServiceUrl.token = school_count?.first?.access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.ScreenType = 9
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

@@ -218,7 +218,7 @@ struct  GetSubjectlistSuc : Codable {
     let data : [GetSubjectDetails]?
 }
 struct GetSubjectDetails:Codable{
-    let id:String?
+    let id:Int?
     let name:String?
     var isSelect:Bool?
 }
