@@ -99,13 +99,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var voiceSetTitleLbl: UILabel!
     
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       
+        
+        if staff_role ==  PriorityType.is_admin || staff_role == PriorityType.is_grouphead || staff_role == PriorityType.is_principal{
+            emengencyCall.isHidden = false
+            EnableCallLbl.isHidden = false
+        }else{
+            emengencyCall.isHidden = true
+            EnableCallLbl.isHidden = true
+        }
+
         
         
-//        emengencyCall.isHidden = true
-//        EnableCallLbl.isHidden = true
         
         sendbtn.isEnabled = true
         check_record_permission()
@@ -122,6 +131,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         informationcontent.addDoneButton()
         setInitialButtonTitles()
         StyleAndTranslater()
+        
+        if staffDetailsCount?.count ?? 0 > 1 {
+            sendbtn.setTitle("Next", for: .normal)
+            sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
+            
+        }else{
+            sendbtn.setTitle("Send", for: .normal)
+            sendbtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
+            
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)
         historytable.delegate = self
         historytable.dataSource = self
@@ -139,6 +158,41 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     }
     
+    
+//    @IBAction func voiceSendBtnAction(_ sender: Any) {
+//        
+//        if (sender as AnyObject).title(for: .normal) == "Next" {
+//               
+//            }
+//        
+//    }
+    
+    @IBAction func voice_sendBtn_action(_ sender: UIButton) {
+        
+        if sender.title(for: .normal) == "Next" {
+              
+            if emengencyCall.isOn{
+                
+                let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.screen_type = screenType.is_emergencyvoice
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+                
+            }else{
+                
+                
+                
+            }
+           
+            
+        }else{
+            
+            
+            
+        }
+        
+        
+    }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
             colors: [                    Colornames.stafGradient, Colornames.stafGradient1],

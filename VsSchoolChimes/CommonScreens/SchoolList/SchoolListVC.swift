@@ -24,7 +24,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         School(name: "Elite Public School", address: "89, New Colony, Thanjavur", isSelected: true),
         School(name: "St. Joseph's Matric", address: "23, Temple Road, Kanyakumari", isSelected: true)
     ]
-    var screen_type : String?
+    var screen_type : Int?
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            colors: [ Colornames.stafGradient, Colornames.stafGradient1],
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
@@ -63,7 +63,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         cell.schoolRelignLangLbl.text = schools_details?.school_name_regional
         
         if segmentName.selectedSegmentIndex == 0{
-            let img = schools[indexPath.row].isSelected ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
+            let img = schools_details?.isSelected ?? false ? UIImage(named: "checkedSquare") : UIImage(
+                named: "uncheckedSquare"
+            )
             cell.selectedBtn.setImage(img, for: .normal)
         }else{
             
@@ -77,9 +79,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
        
         
         if segmentName.selectedSegmentIndex == 0{
-           
-            schools[indexPath.row].isSelected.toggle()
+
+            var schools_details  = school_details?[indexPath.row]
+            schools_details?.isSelected?.toggle()
             listTable.reloadData()
+            
         }else{
             ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)

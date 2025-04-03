@@ -636,18 +636,21 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nQk-Ov-4jG">
-                                            <rect key="frame" x="293" y="390" width="80" height="40"/>
+                                            <rect key="frame" x="288" y="390" width="85" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="38v-uz-8m0"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Send">
+                                            <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Send" imagePadding="5">
                                                 <imageReference key="image" image="paperplane" catalog="system" symbolScale="small"/>
                                                 <backgroundConfiguration key="background" cornerRadius="4">
                                                     <color key="backgroundColor" systemColor="systemMintColor"/>
                                                 </backgroundConfiguration>
                                             </buttonConfiguration>
+                                            <connections>
+                                                <action selector="voice_sendBtn_action:" destination="-1" eventType="touchUpInside" id="5aK-vV-PRq"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lED-Bm-Jet">
                                             <rect key="frame" x="16" y="269.66666666666663" width="80" height="40"/>

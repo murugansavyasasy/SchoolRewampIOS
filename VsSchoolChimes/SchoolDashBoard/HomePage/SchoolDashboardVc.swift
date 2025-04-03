@@ -93,6 +93,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             }else{
                     changeRollLbl.isHidden = true
             }
+            
         }
         
        

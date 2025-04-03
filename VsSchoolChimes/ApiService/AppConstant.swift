@@ -48,6 +48,7 @@ struct screenType{
     static let isSplash  = 4
     static let isForgotPassword  = 5
     static let is_noticeboard = "notice_board"
+    static let is_emergencyvoice = 1 
 }
 struct PriorityType{
     static let is_grouphead  = "p1"
