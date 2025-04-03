@@ -52,7 +52,6 @@ class RecipientVc: UIViewController{
         selectSectionDropdown.isHidden = true
         selectStandardDropDown.isHidden = true
         selectGroupsDropDown.isHidden = true
-        speficBtnName.isEnabled = false
         speficBtnName.backgroundColor = UIColor.gray
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectSubject))
@@ -78,7 +77,7 @@ class RecipientVc: UIViewController{
         view.layer.shadowRadius = shadowRadius
         view.backgroundColor = backgroundColor
     }
-
+    
     
     @IBAction func backbtn(_ sender: Any) {
         
@@ -87,43 +86,43 @@ class RecipientVc: UIViewController{
     
     @IBAction func send(_ sender: UIButton) {
         var selectedIds: [Int] = []
-
-            switch segmentName.selectedSegmentIndex {
-            case 1:
-                selectedIds = groupDetails?.compactMap {
-                    if let id = $0.id as? Int {
-                        return id
-                    } else if let idStr = $0.id as? String, let id = Int(idStr) {
-                        return id
-                    }
-                    return nil
-                } ?? []
-                
-            case 2:
-                selectedIds = standardDetails?.compactMap {
-                    if let id = $0.id as? Int {
-                        return id
-                    } else if let idStr = $0.id as? String, let id = Int(idStr) {
-                        return id
-                    }
-                    return nil
-                } ?? []
-                
-            case 3:
-                selectedIds = sectionsDetails?.compactMap {
-                    if let id = $0.id as? Int {
-                        return id
-                    } else if let idStr = $0.id as? String, let id = Int(idStr) {
-                        return id
-                    }
-                    return nil
-                } ?? []
-                
-            default:
-                selectedIds = []
-            }
-
-            print("Selected IDs: \(selectedIds)")
+        
+        switch segmentName.selectedSegmentIndex {
+        case 1:
+            selectedIds = groupDetails?.compactMap {
+                if let id = $0.id as? Int {
+                    return id
+                } else if let idStr = $0.id as? String, let id = Int(idStr) {
+                    return id
+                }
+                return nil
+            } ?? []
+            
+        case 2:
+            selectedIds = standardDetails?.compactMap {
+                if let id = $0.id as? Int {
+                    return id
+                } else if let idStr = $0.id as? String, let id = Int(idStr) {
+                    return id
+                }
+                return nil
+            } ?? []
+            
+        case 3:
+            selectedIds = sectionsDetails?.compactMap {
+                if let id = $0.id as? Int {
+                    return id
+                } else if let idStr = $0.id as? String, let id = Int(idStr) {
+                    return id
+                }
+                return nil
+            } ?? []
+            
+        default:
+            selectedIds = []
+        }
+        
+        print("Selected IDs: \(selectedIds)")
     }
     
     @IBAction func segmentAction(_ sender: Any) {
@@ -147,10 +146,14 @@ class RecipientVc: UIViewController{
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-        }else if segmentName.selectedSegmentIndex == 3{ // section / spefic student
-            //            getStudentListAPI()
+        }else if segmentName.selectedSegmentIndex == 3{
             getStandardsAPI()
-            speficBtnName.isHidden = false
+            if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
+                speficBtnName.isHidden = true
+            }else{
+                speficBtnName.isHidden = false
+                speficBtnName.isEnabled = false
+            }
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
@@ -171,20 +174,17 @@ class RecipientVc: UIViewController{
         StdDropdown.show()
         
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-            guard let self = self else { return } // Prevents strong reference cycles
-            
-            print("Selected item: \(item) at index: \(index)")
-            
-            // Filter standardDetails based on the selected item
+            guard let self = self else { return }
             self.sectionsDetails = self.standardDetails?.first(where: { $0.name == item })?.sections
-            // Update the label inside the UIView
             if let label = self.selectStandardDropDown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
             }
-            
             self.tv.isHidden = false
-            self.tv.reloadData() // Reload data AFTER updating sectionsDetails
-            tableHeight.constant = tv.contentSize.height
+            self.tv.reloadData()
+            DispatchQueue.main.async {
+                self.tableHeight.constant = self.tv.contentSize.height
+                self.view.layoutIfNeeded()
+            }
         }
     }
     func setupSubjectDropdown() {
@@ -292,9 +292,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     getSubjectListAPI(sectionsDetails?[indexPath.row].id ?? 0)
                     selectSectionDropdown.isHidden = false
                 }else{
+                    sectionsDetails?[indexPath.row].isSelect?.toggle()
                     let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                     speficBtnName.isEnabled =  selectedSections.count != 1 ? false : true
-                    sectionsDetails?[indexPath.row].isSelect?.toggle()
                     speficBtnName.backgroundColor =  selectedSections.count != 1 ? UIColor.gray:.button
                     
                 }
@@ -312,7 +312,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     }
     
     func getGrouplistAPI(){
-        
         APIService.shared
             .makeApi(
                 url: ServiceUrl.recipient_get_group_list,
@@ -338,8 +337,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             }
                             
                             tv.reloadData()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
-                                tableHeight.constant = tv.contentSize.height
+                            DispatchQueue.main.async {
+                                self.tableHeight.constant = self.tv.contentSize.height
+                                self.view.layoutIfNeeded()
                             }
                             
                         }
@@ -383,13 +383,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         drpodonLbl.text = standardDetails?.first?.name
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
                         tv.reloadData()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
-                            tableHeight.constant = tv.contentSize.height
+                        DispatchQueue.main.async {
+                            self.tableHeight.constant = self.tv.contentSize.height
+                            self.view.layoutIfNeeded()
                         }
                     }
                 }else{
-                    tv.isHidden = true
-                    noRecordLbl.text = successMessage.message
+                    DispatchQueue.main.async { [self] in
+                        
+                        tv.isHidden = true
+                        noRecordLbl.text = successMessage.message
+                    }
                 }
                 
             case .failure(let error):
@@ -413,14 +417,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             studentsDetails = students
                         }
                         tv.reloadData()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
-                            tableHeight.constant = tv.contentSize.height
+                        DispatchQueue.main.async {
+                            self.tableHeight.constant = self.tv.contentSize.height
+                            self.view.layoutIfNeeded()
                         }
                         
                     }
                 }else{
-                    tv.isHidden = true
-                    noRecordLbl.text = successMessage.message
+                    DispatchQueue.main.async { [self] in
+                        tv.isHidden = true
+                        noRecordLbl.text = successMessage.message
+                    }
                 }
                 
             case .failure(let error):
@@ -444,10 +451,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             subjectList.append(student.name ?? "")
                         }
                     }
-                    
                 }else{
-                    tv.isHidden = true
-                    noRecordLbl.text = successMessage.message
+                    DispatchQueue.main.async { [self] in
+                        selectSectionDropdown.isHidden = true
+                        tv.isHidden = true
+                        noRecordLbl.text = successMessage.message
+                    }
                 }
                 
             case .failure(let error):

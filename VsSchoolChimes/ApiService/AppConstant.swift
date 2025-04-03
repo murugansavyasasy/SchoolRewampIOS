@@ -47,8 +47,8 @@ struct screenType{
     static let isPassword  = 3
     static let isSplash  = 4
     static let isForgotPassword  = 5
-    static let is_noticeboard = "notice_board"
-    static let is_emergencyvoice = 1 
+    static let is_noticeboard = 23
+    static let is_emergencyvoice = 1
     static let isAssaignment = 22
     static let isHomeWork = 9
 }
