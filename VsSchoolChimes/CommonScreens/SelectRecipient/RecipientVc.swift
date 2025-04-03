@@ -260,12 +260,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     }
     
     func getGrouplistAPI(){
+        
         APIService.shared
             .makeApi(
                 url: ServiceUrl.recipient_get_group_list,
                 parameters: [:],
                 type: ApitTypeSringFile.GET ,
-                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                token: ServiceUrl.token
             ) {
                 [self] (result: Result<GrouplistSuc,Error>) in
                 switch result {
@@ -306,6 +307,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
+                print("successsuccess",successMessage.data)
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         tv.isHidden = false

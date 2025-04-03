@@ -9,6 +9,7 @@ import UIKit
 
 class SchoolListTVC: UITableViewCell {
 
+    @IBOutlet weak var schoolRelignLangLbl: UILabel!
     @IBOutlet weak var selectedBtn: UIButton!
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var name: UILabel!

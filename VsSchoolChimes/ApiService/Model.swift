@@ -80,6 +80,7 @@ struct UserDetails: Codable {
 
 struct StaffDetails: Codable {
     let staff_name: String?
+    var isSelected: Bool?
     let school_name: String?
     let school_name_regional: String?
     let city: String?

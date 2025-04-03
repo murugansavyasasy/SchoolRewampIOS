@@ -46,10 +46,10 @@ class Colornames {
     static  var gradientgreen1 =  UIColor(named: "gradientgreen1")
     static  var gradientBlue =  UIColor(hex: "#7ed957")
     static  var gradientgreen =  UIColor(hex: "#0097b2")
-//    static  var stafGradient =  UIColor(hex: "#33a8cd")
-//    static  var stafGradient1 =  UIColor(hex: "#a6dadf")
-    static  var stafGradient =  UIColor(hex: "#06B6D4")
-    static  var stafGradient1 =  UIColor(hex: "#3B82F6")
+    static  var stafGradient =  UIColor(hex: "#33a8cd")
+    static  var stafGradient1 =  UIColor(hex: "#a6dadf")
+//    static  var stafGradient =  UIColor(hex: "#06B6D4")
+//    static  var stafGradient1 =  UIColor(hex: "#3B82F6")
    
 }
 class ImageName{

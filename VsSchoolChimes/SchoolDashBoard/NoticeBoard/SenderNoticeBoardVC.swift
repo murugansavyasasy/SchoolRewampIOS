@@ -281,38 +281,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     @IBAction func SubmitAction(_ sender: Any) {
         
-//        let vc = SelectRecipientVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-        
-        
-        let detailViewController = SelectRecipientVC()
-        let nav = UINavigationController(rootViewController: detailViewController)
-        
-        // 1 - Set modal presentation style
-        nav.modalPresentationStyle = .pageSheet
-        
-        // 2 - Configure bottom sheet
-        if #available(iOS 15.0, *) {
-            if let sheet = nav.sheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    sheet.detents = [.custom { _ in 470 }, .large()]
-                } else {
-                    // Fallback on earlier versions
-                }
-                sheet.prefersGrabberVisible = false // Hide grabber
-                sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
-            }
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        // 3 - Prevent dismiss on swipe down
-        nav.isModalInPresentation = true
-        
-        // 4 - Present the bottom sheet
-        present(nav, animated: true)
-        
     }
     
     @IBAction func fromDate(_ sender: UIButton) {
@@ -381,39 +349,21 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     }
     
     @IBAction func next(_ sender: UIButton) {
+        let school_count = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
         
-//        let detailViewController = SelectRecipientVC()
-//        let nav = UINavigationController(rootViewController: detailViewController)
-//        
-//        // 1 - Set modal presentation style
-//        nav.modalPresentationStyle = .pageSheet
-//        
-//        // 2 - Configure bottom sheet
-//        if #available(iOS 15.0, *) {
-//            if let sheet = nav.sheetPresentationController {
-//                if #available(iOS 16.0, *) {
-//                    sheet.detents = [.custom { _ in 470 }, .large()]
-//                } else {
-//                    // Fallback on earlier versions
-//                }
-//                sheet.prefersGrabberVisible = false // Hide grabber
-//                sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
-//            }
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//        
-//        // 3 - Prevent dismiss on swipe down
-//        nav.isModalInPresentation = true
-//        
-//        // 4 - Present the bottom sheet
-//        present(nav, animated: true)
-        
-        
-        let vc = SchoolListVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        vc.screen_type = screenType.is_noticeboard
-        present(vc, animated: true)
+        if school_count?.count ?? 0 > 1{
+            let vc = SchoolListVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            vc.screen_type = screenType.is_emergencyvoice
+            present(vc, animated: true)
+        }else{
+            
+            ServiceUrl.token = school_count?.first?.access_token ?? ""
+            let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+       
         
     }
     

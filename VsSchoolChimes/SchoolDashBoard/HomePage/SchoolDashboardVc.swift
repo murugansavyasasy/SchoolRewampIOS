@@ -91,13 +91,9 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
                     changeRollLbl.isHidden = true
                 }
             }else{
-                if staffDetailsCount?.count ?? 0 == 1{
-                    changeRollLbl.isHidden = false
-                }else{
-                    
                     changeRollLbl.isHidden = true
-                }
             }
+            
         }
         
        
@@ -421,21 +417,14 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 
             case 5:
                 MenuRedirect.senderPtmNavigate(from: self)
-                
             case 6:
                 MenuRedirect.senderAbsenteesNavigate(from: self)
-                
-                
             case 7:
                 MenuRedirect.senderSchoolStrength(from: self)
-                
-                
             case 8:
                 MenuRedirect.senderOnlineNavigate(from: self)
-                
             case 9:
                 MenuRedirect.senderHomeWorkNavigate(from: self)
-                
             case 10:
                 MenuRedirect.senderLessonplanNavigate(from: self)
                 
