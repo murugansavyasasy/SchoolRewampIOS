@@ -34,7 +34,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     let backgroundcolor = Colornames.topBackgroundCLr
     let tapColor = Colornames.topBackgroundCLr1
     var placeholderLabel: UILabel!
-    
+    let alert = CustomAlert()
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
     @IBOutlet weak var TextMsgTitleLbl: UILabel!
@@ -103,8 +103,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
-        
         if staff_role ==  PriorityType.is_admin || staff_role == PriorityType.is_grouphead || staff_role == PriorityType.is_principal{
             emengencyCall.isHidden = false
             EnableCallLbl.isHidden = false
@@ -113,9 +111,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             EnableCallLbl.isHidden = true
         }
 
-        
-        
-        
+    
         sendbtn.isEnabled = true
         check_record_permission()
         printCurrentMonth()
@@ -159,36 +155,59 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     
-//    @IBAction func voiceSendBtnAction(_ sender: Any) {
-//        
-//        if (sender as AnyObject).title(for: .normal) == "Next" {
-//               
-//            }
-//        
-//    }
-    
     @IBAction func voice_sendBtn_action(_ sender: UIButton) {
         
+        
+        
         if sender.title(for: .normal) == "Next" {
-              
+            
             if emengencyCall.isOn{
-                
-                let vc = SchoolListVC(nibName: nil, bundle: nil)
-                vc.screen_type = screenType.is_emergencyvoice
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-                
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != ""{
+                    let vc = SchoolListVC(nibName: nil, bundle: nil)
+                    vc.screen_type = screenType.is_emergencyvoice
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else{
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
             }else{
                 
-                
-                
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != "" {
+                    let vc = SchoolListVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else{
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
             }
-           
+            
             
         }else{
-            
-            
-            
+            if emengencyCall.isOn{
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != ""{
+                    CustomAlert
+                        .showAlertWithOkAction(
+                            title: "",
+                            message: AlertstringFile.AreYouSureYouWantToProceed,
+                            on: self
+                        ) {
+                            print("sended voice")
+                        }
+                }else{
+                    
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
+            }else{
+                
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != "" {
+                    let vc = SchoolListVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                        
+                }else{
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
+            }
         }
         
         

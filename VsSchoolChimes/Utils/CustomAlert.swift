@@ -39,7 +39,7 @@ import UIKit
     }
      
      
-     static func showAlert(title: String, message: String, on viewController: UIViewController, okAction: (() -> Void)? = nil) {
+     static func showAlertWithOkAction(title: String, message: String, on viewController: UIViewController, okAction: (() -> Void)? = nil) {
              let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
              
              let okButton = UIAlertAction(title: "OK", style: .default) { _ in

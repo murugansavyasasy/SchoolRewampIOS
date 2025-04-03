@@ -189,7 +189,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                             
                             
                             CustomAlert
-                                .showAlert(
+                                .showAlertWithOkAction(
                                     title: "Success",
                                     message: successMessage.message ?? "",
                                     on: self
@@ -329,7 +329,7 @@ class CreatePasswordVc: UIViewController,UITextFieldDelegate {
                             
                             
                             CustomAlert
-                                .showAlert(
+                                .showAlertWithOkAction(
                                     title: "Success",
                                     message: successMessage.message ?? "",
                                     on: self

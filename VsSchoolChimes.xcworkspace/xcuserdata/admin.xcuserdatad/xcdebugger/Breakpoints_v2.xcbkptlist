@@ -224,25 +224,9 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1006"
-            endingLineNumber = "1006"
-            landmarkName = "playButtonTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B56BAE33-F15A-4CB3-9CF2-FB1C824B4FCF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Auth/Otp/OTPVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "306"
-            endingLineNumber = "306"
-            landmarkName = "Validate_OTP(mobileNumber:otp:)"
+            startingLineNumber = "1018"
+            endingLineNumber = "1018"
+            landmarkName = "deleteVoicemsg(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -258,7 +242,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "350"
             endingLineNumber = "350"
-            landmarkName = "getSubjectListAPI()"
+            landmarkName = "getStudentListAPI()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

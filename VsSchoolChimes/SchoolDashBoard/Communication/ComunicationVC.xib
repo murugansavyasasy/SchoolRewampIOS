@@ -730,9 +730,6 @@
                                                     <color key="backgroundColor" systemColor="systemMintColor"/>
                                                 </backgroundConfiguration>
                                             </buttonConfiguration>
-                                            <connections>
-                                                <action selector="voiceview:" destination="-1" eventType="touchUpInside" id="jxS-Zr-kYI"/>
-                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXD-4C-iTD">
                                             <rect key="frame" x="16" y="60" width="361" height="23"/>

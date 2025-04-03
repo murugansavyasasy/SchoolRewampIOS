@@ -98,8 +98,12 @@ struct ReceiverMenuItems {
 class AlertstringFile{
     
     static let title = "Confirm Action".translated()
+    static let voice_or_title_is_required = "Voice or title is required".translated()
+    
     static let Confirm = "Confirm".translated()
     static let AreYouSureYouWantToProceed = "Are you sure you want to proceed?".translated()
+    static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
+    static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
     static let ConfirmLogout = "Are you sure you want to Logout".translated()
     static let No = "No".translated()
