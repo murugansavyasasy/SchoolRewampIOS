@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="contentLbl" destination="wIL-CB-NVg" id="wn8-3J-3aF"/>
                 <outlet property="fullview" destination="Nnu-ef-Txp" id="f6Q-6e-F5F"/>
+                <outlet property="noRecordLbl" destination="CIm-hq-iKJ" id="mdj-id-cF4"/>
                 <outlet property="segmentName" destination="B1u-TT-aTV" id="WqT-gI-ff5"/>
                 <outlet property="selectGroupsDropDown" destination="zS2-lh-1s4" id="DOY-bP-XtY"/>
                 <outlet property="selectSectionDropdown" destination="ol1-z8-fYC" id="Eab-rb-bOd"/>
@@ -32,6 +33,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nnu-ef-Txp">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CIm-hq-iKJ">
+                            <rect key="frame" x="16" y="379.66666666666669" width="361" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="h91-ek-lhq">
                             <rect key="frame" x="22" y="164.66666666666666" width="349" height="52"/>
                             <subviews>
@@ -277,6 +284,7 @@
                         <constraint firstItem="l1k-xy-cfh" firstAttribute="top" secondItem="h91-ek-lhq" secondAttribute="bottom" constant="8" id="7jZ-pQ-QzC"/>
                         <constraint firstAttribute="trailing" secondItem="h91-ek-lhq" secondAttribute="trailing" constant="22" id="8A5-FR-AJP"/>
                         <constraint firstItem="l1k-xy-cfh" firstAttribute="leading" secondItem="Nnu-ef-Txp" secondAttribute="leading" constant="5" id="8Qv-FH-VVt"/>
+                        <constraint firstItem="CIm-hq-iKJ" firstAttribute="leading" secondItem="Nnu-ef-Txp" secondAttribute="leading" constant="16" id="CWb-Lh-Kqr"/>
                         <constraint firstItem="B1u-TT-aTV" firstAttribute="top" secondItem="gkR-4g-5za" secondAttribute="bottom" constant="20" id="ErE-JK-QcZ"/>
                         <constraint firstItem="h91-ek-lhq" firstAttribute="top" secondItem="B1u-TT-aTV" secondAttribute="bottom" constant="18.666666666666657" id="FPz-rs-jGu"/>
                         <constraint firstItem="gkR-4g-5za" firstAttribute="top" secondItem="TWr-HG-1q7" secondAttribute="bottom" constant="15" id="ISI-B0-UbN"/>
@@ -286,7 +294,9 @@
                         <constraint firstItem="fXh-Kk-deq" firstAttribute="top" secondItem="l1k-xy-cfh" secondAttribute="bottom" constant="15.67" id="dyS-ZI-SeD"/>
                         <constraint firstItem="h91-ek-lhq" firstAttribute="leading" secondItem="Nnu-ef-Txp" secondAttribute="leading" constant="22" id="efU-rW-9s3"/>
                         <constraint firstAttribute="trailing" secondItem="B1u-TT-aTV" secondAttribute="trailing" constant="5" id="gD5-JA-Jgi"/>
+                        <constraint firstAttribute="trailing" secondItem="CIm-hq-iKJ" secondAttribute="trailing" constant="16" id="gxF-yt-1b7"/>
                         <constraint firstItem="gkR-4g-5za" firstAttribute="leading" secondItem="Nnu-ef-Txp" secondAttribute="leading" constant="10" id="kqv-uF-sS6"/>
+                        <constraint firstItem="CIm-hq-iKJ" firstAttribute="centerY" secondItem="Nnu-ef-Txp" secondAttribute="centerY" id="ogl-Sq-CwA"/>
                         <constraint firstItem="B1u-TT-aTV" firstAttribute="leading" secondItem="Nnu-ef-Txp" secondAttribute="leading" constant="5" id="qXe-yO-Bse"/>
                     </constraints>
                 </view>
