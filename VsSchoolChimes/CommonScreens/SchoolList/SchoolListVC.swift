@@ -84,6 +84,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         }else{
             ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.ScreenType = screen_type
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

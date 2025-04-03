@@ -359,7 +359,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             
             ServiceUrl.token = school_count?.first?.access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = 9
+            vc.ScreenType = screenType.is_noticeboard
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
         }

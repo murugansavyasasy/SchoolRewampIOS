@@ -18,6 +18,36 @@
             endingLineNumber = "200"
             landmarkName = "uploadAWS(image:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "200"
+                  endingLineNumber = "200">
+               </Location>
+               <Location
+                  uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F - 8ca15eee2d4e1c44"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.AWSTask&lt;Swift.AnyObject&gt;) -&gt; Swift.Optional&lt;Swift.AnyObject&gt; in VsSchoolChimes.CameraUtility.uploadAWS(image: __C.UIImage) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "200"
+                  endingLineNumber = "200">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -34,6 +64,36 @@
             endingLineNumber = "64"
             landmarkName = "settings()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FE58F554-5999-46C4-A88F-A65FF1414CF1 - 7b02944e1ca41942"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.AppBottomView.settings() -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/ReuseViews/ReuseBotmView/AppBottomView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64">
+               </Location>
+               <Location
+                  uuid = "FE58F554-5999-46C4-A88F-A65FF1414CF1 - 7b02944e1ca41942"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.AppBottomView.settings() -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/ReuseViews/ReuseBotmView/AppBottomView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "64"
+                  endingLineNumber = "64">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -212,6 +272,36 @@
             endingLineNumber = "247"
             landmarkName = "dateChanged(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AA9EF57E-F1DF-4607-898E-EAF513F83B12 - fd2d37614168bdac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.SenderSideHomeWorkViewController.dateChanged(__C.UIDatePicker) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "247"
+                  endingLineNumber = "247">
+               </Location>
+               <Location
+                  uuid = "AA9EF57E-F1DF-4607-898E-EAF513F83B12 - fd2d37614168bdac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.SenderSideHomeWorkViewController.dateChanged(__C.UIDatePicker) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "247"
+                  endingLineNumber = "247">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -228,6 +318,36 @@
             endingLineNumber = "1060"
             landmarkName = "deleteVoicemsg(_:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7ACDA70B-CBEB-4E92-8732-186012E6BAB7 - f4b57d46503e7214"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.ComunicationVC.scheduleCall(__C.UIButton) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "950"
+                  endingLineNumber = "950">
+               </Location>
+               <Location
+                  uuid = "7ACDA70B-CBEB-4E92-8732-186012E6BAB7 - f4b57d46503e7214"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VsSchoolChimes.ComunicationVC.scheduleCall(__C.UIButton) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "950"
+                  endingLineNumber = "950">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -244,6 +364,36 @@
             endingLineNumber = "350"
             landmarkName = "getGrouplistAPI()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B56BAE33-F15A-4CB3-9CF2-FB1C824B4FCF - c57bdfa01f0a5c5a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "280"
+                  endingLineNumber = "280">
+               </Location>
+               <Location
+                  uuid = "B56BAE33-F15A-4CB3-9CF2-FB1C824B4FCF - c57bdfa01f0a5c5a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
+                  moduleName = "VsSchoolChimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "280"
+                  endingLineNumber = "280">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
