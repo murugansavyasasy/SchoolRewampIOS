@@ -224,8 +224,8 @@
             filePath = "VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1018"
-            endingLineNumber = "1018"
+            startingLineNumber = "1060"
+            endingLineNumber = "1060"
             landmarkName = "deleteVoicemsg(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -242,7 +242,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "350"
             endingLineNumber = "350"
-            landmarkName = "getStudentListAPI()"
+            landmarkName = "getGrouplistAPI()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

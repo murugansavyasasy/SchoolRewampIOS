@@ -28,7 +28,7 @@
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qP0-UU-5aC">
-                            <rect key="frame" x="10" y="13" width="35" height="35"/>
+                            <rect key="frame" x="10" y="18" width="35" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="9lV-sc-79d"/>
                                 <constraint firstAttribute="width" constant="35" id="x4Q-oY-TNH"/>
@@ -44,85 +44,88 @@
                                 <action selector="back:" destination="-1" eventType="touchUpInside" id="lz9-HC-7Jf"/>
                             </connections>
                         </button>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schoolss" translatesAutoresizingMaskIntoConstraints="NO" id="TTy-I7-YLt">
-                            <rect key="frame" x="45" y="10.666666666666671" width="40" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="ICy-u6-JiW"/>
-                                <constraint firstAttribute="height" constant="40" id="xdS-Bw-0PG"/>
-                            </constraints>
-                        </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Cfp-wt-D6X">
-                            <rect key="frame" x="95" y="10" width="282" height="41"/>
+                            <rect key="frame" x="55" y="10" width="322" height="41"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="School Selection" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhU-Fx-QLv">
-                                    <rect key="frame" x="0.0" y="0.0" width="282" height="24"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="322" height="24"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                     <color key="textColor" red="0.97519935300000005" green="0.97369331790000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your preferred schools" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4c-gw-60G">
-                                    <rect key="frame" x="0.0" y="24" width="282" height="17"/>
+                                    <rect key="frame" x="0.0" y="24" width="322" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.97519935300000005" green="0.97369331790000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
                         </stackView>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Qt-z4x">
-                            <rect key="frame" x="10" y="84" width="373" height="667"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NvC-x6-SnF">
+                            <rect key="frame" x="0.0" y="61" width="393" height="698"/>
                             <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vG8-IU-045">
-                                    <rect key="frame" x="0.0" y="0.0" width="373" height="39"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="38" id="VV0-ZL-oF4"/>
-                                    </constraints>
-                                    <segments>
-                                        <segment title="Send to multiple school"/>
-                                        <segment title="Send to single school"/>
-                                    </segments>
-                                    <connections>
-                                        <action selector="segment_action:" destination="-1" eventType="valueChanged" id="sbU-r2-2yD"/>
-                                    </connections>
-                                </segmentedControl>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="d71-Gb-zpY">
-                                    <rect key="frame" x="0.0" y="53" width="373" height="559"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <connections>
-                                        <outlet property="dataSource" destination="-1" id="sbl-9r-91f"/>
-                                        <outlet property="delegate" destination="-1" id="es4-1j-EFy"/>
-                                    </connections>
-                                </tableView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIj-m3-g5V">
-                                    <rect key="frame" x="0.0" y="627" width="373" height="40"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="tZn-uG-cBg"/>
-                                    </constraints>
-                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <state key="normal" title="Button"/>
-                                    <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" imagePlacement="trailing" title="Send to mutilple school" imagePadding="6">
-                                        <backgroundConfiguration key="background" cornerRadius="10">
-                                            <color key="backgroundColor" name="AccentColor"/>
-                                        </backgroundConfiguration>
-                                    </buttonConfiguration>
-                                    <connections>
-                                        <action selector="selectedSchool:" destination="-1" eventType="touchUpInside" id="HVz-wE-Rys"/>
-                                    </connections>
-                                </button>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="uN1-Qt-z4x">
+                                    <rect key="frame" x="5" y="5" width="383" height="688"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="vG8-IU-045">
+                                            <rect key="frame" x="0.0" y="0.0" width="383" height="39"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="38" id="VV0-ZL-oF4"/>
+                                            </constraints>
+                                            <segments>
+                                                <segment title="Send to multiple school"/>
+                                                <segment title="Select Resipent"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="segment_action:" destination="-1" eventType="valueChanged" id="sbU-r2-2yD"/>
+                                            </connections>
+                                        </segmentedControl>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="d71-Gb-zpY">
+                                            <rect key="frame" x="0.0" y="66" width="383" height="554"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <connections>
+                                                <outlet property="dataSource" destination="-1" id="sbl-9r-91f"/>
+                                                <outlet property="delegate" destination="-1" id="es4-1j-EFy"/>
+                                            </connections>
+                                        </tableView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hIj-m3-g5V">
+                                            <rect key="frame" x="0.0" y="648" width="383" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="tZn-uG-cBg"/>
+                                            </constraints>
+                                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" imagePlacement="trailing" title="Send to mutilple school" imagePadding="6">
+                                                <backgroundConfiguration key="background" cornerRadius="10">
+                                                    <color key="backgroundColor" name="ButtonColor"/>
+                                                </backgroundConfiguration>
+                                            </buttonConfiguration>
+                                            <connections>
+                                                <action selector="selectedSchool:" destination="-1" eventType="touchUpInside" id="HVz-wE-Rys"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
                             </subviews>
-                        </stackView>
+                            <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="uN1-Qt-z4x" secondAttribute="bottom" constant="5" id="DX7-8u-d3v"/>
+                                <constraint firstItem="uN1-Qt-z4x" firstAttribute="top" secondItem="NvC-x6-SnF" secondAttribute="top" constant="5" id="Hin-h8-Ycq"/>
+                                <constraint firstItem="uN1-Qt-z4x" firstAttribute="leading" secondItem="NvC-x6-SnF" secondAttribute="leading" constant="5" id="W7k-Gk-f1W"/>
+                                <constraint firstAttribute="trailing" secondItem="uN1-Qt-z4x" secondAttribute="trailing" constant="5" id="rYr-uu-Ydv"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="Cfp-wt-D6X" firstAttribute="leading" secondItem="TTy-I7-YLt" secondAttribute="trailing" constant="10" id="5FA-U2-0t9"/>
-                        <constraint firstItem="uN1-Qt-z4x" firstAttribute="top" secondItem="Cfp-wt-D6X" secondAttribute="bottom" constant="33" id="7aL-f2-GsI"/>
-                        <constraint firstItem="TTy-I7-YLt" firstAttribute="leading" secondItem="qP0-UU-5aC" secondAttribute="trailing" id="Exq-Ab-G48"/>
+                        <constraint firstItem="NvC-x6-SnF" firstAttribute="top" secondItem="Cfp-wt-D6X" secondAttribute="bottom" constant="10" id="0ue-Pp-fuT"/>
+                        <constraint firstAttribute="bottom" secondItem="NvC-x6-SnF" secondAttribute="bottom" id="R2V-UN-zTi"/>
                         <constraint firstAttribute="trailing" secondItem="Cfp-wt-D6X" secondAttribute="trailing" constant="16" id="RCW-ZT-UAP"/>
-                        <constraint firstItem="uN1-Qt-z4x" firstAttribute="leading" secondItem="sF9-Kc-In7" secondAttribute="leading" constant="10" id="Tjl-N8-woX"/>
-                        <constraint firstItem="TTy-I7-YLt" firstAttribute="centerY" secondItem="Cfp-wt-D6X" secondAttribute="centerY" id="Uvb-iJ-Yqk"/>
-                        <constraint firstAttribute="bottom" secondItem="uN1-Qt-z4x" secondAttribute="bottom" constant="8" id="Zep-yb-BuM"/>
+                        <constraint firstItem="Cfp-wt-D6X" firstAttribute="leading" secondItem="qP0-UU-5aC" secondAttribute="trailing" constant="10" id="Uh9-f2-Vj1"/>
                         <constraint firstItem="qP0-UU-5aC" firstAttribute="leading" secondItem="sF9-Kc-In7" secondAttribute="leading" constant="10" id="aoR-l6-0Aw"/>
-                        <constraint firstItem="qP0-UU-5aC" firstAttribute="centerY" secondItem="TTy-I7-YLt" secondAttribute="centerY" id="dO8-te-fRM"/>
-                        <constraint firstAttribute="trailing" secondItem="uN1-Qt-z4x" secondAttribute="trailing" constant="10" id="oI5-ib-Ekk"/>
+                        <constraint firstItem="NvC-x6-SnF" firstAttribute="top" secondItem="qP0-UU-5aC" secondAttribute="bottom" constant="8" symbolic="YES" id="cqz-5l-vco"/>
+                        <constraint firstAttribute="trailing" secondItem="NvC-x6-SnF" secondAttribute="trailing" id="nBx-Ve-oWN"/>
+                        <constraint firstItem="NvC-x6-SnF" firstAttribute="leading" secondItem="sF9-Kc-In7" secondAttribute="leading" id="yBZ-3o-Ngd"/>
                         <constraint firstItem="Cfp-wt-D6X" firstAttribute="top" secondItem="sF9-Kc-In7" secondAttribute="top" constant="10" id="zp7-98-tf1"/>
                     </constraints>
                 </view>
@@ -141,15 +144,17 @@
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
-        <image name="schoolss" width="42.666667938232422" height="42.666667938232422"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ButtonColor">
+            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

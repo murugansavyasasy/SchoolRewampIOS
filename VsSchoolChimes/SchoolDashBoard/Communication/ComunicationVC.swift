@@ -137,6 +137,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             sendbtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
             
         }
+        if staffDetailsCount?.count ?? 0 > 1 {
+            TxtMsgSendBtn.setTitle("Next", for: .normal)
+            TxtMsgSendBtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
+            
+        }else{
+            TxtMsgSendBtn.setTitle("Send", for: .normal)
+            TxtMsgSendBtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
+            
+        }
+        
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)
         historytable.delegate = self
         historytable.dataSource = self
@@ -200,7 +212,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }else{
                 
                 if AudioPlayUrl != "" && voiceTitleeTxt.text != "" {
-                    let vc = SchoolListVC(nibName: nil, bundle: nil)
+                    let vc = RecipientVc(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                         
@@ -210,6 +222,36 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
         }
         
+        
+    }
+    
+    
+    @IBAction func text_sendActionBtn(_ sender: UIButton) {
+        
+        if sender.title(for: .normal) == "Next" {
+            
+            if  informationcontent.text != "" && TextMsgTittle.text != ""{
+                let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }else{
+                alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+            }
+        }else{
+            
+            
+            if  informationcontent.text != "" && TextMsgTittle.text != ""{
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }else{
+                alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+            }
+        }
+            
+            
+            
+ 
         
     }
     override func viewDidLayoutSubviews() {

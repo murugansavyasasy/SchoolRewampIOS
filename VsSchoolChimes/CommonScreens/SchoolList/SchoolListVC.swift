@@ -15,6 +15,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
    
     var screen_type : Int?
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    let alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,8 +63,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         
         if segmentName.selectedSegmentIndex == 0{
             let img = schools_details?.isSelected ?? false ? UIImage(named: "checkedSquare") : UIImage(
-                named: "uncheckedSquare"
-            )
+                named: "uncheckedSquare")
             cell.selectedBtn.setImage(img, for: .normal)
         }else{
             
@@ -100,11 +100,13 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBAction func selectedSchool(_ sender: Any) {
         
-        let vc = RecipientVc(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-
-                
+        alert
+            .showAlert(
+                title: "",
+                message: AlertstringFile.AreYouSureYouWantToProceed,
+                on: self
+            )
+        
     }
     @objc func dismissBlurEffect() {
         // You can dismiss or handle the tap here

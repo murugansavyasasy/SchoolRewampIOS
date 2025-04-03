@@ -717,19 +717,22 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ge9-GQ-MId">
-                                            <rect key="frame" x="303" y="442" width="80" height="40"/>
+                                            <rect key="frame" x="298" y="442" width="85" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="AxA-Mz-iLS"/>
                                                 <constraint firstAttribute="height" constant="40" id="skD-Om-9Bd"/>
                                             </constraints>
                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Send">
+                                            <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Send" imagePadding="5">
                                                 <imageReference key="image" image="paperplane" catalog="system" symbolScale="small"/>
                                                 <backgroundConfiguration key="background" cornerRadius="4">
                                                     <color key="backgroundColor" systemColor="systemMintColor"/>
                                                 </backgroundConfiguration>
                                             </buttonConfiguration>
+                                            <connections>
+                                                <action selector="text_sendActionBtn:" destination="-1" eventType="touchUpInside" id="ipl-6t-ayn"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bXD-4C-iTD">
                                             <rect key="frame" x="16" y="60" width="361" height="23"/>
@@ -886,7 +889,7 @@
                     </constraints>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdr-6F-LLo">
-                    <rect key="frame" x="20" y="151" width="353" height="280"/>
+                    <rect key="frame" x="20" y="150.66666666666663" width="353" height="280"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-4A-iyx" customClass="FSCalendar">
                             <rect key="frame" x="0.0" y="45" width="353" height="225"/>
