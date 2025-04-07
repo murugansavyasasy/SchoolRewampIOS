@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecipientVc" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="backbtnMName" destination="TWr-HG-1q7" id="55f-4e-lan"/>
                 <outlet property="contentLbl" destination="wIL-CB-NVg" id="wn8-3J-3aF"/>
                 <outlet property="drpodonLbl" destination="NsN-q4-aAd" id="7e9-O8-aI0"/>
                 <outlet property="fullview" destination="Nnu-ef-Txp" id="f6Q-6e-F5F"/>
@@ -179,7 +180,7 @@
                                 <segment title="Section/Spefic Student"/>
                             </segments>
                             <connections>
-                                <action selector="segmentAction:" destination="-1" eventType="valueChanged" id="AHL-YQ-tVV"/>
+                                <action selector="segment_action:" destination="-1" eventType="valueChanged" id="RZ1-kn-tPX"/>
                             </connections>
                         </segmentedControl>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JXS-cG-yCi">
@@ -191,6 +192,9 @@
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Button"/>
                                     <buttonConfiguration key="configuration" style="plain" title="Spefic Student"/>
+                                    <connections>
+                                        <action selector="spefic_student_actionBtn:" destination="-1" eventType="touchUpInside" id="d2h-7x-1Rr"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dH6-DE-eUm">
                                     <rect key="frame" x="189" y="0.0" width="179" height="40"/>
@@ -305,13 +309,13 @@
                                 <constraint firstItem="8RU-2m-dMq" firstAttribute="top" secondItem="nwx-P1-mTZ" secondAttribute="top" id="ft9-IV-GkR"/>
                             </constraints>
                         </scrollView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWr-HG-1q7">
-                            <rect key="frame" x="5" y="10" width="171.66666666666666" height="35"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TWr-HG-1q7">
+                            <rect key="frame" x="5" y="10" width="398" height="35"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="35" id="KE4-DH-yBL"/>
                             </constraints>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system" title="Select Recipient" imagePadding="9"/>
+                            <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system" imagePlacement="leading" title="Select Recipient" imagePadding="9"/>
                             <connections>
                                 <action selector="backbtn:" destination="-1" eventType="touchUpInside" id="idR-kp-Pra"/>
                             </connections>
@@ -329,6 +333,7 @@
                         <constraint firstItem="TWr-HG-1q7" firstAttribute="top" secondItem="Nnu-ef-Txp" secondAttribute="top" constant="10" id="NyO-y5-Ye9"/>
                         <constraint firstItem="CIm-hq-iKJ" firstAttribute="centerY" secondItem="Nnu-ef-Txp" secondAttribute="centerY" id="RHd-ke-Wfr"/>
                         <constraint firstAttribute="trailing" secondItem="8RU-2m-dMq" secondAttribute="trailing" id="Tcg-ls-PoI"/>
+                        <constraint firstAttribute="trailing" secondItem="TWr-HG-1q7" secondAttribute="trailing" constant="5" id="XKY-IW-jzJ"/>
                         <constraint firstAttribute="bottom" secondItem="JXS-cG-yCi" secondAttribute="bottom" constant="20" id="d5c-jq-jOi"/>
                         <constraint firstItem="nwx-P1-mTZ" firstAttribute="leading" secondItem="Nnu-ef-Txp" secondAttribute="leading" id="fPc-4P-oti"/>
                         <constraint firstAttribute="trailing" secondItem="B1u-TT-aTV" secondAttribute="trailing" constant="5" id="gD5-JA-Jgi"/>

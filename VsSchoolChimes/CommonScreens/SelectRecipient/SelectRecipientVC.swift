@@ -89,9 +89,7 @@ class SelectRecipientVC: UIViewController {
     
     @IBAction func specificBtn(_ sender: Any) {
         
-        let vc = StudentHistryVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+       
         
         
     }

@@ -89,6 +89,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [Student]?
+    var studentsDetails: [StudentDetails]?
+    var selected_sectionID : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +106,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         registerCell()
         filterData = studentData
+        recipient_get_student_list(selected_sectionId: selected_sectionID ?? 0)
         search.delegate = self
         headerView.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
@@ -247,6 +250,41 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         let color = ColorManager.shared.letterColors[firstLetter]
         return color ?? .gradient1
     }
+    
+    func recipient_get_student_list(selected_sectionId: Int){
+        APIService.shared
+            .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: ["section_id" : selected_sectionId], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <GetStudentlistSuc,
+                Error>
+            ) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        historyTable.isHidden = false
+                        studentsDetails = successMessage.data
+                        if var students = studentsDetails {
+                            for i in students.indices {
+                                students[i].isSelect = false
+                            }
+                            studentsDetails = students
+                        }
+                        historyTable.reloadData()
+                    }
+                }else{
+                    DispatchQueue.main.async { [self] in
+                        historyTable.isHidden = true
+//                        noRecordLbl.text = successMessage.message
+                    }
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
     
 }
 

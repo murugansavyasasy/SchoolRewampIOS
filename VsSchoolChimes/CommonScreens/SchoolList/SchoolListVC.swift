@@ -12,23 +12,23 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var sendBtnName: UIButton!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var listTable: UITableView!
-    var schools: [School] = [
-        School(name: "ABC Public School", address: "123, Main Street, Chennai", isSelected: true),
-        School(name: "XYZ International School", address: "45, Park Road, Coimbatore", isSelected: true),
-        School(name: "Sunrise Academy", address: "78, MG Road, Madurai", isSelected: true),
-        School(name: "Greenwood High", address: "56, Anna Nagar, Trichy", isSelected: true),
-        School(name: "Bluebell School", address: "90, Gandhi Street, Salem", isSelected: true),
-        School(name: "Oakridge School", address: "12, Nelson Road, Erode", isSelected: true),
-        School(name: "Little Angels Academy", address: "67, Cross Road, Tirunelveli", isSelected: true),
-        School(name: "Springfield High", address: "34, Lake View, Vellore", isSelected: true),
-        School(name: "Elite Public School", address: "89, New Colony, Thanjavur", isSelected: true),
-        School(name: "St. Joseph's Matric", address: "23, Temple Road, Kanyakumari", isSelected: true)
-    ]
+   
     var screen_type : Int?
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    let alert = CustomAlert()
+    var communicatio_textDetails :[String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        sendBtnName.isHidden = true
+        
+        if screen_type == screenType.is_emergencyvoice{
+            segmentName.isHidden = true
+            segmentName.selectedSegmentIndex = 0
+            sendBtnName.isHidden = false
+        }
+        for i in 0..<(school_details?.count ?? 0) {
+            school_details?[i].isSelected = true
+        }
+        
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
     }
     override func viewDidLayoutSubviews() {
@@ -59,13 +59,12 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.SchoolListTVC, for: indexPath) as! SchoolListTVC
         let schools_details  = school_details?[indexPath.row]
         cell.name.text = schools_details?.school_name
-        cell.address.text = schools_details?.city
+        cell.address.text = schools_details?.school_address
         cell.schoolRelignLangLbl.text = schools_details?.school_name_regional
         
         if segmentName.selectedSegmentIndex == 0{
             let img = schools_details?.isSelected ?? false ? UIImage(named: "checkedSquare") : UIImage(
-                named: "uncheckedSquare"
-            )
+                named: "uncheckedSquare")
             cell.selectedBtn.setImage(img, for: .normal)
         }else{
             
@@ -80,13 +79,15 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         
         if segmentName.selectedSegmentIndex == 0{
 
-            var schools_details  = school_details?[indexPath.row]
-            schools_details?.isSelected?.toggle()
+            school_details?[indexPath.row].isSelected?.toggle()
             listTable.reloadData()
             
         }else{
-            ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
+            if let data = school_details?[indexPath.row]{
+                UserDefaultFileManager.saveStaffDetails(data: data)}
+//            ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.communicatio_textDetails = communicatio_textDetails
             vc.ScreenType = screen_type
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)
@@ -104,11 +105,13 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
     @IBAction func selectedSchool(_ sender: Any) {
         
-        let vc = RecipientVc(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-
-                
+        alert
+            .showAlert(
+                title: "",
+                message: AlertstringFile.AreYouSureYouWantToProceed,
+                on: self
+            )
+        
     }
     @objc func dismissBlurEffect() {
         // You can dismiss or handle the tap here

@@ -34,7 +34,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     let backgroundcolor = Colornames.topBackgroundCLr
     let tapColor = Colornames.topBackgroundCLr1
     var placeholderLabel: UILabel!
-    
+    let alert = CustomAlert()
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TxtMsgSendBtn: UIButton!
     @IBOutlet weak var TextMsgTitleLbl: UILabel!
@@ -103,8 +103,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
-        
         if staff_role ==  PriorityType.is_admin || staff_role == PriorityType.is_grouphead || staff_role == PriorityType.is_principal{
             emengencyCall.isHidden = false
             EnableCallLbl.isHidden = false
@@ -113,9 +111,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             EnableCallLbl.isHidden = true
         }
 
-        
-        
-        
+    
         sendbtn.isEnabled = true
         check_record_permission()
         printCurrentMonth()
@@ -141,6 +137,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             sendbtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
             
         }
+        if staffDetailsCount?.count ?? 0 > 1 {
+            TxtMsgSendBtn.setTitle("Next", for: .normal)
+            TxtMsgSendBtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
+            
+        }else{
+            TxtMsgSendBtn.setTitle("Send", for: .normal)
+            TxtMsgSendBtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
+            
+        }
+        
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)
         historytable.delegate = self
         historytable.dataSource = self
@@ -159,38 +167,97 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     
-//    @IBAction func voiceSendBtnAction(_ sender: Any) {
-//        
-//        if (sender as AnyObject).title(for: .normal) == "Next" {
-//               
-//            }
-//        
-//    }
-    
     @IBAction func voice_sendBtn_action(_ sender: UIButton) {
         
+        
+        
         if sender.title(for: .normal) == "Next" {
-              
+            
             if emengencyCall.isOn{
-                
-                let vc = SchoolListVC(nibName: nil, bundle: nil)
-                vc.screen_type = screenType.is_emergencyvoice
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-                
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != ""{
+                    let vc = SchoolListVC(nibName: nil, bundle: nil)
+                    vc.screen_type = screenType.is_emergencyvoice
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else{
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
             }else{
                 
-                
-                
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != "" {
+                    let vc = SchoolListVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                }else{
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
             }
-           
             
+            
+        }else{
+            if emengencyCall.isOn{
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != ""{
+                    CustomAlert
+                        .showAlertWithOkAction(
+                            title: "",
+                            message: AlertstringFile.AreYouSureYouWantToProceed,
+                            on: self
+                        ) {
+                            print("sended voice")
+                        }
+                }else{
+                    
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
+            }else{
+                
+                if AudioPlayUrl != "" && voiceTitleeTxt.text != "" {
+                    let vc = RecipientVc(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    present(vc, animated: true)
+                        
+                }else{
+                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                }
+            }
+        }
+        
+        
+    }
+    
+    
+    @IBAction func text_sendActionBtn(_ sender: UIButton) {
+        
+        if sender.title(for: .normal) == "Next" {
+            
+            if  informationcontent.text != "" && TextMsgTittle.text != ""{
+                let comm_details  : [String] = [informationcontent.text!,TextMsgTittle.text!]
+                let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.communicatio_textDetails = comm_details
+                vc.screen_type = screenType.communication_text
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }else{
+                alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+            }
         }else{
             
             
-            
+            if  informationcontent.text != "" && TextMsgTittle.text != ""{
+                let comm_details  : [String] = [informationcontent.text!,TextMsgTittle.text!]
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.communicatio_textDetails = comm_details
+                vc.ScreenType = screenType.communication_text
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }else{
+                alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+            }
         }
-        
+            
+            
+            
+ 
         
     }
     override func viewDidLayoutSubviews() {
@@ -787,27 +854,27 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     // Update Slider Position as Audio Plays
     @objc func updateSlider() {
         guard let audioPlayer = player else { return }
-
+        
         if audioPlayer.isPlaying {
             audioRecorder?.updateMeters()
-
+            
             // Get average power for channel 0
             let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
             let normalizedPower = max(1, (averagePower + 160) / 160)
             waveView.updateWithLevel(CGFloat(normalizedPower))  // Update waveform animation
-
+            
             // Update playback time
             if let currentItem = audioPlayer.currentItem {
                 let totalDuration = CMTimeGetSeconds(currentItem.duration)
                 
                 if totalDuration.isFinite {
                     let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-
+                    
                     // Update WaveView progress
                     let progress = CGFloat(elapsedTime / totalDuration)
                     waveView.progress = progress
                     waveView.setNeedsDisplay()  // Refresh WaveView to update colors
-
+                    
                     // Time formatting for display
                     let totalMinutes = Int(totalDuration) / 60
                     let totalSeconds = Int(totalDuration) % 60
@@ -823,11 +890,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
         } else {
             audioRecorder?.updateMeters()
-
+            
             // Get average power for channel 0 when paused or stopped
             let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
             let normalizedPower = max(0, (0) / 160)
-
+            
             // Update wave view with low intensity when paused
             waveView.updateWithLevel(CGFloat(normalizedPower))
         }
