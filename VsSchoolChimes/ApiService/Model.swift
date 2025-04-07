@@ -89,6 +89,7 @@ struct StaffDetails: Codable {
     let is_payment_pending: String?  // Changed from String? to Bool?
     let schedule_call_type: Int?
     let biometric_enable: Int?
+    let school_id: String?
     let allow_video_download: Bool?
     let access_token: String?
     let school_address : String?
@@ -105,6 +106,7 @@ struct ChildDetails: Codable {
     let roll_number: String?
     let display_message: String?
     let access_token: String?
+    let school_id: String?
 }
 
 // MARK: Validate OTP
@@ -260,3 +262,13 @@ struct GetStaffDetails:Codable{
         let name: String?
         let unread_count: Int?
     }
+
+
+
+//MARK: All SENDINg API COMMON MODEL :
+
+struct CommonApiSuc: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [String]?
+}

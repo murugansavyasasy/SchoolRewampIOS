@@ -16,6 +16,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var screen_type : Int?
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     let alert = CustomAlert()
+    var communicatio_textDetails :[String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,7 +59,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.SchoolListTVC, for: indexPath) as! SchoolListTVC
         let schools_details  = school_details?[indexPath.row]
         cell.name.text = schools_details?.school_name
-        cell.address.text = schools_details?.city
+        cell.address.text = schools_details?.school_address
         cell.schoolRelignLangLbl.text = schools_details?.school_name_regional
         
         if segmentName.selectedSegmentIndex == 0{
@@ -82,8 +83,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             listTable.reloadData()
             
         }else{
-            ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
+            if let data = school_details?[indexPath.row]{
+                UserDefaultFileManager.saveStaffDetails(data: data)}
+//            ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.communicatio_textDetails = communicatio_textDetails
             vc.ScreenType = screen_type
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true)

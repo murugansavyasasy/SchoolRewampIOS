@@ -231,7 +231,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if sender.title(for: .normal) == "Next" {
             
             if  informationcontent.text != "" && TextMsgTittle.text != ""{
+                let comm_details  : [String] = [informationcontent.text!,TextMsgTittle.text!]
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.communicatio_textDetails = comm_details
+                vc.screen_type = screenType.communication_text
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }else{
@@ -241,7 +244,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             
             if  informationcontent.text != "" && TextMsgTittle.text != ""{
+                let comm_details  : [String] = [informationcontent.text!,TextMsgTittle.text!]
                 let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.communicatio_textDetails = comm_details
+                vc.ScreenType = screenType.communication_text
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }else{
@@ -848,27 +854,27 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     // Update Slider Position as Audio Plays
     @objc func updateSlider() {
         guard let audioPlayer = player else { return }
-
+        
         if audioPlayer.isPlaying {
             audioRecorder?.updateMeters()
-
+            
             // Get average power for channel 0
             let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
             let normalizedPower = max(1, (averagePower + 160) / 160)
             waveView.updateWithLevel(CGFloat(normalizedPower))  // Update waveform animation
-
+            
             // Update playback time
             if let currentItem = audioPlayer.currentItem {
                 let totalDuration = CMTimeGetSeconds(currentItem.duration)
                 
                 if totalDuration.isFinite {
                     let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-
+                    
                     // Update WaveView progress
                     let progress = CGFloat(elapsedTime / totalDuration)
                     waveView.progress = progress
                     waveView.setNeedsDisplay()  // Refresh WaveView to update colors
-
+                    
                     // Time formatting for display
                     let totalMinutes = Int(totalDuration) / 60
                     let totalSeconds = Int(totalDuration) % 60
@@ -884,11 +890,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
         } else {
             audioRecorder?.updateMeters()
-
+            
             // Get average power for channel 0 when paused or stopped
             let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
             let normalizedPower = max(0, (0) / 160)
-
+            
             // Update wave view with low intensity when paused
             waveView.updateWithLevel(CGFloat(normalizedPower))
         }

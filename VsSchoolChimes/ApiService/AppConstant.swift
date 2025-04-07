@@ -29,6 +29,7 @@ struct ServiceUrl{
     static let recipient_get_student_list  = "comm/recipient/get-student-list"
     static let recipient_get_subject_list  = "comm/recipient/get-subject-list"
     static let recipient_get_staff_list  = "comm/recipient/get-staff-list"
+    static let comm_text_message_send_text  = "comm/text-message/send-text"
 }
 
 struct localData{
@@ -51,6 +52,16 @@ struct screenType{
     static let is_emergencyvoice = 1
     static let isAssaignment = 22
     static let isHomeWork = 9
+    static let communication_text = 2
+}
+struct TargetTypes{
+    
+    static let school = 1
+    static let standard = 2
+    static let section = 3
+    static let group = 4
+    static let student = 5
+    
 }
 struct PriorityType{
     static let is_grouphead  = "p1"

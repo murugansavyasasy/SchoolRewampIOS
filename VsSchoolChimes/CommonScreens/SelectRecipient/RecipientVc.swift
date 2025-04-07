@@ -10,6 +10,7 @@ import DropDown
 
 class RecipientVc: UIViewController{
     
+    @IBOutlet weak var backbtnMName: UIButton!
     @IBOutlet weak var drpodonLbl: UILabel!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var fullview: UIView!
@@ -23,7 +24,7 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var noRecordLbl: UILabel!
     
-    var cv_itemsarry : [String] = ["Entier School","Group","Standard","Section/Student"]
+    var cv_itemsarry : [String] = []
     var dropDownArray = [String]()
     var subjectList = [String]()
     var subjectDetails: [GetSubjectDetails]?
@@ -37,8 +38,41 @@ class RecipientVc: UIViewController{
     var selectedId : IndexPath?
     var sectionId:Int?
     var ScreenType:Int?
+    let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    var segment_selected_index:Int?
+    var array_selectedId : [Int] = []
+    var communicatio_textDetails :[String] = []
+    var target_type : Int?
+    let alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        backbtnMName
+            .setTitle(
+                UserDefaultFileManager.get_staff_Details()?.school_name,
+                for: .normal
+            )
+        if staff_role == PriorityType.is_staff{
+            contentLbl.isHidden = true
+            cv_itemsarry = ["Standard","Section/Student","Group"]
+            segmentName.removeAllSegments()
+                // Add new segments from array
+                for (index, title) in cv_itemsarry.enumerated() {
+                    segmentName.insertSegment(withTitle: title, at: index, animated: false)
+                }
+                // Set default selected index (optional)
+                segmentName.selectedSegmentIndex = 0
+        }else if staff_role == PriorityType.is_admin || staff_role == PriorityType.is_principal || staff_role == PriorityType.is_grouphead{
+            speficBtnName.isHidden = true
+            cv_itemsarry = ["Entier School","Standard","Group"]
+            segmentName.removeAllSegments()
+                for (index, title) in cv_itemsarry.enumerated() { // Add new segments from array
+                    segmentName.insertSegment(withTitle: title, at: index, animated: false)
+                }
+                // Set default selected index (optional)
+                segmentName.selectedSegmentIndex = 0
+        }
         tableHeight.constant = 0
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
@@ -61,11 +95,8 @@ class RecipientVc: UIViewController{
         let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
         
-        tv
-            .register(
-                UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),
-                forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header
-            )
+        tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
+        
         tv.delegate = self
         tv.dataSource = self
     }
@@ -85,68 +116,80 @@ class RecipientVc: UIViewController{
     }
     
     @IBAction func send(_ sender: UIButton) {
-        var selectedIds: [Int] = []
+       
+        print("selectedId : \(array_selectedId)")
+        if array_selectedId.count != 0 {
+            
+            if screenType.communication_text == ScreenType{
+
+                alert
+                    .showAlertCancel(
+                        title: AlertstringFile.Alert_title,
+                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
+                            array_selectedId.count) ,
+                        actionLbl1: AlertstringFile.OK,
+                        actionLbl2: AlertstringFile.Cancel,
+                        on: self,
+                        onOk: { [self] in
+                            sendtextmessage_communication(
+                                message : communicatio_textDetails.first ?? "",
+                                description: communicatio_textDetails.last ?? "",
+                                target_type :target_type ?? 0
+                            )
+                        } ,
+                        onNo: {print("Canceled")})
+            }
+            
+        }else{
         
-        switch segmentName.selectedSegmentIndex {
-        case 1:
-            selectedIds = groupDetails?.compactMap {
-                if let id = $0.id as? Int {
-                    return id
-                } else if let idStr = $0.id as? String, let id = Int(idStr) {
-                    return id
-                }
-                return nil
-            } ?? []
-            
-        case 2:
-            selectedIds = standardDetails?.compactMap {
-                if let id = $0.id as? Int {
-                    return id
-                } else if let idStr = $0.id as? String, let id = Int(idStr) {
-                    return id
-                }
-                return nil
-            } ?? []
-            
-        case 3:
-            selectedIds = sectionsDetails?.compactMap {
-                if let id = $0.id as? Int {
-                    return id
-                } else if let idStr = $0.id as? String, let id = Int(idStr) {
-                    return id
-                }
-                return nil
-            } ?? []
-            
-        default:
-            selectedIds = []
+            alert
+                .showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message:AlertstringFile.Choose_any_target,
+                    on: self
+                )
         }
-        
-        print("Selected IDs: \(selectedIds)")
     }
     
-    @IBAction func segmentAction(_ sender: Any) {
+    @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
         
+        let vc = StudentHistryVC(nibName: nil, bundle: nil)
+        vc.selected_sectionID = array_selectedId.first
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
         
-        if segmentName.selectedSegmentIndex == 0{ // Entier
+    }
+    @IBAction func segment_action(_ sender: UISegmentedControl) {
+        array_selectedId.removeAll()
+        segment_selected_index = sender.selectedSegmentIndex
+        guard segment_selected_index ?? 0 >= 0, segment_selected_index ?? 0 < cv_itemsarry.count else {
+               print("Invalid segment index.")
+               return
+           }
+        let selectedTitle = cv_itemsarry[segment_selected_index ?? 0]
+        if selectedTitle == "Entier School"{ // Entier
+            target_type = TargetTypes.school
             contentLbl.isHidden = false
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
-        }else if segmentName.selectedSegmentIndex == 1{ // group
+        }else if selectedTitle == "Group"{ // group
+            target_type = TargetTypes.group
             getGrouplistAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
-        }else if segmentName.selectedSegmentIndex == 2{ // standard
+        }else if selectedTitle ==  "Standard"{ // standard
+            target_type = TargetTypes.standard
             getStandardsAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-        }else if segmentName.selectedSegmentIndex == 3{
+        }else if selectedTitle  ==  "Section/Student"{
+            target_type = TargetTypes.section
             getStandardsAPI()
             if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
                 speficBtnName.isHidden = true
@@ -158,8 +201,9 @@ class RecipientVc: UIViewController{
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
         }
+        
     }
-    
+   
     @IBAction func selectStd(){
         setupStdDropdown ()
     }
@@ -211,13 +255,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let head = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Std_Grp_header") as! Std_Grp_header
         
-        switch segmentName.selectedSegmentIndex {
-        case 1:
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+        case "Group":
             head.HeaderLabel.text = "Group"
-        case 2:
+        case "Standard":
             head.HeaderLabel.text = "Standard"
-        case 3:
-            head.HeaderLabel.text = "Section"
+        case "Section":
+            head.HeaderLabel.text = "Section/Student"
         default:
             head.HeaderLabel.text = ""
         }
@@ -229,12 +273,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch segmentName.selectedSegmentIndex {
-        case 1:
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+        case "Group":
             return groupDetails?.count ?? 0
-        case 2:
+        case "Standard":
             return standardDetails?.count ?? 0
-        case 3:
+        case "Section/Student":
             return sectionsDetails?.count ?? 0
         default:
             return 0
@@ -244,23 +288,25 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell, for: indexPath) as! RecipientTvCell
         
-        switch segmentName.selectedSegmentIndex {
-        case 1:
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+        case "Group":
             cell.checkboxImg.isUserInteractionEnabled = true
             cell.cellLabel.text = groupDetails?[indexPath.row].name
             if let select = groupDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
             }
-        case 2:
+            
+        case "Standard":
             cell.cellLabel.text = standardDetails?[indexPath.row].name
             if let select = standardDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
             }
-        case 3:
+        case "Section/Student":
             cell.cellLabel.text = sectionsDetails?[indexPath.row].name
             if let select = sectionsDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
             }
+            
         default:
             break
         }
@@ -269,37 +315,77 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch segmentName.selectedSegmentIndex {
-        case 1:
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+        case "Group":
             if indexPath.row < (groupDetails?.count ?? 0) {
                 groupDetails?[indexPath.row].isSelect?.toggle()
+                
+                if let id =  groupDetails?[indexPath.row].id {
+                    if  groupDetails?[indexPath.row].isSelect == true {
+                        if !array_selectedId.contains(Int(id) ?? 0) {
+                            array_selectedId.append(Int(id) ?? 0)
+                        }
+                    } else {
+                        array_selectedId.removeAll(where: { $0 == Int(id) ?? 0 })
+                    }
+                }
             }
-        case 2:
+        case "Standard":
             if indexPath.row < (standardDetails?.count ?? 0) {
                 standardDetails?[indexPath.row].isSelect?.toggle()
-            }
-        case 3:
-            if indexPath.row < (sectionsDetails?.count ?? 0) {
-                if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
-                    for i in 0..<(sectionsDetails?.count ?? 0){
-                        if i != indexPath.row{
-                            sectionsDetails?[i].isSelect = false
-                        }else{
-                            sectionsDetails?[i].isSelect?.toggle()
+                
+                if let id = standardDetails?[indexPath.row].id {
+                    if standardDetails?[indexPath.row].isSelect == true {
+                        if !array_selectedId.contains(id) {
+                            array_selectedId.append(id)
                         }
+                    } else {
+                        array_selectedId.removeAll(where: { $0 == id })
                     }
-                    
-                    getSubjectListAPI(sectionsDetails?[indexPath.row].id ?? 0)
-                    selectSectionDropdown.isHidden = false
-                }else{
-                    sectionsDetails?[indexPath.row].isSelect?.toggle()
-                    let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
-                    speficBtnName.isEnabled =  selectedSections.count != 1 ? false : true
-                    speficBtnName.backgroundColor =  selectedSections.count != 1 ? UIColor.gray:.button
-                    
                 }
-                
-                
+            }
+        case "Section/Student":
+            if indexPath.row < (sectionsDetails?.count ?? 0) {
+                   guard var section = sectionsDetails?[indexPath.row] else { return }
+
+                   if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork {
+                       for i in 0..<(sectionsDetails?.count ?? 0) {
+                           if i != indexPath.row {
+                               sectionsDetails?[i].isSelect = false
+                           } else {
+                               sectionsDetails?[i].isSelect?.toggle()
+                           }
+                       }
+                       getSubjectListAPI(section.id ?? 0)
+                       selectSectionDropdown.isHidden = false
+                       
+                       if let id = section.id {
+                           if section.isSelect == true {
+                               if !array_selectedId.contains(id) {
+                                   array_selectedId.append(id)
+                               }
+                           } else {
+                               array_selectedId.removeAll(where: { $0 == id })
+                           }
+                       }
+                   } else {
+                       section.isSelect?.toggle()
+                       sectionsDetails?[indexPath.row].isSelect = section.isSelect // update back to array
+
+                       if let id = section.id {
+                           if section.isSelect == true {
+                               if !array_selectedId.contains(id) {
+                                   array_selectedId.append(id)
+                               }
+                           } else {
+                               array_selectedId.removeAll(where: { $0 == id })
+                           }
+                       }
+
+                       let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
+                       speficBtnName.isEnabled = selectedSections.count == 1
+                       speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
+                   }
             }
         default:
             break
@@ -311,13 +397,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         return 50
     }
     
+    // MARK:  This api for  Listing Stars ============================
+    
     func getGrouplistAPI(){
         APIService.shared
             .makeApi(
                 url: ServiceUrl.recipient_get_group_list,
                 parameters: [:],
                 type: ApitTypeSringFile.GET ,
-                token: ServiceUrl.token
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
             ) {
                 [self] (result: Result<GrouplistSuc,Error>) in
                 switch result {
@@ -356,8 +444,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }
             }
     }
-    
-    
     
     func getStandardsAPI(){
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
@@ -402,42 +488,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    func getStudentListAPI(){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetStudentlistSuc,Error>) in
-            switch result {
-            case .success(let successMessage):
-                if successMessage.status == true{
-                    DispatchQueue.main.async { [self] in
-                        tv.isHidden = false
-                        studentsDetails = successMessage.data
-                        if var students = studentsDetails {
-                            for i in students.indices {
-                                students[i].isSelect = false
-                            }
-                            studentsDetails = students
-                        }
-                        tv.reloadData()
-                        DispatchQueue.main.async {
-                            self.tableHeight.constant = self.tv.contentSize.height
-                            self.view.layoutIfNeeded()
-                        }
-                        
-                    }
-                }else{
-                    DispatchQueue.main.async { [self] in
-                        tv.isHidden = true
-                        noRecordLbl.text = successMessage.message
-                    }
-                }
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        
-    }
-    
-    
     
     func getSubjectListAPI(_ id:Int){
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list + "?section_id=\(id)", parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
@@ -458,13 +508,73 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         noRecordLbl.text = successMessage.message
                     }
                 }
-                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
         
+    }   // MARK:   Listing  API END ===========================
+    
+    
+    
+    
+    //MARK: ALL Sending API START ===========================
+    
+    
+    func sendtextmessage_communication(message : String,description:String,target_type :Int){
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
+                
+                send_textmessageStringFile.target_type : target_type,
+                send_textmessageStringFile.target_code : array_selectedId,
+                send_textmessageStringFile.message : message,
+                send_textmessageStringFile.description : description
+                 
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+            
+            switch result {
+                
+            case.success(let succesmessage) :
+                
+                if succesmessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: "Success",
+                                message: succesmessage.message ?? "",
+                                on: self
+                            ) {
+                                self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                
+                            }
+                       
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                      
+                        
+                    }
+                }
+                
+            case.failure(let error) :
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+            
+        }
+        
+        
     }
+    
+    
     
     
 }
