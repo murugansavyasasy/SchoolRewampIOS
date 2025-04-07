@@ -465,6 +465,4 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    
-    
 }

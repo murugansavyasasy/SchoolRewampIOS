@@ -1044,7 +1044,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             cell.descriptContent.tag = indexPath.row
             cell.descriptContent.isUserInteractionEnabled = true
             cell.descriptContent.addGestureRecognizer(tapGesture)
-            
             return cell
             
         }else{
@@ -1053,7 +1052,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             cell.playBtn.tag = indexPath.row
             
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
-            // Update play state
             let isPlaying = (playIndex == indexPath.row)
             cell.updatePlayState(isPlaying: isPlaying, url: "file:///Users/admin/Library/Developer/CoreSimulator/Devices/2B90BDE8-D068-4A12-BD7E-7E942461DEA2/data/Containers/Data/Application/F581A644-A9BE-4291-B7E0-733CD151F829/Documents/myRecording.mp4")
             cell.delegate = self
@@ -1075,26 +1073,20 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         let isExpanded = label.numberOfLines == 0
         label.numberOfLines = isExpanded ? 3 : 0
         label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
-        
-        // Animate the cell height change
         historytable.beginUpdates()
         historytable.endUpdates()
     }
     
     //MARK: TEXT ADD SEE MORE
     func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-        // If expanded, show full text with "See less"
         if expanded {
             let fullString = fullDescription + CommonStringFile.seeLess.translated()
             let attributedText = NSMutableAttributedString(string: fullString)
-            // Set "See less" text to blue and underline it
             let seeLessRange = (fullString as NSString).range(of: "See less")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            
             return attributedText
         } else {
             var fullString = ""
-            // Otherwise, truncate and show "See more"
             if fullDescription.count > 120{
                 let truncatedDescription = String(fullDescription.prefix(100))
                 fullString = truncatedDescription + CommonStringFile.seemore.translated()
@@ -1102,8 +1094,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 fullString = fullDescription
             }
             let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See more" text to blue and underline it
             let seeMoreRange = (fullString as NSString).range(of: "See more")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
             return attributedText
@@ -1113,7 +1103,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     
     
     func reload(index: Int) {
-        // Stop playback in the currently playing cell (if any)
         if let currentIndex = playIndex, currentIndex != index {
                    let previousIndexPath = IndexPath(row: currentIndex, section: 0)
             (historytable.cellForRow(at: previousIndexPath) as? HistoryTC)?.updatePlayState(isPlaying: false, url: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg")
@@ -1148,7 +1137,6 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         if let activeButton = activeButton {
-            // Update the respective button's title
             let selectedTime = formatter.string(from: timePicker.date)
             activeButton.setTitle(selectedTime, for: .normal)
         }
@@ -1158,7 +1146,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func minimumDate(for calendar: FSCalendar) -> Date {
-        return Date() // Today
+        return Date()
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {
@@ -1166,13 +1154,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        // Get the current visible month
         let firstDayOfCurrentMonth = calendar.currentPage
         let lastDayOfCurrentMonth = Calendar.current.date(byAdding: .month, value: 1, to: firstDayOfCurrentMonth)?.addingTimeInterval(-1) ?? firstDayOfCurrentMonth
         if !(date >= firstDayOfCurrentMonth && date <= lastDayOfCurrentMonth) {
-            // Deselect the date and notify the user
-            calendar.deselect(date)
             
+            calendar.deselect(date)
             let alert = UIAlertController(
                 title: AlertstringFile.invalidSelection,
                 message: AlertstringFile.selectDatesWithinMonth,
@@ -1182,14 +1168,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             self.present(alert, animated: true, completion: nil)
             return
         }
-        
-        // Limit selections to a maximum of 6 dates
         if selectedDates.count < 6 {
             if !selectedDates.contains(date) {
-                selectedDates.append(date) // Add the selected date
+                selectedDates.append(date)
             }
         } else {
-            // Automatically deselect the date if the limit is reached
             calendar.deselect(date)
             
             let alert = UIAlertController(
@@ -1243,15 +1226,12 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     // make a cell for each cell index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        // get a reference to our storyboard cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCVC, for: indexPath as IndexPath) as! DateCVC
         
         let selectedDate = selectedDates[indexPath.item]
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium // You can change this style to your preference
         let formattedDate = dateFormatter.string(from: selectedDate)
-        
-        // Assign the formatted date to the label
         cell.dateLbl.text = formattedDate
         cell.dateDelet.tag = indexPath.item
         cell.delegate = self
