@@ -69,7 +69,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhC-TO-4ad" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="16" y="40.333333333333336" width="297" height="77.333333333333314"/>
+                                <rect key="frame" x="16" y="46.333333333333336" width="297" height="71.333333333333314"/>
                                 <string key="text">Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
@@ -87,7 +87,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Announcements and promos" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E6K-XD-RuD" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="16" y="9.9999999999999982" width="297" height="20.333333333333329"/>
+                                <rect key="frame" x="16" y="15.999999999999998" width="297" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -107,7 +107,7 @@
                             <constraint firstItem="ZhC-TO-4ad" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="FNp-wa-w5F"/>
                             <constraint firstAttribute="bottom" secondItem="vwk-N1-Vce" secondAttribute="bottom" constant="10" id="Fip-zH-CbG"/>
                             <constraint firstItem="E6K-XD-RuD" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="Gt3-ub-Ckj"/>
-                            <constraint firstItem="E6K-XD-RuD" firstAttribute="top" secondItem="PuL-ZK-Yro" secondAttribute="top" constant="10" id="OJi-7Y-eam"/>
+                            <constraint firstItem="E6K-XD-RuD" firstAttribute="top" secondItem="PuL-ZK-Yro" secondAttribute="top" constant="16" id="OJi-7Y-eam"/>
                             <constraint firstAttribute="trailing" secondItem="E6K-XD-RuD" secondAttribute="trailing" constant="16" id="Qjd-4J-WAq"/>
                             <constraint firstItem="orl-Nb-csW" firstAttribute="top" secondItem="ZhC-TO-4ad" secondAttribute="bottom" constant="10" id="U1J-ev-701"/>
                             <constraint firstAttribute="trailing" secondItem="gF1-fd-HlY" secondAttribute="trailing" id="ewW-Te-CYc"/>
@@ -141,13 +141,13 @@
         <image name="newimg" width="498" height="501"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -61,37 +61,20 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let customdate = DateFormatter()
     let initialHeight: CGFloat = 60
     let maxHeight: CGFloat = 300
-    
+    var homeWorkList:[Homework]?
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         BackBtn.applyBackButton()
         // Add observers for keyboard events
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
         wordsCountLbl.applyRightTxt()
-        NotificationCenter.default.addObserver(
-            
-            self,
-            
-            selector: #selector(keyboardWillShow),
-            
-            name: UIResponder.keyboardWillShowNotification,
-            
-            object: nil
-            
-        )
+        NotificationCenter.default.addObserver( self,selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification,object: nil)
         
-        NotificationCenter.default.addObserver(
-            
-            self,
-            
-            selector: #selector(keyboardWillHide),
-            
-            name: UIResponder.keyboardWillHideNotification,
-            
-            object: nil
-            
-        )
+        NotificationCenter.default.addObserver(self,
+            selector: #selector(keyboardWillHide),name: UIResponder.keyboardWillHideNotification, object: nil)
         
         TitleTxtfield.addDoneButton()
         DetailsTxtview.addDoneButton()
@@ -99,7 +82,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         SearchBar.isHidden = true
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
-        
+        TV.delegate = self
+        TV.dataSource = self
         DetailsTxtview.delegate = self
         
         let nib = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
@@ -188,12 +172,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         StandardLbl.setFont(style: .title, size: FontSize.TitleSize)
         SectionLbl.setFont(style: .title, size: FontSize.TitleSize)
         
-        //MARK: Text Field Font Style
-        //TitleTxtfield.setFont(style: .body, size: FontSize.BodySize)
-        
-        //MARK: Text View Font Style
-        //DetailsTxtview.setFont(style: .body, size: FontSize.BodySize)
-        
     }
     func showDatepicker(){
         
@@ -272,10 +250,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             self.calenderHeight.constant = 0
             self.CalenderViewTodateBtnTop.constant = 0
             
-            //                self.TV.isHidden = false
-            //                self.TV.delegate = self
-            //                self.TV.dataSource = self
-            //                self.TV.reloadData()
             
         }
     }
@@ -300,8 +274,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             CalenderViewTodateBtnTop.constant = 0
             SearchBar.isHidden = false
             self.TV.isHidden = false
-            self.TV.delegate = self
-            self.TV.dataSource = self
             self.TV.reloadData()
         }
     }
@@ -344,7 +316,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     @IBAction func HomeworkBtnAct(_ sender: Any) {
-
+        
         ToStdOrSecBtnBottom.constant = 50
         gradientcolours(button: homeworkBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         homeworkBtn.setTitleColor(.white, for:.normal)
@@ -352,7 +324,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         gradientcolours(button: ReportBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ReportBtn.setTitleColor(.black, for:.normal)
-       
+        
         ReportView.isHidden = true
         ReportView.alpha = 0
         ComposeHomeworkView.isHidden = false
@@ -369,7 +341,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         gradientcolours(button: homeworkBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         homeworkBtn.setTitleColor(.black, for:.normal)
-       
+        
         ComposeHomeworkView.isHidden = true
         ComposeHomeworkView.alpha = 0
         ReportView.isHidden = false
@@ -438,6 +410,17 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     @IBAction func RecipentBtnAct(_ sender: Any) {
         
+        let data: [String: Any] = [
+            "topic": TitleTxtfield.text ?? "",
+            "text": DetailsTxtview.text ?? "",
+            "section_code": [""],
+            "subject_id": "",
+            "file_path": selectedImages
+        ]
+        let vc = RecipientVc(nibName: nil, bundle: nil)
+        vc.ScreenType = screenType.isHomeWork
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     // MARK: Set gradient colours for Button
@@ -591,7 +574,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 @available(iOS 14.0, *)
 extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        return /*homeWorkList?.count ?? 0*/ 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -603,10 +586,6 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             cell.ishomework = true
             cell.CVHeight.constant = 120
             cell.pagecontrollerheight.constant = 26
-            //            cell.datelbl.isHidden = true
-            //            cell.pinImage.isHidden = true
-            //            cell.Pinview.isHidden = true
-            //            cell.collectionview.isHidden = false
             cell.pagecontroller.isHidden = false
             cell.SelectBtn.isHidden = true
             cell.HomeworkSubjectLbl.text = "Tamil"
@@ -652,7 +631,7 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
             cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
             cell.delegate = self
-            cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
+            cell.dicriptContent.tag = indexPath.row
             cell.dicriptContent.isUserInteractionEnabled = true
             cell.dicriptContent.addGestureRecognizer(tapGesture)
             return cell
@@ -663,15 +642,9 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         guard let label = sender.view as? UILabel else { return }
         let indexPath = IndexPath(row: label.tag, section: 0)
         let fullDescription = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment."
-        
-        // Toggle the label between expanded and collapsed states
         let isExpanded = label.numberOfLines == 0
         label.numberOfLines = isExpanded ? 3 : 0
-        
-        // Update the label text with the appropriate "See more" or "See less" state
         label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
-        
-        // Animate the cell height change
         TV.beginUpdates()
         TV.endUpdates()
     }
@@ -682,15 +655,11 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         if expanded {
             let fullString = fullDescription + CommonStringFile.seeLess.translated()
             let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See less" text to blue and underline it
             let seeLessRange = (fullString as NSString).range(of: "See less")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            
             return attributedText
         } else {
             var fullString = ""
-            // Otherwise, truncate and show "See more"
             if fullDescription.count > 120{
                 let truncatedDescription = String(fullDescription.prefix(100))
                 fullString = truncatedDescription + CommonStringFile.seemore.translated()
@@ -698,8 +667,6 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
                 fullString = fullDescription
             }
             let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See more" text to blue and underline it
             let seeMoreRange = (fullString as NSString).range(of: "See more")
             attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
             return attributedText
@@ -729,8 +696,6 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         let size = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)
-        
-        // Update height constraint and scrolling
         TextViewheight.constant = newHeight
         DetailsTxtview.isScrollEnabled = size.height > maxHeight
         
@@ -801,5 +766,32 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         let rect = view.convert(view.bounds, to: scrollView)
         scrollView.scrollRectToVisible(rect, animated: true)
     }
-    
+    func GetHomeWorkList(){
+        APIService.shared
+            .makeApi(url:  ServiceUrl.comm_homework_get_homework_report + "?member_type=parent", parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+                result : Result<DashboardResponse,
+                Error>
+            ) in
+            
+            switch result {
+                
+            case.success(let succesmessage) :
+                if succesmessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                    }
+                }else {
+                    DispatchQueue.main.async {
+                        
+                    }
+                }
+                
+            case.failure(let error) :
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+            
+        }
+    }
 }

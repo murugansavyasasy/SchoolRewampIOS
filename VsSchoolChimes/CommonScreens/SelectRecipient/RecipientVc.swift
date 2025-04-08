@@ -31,6 +31,7 @@ class RecipientVc: UIViewController{
     var studentsDetails: [StudentDetails]?
     var sectionsDetails: [sectionsDetail]?
     var standardDetails: [StandardDetail]?
+    var staffDetails: [GetStaffDetails]?
     var groupDetails: [GroupDetail]?
     var lastSelectedButton: UIButton?
     let dropDown = DropDown()
@@ -571,7 +572,35 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
-    
+    func getStaffListAPI(){
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetStafflistSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        tv.isHidden = false
+                        staffDetails = successMessage.data
+                        if var students = staffDetails {
+                            for i in students.indices {
+                                students[i].isSelect = false
+                            }
+                            staffDetails = students
+                        }
+                        tv.reloadData()
+                    }
+                }else{
+                    DispatchQueue.main.async { [self] in
+                        selectSectionDropdown.isHidden = true
+                        tv.isHidden = true
+                        noRecordLbl.text = successMessage.message
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
     func getSubjectListAPI(_ id:String){
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list + "?section_id=\(id)", parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
             switch result {
