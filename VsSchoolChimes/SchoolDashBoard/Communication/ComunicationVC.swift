@@ -36,7 +36,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var timePicker: UIDatePicker!
     var doneButton: UIButton!
     var activeButton: UIButton?
-    var scheduleClick = false
+    var isScheduleSelected = false
     let backgroundcolor = Colornames.topBackgroundCLr
     let tapColor = Colornames.topBackgroundCLr1
     var placeholderLabel: UILabel!
@@ -111,6 +111,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var VoiceHistory:[VoiceData]?
     var TextHistory:[TextDetail]?
+    var isEmergencyVoice = false
+    var voiceRecordedDuration : Int?
+//    var isScheduleSelected : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -131,15 +134,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         setInitialButtonTitles()
         StyleAndTranslater()
         
-        if staffDetailsCount?.count ?? 0 > 1 {
-            sendbtn.setTitle("Next", for: .normal)
-            sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
-            
-        }else{
-            sendbtn.setTitle("Send", for: .normal)
-            sendbtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
-            
+        
+        if emengencyCall.isOn{
+            isEmergencyVoice = true
+            enableDisable()
         }
+        else{
+            isEmergencyVoice = false
+            enableDisable()
+
+        }
+        
+        
+    
+        
+        
+        
         if staffDetailsCount?.count ?? 0 > 1 {
             TxtMsgSendBtn.setTitle("Next", for: .normal)
             TxtMsgSendBtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
@@ -182,6 +192,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             enableVoiceHistory.isHidden = true
             enableVoiceHistoryLabel.isHidden = true
         }
+    
+    @IBAction func switchAction(_ sender: Any) {
+        
+        if emengencyCall.isOn{
+            isEmergencyVoice = true
+            enableDisable()
+        }
+        else{
+            isEmergencyVoice = false
+            enableDisable()
+
+        }
+        
     }
 
 
@@ -189,48 +212,83 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBAction func voice_sendBtn_action(_ sender: UIButton) {
         
         
-        
-        if sender.title(for: .normal) == "Next" {
+
+        if(AudioPlayUrl != "" && voiceTitleeTxt.text != ""){
             
-            if emengencyCall.isOn{
-                if AudioPlayUrl != "" && voiceTitleeTxt.text != ""{
-                    let vc = SchoolListVC(nibName: nil, bundle: nil)
-                    vc.screen_type = screenType.is_emergencyvoice
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else{
-                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
-                }
-            }else{
+            recienpient_validation(isVoice : true)
+        }
+        else{
+            alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+        }
+        
+    }
+    
+    
+    func recienpient_validation(isVoice : Bool){
+        
+        if(staffDetailsCount?.count ?? 0 > 1){
+            if(
+                staff_role == PriorityType.is_principal || staff_role == PriorityType
+                    .is_grouphead || staff_role == PriorityType.is_admin){
                 
-                if AudioPlayUrl != "" && voiceTitleeTxt.text != "" {
-                    let vc = SchoolListVC(nibName: nil, bundle: nil)
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
-                }else{
-                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
-                }
+                
+                let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.isEmergency = isEmergencyVoice
+                vc.screen_type = screenType.is_emergencyvoice
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+                
+            }
+            else{
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.requestCommonDataDetails = [
+                    send_voicemeassageStringFile.voice_link : "",
+                    send_voicemeassageStringFile.duration : voiceRecordedDuration,
+                    send_voicemeassageStringFile.description : voiceTitleeTxt,
+                    send_voicemeassageStringFile.is_emergency : isEmergencyVoice,
+                    send_voicemeassageStringFile.is_schedule : isScheduleSelected,
+//                    send_voicemeassageStringFile.schedule_date : schedule_date,
+                    send_voicemeassageStringFile.start_time : fromTime.titleLabel?.text ?? "",
+                    send_voicemeassageStringFile.end_time :toTime.titleLabel?.text ?? "",
+                ]
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
             }
             
+        }
+        else{
             
-        }else{
-            if emengencyCall.isOn{
-                if AudioPlayUrl != "" && voiceTitleeTxt.text != ""{
-                    CustomAlert
-                        .showAlertWithOkAction(
-                            title: "",
-                            message: AlertstringFile.AreYouSureYouWantToProceed,
-                            on: self
-                        ) {
-                            print("sended voice")
-                        }
-                }else{
+            
+            
+            if(isVoice == true){
+                if(
+                    staff_role == PriorityType.is_principal || staff_role == PriorityType
+                        .is_grouphead || staff_role == PriorityType.is_admin){
                     
-                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                    if(isEmergencyVoice == true){
+                        //call send api here itself
+                        let today = getCurrentDateString()
+                        sendVoiceMessage_communication(
+                            voice_link : "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-03-29/4351/VS_1743239103551.wav",
+                            target_type : 1,
+                            duration : 44,
+                            description : voiceTitleeTxt.text ?? "",
+                            is_emergency :isEmergencyVoice,
+                            is_schedule :false,
+                            schedule_date :today,
+                            start_time :"",
+                            end_time :"",
+                            file_name :"testing"
+                        )
+                    }
+                    else{
+                        let vc = RecipientVc(nibName: nil, bundle: nil)
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true)
+                    }
+                    
                 }
-            }else{
-                
-                if AudioPlayUrl != "" && voiceTitleeTxt.text != "" {
+                else{
                     let vc = RecipientVc(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
@@ -239,52 +297,137 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
                 }
             }
+            else{
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
         }
         
+        
+    }
+    
+    
+    func sendVoiceMessage_communication(
+        voice_link :String,
+        target_type :Int,
+        duration :Int,
+        description :String,
+        is_emergency :Bool,
+        is_schedule :Bool,
+        schedule_date :String,
+        start_time :String,
+        end_time :String,
+        file_name :String
+    ) {
+        
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
+                
+                send_voicemeassageStringFile.voice_link : voice_link,
+                send_voicemeassageStringFile.target_type : target_type,
+                send_voicemeassageStringFile.target_code : staffDetailsCount?.first?.school_id ?? "",
+                send_voicemeassageStringFile.duration : duration,
+                send_voicemeassageStringFile.description : description,
+                send_voicemeassageStringFile.is_emergency : is_emergency,
+                send_voicemeassageStringFile.is_schedule : is_schedule,
+                send_voicemeassageStringFile.schedule_date : schedule_date,
+                send_voicemeassageStringFile.start_time : start_time,
+                send_voicemeassageStringFile.end_time :end_time,
+                send_voicemeassageStringFile.file_name : file_name,
+
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: "Success",
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.dismiss(
+                                        animated: false,
+                                        completion: nil
+                                    )
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
         
     }
     
     
     @IBAction func text_sendActionBtn(_ sender: UIButton) {
         
-        if sender.title(for: .normal) == "Next" {
-            
-            if  informationcontent.text != "" && TextMsgTittle.text != ""{
-                let comm_details  : [String] = [informationcontent.text!,TextMsgTittle.text!]
-                let vc = SchoolListVC(nibName: nil, bundle: nil)
-                vc.communicatio_textDetails = comm_details
-                vc.screen_type = screenType.communication_text
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-            }else{
-                alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
-            }
-        }else{
-            
-            
-            if  informationcontent.text != "" && TextMsgTittle.text != ""{
-                let comm_details  : [String] = [informationcontent.text!,TextMsgTittle.text!]
-                let vc = RecipientVc(nibName: nil, bundle: nil)
-                vc.communicatio_textDetails = comm_details
-                vc.ScreenType = screenType.communication_text
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
-            }else{
-                alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
-            }
+        if  informationcontent.text != "" && TextMsgTittle.text != ""{
+            recienpient_validation(isVoice : false)
+
         }
-        
-        
-        
-        
-        
-    }
+        else{
+            alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+        }
+        }
+    
     override func viewDidLayoutSubviews() {
         view.applyGradient(
-            colors: [                    Colornames.stafGradient, Colornames.stafGradient1],
+            colors: [ Colornames.stafGradient, Colornames.stafGradient1],
             startPoint: CGPoint(x: 1, y: 0.5),
             endPoint: CGPoint(x: 0, y: 0.5)
         )
+    }
+    
+    func enableDisable() {
+        if staffDetailsCount?.count ?? 0 > 1 {
+          
+            sendbtn.setTitle("Next", for: .normal)
+            sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
+            
+        }else{
+            if(staff_role == PriorityType.is_staff ){
+                sendbtn.setTitle("Next", for: .normal)
+                sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
+
+           }
+            else{
+                if(isEmergencyVoice){
+                    sendbtn.setTitle("Send", for: .normal)
+                    sendbtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
+                }
+                else{
+                    sendbtn.setTitle("Next", for: .normal)
+                    sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
+                }
+                   
+            }
+            
+        }
+        
     }
     
     func StyleAndTranslater() {
@@ -694,7 +837,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceview.isHidden = true
         tittlemessage.text = CommonStringFile.TextMessage.translated()
         scheduleBtn.backgroundColor = UIColor.white
-        scheduleClick = true
+        isScheduleSelected = false
         schedulCallView.isHidden = true
         timePickerHeight.constant = 0
         dateSelectedViewHeight.constant = 0
@@ -956,6 +1099,50 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             voiceTiming.text = "\(currentFormatted) / \(totalFormatted)"
             let fakeLevel = sin(progress * .pi)
             waveView.updateWithLevel(CGFloat(fakeLevel))
+        if audioPlayer.isPlaying {
+            audioRecorder?.updateMeters()
+            
+            // Get average power for channel 0
+            let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
+            let normalizedPower = max(1, (averagePower + 160) / 160)
+            waveView.updateWithLevel(CGFloat(normalizedPower))  // Update waveform animation
+            
+            // Update playback time
+            if let currentItem = audioPlayer.currentItem {
+                let totalDuration = CMTimeGetSeconds(currentItem.duration)
+                
+                if totalDuration.isFinite {
+                    let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
+                    
+                    // Update WaveView progress
+                    let progress = CGFloat(elapsedTime / totalDuration)
+                    waveView.progress = progress
+                    waveView.setNeedsDisplay()  // Refresh WaveView to update colors
+                    
+                    // Time formatting for display
+                    let totalMinutes = Int(totalDuration) / 60
+                    let totalSeconds = Int(totalDuration) % 60
+                    let totalDurationFormatted = String(format: "%02d:%02d", totalMinutes, totalSeconds)
+                    
+                    let elapsedMinutes = Int(elapsedTime) / 60
+                    let elapsedSeconds = Int(elapsedTime) % 60
+                    let currentFormatted = String(format: "%02d:%02d", elapsedMinutes, elapsedSeconds)
+                    
+                    // Update the timing label
+                    voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
+                    
+                    voiceRecordedDuration = Int(totalDurationFormatted)
+                }
+            }
+        } else {
+            audioRecorder?.updateMeters()
+            
+            // Get average power for channel 0 when paused or stopped
+            let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
+            let normalizedPower = max(0, (0) / 160)
+            
+            // Update wave view with low intensity when paused
+            waveView.updateWithLevel(CGFloat(normalizedPower))
         }
     }
     
@@ -1018,7 +1205,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.tintColor = .white
         textBtn.tintColor = .black
         scheduleBtn.backgroundColor = UIColor.white
-        scheduleClick = true
+        isScheduleSelected = false
         schedulCallView.isHidden = true
         timePickerHeight.constant = 0
         dateSelectedViewHeight.constant = 0
@@ -1068,7 +1255,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textClickView.backgroundColor = .white
         voiceClickView.backgroundColor = .white
         seduleClickView.backgroundColor = tapColor
-        scheduleClick = false
+        isScheduleSelected = true
         showVoiceMessageView()
         schedulCallView.isHidden = false
         timePickerHeight.constant = 141

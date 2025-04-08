@@ -52,7 +52,7 @@ struct screenType{
     static let isSplash  = 4
     static let isForgotPassword  = 5
     static let is_noticeboard = 23
-    static let is_emergencyvoice = 1
+    static let is_emergencyvoice =  1
     static let isAssaignment = 22
     static let isHomeWork = 9
     static let communication_text = 2
@@ -85,5 +85,13 @@ func isValidIndianMobileNumber(_ mobileNumber: String) -> Bool {
     let mobileNumberTest = NSPredicate(format: "SELF MATCHES %@", mobileNumberRegex)
     return mobileNumberTest.evaluate(with: mobileNumber)
 }
+
+func getCurrentDateString(format: String = "dd-MM-yyyy") -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = format
+    return dateFormatter.string(from: Date())
+}
+
+
 
 

@@ -189,13 +189,13 @@ struct  GetStandardsSuc : Codable {
     let data : [StandardDetail]?
 }
 struct StandardDetail:Codable{
-    let id:Int?
+    let id:String?
     let name:String?
     var sections:[sectionsDetail]?
     var isSelect:Bool?
 }
 struct sectionsDetail:Codable{
-    let id:Int?
+    let id:String?
     let name:String?
     var isSelect:Bool?
 }

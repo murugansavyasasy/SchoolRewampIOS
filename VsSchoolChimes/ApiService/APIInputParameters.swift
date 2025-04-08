@@ -60,3 +60,19 @@ class  send_textmessageStringFile {
     static var message = "message"
     static var description = "description"
 }
+class send_voicemeassageStringFile {
+    
+    static var voice_link = "voice_link"
+    static var target_code = "target_code"
+    static var target_type = "target_type"
+    static var duration = "duration"
+    static var description = "description"
+    static var is_emergency = "is_emergency"
+    static var is_schedule = "is_schedule"
+    static var schedule_date = "schedule_date"
+    static var start_time = "start_time"
+    static var end_time = "end_time"
+    static var file_name = "file_name"
+    static var circular_type = "circular_type"
+  
+}
