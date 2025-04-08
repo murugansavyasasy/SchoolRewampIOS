@@ -24,6 +24,7 @@ struct UserDefaultFileManager {
         }
     }
     
+    
     static func getCountryDetails() -> CountryData? {
         if let savedData = UserDefaults.standard.data(forKey: countryKey),
            let user = try? JSONDecoder().decode(CountryData.self, from: savedData) {
@@ -108,6 +109,8 @@ struct UserDefaultFileManager {
     }
     
     
+    
+
 }
 
 

@@ -159,4 +159,7 @@ class APIService: NSObject, URLSessionDelegate {
     func deleteApi<T: Codable>(url: String, token: String, completionHandler: @escaping (Swift.Result<T, Error>) -> Void) {
         makeApi(url: url, parameters: nil, type: "DELETE", token: token, completionHandler: completionHandler)
     }
+    
+    
+    
 }

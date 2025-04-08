@@ -24,8 +24,8 @@
                 <outlet property="rollNoLbl" destination="OV7-tl-vWS" id="AYw-gj-8EF"/>
                 <outlet property="search" destination="Gnb-ok-S6u" id="K48-MP-eJD"/>
                 <outlet property="selectAllBtn" destination="2Eh-TK-gsW" id="tB7-K7-Cho"/>
+                <outlet property="sendbtnName" destination="Ch4-X4-Jhw" id="sdE-1C-IB2"/>
                 <outlet property="statusLbl" destination="46F-QA-hQf" id="7nA-zi-lKt"/>
-                <outlet property="studentCollection" destination="7lY-h9-pgc" id="K0J-1X-GqM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -78,27 +78,13 @@
                             </constraints>
                         </view>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-7B-HhZ">
-                            <rect key="frame" x="0.0" y="95.333333333333314" width="393" height="607.66666666666674"/>
+                            <rect key="frame" x="0.0" y="95.333333333333314" width="393" height="550.33333333333348"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="Wyy-17-fn2"/>
                                 <outlet property="delegate" destination="-1" id="meW-M3-nOm"/>
                             </connections>
                         </tableView>
-                        <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7lY-h9-pgc">
-                            <rect key="frame" x="0.0" y="95.333333333333314" width="393" height="607.66666666666674"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jXk-Oc-Dnh">
-                                <size key="itemSize" width="128" height="128"/>
-                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                <inset key="sectionInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                            </collectionViewFlowLayout>
-                            <connections>
-                                <outlet property="dataSource" destination="-1" id="7JO-1z-GGm"/>
-                                <outlet property="delegate" destination="-1" id="INT-rm-qP8"/>
-                            </connections>
-                        </collectionView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geB-F8-sSm">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                             <subviews>
@@ -136,23 +122,32 @@
                                 <constraint firstItem="Gnb-ok-S6u" firstAttribute="leading" secondItem="trk-rO-gYS" secondAttribute="trailing" id="xlH-91-cZA"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ch4-X4-Jhw">
+                            <rect key="frame" x="80" y="660.66666666666663" width="233" height="34.333333333333371"/>
+                            <color key="backgroundColor" name="ButtonColor"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" imagePlacement="trailing" title="Send"/>
+                            <connections>
+                                <action selector="sendBtnAction:" destination="-1" eventType="touchUpInside" id="P8o-lT-Pt9"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="GN1-gS-A5g" firstAttribute="top" secondItem="geB-F8-sSm" secondAttribute="bottom" constant="5" id="4kE-t6-D59"/>
+                        <constraint firstItem="Ch4-X4-Jhw" firstAttribute="leading" secondItem="vrX-am-fa0" secondAttribute="leading" constant="80" id="ErV-zA-NCQ"/>
                         <constraint firstItem="geB-F8-sSm" firstAttribute="top" secondItem="vrX-am-fa0" secondAttribute="top" id="VIx-aN-pzd"/>
                         <constraint firstAttribute="trailing" secondItem="GN1-gS-A5g" secondAttribute="trailing" id="YCA-Hn-MTT"/>
-                        <constraint firstItem="7lY-h9-pgc" firstAttribute="leading" secondItem="vrX-am-fa0" secondAttribute="leading" id="YQv-Yp-LRh"/>
                         <constraint firstItem="lbl-7B-HhZ" firstAttribute="top" secondItem="GN1-gS-A5g" secondAttribute="bottom" id="YW4-A2-DEj"/>
                         <constraint firstAttribute="trailing" secondItem="geB-F8-sSm" secondAttribute="trailing" id="Zpz-1m-tIm"/>
                         <constraint firstAttribute="trailing" secondItem="lbl-7B-HhZ" secondAttribute="trailing" id="bYZ-mv-az5"/>
+                        <constraint firstAttribute="trailing" secondItem="Ch4-X4-Jhw" secondAttribute="trailing" constant="80" id="e7Z-hk-9cq"/>
                         <constraint firstItem="lbl-7B-HhZ" firstAttribute="leading" secondItem="vrX-am-fa0" secondAttribute="leading" id="iWV-E8-ebi"/>
-                        <constraint firstItem="7lY-h9-pgc" firstAttribute="top" secondItem="GN1-gS-A5g" secondAttribute="bottom" id="mZp-Tj-tba"/>
                         <constraint firstItem="geB-F8-sSm" firstAttribute="leading" secondItem="vrX-am-fa0" secondAttribute="leading" id="oF7-eN-Z5h"/>
-                        <constraint firstAttribute="bottom" secondItem="lbl-7B-HhZ" secondAttribute="bottom" id="p44-3G-yTH"/>
                         <constraint firstItem="GN1-gS-A5g" firstAttribute="leading" secondItem="vrX-am-fa0" secondAttribute="leading" id="reK-iR-AqL"/>
-                        <constraint firstAttribute="bottom" secondItem="7lY-h9-pgc" secondAttribute="bottom" id="suD-dF-xeU"/>
-                        <constraint firstAttribute="trailing" secondItem="7lY-h9-pgc" secondAttribute="trailing" id="z1m-ST-yPB"/>
+                        <constraint firstItem="Ch4-X4-Jhw" firstAttribute="top" secondItem="lbl-7B-HhZ" secondAttribute="bottom" constant="15" id="wc1-AE-WvV"/>
+                        <constraint firstAttribute="bottom" secondItem="Ch4-X4-Jhw" secondAttribute="bottom" constant="8" id="xmE-Sx-pcF"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uty-p2-UrK">
@@ -219,10 +214,14 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <image name="square" catalog="system" width="128" height="114"/>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonColor">
+            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

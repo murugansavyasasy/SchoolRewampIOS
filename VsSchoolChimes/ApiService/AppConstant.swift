@@ -30,6 +30,7 @@ struct ServiceUrl{
     static let recipient_get_subject_list  = "comm/recipient/get-subject-list"
     static let recipient_get_staff_list  = "comm/recipient/get-staff-list"
     static let comm_text_message_send_text  = "comm/text-message/send-text"
+    static let comm_voice_send_voice  = "comm/voice/send-voice"
 }
 
 struct localData{
@@ -49,7 +50,7 @@ struct screenType{
     static let isSplash  = 4
     static let isForgotPassword  = 5
     static let is_noticeboard = 23
-    static let is_emergencyvoice = 1
+    static let is_emergencyvoice =  1
     static let isAssaignment = 22
     static let isHomeWork = 9
     static let communication_text = 2
@@ -81,5 +82,13 @@ func isValidIndianMobileNumber(_ mobileNumber: String) -> Bool {
     let mobileNumberTest = NSPredicate(format: "SELF MATCHES %@", mobileNumberRegex)
     return mobileNumberTest.evaluate(with: mobileNumber)
 }
+
+func getCurrentDateString(format: String = "dd-MM-yyyy") -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = format
+    return dateFormatter.string(from: Date())
+}
+
+
 
 

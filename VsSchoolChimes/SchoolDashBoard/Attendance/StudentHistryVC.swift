@@ -36,6 +36,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     @IBOutlet weak var selectAllBtn: UIButton!
     @IBOutlet weak var filterBtn: UIButton!
     @IBOutlet weak var categoryDropDownView: UIView!
+    @IBOutlet weak var sendbtnName: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     var switchCell = 1
     var dropDown = DropDown()
@@ -44,35 +45,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var id = 1
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
-    var specificdata: [SpecificStudent] = [
-        SpecificStudent(name: "Aarav", rollnumber: "Roll no: 101", admissionNo: "Admission no: 100001"),
-        SpecificStudent(name: "Bhavana", rollnumber: "Roll no: 102", admissionNo: "Admission no: 100002"),
-        SpecificStudent(name: "Chirag", rollnumber: "Roll no: 103", admissionNo: "Admission no: 100003"),
-        SpecificStudent(name: "Dhruv", rollnumber: "Roll no: 104", admissionNo: "Admission no: 100004"),
-        SpecificStudent(name: "Eshwar", rollnumber: "Roll no: 105", admissionNo: "Admission no: 100005"),
-        SpecificStudent(name: "Farhan", rollnumber: "Roll no: 106", admissionNo: "Admission no: 100006"),
-        SpecificStudent(name: "Gopal", rollnumber: "Roll no: 107", admissionNo: "Admission no: 100007"),
-        SpecificStudent(name: "Harini", rollnumber: "Roll no: 108", admissionNo: "Admission no: 100008"),
-        SpecificStudent(name: "Ishaan", rollnumber: "Roll no: 109", admissionNo: "Admission no: 100009"),
-        SpecificStudent(name: "Jeevan", rollnumber: "Roll no: 110", admissionNo: "Admission no: 100010"),
-        SpecificStudent(name: "Karthik", rollnumber: "Roll no: 111", admissionNo: "Admission no: 100011"),
-        SpecificStudent(name: "Lakshmanan", rollnumber: "Roll no: 112", admissionNo: "Admission no: 100012"),
-        SpecificStudent(name: "Meera", rollnumber: "Roll no: 113", admissionNo: "Admission no: 100013"),
-        SpecificStudent(name: "Neha", rollnumber: "Roll no: 114", admissionNo: "Admission no: 100014"),
-        SpecificStudent(name: "Omkar", rollnumber: "Roll no: 115", admissionNo: "Admission no: 100015"),
-        SpecificStudent(name: "Pranav", rollnumber: "Roll no: 116", admissionNo: "Admission no: 100016"),
-        SpecificStudent(name: "Qadir", rollnumber: "Roll no: 117", admissionNo: "Admission no: 100017"),
-        SpecificStudent(name: "Rajesh", rollnumber: "Roll no: 118", admissionNo: "Admission no: 100018"),
-        SpecificStudent(name: "Saranraj", rollnumber: "Roll no: 119", admissionNo: "Admission no: 100019"),
-        SpecificStudent(name: "Tarun", rollnumber: "Roll no: 120", admissionNo: "Admission no: 100020"),
-        SpecificStudent(name: "Umesh", rollnumber: "Roll no: 121", admissionNo: "Admission no: 100021"),
-        SpecificStudent(name: "Varun", rollnumber: "Roll no: 122", admissionNo: "Admission no: 100022"),
-        SpecificStudent(name: "Waseem", rollnumber: "Roll no: 123", admissionNo: "Admission no: 100023"),
-        SpecificStudent(name: "Xavier", rollnumber: "Roll no: 124", admissionNo: "Admission no: 100024"),
-        SpecificStudent(name: "Yash", rollnumber: "Roll no: 125", admissionNo: "Admission no: 100025"),
-        SpecificStudent(name: "Zara", rollnumber: "Roll no: 126", admissionNo: "Admission no: 100026")
-    ]
-    
+
     var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
                                  Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
                                  Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
@@ -90,15 +63,19 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var totalcount = 0
     var filterData : [Student]?
     var studentsDetails: [StudentDetails]?
-    var selected_sectionID : Int?
-    
+    var selected_sectionID : String?
+    var selected_student : [Int] = []
+    var ScreenType:Int?
+    let alert = CustomAlert()
+    var communicatio_textDetails :[String] = []
+    var target_type : Int?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        sendbtnName.layer.cornerRadius = 10
+        target_type = TargetTypes.student
         StyleAndTranslater()
         BackBtn.applyBackButton()
-        dataVisibility = Array(repeating: false, count: specificdata.count)
-        selectedRows = Array(repeating: false, count: specificdata.count)
+       
         if id == 1{
             HeaderviewHeight.constant = 0
             headerView.isHidden = true
@@ -106,7 +83,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         registerCell()
         filterData = studentData
-        recipient_get_student_list(selected_sectionId: selected_sectionID ?? 0)
+        recipient_get_student_list(selected_sectionId: selected_sectionID ?? "")
+       
         search.delegate = self
         headerView.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
@@ -146,7 +124,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
         historyTable.register(UINib(nibName: CellConfingName.StudentHistryTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.StudentHistryTVC)
         historyTable.register(UINib(nibName: "MarkAtendenceTV", bundle: nil), forCellReuseIdentifier: "MarkAtendenceTV")
-        studentCollection.register(UINib(nibName: "MarkAttendenceCV", bundle: nil), forCellWithReuseIdentifier: "MarkAttendenceCV")
+       
     }
     
     @IBAction func fliter(_ sender: UIButton) {
@@ -216,7 +194,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }
         else{
             isSelectAllEnabled.toggle()
-            for i in 0..<specificdata.count {
+            for i in 0..<(studentsDetails?.count ?? 0) {
                 let indexPath = IndexPath(row: i, section: 0)
                 if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
                     if isSelectAllEnabled {
@@ -251,9 +229,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         return color ?? .gradient1
     }
     
-    func recipient_get_student_list(selected_sectionId: Int){
+    func recipient_get_student_list(selected_sectionId: String){
         APIService.shared
-            .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: ["section_id" : selected_sectionId], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.recipient_get_student_list + "?section_id=\(selected_sectionId)", parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <GetStudentlistSuc,
                 Error>
             ) in
@@ -269,6 +247,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                             }
                             studentsDetails = students
                         }
+                        dataVisibility = Array(repeating: false, count: studentsDetails?.count ?? 0)
+                        selectedRows = Array(repeating: false, count: studentsDetails?.count ?? 0)
                         historyTable.reloadData()
                     }
                 }else{
@@ -286,41 +266,165 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     
+    @IBAction func sendBtnAction(_ sender: UIButton) {
+        
+        if selected_student.count != 0 {
+            
+            if screenType.communication_text == ScreenType{
+                
+                alert
+                    .showAlertCancel(
+                        title: AlertstringFile.Alert_title,
+                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
+                            selected_student.count) ,
+                        actionLbl1: AlertstringFile.OK,
+                        actionLbl2: AlertstringFile.Cancel,
+                        on: self,
+                        onOk: { [self] in
+                            sendtextmessage_communication(
+                                message : communicatio_textDetails.first ?? "",
+                                description: communicatio_textDetails.last ?? "",
+                                target_type :target_type ?? 0
+                            )
+                        } ,
+                        onNo: {print("Canceled")})
+            }else if screenType.is_emergencyvoice == ScreenType{
+                
+//                alert
+//                    .showAlertCancel(
+//                        title: AlertstringFile.Alert_title,
+//                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
+//                            array_selectedId.count) ,
+//                        actionLbl1: AlertstringFile.OK,
+//                        actionLbl2: AlertstringFile.Cancel,
+//                        on: self,
+//                        onOk: { [self] in
+//                            sendVoiceMessage_communication(
+//                                voice_link: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-03-29/4351/VS_1743239103551.wav",
+//                                target_type: target_type ?? 0,
+//                                duration: 44,
+//                                description: <#T##String#>,
+//                                is_emergency: 1,
+//                                is_schedule: false,
+//                                schedule_date: <#T##String#>,
+//                                start_time: <#T##String#>,
+//                                end_time: <#T##String#>,
+//                                file_name: <#T##String#>
+//                            )
+//                        } ,
+//                        onNo: {print("Canceled")})
+            }
+            
+        }else{
+            
+            alert
+                .showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message:AlertstringFile.Choose_any_target,
+                    on: self
+                )
+        }
+        
+    }
+    
+    
+    
+    func sendtextmessage_communication(message : String,description:String,target_type :Int){
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
+                
+                send_textmessageStringFile.target_type : target_type,
+                send_textmessageStringFile.target_code : selected_student,
+                send_textmessageStringFile.message : message,
+                send_textmessageStringFile.description : description
+                
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: "Success",
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+        
+        
+    }
+    
+    
 }
 
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if id == 2{
-            return filterData?.count ?? 0
+            return studentsDetails?.count ?? 0
         }else{
-            return specificdata.count
+            return studentsDetails?.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if id == 1{
             let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
-            let backgroundColor = colorForName(specificdata[indexPath.row].name)
+            let backgroundColor = colorForName(
+                studentsDetails?[indexPath.row].name ?? ""
+            )
             
-            cell.NameLbl.text = specificdata[indexPath.row].name
-            cell.AdmisionNoLbl.text = specificdata[indexPath.row].admissionNo
-            cell.RollNoLbl.text = specificdata[indexPath.row].rollnumber
-            if let firstChar = specificdata[indexPath.row].name.first {
+            cell.NameLbl.text =  studentsDetails?[indexPath.row].name ?? ""
+//            cell.AdmisionNoLbl.text = specificdata[indexPath.row].admissionNo
+//            cell.RollNoLbl.text = specificdata[indexPath.row].rollnumber
+            if let firstChar =  studentsDetails?[indexPath.row].name?.first {
                 cell.alphabetLbl.text = String(firstChar)
             } else {
                 cell.alphabetLbl.text = "" // Fallback for empty string
             }
             cell.AlphabetView.backgroundColor = backgroundColor
-            let isSelected = selectedRows[indexPath.row]
-            cell.CheckBoxImgview.image = isSelected ? UIImage(named: "checked_Tick") : UIImage(named: "CheckCircle")
+            
+//            let isSelected = selectedRows[indexPath.row]
+//            
+//            cell.CheckBoxImgview.image = isSelected ? UIImage(named: "checked_Tick") : UIImage(named: "CheckCircle")
             cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
             
+            if let select = studentsDetails?[indexPath.row].isSelect {
+                cell.CheckBoxImgview.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
+            }
             // Set visibility state
             cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
             cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
             
-            // Configure tap action
+//             Configure tap action
             cell.tapAction = { [weak self] in
                 self?.handleImageTap(at: indexPath)
             }
@@ -411,6 +515,15 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             // Toggle the state
             selectedRows[indexPath.row] = !selectedRows[indexPath.row]
             
+            if let id = studentsDetails?[indexPath.row].id {
+                if studentsDetails?[indexPath.row].isSelect == true {
+                    if !selected_student.contains(Int(id) ?? 0) {
+                        selected_student.append(Int(id) ?? 0)
+                    }
+                } else {
+                    selected_student.removeAll(where: { $0 == Int(id) })
+                }
+            }
             // Reload the specific row to update the checkbox image
             tableView.reloadRows(at: [indexPath], with: .none)
         }
@@ -439,32 +552,6 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // Dismiss the keyboard
-    }
-}
-extension StudentHistryVC:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filterData?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = studentCollection.dequeueReusableCell(withReuseIdentifier: "MarkAttendenceCV", for: indexPath) as! MarkAttendenceCV
-        cell.nameLbl.text = "Name :\(filterData?[indexPath.item].name ?? "")"
-        cell.admissionLbl.text = "ADMIS No :\(filterData?[indexPath.item].phoneNo ?? "")"
-        cell.rollNoLbl.text = "Roll No:\(filterData?[indexPath.item].rollnumber ?? "")"
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let cellWidth = (studentCollection.frame.width - 40) / 2
-        return CGSize(width: cellWidth, height: 220)
-    }
-    func calculateLabelHeight(text: String, font: UIFont, width: CGFloat) -> CGFloat {
-        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = text.boundingRect(with: constraintRect,
-                                            options: [.usesLineFragmentOrigin, .usesFontLeading],
-                                            attributes: [NSAttributedString.Key.font: font],
-                                            context: nil)
-        return ceil(boundingBox.height)
     }
 }
 
