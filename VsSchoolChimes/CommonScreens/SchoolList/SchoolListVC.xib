@@ -73,7 +73,7 @@
                                                 <constraint firstAttribute="height" constant="38" id="VV0-ZL-oF4"/>
                                             </constraints>
                                             <segments>
-                                                <segment title="Send to multiple school"/>
+                                                <segment title="Select  multiple school"/>
                                                 <segment title="Select Resipent"/>
                                             </segments>
                                             <connections>

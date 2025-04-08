@@ -56,7 +56,11 @@ class RecipientVc: UIViewController{
             )
         if staff_role == PriorityType.is_staff{
             contentLbl.isHidden = true
-            cv_itemsarry = ["Standard","Section/Student","Group"]
+            cv_itemsarry = [
+                recipeint_tabBarName.Standard,
+                recipeint_tabBarName.Section_Student,
+                recipeint_tabBarName.Group
+            ]
             segmentName.removeAllSegments()
             // Add new segments from array
             for (index, title) in cv_itemsarry.enumerated() {
@@ -68,11 +72,19 @@ class RecipientVc: UIViewController{
         }else if staff_role == PriorityType.is_admin || staff_role == PriorityType.is_principal || staff_role == PriorityType.is_grouphead{
             speficBtnName.isHidden = true
             if staffDetailsCount?.count ?? 0 > 1{
-                cv_itemsarry = ["Standard","Group","Section/Student","Staff"]
+                cv_itemsarry = [
+                                recipeint_tabBarName.Standard,
+                                 recipeint_tabBarName.Section_Student,
+                                 recipeint_tabBarName.Group,
+                                 recipeint_tabBarName.Staff
+                ]
                 contentLbl.isHidden = true
                 getStandardsAPI()
             }else{
-                cv_itemsarry = ["Entier School","Standard","Group"]
+                cv_itemsarry = [
+                    recipeint_tabBarName.Entier_School,
+                    recipeint_tabBarName.Standard,
+                    recipeint_tabBarName.Group]
                 tableHeight.constant = 0
             }
             segmentName.removeAllSegments()
@@ -204,13 +216,13 @@ class RecipientVc: UIViewController{
             return
         }
         let selectedTitle = cv_itemsarry[segment_selected_index ?? 0]
-        if selectedTitle == "Entier School"{ // Entier
+        if selectedTitle == recipeint_tabBarName.Entier_School{ // Entier
             target_type = TargetTypes.school
             contentLbl.isHidden = false
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
-        }else if selectedTitle == "Group"{ // group
+        }else if selectedTitle == recipeint_tabBarName.Group{ // group
             target_type = TargetTypes.group
             getGrouplistAPI()
             contentLbl.isHidden = true
@@ -218,14 +230,14 @@ class RecipientVc: UIViewController{
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
-        }else if selectedTitle ==  "Standard"{ // standard
+        }else if selectedTitle ==  recipeint_tabBarName.Standard{ // standard
             target_type = TargetTypes.standard
             getStandardsAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-        }else if selectedTitle  ==  "Section/Student"{
+        }else if selectedTitle  == recipeint_tabBarName.Section_Student{
             target_type = TargetTypes.section
             getStandardsAPI()
             if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
@@ -237,6 +249,15 @@ class RecipientVc: UIViewController{
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
+        }
+        
+        else if selectedTitle  == recipeint_tabBarName.Staff{
+            target_type = TargetTypes.staff
+            getStandardsAPI()
+            
+            contentLbl.isHidden = true
+            tv.isHidden = false
+            selectStandardDropDown.isHidden = true
         }
         
     }
@@ -293,12 +314,14 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let head = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Std_Grp_header") as! Std_Grp_header
         
         switch cv_itemsarry[segment_selected_index ?? 0] {
-        case "Group":
+        case recipeint_tabBarName.Group:
             head.HeaderLabel.text = "Group"
-        case "Standard":
+        case recipeint_tabBarName.Standard:
             head.HeaderLabel.text = "Standard"
-        case "Section":
+        case recipeint_tabBarName.Section_Student:
             head.HeaderLabel.text = "Section/Student"
+        case recipeint_tabBarName.Staff:
+            head.HeaderLabel.text = "Staff"
         default:
             head.HeaderLabel.text = ""
         }
@@ -311,11 +334,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch cv_itemsarry[segment_selected_index ?? 0] {
-        case "Group":
+        case recipeint_tabBarName.Group:
             return groupDetails?.count ?? 0
-        case "Standard":
+        case recipeint_tabBarName.Standard:
             return standardDetails?.count ?? 0
-        case "Section/Student":
+        case recipeint_tabBarName.Section_Student:
+            return sectionsDetails?.count ?? 0
+        case recipeint_tabBarName.Staff:
             return sectionsDetails?.count ?? 0
         default:
             return 0
@@ -326,19 +351,25 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell, for: indexPath) as! RecipientTvCell
         
         switch cv_itemsarry[segment_selected_index ?? 0] {
-        case "Group":
+        case recipeint_tabBarName.Group:
             cell.checkboxImg.isUserInteractionEnabled = true
             cell.cellLabel.text = groupDetails?[indexPath.row].name
             if let select = groupDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
             }
             
-        case "Standard":
+        case recipeint_tabBarName.Standard:
             cell.cellLabel.text = standardDetails?[indexPath.row].name
             if let select = standardDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
             }
-        case "Section/Student":
+        case recipeint_tabBarName.Section_Student:
+            cell.cellLabel.text = sectionsDetails?[indexPath.row].name
+            if let select = sectionsDetails?[indexPath.row].isSelect {
+                cell.checkboxImg.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
+            }
+            
+        case recipeint_tabBarName.Staff:
             cell.cellLabel.text = sectionsDetails?[indexPath.row].name
             if let select = sectionsDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
@@ -353,7 +384,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch cv_itemsarry[segment_selected_index ?? 0] {
-        case "Group":
+        case recipeint_tabBarName.Group:
             if indexPath.row < (groupDetails?.count ?? 0) {
                 groupDetails?[indexPath.row].isSelect?.toggle()
                 
@@ -367,7 +398,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             }
-        case "Standard":
+        case recipeint_tabBarName.Standard:
             if indexPath.row < (standardDetails?.count ?? 0) {
                 standardDetails?[indexPath.row].isSelect?.toggle()
                 
@@ -381,7 +412,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }
                 }
             }
-        case "Section/Student":
+        case recipeint_tabBarName.Section_Student:
             if indexPath.row < (sectionsDetails?.count ?? 0) {
                 guard var section = sectionsDetails?[indexPath.row] else { return }
                 
@@ -422,6 +453,21 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                     speficBtnName.isEnabled = selectedSections.count == 1
                     speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
+                }
+            }
+            
+        case recipeint_tabBarName.Staff:
+            if indexPath.row < (standardDetails?.count ?? 0) {
+                standardDetails?[indexPath.row].isSelect?.toggle()
+                
+                if let id = standardDetails?[indexPath.row].id {
+                    if standardDetails?[indexPath.row].isSelect == true {
+                        if !array_selectedId.contains(id) {
+                            array_selectedId.append(id)
+                        }
+                    } else {
+                        array_selectedId.removeAll(where: { $0 == id })
+                    }
                 }
             }
         default:
