@@ -232,6 +232,10 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
+        let vc = SchoolListVC(nibName: nil, bundle: nil)
+        vc.screen_type = screenType.isAssaignment
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     @IBAction  func categoryDropdown (){

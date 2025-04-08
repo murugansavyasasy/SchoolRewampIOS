@@ -47,54 +47,54 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Fd-Jo-Dka">
-                                    <rect key="frame" x="42" y="266" width="308" height="40"/>
+                                    <rect key="frame" x="42" y="265.33333333333331" width="308" height="40"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IT3-Y1-4ZX">
-                                            <rect key="frame" x="0.0" y="0.0" width="160" height="40"/>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Group head">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="teacherAct:" destination="-1" eventType="touchUpInside" id="hCk-On-qIX"/>
-                                            </connections>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYa-cJ-qwB">
-                                            <rect key="frame" x="148" y="0.0" width="160" height="40"/>
-                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                            <state key="normal" title="Parent">
-                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="ParentAct:" destination="-1" eventType="touchUpInside" id="0RB-lc-KCF"/>
-                                            </connections>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="JJN-tz-BHC">
+                                            <rect key="frame" x="0.0" y="0.0" width="308" height="40"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IT3-Y1-4ZX">
+                                                    <rect key="frame" x="0.0" y="0.0" width="156.66666666666666" height="40"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Group head">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="teacherAct:" destination="-1" eventType="touchUpInside" id="hCk-On-qIX"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYa-cJ-qwB">
+                                                    <rect key="frame" x="151.66666666666663" y="0.0" width="156.33333333333337" height="40"/>
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Parent">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="ParentAct:" destination="-1" eventType="touchUpInside" id="0RB-lc-KCF"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <color key="backgroundColor" red="0.7803921568627451" green="0.91764705882352937" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="gYa-cJ-qwB" firstAttribute="leading" secondItem="3Fd-Jo-Dka" secondAttribute="leading" constant="148" id="4sR-s7-MKi"/>
-                                        <constraint firstAttribute="trailing" secondItem="gYa-cJ-qwB" secondAttribute="trailing" id="KWr-Eg-IWZ"/>
-                                        <constraint firstItem="IT3-Y1-4ZX" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="top" id="OHf-yW-esn"/>
-                                        <constraint firstAttribute="trailing" secondItem="IT3-Y1-4ZX" secondAttribute="trailing" constant="148" id="P8H-sK-zhd"/>
-                                        <constraint firstItem="gYa-cJ-qwB" firstAttribute="leading" secondItem="IT3-Y1-4ZX" secondAttribute="trailing" constant="-12" id="PDm-mO-fEB"/>
-                                        <constraint firstItem="gYa-cJ-qwB" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="top" id="XtW-4X-U0t"/>
-                                        <constraint firstAttribute="bottom" secondItem="IT3-Y1-4ZX" secondAttribute="bottom" id="YQw-OA-DXb"/>
-                                        <constraint firstItem="IT3-Y1-4ZX" firstAttribute="leading" secondItem="3Fd-Jo-Dka" secondAttribute="leading" id="cEu-7s-h12"/>
+                                        <constraint firstItem="JJN-tz-BHC" firstAttribute="leading" secondItem="3Fd-Jo-Dka" secondAttribute="leading" id="6yw-Ca-A0Z"/>
+                                        <constraint firstAttribute="bottom" secondItem="JJN-tz-BHC" secondAttribute="bottom" id="NA0-fy-JwT"/>
+                                        <constraint firstAttribute="trailing" secondItem="JJN-tz-BHC" secondAttribute="trailing" id="c0A-2r-8KD"/>
                                         <constraint firstAttribute="height" constant="40" id="dUR-SO-gWW"/>
-                                        <constraint firstAttribute="bottom" secondItem="gYa-cJ-qwB" secondAttribute="bottom" id="xZi-ri-igw"/>
+                                        <constraint firstItem="JJN-tz-BHC" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="top" id="sBB-Pb-MsV"/>
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login as a teacher or parent" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3w-cO-gNT">
-                                    <rect key="frame" x="20" y="214" width="353" height="21"/>
+                                    <rect key="frame" x="20" y="214" width="353" height="20.333333333333343"/>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vDi-Yd-4hE">
-                                    <rect key="frame" x="10" y="314" width="373" height="444"/>
+                                    <rect key="frame" x="10" y="313.33333333333326" width="373" height="444.66666666666674"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
@@ -164,7 +164,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

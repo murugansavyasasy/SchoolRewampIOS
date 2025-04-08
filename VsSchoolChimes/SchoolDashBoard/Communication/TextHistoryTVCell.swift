@@ -36,7 +36,7 @@ class TextHistoryTVCell: UITableViewCell {
         
     }
     @IBAction func Select(_ sender: UIButton) {
-        delegate?.select(Tittle: "selectedText", descriptContent: descriptContent.text ?? "hgdsxgvbdusf")
+        delegate?.select(Tittle: MessageTitle.text ?? "selectedText", descriptContent: descriptContent.text ?? "hgdsxgvbdusf")
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

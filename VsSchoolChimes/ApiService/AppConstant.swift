@@ -30,6 +30,9 @@ struct ServiceUrl{
     static let recipient_get_subject_list  = "comm/recipient/get-subject-list"
     static let recipient_get_staff_list  = "comm/recipient/get-staff-list"
     static let comm_text_message_send_text  = "comm/text-message/send-text"
+    static let comm_voice_get_voice_history  = "comm/voice/get-voice-history"
+    static let comm_text_message_get_text_history  = "comm/text-message/get-text-history"
+    static let comm_homework_get_homework_report  = "comm/homework/get-homework-report"
 }
 
 struct localData{
@@ -53,6 +56,7 @@ struct screenType{
     static let isAssaignment = 22
     static let isHomeWork = 9
     static let communication_text = 2
+    static var staffSelectedMenuId = 0
 }
 struct TargetTypes{
     

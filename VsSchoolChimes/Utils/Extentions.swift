@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+fileprivate var loaderAlert: UIAlertController?
 extension UIImageView {
     func applyRTLFlip(_ isRTL: Bool) {
         if isRTL {
@@ -128,5 +129,34 @@ extension String {
     func removingSlashComponent() -> String {
         let components = self.split(separator: "/").map { String($0) }
         return components.joined(separator: "")
+    }
+}
+extension UIViewController {
+    
+    func showLoader(message: String = "Please wait...") {
+        DispatchQueue.main.async {
+            // Prevent multiple loaders
+            guard loaderAlert == nil else { return }
+
+            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+
+            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.style = .large
+            loadingIndicator.startAnimating()
+            
+            alert.view.addSubview(loadingIndicator)
+            loaderAlert = alert
+            
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
+    func hideLoader() {
+        DispatchQueue.main.async {
+            loaderAlert?.dismiss(animated: true, completion: {
+                loaderAlert = nil
+            })
+        }
     }
 }

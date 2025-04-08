@@ -399,9 +399,10 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         if collectionView == bottomCv{
             
             let menuItem = filteredMenu_details?[indexPath.row].id
-            
+            screenType.staffSelectedMenuId = menuItem ?? 0
             switch menuItem {
             case 0:
+                
                 MenuRedirect.senderCommunicationNavigate(from: self)
             case 1:
                 MenuRedirect.senderVideoNavigate(from: self)

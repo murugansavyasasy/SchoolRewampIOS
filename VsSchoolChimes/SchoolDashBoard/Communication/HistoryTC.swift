@@ -7,20 +7,22 @@
 
 import UIKit
 import AVFoundation
-
 import AVFAudio
 
+protocol ForwordDelegate{
+    func voiceforword(selectedIndex:Int?)
+}
 class HistoryTC: UITableViewCell {
-    var AudioPlayUrl = "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav"
+    
+    var audioPlayUrl = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-03-29/4351/VS_1743239103551.wav"
     var player: AVPlayer?
+    var playerItem: AVPlayerItem?
     var updateTimer: Timer?
     var isPlaying = false
-    var totalsecont = "03.00"
+    var totalsecont = "03:00"
     var lastPlayingduration = "00:00"
-    var audioRecorder: AVAudioRecorder?
-    var playerItem : AVPlayerItem?
-    var delegate : reloadDelegate?
-    
+    var delegate: reloadDelegate?
+    var ForwordDelegate : ForwordDelegate?
     @IBOutlet weak var NewImageView: UIView!
     @IBOutlet weak var PlayerFullview: ShimmerView2!
     @IBOutlet weak var sentBtnWidth: NSLayoutConstraint!
@@ -33,14 +35,15 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
     
-    var audioURL: String = "http://api.schoolchimes.com/nodejs/voice/VS_1742889307660.mp3"
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         outerview.layer.shadowColor = UIColor.black.cgColor
         outerview.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerview.layer.shadowRadius = 5
         outerview.layer.shadowOpacity = 0.3
         outerview.layer.cornerRadius = 20
+        
         sendbtn.layer.cornerRadius = 4
         
         datelbl.setFont(style: .body, size: FontSize.BodySize)
@@ -51,137 +54,101 @@ class HistoryTC: UITableViewCell {
         totaltime.isHidden = true
         NewImageView.isHidden = true
     }
+    
     func setupPlayer(with url: URL) {
         player = AVPlayer(url: url)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying),
-                                               name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerDidFinishPlaying),
+                                               name: .AVPlayerItemDidPlayToEndTime,
                                                object: player?.currentItem)
     }
     
     @IBAction func play(_ sender: UIButton) {
         sender.isSelected.toggle()
-        let play = sender.isSelected
         delegate?.reload(index: sender.tag)
+    }
+    
+    func updatePlayState(isPlaying: Bool, url: String?) {
+        if isPlaying {
+            guard let urlString = url, let audioURL = URL(string: urlString) else { return }
+
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                print("Audio session error: \(error.localizedDescription)")
+            }
+
+            playerItem = AVPlayerItem(url: audioURL)
+            player = AVPlayer(playerItem: playerItem)
+            player?.volume = 1.0
+            player?.play()
+
+            playBtn.setImage(ImageName.pausebutton, for: .normal)
+
+            updateTimer = Timer.scheduledTimer(timeInterval: 0.1,
+                                               target: self,
+                                               selector: #selector(updateSlider),
+                                               userInfo: nil,
+                                               repeats: true)
+            updateTimeDisplay()
+        } else {
+            player?.pause()
+            playBtn.setImage(ImageName.playbutton, for: .normal)
+            updateTimer?.invalidate()
+            updateTimeDisplay()
+        }
+
+        self.isPlaying = isPlaying
+    }
+    
+    @objc func updateSlider() {
+        guard let audioPlayer = player, let currentItem = audioPlayer.currentItem else { return }
+
+        let totalDuration = CMTimeGetSeconds(currentItem.duration)
+        let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
+
+        guard totalDuration.isFinite && elapsedTime.isFinite else { return }
+        let totalFormatted = formatTime(totalDuration)
+        let currentFormatted = formatTime(elapsedTime)
+        lastPlayingduration = currentFormatted
+        totaltime.text = "\(currentFormatted) / \(totalFormatted)"
+        let progress = CGFloat(elapsedTime / totalDuration)
+        playerView.progress = progress
+        playerView.updateWithLevel(CGFloat(sin(progress * .pi)))  // Simulated wave bounce
+        playerView.setNeedsDisplay()
     }
     
     @objc func playerDidFinishPlaying() {
         playBtn.setImage(ImageName.playbutton, for: .normal)
         isPlaying = false
-        audioRecorder?.updateMeters()
-        let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160 // Default to -160 if no data
-        let normalizedPower = max(0, (averagePower + 160) / 160)
-        playerView.updateWithLevel(CGFloat(normalizedPower))
+        playerView.progress = 1.0
+        playerView.updateWithLevel(0.0)
+        playerView.setNeedsDisplay()
     }
-    func updatePlayState(isPlaying: Bool, url: String?) {
-        if isPlaying {
-            if player != nil, let url = URL(string: audioURL) {
-                player = AVPlayer(url: url)
-            }
-            
-            // Start playback
-            player?.volume = 1
-            player?.play()
-            playBtn.setImage(ImageName.pausebutton, for: .normal)
-            updateTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateSlider), userInfo: nil, repeats: true)
-            // Update player view
-            updateAudioLevels(int: 1)
-            
-            // Update time
-            if let currentItem = player?.currentItem, let currentTime = player?.currentTime() {
-                let totalDuration = CMTimeGetSeconds(currentItem.duration)
-                let elapsedTime = CMTimeGetSeconds(currentTime)
-                
-                if totalDuration.isFinite && elapsedTime.isFinite {
-                    let totalDurationFormatted = formatTime(totalDuration)
-                    let currentFormatted = formatTime(elapsedTime)
-                    totalsecont = totalDurationFormatted
-                    totaltime.text = "\(currentFormatted) / \(totalDurationFormatted)"
-                }
-                else {
-                    let currentFormatted = formatTime(elapsedTime)
-                    totaltime.text = "\(currentFormatted) /\(totalsecont)" // Default if time is unavailable
-                }
-            }
+
+    private func updateTimeDisplay() {
+        guard let currentItem = player?.currentItem,
+              let currentTime = player?.currentTime() else { return }
+
+        let totalDuration = CMTimeGetSeconds(currentItem.duration)
+        let elapsedTime = CMTimeGetSeconds(currentTime)
+
+        if totalDuration.isFinite && elapsedTime.isFinite {
+            let totalFormatted = formatTime(totalDuration)
+            let currentFormatted = formatTime(elapsedTime)
+            totalsecont = totalFormatted
+            totaltime.text = "\(currentFormatted) / \(totalFormatted)"
         } else {
-            // Pause playback
-            player?.pause()
-            playBtn.setImage(ImageName.playbutton, for: .normal)
-            updateAudioLevels(int: 0)
-            // Update time
-            if let currentItem = player?.currentItem, let currentTime = player?.currentTime() {
-                let totalDuration = CMTimeGetSeconds(currentItem.duration)
-                let elapsedTime = CMTimeGetSeconds(currentTime)
-                
-                if totalDuration.isFinite && elapsedTime.isFinite {
-                    let totalDurationFormatted = formatTime(totalDuration)
-                    let currentFormatted = formatTime(elapsedTime)
-                    totalsecont = totalDurationFormatted
-                    totaltime.text = "\(currentFormatted) / \(totalDurationFormatted)"
-                }
-                else {
-                    let currentFormatted = formatTime(elapsedTime)
-                    totaltime.text = "\(currentFormatted) /\(totalsecont)" // Default if time is unavailable
-                }
-            }
+            let currentFormatted = formatTime(elapsedTime)
+            totaltime.text = "\(currentFormatted) / \(totalsecont)"
         }
-        self.isPlaying = isPlaying
     }
-//
     
-    
-//    func updatePlayState(isPlaying: Bool) {
-//        if isPlaying {
-//            if player == nil, let url = URL(string: audioURL) {
-//                player = AVPlayer(url: url)
-//            }
-//            player?.play()
-//            player?.volume = 1
-//            playBtn.setImage(UIImage(named: "pausebutton"), for: .normal)
-//        } else {
-//            player?.pause()
-//            updateAudioLevels(int: 0)
-//            playBtn.setImage(UIImage(named: "playbutton"), for: .normal)
-//        }
-//    }
-    
-    // Helper to format time as mm:ss
     private func formatTime(_ seconds: Double) -> String {
         let minutes = Int(seconds) / 60
         let seconds = Int(seconds) % 60
         return String(format: "%02d:%02d", minutes, seconds)
-    }
-    
-    // Helper to update audio levels
-    private func updateAudioLevels(int:Float) {
-        audioRecorder?.updateMeters()
-        let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160 // Default to -160 if no data
-        let normalizedPower = max(int, (averagePower + 160) / 160)
-        playerView.updateWithLevel(CGFloat(normalizedPower))
-    }
-    
-    
-    @objc func updateSlider() {
-        guard let audioPlayer = player else { return }
-        
-        if audioPlayer.isPlaying {
-            if let currentItem = audioPlayer.currentItem {
-                let totalDuration = CMTimeGetSeconds(currentItem.duration)
-                if totalDuration.isFinite {
-                    let totalMinutes = Int(totalDuration) / 60
-                    let totalSeconds = Int(totalDuration) % 60
-                    let totalDurationFormatted = String(format: "%02d:%02d", totalMinutes, totalSeconds)
-                    // Get the current playback time
-                    let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-                    let elapsedMinutes = Int(elapsedTime) / 60
-                    let elapsedSeconds = Int(elapsedTime) % 60
-                    let currentFormatted = String(format: "%02d:%02d", elapsedMinutes, elapsedSeconds)
-                    lastPlayingduration = currentFormatted
-                    // Update the label with current and total duration
-                    totaltime.text = "\(lastPlayingduration) / \(totalDurationFormatted)"
-                }
-            }
-        }
     }
     
     func configureShimmer() {
@@ -195,5 +162,9 @@ class HistoryTC: UITableViewCell {
         totaltime.isHidden = false
         playerView.isHidden = false
     }
-
+    @IBAction func forword(_ sender: UIButton) {
+        ForwordDelegate?.voiceforword(selectedIndex: sender.tag)
+    }
+    
 }
+

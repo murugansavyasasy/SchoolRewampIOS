@@ -272,3 +272,50 @@ struct CommonApiSuc: Codable {
     let message: String?
     let data: [String]?
 }
+
+// MARK: - Get Voice History
+struct VoiceResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [VoiceData]?
+}
+
+// MARK: - Voice Data
+struct VoiceData: Codable {
+    let file_path: String?
+    let url: String?
+    let description: String?
+    let sent_on: String?
+    let school_id: String?
+    let header_id: String?
+    let duration: Int?
+}
+struct TextDetailsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [TextDetail]?
+}
+
+struct TextDetail: Codable {
+    let id: String?
+    let content: String?
+    let description: String?
+    let date: String?
+}
+struct HomeworkResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [Homework]
+}
+
+struct Homework: Codable {
+    let topic: String
+    let content: String
+    let subject_name: String
+    let created_by: String
+    let file_path: [FilePath]
+}
+
+struct FilePath: Codable {
+    let path: String
+}
