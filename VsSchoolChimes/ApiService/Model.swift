@@ -234,6 +234,7 @@ struct  GetStafflistSuc : Codable {
 struct GetStaffDetails:Codable{
     let id:String?
     let name:String?
+    var isSelect:Bool?
 }
 
 //MARK: Dashboard API

@@ -30,6 +30,7 @@ struct ServiceUrl{
     static let recipient_get_subject_list  = "comm/recipient/get-subject-list"
     static let recipient_get_staff_list  = "comm/recipient/get-staff-list"
     static let comm_text_message_send_text  = "comm/text-message/send-text"
+    static let comm_voice_send_voice  = "comm/voice/send-voice"
     static let comm_voice_get_voice_history  = "comm/voice/get-voice-history"
     static let comm_text_message_get_text_history  = "comm/text-message/get-text-history"
     static let comm_homework_get_homework_report  = "comm/homework/get-homework-report"
