@@ -84,6 +84,21 @@ struct recipeint_tabBarName{
     static let Staff = "Staff"
     static let Entier_School = "Entier School"
 }
+
+struct user_inputs{
+    static var voice_link = ""
+    static var duration : Int = 0
+    static var is_schedule : Bool = false
+    static var title = ""
+    static var description = ""
+    static var is_emergency : Int = 0
+    static var schedule_date : [String] = []
+    static var start_time = ""
+    static var end_time = ""
+    static var file_name = ""
+    static var circular_type = ""
+    
+}
 func isValidEmail(_ email: String) -> Bool {
     let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
     let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)

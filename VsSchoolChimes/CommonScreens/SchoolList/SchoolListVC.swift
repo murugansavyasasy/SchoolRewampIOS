@@ -14,19 +14,21 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var listTable: UITableView!
    
     var screen_type : Int?
-    var isEmergency : Bool = false
-    var isNoticeBoard : Bool = false
+    var isEmergency : Int?
+    var isNoticeBoard : Int?
     
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     let alert = CustomAlert()
     var communicatio_textDetails :[String] = []
     var array_selectedSchoolId :[String] = []
     var target_type:Int?
+    var requestCommonDataDetails : [String:Any] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         target_type = TargetTypes.school
         
-        if (isEmergency == true || isNoticeBoard == true){
+        if (isEmergency == 1 || isNoticeBoard == 1){
             segmentName.isHidden = true
             segmentName.selectedSegmentIndex = 0
             sendBtnName.isHidden = false
@@ -104,7 +106,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         }else{
             if let data = school_details?[indexPath.row]{
                 UserDefaultFileManager.saveStaffDetails(data: data)}
-//            ServiceUrl.token = school_details?[indexPath.row].access_token ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
             vc.communicatio_textDetails = communicatio_textDetails
             vc.ScreenType = screen_type
@@ -138,11 +139,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         actionLbl2: AlertstringFile.Cancel,
                         on: self,
                         onOk: { [self] in
-                            sendtextmessage_communication(
-                                message : communicatio_textDetails.first ?? "",
-                                description: communicatio_textDetails.last ?? "",
-                                target_type :target_type ?? 0
-                            )
+                            
+                            sendtextmessage_communication()
                         } ,
                         onNo: {print("Canceled")})
             }else if screenType.is_emergencyvoice == screen_type{
@@ -157,19 +155,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         actionLbl2: AlertstringFile.Cancel,
                         on: self,
                         onOk: { [self] in
-                            sendVoiceMessage_communication(
-                                voice_link: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-03-29/4351/VS_1743239103551.wav",
-                                target_type: target_type ?? 0,
-                                duration: 44,
-                                description: "testing voice",
-                                is_emergency: true,
-                                is_schedule: false,
-                                schedule_date: today ,
-                                start_time: "",
-                                end_time: "",
-                                file_name: "Testing",
-                                circular_type : "A"
-                            )
+                            
+                            sendVoiceMessage_communication()
                         } ,
                         onNo: {print("Canceled")})
             }
@@ -187,16 +174,19 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
    
     
-    func sendtextmessage_communication(message : String,description:String,target_type :Int){
+    func sendtextmessage_communication(){
+        
+        
+        
         
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
-                
-                send_textmessageStringFile.target_type : target_type,
-                send_textmessageStringFile.target_code : array_selectedSchoolId,
-                send_textmessageStringFile.message : message,
-                send_textmessageStringFile.description : description
-                
+                 
+                   send_textmessageStringFile.description : user_inputs.title,
+                   send_textmessageStringFile.message : user_inputs.description,
+                   send_textmessageStringFile.target_code: array_selectedSchoolId,
+                   send_textmessageStringFile.target_type: target_type ?? 0
+                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -215,7 +205,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                                     
                                 }
                             
@@ -241,36 +231,24 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     
     
-    func sendVoiceMessage_communication(
-        voice_link :String,
-        target_type :Int,
-        duration :Int,
-        description :String,
-        is_emergency :Bool,
-        is_schedule :Bool,
-        schedule_date :String,
-        start_time :String,
-        end_time :String,
-        file_name :String,
-        circular_type : String
-    ) {
+    func sendVoiceMessage_communication() {
         
         
         APIService.shared
             .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
                 
-                send_voicemeassageStringFile.voice_link : voice_link,
-                send_voicemeassageStringFile.target_type : target_type,
+                send_voicemeassageStringFile.voice_link : user_inputs.voice_link,
+                send_voicemeassageStringFile.target_type : target_type ?? 0,
                 send_voicemeassageStringFile.target_code : array_selectedSchoolId,
-                send_voicemeassageStringFile.duration : duration,
-                send_voicemeassageStringFile.description : description,
-                send_voicemeassageStringFile.is_emergency : is_emergency,
-                send_voicemeassageStringFile.is_schedule : is_schedule,
-                send_voicemeassageStringFile.schedule_date : schedule_date,
-                send_voicemeassageStringFile.start_time : start_time,
-                send_voicemeassageStringFile.end_time :end_time,
-                send_voicemeassageStringFile.file_name : file_name,
-                send_voicemeassageStringFile.circular_type : circular_type
+                send_voicemeassageStringFile.duration : user_inputs.duration,
+                send_voicemeassageStringFile.description : user_inputs.description,
+                send_voicemeassageStringFile.is_emergency : user_inputs.is_emergency,
+                send_voicemeassageStringFile.is_schedule : user_inputs.is_schedule,
+                send_voicemeassageStringFile.schedule_date : user_inputs.schedule_date,
+                send_voicemeassageStringFile.start_time : user_inputs.start_time,
+                send_voicemeassageStringFile.end_time :user_inputs.end_time,
+                send_voicemeassageStringFile.file_name : user_inputs.file_name
+                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -289,7 +267,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                                     
                                 }
                             
@@ -298,12 +276,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         
                         DispatchQueue.main.async {
                             
-                            self.alert
-                                .showAlert(
-                                    title: "Error",
-                                    message:succesmessage.message ?? "" ,
-                                    on: self
-                                )
+                            
                         }
                     }
                     

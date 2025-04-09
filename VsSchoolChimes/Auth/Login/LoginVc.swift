@@ -199,14 +199,30 @@ class LoginVc: UIViewController {
                                             
                                         }
                                         else if(data.user_details?.is_staff == true){
-                                            let vc = TapBarVC(
-                                                nibName: nil,
-                                                bundle: nil
-                                            )
-                                            vc.login_astype = 1
-                                            ServiceUrl.token = data.user_details?.staff_details?.first?.access_token ?? ""
-                                            vc.modalPresentationStyle = .fullScreen
-                                            present(vc, animated: true)
+                                            
+                                            
+                                            if(
+                                                data.user_details?.staff_details?.count ?? 0 > 1
+                                            ){
+                                                let vc = PriorityVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            else{
+                                                
+                                                let vc = TapBarVC(
+                                                    nibName: nil,
+                                                    bundle: nil
+                                                )
+                                                ServiceUrl.token = data.user_details?.staff_details?.first?.access_token ?? ""
+                                                vc.login_astype = 2
+                                                vc.modalPresentationStyle = .fullScreen
+                                                present(vc, animated: true)
+                                            }
+                                            
                                             
                                         }
                                         else if(data.user_details?.is_parent == true){
