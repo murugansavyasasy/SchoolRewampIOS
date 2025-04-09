@@ -29,6 +29,7 @@ class VideoVC: UIViewController {
     var activityIndicator: UIActivityIndicatorView!
     var filteredData: [Video] = []
     var passValue = 0
+    var shouldShowFooter = true
     var data = [
         Video(id: "1", name: "Introduction to Swift", url: "https://www.w3schools.com/tags/mov_bbb.mp4", description: "A beginner's guide to Swift programming language. A beginner's guide to Swift programming language. A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.A beginner's guide to Swift programming language.", readed: false, hasAnimated: true, img: nil),
         Video(id:"2", name: "Advanced iOS Animations", url: "https://videos.pexels.com/video-files/3205789/3205789-hd_1080_1920_25fps.mp4", description: "Learn how to implement complex animations in iOS.", readed: false,hasAnimated: true, img: nil),
@@ -377,6 +378,46 @@ extension VideoVC:UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate
             }
         } else {
             // Fallback on earlier versions
+        }
+    }
+    
+    // Method to load the footer from nib and set it as tableFooterView
+    func setupTableFooter() {
+        if shouldShowFooter {
+            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+                // Adjust the frame based on your needs.
+                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
+                
+                // Add a tap gesture recognizer to the button to trigger the hide action.
+                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
+                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
+                footer.SeeMoreBtn.isUserInteractionEnabled = true
+                
+                // Set the footer view.
+                tableview.tableFooterView = footer
+            }
+        } else {
+            tableview.tableFooterView = nil
+        }
+    }
+    
+    @objc func seeMoreAction() {
+        print("Footer button tapped. Hiding the footer.")
+        
+        // Animate the footer fade-out if desired.
+        if let footer = tableview.tableFooterView {
+            UIView.animate(withDuration: 0.3, animations: {
+                footer.alpha = 0
+            }, completion: {[self] _ in
+                // Hide the footer after animation completes.
+                tableview.tableFooterView = nil
+                shouldShowFooter = false
+                
+                tableview.reloadData()
+            })
+        } else {
+            // In case footer is already nil.
+            shouldShowFooter = false
         }
     }
     

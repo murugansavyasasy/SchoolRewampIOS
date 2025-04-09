@@ -36,7 +36,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     var playIndex :Int?
     var AudioPlayUrl: String?
     var passValue = 0
-    
+    var count = 5
+    var shouldShowFooter = true
+
     override func viewDidLoad() {
         super.viewDidLoad()
         buttons()
@@ -54,10 +56,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         // Do any additional setup after loading the view.
       
         RegisterCell()
+        
+        setupTableFooter()
        
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
+        
+        
     }
 
     override func viewDidLayoutSubviews() {
@@ -91,6 +97,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
         let nib2 = UINib(nibName: CellConfingName.HistoryTC, bundle: nil)
         tv.register(nib2, forCellReuseIdentifier: CellConfingName.HistoryTC)
+        
+        let footerNib = UINib(nibName:CellConfingName.SeeMoreFooterView , bundle: nil)
+        tv.register(footerNib, forHeaderFooterViewReuseIdentifier: CellConfingName.SeeMoreFooterView)
     }
     
     func ButtonStyle(){
@@ -115,6 +124,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         
         gradientcolours(view: textClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
     }
+    
     func buttons(){
         //MARK: TEXT BUTTON BACKGROUND
         textBtn.layer.cornerRadius = 20
@@ -133,6 +143,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         textBtn.tintColor = .black
         
     }
+    
     func textButtonStyle(){
         textClickView.backgroundColor = backgroundcolor
         voiceClickView.backgroundColor = .white
@@ -174,42 +185,44 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     }
 
     @IBAction func backBtn(_ sender: Any) {
-        dismiss(animated: true)
         
+        dismiss(animated: true)
     }
     @IBAction func voiceMessgBtn(_ sender: Any) {
         BtnId = 1
         ButtonStyle()
-        
+        shouldShowFooter = true
+        setupTableFooter()
         tv.reloadData()
         
     }
-    
-    
     
     @IBAction func TextMessageBtn(_ sender: Any) {
         
         BtnId = 0
         textButtonStyle()
-        
+        shouldShowFooter = true
+        setupTableFooter()
         tv.reloadData()
-        
     }
-    
 }
 
 //MARK: Tableview Functions
 extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if BtnId == 0{
-            return 5
-        }else{
-            
-            return 5
-        }
-       
+//        if BtnId == 0{
+//            count =  2//5
+//        }else{
+//            
+//            count =  2//5
+//        }
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -253,10 +266,10 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         }
     }
     
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
     // MARK: - Tap Gesture for "See More" / "See Less"
     @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel, let text = label.text else { return }
@@ -269,6 +282,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             handleSeeMoreTap(gesture)
         }
     }
+    
     //MARK: EXPANDABLE LABLE
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
@@ -308,5 +322,44 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         }
     }
     
+    // Method to load the footer from nib and set it as tableFooterView
+    func setupTableFooter() {
+        if shouldShowFooter {
+            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+                // Adjust the frame based on your needs.
+                footer.frame = CGRect(x: 0, y: 0, width: tv.frame.width, height: 60)
+                
+                // Add a tap gesture recognizer to the button to trigger the hide action.
+                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
+                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
+                footer.SeeMoreBtn.isUserInteractionEnabled = true
+                
+                // Set the footer view.
+                tv.tableFooterView = footer
+            }
+        } else {
+            tv.tableFooterView = nil
+        }
+    }
     
+    @objc func seeMoreAction() {
+        print("Footer button tapped. Hiding the footer.")
+        
+        // Animate the footer fade-out if desired.
+        if let footer = tv.tableFooterView {
+            UIView.animate(withDuration: 0.3, animations: {
+                footer.alpha = 0
+            }, completion: {[self] _ in
+                // Hide the footer after animation completes.
+                tv.tableFooterView = nil
+                shouldShowFooter = false
+                
+                count += 2
+                tv.reloadData()
+            })
+        } else {
+            // In case footer is already nil.
+            shouldShowFooter = false
+        }
+    }
 }
