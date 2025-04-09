@@ -162,6 +162,12 @@
 		840F677A2D94128F00AC2F5A /* cell1Tv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840F67782D94128F00AC2F5A /* cell1Tv.xib */; };
 		840F677D2D9412B400AC2F5A /* cell2Tv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840F677B2D9412B400AC2F5A /* cell2Tv.swift */; };
 		840F677E2D9412B400AC2F5A /* cell2Tv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840F677C2D9412B400AC2F5A /* cell2Tv.xib */; };
+		841ACC8F2DA5076800326D52 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
+		841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 841ACC9B2DA50C7A00326D52 /* Lottie */; };
+		841ACCA02DA50FC400326D52 /* google-loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC9D2DA50FC400326D52 /* google-loader.json */; };
+		841ACCA12DA50FC400326D52 /* successfully-send.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC9F2DA50FC400326D52 /* successfully-send.json */; };
+		841ACCA22DA50FC400326D52 /* loader (1).json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC9E2DA50FC400326D52 /* loader (1).json */; };
+		841ACCA42DA511EB00326D52 /* pencil-loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACCA32DA511EB00326D52 /* pencil-loading.json */; };
 		8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8420316C2D390CED003C4076 /* TimetableVC.xib */; };
 		8420316E2D390CED003C4076 /* TimetableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8420316B2D390CED003C4076 /* TimetableVC.swift */; };
 		842031782D390FE9003C4076 /* TimetableTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842031772D390FE9003C4076 /* TimetableTv.swift */; };
@@ -761,6 +767,11 @@
 		840F67782D94128F00AC2F5A /* cell1Tv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cell1Tv.xib; sourceTree = "<group>"; };
 		840F677B2D9412B400AC2F5A /* cell2Tv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cell2Tv.swift; sourceTree = "<group>"; };
 		840F677C2D9412B400AC2F5A /* cell2Tv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cell2Tv.xib; sourceTree = "<group>"; };
+		841ACC8E2DA5076800326D52 /* loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
+		841ACC9D2DA50FC400326D52 /* google-loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "google-loader.json"; sourceTree = "<group>"; };
+		841ACC9E2DA50FC400326D52 /* loader (1).json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "loader (1).json"; sourceTree = "<group>"; };
+		841ACC9F2DA50FC400326D52 /* successfully-send.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "successfully-send.json"; sourceTree = "<group>"; };
+		841ACCA32DA511EB00326D52 /* pencil-loading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "pencil-loading.json"; sourceTree = "<group>"; };
 		8420316B2D390CED003C4076 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
 		8420316C2D390CED003C4076 /* TimetableVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableVC.xib; sourceTree = "<group>"; };
 		842031772D390FE9003C4076 /* TimetableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableTv.swift; sourceTree = "<group>"; };
@@ -1216,6 +1227,7 @@
 				84759C652CEDE02400E7D367 /* SDWebImageMapKit in Frameworks */,
 				18BAF3E52CE8A27800517441 /* FSCalendar in Frameworks */,
 				842F95CC2D85606E007A4A98 /* Kingfisher in Frameworks */,
+				841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2224,6 +2236,11 @@
 			isa = PBXGroup;
 			children = (
 				849E572E2C1FF65F006119DA /* right-arrow.json */,
+				841ACC9D2DA50FC400326D52 /* google-loader.json */,
+				841ACC9E2DA50FC400326D52 /* loader (1).json */,
+				841ACCA32DA511EB00326D52 /* pencil-loading.json */,
+				841ACC9F2DA50FC400326D52 /* successfully-send.json */,
+				841ACC8E2DA5076800326D52 /* loader.json */,
 			);
 			path = Gif;
 			sourceTree = "<group>";
@@ -3099,6 +3116,7 @@
 				84759C622CEDE02400E7D367 /* SDWebImage */,
 				84759C642CEDE02400E7D367 /* SDWebImageMapKit */,
 				842F95CB2D85606E007A4A98 /* Kingfisher */,
+				841ACC9B2DA50C7A00326D52 /* Lottie */,
 			);
 			productName = VsSchoolChimes;
 			productReference = 84A5BE3E2C19719700E32496 /* VsSchoolChimes.app */;
@@ -3189,6 +3207,7 @@
 				18BAF3E32CE8A27800517441 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				84759C612CEDE02400E7D367 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				842F95CA2D85606E007A4A98 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				841ACC9A2DA50C7A00326D52 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 84A5BE3F2C19719700E32496 /* Products */;
 			projectDirPath = "";
@@ -3263,12 +3282,14 @@
 				849978432CEF1FE5007D45BA /* StudentHistryVC.xib in Resources */,
 				849978442CEF1FE5007D45BA /* StudentHistryTVC.xib in Resources */,
 				84A5BE4E2C19719900E32496 /* Base in Resources */,
+				841ACC8F2DA5076800326D52 /* loader.json in Resources */,
 				187CF4D62D119C82001422CE /* ClassTimeTableViewController.xib in Resources */,
 				8442A9522CDE83C80006068E /* Localizable.strings in Resources */,
 				187CF5BF2D13F009001422CE /* WeekDaysNameCollectionViewCell.xib in Resources */,
 				849F313F2D00631600BACEC7 /* EventHistoryVC.xib in Resources */,
 				848CC17F2D8A999A00CD0255 /* CreatePasswordVc.xib in Resources */,
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
+				841ACCA42DA511EB00326D52 /* pencil-loading.json in Resources */,
 				8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
@@ -3413,6 +3434,9 @@
 				849AD02C2D1A840E002DEC07 /* OnlineMeetingVC.xib in Resources */,
 				FA31A7C42D7023890069C954 /* VideoPlayerVC.xib in Resources */,
 				FA31A7C52D7023890069C954 /* VideoTVCell.xib in Resources */,
+				841ACCA02DA50FC400326D52 /* google-loader.json in Resources */,
+				841ACCA12DA50FC400326D52 /* successfully-send.json in Resources */,
+				841ACCA22DA50FC400326D52 /* loader (1).json in Resources */,
 				FA31A7C62D7023890069C954 /* VideoVC.xib in Resources */,
 				849AD02D2D1A840E002DEC07 /* MeetingsTVcell.xib in Resources */,
 				18D718622D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib in Resources */,
@@ -4448,6 +4472,14 @@
 				minimumVersion = 2.8.4;
 			};
 		};
+		841ACC9A2DA50C7A00326D52 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
 		842F95CA2D85606E007A4A98 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -4471,6 +4503,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 18BAF3E32CE8A27800517441 /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		841ACC9B2DA50C7A00326D52 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 841ACC9A2DA50C7A00326D52 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		842F95CB2D85606E007A4A98 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

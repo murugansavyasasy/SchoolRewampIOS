@@ -251,6 +251,28 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
         }
     
+    @IBAction func voice_sendBtn_action(_ sender: UIButton) {
+        
+        
+        
+        if(AudioPlayUrl != "" && voiceTitleeTxt.text != ""){
+            
+//            recienpient_validation(isVoice : true)
+            if let audioURL = URL(string: AudioPlayUrl ?? "") {
+                AWSUploadManager.shared.uploadFileToAWS(file: audioURL, bucketPath: "uploads/audio/") { url in
+                    if let uploadedURL = url {
+                        print("✅ Audio uploaded successfully: \(uploadedURL)")
+                    } else {
+                        print("❌ Failed to upload audio.")
+                    }
+                }
+            } 
+        }
+        else{
+            alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+        }
+        
+    }
     
     
     func recienpient_validation(isVoice : Bool){
@@ -268,6 +290,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
             else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.requestCommonDataDetails = [
+                    send_voicemeassageStringFile.voice_link : "",
+                    send_voicemeassageStringFile.duration : voiceRecordedDuration,
+                    send_voicemeassageStringFile.description : voiceTitleeTxt,
+                    send_voicemeassageStringFile.is_emergency : isEmergencyVoice,
+                    send_voicemeassageStringFile.is_schedule : isScheduleSelected,
+                    //                    send_voicemeassageStringFile.schedule_date : schedule_date,
+                    send_voicemeassageStringFile.start_time : fromTime.titleLabel?.text ?? "",
+                    send_voicemeassageStringFile.end_time :toTime.titleLabel?.text ?? "",
+                ]
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
@@ -1577,4 +1609,248 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     
 
+//MARK: Table view Delegate Functions
+extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? VoiceHistory?.count ?? 0:TextHistory?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tittlemessage.text == CommonStringFile.TextMessage.translated(){
+            
+            let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
+            cell.descriptContent.attributedText = descript(for:TextHistory?[indexPath.row].description ?? "", expanded: false)
+            cell.MessageTitle.text = TextHistory?[indexPath.row].content
+            cell.DateLabel.text = TextHistory?[indexPath.row].date
+            cell.delegate = self
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+            cell.descriptContent.tag = indexPath.row
+            cell.descriptContent.isUserInteractionEnabled = true
+            cell.descriptContent.addGestureRecognizer(tapGesture)
+            DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                
+                cell.configureShimmer()
+            }
+            return cell
+            
+        }else{
+            let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+            
+            cell.playBtn.tag = indexPath.row
+            
+            let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
+            let isPlaying = (playIndex == indexPath.row)
+            cell.updatePlayState(isPlaying: isPlaying, url: VoiceHistory?[indexPath.row].url)
+            cell.datelbl.text = VoiceHistory?[indexPath.row].sent_on
+            cell.totaltime.text = "\(VoiceHistory?[indexPath.row].duration ?? 0)/03:00"
+            cell.contentlbl.text = VoiceHistory?[indexPath.row].description
+            cell.datelbl.text = VoiceHistory?[indexPath.row].sent_on
+            DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
+                
+                cell.configureShimmer()
+            }
+            cell.sendbtn.tag = indexPath.row
+            cell.delegate = self
+            cell.ForwordDelegate = self
+            cell.playBtn.setImage(image, for: .normal)
+            return cell
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    
+    
+    //MARK: EXPANDABLE LABLE
+    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else { return }
+        let indexPath = IndexPath(row: label.tag, section: 0)
+        
+        let isExpanded = label.numberOfLines == 0
+        label.numberOfLines = isExpanded ? 3 : 0
+        label.attributedText = descript(for: label.text ?? "", expanded: !isExpanded)
+        historytable.beginUpdates()
+        historytable.endUpdates()
+    }
+    
+    //MARK: TEXT ADD SEE MORE
+    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
+        if expanded {
+            let fullString = fullDescription + CommonStringFile.seeLess.translated()
+            let attributedText = NSMutableAttributedString(string: fullString)
+            let seeLessRange = (fullString as NSString).range(of: "See less")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
+            return attributedText
+        } else {
+            var fullString = ""
+            if fullDescription.count > 120{
+                let truncatedDescription = String(fullDescription.prefix(100))
+                fullString = truncatedDescription + CommonStringFile.seemore.translated()
+            }else{
+                fullString = fullDescription
+            }
+            let attributedText = NSMutableAttributedString(string: fullString)
+            let seeMoreRange = (fullString as NSString).range(of: "See more")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
+            return attributedText
+        }
+    }
+    
+    
+    
+    func reload(index: Int) {
+        if let currentIndex = playIndex, currentIndex != index {
+            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+            if let previousCell = historytable.cellForRow(at: previousIndexPath) as? HistoryTC {
+                previousCell.updatePlayState(isPlaying: false, url: nil)
+            }
+        }
+        
+        playIndex = (playIndex == index) ? nil : index
+        historytable.reloadData()
+    }
+    
+    func setupTimePicker() {
+        // Initialize the picker
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            timePicker.preferredDatePickerStyle = .wheels
+        }
+        timePicker.backgroundColor = .white
+        timePicker.isHidden = true // Initially hidden
+        self.view.addSubview(timePicker)
+        
+        // Add Done Button
+        doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.isHidden = true
+        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.layer.cornerRadius = 8
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        self.view.addSubview(doneButton)
+    }
+    @objc func doneButtonTapped() {
+        // Format the time
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        if let activeButton = activeButton {
+            let selectedTime = formatter.string(from: timePicker.date)
+            activeButton.setTitle(selectedTime, for: .normal)
+        }
+        timePicker.isHidden = true
+        doneButton.isHidden = true
+        activeButton = nil
+    }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return Date()
+    }
+    
+    func maximumDate(for calendar: FSCalendar) -> Date {
+        return Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        let firstDayOfCurrentMonth = calendar.currentPage
+        let lastDayOfCurrentMonth = Calendar.current.date(byAdding: .month, value: 1, to: firstDayOfCurrentMonth)?.addingTimeInterval(-1) ?? firstDayOfCurrentMonth
+        if !(date >= firstDayOfCurrentMonth && date <= lastDayOfCurrentMonth) {
+            
+            calendar.deselect(date)
+            let alert = UIAlertController(
+                title: AlertstringFile.invalidSelection,
+                message: AlertstringFile.selectDatesWithinMonth,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        if selectedDates.count < 6 {
+            if !selectedDates.contains(date) {
+                selectedDates.append(date)
+            }
+        } else {
+            calendar.deselect(date)
+            
+            let alert = UIAlertController(
+                title: "",
+                message: AlertstringFile.Already_Reach_Your_Limit,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        dateCV.reloadData()
+    }
+    
+    func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        // Remove the deselected date
+        if let index = selectedDates.firstIndex(of: date) {
+            selectedDates.remove(at: index)
+        }
+        dateCV.reloadData()
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        printCurrentMonth()
+        print("Current page changed to: \(calendar.currentPage)")
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        return selectedDates.contains(date) ? UIColor.green : nil
+    }
+    func deleteDelegate(index: Int) {
+        //        selectedDates.remove(at: index)
+        let dateToRemove = selectedDates[index]
+        selectedDates.remove(at: index)
+        DateSelection.deselect(dateToRemove)
+        if selectedDates.count == 0{
+            dateSelectedViewHeight.constant = 0
+        }else if selectedDates.count <= 3{
+            dateSelectedViewHeight.constant = 64
+        }else{
+            dateSelectedViewHeight.constant = 128
+        }
+        dateCV.reloadData()
+    }
+    
+    //MARK: Collection View Delegate Functions
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedDates.count
+    }
+    
+    // make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCVC, for: indexPath as IndexPath) as! DateCVC
+        
+        let selectedDate = selectedDates[indexPath.item]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium // You can change this style to your preference
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        cell.dateLbl.text = formattedDate
+        cell.dateDelet.tag = indexPath.item
+        cell.delegate = self
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let with = dateCV.frame.size.width - 20
+        let cwidth = with/3
+        return CGSize(width: cwidth, height: 50)
+    }
+    func select(Tittle: String, descriptContent: String) {
+        TextMsgTittle.text = Tittle
+        informationcontent.text = descriptContent
+        showTextMessageView()
+    }
+}
 
