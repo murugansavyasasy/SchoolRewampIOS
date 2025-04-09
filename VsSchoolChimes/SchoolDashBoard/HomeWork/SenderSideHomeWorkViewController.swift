@@ -438,7 +438,12 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
         
         for image in selectedImages {
-            AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
+            AWSUploadManager.shared
+                .uploadFileToAWS(
+                    file: image,
+                    bucketPath: "uploads/images/",
+                    bucketName: "schoolchimes-communication"
+                ) { url in
                 if let url = url {
                     uploadedImageURLs.append(url)
                 }
