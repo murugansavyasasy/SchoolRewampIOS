@@ -91,40 +91,30 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
     }
     
     func imageSelection(){
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
             selectedImages.append(contentsOf: images)
-            for image in images {
-                print("Selected image: \(image)")
-                // photoPickManager.uploadAWS(image: image)
-            }
-            selectImgPdfview.imageCollectionview.reloadData()
-        }
-        photoPickManager.pdfUrl = { [weak self] pdfurl in
-            guard let self = self else { return }
-            selectedImages.removeAll()
-            url = pdfurl.absoluteURL
-            selectedImages.append(ImageName.pdf!)
-            //            url = URL(string:pdfurl)
-            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
-            selectImgPdfview.imageCollectionview.reloadData()
-        }
-        photoPickManager.onCameraImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            
             if url != nil{
                 selectedImages.removeAll()
                 url = nil
             }
-            selectedImages.append(images)
+            selectImgPdfview.imageCollectionview.reloadData()
+            // handle gallery images
+        }
+
+        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+            // handle picked PDF
+            selectedImages.removeAll()
+            url = data.absoluteURL
+            selectedImages.append(ImageName.pdf!)
             selectImgPdfview.imageCollectionview.reloadData()
         }
+
     }
     
     @IBAction func presentSelectionAlert() {
@@ -157,18 +147,18 @@ class submitVC: UIViewController,UIImagePickerControllerDelegate & UINavigationC
 
 
     func selectImages() {
-        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
+        PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5), from: self)
        }
 
     func selectPdf() {
-        photoPickManager.pickPDF(from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
        }
        
-
+ 
     //    MARK: Handle Select Camera,Pdf,Image
     @IBAction func openCamera() {
-        // Check if the camera is available
-        photoPickManager.openCamera(from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+        
     }
 
 

@@ -28,6 +28,8 @@ class EventResiverVC: UIViewController, SelectNotice{
     var delegate : HistorySelectDelegate?
     let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
     var section = 0
+    var shouldShowFooter = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,7 +57,7 @@ class EventResiverVC: UIViewController, SelectNotice{
         gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         historyBtn.setTitleColor(.gray, for:.normal)
         // Set the initial page
-    
+        setupTableFooter()
         tableview.reloadData()
     }
     
@@ -312,7 +314,47 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
     }
-    //scrol
+    
+    // Method to load the footer from nib and set it as tableFooterView
+    func setupTableFooter() {
+        if shouldShowFooter {
+            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+                // Adjust the frame based on your needs.
+                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
+                
+                // Add a tap gesture recognizer to the button to trigger the hide action.
+                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
+                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
+                footer.SeeMoreBtn.isUserInteractionEnabled = true
+                
+                // Set the footer view.
+                tableview.tableFooterView = footer
+            }
+        } else {
+            tableview.tableFooterView = nil
+        }
+    }
+    
+    @objc func seeMoreAction() {
+        print("Footer button tapped. Hiding the footer.")
+        
+        // Animate the footer fade-out if desired.
+        if let footer = tableview.tableFooterView {
+            UIView.animate(withDuration: 0.3, animations: {
+                footer.alpha = 0
+            }, completion: {[self] _ in
+                // Hide the footer after animation completes.
+                tableview.tableFooterView = nil
+                shouldShowFooter = false
+                
+                tableview.reloadData()
+            })
+        } else {
+            // In case footer is already nil.
+            shouldShowFooter = false
+        }
+    }
+    
 }
 
 

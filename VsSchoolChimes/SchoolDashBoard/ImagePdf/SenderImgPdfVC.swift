@@ -74,36 +74,32 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         NotificationCenter.default.removeObserver(self)
     }
     func imageSelection(){
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            UploadView.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
             selectedImages.append(contentsOf: images)
-            UploadView.imageCollectionview.reloadData()
-        }
-        photoPickManager.pdfUrl = { [weak self] pdfurl in
-            guard let self = self else { return }
-            selectedImages.removeAll()
-            url = pdfurl.absoluteURL
-            selectedImages.append(ImageName.pdf!)
-            //            url = URL(string:pdfurl)
-            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
-            UploadView.imageCollectionview.reloadData()
-        }
-        photoPickManager.onCameraImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
             if url != nil{
                 selectedImages.removeAll()
                 url = nil
             }
-            selectedImages.append(images)
+            UploadView.imageCollectionview.reloadData()
+            // handle gallery images
+        }
+
+        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+            // handle picked PDF
+            selectedImages.removeAll()
+            url = data.absoluteURL
+            selectedImages.append(ImageName.pdf!)
             UploadView.imageCollectionview.reloadData()
         }
+
     }
+    
     @IBAction func uploadImgPdf(){
         
         let alertController = UIAlertController(title: AlertstringFile.Select, message:AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
@@ -132,10 +128,9 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         self.present(alertController, animated: true, completion: nil)
         
     }
-    
     func selectImages() {
         if selectedImages.count != 5{
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
             
         }else{
             let alert = CustomAlert()
@@ -145,7 +140,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
     }
     func openCamera(){
         if selectedImages.count != 5{
-            photoPickManager.openCamera(from: self)
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
@@ -154,8 +149,7 @@ class SenderImgPdfVC: UIViewController, DeleteImge {
         
     }
     func selectPDF() {
-        photoPickManager.pickPDF(from: self)
-        
+        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
     }
     func deleteImage(index: Int) {
         selectedImages.remove(at: index)

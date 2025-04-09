@@ -63,15 +63,19 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let maxHeight: CGFloat = 300
     var homeWorkList:[Homework]?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var loadingLabel: UILabel?
+    var backgroundView: UIView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 15.0, *) {
-            self.showLottieLoader()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) {
-                self.hideLottieLoader()
-            }
-
-        }
+        //        if #available(iOS 15.0, *) {
+        //            showLottieProgressLoader()
+        //            updateLottieProgress(to: 72)
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) {
+        //            }
+        //
+        //        }
+        
         BackBtn.applyBackButton()
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
@@ -79,7 +83,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         NotificationCenter.default.addObserver( self,selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification,object: nil)
         
         NotificationCenter.default.addObserver(self,
-            selector: #selector(keyboardWillHide),name: UIResponder.keyboardWillHideNotification, object: nil)
+                                               selector: #selector(keyboardWillHide),name: UIResponder.keyboardWillHideNotification, object: nil)
         
         TitleTxtfield.addDoneButton()
         DetailsTxtview.addDoneButton()
@@ -282,42 +286,30 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             self.TV.reloadData()
         }
     }
-    
     func imageSelection(){
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
             selectedImages.append(contentsOf: images)
-            for image in images {
-                print("Selected image: \(image)")
-                // photoPickManager.uploadAWS(image: image)
-            }
-            uploadAttachmentView.imageCollectionview.reloadData()
-        }
-        photoPickManager.pdfUrl = { [weak self] pdfurl in
-            guard let self = self else { return }
-            selectedImages.removeAll()
-            url = pdfurl.absoluteURL
-            selectedImages.append(ImageName.pdf!)
-            //            url = URL(string:pdfurl)
-            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
-            uploadAttachmentView.imageCollectionview.reloadData()
-        }
-        photoPickManager.onCameraImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            
             if url != nil{
                 selectedImages.removeAll()
                 url = nil
             }
-            selectedImages.append(images)
             uploadAttachmentView.imageCollectionview.reloadData()
         }
+        
+        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+            // handle picked PDF
+            selectedImages.removeAll()
+            url = data.absoluteURL
+            selectedImages.append(ImageName.pdf!)
+            uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        
     }
     
     @IBAction func HomeworkBtnAct(_ sender: Any) {
@@ -412,25 +404,64 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Assign the attributed string to the label
         customDateLbl.attributedText = attributedString
     }
-
-//    let vc = RecipientVc(nibName: nil, bundle: nil)
-//    vc.ScreenType = screenType.isHomeWork
-//    vc.modalPresentationStyle = .fullScreen
-//    present(vc, animated: true)
+    
+    //    let vc = RecipientVc(nibName: nil, bundle: nil)
+    //    vc.ScreenType = screenType.isHomeWork
+    //    vc.modalPresentationStyle = .fullScreen
+    //    present(vc, animated: true)
+    @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-//        
-//        var uploadedImageURLs: [String] = []
-//            let dispatchGroup = DispatchGroup()
-//
-//            for image in selectedImages {
-//                AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
-//                    if let url = url {
-//                        uploadedImageURLs.append(url)
-//                    }
-//                }
-//            }
+        
+        //        var uploadedImageURLs: [String] = []
+        //            let dispatchGroup = DispatchGroup()
+        //
+        //            for image in selectedImages {
+        //                AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
+        //                    if let url = url {
+        //                        uploadedImageURLs.append(url)
+        //                    }
+        //                }
+        //            }
+        uploadSelectedImages()
     }
-  
+    @available(iOS 15.0, *)
+    func uploadSelectedImages() {
+        guard !selectedImages.isEmpty else { return }
+        
+        var uploadedImageURLs: [String] = []
+        let total = selectedImages.count
+        var completed = 0
+        
+        DispatchQueue.main.async {
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+        }
+        
+        for image in selectedImages {
+            AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
+                if let url = url {
+                    uploadedImageURLs.append(url)
+                }
+                
+                completed += 1
+                let progress = (Double(completed) / Double(total)) * 100
+                
+                DispatchQueue.main.async {
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+                    print(progress)
+                    if completed == total {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            CircularProgressLoader.shared.hide()
+                            print("✅ Uploads finished: \(uploadedImageURLs)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
     // MARK: Set gradient colours for Button
     func gradientcolours(button : UIButton,colours : [CGColor]) {
         
@@ -452,17 +483,18 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     // MARK: File Attachments Actions
     func selectImages() {
         if selectedImages.count != 5{
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
             
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
+        
     }
     func openCamera(){
         if selectedImages.count != 5{
-            photoPickManager.openCamera(from: self)
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
@@ -470,7 +502,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
     func selectPDF() {
-        photoPickManager.pickPDF(from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
         
     }
     
@@ -780,26 +812,59 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
                 result : Result<DashboardResponse,
                 Error>
             ) in
-            
-            switch result {
                 
-            case.success(let succesmessage) :
-                if succesmessage.status == true {
-                    DispatchQueue.main.async { [self] in
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    if succesmessage.status == true {
+                        DispatchQueue.main.async { [self] in
+                        }
+                    }else {
+                        DispatchQueue.main.async {
+                            
+                        }
                     }
-                }else {
+                    
+                case.failure(let error) :
+                    
                     DispatchQueue.main.async {
-                        
+                        print(error.localizedDescription)
                     }
                 }
                 
-            case.failure(let error) :
-                
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
-                }
             }
-            
+    }
+    
+    func showImageLoadingProgress(total: Int) {
+        backgroundView = UIView(frame: view.bounds)
+        backgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
+        loadingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 60))
+        loadingLabel?.center = backgroundView!.center
+        loadingLabel?.textAlignment = .center
+        loadingLabel?.numberOfLines = 2
+        loadingLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        loadingLabel?.textColor = .white
+        loadingLabel?.text = "Loading images: 0 / \(total)"
+        
+        if let label = loadingLabel {
+            backgroundView?.addSubview(label)
+        }
+        
+        if let bgView = backgroundView {
+            view.addSubview(bgView)
         }
     }
+    
+    func updateImageLoadingProgress(current: Int, total: Int) {
+        loadingLabel?.text = "Loading images: \(current) / \(total)"
+    }
+    
+    func hideImageLoader() {
+        backgroundView?.removeFromSuperview()
+        backgroundView = nil
+        loadingLabel = nil
+    }
+    
+    
 }
