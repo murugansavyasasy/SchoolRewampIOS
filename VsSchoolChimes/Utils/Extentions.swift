@@ -12,6 +12,11 @@ import RealityFoundation
 @available(iOS 15.0, *)
 fileprivate var lottieView: LottieAnimationView?
 fileprivate var lottieOverlay: UIView?
+
+@available(iOS 15.0, *)
+fileprivate var loaderContainerView: UIView?
+@available(iOS 15.0, *)
+fileprivate var loaderAnimationView: LottieAnimationView?
 extension UIImageView {
     func applyRTLFlip(_ isRTL: Bool) {
         if isRTL {
@@ -166,45 +171,242 @@ extension String {
 //}
 
 
+//@available(iOS 15.0, *)
+//extension UIViewController {
+//    
+//    func showLottieLoader() {
+//        DispatchQueue.main.async {
+//            guard lottieOverlay == nil else { return }
+//            
+//            // Overlay background
+//            let overlay = UIView(frame: UIScreen.main.bounds)
+//            overlay.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+//            
+//            // Load animation
+//            guard let animation = try? LottieAnimation.named("percentage-circle") else {
+//                print("Lottie animation not found!")
+//                return
+//            }
+//            
+//            let animationView = LottieAnimationView(animation: animation)
+//            animationView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+//            animationView.center = overlay.center
+//            animationView.loopMode = .loop
+//            animationView.contentMode = .scaleAspectFit
+//            animationView.play()
+//            
+//            overlay.addSubview(animationView)
+//            
+//            UIApplication.shared.keyWindow?.addSubview(overlay)
+//            
+//            lottieView = animationView
+//            lottieOverlay = overlay
+//        }
+//    }
+//    
+//    func hideLottieLoader() {
+//        DispatchQueue.main.async {
+//            lottieView?.stop()
+//            lottieOverlay?.removeFromSuperview()
+//            lottieView = nil
+//            lottieOverlay = nil
+//        }
+//    }
+//}
 @available(iOS 15.0, *)
 extension UIViewController {
     
-    func showLottieLoader() {
-        DispatchQueue.main.async {
-            guard lottieOverlay == nil else { return }
-            
-            // Overlay background
-            let overlay = UIView(frame: UIScreen.main.bounds)
-            overlay.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-            
-            // Load animation
-            guard let animation = try? LottieAnimation.named("pencil-loading") else {
-                print("Lottie animation not found!")
-                return
-            }
-            
-            let animationView = LottieAnimationView(animation: animation)
-            animationView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-            animationView.center = overlay.center
-            animationView.loopMode = .loop
-            animationView.contentMode = .scaleAspectFit
-            animationView.play()
-            
-            overlay.addSubview(animationView)
-            
-            UIApplication.shared.keyWindow?.addSubview(overlay)
-            
-            lottieView = animationView
-            lottieOverlay = overlay
-        }
+    func showLottieProgressLoader(animationName: String = "loader") {
+        hideLottieProgressLoader()
+
+        let containerSize: CGFloat = 100
+        let container = UIView(frame: CGRect(x: 0, y: 0, width: containerSize, height: containerSize))
+        
+        container.backgroundColor = .white
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.layer.cornerRadius = 16
+        container.layer.masksToBounds = true
+        view.addSubview(container)
+        
+        NSLayoutConstraint.activate([
+            container.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            container.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            container.widthAnchor.constraint(equalToConstant: containerSize),
+            container.heightAnchor.constraint(equalToConstant: containerSize)
+        ])
+
+        // Load Lottie animation
+        let animationView = LottieAnimationView(name: animationName)
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.contentMode = .scaleAspectFit
+        animationView.loopMode = .loop
+        animationView.play()
+
+        container.addSubview(animationView)
+        
+        NSLayoutConstraint.activate([
+            animationView.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            animationView.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            animationView.topAnchor.constraint(equalTo: container.topAnchor),
+            animationView.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+        ])
+
+        loaderContainerView = container
+        loaderAnimationView = animationView
     }
     
-    func hideLottieLoader() {
+    func updateLottieProgress(to percent: Double) {
+        let percentageText = "\(Int(percent))%"
         DispatchQueue.main.async {
-            lottieView?.stop()
-            lottieOverlay?.removeFromSuperview()
-            lottieView = nil
-            lottieOverlay = nil
+            loaderAnimationView?.textProvider = DictionaryTextProvider(["percentage": percentageText])
+        }
+    }
+
+    func hideLottieProgressLoader() {
+        loaderAnimationView?.stop()
+        loaderContainerView?.removeFromSuperview()
+        loaderContainerView = nil
+        loaderAnimationView = nil
+    }
+}
+
+enum LoaderStyle {
+    case circle
+    case rectangle
+}
+
+class CircularProgressLoader: UIView {
+
+    static let shared = CircularProgressLoader()
+
+    private let backgroundView = UIView()
+    private let progressLayer = CAShapeLayer()
+    private let trackLayer = CAShapeLayer()
+    private let percentageLabel = UILabel()
+    private var currentStyle: LoaderStyle = .circle
+
+    private override init(frame: CGRect) {
+        super.init(frame: UIScreen.main.bounds)
+        self.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        setupCommonUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupCommonUI() {
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.backgroundColor = .white
+        backgroundView.layer.cornerRadius = 20
+        backgroundView.clipsToBounds = true
+        addSubview(backgroundView)
+
+        NSLayoutConstraint.activate([
+            backgroundView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            backgroundView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            backgroundView.widthAnchor.constraint(equalToConstant: 100),
+            backgroundView.heightAnchor.constraint(equalToConstant: 100)
+        ])
+
+        percentageLabel.translatesAutoresizingMaskIntoConstraints = false
+        percentageLabel.textAlignment = .center
+        percentageLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        percentageLabel.textColor = .black
+        backgroundView.addSubview(percentageLabel)
+
+        NSLayoutConstraint.activate([
+            percentageLabel.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            percentageLabel.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor)
+        ])
+    }
+
+    private func setupStyle(_ style: LoaderStyle) {
+        trackLayer.removeFromSuperlayer()
+        progressLayer.removeFromSuperlayer()
+
+        let path: UIBezierPath
+
+        if style == .circle {
+            let padding: CGFloat = 20
+            let diameter: CGFloat = 100 - (padding * 2)
+            let centerPoint = CGPoint(x: 50, y: 50)
+            path = UIBezierPath(arcCenter: centerPoint, radius: diameter / 2, startAngle: -.pi / 2, endAngle: 1.5 * .pi, clockwise: true)
+
+            trackLayer.strokeColor = UIColor.lightGray.cgColor
+            progressLayer.strokeColor = UIColor.systemGreen.cgColor
+
+            trackLayer.lineWidth = 8
+            progressLayer.lineWidth = 5
+
+            trackLayer.fillColor = UIColor.clear.cgColor
+            progressLayer.fillColor = UIColor.clear.cgColor
+
+            trackLayer.path = path.cgPath
+            progressLayer.path = path.cgPath
+        } else {
+            // Rectangle loader
+            let baseRect = CGRect(x: 10, y: 45, width: 80, height: 10)
+            path = UIBezierPath(roundedRect: baseRect, cornerRadius: 5)
+
+            trackLayer.fillColor = UIColor.lightGray.cgColor
+            progressLayer.fillColor = UIColor.systemGreen.cgColor
+
+            trackLayer.strokeColor = nil
+            progressLayer.strokeColor = nil
+
+            trackLayer.lineWidth = 0
+            progressLayer.lineWidth = 0
+
+            trackLayer.path = path.cgPath
+            progressLayer.path = UIBezierPath(roundedRect: CGRect(x: 10, y: 45, width: 0, height: 10), cornerRadius: 5).cgPath
+        }
+
+        backgroundView.layer.addSublayer(trackLayer)
+        backgroundView.layer.addSublayer(progressLayer)
+
+        progressLayer.strokeEnd = 0
+        percentageLabel.text = "0%"
+        self.currentStyle = style
+    }
+
+    func show(style: LoaderStyle = .circle) {
+        DispatchQueue.main.async {
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+
+            if self.superview == nil {
+                window.addSubview(self)
+            }
+
+            self.setupStyle(style)
+        }
+    }
+
+    func updateProgress(to percent: Double) {
+        DispatchQueue.main.async {
+            let clamped = max(0.0, min(100.0, percent))
+            let stroke = clamped / 100.0
+            self.percentageLabel.text = String(format: "%.0f%%", clamped)
+
+            if self.currentStyle == .circle {
+                self.progressLayer.strokeEnd = CGFloat(stroke)
+            } else {
+                let width = 80 * CGFloat(stroke)
+                let path = UIBezierPath(roundedRect: CGRect(x: 10, y: 45, width: width, height: 10), cornerRadius: 5)
+                self.progressLayer.path = path.cgPath
+            }
+
+            if clamped >= 100 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.hide()
+                }
+            }
+        }
+    }
+
+    func hide() {
+        DispatchQueue.main.async {
+            self.removeFromSuperview()
         }
     }
 }

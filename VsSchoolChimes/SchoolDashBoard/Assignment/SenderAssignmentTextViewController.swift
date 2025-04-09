@@ -126,39 +126,27 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
         
-        //MARK: Gallery Image
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            selectedImages.append(contentsOf: images)
-            
-            for image in images {
-                print("Selected image: \(image)")
-                selectImgPdfview.imageCollectionview.reloadData()
-            }
-        }
-        
-        //MARK: Camera Image
-        photoPickManager.onCameraImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            
-            selectedImages.append(images)
-            print("Selected image: \(images)")
-            photoPickManager.uploadAWS(image: images)
-        }
-        
-        //MARK: PDF
-        photoPickManager.onPdfPicked = { [weak self] pdf in
-            print("Selectedpdf12 \(pdf)")
-            self!.photoPickManager.uploadPDFFileToAWS(pdfData: pdf)
-            guard let self = self else { return }
-            // Handle selected images here
-        }
-        photoPickManager.onPdfString = { [weak self] pdf in
-            print("Selectef12 \(pdf)")
-        }
     }
-    
+    func imageSelection(){
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+            selectedImages.append(contentsOf: images)
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+            // handle picked PDF
+            selectedImages.removeAll()
+            selectedImages.append(ImageName.pdf!)
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+
+    }
     override func viewDidLayoutSubviews() {
         
         view.applyGradient(
@@ -288,18 +276,31 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     
     
     func selectImages() {
-        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
+        if selectedImages.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
+            
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
     }
     
     func selectPdf() {
-        photoPickManager.pickPDF(from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
     }
     
     // MARK: Handle Select Camera,Pdf,Image
     @IBAction func openCamera() {
-        // Check if the camera is available
-        photoPickManager.openCamera(from: self)
+        if selectedImages.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
     }
+    
     
     @IBAction func DateBtnAct(_ sender: Any) {
         let vc = DatePickerVC(nibName: nil, bundle: nil)

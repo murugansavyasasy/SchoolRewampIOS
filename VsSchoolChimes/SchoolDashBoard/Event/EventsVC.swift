@@ -137,33 +137,29 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
 
     func imageSelection(){
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            costomView.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+            selectedImages.append(contentsOf: images)
             if url != nil{
                 selectedImages.removeAll()
                 url = nil
             }
-            selectedImages.append(contentsOf: images)
             costomView.imageCollectionview.reloadData()
         }
-        photoPickManager.pdfUrl = { [weak self] pdfurl in
-            guard let self = self else { return }
+
+        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+            // handle picked PDF
             selectedImages.removeAll()
-            url = pdfurl.absoluteURL
+            url = data.absoluteURL
             selectedImages.append(ImageName.pdf!)
             costomView.imageCollectionview.reloadData()
         }
-        photoPickManager.onCameraImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
-            selectedImages.append(images)
-            costomView.imageCollectionview.reloadData()
-        }
+
     }
     
     //MARK: BUTTON TITLE CURRANT TIME
@@ -526,17 +522,18 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     
     func selectImages() {
         if selectedImages.count != 5{
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
             
         }else{
             let alert = CustomAlert()
-            alert.showAlert(title: "", message:AlertstringFile.Already_Reach_Your_Limit, on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
+
     }
     func openCamera(){
         if selectedImages.count != 5{
-            photoPickManager.openCamera(from: self)
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
@@ -544,9 +541,10 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         }
     }
     func selectPDF() {
-        photoPickManager.pickPDF(from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
         
     }
+    
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)

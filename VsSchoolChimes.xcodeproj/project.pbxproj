@@ -164,10 +164,6 @@
 		840F677E2D9412B400AC2F5A /* cell2Tv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840F677C2D9412B400AC2F5A /* cell2Tv.xib */; };
 		841ACC8F2DA5076800326D52 /* loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC8E2DA5076800326D52 /* loader.json */; };
 		841ACC9C2DA50C7A00326D52 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 841ACC9B2DA50C7A00326D52 /* Lottie */; };
-		841ACCA02DA50FC400326D52 /* google-loader.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC9D2DA50FC400326D52 /* google-loader.json */; };
-		841ACCA12DA50FC400326D52 /* successfully-send.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC9F2DA50FC400326D52 /* successfully-send.json */; };
-		841ACCA22DA50FC400326D52 /* loader (1).json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACC9E2DA50FC400326D52 /* loader (1).json */; };
-		841ACCA42DA511EB00326D52 /* pencil-loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 841ACCA32DA511EB00326D52 /* pencil-loading.json */; };
 		8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8420316C2D390CED003C4076 /* TimetableVC.xib */; };
 		8420316E2D390CED003C4076 /* TimetableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8420316B2D390CED003C4076 /* TimetableVC.swift */; };
 		842031782D390FE9003C4076 /* TimetableTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842031772D390FE9003C4076 /* TimetableTv.swift */; };
@@ -231,6 +227,7 @@
 		845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FED3D2D129A0D0090296B /* ExamCreatVC.swift */; };
 		845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845FED3E2D129A0D0090296B /* ExamCreatVC.xib */; };
 		8463D0EB2D6EF5CD00361F55 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463D0EA2D6EF5CD00361F55 /* Extentions.swift */; };
+		8464BA692DA6774100A52D8B /* percentage-circle.json in Resources */ = {isa = PBXBuildFile; fileRef = 8464BA682DA6774100A52D8B /* percentage-circle.json */; };
 		84666AE52CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */; };
 		84666AE62CE866E30010DA24 /* NoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */; };
 		84666AE72CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */; };
@@ -768,10 +765,6 @@
 		840F677B2D9412B400AC2F5A /* cell2Tv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cell2Tv.swift; sourceTree = "<group>"; };
 		840F677C2D9412B400AC2F5A /* cell2Tv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = cell2Tv.xib; sourceTree = "<group>"; };
 		841ACC8E2DA5076800326D52 /* loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loader.json; sourceTree = "<group>"; };
-		841ACC9D2DA50FC400326D52 /* google-loader.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "google-loader.json"; sourceTree = "<group>"; };
-		841ACC9E2DA50FC400326D52 /* loader (1).json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "loader (1).json"; sourceTree = "<group>"; };
-		841ACC9F2DA50FC400326D52 /* successfully-send.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "successfully-send.json"; sourceTree = "<group>"; };
-		841ACCA32DA511EB00326D52 /* pencil-loading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "pencil-loading.json"; sourceTree = "<group>"; };
 		8420316B2D390CED003C4076 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
 		8420316C2D390CED003C4076 /* TimetableVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableVC.xib; sourceTree = "<group>"; };
 		842031772D390FE9003C4076 /* TimetableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableTv.swift; sourceTree = "<group>"; };
@@ -844,6 +837,7 @@
 		8463D0E82D6EE0FB00361F55 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		8463D0E92D6EE0FC00361F55 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8463D0EA2D6EF5CD00361F55 /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
+		8464BA682DA6774100A52D8B /* percentage-circle.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "percentage-circle.json"; sourceTree = "<group>"; };
 		84666ADF2CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardTvcellTableViewCell.swift; sourceTree = "<group>"; };
 		84666AE02CE866E30010DA24 /* NoticeBoardTvcellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardTvcellTableViewCell.xib; sourceTree = "<group>"; };
 		84666AE22CE866E30010DA24 /* NoticeBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeBoardVc.swift; sourceTree = "<group>"; };
@@ -2236,10 +2230,7 @@
 			isa = PBXGroup;
 			children = (
 				849E572E2C1FF65F006119DA /* right-arrow.json */,
-				841ACC9D2DA50FC400326D52 /* google-loader.json */,
-				841ACC9E2DA50FC400326D52 /* loader (1).json */,
-				841ACCA32DA511EB00326D52 /* pencil-loading.json */,
-				841ACC9F2DA50FC400326D52 /* successfully-send.json */,
+				8464BA682DA6774100A52D8B /* percentage-circle.json */,
 				841ACC8E2DA5076800326D52 /* loader.json */,
 			);
 			path = Gif;
@@ -3289,7 +3280,6 @@
 				849F313F2D00631600BACEC7 /* EventHistoryVC.xib in Resources */,
 				848CC17F2D8A999A00CD0255 /* CreatePasswordVc.xib in Resources */,
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
-				841ACCA42DA511EB00326D52 /* pencil-loading.json in Resources */,
 				8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
@@ -3357,6 +3347,7 @@
 				FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */,
 				FAFF9DFF2D6C7B7A00498368 /* SlotsCollectionViewCell.xib in Resources */,
 				FAFF9E002D6C7B7A00498368 /* CheckAviableTv.xib in Resources */,
+				8464BA692DA6774100A52D8B /* percentage-circle.json in Resources */,
 				FAFF9E012D6C7B7A00498368 /* SltoCreationViewController.xib in Resources */,
 				FAFF9E022D6C7B7A00498368 /* PTMViewController.xib in Resources */,
 				848CC16C2D899E4000CD0255 /* OTPVc.xib in Resources */,
@@ -3434,9 +3425,6 @@
 				849AD02C2D1A840E002DEC07 /* OnlineMeetingVC.xib in Resources */,
 				FA31A7C42D7023890069C954 /* VideoPlayerVC.xib in Resources */,
 				FA31A7C52D7023890069C954 /* VideoTVCell.xib in Resources */,
-				841ACCA02DA50FC400326D52 /* google-loader.json in Resources */,
-				841ACCA12DA50FC400326D52 /* successfully-send.json in Resources */,
-				841ACCA22DA50FC400326D52 /* loader (1).json in Resources */,
 				FA31A7C62D7023890069C954 /* VideoVC.xib in Resources */,
 				849AD02D2D1A840E002DEC07 /* MeetingsTVcell.xib in Resources */,
 				18D718622D0D471A00E9EDA3 /* DailyCollectionFeeCurrentTableViewCell.xib in Resources */,
