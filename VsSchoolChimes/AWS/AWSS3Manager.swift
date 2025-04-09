@@ -16,6 +16,7 @@ class AWSUploadManager {
     func uploadFileToAWS(
         file: Any,
         bucketPath: String,
+        bucketName: String,
         completion: @escaping (String?) -> Void
     ) {
         var fileURL: URL?
@@ -62,7 +63,7 @@ class AWSUploadManager {
 
         // 1. Get Pre-Signed URL
         AWSPreSignedURL.shared.fetchPresignedURL(
-            bucket: "schoolchimes-communication",
+            bucket: bucketName,
             fileName: finalURL,
             bucketPath: bucketPath,
             fileType: contentType

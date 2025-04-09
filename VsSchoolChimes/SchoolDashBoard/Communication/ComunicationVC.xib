@@ -48,6 +48,7 @@
                 <outlet property="moveTextmessage" destination="OFL-0u-DSC" id="bC6-eo-GcF"/>
                 <outlet property="moveVoiceMessage" destination="ew1-NT-jsT" id="hWA-EX-h52"/>
                 <outlet property="nextMontBtn" destination="Kvx-5W-tZM" id="dhq-gy-hdD"/>
+                <outlet property="no_recordLbl" destination="nOg-NL-lyL" id="1fw-Qj-Agj"/>
                 <outlet property="outerView" destination="L9X-Oo-o0s" id="rJU-yz-2ez"/>
                 <outlet property="playadiuoslider" destination="F5q-LX-VKf" id="4MZ-1u-bHS"/>
                 <outlet property="playerheight" destination="sBh-Vh-YzH" id="Ja0-P5-s9k"/>
@@ -823,8 +824,8 @@
                                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uhv-Jx-CbW">
                                     <rect key="frame" x="0.0" y="414.00000000000006" width="393" height="539.33333333333348"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Record Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOg-NL-lyL">
-                                            <rect key="frame" x="128" y="259.66666666666663" width="137" height="20.333333333333314"/>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Record Found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nOg-NL-lyL">
+                                            <rect key="frame" x="10" y="259.66666666666663" width="373" height="20.333333333333314"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -870,8 +871,10 @@
                                         <constraint firstItem="GDP-Ia-qZl" firstAttribute="top" secondItem="Uhv-Jx-CbW" secondAttribute="top" constant="10" id="BT2-Ac-tMW"/>
                                         <constraint firstItem="Yij-vy-f1U" firstAttribute="leading" secondItem="GDP-Ia-qZl" secondAttribute="leading" id="CDg-xK-4yT"/>
                                         <constraint firstItem="nOg-NL-lyL" firstAttribute="centerY" secondItem="Uhv-Jx-CbW" secondAttribute="centerY" id="E8Z-er-e7x"/>
+                                        <constraint firstItem="nOg-NL-lyL" firstAttribute="leading" secondItem="Uhv-Jx-CbW" secondAttribute="leading" constant="10" id="Ifx-my-Agq"/>
                                         <constraint firstAttribute="trailing" secondItem="h6i-Qe-bg5" secondAttribute="trailing" id="Ikg-bP-G5L"/>
                                         <constraint firstItem="nOg-NL-lyL" firstAttribute="centerX" secondItem="Uhv-Jx-CbW" secondAttribute="centerX" id="OPx-cW-VvV"/>
+                                        <constraint firstAttribute="trailing" secondItem="nOg-NL-lyL" secondAttribute="trailing" constant="10" id="VLd-Yc-jjG"/>
                                         <constraint firstItem="h6i-Qe-bg5" firstAttribute="leading" secondItem="Uhv-Jx-CbW" secondAttribute="leading" id="ccQ-XP-SIC"/>
                                         <constraint firstAttribute="bottom" secondItem="h6i-Qe-bg5" secondAttribute="bottom" constant="20" id="hCD-eU-Jlr"/>
                                         <constraint firstItem="Yij-vy-f1U" firstAttribute="top" secondItem="GDP-Ia-qZl" secondAttribute="bottom" constant="10" id="phF-nP-J9E"/>
@@ -922,7 +925,7 @@
                     </constraints>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdr-6F-LLo">
-                    <rect key="frame" x="20" y="345" width="353" height="280"/>
+                    <rect key="frame" x="20" y="150.66666666666663" width="353" height="280"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-4A-iyx" customClass="FSCalendar">
                             <rect key="frame" x="0.0" y="45" width="353" height="225"/>

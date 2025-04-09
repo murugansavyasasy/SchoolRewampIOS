@@ -69,10 +69,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     let alert = CustomAlert()
     var communicatio_textDetails :[String] = []
     var target_type : Int?
+    var circular_types : String?
+    var standard_sectionlabel : String? = "10"
     override func viewDidLoad() {
         super.viewDidLoad()
+        BackBtn.setTitle(standard_sectionlabel, for: .normal)
         sendbtnName.layer.cornerRadius = 10
         target_type = TargetTypes.student
+        circular_types =  circular_type.student
         StyleAndTranslater()
         BackBtn.applyBackButton()
        
@@ -268,77 +272,97 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
         
-        if selected_student.count != 0 {
-            
-            if screenType.communication_text == ScreenType{
-                
-                alert
-                    .showAlertCancel(
-                        title: AlertstringFile.Alert_title,
-                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
-                            selected_student.count) ,
-                        actionLbl1: AlertstringFile.OK,
-                        actionLbl2: AlertstringFile.Cancel,
-                        on: self,
-                        onOk: { [self] in
-                            sendtextmessage_communication(
-                                message : communicatio_textDetails.first ?? "",
-                                description: communicatio_textDetails.last ?? "",
-                                target_type :target_type ?? 0
-                            )
-                        } ,
-                        onNo: {print("Canceled")})
-            }else if screenType.is_emergencyvoice == ScreenType{
-                
-//                alert
-//                    .showAlertCancel(
-//                        title: AlertstringFile.Alert_title,
-//                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
-//                            array_selectedId.count) ,
-//                        actionLbl1: AlertstringFile.OK,
-//                        actionLbl2: AlertstringFile.Cancel,
-//                        on: self,
-//                        onOk: { [self] in
-//                            sendVoiceMessage_communication(
-//                                voice_link: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-03-29/4351/VS_1743239103551.wav",
-//                                target_type: target_type ?? 0,
-//                                duration: 44,
-//                                description: <#T##String#>,
-//                                is_emergency: 1,
-//                                is_schedule: false,
-//                                schedule_date: <#T##String#>,
-//                                start_time: <#T##String#>,
-//                                end_time: <#T##String#>,
-//                                file_name: <#T##String#>
-//                            )
-//                        } ,
-//                        onNo: {print("Canceled")})
-            }
-            
-        }else{
-            
-            alert
-                .showAlert(
+        guard !selected_student.isEmpty else {
+                alert.showAlert(
                     title: AlertstringFile.Alert_title,
-                    message:AlertstringFile.Choose_any_target,
+                    message: AlertstringFile.Choose_any_target,
                     on: self
                 )
-        }
+                return
+            }
+
+            switch screenType.staffSelectedMenuId {
+            case Menu_id.communicationMenuId:
+                SendingCommunicationFlow()
+
+            case Menu_id.homeWorkMenuId:
+                handleHomeworkFlow()
+
+            default:
+                print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+            }
+    }
+   
+    
+    
+    private func handleHomeworkFlow() {
+        
         
     }
     
+    private func SendingCommunicationFlow() {
+        let message = AlertstringFile.AreYouSureYouWantToProceed + "\(selected_student.count)"
+        let title = AlertstringFile.Alert_title
+
+        alert.showAlertCancel(
+            title: title,
+            message: message,
+            actionLbl1: AlertstringFile.OK,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [self] in
+                switch ScreenType {
+                case screenType.communication_text:
+                    sendtextmessage_communication()
+
+                case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
+                    uploadAndSendVoiceMessage(url : user_inputs.voice_link)
+
+                default:
+                    print("❗️Unhandled communication screen type: \(ScreenType)")
+                }
+            },
+            onNo: {
+                print("❌ User canceled.")
+            }
+        )
+    }
+    
+    private func uploadAndSendVoiceMessage(url: String) {
+        guard let audioURL = URL(string: url) else {
+            print("❌ Invalid audio URL.")
+            return
+        }
+
+        AWSUploadManager.shared.uploadFileToAWS(
+            file: audioURL,
+            bucketPath: "uploads/audio/",
+            bucketName: "schoolchimes-communication"
+        ) { url in
+            if let uploadedURL = url {
+                print("✅ Audio uploaded: \(uploadedURL)")
+                user_inputs.voice_link = uploadedURL
+                self.sendVoiceMessage_communication()
+            } else {
+                print("❌ Audio upload failed.")
+            }
+        }
+    }
     
     
-    func sendtextmessage_communication(message : String,description:String,target_type :Int){
+    func sendtextmessage_communication(){
+        
+        
+        
         
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
-                
-                send_textmessageStringFile.target_type : target_type,
-                send_textmessageStringFile.target_code : selected_student,
-                send_textmessageStringFile.message : message,
-                send_textmessageStringFile.description : description
-                
+                 
+                   send_textmessageStringFile.description : user_inputs.title,
+                   send_textmessageStringFile.message : user_inputs.description,
+                   send_textmessageStringFile.target_code: selected_student,
+                   send_textmessageStringFile.target_type: target_type ?? 0
+                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -379,6 +403,69 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 
             }
         
+        
+    }
+    
+    
+    func sendVoiceMessage_communication() {
+        
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
+                
+                send_voicemeassageStringFile.voice_link : user_inputs.voice_link,
+                send_voicemeassageStringFile.target_type : target_type ?? 0,
+                send_voicemeassageStringFile.target_code : selected_student,
+                send_voicemeassageStringFile.duration : user_inputs.duration,
+                send_voicemeassageStringFile.description : user_inputs.description,
+                send_voicemeassageStringFile.is_emergency : user_inputs.is_emergency,
+                send_voicemeassageStringFile.is_schedule : user_inputs.is_schedule,
+                send_voicemeassageStringFile.schedule_date : user_inputs.schedule_date,
+                send_voicemeassageStringFile.start_time : user_inputs.start_time,
+                send_voicemeassageStringFile.end_time :user_inputs.end_time,
+                send_voicemeassageStringFile.file_name : user_inputs.file_name,
+                send_voicemeassageStringFile.circular_type  : user_inputs.circular_type
+                
+                
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: "Success",
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
         
     }
     

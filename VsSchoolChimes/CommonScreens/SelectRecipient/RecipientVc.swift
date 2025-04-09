@@ -48,6 +48,7 @@ class RecipientVc: UIViewController{
     var requestCommonDataDetails : [String:Any] = [:]
     var target_type : Int?
     let alert = CustomAlert()
+    var circular_types : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,7 +58,7 @@ class RecipientVc: UIViewController{
                 for: .normal
             )
        
-        userAcces_check()
+        configureRecipientTabs()
         
         if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
             speficBtnName.isHidden = true
@@ -89,50 +90,58 @@ class RecipientVc: UIViewController{
     }
     
     
-    func userAcces_check(){
+    func configureRecipientTabs() {
+        segmentName.removeAllSegments()
+        cv_itemsarry.removeAll()
         
-        if staff_role == PriorityType.is_staff{
+        switch staff_role {
+        case PriorityType.is_staff:
             contentLbl.isHidden = true
             cv_itemsarry = [
                 recipeint_tabBarName.Standard,
                 recipeint_tabBarName.Section_Student,
                 recipeint_tabBarName.Group
             ]
-            segmentName.removeAllSegments()
-            for (index, title) in cv_itemsarry.enumerated() {
-                segmentName.insertSegment(withTitle: title, at: index, animated: false)
-            }
-            segmentName.selectedSegmentIndex = 0
+            target_type = TargetTypes.standard
+            circular_types =  circular_type.standard
             getStandardsAPI()
             
-        }else if staff_role == PriorityType.is_admin || staff_role == PriorityType.is_principal || staff_role == PriorityType.is_grouphead{
+        case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             speficBtnName.isHidden = true
-            if staffDetailsCount?.count ?? 0 > 1{
+            
+            if (staffDetailsCount?.count ?? 0) > 1 {
+                contentLbl.isHidden = true
                 cv_itemsarry = [
                     recipeint_tabBarName.Standard,
                     recipeint_tabBarName.Section_Student,
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
-                contentLbl.isHidden = true
+                target_type = TargetTypes.standard
+                circular_types =  circular_type.standard
                 getStandardsAPI()
-            }else{
+            } else {
                 cv_itemsarry = [
                     recipeint_tabBarName.Entier_School,
                     recipeint_tabBarName.Standard,
-                    recipeint_tabBarName.Group]
+                    recipeint_tabBarName.Group
+                ]
                 tableHeight.constant = 0
             }
-            segmentName.removeAllSegments()
-            for (index, title) in cv_itemsarry.enumerated() { // Add new segments from array
-                segmentName.insertSegment(withTitle: title, at: index, animated: false)
-            }
-            segmentName.selectedSegmentIndex = 0
+            
+        default:
+            print("Unhandled staff role")
         }
         
+        // Add segments from updated array
+        for (index, title) in cv_itemsarry.enumerated() {
+            segmentName.insertSegment(withTitle: title, at: index, animated: false)
+        }
         
-        
+        segmentName.selectedSegmentIndex = 0
     }
+    
+    
     func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
         view.layer.cornerRadius = cornerRadius
         view.layer.shadowColor = shadowColor.cgColor
@@ -151,48 +160,83 @@ class RecipientVc: UIViewController{
     @IBAction func send(_ sender: UIButton) {
         
         print("selectedId : \(array_selectedId)")
-        if array_selectedId.count != 0 {
-            
-            if screenType.communication_text == ScreenType{
-                
-                alert
-                    .showAlertCancel(
-                        title: AlertstringFile.Alert_title,
-                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
-                            array_selectedId.count) ,
-                        actionLbl1: AlertstringFile.OK,
-                        actionLbl2: AlertstringFile.Cancel,
-                        on: self,
-                        onOk: { [self] in
-                            
-                            sendtextmessage_communication()
-                            
-                        } ,
-                        onNo: {print("Canceled")})
-            }else if screenType.is_emergencyvoice == ScreenType{
-                let today = getCurrentDateString()
-                alert
-                    .showAlertCancel(
-                        title: AlertstringFile.Alert_title,
-                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
-                            array_selectedId.count) ,
-                        actionLbl1: AlertstringFile.OK,
-                        actionLbl2: AlertstringFile.Cancel,
-                        on: self,
-                        onOk: { [self] in
-                            sendVoiceMessage_communication()
-                        } ,
-                        onNo: {print("Canceled")})
-            }
-            
-        }else{
-            
-            alert
-                .showAlert(
+        
+        
+        
+        guard !array_selectedId.isEmpty else {
+                alert.showAlert(
                     title: AlertstringFile.Alert_title,
-                    message:AlertstringFile.Choose_any_target,
+                    message: AlertstringFile.Choose_any_target,
                     on: self
                 )
+                return
+            }
+
+            switch screenType.staffSelectedMenuId {
+            case Menu_id.communicationMenuId:
+                SendingCommunicationFlow()
+
+            case Menu_id.homeWorkMenuId:
+                handleHomeworkFlow()
+
+            default:
+                print("Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+            }
+        
+        
+    }
+    
+    private func handleHomeworkFlow() {
+        
+        
+    }
+    
+    private func SendingCommunicationFlow() {
+        let message = AlertstringFile.AreYouSureYouWantToProceed + "\(array_selectedId.count)"
+        let title = AlertstringFile.Alert_title
+
+        alert.showAlertCancel(
+            title: title,
+            message: message,
+            actionLbl1: AlertstringFile.OK,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [self] in
+                switch ScreenType {
+                case screenType.communication_text:
+                    sendtextmessage_communication()
+
+                case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
+                    uploadAndSendVoiceMessage(url : user_inputs.voice_link)
+
+                default:
+                    print("Unhandled communication screen type: \(ScreenType)")
+                }
+            },
+            onNo: {
+                print("User canceled.")
+            }
+        )
+    }
+    
+    private func uploadAndSendVoiceMessage(url: String) {
+        guard let audioURL = URL(string: url) else {
+            print("Invalid audio URL.")
+            return
+        }
+
+        AWSUploadManager.shared.uploadFileToAWS(
+            file: audioURL,
+            bucketPath: "uploads/audio/",
+            bucketName: "schoolchimes-communication"
+        ) { url in
+            if let uploadedURL = url {
+                print("✅ Audio uploaded: \(uploadedURL)")
+                user_inputs.voice_link = uploadedURL
+                self.sendVoiceMessage_communication()
+            } else {
+                print("❌ Audio upload failed.")
+            }
         }
     }
     
@@ -200,8 +244,8 @@ class RecipientVc: UIViewController{
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
-        vc.communicatio_textDetails = communicatio_textDetails
         vc.ScreenType = ScreenType
+//        vc.standard_sectionlabel =
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -214,48 +258,53 @@ class RecipientVc: UIViewController{
             return
         }
         let selectedTitle = cv_itemsarry[segment_selected_index ?? 0]
-        if selectedTitle == recipeint_tabBarName.Entier_School{ // Entier
+
+        switch selectedTitle {
+        case recipeint_tabBarName.Entier_School:
             target_type = TargetTypes.school
+            circular_types =  circular_type.school
             contentLbl.isHidden = false
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
-        }else if selectedTitle == recipeint_tabBarName.Group{ // group
+        case recipeint_tabBarName.Group:
             target_type = TargetTypes.group
+            circular_types =  circular_type.group
             getGrouplistAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-            
-        }else if selectedTitle ==  recipeint_tabBarName.Standard{ // standard
+
+        case recipeint_tabBarName.Standard:
             target_type = TargetTypes.standard
+            circular_types =  circular_type.standard
             getStandardsAPI()
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-        }else if selectedTitle  == recipeint_tabBarName.Section_Student{
+
+        case recipeint_tabBarName.Section_Student:
             target_type = TargetTypes.section
+            circular_types =  circular_type.section
             getStandardsAPI()
-            if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
-                speficBtnName.isHidden = true
-            }else{
-                speficBtnName.isHidden = false
-                speficBtnName.isEnabled = false
-            }
+            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork
+            speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork)
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
-        }
-        
-        else if selectedTitle  == recipeint_tabBarName.Staff{
+
+        case recipeint_tabBarName.Staff:
             target_type = TargetTypes.staff
+            circular_types =  circular_type.staff
             getStaffListAPI()
-            
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
+
+        default:
+            print("Unhandled tab selection: \(selectedTitle)")
         }
         
     }
@@ -711,7 +760,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 send_voicemeassageStringFile.schedule_date : user_inputs.schedule_date,
                 send_voicemeassageStringFile.start_time : user_inputs.start_time,
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
-                send_voicemeassageStringFile.file_name : user_inputs.file_name
+                send_voicemeassageStringFile.file_name : user_inputs.file_name,
+                send_voicemeassageStringFile.circular_type : circular_types
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,

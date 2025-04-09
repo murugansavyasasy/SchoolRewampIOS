@@ -53,11 +53,20 @@ struct screenType{
     static let isSplash  = 4
     static let isForgotPassword  = 5
     static let is_noticeboard = 23
-    static let is_emergencyvoice =  1
     static let isAssaignment = 22
     static let isHomeWork = 9
-    static let communication_text = 2
     static var staffSelectedMenuId = 0
+    static var communicationMenuId = 0
+    static let communication_text = 2
+    static let is_emergencyvoice =  1
+    static let non_emergencyvoice =  3
+}
+
+struct Menu_id{
+    
+    static var communicationMenuId = 0
+    static var homeWorkMenuId = 22
+    
 }
 struct TargetTypes{
     
@@ -99,6 +108,17 @@ struct user_inputs{
     static var circular_type = ""
     
 }
+struct circular_type{
+    static var school =  "A"
+    static var  standard = "C"
+    static var  section = "S"
+    static var  group  =  "G"
+    static var  student = "student"
+    static var staff = "staff"
+    
+}
+
+
 func isValidEmail(_ email: String) -> Bool {
     let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}$"
     let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)

@@ -418,17 +418,17 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 //    vc.modalPresentationStyle = .fullScreen
 //    present(vc, animated: true)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        
-        var uploadedImageURLs: [String] = []
-            let dispatchGroup = DispatchGroup()
-
-            for image in selectedImages {
-                AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
-                    if let url = url {
-                        uploadedImageURLs.append(url)
-                    }
-                }
-            }
+//        
+//        var uploadedImageURLs: [String] = []
+//            let dispatchGroup = DispatchGroup()
+//
+//            for image in selectedImages {
+//                AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
+//                    if let url = url {
+//                        uploadedImageURLs.append(url)
+//                    }
+//                }
+//            }
     }
   
     // MARK: Set gradient colours for Button

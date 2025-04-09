@@ -126,53 +126,85 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBAction func selectedSchool(_ sender: Any) {
         
         print("array_selectedSchoolId",array_selectedSchoolId)
-        if array_selectedSchoolId.count != 0 {
-            
-            if screenType.communication_text == screen_type{
-                
-                alert
-                    .showAlertCancel(
-                        title: AlertstringFile.Alert_title,
-                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
-                            array_selectedSchoolId.count) ,
-                        actionLbl1: AlertstringFile.OK,
-                        actionLbl2: AlertstringFile.Cancel,
-                        on: self,
-                        onOk: { [self] in
-                            
-                            sendtextmessage_communication()
-                        } ,
-                        onNo: {print("Canceled")})
-            }else if screenType.is_emergencyvoice == screen_type{
-                let today = getCurrentDateString()
-               
-                alert
-                    .showAlertCancel(
-                        title: AlertstringFile.Alert_title,
-                        message: AlertstringFile.AreYouSureYouWantToProceed + String(
-                            array_selectedSchoolId.count) ,
-                        actionLbl1: AlertstringFile.OK,
-                        actionLbl2: AlertstringFile.Cancel,
-                        on: self,
-                        onOk: { [self] in
-                            
-                            sendVoiceMessage_communication()
-                        } ,
-                        onNo: {print("Canceled")})
-            }
-            
-        }else{
-            
-            alert
-                .showAlert(
+        
+        
+        guard !array_selectedSchoolId.isEmpty else {
+                alert.showAlert(
                     title: AlertstringFile.Alert_title,
-                    message:AlertstringFile.Choose_any_target,
+                    message: AlertstringFile.Choose_any_target,
                     on: self
                 )
-        }
-        
+                return
+            }
+
+            switch screenType.staffSelectedMenuId {
+            case Menu_id.communicationMenuId:
+                SendingCommunicationFlow()
+
+            case Menu_id.homeWorkMenuId:
+                handleHomeworkFlow()
+
+            default:
+                print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+            }
     }
    
+    
+    
+    private func handleHomeworkFlow() {
+        
+        
+    }
+    
+    private func SendingCommunicationFlow() {
+        let message = AlertstringFile.AreYouSureYouWantToProceed + "\(array_selectedSchoolId.count)"
+        let title = AlertstringFile.Alert_title
+
+        alert.showAlertCancel(
+            title: title,
+            message: message,
+            actionLbl1: AlertstringFile.OK,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [self] in
+                switch screen_type {
+                case screenType.communication_text:
+                    sendtextmessage_communication()
+
+                case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
+                    uploadAndSendVoiceMessage(url : user_inputs.voice_link)
+
+                default:
+                    print("❗️Unhandled communication screen type: \(screen_type)")
+                }
+            },
+            onNo: {
+                print("❌ User canceled.")
+            }
+        )
+    }
+    
+    private func uploadAndSendVoiceMessage(url: String) {
+        guard let audioURL = URL(string: url) else {
+            print("❌ Invalid audio URL.")
+            return
+        }
+
+        AWSUploadManager.shared.uploadFileToAWS(
+            file: audioURL,
+            bucketPath: "uploads/audio/",
+            bucketName: "schoolchimes-communication"
+        ) { url in
+            if let uploadedURL = url {
+                print("✅ Audio uploaded: \(uploadedURL)")
+                user_inputs.voice_link = uploadedURL
+                self.sendVoiceMessage_communication()
+            } else {
+                print("❌ Audio upload failed.")
+            }
+        }
+    }
+    
     
     func sendtextmessage_communication(){
         
@@ -247,7 +279,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 send_voicemeassageStringFile.schedule_date : user_inputs.schedule_date,
                 send_voicemeassageStringFile.start_time : user_inputs.start_time,
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
-                send_voicemeassageStringFile.file_name : user_inputs.file_name
+                send_voicemeassageStringFile.file_name : user_inputs.file_name,
+                send_voicemeassageStringFile.circular_type : circular_type.school
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,

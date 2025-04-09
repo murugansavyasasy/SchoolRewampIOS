@@ -22,7 +22,7 @@ struct common_redirection {
                     .is_grouphead || staff_role == PriorityType.is_admin){
                 
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
-                vc.isEmergency = isVoice
+//                vc.isEmergency = isVoice
                 vc.screen_type = screenType.is_emergencyvoice
                 vc.requestCommonDataDetails = api_request_param
                 vc.modalPresentationStyle = .fullScreen
