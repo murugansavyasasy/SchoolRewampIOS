@@ -320,3 +320,14 @@ struct Homework: Codable {
 struct FilePath: Codable {
     let path: String
 }
+
+struct AwsResps: Codable {
+    let status: Int
+    let message: String
+    let data: AwsData?
+}
+
+struct AwsData: Codable {
+    let presignedUrl: String
+    let fileUrl: String
+}

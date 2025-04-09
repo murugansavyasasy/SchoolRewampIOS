@@ -65,9 +65,14 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if #available(iOS 15.0, *) {
+            self.showLottieLoader()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) {
+                self.hideLottieLoader()
+            }
+
+        }
         BackBtn.applyBackButton()
-        // Add observers for keyboard events
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
         wordsCountLbl.applyRightTxt()
@@ -407,22 +412,25 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Assign the attributed string to the label
         customDateLbl.attributedText = attributedString
     }
-    
+
+//    let vc = RecipientVc(nibName: nil, bundle: nil)
+//    vc.ScreenType = screenType.isHomeWork
+//    vc.modalPresentationStyle = .fullScreen
+//    present(vc, animated: true)
     @IBAction func RecipentBtnAct(_ sender: Any) {
         
-        let data: [String: Any] = [
-            "topic": TitleTxtfield.text ?? "",
-            "text": DetailsTxtview.text ?? "",
-            "section_code": [""],
-            "subject_id": "",
-            "file_path": selectedImages
-        ]
-        let vc = RecipientVc(nibName: nil, bundle: nil)
-        vc.ScreenType = screenType.isHomeWork
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        var uploadedImageURLs: [String] = []
+            let dispatchGroup = DispatchGroup()
+
+            for image in selectedImages {
+                AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
+                    if let url = url {
+                        uploadedImageURLs.append(url)
+                    }
+                }
+            }
     }
-    
+  
     // MARK: Set gradient colours for Button
     func gradientcolours(button : UIButton,colours : [CGColor]) {
         

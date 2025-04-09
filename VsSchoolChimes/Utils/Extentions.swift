@@ -7,7 +7,11 @@
 
 import Foundation
 import UIKit
-fileprivate var loaderAlert: UIAlertController?
+import Lottie
+import RealityFoundation
+@available(iOS 15.0, *)
+fileprivate var lottieView: LottieAnimationView?
+fileprivate var lottieOverlay: UIView?
 extension UIImageView {
     func applyRTLFlip(_ isRTL: Bool) {
         if isRTL {
@@ -38,7 +42,7 @@ extension UIView {
     func applyRightTxt() {
         let language = UserDefaults.standard.string(forKey: DefaultsKeys.Language) ?? "en"
         let isRTL = (language == "ar")
-
+        
         if let textView = self as? UITextView {
             textView.textAlignment = isRTL ? .right : .left
         } else if let textField = self as? UITextField {
@@ -53,7 +57,7 @@ extension UIView {
             }
         }
     }
-
+    
     func applyRightTxt(with placeholderLabel: UILabel) {
         guard let textView = self as? UITextView else { return }
         
@@ -91,7 +95,7 @@ class Custom:UIButton{
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.cornerRadius = 8
-        self.backgroundColor = .button
+        self.backgroundColor = .brown
     }
 }
 class CustomView:UIView{
@@ -131,32 +135,76 @@ extension String {
         return components.joined(separator: "")
     }
 }
+//extension UIViewController {
+//
+//    func showLoader(message: String = "Please wait...") {
+//        DispatchQueue.main.async {
+//            // Prevent multiple loaders
+//            guard loaderAlert == nil else { return }
+//
+//            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+//
+//            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+//            loadingIndicator.hidesWhenStopped = true
+//            loadingIndicator.style = .large
+//            loadingIndicator.startAnimating()
+//
+//            alert.view.addSubview(loadingIndicator)
+//            loaderAlert = alert
+//
+//            self.present(alert, animated: true, completion: nil)
+//        }
+//    }
+//
+//    func hideLoader() {
+//        DispatchQueue.main.async {
+//            loaderAlert?.dismiss(animated: true, completion: {
+//                loaderAlert = nil
+//            })
+//        }
+//    }
+//}
+
+
+@available(iOS 15.0, *)
 extension UIViewController {
     
-    func showLoader(message: String = "Please wait...") {
+    func showLottieLoader() {
         DispatchQueue.main.async {
-            // Prevent multiple loaders
-            guard loaderAlert == nil else { return }
-
-            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-
-            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-            loadingIndicator.hidesWhenStopped = true
-            loadingIndicator.style = .large
-            loadingIndicator.startAnimating()
+            guard lottieOverlay == nil else { return }
             
-            alert.view.addSubview(loadingIndicator)
-            loaderAlert = alert
+            // Overlay background
+            let overlay = UIView(frame: UIScreen.main.bounds)
+            overlay.backgroundColor = UIColor.black.withAlphaComponent(0.3)
             
-            self.present(alert, animated: true, completion: nil)
+            // Load animation
+            guard let animation = try? LottieAnimation.named("pencil-loading") else {
+                print("Lottie animation not found!")
+                return
+            }
+            
+            let animationView = LottieAnimationView(animation: animation)
+            animationView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
+            animationView.center = overlay.center
+            animationView.loopMode = .loop
+            animationView.contentMode = .scaleAspectFit
+            animationView.play()
+            
+            overlay.addSubview(animationView)
+            
+            UIApplication.shared.keyWindow?.addSubview(overlay)
+            
+            lottieView = animationView
+            lottieOverlay = overlay
         }
     }
-
-    func hideLoader() {
+    
+    func hideLottieLoader() {
         DispatchQueue.main.async {
-            loaderAlert?.dismiss(animated: true, completion: {
-                loaderAlert = nil
-            })
+            lottieView?.stop()
+            lottieOverlay?.removeFromSuperview()
+            lottieView = nil
+            lottieOverlay = nil
         }
     }
 }

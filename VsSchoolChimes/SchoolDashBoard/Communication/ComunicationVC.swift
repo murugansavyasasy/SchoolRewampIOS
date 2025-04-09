@@ -13,7 +13,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func voiceforword(selectedIndex: Int?) {
         voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].description ?? ""
         
-//        VoiceHistory[]
+        //        VoiceHistory[]
     }
     
     
@@ -113,7 +113,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var TextHistory:[TextDetail]?
     var isEmergencyVoice = false
     var voiceRecordedDuration : Int?
-//    var isScheduleSelected : Bool = false
+    //    var isScheduleSelected : Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -142,11 +142,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         else{
             isEmergencyVoice = false
             enableDisable()
-
+            
         }
         
         
-    
+        
         
         
         
@@ -180,7 +180,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     func updateEmergencyCallVisibility(_ staff_role: String) {
         if staff_role == PriorityType.is_admin ||
-           staff_role == PriorityType.is_grouphead ||
+            staff_role == PriorityType.is_grouphead ||
             staff_role == PriorityType.is_principal || VoiceHistory != nil || TextHistory != nil{
             emengencyCall.isHidden = false
             EnableCallLbl.isHidden = false
@@ -192,7 +192,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             enableVoiceHistory.isHidden = true
             enableVoiceHistoryLabel.isHidden = true
         }
-    
+    }
     @IBAction func switchAction(_ sender: Any) {
         
         if emengencyCall.isOn{
@@ -202,20 +202,29 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         else{
             isEmergencyVoice = false
             enableDisable()
-
+            
         }
         
     }
-
-
+    
+    
     
     @IBAction func voice_sendBtn_action(_ sender: UIButton) {
         
         
-
+        
         if(AudioPlayUrl != "" && voiceTitleeTxt.text != ""){
             
-            recienpient_validation(isVoice : true)
+//            recienpient_validation(isVoice : true)
+            if let audioURL = URL(string: AudioPlayUrl ?? "") {
+                AWSUploadManager.shared.uploadFileToAWS(file: audioURL, bucketPath: "uploads/audio/") { url in
+                    if let uploadedURL = url {
+                        print("✅ Audio uploaded successfully: \(uploadedURL)")
+                    } else {
+                        print("❌ Failed to upload audio.")
+                    }
+                }
+            } 
         }
         else{
             alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
@@ -247,7 +256,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     send_voicemeassageStringFile.description : voiceTitleeTxt,
                     send_voicemeassageStringFile.is_emergency : isEmergencyVoice,
                     send_voicemeassageStringFile.is_schedule : isScheduleSelected,
-//                    send_voicemeassageStringFile.schedule_date : schedule_date,
+                    //                    send_voicemeassageStringFile.schedule_date : schedule_date,
                     send_voicemeassageStringFile.start_time : fromTime.titleLabel?.text ?? "",
                     send_voicemeassageStringFile.end_time :toTime.titleLabel?.text ?? "",
                 ]
@@ -293,8 +302,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                     
-                }else{
-                    alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
                 }
             }
             else{
@@ -336,7 +343,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 send_voicemeassageStringFile.start_time : start_time,
                 send_voicemeassageStringFile.end_time :end_time,
                 send_voicemeassageStringFile.file_name : file_name,
-
+                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -387,12 +394,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         if  informationcontent.text != "" && TextMsgTittle.text != ""{
             recienpient_validation(isVoice : false)
-
+            
         }
         else{
             alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
         }
-        }
+    }
     
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -404,7 +411,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     func enableDisable() {
         if staffDetailsCount?.count ?? 0 > 1 {
-          
+            
             sendbtn.setTitle("Next", for: .normal)
             sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
             
@@ -412,8 +419,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             if(staff_role == PriorityType.is_staff ){
                 sendbtn.setTitle("Next", for: .normal)
                 sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
-
-           }
+                
+            }
             else{
                 if(isEmergencyVoice){
                     sendbtn.setTitle("Send", for: .normal)
@@ -423,7 +430,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     sendbtn.setTitle("Next", for: .normal)
                     sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
                 }
-                   
+                
             }
             
         }
@@ -1099,53 +1106,53 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             voiceTiming.text = "\(currentFormatted) / \(totalFormatted)"
             let fakeLevel = sin(progress * .pi)
             waveView.updateWithLevel(CGFloat(fakeLevel))
-        if audioPlayer.isPlaying {
-            audioRecorder?.updateMeters()
-            
-            // Get average power for channel 0
-            let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
-            let normalizedPower = max(1, (averagePower + 160) / 160)
-            waveView.updateWithLevel(CGFloat(normalizedPower))  // Update waveform animation
-            
-            // Update playback time
-            if let currentItem = audioPlayer.currentItem {
-                let totalDuration = CMTimeGetSeconds(currentItem.duration)
+            if audioPlayer.isPlaying {
+                audioRecorder?.updateMeters()
                 
-                if totalDuration.isFinite {
-                    let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
+                // Get average power for channel 0
+                let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
+                let normalizedPower = max(1, (averagePower + 160) / 160)
+                waveView.updateWithLevel(CGFloat(normalizedPower))  // Update waveform animation
+                
+                // Update playback time
+                if let currentItem = audioPlayer.currentItem {
+                    let totalDuration = CMTimeGetSeconds(currentItem.duration)
                     
-                    // Update WaveView progress
-                    let progress = CGFloat(elapsedTime / totalDuration)
-                    waveView.progress = progress
-                    waveView.setNeedsDisplay()  // Refresh WaveView to update colors
-                    
-                    // Time formatting for display
-                    let totalMinutes = Int(totalDuration) / 60
-                    let totalSeconds = Int(totalDuration) % 60
-                    let totalDurationFormatted = String(format: "%02d:%02d", totalMinutes, totalSeconds)
-                    
-                    let elapsedMinutes = Int(elapsedTime) / 60
-                    let elapsedSeconds = Int(elapsedTime) % 60
-                    let currentFormatted = String(format: "%02d:%02d", elapsedMinutes, elapsedSeconds)
-                    
-                    // Update the timing label
-                    voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
-                    
-                    voiceRecordedDuration = Int(totalDurationFormatted)
+                    if totalDuration.isFinite {
+                        let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
+                        
+                        // Update WaveView progress
+                        let progress = CGFloat(elapsedTime / totalDuration)
+                        waveView.progress = progress
+                        waveView.setNeedsDisplay()  // Refresh WaveView to update colors
+                        
+                        // Time formatting for display
+                        let totalMinutes = Int(totalDuration) / 60
+                        let totalSeconds = Int(totalDuration) % 60
+                        let totalDurationFormatted = String(format: "%02d:%02d", totalMinutes, totalSeconds)
+                        
+                        let elapsedMinutes = Int(elapsedTime) / 60
+                        let elapsedSeconds = Int(elapsedTime) % 60
+                        let currentFormatted = String(format: "%02d:%02d", elapsedMinutes, elapsedSeconds)
+                        
+                        // Update the timing label
+                        voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
+                        
+                        voiceRecordedDuration = Int(totalDurationFormatted)
+                    }
                 }
+            } else {
+                audioRecorder?.updateMeters()
+                
+                // Get average power for channel 0 when paused or stopped
+                let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
+                let normalizedPower = max(0, (0) / 160)
+                
+                // Update wave view with low intensity when paused
+                waveView.updateWithLevel(CGFloat(normalizedPower))
             }
-        } else {
-            audioRecorder?.updateMeters()
-            
-            // Get average power for channel 0 when paused or stopped
-            let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
-            let normalizedPower = max(0, (0) / 160)
-            
-            // Update wave view with low intensity when paused
-            waveView.updateWithLevel(CGFloat(normalizedPower))
         }
     }
-    
     private func formatTime(_ seconds: Double) -> String {
         let minutes = Int(seconds) / 60
         let seconds = Int(seconds) % 60
@@ -1587,7 +1594,5 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         informationcontent.text = descriptContent
         showTextMessageView()
     }
-    
-    
 }
 

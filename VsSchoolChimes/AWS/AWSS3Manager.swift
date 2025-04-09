@@ -1,124 +1,183 @@
 //
 //  AWSS3Manager.swift
 //  VsSchoolChimes
-//
-//  Created by admin on 12/06/24.
-//
-
-import Foundation
-
+//  Created by chandhru on 12/06/24.
 
 import UIKit
-
-import AWSS3 //1
+import AWSS3
 import AWSCore
 
+class AWSUploadManager {
 
-typealias progressBlock = (_ progress: Double) -> Void //2
+    static let shared = AWSUploadManager()
+    private init() {}
 
-typealias completionBlock = (_ response: Any?, _ error: Error?) -> Void //3
-class AWSS3Manager {
+    // MARK: - Upload File (Handles Image, PDF, Audio, etc.)
+    func uploadFileToAWS(
+        file: Any,
+        bucketPath: String,
+        completion: @escaping (String?) -> Void
+    ) {
+        var fileURL: URL?
+        var contentType = ""
+        var fileName = "\(UUID().uuidString)"
 
-    let S3BucketName = AwsCredentials.bucketNameIndia
-    let CognitoPoolID = AwsCredentials.CognitoPoolID
-    let Region = AWSRegionType.APSouth1
-    static let shared = AWSS3Manager() // 4
-    private init () { }
-    let bucketName = AwsCredentials.bucketNameIndia
-    
-    
-    // Upload image using UIImage object
-    func uploadImage(image: UIImage, progress: progressBlock?, completion: completionBlock?) {
-        
-        guard let imageData = image.jpegData(compressionQuality: 1.0) else {
-            let error = NSError(domain:"", code:402, userInfo:[NSLocalizedDescriptionKey: "invalid image"])
-            completion?(nil, error)
+        switch file {
+        case let image as UIImage:
+            contentType = "image/jpeg"
+            fileName += ".jpg"
+            fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+            guard let data = image.jpegData(compressionQuality: 0.9) else {
+                completion(nil)
+                return
+            }
+            try? data.write(to: fileURL!)
+
+        case let data as Data:
+            contentType = "application/octet-stream"
+            fileName += ".bin"
+            fileURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+            try? data.write(to: fileURL!)
+
+        case let url as URL:
+            let fileExists = FileManager.default.fileExists(atPath: url.path)
+            if !fileExists {
+                completion(nil)
+                return
+            }
+
+            fileURL = url
+            fileName = url.lastPathComponent
+            contentType = getContentType(from: fileName)
+
+        default:
+            completion(nil)
             return
         }
-        
-        let tmpPath = NSTemporaryDirectory() as String
-        let fileName: String = ProcessInfo.processInfo.globallyUniqueString + (".jpeg")
-        let filePath = tmpPath + "/" + fileName
-        let fileUrl = URL(fileURLWithPath: filePath)
-        
-        do {
-            try imageData.write(to: fileUrl)
-            self.uploadfile(fileUrl: fileUrl, fileName: fileName, contenType: "image", progress: progress, completion: completion)
-        } catch {
-            let error = NSError(domain:"", code:402, userInfo:[NSLocalizedDescriptionKey: "invalid image"])
-            completion?(nil, error)
+
+        guard let finalURL = fileURL else {
+            completion(nil)
+            return
         }
-    }
-    
-    // Upload video from local path url
-    func uploadVideo(videoUrl: URL, progress: progressBlock?, completion: completionBlock?) {
-        let fileName = self.getUniqueFileName(fileUrl: videoUrl)
-        self.uploadfile(fileUrl: videoUrl, fileName: fileName, contenType: "video", progress: progress, completion: completion)
-    }
-    
-    // Upload auido from local path url
-    func uploadAudio(audioUrl: URL, progress: progressBlock?, completion: completionBlock?) {
-        let fileName = self.getUniqueFileName(fileUrl: audioUrl)
-        self.uploadfile(fileUrl: audioUrl, fileName: fileName, contenType: "audio", progress: progress, completion: completion)
-    }
-    
-    // Upload files like Text, Zip, etc from local path url
-    func uploadOtherFile(fileUrl: URL, conentType: String, progress: progressBlock?, completion: completionBlock?) {
-        let fileName = self.getUniqueFileName(fileUrl: fileUrl)
-        self.uploadfile(fileUrl: fileUrl, fileName: fileName, contenType: conentType, progress: progress, completion: completion)
-    }
-    
-    // Get unique file name
-    func getUniqueFileName(fileUrl: URL) -> String {
-        let strExt: String = "." + (URL(fileURLWithPath: fileUrl.absoluteString).pathExtension)
-        return (ProcessInfo.processInfo.globallyUniqueString + (strExt))
-    }
-    
-    //MARK:- AWS file upload
-    // fileUrl :  file local path url
-    // fileName : name of file, like "myimage.jpeg" "video.mov"
-    // contenType: file MIME type
-    // progress: file upload progress, value from 0 to 1, 1 for 100% complete
-    // completion: completion block when uplaoding is finish, you will get S3 url of upload file here
-    private func uploadfile(fileUrl: URL, fileName: String, contenType: String, progress: progressBlock?, completion: completionBlock?) {
-        // Upload progress block
-        let expression = AWSS3TransferUtilityUploadExpression()
-        expression.progressBlock = {(task, awsProgress) in
-            guard let uploadProgress = progress else { return }
-            DispatchQueue.main.async {
-                uploadProgress(awsProgress.fractionCompleted)
-            }
-        }
-        // Completion block
-        var completionHandler: AWSS3TransferUtilityUploadCompletionHandlerBlock?
-        completionHandler = { (task, error) -> Void in
-            DispatchQueue.main.async(execute: {
-                if error == nil {
-                    let url = AWSS3.default().configuration.endpoint.url
-                    let publicURL = url?.appendingPathComponent(self.bucketName).appendingPathComponent(fileName)
-                    print("Uploaded to:\(String(describing: publicURL))")
-                    if let completionBlock = completion {
-                        completionBlock(publicURL?.absoluteString, nil)
-                    }
-                } else {
-                    if let completionBlock = completion {
-                        completionBlock(nil, error)
-                    }
+
+        // 1. Get Pre-Signed URL
+        AWSPreSignedURL.shared.fetchPresignedURL(
+            bucket: "schoolchimes-communication",
+            fileName: finalURL,
+            bucketPath: bucketPath,
+            fileType: contentType
+        ) { result in
+            switch result {
+            case .success(let respons):
+                guard let presignedURL = respons.data?.presignedUrl,
+                      let uploadURL = URL(string: presignedURL) else {
+                    completion(nil)
+                    return
                 }
-            })
-        }
-        // Start uploading using AWSS3TransferUtility
-        let awsTransferUtility = AWSS3TransferUtility.default()
-        awsTransferUtility.uploadFile(fileUrl, bucket: bucketName, key: fileName, contentType: contenType, expression: expression, completionHandler: completionHandler).continueWith { (task) -> Any? in
-            if let error = task.error {
-                print("error is: \(error.localizedDescription)")
+
+                // 2. Upload File using PUT
+                guard let fileData = try? Data(contentsOf: finalURL) else {
+                    completion(nil)
+                    return
+                }
+
+                var request = URLRequest(url: uploadURL)
+                request.httpMethod = "PUT"
+                request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+
+                URLSession.shared.uploadTask(with: request, from: fileData) { _, response, error in
+                    if let error = error {
+                        completion(nil)
+                        return
+                    }
+
+                    if let httpResponse = response as? HTTPURLResponse {
+                        if httpResponse.statusCode == 200 {
+                            completion(respons.data?.fileUrl ?? presignedURL)
+                        } else {
+                            print("❌ Upload failed with status code: \(httpResponse.statusCode)")
+                            completion(nil)
+                        }
+                    } else {
+                        print("❌ No HTTP response")
+                        completion(nil)
+                    }
+
+                }.resume()
+
+            case .failure(let error):
+                print("❌ Failed to get presigned URL: \(error.localizedDescription)")
+                completion(nil)
             }
-            if let _ = task.result {
-                // your uploadTask
-            }
-            return nil
         }
     }
-    
-    
+
+    // MARK: - Guess Content-Type from File Extension
+    private func getContentType(from filename: String) -> String {
+        let ext = (filename as NSString).pathExtension.lowercased()
+        switch ext {
+        case "jpg", "jpeg": return "image/jpeg"
+        case "png": return "image/png"
+        case "pdf": return "application/pdf"
+        case "mp3": return "audio/mpeg"
+        case "m4a": return "audio/x-m4a" // ← Fixed here!
+        case "wav": return "audio/wav"
+        case "mp4": return "video/mp4"
+        case "mov": return "video/quicktime"
+        default: return "application/octet-stream"
+        }
+    }
+}
+
+
+
+class AWSPreSignedURL {
+    static let shared = AWSPreSignedURL()
+    private init() {}
+
+    func fetchPresignedURL(
+        bucket: String,
+        fileName: URL,
+        bucketPath: String,
+        fileType: String,
+        completion: @escaping (Result<AwsResps, Error>) -> Void
+    ) {
+        let fileBaseName = fileName.lastPathComponent
+
+        var components = URLComponents(string: "https://api.schoolchimes.com/nodejs/api/MergedApi/get-s3-presigned-url")!
+        components.queryItems = [
+            URLQueryItem(name: "bucket", value: bucket),
+            URLQueryItem(name: "fileName", value: fileBaseName),
+            URLQueryItem(name: "bucketPath", value: bucketPath),
+            URLQueryItem(name: "fileType", value: fileType)
+        ]
+
+        guard let url = components.url else {
+            completion(.failure(NSError(domain: "", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Empty response"])))
+                return
+            }
+
+            do {
+                let decoded = try JSONDecoder().decode(AwsResps.self, from: data)
+                completion(.success(decoded))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
+
 }
