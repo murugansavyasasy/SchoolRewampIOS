@@ -95,22 +95,20 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
             staffSideView.isHidden = false
             
         }
-        
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            
-            selectedImages.append(contentsOf: images)
-            imgPdCollectionView.delegate = self
-            imgPdCollectionView.dataSource = self
-            
-            for image in images {
-                print("Selected image: \(image)")
-                //                       photoPickManager.uploadAWS(image: image)
-            }
+        imgPdCollectionView.delegate = self
+        imgPdCollectionView.dataSource = self
+
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            imgPdCollectionView.reloadData()
         }
-        
-        
+
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+            selectedImages.append(contentsOf: images)
+            imgPdCollectionView.reloadData()
+            // handle gallery images
+        }
     }
     
     @IBAction func backAction() {
@@ -139,7 +137,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
         // PDF option
         let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
             
-            photoPickManager.pickPDF(from: self)
+            PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
         }
         alertController.addAction(pdfAction)
         
@@ -153,19 +151,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
     
     //    MARK: Handle Select Camera,Pdf,Image
     @IBAction func openCamera() {
-        // Check if the camera is available
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .camera
-            imagePicker.allowsEditing = true // Allows editing of the captured image
-            present(imagePicker, animated: true, completion: nil)
-        } else {
-            // Camera is not available, show an alert
-            let alert = UIAlertController(title: AlertstringFile.CameraNotAvailable, message:AlertstringFile.devicehasnoCamara, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-        }
+        PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
     }
     
     
@@ -201,9 +187,7 @@ class SenderSideImagePdfViewController: UIViewController, UIImagePickerControlle
 @available(iOS 14.0, *)
 extension SenderSideImagePdfViewController : UICollectionViewDelegate,UICollectionViewDataSource{
     func selectImages() {
-        photoPickManager.presentPhotoPicker(from: self, selectionLimit: 3)
-        
-        
+        PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5), from: self)
     }
     // MARK: - UICollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

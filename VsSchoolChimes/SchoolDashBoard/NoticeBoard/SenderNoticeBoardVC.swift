@@ -130,61 +130,30 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         }
     }
     func imageSelection(){
-        photoPickManager.onImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            costomView.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
             selectedImages.append(contentsOf: images)
-            
-            print("selectedImage", selectedImages)
-         /*   let images = images*/ // Array of images
-            let presignedURLs = ["https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/2024-12-24/6063/file%3A///private/var/mobile/Containers/Data/Application/00E089B8-D267-441E-AAD4-3E35A102A925/tmp/vc_-5851419880403543277.png?Content-Type=image&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA2NK3YMVHFMO66GYP%2F20241224%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20241224T072154Z&X-Amz-Expires=90&X-Amz-Signature=786c9921f6135bf05cfd40390a3d62b43972895f224ac83c26dee7de1effce6a&X-Amz-SignedHeaders=host"] // Corresponding presigned URLs
-
-            photoPickManager.getImageURLUsingPresignedURL(images: images, presignedURLs: presignedURLs) { uploadedURLs in
-                print("Uploaded image URLs: \(uploadedURLs)")
-            }
-
-            
-            //            for image in images {
-            //                print("Selected image: \(image)")
-//                            photoPickManager.uploadAWS(image: image)
-            //            }
-            
-            
-            
-            costomView.imageCollectionview.reloadData()
-            costomView.ActivityIndicator.stopAnimating()
-        }
-        photoPickManager.pdfUrl = { [weak self] pdfurl in
-            guard let self = self else { return }
-            selectedImages.removeAll()
-            url = pdfurl.absoluteURL
-            selectedImages.append(ImageName.pdf!)
-//            setAttributedText(for: addPhotoLbl, with: CommonStringFile.AddPdfoptional.translated(), firstString: CommonStringFile.AddPdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
-            //            url = URL(string:pdfurl)
-            //            photoPickManager.uploadPDFFileToAWS(pdfData: pdfData ?? Data())
-            costomView.imageCollectionview.reloadData()
-            costomView.ActivityIndicator.stopAnimating()
-        }
-        photoPickManager.onCameraImagePicked = { [weak self] images in
-            guard let self = self else { return }
-            // Handle selected images here
-            
             if url != nil{
                 selectedImages.removeAll()
                 url = nil
             }
-            selectedImages.append(images)
             costomView.imageCollectionview.reloadData()
-            costomView.ActivityIndicator.stopAnimating()
+            // handle gallery images
         }
-        
-        
-        
-        
+
+        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+            // handle picked PDF
+            selectedImages.removeAll()
+            url = data.absoluteURL
+            selectedImages.append(ImageName.pdf!)
+            costomView.imageCollectionview.reloadData()
+        }
+
     }
     
     //MARK: Setting Current Date as initial Date
@@ -369,33 +338,31 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     
     // MARK: File Attachments Actions
-    
+
     func selectImages() {
-        
         if selectedImages.count != 5{
-            costomView.ActivityIndicator.startAnimating()
-            photoPickManager.presentPhotoPicker(from: self, selectionLimit: 5 - selectedImages.count )
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
             
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
-        
     }
     func openCamera(){
         if selectedImages.count != 5{
-            costomView.ActivityIndicator.startAnimating()
-            photoPickManager.openCamera(from: self)
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
         }
+        
     }
     func selectPDF() {
-        costomView.ActivityIndicator.startAnimating()
-        photoPickManager.pickPDF(from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
     }
+    
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         controller.dismiss(animated: true, completion: nil)
