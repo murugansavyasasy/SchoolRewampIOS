@@ -823,7 +823,7 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
     }
     func GetHomeWorkList(){
         APIService.shared
-            .makeApi(url:  ServiceUrl.comm_homework_get_homework_report + "?member_type=parent", parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url:  ServiceUrl.comm_homework_get_homework_report , parameters: ["member_type" : "parent"] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
                 result : Result<DashboardResponse,
                 Error>
             ) in
