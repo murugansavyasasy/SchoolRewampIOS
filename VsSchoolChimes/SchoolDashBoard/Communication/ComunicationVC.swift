@@ -9,13 +9,27 @@ protocol reloadDelegate{
     func deleteDelegate(index:Int)
 }
 
-class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate, ForwordDelegate{
+class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate, ForwordDelegate, HistoryFinishPalyingDelegate{
     func voiceforword(selectedIndex: Int?) {
         voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].description ?? ""
         
-        //        VoiceHistory[]
+        if isScheduleSelected{
+            enabelScheduleView(isforward: true,
+                               voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "", title: VoiceHistory?[selectedIndex ?? 0].description ?? "")
+        }else{
+            enabelVoice_view(
+                isforward: true,
+                voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "", title: VoiceHistory?[selectedIndex ?? 0].description ?? "")
+        }
+        
+        
     }
     
+    func didFinishPlaying(at index: Int) {
+            playIndex = nil
+            let indexPath = IndexPath(row: index, section: 0)
+            historytable.reloadRows(at: [indexPath], with: .none)
+        }
     
     var isKeyboardVisible = false
     var selectedDates: [Date] = [] // Store selected dates
@@ -241,7 +255,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                recienpient_validation(isVoice : true)
             }
             else{
-                alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+                alert
+                    .showAlert(
+                        title: "",
+                        message: AlertstringFile.voice_or_title_is_required,
+                        on: self
+                    )
             }
             
         }
@@ -260,38 +279,17 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
             }
             else{
-                alert.showAlert(title: "", message: AlertstringFile.voice_or_title_is_required, on: self)
+                alert
+                    .showAlert(
+                        title: "",
+                        message: AlertstringFile.enter_title_description,
+                        on: self
+                    )
             }
         }
     
     
-//    @IBAction func voice_sendBtn_action(_ sender: UIButton) {
-//        
-//        
-//        
-//        if(AudioPlayUrl != "" && voiceTitleeTxt.text != ""){
-//            
-////            recienpient_validation(isVoice : true)
-//            if let audioURL = URL(string: AudioPlayUrl ?? "") {
-//                AWSUploadManager.shared
-//                    .uploadFileToAWS(
-//                        file: audioURL,
-//                        bucketPath: "uploads/audio/",
-//                        bucketName: "schoolchimes-communication"
-//                    ) { url in
-//                    if let uploadedURL = url {
-//                        print("✅ Audio uploaded successfully: \(uploadedURL)")
-//                    } else {
-//                        print("❌ Failed to upload audio.")
-//                    }
-//                }
-//            } 
-//        }
-//        else{
-//            alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
-//        }
-//        
-//    }
+
     
     
     func recienpient_validation(isVoice : Bool){
@@ -300,7 +298,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             if(isVoice == true){
                 if(staff_role == PriorityType.is_principal || staff_role == PriorityType
                     .is_grouphead || staff_role == PriorityType.is_admin){
-                    
+            
                         let vc = SchoolListVC(nibName: nil, bundle: nil)
                         if(isEmergencyVoice == 1){
                             vc.screen_type = screenType.is_emergencyvoice
@@ -338,12 +336,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
         else{
             
-            
-            
             if(isVoice == true){
                 if(staff_role == PriorityType.is_principal || staff_role == PriorityType
                     .is_grouphead || staff_role == PriorityType.is_admin){
-                    
                     if(isEmergencyVoice == 1){
                         //call send api here itself
                         sendVoiceMessage_communication()
@@ -353,15 +348,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true)
                     }
-                    
                 }
                 
                 else{
-                    
                     let vc = RecipientVc(nibName: nil, bundle: nil)
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
-                    
                 }
             }
             else{
@@ -384,7 +376,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
                 send_voicemeassageStringFile.voice_link : user_inputs.voice_link,
                 send_voicemeassageStringFile.target_type : 1,
-                send_voicemeassageStringFile.target_code : staffDetailsCount?.first?.school_id ,
+                send_voicemeassageStringFile.target_code : staffDetailsCount?.first?.school_id ?? 0 ,
                 send_voicemeassageStringFile.duration : user_inputs.duration,
                 send_voicemeassageStringFile.description : user_inputs.description,
                 send_voicemeassageStringFile.is_emergency : user_inputs.is_emergency,
@@ -925,7 +917,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     func get_Voice_History(voiceType: Int){
         APIService.shared
-            .makeApi(url:  ServiceUrl.comm_voice_get_voice_history+"?is_emergency=\(voiceType)", parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url:  ServiceUrl.comm_voice_get_voice_history, parameters: ["is_emergency":voiceType] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
                 result : Result<VoiceResponse,
                 Error>
             ) in
@@ -1008,9 +1000,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             playerheight.constant = 0
             Timinglbl.text = "00:00/03:00"
             moveTextmessage.isHidden = false
+            voiceTitleeTxt.text = ""
         }
         
         func startRecording() {
+            addfile.isHidden = true
             recrdimg.image = UIImage.gifImageWithName("Mic")
             isRecording = true
             recordingStartTime = Date()
@@ -1026,6 +1020,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             isRecording = false
             recordingTimer?.invalidate()
             recordingTimer = nil
+            btnplay.setImage(ImageName.playbutton, for: .normal)
             if let urls = URL(string: AudioPlayUrl!){
                 // Calculate total recording duration and set Timinglbl
                 if let startTime = recordingStartTime {
@@ -1242,34 +1237,84 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             
             @IBAction func voiceview(_ sender: Any) {
-                updateEmergencyCallVisibility( staff_role)
-                voiceBtn.backgroundColor = backgroundcolor
-                textClickView.backgroundColor = .white
-                voiceClickView.backgroundColor = tapColor
-                seduleClickView.backgroundColor = .white
-                textBtn.backgroundColor = UIColor.white
-                voiceview.isHidden = false
-                textmessageview.isHidden = true
-                historyview.isHidden = true
-                tittlemessage.text = CommonStringFile.VoiceMessage.translated()
-                clickVoiceLbl.textColor = .white
-                clickTextView.textColor = .black
-                clickSchedule.textColor = .black
-                scheduleBtn.tintColor = .black
-                voiceBtn.tintColor = .white
-                textBtn.tintColor = .black
-                scheduleBtn.backgroundColor = UIColor.white
-                isScheduleSelected = false
-                schedulCallView.isHidden = true
-                timePickerHeight.constant = 0
-                dateSelectedViewHeight.constant = 0
-                // Hide the picker and Done button
-                timePicker.isHidden = true
-                doneButton.isHidden = true
-                activeButton = nil
-                calanderOuter.isHidden = true
-                updateEmergencyCallVisibility(staff_role)
+                enabelVoice_view(isforward: false, voiceUrl: "", title: "")
             }
+    
+    
+    func enabelVoice_view(isforward:Bool,voiceUrl:String,title:String){
+        
+        emengencyCall.isOn = false
+        if isforward{
+            
+            updateEmergencyCallVisibility( staff_role)
+            AudioPlayUrl = voiceUrl
+            // UI updates (e.g., show player)
+            playerheight.constant = 60
+            voiceStackview.isHidden = false
+            dltbtn.isHidden = false
+            recoderbtn.isEnabled = false
+            if let audioUrl = URL(string: AudioPlayUrl ?? "") {
+                playerItem = AVPlayerItem(url: audioUrl)
+                player = AVPlayer(playerItem: playerItem)
+            }
+            voiceTitleeTxt.text = title
+            voiceBtn.backgroundColor = backgroundcolor
+            textClickView.backgroundColor = .white
+            voiceClickView.backgroundColor = tapColor
+            seduleClickView.backgroundColor = .white
+            textBtn.backgroundColor = UIColor.white
+            voiceview.isHidden = false
+            textmessageview.isHidden = true
+            historyview.isHidden = true
+            tittlemessage.text = CommonStringFile.VoiceMessage.translated()
+            clickVoiceLbl.textColor = .white
+            clickTextView.textColor = .black
+            clickSchedule.textColor = .black
+            scheduleBtn.tintColor = .black
+            voiceBtn.tintColor = .white
+            textBtn.tintColor = .black
+            scheduleBtn.backgroundColor = UIColor.white
+            isScheduleSelected = false
+            schedulCallView.isHidden = true
+            timePickerHeight.constant = 0
+            dateSelectedViewHeight.constant = 0
+            // Hide the picker and Done button
+            timePicker.isHidden = true
+            doneButton.isHidden = true
+            activeButton = nil
+            calanderOuter.isHidden = true
+        }else{
+            updateEmergencyCallVisibility( staff_role)
+            voiceTitleeTxt.text = title
+            voiceBtn.backgroundColor = backgroundcolor
+            textClickView.backgroundColor = .white
+            voiceClickView.backgroundColor = tapColor
+            seduleClickView.backgroundColor = .white
+            textBtn.backgroundColor = UIColor.white
+            voiceview.isHidden = false
+            textmessageview.isHidden = true
+            historyview.isHidden = true
+            tittlemessage.text = CommonStringFile.VoiceMessage.translated()
+            clickVoiceLbl.textColor = .white
+            clickTextView.textColor = .black
+            clickSchedule.textColor = .black
+            scheduleBtn.tintColor = .black
+            voiceBtn.tintColor = .white
+            textBtn.tintColor = .black
+            scheduleBtn.backgroundColor = UIColor.white
+            isScheduleSelected = false
+            schedulCallView.isHidden = true
+            timePickerHeight.constant = 0
+            dateSelectedViewHeight.constant = 0
+            // Hide the picker and Done button
+            timePicker.isHidden = true
+            doneButton.isHidden = true
+            activeButton = nil
+            calanderOuter.isHidden = true
+            
+        }
+        
+    }
             
             @IBAction func doneSelection(_ sender: Any) {
                 if selectedDates.count == 0{
@@ -1300,39 +1345,85 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
             }
             @IBAction func textviewshow(_ sender: Any) {
+                emengencyCall.isOn = false
                 updateEmergencyCallVisibility( staff_role)
                 showTextMessageView()
                 deletRecoding()
             }
             
             @IBAction func scheduleCall(_ sender: UIButton) {
-                updateEmergencyCallVisibility( staff_role)
-                scheduleBtn.backgroundColor = backgroundcolor
-                textClickView.backgroundColor = .white
-                voiceClickView.backgroundColor = .white
-                seduleClickView.backgroundColor = tapColor
-                isScheduleSelected = true
-                showVoiceMessageView()
-                schedulCallView.isHidden = false
-                timePickerHeight.constant = 141
-                textmessageview.isHidden = true
-                textBtn.backgroundColor = UIColor.white
-                voiceBtn.backgroundColor = UIColor.white
-                tittlemessage.text = CommonStringFile.ScheduleCall.translated()
-                clickVoiceLbl.textColor = .black
-                clickTextView.textColor = .black
-                clickSchedule.textColor = .white
-                voiceBtn.tintColor = .white
-                textBtn.tintColor = .black
-                scheduleBtn.tintColor = .white
-                voiceBtn.tintColor = .black
-                emengencyCall.isHidden = true
-                EnableCallLbl.isHidden = true
-                enableVoiceHistory.isHidden = true
-                enableVoiceHistoryLabel.isHidden = true
+                enabelScheduleView(isforward: false, voiceUrl: "", title: "")
                 
             }
             
+    func enabelScheduleView(isforward:Bool,voiceUrl:String,title:String){
+        
+        emengencyCall.isOn = false
+        
+        if isforward{
+            AudioPlayUrl = voiceUrl
+            // UI updates (e.g., show player)
+            playerheight.constant = 60
+            voiceStackview.isHidden = false
+            dltbtn.isHidden = false
+            recoderbtn.isEnabled = false
+            if let audioUrl = URL(string: AudioPlayUrl ?? "") {
+                playerItem = AVPlayerItem(url: audioUrl)
+                player = AVPlayer(playerItem: playerItem)
+            }
+            
+            updateEmergencyCallVisibility( staff_role)
+            scheduleBtn.backgroundColor = backgroundcolor
+            textClickView.backgroundColor = .white
+            voiceClickView.backgroundColor = .white
+            seduleClickView.backgroundColor = tapColor
+            isScheduleSelected = true
+            showVoiceMessageView()
+            schedulCallView.isHidden = false
+            timePickerHeight.constant = 141
+            textmessageview.isHidden = true
+            textBtn.backgroundColor = UIColor.white
+            voiceBtn.backgroundColor = UIColor.white
+            tittlemessage.text = CommonStringFile.ScheduleCall.translated()
+            clickVoiceLbl.textColor = .black
+            clickTextView.textColor = .black
+            clickSchedule.textColor = .white
+            voiceBtn.tintColor = .white
+            textBtn.tintColor = .black
+            scheduleBtn.tintColor = .white
+            voiceBtn.tintColor = .black
+            emengencyCall.isHidden = true
+            EnableCallLbl.isHidden = true
+            enableVoiceHistory.isHidden = true
+            enableVoiceHistoryLabel.isHidden = true
+            
+        }else{
+            updateEmergencyCallVisibility( staff_role)
+            scheduleBtn.backgroundColor = backgroundcolor
+            textClickView.backgroundColor = .white
+            voiceClickView.backgroundColor = .white
+            seduleClickView.backgroundColor = tapColor
+            isScheduleSelected = true
+            showVoiceMessageView()
+            schedulCallView.isHidden = false
+            timePickerHeight.constant = 141
+            textmessageview.isHidden = true
+            textBtn.backgroundColor = UIColor.white
+            voiceBtn.backgroundColor = UIColor.white
+            tittlemessage.text = CommonStringFile.ScheduleCall.translated()
+            clickVoiceLbl.textColor = .black
+            clickTextView.textColor = .black
+            clickSchedule.textColor = .white
+            voiceBtn.tintColor = .white
+            textBtn.tintColor = .black
+            scheduleBtn.tintColor = .white
+            voiceBtn.tintColor = .black
+            emengencyCall.isHidden = true
+            EnableCallLbl.isHidden = true
+            enableVoiceHistory.isHidden = true
+            enableVoiceHistoryLabel.isHidden = true
+        }
+    }
             // Record Button Action
             @IBAction func recordButtonTapped(_ sender: UIButton) {
                 
@@ -1369,7 +1460,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             @IBAction func Addfiles(_ sender: UIButton) {
                 // Configure the document picker to allow audio or document files
                 if #available(iOS 14.0, *) {
-                    let supportedTypes: [UTType] = [.audio, .pdf, .text, .plainText]
+                    let supportedTypes: [UTType] = [.audio]
                     let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: supportedTypes)
                     documentPicker.delegate = self
                     documentPicker.allowsMultipleSelection = false
@@ -1428,6 +1519,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 if tittlemessage.text == CommonStringFile.TextMessage.translated(){
                     
                     let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
+                    
                     cell.descriptContent.attributedText = descript(for:TextHistory?[indexPath.row].description ?? "", expanded: false)
                     cell.MessageTitle.text = TextHistory?[indexPath.row].content
                     cell.DateLabel.text = TextHistory?[indexPath.row].date
@@ -1445,23 +1537,31 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 }else{
                     let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
                     
-                    cell.playBtn.tag = indexPath.row
-                    
-                    let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
                     let isPlaying = (playIndex == indexPath.row)
                     cell.updatePlayState(isPlaying: isPlaying, url: VoiceHistory?[indexPath.row].url)
-                    cell.datelbl.text = VoiceHistory?[indexPath.row].sent_on
-                    cell.totaltime.text = "\(VoiceHistory?[indexPath.row].duration ?? 0)/03:00"
-                    cell.contentlbl.text = VoiceHistory?[indexPath.row].description
-                    cell.datelbl.text = VoiceHistory?[indexPath.row].sent_on
-                    DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
-                        
-                        cell.configureShimmer()
-                    }
+
+                    cell.playBtn.tag = indexPath.row
                     cell.sendbtn.tag = indexPath.row
                     cell.delegate = self
                     cell.ForwordDelegate = self
-                    cell.playBtn.setImage(image, for: .normal)
+                    cell.FinishPlayingdelegate = self
+
+                    cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
+                    cell.datelbl.text = VoiceHistory?[indexPath.row].sent_on
+                    cell.totaltime.text = "\(VoiceHistory?[indexPath.row].duration ?? 0)/03:00"
+                    cell.contentlbl.text = VoiceHistory?[indexPath.row].description
+
+                    // ✨ Reset player view if not playing
+                    if !isPlaying {
+                        cell.playerView.progress = 0.0
+                        cell.playerView.updateWithLevel(0.0)
+                        cell.playerView.setNeedsDisplay()
+                    }
+
+                    // Optional shimmer
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        cell.configureShimmer()
+                    }
                     return cell
                 }
             }
@@ -1649,11 +1749,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
                 let with = dateCV.frame.size.width - 20
                 let cwidth = with/3
-                return CGSize(width: cwidth, height: 50)
+                return CGSize(width: cwidth, height: 60)
             }
             func select(Tittle: String, descriptContent: String) {
                 TextMsgTittle.text = Tittle
                 informationcontent.text = descriptContent
+                placeholderLabel.isHidden = !informationcontent.text.isEmpty
+
                 showTextMessageView()
             }
             

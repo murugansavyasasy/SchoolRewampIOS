@@ -523,7 +523,7 @@ extension ParentDashboardVc: UISearchBarDelegate{
       
         print("tokenefrfrdfrfdx",ServiceUrl.token)
         APIService.shared
-            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=parent", parameters: [:] , type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+            .makeApi(url:  ServiceUrl.get_dashboard_details, parameters: ["member_type" : "parent"] , type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
                 result : Result<DashboardResponse,
                 Error>
             ) in

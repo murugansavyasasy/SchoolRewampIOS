@@ -12,6 +12,9 @@ import AVFAudio
 protocol ForwordDelegate{
     func voiceforword(selectedIndex:Int?)
 }
+protocol HistoryFinishPalyingDelegate: AnyObject {
+    func didFinishPlaying(at index: Int)
+}
 class HistoryTC: UITableViewCell {
     
     var audioPlayUrl = "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-03-29/4351/VS_1743239103551.wav"
@@ -34,7 +37,8 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var playerView: WaveView!
     @IBOutlet weak var sendbtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
-    
+    var playIndex: Int? = nil
+    weak var FinishPlayingdelegate: HistoryFinishPalyingDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -65,7 +69,13 @@ class HistoryTC: UITableViewCell {
     
     @IBAction func play(_ sender: UIButton) {
         sender.isSelected.toggle()
-        delegate?.reload(index: sender.tag)
+        if playIndex != sender.tag {
+              player?.pause()
+              updateTimer?.invalidate()
+          }
+
+          playIndex = sender.tag // Update currently playing index
+          delegate?.reload(index: sender.tag) // Triggers table reload to update cell
     }
     
     func updatePlayState(isPlaying: Bool, url: String?) {
@@ -121,10 +131,12 @@ class HistoryTC: UITableViewCell {
     
     @objc func playerDidFinishPlaying() {
         playBtn.setImage(ImageName.playbutton, for: .normal)
-        isPlaying = false
-        playerView.progress = 1.0
-        playerView.updateWithLevel(0.0)
-        playerView.setNeedsDisplay()
+          isPlaying = false
+          playerView.progress = 1.0
+          playerView.updateWithLevel(0.0)
+          playerView.setNeedsDisplay()
+
+        FinishPlayingdelegate?.didFinishPlaying(at: playBtn.tag)
     }
 
     private func updateTimeDisplay() {

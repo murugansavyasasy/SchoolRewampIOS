@@ -20,7 +20,7 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var selectGroupsDropDown: UIView!
     @IBOutlet weak var selectStandardDropDown: UIView!
     @IBOutlet weak var selectSubject: UIView!
-   
+    
     @IBOutlet weak var tableHeight: NSLayoutConstraint!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var noRecordLbl: UILabel!
@@ -57,7 +57,7 @@ class RecipientVc: UIViewController{
                 UserDefaultFileManager.get_staff_Details()?.school_name,
                 for: .normal
             )
-       
+        
         configureRecipientTabs()
         
         if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
@@ -68,7 +68,7 @@ class RecipientVc: UIViewController{
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
         
-       
+        
         applyShadowAndCornerRadius(to: selectStandardDropDown)
         applyShadowAndCornerRadius(to: selectSubject)
         selectSubject.isHidden = true
@@ -158,32 +158,22 @@ class RecipientVc: UIViewController{
     }
     
     @IBAction func send(_ sender: UIButton) {
-        
         print("selectedId : \(array_selectedId)")
-        
-        
-        
         guard !array_selectedId.isEmpty else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_target,
-                    on: self
-                )
-                return
-            }
-
-            switch screenType.staffSelectedMenuId {
-            case Menu_id.communicationMenuId:
-                SendingCommunicationFlow()
-
-            case Menu_id.homeWorkMenuId:
-                handleHomeworkFlow()
-
-            default:
-                print("Unhandled menu ID: \(screenType.staffSelectedMenuId)")
-            }
-        
-        
+            alert.showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Choose_any_target,
+                on: self)
+            return
+        }
+        switch screenType.staffSelectedMenuId {
+        case Menu_id.communicationMenuId:
+            SendingCommunicationFlow()
+        case Menu_id.homeWorkMenuId:
+            handleHomeworkFlow()
+        default:
+            print("Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+        }
     }
     
     private func handleHomeworkFlow() {
@@ -194,7 +184,7 @@ class RecipientVc: UIViewController{
     private func SendingCommunicationFlow() {
         let message = AlertstringFile.AreYouSureYouWantToProceed + "\(array_selectedId.count)"
         let title = AlertstringFile.Alert_title
-
+        
         alert.showAlertCancel(
             title: title,
             message: message,
@@ -205,10 +195,8 @@ class RecipientVc: UIViewController{
                 switch ScreenType {
                 case screenType.communication_text:
                     sendtextmessage_communication()
-
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     uploadAndSendVoiceMessage(url : user_inputs.voice_link)
-
                 default:
                     print("Unhandled communication screen type: \(ScreenType)")
                 }
@@ -224,7 +212,6 @@ class RecipientVc: UIViewController{
             print("Invalid audio URL.")
             return
         }
-
         AWSUploadManager.shared.uploadFileToAWS(
             file: audioURL,
             bucketPath: "uploads/audio/",
@@ -245,7 +232,7 @@ class RecipientVc: UIViewController{
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
-//        vc.standard_sectionlabel =
+        //        vc.standard_sectionlabel =
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -258,8 +245,9 @@ class RecipientVc: UIViewController{
             return
         }
         let selectedTitle = cv_itemsarry[segment_selected_index ?? 0]
-
+        
         switch selectedTitle {
+            
         case recipeint_tabBarName.Entier_School:
             target_type = TargetTypes.school
             circular_types =  circular_type.school
@@ -267,6 +255,7 @@ class RecipientVc: UIViewController{
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
+            
         case recipeint_tabBarName.Group:
             target_type = TargetTypes.group
             circular_types =  circular_type.group
@@ -275,7 +264,7 @@ class RecipientVc: UIViewController{
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-
+            
         case recipeint_tabBarName.Standard:
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
@@ -284,7 +273,7 @@ class RecipientVc: UIViewController{
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
-
+            
         case recipeint_tabBarName.Section_Student:
             target_type = TargetTypes.section
             circular_types =  circular_type.section
@@ -294,7 +283,7 @@ class RecipientVc: UIViewController{
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
-
+            
         case recipeint_tabBarName.Staff:
             target_type = TargetTypes.staff
             circular_types =  circular_type.staff
@@ -302,7 +291,7 @@ class RecipientVc: UIViewController{
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
-
+            
         default:
             print("Unhandled tab selection: \(selectedTitle)")
         }
@@ -403,27 +392,27 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             cell.cellLabel.text = groupDetails?[indexPath.row].name
             if let select = groupDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                    ImageName.uncheckedSquares
+                ImageName.uncheckedSquares
             }
             
         case recipeint_tabBarName.Standard:
             cell.cellLabel.text = standardDetails?[indexPath.row].name
             if let select = standardDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                    ImageName.uncheckedSquares
+                ImageName.uncheckedSquares
             }
         case recipeint_tabBarName.Section_Student:
             cell.cellLabel.text = sectionsDetails?[indexPath.row].name
             if let select = sectionsDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                    ImageName.uncheckedSquares
+                ImageName.uncheckedSquares
             }
             
         case recipeint_tabBarName.Staff:
             cell.cellLabel.text = staffDetails?[indexPath.row].name
             if let select = staffDetails?[indexPath.row].isSelect {
                 cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                    ImageName.uncheckedSquares
+                ImageName.uncheckedSquares
             }
             
         default:
@@ -628,35 +617,35 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 result:Result <GetStafflistSuc,
                 Error>
             ) in
-            switch result {
-            case .success(let successMessage):
-                if successMessage.status == true{
-                    DispatchQueue.main.async { [self] in
-                        tv.isHidden = false
-                        staffDetails = successMessage.data
-                        if var students = staffDetails {
-                            for i in students.indices {
-                                students[i].isSelect = false
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            tv.isHidden = false
+                            staffDetails = successMessage.data
+                            if var students = staffDetails {
+                                for i in students.indices {
+                                    students[i].isSelect = false
+                                }
+                                staffDetails = students
                             }
-                            staffDetails = students
+                            tv.reloadData()
                         }
-                        tv.reloadData()
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            selectSubject.isHidden = true
+                            tv.isHidden = true
+                            noRecordLbl.text = successMessage.message
+                        }
                     }
-                }else{
-                    DispatchQueue.main.async { [self] in
-                        selectSubject.isHidden = true
-                        tv.isHidden = true
-                        noRecordLbl.text = successMessage.message
-                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
             }
-        }
         
     }
     func getSubjectListAPI(_ id:String){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list + "?section_id=\(id)", parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: ["section_id": id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
@@ -694,12 +683,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
-                 
-                   send_textmessageStringFile.description : user_inputs.title,
-                   send_textmessageStringFile.message : user_inputs.description,
-                   send_textmessageStringFile.target_code: array_selectedId,
-                   send_textmessageStringFile.target_type: target_type ?? 0
-                 
+                
+                send_textmessageStringFile.description : user_inputs.title,
+                send_textmessageStringFile.message : user_inputs.description,
+                send_textmessageStringFile.target_code: array_selectedId,
+                send_textmessageStringFile.target_type: target_type ?? 0
+                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>

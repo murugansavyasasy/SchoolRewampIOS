@@ -587,7 +587,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         print("tokenefrfrdfrfdx",staffDetails?.access_token ?? "")
        
         APIService.shared
-            .makeApi(url:  ServiceUrl.get_dashboard_details + "?member_type=staff", parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+            .makeApi(url:  ServiceUrl.get_dashboard_details, parameters: ["member_type" :"staff"] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
                 result : Result<DashboardResponse,
                 Error>
             ) in

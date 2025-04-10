@@ -235,7 +235,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     func recipient_get_student_list(selected_sectionId: String){
         APIService.shared
-            .makeApi(url: ServiceUrl.recipient_get_student_list + "?section_id=\(selected_sectionId)", parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: ["section_id" : selected_sectionId], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <GetStudentlistSuc,
                 Error>
             ) in
