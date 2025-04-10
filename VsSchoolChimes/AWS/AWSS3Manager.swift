@@ -210,6 +210,7 @@ class AWSUploadManager {
         file: Any,
         bucketPath: String,
         bucketName: String,
+        progressHandler: ((Double) -> Void)? = nil,
         completion: @escaping (String?) -> Void
     ) {
         var fileURL: URL?

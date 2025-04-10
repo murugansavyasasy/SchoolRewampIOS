@@ -285,10 +285,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         MenuRedirect.senderHomeWorkNavigate(from: self)
     }
     @IBAction func seeAllShow(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        seeAllButton.setTitle(!sender.isSelected ? "See Less" : "See All", for: .normal)
+        isShowingAll.toggle()
+        seeAllButton.setTitle(!isShowingAll ? "See Less" : "See All", for: .normal)
         
-        if sender.isSelected {
+        if isShowingAll {
             // Collapse back to show only the first 9 items
             if let menuDetails = menu_details {
                 filteredMenu_details = Array(menuDetails.prefix(9))

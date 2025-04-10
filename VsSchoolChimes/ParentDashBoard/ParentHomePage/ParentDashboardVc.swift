@@ -318,11 +318,10 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         }
     }
     @IBAction func seeAllShow(_ sender: UIButton) {
-        sender.isSelected.toggle()
-           seeAllButton.setTitle(!sender.isSelected ? "See Less" : "See All", for: .normal)
+        isShowingAll.toggle()
+           seeAllButton.setTitle(!isShowingAll ? "See Less" : "See All", for: .normal)
            
-           if sender.isSelected {
-               // Collapse back to show only the first 9 items
+           if isShowingAll{
                if let menuDetails = menu_details {
                    filteredMenu_details = Array(menuDetails.prefix(9))
                    if filteredMenu_details?.count ?? 0 > 5 {

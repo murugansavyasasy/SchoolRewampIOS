@@ -65,7 +65,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var loadingLabel: UILabel?
     var backgroundView: UIView?
-    
+    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     override func viewDidLoad() {
         super.viewDidLoad()
         //        if #available(iOS 15.0, *) {
@@ -404,26 +405,35 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Assign the attributed string to the label
         customDateLbl.attributedText = attributedString
     }
-    
-    //    let vc = RecipientVc(nibName: nil, bundle: nil)
-    //    vc.ScreenType = screenType.isHomeWork
-    //    vc.modalPresentationStyle = .fullScreen
-    //    present(vc, animated: true)
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        
-        //        var uploadedImageURLs: [String] = []
-        //            let dispatchGroup = DispatchGroup()
-        //
-        //            for image in selectedImages {
-        //                AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
-        //                    if let url = url {
-        //                        uploadedImageURLs.append(url)
-        //                    }
-        //                }
-        //            }
+        if isStaff(){
+            let vc = SchoolListVC(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }else{
+            let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
         uploadSelectedImages()
     }
+    
+    func isStaff() -> Bool {
+        if (staffDetailsCount?.count ?? 0 > 1) {
+            if staff_role == PriorityType.is_principal ||
+                staff_role == PriorityType.is_grouphead ||
+                staff_role == PriorityType.is_admin {
+                return true
+            } else {
+                
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+
     @available(iOS 15.0, *)
     func uploadSelectedImages() {
         guard !selectedImages.isEmpty else { return }
