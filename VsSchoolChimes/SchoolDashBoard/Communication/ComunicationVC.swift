@@ -160,24 +160,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
         else{
             isEmergencyVoice = 0
-            
             enableDisable()
-            
         }
-        
-        
-        
-        
         
         
         if staffDetailsCount?.count ?? 0 > 1 {
             TxtMsgSendBtn.setTitle("Next", for: .normal)
             TxtMsgSendBtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
-            
         }else{
             TxtMsgSendBtn.setTitle("Send", for: .normal)
             TxtMsgSendBtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
-            
         }
         
         
@@ -204,7 +196,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             staff_role == PriorityType.is_principal || VoiceHistory != nil || TextHistory != nil{
             emengencyCall.isHidden = false
             EnableCallLbl.isHidden = false
-            
             staffDetails = staffDetailsCount?.first
             
         } else {
@@ -222,7 +213,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         else{
             isEmergencyVoice = 2
             enableDisable()
-            
         }
         
     }
@@ -252,20 +242,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     user_inputs.start_time = fromTime.titleLabel?.text ?? ""
                     user_inputs.end_time = toTime.titleLabel?.text ?? ""
                 }else{
-                    alert
-                        .showAlert(
-                            title: "",
-                            message: AlertstringFile.select_date,
-                            on: self
-                        )
+                    alert.showAlert(title: "",message: AlertstringFile.select_date,on: self)
                 }
-                
             }
-            
-            
             user_inputs.file_name = "file"
-            
-            
             recienpient_validation(isVoice : true)
         }
         else{
@@ -273,8 +253,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 .showAlert(
                     title: "",
                     message: AlertstringFile.voice_or_title_is_required,
-                    on: self
-                )
+                    on: self)
         }
         
     }

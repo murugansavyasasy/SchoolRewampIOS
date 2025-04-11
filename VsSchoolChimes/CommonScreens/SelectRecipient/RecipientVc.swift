@@ -840,7 +840,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     on: self
                                 ) {
                                     self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-                                    
                                 }
                             
                         }
