@@ -16,8 +16,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var listTable: UITableView!
    
     var screen_type : Int?
-    var isEmergency : Int?
-    var isNoticeBoard : Int?
+    var isEmergency : Int = 1
+    var isNoticeBoard : Int = 1
     
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     let alert = CustomAlert()
@@ -33,9 +33,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         target_type = TargetTypes.school
         sendBtnName.isHidden = true
-        if (isEmergency == 1 || isNoticeBoard == 1){
+        if (isEmergency == screen_type || isNoticeBoard == screen_type){
             segmentName.isHidden = true
-            segmentName.selectedSegmentIndex = 0
+            segmentName.selectedSegmentIndex = 1
             sendBtnName.isHidden = false
         }
         for i in 0..<(school_details?.count ?? 0) {
