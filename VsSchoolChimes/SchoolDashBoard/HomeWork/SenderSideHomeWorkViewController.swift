@@ -63,19 +63,16 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let maxHeight: CGFloat = 300
     var homeWorkList:[Homework]?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
-    var loadingLabel: UILabel?
-    var backgroundView: UIView?
-    
+    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var sectionsDetails: [sectionsDetail]?
+    var standardDetails: [StandardDetail]?
+    var sectionList = [String]()
+    var standerdList = [String]()
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        if #available(iOS 15.0, *) {
-        //            showLottieProgressLoader()
-        //            updateLottieProgress(to: 72)
-        //            DispatchQueue.main.asyncAfter(deadline: .now() + 8.0) {
-        //            }
-        //
-        //        }
-        
+        selectDate()
+        getStandardsAPI()
         BackBtn.applyBackButton()
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
@@ -114,7 +111,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         ComposeHomeworkView.alpha = 1
         ReportView.isHidden = true
         ReportView.alpha = 0
-        
+        calenderHeight.constant = 0
         imageSelection()
     }
     
@@ -127,10 +124,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     deinit {
-        // Remove observers
-        //        NotificationCenter.default.removeObserver(self)
-        
-        
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -187,94 +180,78 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Create a UIDatePicker
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
-        // Use inline display style for iOS 14+
-        if #available(iOS 14.0, *) {
-            datePicker.preferredDatePickerStyle = .inline
-        }
-        // Set maximum date to today
+        datePicker.preferredDatePickerStyle = .inline
+
         datePicker.maximumDate = Date()
-        // Calculate minimum date (30 days before today)
         let calendar = Calendar.current
         if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
             datePicker.minimumDate = thirtyDaysAgo
         }
-        
-        // Scale down the entire calendar
-        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65) // Adjust scaling factors
-        
-        // Set frame and center it in the container view
+        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65)
         datePicker.frame = CalendarView.bounds
         datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        // Add the date picker to the container view
         CalendarView.addSubview(datePicker)
-        
-        // Handle date selection
         datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
     }
     
     @objc func dateChanged(_ sender: UIDatePicker) {
-        
+        selectDate(date: sender.date)
+    }
+    func selectDate(date: Date = Date()) {
         formatter.dateFormat = "EEE d MMM yyyy"
-        print("Selected date: \(formatter.string(from: sender.date))")
+        let label = formatter.string(from: date)
         
-        let label = formatter.string(from: sender.date)
-        
-        //   DateViewheight.constant = 25
         calenderHeight.constant = 0
         CalenderViewTodateBtnTop.constant = 0
         CalendarView.isHidden = true
         dateBtn.isHidden = false
         dateBtn.setTitle(label, for: .normal)
         dateBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        // calenderHeight.constant = 260
+
         customdate.dateFormat = "EEE d"
-        let attributedLbl = customdate.string(from: sender.date)
+        let attributedLbl = customdate.string(from: date)
         setcustomDate(attributedLbl: attributedLbl)
     }
-    
+
     @IBAction func SelectStandard() {
         // Setup dropdown anchor and data source
-        standardDropdown.anchorView = StandardView
-        standardDropdown.dataSource = ["8th", "9th", "10th", "11th"]
-        standardDropdown.bottomOffset = CGPoint(x: 0, y: StandardView.bounds.height)
+           standardDropdown.anchorView = StandardView
+           standardDropdown.dataSource = standerdList
+           standardDropdown.bottomOffset = CGPoint(x: 0, y: StandardView.bounds.height)
+           standardDropdown.direction = .bottom
+           standardDropdown.show()
+
+           standardDropdown.selectionAction = { [weak self] (index: Int, item: String) in
+               guard let self = self else { return }
+               guard let selectedSections = standardDetails?[index].sections else { return }
+               sectionsDetails = selectedSections
+               sectionList.removeAll()
+               sectionList.append(contentsOf: selectedSections.compactMap { $0.name })
+               SectionLbl.text = selectedSections.first?.name ?? ""
+               if let label = self.StandardView.subviews.compactMap({ $0 as? UILabel }).first {
+                   label.text = item
+               }
+
+               self.CalendarView.isHidden = true
+               self.calenderHeight.constant = 0
+               self.CalenderViewTodateBtnTop.constant = 0
+           }
         
-        // Show the dropdown
-        standardDropdown.show()
         
-        // Handle the selection
-        standardDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-            guard let self = self else { return } // Safely unwrap self
-            
-            print("Selected item: \(item) at index: \(index)")
-            
-            // Update the label inside the standardView
-            if let label = self.StandardView.subviews.compactMap({ $0 as? UILabel }).first {
-                label.text = item
-            }
-            
-            // Perform additional actions when ID == 1
-            
-            self.CalendarView.isHidden = true
-            self.calenderHeight.constant = 0
-            self.CalenderViewTodateBtnTop.constant = 0
-            
-            
-        }
     }
     
     @IBAction func SelectSection() {
         SectionDropdown.anchorView = SectionView
-        SectionDropdown.dataSource = ["A", "B", "C", "D"]
+        SectionDropdown.dataSource = sectionList
         SectionDropdown.show()
         SectionDropdown.bottomOffset = CGPoint(x: 0, y: SectionView.bounds.height)
-        
-        SectionDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-            guard let self = self else { return }
-            print("Selected item: \(item) at index: \(index)")
+        standardDropdown.direction = .bottom
+        SectionDropdown.selectionAction = { [self] (index: Int, item: String) in
             
-            // Update the label inside the UIView
-            if let label = self.SectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+            if index < sectionsDetails?.count ?? 0{
+                GetHomeWorkReport(sectionsDetails?[index].id, dateBtn.titleLabel?.text ?? "")
+            }
+            if let label = SectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
             }
             
@@ -282,23 +259,28 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             calenderHeight.constant = 0
             CalenderViewTodateBtnTop.constant = 0
             SearchBar.isHidden = false
-            self.TV.isHidden = false
-            self.TV.reloadData()
+            TV.isHidden = false
+            TV.reloadData()
         }
     }
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            // handle camera image
-            selectedImages.append(image)
-            uploadAttachmentView.imageCollectionview.reloadData()
-        }
-        
-        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            selectedImages.append(contentsOf: images)
             if url != nil{
                 selectedImages.removeAll()
                 url = nil
             }
+            selectedImages.append(image)
+            user_inputs.selectedFileType = "IMAGE"
+            uploadAttachmentView.imageCollectionview.reloadData()
+        }
+        
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
+            }
+            user_inputs.selectedFileType = "IMAGE"
+            selectedImages.append(contentsOf: images)
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -306,6 +288,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             // handle picked PDF
             selectedImages.removeAll()
             url = data.absoluteURL
+            user_inputs.selectedFileType = "pdf"
             selectedImages.append(ImageName.pdf!)
             uploadAttachmentView.imageCollectionview.reloadData()
         }
@@ -366,7 +349,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     func setcustomDate(attributedLbl: String) {
-        // Split the input string into weekday and day components
         let components = attributedLbl.split(separator: " ")
         guard components.count == 2,
               let weekday = components.first,
@@ -376,15 +358,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
         
         // Fonts for different parts
-        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-        //let weekdayFont =  UIFont(name: "Poppins-Medium", size: 12)
-        //let dayFont =  UIFont(name: "Poppins-Medium", size: 22)
-        let dayFont = UIFont.boldSystemFont(ofSize: 22) // Larger font for date ex : 24
-        
-        // Create an attributed string
+        let weekdayFont = UIFont.systemFont(ofSize: 12)
+        let dayFont = UIFont.boldSystemFont(ofSize: 22)
         let attributedString = NSMutableAttributedString()
-        
-        // Add the weekday (e.g., "Mon")
         attributedString.append(NSAttributedString(string: "\(weekday)\n", attributes: [
             .font: weekdayFont,
             .foregroundColor: UIColor.gray
@@ -404,26 +380,44 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Assign the attributed string to the label
         customDateLbl.attributedText = attributedString
     }
-    
-    //    let vc = RecipientVc(nibName: nil, bundle: nil)
-    //    vc.ScreenType = screenType.isHomeWork
-    //    vc.modalPresentationStyle = .fullScreen
-    //    present(vc, animated: true)
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        
-        //        var uploadedImageURLs: [String] = []
-        //            let dispatchGroup = DispatchGroup()
-        //
-        //            for image in selectedImages {
-        //                AWSUploadManager.shared.uploadFileToAWS(file: image, bucketPath: "uploads/images/") { url in
-        //                    if let url = url {
-        //                        uploadedImageURLs.append(url)
-        //                    }
-        //                }
-        //            }
-        uploadSelectedImages()
+        if TitleTxtfield.text != nil && DetailsTxtview.text != nil && selectedImages.count != 0{
+            user_inputs.title = TitleTxtfield.text ?? ""
+            user_inputs.description = DetailsTxtview.text ?? ""
+            user_inputs.selectedImg = selectedImages
+            
+            
+            if isStaff(){
+                let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                vc.screen_type = Menu_id.homeWorkMenuId
+                present(vc, animated: true)
+            }else{
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.ScreenType = Menu_id.homeWorkMenuId
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+        }
+
     }
+    
+    func isStaff() -> Bool {
+        if (staffDetailsCount?.count ?? 0 > 1) {
+            if staff_role == PriorityType.is_principal ||
+                staff_role == PriorityType.is_grouphead ||
+                staff_role == PriorityType.is_admin {
+                return true
+            } else {
+                
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+
     @available(iOS 15.0, *)
     func uploadSelectedImages() {
         guard !selectedImages.isEmpty else { return }
@@ -619,77 +613,125 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 @available(iOS 14.0, *)
 extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return /*homeWorkList?.count ?? 0*/ 4
+        return homeWorkList?.count ?? 0
     }
     
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//      
+//            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+//            
+//            cell.cellview.changeHeightAndAnimate(40, 150, 100, 80, top: 5)
+//            cell.ishomework = true
+//            cell.CVHeight.constant = 120
+//            cell.pagecontrollerheight.constant = 26
+//            cell.pagecontroller.isHidden = false
+//            cell.SelectBtn.isHidden = true
+//        cell.HomeworkSubjectLbl.text = homeWorkList?[indexPath.row].subject_name
+//        cell.TitleLbl.text = homeWorkList?[indexPath.row].topic ?? ""
+//        if let urls = homeWorkList?[indexPath.row].file_path{
+//            cell.loadImage(urls:urls)
+//        }
+//        cell.dicriptContent.configure(text: homeWorkList?[indexPath.row].content ?? "", isExpanded: cell.dicriptContent.isExpanded)
+//        cell.dicriptContent.onTap = {
+//            cell.dicriptContent.isExpanded.toggle()
+//            tableView.reloadRows(at: [indexPath], with: .automatic)
+//        }
+//
+////        cell.dicriptContent.text = "d,hsebduxgbuawusdbzxbwsbdzxycwasdzvxfcaysvdzxyvcywvsD"
+////            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+//            cell.delegate = self
+////            cell.dicriptContent.tag = indexPath.row
+////            cell.dicriptContent.isUserInteractionEnabled = true
+////            cell.dicriptContent.addGestureRecognizer(tapGesture)
+//            
+//            return cell
+////        }
+////        else if indexPath.row == 1 {
+////            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.HomeworkreportTV, for: indexPath) as! HomeworkreportTV
+////            
+////            cell.HomeworkTitleLbl.text = "Write Assignment"
+////            cell.DescriptionLbl.attributedText = descript(for:"Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality." , expanded: false)
+////            // cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
+////            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+////            // cell.delegate = self
+////            cell.DescriptionLbl.tag = indexPath.row // Tag the label with the row index
+////            cell.DescriptionLbl.isUserInteractionEnabled = true
+////            cell.DescriptionLbl.addGestureRecognizer(tapGesture)
+////            cell.SubjectLbl.text = "Tamil"
+////            return cell
+////        }
+////        else {
+////            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+////            
+////            cell.cellview.changeHeightAndAnimate(40,0, 31, 80, top: 5)
+////            cell.ishomework = true
+////            cell.pagecontrollerheight.constant = 0
+////            cell.pagecontroller.isHidden = true
+////            
+////            // cell.datelbl.isHidden = true
+////            cell.pinImage.isHidden = true
+////            cell.Pinview.isHidden = true
+////            cell.SelectBtn.isHidden = true
+////            cell.CVHeight.constant = 0
+////            cell.HomeworkSubjectLbl.text = "Write Assignment"
+////            cell.TitleLbl.text = "Tamil"
+////            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
+////            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+////            cell.delegate = self
+////            cell.dicriptContent.tag = indexPath.row
+////            cell.dicriptContent.isUserInteractionEnabled = true
+////            cell.dicriptContent.addGestureRecognizer(tapGesture)
+////            return cell
+////        }
+//    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
         
-        if indexPath.row == 0 {
-            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-            
-            cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
-            cell.ishomework = true
-            cell.CVHeight.constant = 120
-            cell.pagecontrollerheight.constant = 26
-            cell.pagecontroller.isHidden = false
-            cell.SelectBtn.isHidden = true
-            cell.HomeworkSubjectLbl.text = "Tamil"
-            cell.TitleLbl.text = "Write Assignment"
-            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-            cell.delegate = self
-            cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
-            cell.dicriptContent.isUserInteractionEnabled = true
-            cell.dicriptContent.addGestureRecognizer(tapGesture)
-            
-            return cell
+        cell.cellview.changeHeightAndAnimate(40, 150, 100, 80, top: 5)
+        cell.ishomework = true
+        cell.CVHeight.constant = 120
+        cell.pagecontrollerheight.constant = 26
+        cell.pagecontroller.isHidden = false
+        cell.SelectBtn.isHidden = true
+        
+        let data = homeWorkList?[indexPath.row]
+        
+        cell.HomeworkSubjectLbl.text = data?.subject_name
+        cell.TitleLbl.text = data?.topic ?? ""
+        
+        if let urls = data?.file_path {
+            cell.loadImage(urls: urls)
         }
-        else if indexPath.row == 1 {
-            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.HomeworkreportTV, for: indexPath) as! HomeworkreportTV
-            
-            cell.HomeworkTitleLbl.text = "Write Assignment"
-            cell.DescriptionLbl.attributedText = descript(for:"Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality." , expanded: false)
-            // cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-            // cell.delegate = self
-            cell.DescriptionLbl.tag = indexPath.row // Tag the label with the row index
-            cell.DescriptionLbl.isUserInteractionEnabled = true
-            cell.DescriptionLbl.addGestureRecognizer(tapGesture)
-            cell.SubjectLbl.text = "Tamil"
-            return cell
+
+//        // Configure expandable content
+//        cell.dicriptContent.configure(text: "hjdsbfausdu asyvydvwyasvdyjzvcj tyasvzcvw vesdavxj", isExpanded: cell.dicriptContent.isExpanded)
+//        cell.dicriptContent.onTap = {
+//            cell.dicriptContent.isExpanded.toggle()
+//            tableView.reloadRows(at: [indexPath], with: .automatic)
+//        }
+        cell.dicriptContent.configure(
+            text: homeWorkList?[indexPath.row].content ?? "",
+            isExpanded: cell.dicriptContent.isExpanded
+        )
+
+        cell.dicriptContent.onTap = {
+            cell.dicriptContent.isExpanded.toggle()
+            tableView.beginUpdates()
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
         }
-        else {
-            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-            
-            cell.cellview.changeHeightAndAnimate(40,0, 31, 80, top: 5)
-            cell.ishomework = true
-            cell.pagecontrollerheight.constant = 0
-            cell.pagecontroller.isHidden = true
-            
-            // cell.datelbl.isHidden = true
-            cell.pinImage.isHidden = true
-            cell.Pinview.isHidden = true
-            cell.SelectBtn.isHidden = true
-            cell.CVHeight.constant = 0
-            cell.HomeworkSubjectLbl.text = "Write Assignment"
-            cell.TitleLbl.text = "Tamil"
-            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-            cell.delegate = self
-            cell.dicriptContent.tag = indexPath.row
-            cell.dicriptContent.isUserInteractionEnabled = true
-            cell.dicriptContent.addGestureRecognizer(tapGesture)
-            return cell
-        }
+
+
+        return cell
     }
-    
+
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
         let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment."
+        let fullDescription = label.text
         let isExpanded = label.numberOfLines == 0
         label.numberOfLines = isExpanded ? 3 : 0
-        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
+        label.attributedText = descript(for: fullDescription ?? "", expanded: !isExpanded)
         TV.beginUpdates()
         TV.endUpdates()
     }
@@ -720,6 +762,9 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
     
     func didTapButton(title: String, content: String, items: [String]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }
 
@@ -811,10 +856,11 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         let rect = view.convert(view.bounds, to: scrollView)
         scrollView.scrollRectToVisible(rect, animated: true)
     }
-    func GetHomeWorkList(){
+    func GetHomeWorkReport(_ sectionId:String?,_ dates:String?){
+        let date = ConvertDateStringSmart(dates)
         APIService.shared
-            .makeApi(url:  ServiceUrl.comm_homework_get_homework_report , parameters: ["member_type" : "parent"] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
-                result : Result<DashboardResponse,
+            .makeApi(url:  ServiceUrl.comm_homework_get_homework_report , parameters: ["section_id":sectionId ?? "","date":date] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
+                result : Result<HomeworkResponse,
                 Error>
             ) in
                 
@@ -823,10 +869,13 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
                 case.success(let succesmessage) :
                     if succesmessage.status == true {
                         DispatchQueue.main.async { [self] in
+                            homeWorkList = succesmessage.data
+                            TV.reloadData()
                         }
                     }else {
-                        DispatchQueue.main.async {
-                            
+                        DispatchQueue.main.async { [self] in
+                            homeWorkList = succesmessage.data
+                            TV.reloadData()
                         }
                     }
                     
@@ -839,37 +888,136 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
                 
             }
     }
-    
-    func showImageLoadingProgress(total: Int) {
-        backgroundView = UIView(frame: view.bounds)
-        backgroundView?.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        
-        loadingLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 60))
-        loadingLabel?.center = backgroundView!.center
-        loadingLabel?.textAlignment = .center
-        loadingLabel?.numberOfLines = 2
-        loadingLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        loadingLabel?.textColor = .white
-        loadingLabel?.text = "Loading images: 0 / \(total)"
-        
-        if let label = loadingLabel {
-            backgroundView?.addSubview(label)
+    func getStandardsAPI(){
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                print("successsuccess",successMessage.data)
+                
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+ 
+                        standardDetails = successMessage.data
+                        standardDetails?.enumerated().forEach { index, student in
+                            standerdList.append(student.name ?? "")
+                        }
+                        if let sections = standardDetails?.first?.sections{
+                            sectionsDetails = sections
+                            for j in 0..<sections.count {
+                                sectionList.append(sectionsDetails?[j].name ?? "")
+                            }
+                        }
+                        GetHomeWorkReport(standardDetails?.first?.sections?.first?.id, dateBtn.titleLabel?.text ?? "")
+                        StandardLbl.text = standardDetails?.first?.name
+                        SectionLbl.text = standardDetails?.first?.sections?.first?.name ?? ""
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
         
-        if let bgView = backgroundView {
-            view.addSubview(bgView)
+    }
+    
+}
+
+class ExpandableLabel: UILabel {
+    
+    // MARK: - Public Properties
+    var isExpanded: Bool = false
+    var onTap: (() -> Void)?
+    
+    // MARK: - Private Properties
+    private let maxLines = 3
+    private var fullText: String = ""
+    
+    // MARK: - Configure Label
+    func configure(text: String, isExpanded: Bool) {
+        self.fullText = text
+        self.isExpanded = isExpanded
+        self.numberOfLines = isExpanded ? 0 : maxLines
+        self.attributedText = createAttributedText(text: text)
+        addTapGesture()
+    }
+    
+    // MARK: - Create Attributed Text
+    private func createAttributedText(text: String) -> NSAttributedString {
+        let suffix = isExpanded ? " See Less" : "... See More"
+        
+        // Expanded state – show full text
+        if isExpanded || !doesExceedThreeLines(text: text + suffix) {
+            return NSAttributedString(string: text, attributes: [.font: font!])
+        }
+        
+        // Truncate and append suffix
+        var displayText = text
+        while doesExceedThreeLines(text: displayText + suffix), displayText.count > 10 {
+            displayText = String(displayText.dropLast())
+        }
+        
+        let finalText = displayText + suffix
+        let attributed = NSMutableAttributedString(string: finalText, attributes: [.font: font!])
+        let tappableRange = (finalText as NSString).range(of: isExpanded ? "See Less" : "See More")
+        
+        attributed.addAttributes([
+            .foregroundColor: UIColor.systemBlue,
+            .font: UIFont.boldSystemFont(ofSize: font!.pointSize)
+        ], range: tappableRange)
+        
+        return attributed
+    }
+    
+    // MARK: - Check If Text Exceeds 3 Lines
+    private func doesExceedThreeLines(text: String) -> Bool {
+        let width = self.preferredMaxLayoutWidth > 0 ? self.preferredMaxLayoutWidth : UIScreen.main.bounds.width - 40
+        let size = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let bounding = NSString(string: text).boundingRect(
+            with: size,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: self.font!],
+            context: nil
+        )
+        return bounding.height > font.lineHeight * CGFloat(maxLines)
+    }
+    
+    // MARK: - Add Tap Gesture
+    private func addTapGesture() {
+        isUserInteractionEnabled = true
+        gestureRecognizers?.forEach { self.removeGestureRecognizer($0) }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tap)
+    }
+    
+    // MARK: - Handle Tap
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = self.attributedText?.string else { return }
+        let nsText = text as NSString
+        let tappableText = isExpanded ? "See Less" : "See More"
+        let tappableRange = nsText.range(of: tappableText)
+        
+        let tapLocation = gesture.location(in: self)
+        let index = indexOfCharacter(at: tapLocation)
+        
+        if NSLocationInRange(index, tappableRange) {
+            onTap?()
         }
     }
     
-    func updateImageLoadingProgress(current: Int, total: Int) {
-        loadingLabel?.text = "Loading images: \(current) / \(total)"
+    // MARK: - Get Index of Character at Tap Point
+    private func indexOfCharacter(at point: CGPoint) -> Int {
+        guard let attributedText = self.attributedText else { return NSNotFound }
+        
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: self.bounds.size)
+        
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = numberOfLines
+        textContainer.lineBreakMode = lineBreakMode
+        
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
-    
-    func hideImageLoader() {
-        backgroundView?.removeFromSuperview()
-        backgroundView = nil
-        loadingLabel = nil
-    }
-    
-    
 }
