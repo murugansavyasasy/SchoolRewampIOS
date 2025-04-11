@@ -78,8 +78,10 @@ class RecipientVc: UIViewController{
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
+            segment_selected_index = 1
         }else{
             speficBtnName.isEnabled = false
+            selectStandardDropDown.isHidden = true
         }
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
@@ -89,7 +91,6 @@ class RecipientVc: UIViewController{
         applyShadowAndCornerRadius(to: selectSubject)
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
-        selectStandardDropDown.isHidden = true
         speficBtnName.backgroundColor = UIColor.gray
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectedSubject))
@@ -129,7 +130,7 @@ class RecipientVc: UIViewController{
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             speficBtnName.isHidden = true
             
-//            if (staffDetailsCount?.count ?? 0) > 1 {
+            if (staffDetailsCount?.count ?? 0) > 1 {
                 contentLbl.isHidden = true
                 cv_itemsarry = [
                     recipeint_tabBarName.Standard,
@@ -140,14 +141,15 @@ class RecipientVc: UIViewController{
                 target_type = TargetTypes.standard
                 circular_types =  circular_type.standard
                 getStandardsAPI()
-//            } else {
-//                cv_itemsarry = [
-//                    recipeint_tabBarName.Entier_School,
-//                    recipeint_tabBarName.Standard,
-//                    recipeint_tabBarName.Group
-//                ]
-//                tableHeight.constant = 0
-//            }
+            } else {
+                cv_itemsarry = [
+                    recipeint_tabBarName.Entier_School,
+                    recipeint_tabBarName.Standard,
+                    recipeint_tabBarName.Group,
+                    recipeint_tabBarName.Staff
+                ]
+                tableHeight.constant = 0
+            }
             
         default:
             print("Unhandled staff role")
@@ -331,7 +333,7 @@ class RecipientVc: UIViewController{
         case let images as [UIImage]:
             let total = images.count
             guard !images.isEmpty else {
-                print("❌ No images to upload.")
+                completion()
                 return
             }
 
