@@ -17,13 +17,13 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var contentLbl: UILabel!
     @IBOutlet weak var speficBtnName: UIButton!
     @IBOutlet weak var sendbtnName: UIButton!
-    @IBOutlet weak var selectGroupsDropDown: UIView!
     @IBOutlet weak var selectStandardDropDown: UIView!
     @IBOutlet weak var selectSubject: UIView!
     
     @IBOutlet weak var tableHeight: NSLayoutConstraint!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var noRecordLbl: UILabel!
+    @IBOutlet weak var acidamicYrDropView: UIView!
     
     var cv_itemsarry : [String] = []
     var dropDownArray = [String]()
@@ -52,6 +52,9 @@ class RecipientVc: UIViewController{
     let alert = CustomAlert()
     var circular_types : String?
     var subjectId : String?
+    var AcadimicYearDatas : [AcadimicYearData] = []
+    var accadimYr :[String] = []
+    let acidamicdrops = DropDown()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,6 +65,7 @@ class RecipientVc: UIViewController{
             )
         
         configureRecipientTabs()
+        getacadmicYr()
         
         if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
             speficBtnName.isHidden = true
@@ -74,14 +78,18 @@ class RecipientVc: UIViewController{
         
         applyShadowAndCornerRadius(to: selectStandardDropDown)
         applyShadowAndCornerRadius(to: selectSubject)
+        applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
         selectStandardDropDown.isHidden = true
-        selectGroupsDropDown.isHidden = true
         speficBtnName.backgroundColor = UIColor.gray
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectedSubject))
+        let acidmaciyrClick = UITapGestureRecognizer(target: self, action:
+                                                        #selector(academicYearDrop_action))
         selectStandardDropDown.addGestureRecognizer(tap2)
         selectSubject.addGestureRecognizer(tap3)
+        acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
+        
         
         let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
@@ -474,6 +482,27 @@ class RecipientVc: UIViewController{
         }
     }
     
+    @IBAction func academicYearDrop_action() {
+        accadimYr.removeAll()
+        for i in 0..<(AcadimicYearDatas.count) {
+            accadimYr.append(AcadimicYearDatas[i].year ?? "")
+        }
+        acidamicdrops.anchorView = acidamicYrDropView
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: acidamicYrDropView.bounds.height)
+        acidamicdrops.show()
+        
+        acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+            
+            if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.text = item
+            }
+            
+            
+        }
+        
+    }
 }
 
 
@@ -785,7 +814,46 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-    }   // MARK:   Listing  API END ===========================
+        
+    }
+    
+    func getacadmicYr(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+//                        listTable.isHidden = true
+                        AcadimicYearDatas = successMessage.data ?? []
+                        for i in 0..<(AcadimicYearDatas.count){
+                            if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                                    label.text = AcadimicYearDatas[i].year
+                                    break
+                                }
+                            }
+                        }
+                    }
+                }else{
+                    DispatchQueue.main.async { [self] in
+                      
+//                        listTable.isHidden = true
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
+    } // MARK:   Listing  API END ===========================
+    
+    
+    
+   
     
     
     
@@ -867,7 +935,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 send_voicemeassageStringFile.start_time : user_inputs.start_time,
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
                 send_voicemeassageStringFile.file_name : user_inputs.file_name,
-                send_voicemeassageStringFile.circular_type : circular_types
+                send_voicemeassageStringFile.circular_type : circular_types ?? ""
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,

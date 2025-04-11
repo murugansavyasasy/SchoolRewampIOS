@@ -64,7 +64,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var filterData : [Student]?
     var studentsDetails: [StudentDetails]?
     var selected_sectionID : String?
-    var selected_student : [Int] = []
+    var selected_student : [String] = []
     var ScreenType:Int?
     let alert = CustomAlert()
     var communicatio_textDetails :[String] = []
@@ -381,7 +381,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                                     
                                 }
                             
@@ -424,7 +424,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 send_voicemeassageStringFile.start_time : user_inputs.start_time,
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
                 send_voicemeassageStringFile.file_name : user_inputs.file_name,
-                send_voicemeassageStringFile.circular_type  : user_inputs.circular_type
+                send_voicemeassageStringFile.circular_type  : circular_type.student
                 
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
@@ -445,7 +445,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                                     
                                 }
                             
@@ -498,14 +498,10 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 cell.alphabetLbl.text = "" // Fallback for empty string
             }
             cell.AlphabetView.backgroundColor = backgroundColor
-            
-//            let isSelected = selectedRows[indexPath.row]
-//            
-//            cell.CheckBoxImgview.image = isSelected ? UIImage(named: "checked_Tick") : UIImage(named: "CheckCircle")
             cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
             
             if let select = studentsDetails?[indexPath.row].isSelect {
-                cell.CheckBoxImgview.image = select ? UIImage(named: "checkedSquare") : UIImage(named: "uncheckedSquare")
+                cell.CheckBoxImgview.image = select ? ImageName.checkedSquares: ImageName.uncheckedSquares
             }
             // Set visibility state
             cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
@@ -604,13 +600,27 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             
             if let id = studentsDetails?[indexPath.row].id {
                 if studentsDetails?[indexPath.row].isSelect == true {
-                    if !selected_student.contains(Int(id) ?? 0) {
-                        selected_student.append(Int(id) ?? 0)
+                    if !selected_student.contains(id) {
+                        selected_student.append(id)
                     }
                 } else {
-                    selected_student.removeAll(where: { $0 == Int(id) })
+                    selected_student.removeAll(where: { $0 == id })
                 }
             }
+            if indexPath.row < (studentsDetails?.count ?? 0) {
+                studentsDetails?[indexPath.row].isSelect?.toggle()
+                
+                if let id = studentsDetails?[indexPath.row].id {
+                    if studentsDetails?[indexPath.row].isSelect == true {
+                        if !selected_student.contains(id) {
+                            selected_student.append(id)
+                        }
+                    } else {
+                        selected_student.removeAll(where: { $0 == id })
+                    }
+                }
+            }
+            
             // Reload the specific row to update the checkbox image
             tableView.reloadRows(at: [indexPath], with: .none)
         }

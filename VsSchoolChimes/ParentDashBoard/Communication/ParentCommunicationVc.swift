@@ -287,10 +287,13 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
         let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = "Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1."
+        let fullDescription = label.text
         let isExpanded = label.numberOfLines == 0
         label.numberOfLines = isExpanded ? 3 : 0
-        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
+        label.attributedText = descript(
+            for: fullDescription ?? "",
+            expanded: !isExpanded
+        )
         tv.beginUpdates()
         tv.endUpdates()
     }

@@ -29,7 +29,8 @@ class TextHistoryTVCell: UITableViewCell {
         outerview.layer.shadowOpacity = 0.3
         outerview.layer.cornerRadius = 20
         sendBtn.layer.cornerRadius = 4
-        
+        MessageTitle.removeShimmer()
+        DateLabel.removeShimmer()
         DateLabel.setFont(style: .body, size: FontSize.BodySize)
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)

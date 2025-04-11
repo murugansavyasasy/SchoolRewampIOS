@@ -14,22 +14,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].description ?? ""
         
         if isScheduleSelected{
-            enabelScheduleView(isforward: true,
-                               voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "", title: VoiceHistory?[selectedIndex ?? 0].description ?? "")
+            enabelScheduleView(
+isforward: true,
+voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
+title: VoiceHistory?[selectedIndex ?? 0].description ?? "",
+durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0
+            )
         }else{
             enabelVoice_view(
                 isforward: true,
-                voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "", title: VoiceHistory?[selectedIndex ?? 0].description ?? "")
+                voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "", title: VoiceHistory?[selectedIndex ?? 0].description ?? "",durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0)
         }
         
         
     }
     
-    func didFinishPlaying(at index: Int) {
-            playIndex = nil
-            let indexPath = IndexPath(row: index, section: 0)
-            historytable.reloadRows(at: [indexPath], with: .none)
-        }
+
     
     var isKeyboardVisible = false
     var selectedDates: [Date] = [] // Store selected dates
@@ -130,6 +130,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var isEmergencyVoice : Int?
     var voiceRecordedDuration : Int?
     var ScheduleSelectedDate : [String] = []
+    
+      
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -243,9 +245,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                    user_inputs.start_time = ""
                    user_inputs.end_time = ""
                } else {
-                   user_inputs.schedule_date = ScheduleSelectedDate
-                   user_inputs.start_time = fromTime.titleLabel?.text ?? ""
-                   user_inputs.end_time = toTime.titleLabel?.text ?? ""
+                   if ScheduleSelectedDate.count != 0{
+                       let originalDates = ScheduleSelectedDate
+                       let convertedDates = convertDateStrings(dates: originalDates)
+                       ScheduleSelectedDate = convertedDates
+                       user_inputs.schedule_date = ScheduleSelectedDate
+                       user_inputs.start_time = fromTime.titleLabel?.text ?? ""
+                       user_inputs.end_time = toTime.titleLabel?.text ?? ""
+                   }else{
+                       alert
+                           .showAlert(
+                               title: "",
+                               message: AlertstringFile.select_date,
+                               on: self
+                           )
+                   }
+                  
                }
               
               
@@ -344,7 +359,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                         sendVoiceMessage_communication()
                     }
                     else{
+                        
                         let vc = RecipientVc(nibName: nil, bundle: nil)
+                        vc.ScreenType = screenType.non_emergencyvoice
                         vc.modalPresentationStyle = .fullScreen
                         present(vc, animated: true)
                     }
@@ -352,6 +369,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
                 else{
                     let vc = RecipientVc(nibName: nil, bundle: nil)
+                    vc.ScreenType = screenType.non_emergencyvoice
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 }
@@ -570,6 +588,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             }
         }
         
+  
         
         func uiUUpdate(){
             emengencyCall.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
@@ -852,7 +871,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
         
         //MARK: TEXT MESSAGE VIEW
-        func showTextMessageView() {
+    func showTextMessageView(isforwardtext:Bool) {
+        if !isforwardtext{
+            informationcontent.text = ""
+            TextMsgTittle.text = ""
+        }
             calanderOuter.isHidden = true
             // Hide the picker and Done button
             timePicker.isHidden = true
@@ -1220,7 +1243,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             @IBAction func backToHome(_ sender: UIButton) {
                 if tittlemessage.text == CommonStringFile.TextMessage.translated(){
-                    showTextMessageView()
+                    showTextMessageView(isforwardtext: false)
                     
                 }else{
                     showVoiceMessageView()
@@ -1237,15 +1260,29 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             
             @IBAction func voiceview(_ sender: Any) {
-                enabelVoice_view(isforward: false, voiceUrl: "", title: "")
+               
+                enabelVoice_view(
+                    isforward: false,
+                    voiceUrl: "",
+                    title: "",
+                    durations: 0
+                )
             }
     
     
-    func enabelVoice_view(isforward:Bool,voiceUrl:String,title:String){
+    func enabelVoice_view(
+        isforward:Bool,
+        voiceUrl:String,
+        title:String,
+        durations:Int
+    ){
         
         emengencyCall.isOn = false
+       
         if isforward{
-            
+            let duration = durations
+            let formatted = formatDuration(duration)
+            voiceTiming.text  = "00:00 / \(formatted)"
             updateEmergencyCallVisibility( staff_role)
             AudioPlayUrl = voiceUrl
             // UI updates (e.g., show player)
@@ -1285,6 +1322,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             calanderOuter.isHidden = true
         }else{
             updateEmergencyCallVisibility( staff_role)
+            recrdimg.image = ImageName.mic1
+            audioRecorder?.stop()
+            isRecording = false
+            recordingTimer?.invalidate()
+            recordingTimer = nil
+            deletRecoding()
+            voiceTiming.text  = "00:00 / 03:00"
             voiceTitleeTxt.text = title
             voiceBtn.backgroundColor = backgroundcolor
             textClickView.backgroundColor = .white
@@ -1311,7 +1355,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             doneButton.isHidden = true
             activeButton = nil
             calanderOuter.isHidden = true
-            
+           
         }
         
     }
@@ -1345,24 +1389,45 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
             }
             @IBAction func textviewshow(_ sender: Any) {
+                recrdimg.image = ImageName.mic1
+                audioRecorder?.stop()
+                isRecording = false
+                recordingTimer?.invalidate()
+                recordingTimer = nil
+                deletRecoding()
+                voiceTiming.text  = "00:00 / 03:00"
                 emengencyCall.isOn = false
                 updateEmergencyCallVisibility( staff_role)
-                showTextMessageView()
+                showTextMessageView(isforwardtext: false)
                 deletRecoding()
             }
             
             @IBAction func scheduleCall(_ sender: UIButton) {
-                enabelScheduleView(isforward: false, voiceUrl: "", title: "")
+                enabelScheduleView(
+                    isforward: false,
+                    voiceUrl: "",
+                    title: "",
+                    durations: 0
+                )
                 
             }
             
-    func enabelScheduleView(isforward:Bool,voiceUrl:String,title:String){
+    func enabelScheduleView(
+        isforward:Bool,
+        voiceUrl:String,
+        title:String,
+        durations:Int
+    ){
         
         emengencyCall.isOn = false
         
         if isforward{
             AudioPlayUrl = voiceUrl
             // UI updates (e.g., show player)
+            let duration = durations
+            let formatted = formatDuration(duration)
+            voiceTiming.text  = "00:00 / \(formatted)"
+            
             playerheight.constant = 60
             voiceStackview.isHidden = false
             dltbtn.isHidden = false
@@ -1398,6 +1463,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             enableVoiceHistoryLabel.isHidden = true
             
         }else{
+            
+            recrdimg.image = ImageName.mic1
+            audioRecorder?.stop()
+            isRecording = false
+            recordingTimer?.invalidate()
+            recordingTimer = nil
+            deletRecoding()
+            voiceTiming.text  = "00:00 / 03:00"
             updateEmergencyCallVisibility( staff_role)
             scheduleBtn.backgroundColor = backgroundcolor
             textClickView.backgroundColor = .white
@@ -1520,11 +1593,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     
                     let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
                     
-                    cell.descriptContent.attributedText = descript(for:TextHistory?[indexPath.row].description ?? "", expanded: false)
-                    cell.MessageTitle.text = TextHistory?[indexPath.row].content
+                    cell.descriptContent.attributedText = descript(
+                        for:TextHistory?[indexPath.row].content ?? "",
+                        expanded: false
+                    )
+                    
+                    cell.MessageTitle.text = TextHistory?[indexPath.row].description
                     cell.DateLabel.text = TextHistory?[indexPath.row].date
                     cell.delegate = self
-                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
                     cell.descriptContent.tag = indexPath.row
                     cell.descriptContent.isUserInteractionEnabled = true
                     cell.descriptContent.addGestureRecognizer(tapGesture)
@@ -1538,30 +1615,33 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
                     
                     let isPlaying = (playIndex == indexPath.row)
-                    cell.updatePlayState(isPlaying: isPlaying, url: VoiceHistory?[indexPath.row].url)
+                       let voiceData = VoiceHistory?[indexPath.row]
 
-                    cell.playBtn.tag = indexPath.row
-                    cell.sendbtn.tag = indexPath.row
-                    cell.delegate = self
-                    cell.ForwordDelegate = self
-                    cell.FinishPlayingdelegate = self
+                       cell.updatePlayState(isPlaying: isPlaying, url: voiceData?.url)
+                       cell.playBtn.tag = indexPath.row
+                       cell.sendbtn.tag = indexPath.row
+                       cell.delegate = self
+                       cell.ForwordDelegate = self
+                       cell.FinishPlayingdelegate = self
 
-                    cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-                    cell.datelbl.text = VoiceHistory?[indexPath.row].sent_on
-                    cell.totaltime.text = "\(VoiceHistory?[indexPath.row].duration ?? 0)/03:00"
-                    cell.contentlbl.text = VoiceHistory?[indexPath.row].description
+                       cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
+                       cell.datelbl.text = voiceData?.sent_on ?? ""
 
-                    // ✨ Reset player view if not playing
-                    if !isPlaying {
-                        cell.playerView.progress = 0.0
-                        cell.playerView.updateWithLevel(0.0)
-                        cell.playerView.setNeedsDisplay()
-                    }
+                       let duration = voiceData?.duration ?? 0
+                       let formatted = formatDuration(duration)
+                       cell.totaltime.text = "00:00 / \(formatted)"
+                       cell.contentlbl.text = voiceData?.description ?? ""
 
-                    // Optional shimmer
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        cell.configureShimmer()
-                    }
+                       if !isPlaying {
+                           cell.playerView.progress = 0.0
+                           cell.playerView.updateWithLevel(0.0)
+                           cell.playerView.setNeedsDisplay()
+                       }
+
+                       DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                           cell.configureShimmer()
+                       }
+
                     return cell
                 }
             }
@@ -1571,20 +1651,59 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             
             
+            func playTapped(at index: Int) {
+                    if playIndex != index {
+                        player?.pause()
+                        updateTimer?.invalidate()
+                    }
+
+                    playIndex = index
+                    historytable.reloadData()
+                }
+
+                // MARK: - Finish Playing Delegate
+                func didFinishPlaying(at index: Int) {
+                    print("✅ Finished playing voice at row: \(index)")
+                    playIndex = -1
+                    historytable.reloadData()
+                }
+
+                // Format seconds into mm:ss
+                func formatDuration(_ seconds: Int) -> String {
+                    let minutes = seconds / 60
+                    let sec = seconds % 60
+                    return String(format: "%02d:%02d", minutes, sec)
+                }
             //MARK: EXPANDABLE LABLE
             @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
                 guard let label = sender.view as? UILabel else { return }
                 let indexPath = IndexPath(row: label.tag, section: 0)
-                
+                let fullDescription = label.text
                 let isExpanded = label.numberOfLines == 0
                 label.numberOfLines = isExpanded ? 3 : 0
-                label.attributedText = descript(for: label.text ?? "", expanded: !isExpanded)
+                label.attributedText = descript(
+                    for: fullDescription ?? "",
+                    expanded: !isExpanded
+                )
                 historytable.beginUpdates()
                 historytable.endUpdates()
             }
             
             //MARK: TEXT ADD SEE MORE
+            
+            @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+                guard let label = gesture.view as? UILabel, let text = label.text else { return }
+                
+                let seeMoreRange = (text as NSString).range(of: CommonStringFile.seemore.translated())
+                let seeLessRange = (text as NSString).range(of: CommonStringFile.seeLess.translated())
+                
+                if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) ||
+                    gesture.didTapAttributedTextInLabel(label: label, inRange: seeLessRange) {
+                    handleSeeMoreTap(gesture)
+                }
+            }
             func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
+                // If expanded, show full text with "See less"
                 if expanded {
                     let fullString = fullDescription + CommonStringFile.seeLess.translated()
                     let attributedText = NSMutableAttributedString(string: fullString)
@@ -1593,6 +1712,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     return attributedText
                 } else {
                     var fullString = ""
+                    // Otherwise, truncate and show "See more"
                     if fullDescription.count > 120{
                         let truncatedDescription = String(fullDescription.prefix(100))
                         fullString = truncatedDescription + CommonStringFile.seemore.translated()
@@ -1600,14 +1720,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                         fullString = fullDescription
                     }
                     let attributedText = NSMutableAttributedString(string: fullString)
+                    
+                    // Set "See more" text to blue and underline it
                     let seeMoreRange = (fullString as NSString).range(of: "See more")
                     attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
                     return attributedText
                 }
+                
+                
             }
-            
-            
-            
             func reload(index: Int) {
                 if let currentIndex = playIndex, currentIndex != index {
                     let previousIndexPath = IndexPath(row: currentIndex, section: 0)
@@ -1741,6 +1862,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateStyle = .medium // You can change this style to your preference
                 let formattedDate = dateFormatter.string(from: selectedDate)
+                ScheduleSelectedDate.append(formattedDate)
+                
                 cell.dateLbl.text = formattedDate
                 cell.dateDelet.tag = indexPath.item
                 cell.delegate = self
@@ -1755,10 +1878,26 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 TextMsgTittle.text = Tittle
                 informationcontent.text = descriptContent
                 placeholderLabel.isHidden = !informationcontent.text.isEmpty
-
-                showTextMessageView()
+                textCountLbl.text = "\(Tittle.count) of 500"
+                showTextMessageView(isforwardtext:true)
             }
             
+            func convertDateStrings(dates: [String]) -> [String] {
+                let inputFormatter = DateFormatter()
+                inputFormatter.dateFormat = "dd MMM yyyy"
+                inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+                let outputFormatter = DateFormatter()
+                outputFormatter.dateFormat = "dd-MM-yyyy"
+
+                return dates.compactMap { dateString in
+                    if let date = inputFormatter.date(from: dateString) {
+                        return outputFormatter.string(from: date)
+                    } else {
+                        return nil
+                    }
+                }
+            }
             
         }
         

@@ -33,6 +33,9 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="shimmerLeadingInset">
                                         <real key="value" value="100"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ShimmerHeight">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gF1-fd-HlY">
@@ -69,14 +72,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhC-TO-4ad" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="16" y="46.333333333333336" width="297" height="71.333333333333314"/>
+                                <rect key="frame" x="16" y="51.333333333333329" width="297" height="61.333333333333329"/>
                                 <string key="text">Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="ShimmerHeight">
-                                        <real key="value" value="50"/>
+                                        <real key="value" value="40"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shimmerLeadingInset">
                                         <real key="value" value="5"/>
@@ -95,12 +98,15 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="shimmerTrailingInset">
                                         <real key="value" value="100"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ShimmerHeight">
+                                        <real key="value" value="18"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ZhC-TO-4ad" firstAttribute="top" secondItem="E6K-XD-RuD" secondAttribute="bottom" constant="10" id="2CO-qg-V6E"/>
+                            <constraint firstItem="ZhC-TO-4ad" firstAttribute="top" secondItem="E6K-XD-RuD" secondAttribute="bottom" constant="15" id="2CO-qg-V6E"/>
                             <constraint firstItem="vwk-N1-Vce" firstAttribute="leading" secondItem="orl-Nb-csW" secondAttribute="trailing" id="4eB-la-ZVh"/>
                             <constraint firstItem="orl-Nb-csW" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="6WA-G8-vJs"/>
                             <constraint firstAttribute="trailing" secondItem="ZhC-TO-4ad" secondAttribute="trailing" constant="16" id="A4d-96-Phh"/>
@@ -109,7 +115,7 @@
                             <constraint firstItem="E6K-XD-RuD" firstAttribute="leading" secondItem="PuL-ZK-Yro" secondAttribute="leading" constant="16" id="Gt3-ub-Ckj"/>
                             <constraint firstItem="E6K-XD-RuD" firstAttribute="top" secondItem="PuL-ZK-Yro" secondAttribute="top" constant="16" id="OJi-7Y-eam"/>
                             <constraint firstAttribute="trailing" secondItem="E6K-XD-RuD" secondAttribute="trailing" constant="16" id="Qjd-4J-WAq"/>
-                            <constraint firstItem="orl-Nb-csW" firstAttribute="top" secondItem="ZhC-TO-4ad" secondAttribute="bottom" constant="10" id="U1J-ev-701"/>
+                            <constraint firstItem="orl-Nb-csW" firstAttribute="top" secondItem="ZhC-TO-4ad" secondAttribute="bottom" constant="15" id="U1J-ev-701"/>
                             <constraint firstAttribute="trailing" secondItem="gF1-fd-HlY" secondAttribute="trailing" id="ewW-Te-CYc"/>
                             <constraint firstItem="gF1-fd-HlY" firstAttribute="top" secondItem="PuL-ZK-Yro" secondAttribute="top" constant="-40" id="qLT-QP-vJB"/>
                             <constraint firstAttribute="bottom" secondItem="orl-Nb-csW" secondAttribute="bottom" constant="10" id="rgP-5H-3ew"/>

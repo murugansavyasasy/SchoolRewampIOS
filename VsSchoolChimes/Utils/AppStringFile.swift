@@ -100,8 +100,9 @@ class AlertstringFile{
     static let title = "Confirm Action".translated()
     static let voice_or_title_is_required = "Voice or title is required".translated()
     static let enter_title_description = "Enter title description".translated()
-    static let Choose_any_target = "Choose any target to send message"
+    static let Choose_any_target = "Choose any target to send message".translated()
     static let Alert_title = "Alert"
+    static let select_date = "Select Date".translated()
     
     static let Confirm = "Confirm".translated()
     static let AreYouSureYouWantToProceed = "Are you sure you want to proceed? NOTE : selected target count is ".translated()
