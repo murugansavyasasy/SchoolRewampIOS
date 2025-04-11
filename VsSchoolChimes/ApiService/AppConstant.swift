@@ -34,6 +34,7 @@ struct ServiceUrl{
     static let comm_voice_get_voice_history  = "comm/voice/get-voice-history"
     static let comm_text_message_get_text_history  = "comm/text-message/get-text-history"
     static let comm_homework_get_homework_report  = "comm/homework/get-homework-report"
+    static let comm_recipient_get_academic_year_list  = "comm/recipient/get-academic-year-list"
 }
 
 struct localData{
@@ -136,6 +137,11 @@ func getCurrentDateString(format: String = "dd-MM-yyyy") -> String {
     return dateFormatter.string(from: Date())
 }
 
+func formatDuration(_ duration: Int) -> String {
+    let minutes = duration / 60
+    let seconds = duration % 60
+    return String(format: "%02d:%02d", minutes, seconds)
+}
 
 
 

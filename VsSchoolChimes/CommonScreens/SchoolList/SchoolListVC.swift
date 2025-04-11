@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import DropDown
 
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var acidamicYrDropView: UIView!
     @IBOutlet weak var sendBtnName: UIButton!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var listTable: UITableView!
@@ -23,11 +25,14 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var array_selectedSchoolId :[String] = []
     var target_type:Int?
     var requestCommonDataDetails : [String:Any] = [:]
-    
+    var AcadimicYearDatas : [AcadimicYearData] = []
+    var accadimYr :[String] = []
+    let acidamicdrops = DropDown()
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyShadowAndCornerRadius(to: acidamicYrDropView)
         target_type = TargetTypes.school
-        
+        sendBtnName.isHidden = true
         if (isEmergency == 1 || isNoticeBoard == 1){
             segmentName.isHidden = true
             segmentName.selectedSegmentIndex = 0
@@ -41,7 +46,13 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             }
         }
         
+        getacadmicYr()
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
+        
+        let acidmaciyrClick = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
+        acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
+       
+        
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -51,13 +62,45 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         )
     }
     
+    
+    @IBAction func academicYearDrop_action() {
+        accadimYr.removeAll()
+        for i in 0..<(AcadimicYearDatas.count){
+            accadimYr.append(AcadimicYearDatas[i].year ?? "")
+        }
+        acidamicdrops.anchorView = acidamicYrDropView
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: acidamicYrDropView.bounds.height)
+        acidamicdrops.show()
+        
+        acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+            
+            if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                label.text = item
+            }
+           
+    
+        }
+        
+    }
+    
+    func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
+        view.layer.cornerRadius = cornerRadius
+        view.layer.shadowColor = shadowColor.cgColor
+        view.layer.shadowOffset = shadowOffset
+        view.layer.shadowOpacity = shadowOpacity
+        view.layer.shadowRadius = shadowRadius
+        view.backgroundColor = backgroundColor
+    }
     @IBAction func segment_action(_ sender: Any) {
        
         if segmentName.selectedSegmentIndex == 0 {
-            sendBtnName.isHidden = false
+           
+            sendBtnName.isHidden = true
             listTable.reloadData()
         }else{
-            sendBtnName.isHidden = true
+            sendBtnName.isHidden = false
             listTable.reloadData()
         }
         
@@ -74,7 +117,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         cell.address.text = schools_details?.school_address
         cell.schoolRelignLangLbl.text = schools_details?.school_name_regional
         
-        if segmentName.selectedSegmentIndex == 0{
+        if segmentName.selectedSegmentIndex == 1{
             let img = schools_details?.isSelected ?? false ? UIImage(named: "checkedSquare") : UIImage(
                 named: "uncheckedSquare")
             cell.selectedBtn.setImage(img, for: .normal)
@@ -89,7 +132,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
         
-        if segmentName.selectedSegmentIndex == 0{
+        if segmentName.selectedSegmentIndex == 1{
 
             school_details?[indexPath.row].isSelected?.toggle()
             if let id = school_details?[indexPath.row].school_id {
@@ -206,19 +249,53 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     
     
+    
+    
+    func getacadmicYr(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            //                        listTable.isHidden = true
+                            AcadimicYearDatas = successMessage.data ?? []
+                            acidamicYrDropView.isUserInteractionEnabled = true
+                            for i in 0..<(AcadimicYearDatas.count){
+                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                    if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                                        label.text = AcadimicYearDatas[i].year
+                                        break
+                                    }
+                                }
+                            }
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            acidamicYrDropView.isUserInteractionEnabled = false
+                            listTable.isHidden = true
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        
+    }
     func sendtextmessage_communication(){
-        
-        
         
         
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
-                 
-                   send_textmessageStringFile.description : user_inputs.title,
-                   send_textmessageStringFile.message : user_inputs.description,
-                   send_textmessageStringFile.target_code: array_selectedSchoolId,
-                   send_textmessageStringFile.target_type: target_type ?? 0
-                 
+                
+                send_textmessageStringFile.description : user_inputs.title,
+                send_textmessageStringFile.message : user_inputs.description,
+                send_textmessageStringFile.target_code: array_selectedSchoolId,
+                send_textmessageStringFile.target_type: TargetTypes.school
+                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -237,7 +314,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                                     
                                 }
                             
@@ -261,6 +338,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         
         
     }
+    
+    
     
     
     func sendVoiceMessage_communication() {
@@ -300,7 +379,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
                                     
                                 }
                             

@@ -331,3 +331,17 @@ struct AwsData: Codable {
     let presignedUrl: String
     let fileUrl: String
 }
+
+struct get_academic_yearSuc : Codable {
+    
+    let status: Bool?
+    let message: String?
+    let data: [AcadimicYearData]?
+    
+}
+
+struct AcadimicYearData : Codable {
+    let id: Int?
+    let year: String?
+    let current_academic_year: Bool?
+}
