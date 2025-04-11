@@ -382,7 +382,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        if TitleTxtfield.text != nil && DetailsTxtview.text != nil && selectedImages.count != 0{
+        if TitleTxtfield.text != nil && DetailsTxtview.text != nil{
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.selectedImg = selectedImages
@@ -613,77 +613,8 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
 @available(iOS 14.0, *)
 extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return homeWorkList?.count ?? 0
+        return homeWorkList?.count ?? 4
     }
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//      
-//            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-//            
-//            cell.cellview.changeHeightAndAnimate(40, 150, 100, 80, top: 5)
-//            cell.ishomework = true
-//            cell.CVHeight.constant = 120
-//            cell.pagecontrollerheight.constant = 26
-//            cell.pagecontroller.isHidden = false
-//            cell.SelectBtn.isHidden = true
-//        cell.HomeworkSubjectLbl.text = homeWorkList?[indexPath.row].subject_name
-//        cell.TitleLbl.text = homeWorkList?[indexPath.row].topic ?? ""
-//        if let urls = homeWorkList?[indexPath.row].file_path{
-//            cell.loadImage(urls:urls)
-//        }
-//        cell.dicriptContent.configure(text: homeWorkList?[indexPath.row].content ?? "", isExpanded: cell.dicriptContent.isExpanded)
-//        cell.dicriptContent.onTap = {
-//            cell.dicriptContent.isExpanded.toggle()
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
-//
-////        cell.dicriptContent.text = "d,hsebduxgbuawusdbzxbwsbdzxycwasdzvxfcaysvdzxyvcywvsD"
-////            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-//            cell.delegate = self
-////            cell.dicriptContent.tag = indexPath.row
-////            cell.dicriptContent.isUserInteractionEnabled = true
-////            cell.dicriptContent.addGestureRecognizer(tapGesture)
-//            
-//            return cell
-////        }
-////        else if indexPath.row == 1 {
-////            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.HomeworkreportTV, for: indexPath) as! HomeworkreportTV
-////            
-////            cell.HomeworkTitleLbl.text = "Write Assignment"
-////            cell.DescriptionLbl.attributedText = descript(for:"Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality." , expanded: false)
-////            // cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
-////            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-////            // cell.delegate = self
-////            cell.DescriptionLbl.tag = indexPath.row // Tag the label with the row index
-////            cell.DescriptionLbl.isUserInteractionEnabled = true
-////            cell.DescriptionLbl.addGestureRecognizer(tapGesture)
-////            cell.SubjectLbl.text = "Tamil"
-////            return cell
-////        }
-////        else {
-////            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-////            
-////            cell.cellview.changeHeightAndAnimate(40,0, 31, 80, top: 5)
-////            cell.ishomework = true
-////            cell.pagecontrollerheight.constant = 0
-////            cell.pagecontroller.isHidden = true
-////            
-////            // cell.datelbl.isHidden = true
-////            cell.pinImage.isHidden = true
-////            cell.Pinview.isHidden = true
-////            cell.SelectBtn.isHidden = true
-////            cell.CVHeight.constant = 0
-////            cell.HomeworkSubjectLbl.text = "Write Assignment"
-////            cell.TitleLbl.text = "Tamil"
-////            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment.", expanded: false)
-////            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-////            cell.delegate = self
-////            cell.dicriptContent.tag = indexPath.row
-////            cell.dicriptContent.isUserInteractionEnabled = true
-////            cell.dicriptContent.addGestureRecognizer(tapGesture)
-////            return cell
-////        }
-//    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
         
@@ -693,7 +624,7 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         cell.pagecontrollerheight.constant = 26
         cell.pagecontroller.isHidden = false
         cell.SelectBtn.isHidden = true
-        
+        cell.newView.isHidden = true
         let data = homeWorkList?[indexPath.row]
         
         cell.HomeworkSubjectLbl.text = data?.subject_name
@@ -702,62 +633,13 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         if let urls = data?.file_path {
             cell.loadImage(urls: urls)
         }
-
-//        // Configure expandable content
-//        cell.dicriptContent.configure(text: "hjdsbfausdu asyvydvwyasvdyjzvcj tyasvzcvw vesdavxj", isExpanded: cell.dicriptContent.isExpanded)
-//        cell.dicriptContent.onTap = {
-//            cell.dicriptContent.isExpanded.toggle()
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
-        cell.dicriptContent.configure(
-            text: homeWorkList?[indexPath.row].content ?? "",
-            isExpanded: cell.dicriptContent.isExpanded
-        )
-
+        cell.dicriptContent.configure(text: data?.content ?? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel magna vel justo gravida bibendum non a nulla. Praesent a suscipit ex. Integer a semper lacus. See how this gets trimmed and shows more or less?")
         cell.dicriptContent.onTap = {
             cell.dicriptContent.isExpanded.toggle()
             tableView.beginUpdates()
-            tableView.reloadRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
         }
-
-
         return cell
-    }
-
-    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel else { return }
-        let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = label.text
-        let isExpanded = label.numberOfLines == 0
-        label.numberOfLines = isExpanded ? 3 : 0
-        label.attributedText = descript(for: fullDescription ?? "", expanded: !isExpanded)
-        TV.beginUpdates()
-        TV.endUpdates()
-    }
-    
-    //MARK: TEXT ADD SEE MORE
-    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-        // If expanded, show full text with "See less"
-        if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess.translated()
-            let attributedText = NSMutableAttributedString(string: fullString)
-            let seeLessRange = (fullString as NSString).range(of: "See less")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            return attributedText
-        } else {
-            var fullString = ""
-            if fullDescription.count > 120{
-                let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + CommonStringFile.seemore.translated()
-            }else{
-                fullString = fullDescription
-            }
-            let attributedText = NSMutableAttributedString(string: fullString)
-            let seeMoreRange = (fullString as NSString).range(of: "See more")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-            return attributedText
-        }
     }
     
     func didTapButton(title: String, content: String, items: [String]) {
@@ -827,7 +709,6 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         } else {
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //contentTxtView.isEditable = false // Optionally disable editing
             return false // Reject the change
         }
     }
@@ -835,12 +716,8 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
-            
-            // Adjust the scroll view content inset
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight+30, right: 0)
             scrollView.scrollIndicatorInsets = scrollView.contentInset
-            
-            // Ensure the UITextView is visible
             scrollToView(DetailsTxtview)
         }
     }
@@ -878,7 +755,6 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
                             TV.reloadData()
                         }
                     }
-                    
                 case.failure(let error) :
                     
                     DispatchQueue.main.async {
@@ -889,7 +765,7 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
             }
     }
     func getStandardsAPI(){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: ["academic_year_id":"6"], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 print("successsuccess",successMessage.data)
@@ -921,103 +797,4 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
     
 }
 
-class ExpandableLabel: UILabel {
-    
-    // MARK: - Public Properties
-    var isExpanded: Bool = false
-    var onTap: (() -> Void)?
-    
-    // MARK: - Private Properties
-    private let maxLines = 3
-    private var fullText: String = ""
-    
-    // MARK: - Configure Label
-    func configure(text: String, isExpanded: Bool) {
-        self.fullText = text
-        self.isExpanded = isExpanded
-        self.numberOfLines = isExpanded ? 0 : maxLines
-        self.attributedText = createAttributedText(text: text)
-        addTapGesture()
-    }
-    
-    // MARK: - Create Attributed Text
-    private func createAttributedText(text: String) -> NSAttributedString {
-        let suffix = isExpanded ? " See Less" : "... See More"
-        
-        // Expanded state – show full text
-        if isExpanded || !doesExceedThreeLines(text: text + suffix) {
-            return NSAttributedString(string: text, attributes: [.font: font!])
-        }
-        
-        // Truncate and append suffix
-        var displayText = text
-        while doesExceedThreeLines(text: displayText + suffix), displayText.count > 10 {
-            displayText = String(displayText.dropLast())
-        }
-        
-        let finalText = displayText + suffix
-        let attributed = NSMutableAttributedString(string: finalText, attributes: [.font: font!])
-        let tappableRange = (finalText as NSString).range(of: isExpanded ? "See Less" : "See More")
-        
-        attributed.addAttributes([
-            .foregroundColor: UIColor.systemBlue,
-            .font: UIFont.boldSystemFont(ofSize: font!.pointSize)
-        ], range: tappableRange)
-        
-        return attributed
-    }
-    
-    // MARK: - Check If Text Exceeds 3 Lines
-    private func doesExceedThreeLines(text: String) -> Bool {
-        let width = self.preferredMaxLayoutWidth > 0 ? self.preferredMaxLayoutWidth : UIScreen.main.bounds.width - 40
-        let size = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let bounding = NSString(string: text).boundingRect(
-            with: size,
-            options: [.usesLineFragmentOrigin, .usesFontLeading],
-            attributes: [.font: self.font!],
-            context: nil
-        )
-        return bounding.height > font.lineHeight * CGFloat(maxLines)
-    }
-    
-    // MARK: - Add Tap Gesture
-    private func addTapGesture() {
-        isUserInteractionEnabled = true
-        gestureRecognizers?.forEach { self.removeGestureRecognizer($0) }
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        addGestureRecognizer(tap)
-    }
-    
-    // MARK: - Handle Tap
-    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
-        guard let text = self.attributedText?.string else { return }
-        let nsText = text as NSString
-        let tappableText = isExpanded ? "See Less" : "See More"
-        let tappableRange = nsText.range(of: tappableText)
-        
-        let tapLocation = gesture.location(in: self)
-        let index = indexOfCharacter(at: tapLocation)
-        
-        if NSLocationInRange(index, tappableRange) {
-            onTap?()
-        }
-    }
-    
-    // MARK: - Get Index of Character at Tap Point
-    private func indexOfCharacter(at point: CGPoint) -> Int {
-        guard let attributedText = self.attributedText else { return NSNotFound }
-        
-        let textStorage = NSTextStorage(attributedString: attributedText)
-        let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: self.bounds.size)
-        
-        textContainer.lineFragmentPadding = 0
-        textContainer.maximumNumberOfLines = numberOfLines
-        textContainer.lineBreakMode = lineBreakMode
-        
-        layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
-        
-        return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-    }
-}
+

@@ -410,3 +410,104 @@ class CircularProgressLoader: UIView {
         }
     }
 }
+class ExpandableLabel: UILabel {
+
+    // MARK: - Public Properties
+    var isExpanded: Bool = false {
+        didSet {
+            updateLabel()
+        }
+    }
+    var onTap: (() -> Void)?
+    
+    // MARK: - Private Properties
+    private var fullText: String = ""
+    private let maxTrimLength = 100
+
+    // MARK: - Configure Label
+    func configure(text: String, isExpanded: Bool = false) {
+        self.fullText = text
+        self.isExpanded = isExpanded
+        self.numberOfLines = 0
+        updateLabel()
+        addTapGesture()
+    }
+
+    // MARK: - Update Attributed Text
+    private func updateLabel() {
+        self.attributedText = createAttributedText(text: fullText)
+    }
+
+    // MARK: - Create Attributed Text
+    private func createAttributedText(text: String) -> NSAttributedString {
+        guard let font = self.font else { return NSAttributedString(string: text) }
+        
+        if isExpanded {
+            let fullString = text + " " + CommonStringFile.seeLess.translated()
+            let attributed = NSMutableAttributedString(string: fullString, attributes: [.font: font])
+            let seeLessRange = (fullString as NSString).range(of: CommonStringFile.seeLess.translated())
+            attributed.addAttributes([
+                .foregroundColor: UIColor.link,
+                .font: UIFont.boldSystemFont(ofSize: font.pointSize)
+            ], range: seeLessRange)
+            return attributed
+        } else {
+            var displayText = text
+            if text.count > maxTrimLength {
+                displayText = String(text.prefix(maxTrimLength)).trimmingCharacters(in: .whitespacesAndNewlines)
+                displayText += "... " + CommonStringFile.seemore.translated()
+            }
+            let attributed = NSMutableAttributedString(string: displayText, attributes: [.font: font])
+            let seeMoreRange = (displayText as NSString).range(of: CommonStringFile.seemore.translated())
+            if seeMoreRange.location != NSNotFound {
+                attributed.addAttributes([
+                    .foregroundColor: UIColor.link,
+                    .font: UIFont.boldSystemFont(ofSize: font.pointSize)
+                ], range: seeMoreRange)
+            }
+            return attributed
+        }
+    }
+
+    // MARK: - Add Tap Gesture
+    private func addTapGesture() {
+        isUserInteractionEnabled = true
+        gestureRecognizers?.forEach { removeGestureRecognizer($0) }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tap)
+    }
+
+    // MARK: - Handle Tap
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = self.attributedText?.string else { return }
+        let nsText = text as NSString
+        let tappableText = isExpanded ? CommonStringFile.seeLess.translated() : CommonStringFile.seemore.translated()
+        let tappableRange = nsText.range(of: tappableText)
+
+        let tapLocation = gesture.location(in: self)
+        let index = indexOfCharacter(at: tapLocation)
+
+        if NSLocationInRange(index, tappableRange) {
+            onTap?()
+        }
+    }
+
+    // MARK: - Get Index of Character at Tap Point
+    private func indexOfCharacter(at point: CGPoint) -> Int {
+        guard let attributedText = self.attributedText else { return NSNotFound }
+
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: self.bounds.size)
+
+        textContainer.lineFragmentPadding = 0
+        textContainer.lineBreakMode = self.lineBreakMode
+        textContainer.maximumNumberOfLines = self.numberOfLines
+
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+
+        return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+    }
+}
+

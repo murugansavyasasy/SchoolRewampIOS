@@ -65,10 +65,9 @@ struct screenType{
 }
 
 struct Menu_id{
-    
     static var communicationMenuId = 0
     static var homeWorkMenuId = 9
-    
+    static let isAssaignment = 22
 }
 struct TargetTypes{
     
@@ -89,9 +88,9 @@ struct PriorityType{
    
 }
 struct recipeint_tabBarName{
-    static let Standard = "Standard"
-    static let Group = "Group"
-    static let Section_Student = "Section/Student"
+    static let Standard = "Standards"
+    static let Group = "Groups"
+    static let Section_Student = "Section/Students"
     static let Staff = "Staff"
     static let Entier_School = "Entier School"
 }

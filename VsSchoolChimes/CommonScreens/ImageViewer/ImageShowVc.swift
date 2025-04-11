@@ -19,7 +19,7 @@ class ImageShowVc: UIViewController{
     @IBOutlet weak var TitleLbl: UILabel!
     
     var imageIterms : [String] = []
-    var imageURL : [String] = []
+    var imageURL : [FilePath] = []
     var delegate:DidSelectDelegate?
     var pageName = ""
     var pdfUrl = ""
@@ -36,6 +36,7 @@ class ImageShowVc: UIViewController{
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     override func viewWillAppear(_ animated: Bool) {
+        type = imageURL.first?.type == "pdf" ? 0 : 0
         uiUpdate(type: type)
     }
     func uiUpdate(type:Int){
@@ -101,7 +102,7 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
         
-        cell.imageView.sd_setImage(with: URL(string: imageURL[indexPath.row]), placeholderImage: ImageName.placeholder)
+        cell.imageView.sd_setImage(with: URL(string: imageURL[indexPath.row].path ?? ""), placeholderImage: ImageName.placeholder)
         //        cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
         
         return cell

@@ -82,7 +82,7 @@ class PageVC: UIPageViewController, UIPageViewControllerDelegate, UIPageViewCont
         if let value = value,
            let targetVC = pages[index] as? ImageShowVc {
             targetVC.pageName = "Assigment"
-            targetVC.imageURL = imgs
+//            targetVC.imageURL = imgs
             targetVC.type = Int(value) ?? 0
         }
         // Determine navigation direction based on current index

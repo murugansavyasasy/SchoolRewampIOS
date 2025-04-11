@@ -29,6 +29,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var pinImage: UIImageView!
     @IBOutlet weak var pagecontroller: UIPageControl!
     @IBOutlet weak var pagecontrollerheight: NSLayoutConstraint!
+    @IBOutlet weak var newView: UIView!
     @IBOutlet weak var SelectBtn: UIButton!
     
     
@@ -207,7 +208,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         if homeworkDocs?.count == 0{
             CVHeight.constant = 0
         }else {
-            CVHeight.constant = 150
+            CVHeight.constant = 130
         }
         return homeworkDocs?.count ?? 0
         
@@ -239,7 +240,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         
         let vc = getCurrentViewController()
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
-        //        vcc.imageURL = homeworkDocs ?? []
+        vcc.imageURL = homeworkDocs ?? []
         vcc.type = 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)

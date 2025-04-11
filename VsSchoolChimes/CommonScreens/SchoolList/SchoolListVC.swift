@@ -33,11 +33,20 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         target_type = TargetTypes.school
         sendBtnName.isHidden = true
-        if (isEmergency == screen_type || isNoticeBoard == screen_type){
+        switch screen_type {
+        case isEmergency, isNoticeBoard:
             segmentName.isHidden = true
             segmentName.selectedSegmentIndex = 1
             sendBtnName.isHidden = false
+
+        case Menu_id.homeWorkMenuId,Menu_id.isAssaignment:
+            segmentName.isHidden = true
+            segmentName.selectedSegmentIndex = 0
+            sendBtnName.isHidden = false
+        default:
+            segmentName.isHidden = false
         }
+
         for i in 0..<(school_details?.count ?? 0) {
             school_details?[i].isSelected = true
             if let school_id = school_details?[i].school_id{

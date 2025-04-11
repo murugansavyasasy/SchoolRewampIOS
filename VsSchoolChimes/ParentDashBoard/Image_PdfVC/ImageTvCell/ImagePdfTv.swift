@@ -158,7 +158,7 @@ extension ImagePdfTv : UICollectionViewDelegate,UICollectionViewDataSource,UICol
 
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
        // vcc.imageIterms = imgs
-        vcc.imageURL = imgs
+//        vcc.imageURL = imgs
         vcc.type = 2
         vcc.modalPresentationStyle = .fullScreen
 
