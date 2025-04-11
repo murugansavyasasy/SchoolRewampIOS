@@ -76,7 +76,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kz9-cN-IxL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kz9-cN-IxL" customClass="ExpandableLabel" customModule="VsSchoolChimes" customModuleProvider="target">
                                 <rect key="frame" x="8" y="214.33333333333334" width="347" height="115.66666666666666"/>
                                 <string key="text">Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -171,7 +171,7 @@
                 <outlet property="cellview" destination="iLP-ce-oCO" id="fHG-Ug-O8M"/>
                 <outlet property="collectionview" destination="kwf-UY-KqC" id="NPj-aA-lIp"/>
                 <outlet property="datelbl" destination="ZlO-yr-9O1" id="tge-7U-oWz"/>
-                <outlet property="dicriptContent" destination="Kz9-cN-IxL" id="z1j-N4-cdC"/>
+                <outlet property="dicriptContent" destination="Kz9-cN-IxL" id="vXj-NR-FnU"/>
                 <outlet property="pagecontroller" destination="3fk-V0-e47" id="8Ui-Eb-NEa"/>
                 <outlet property="pagecontrollerheight" destination="ven-wA-ptx" id="ehF-aM-kJC"/>
                 <outlet property="pinImage" destination="0ta-Ym-h3a" id="Pic-M1-3qO"/>

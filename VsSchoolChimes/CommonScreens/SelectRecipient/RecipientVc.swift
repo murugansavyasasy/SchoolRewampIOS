@@ -28,6 +28,7 @@ class RecipientVc: UIViewController{
     var cv_itemsarry : [String] = []
     var dropDownArray = [String]()
     var subjectList = [String]()
+    var uploadedURLs: [String] = []
     var subjectDetails: [GetSubjectDetails]?
     var studentsDetails: [StudentDetails]?
     var sectionsDetails: [sectionsDetail]?
@@ -40,6 +41,7 @@ class RecipientVc: UIViewController{
     var selectedId : IndexPath?
     var sectionId:Int?
     var ScreenType:Int?
+    var sectionIds:String?
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var segment_selected_index:Int?
@@ -49,6 +51,7 @@ class RecipientVc: UIViewController{
     var target_type : Int?
     let alert = CustomAlert()
     var circular_types : String?
+    var subjectId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,7 +63,7 @@ class RecipientVc: UIViewController{
         
         configureRecipientTabs()
         
-        if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork{
+        if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
             speficBtnName.isHidden = true
         }else{
             speficBtnName.isEnabled = false
@@ -109,7 +112,7 @@ class RecipientVc: UIViewController{
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             speficBtnName.isHidden = true
             
-            if (staffDetailsCount?.count ?? 0) > 1 {
+//            if (staffDetailsCount?.count ?? 0) > 1 {
                 contentLbl.isHidden = true
                 cv_itemsarry = [
                     recipeint_tabBarName.Standard,
@@ -120,14 +123,14 @@ class RecipientVc: UIViewController{
                 target_type = TargetTypes.standard
                 circular_types =  circular_type.standard
                 getStandardsAPI()
-            } else {
-                cv_itemsarry = [
-                    recipeint_tabBarName.Entier_School,
-                    recipeint_tabBarName.Standard,
-                    recipeint_tabBarName.Group
-                ]
-                tableHeight.constant = 0
-            }
+//            } else {
+//                cv_itemsarry = [
+//                    recipeint_tabBarName.Entier_School,
+//                    recipeint_tabBarName.Standard,
+//                    recipeint_tabBarName.Group
+//                ]
+//                tableHeight.constant = 0
+//            }
             
         default:
             print("Unhandled staff role")
@@ -177,8 +180,64 @@ class RecipientVc: UIViewController{
     }
     
     private func handleHomeworkFlow() {
-        
-        
+        uploadAndSendVoiceMessage(file: user_inputs.selectedImg) { [self] in
+            CircularProgressLoader.shared.hide()
+            let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+                return [
+                    "path": url,
+                    "type": user_inputs.selectedFileType
+                ]
+            }
+            let parameters: [String: Any] = [
+                UploadMessageKeys.topic: user_inputs.title,
+                UploadMessageKeys.text: user_inputs.description,
+                UploadMessageKeys.sectionCode: array_selectedId,
+                UploadMessageKeys.subjectId: subjectId ?? "",
+                UploadMessageKeys.filePath:uploadedFiles
+            ]
+
+            APIService.shared
+                .makeApi(url: ServiceUrl.comm_homework_sendhomework, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                    result : Result<CommonApiSuc,
+                    Error>
+                ) in
+                    
+                    switch result {
+                        
+                    case.success(let succesmessage) :
+                        
+                        if succesmessage.status == true {
+                            
+                            DispatchQueue.main.async { [self] in
+                                CustomAlert
+                                    .showAlertWithOkAction(
+                                        title: "Success",
+                                        message: succesmessage.message ?? "",
+                                        on: self
+                                    ) {
+                                        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                        
+                                    }
+                                
+                            }
+                        }else {
+                            
+                            DispatchQueue.main.async {
+                                
+                                
+                            }
+                        }
+                        
+                    case.failure(let error) :
+                        
+                        DispatchQueue.main.async {
+                            print(error.localizedDescription)
+                        }
+                    }
+                    
+                }
+        }
+       
     }
     
     private func SendingCommunicationFlow() {
@@ -196,7 +255,10 @@ class RecipientVc: UIViewController{
                 case screenType.communication_text:
                     sendtextmessage_communication()
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
-                    uploadAndSendVoiceMessage(url : user_inputs.voice_link)
+                    uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
+                        CircularProgressLoader.shared.hide()
+                        self.sendVoiceMessage_communication()
+                    }
                 default:
                     print("Unhandled communication screen type: \(ScreenType)")
                 }
@@ -206,27 +268,97 @@ class RecipientVc: UIViewController{
             }
         )
     }
-    
-    private func uploadAndSendVoiceMessage(url: String) {
-        guard let audioURL = URL(string: url) else {
-            print("Invalid audio URL.")
+    private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
+        var completed = 0
+
+        switch file {
+
+        // 🎙️ Case: Audio File from String (URL Path)
+        case let files as String:
+            guard let audioURL = URL(string: files) else {
+                print("❌ Invalid audio URL.")
+                return
+            }
+
+            let total = 1
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+
+            AWSUploadManager.shared.uploadFileToAWS(
+                file: audioURL,
+                bucketPath: "uploads/audio/",
+                bucketName: "schoolchimes-communication",
+                progressHandler: { progress in
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+                },
+                completion: { url in
+                    if let uploadedURL = url {
+                        print("✅ Audio uploaded: \(uploadedURL)")
+                        user_inputs.voice_link = uploadedURL
+                    } else {
+                        print("❌ Audio upload failed.")
+                    }
+
+                    completed += 1
+                    let progress = (Double(completed) / Double(total)) * 100
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+
+                    if completed == total {
+                        CircularProgressLoader.shared.hide()
+                        completion()
+                    }
+                }
+            )
+
+        // 🖼️ Case: Array of Images
+        case let images as [UIImage]:
+            let total = images.count
+            guard !images.isEmpty else {
+                print("❌ No images to upload.")
+                return
+            }
+
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+
+            for (index, img) in images.enumerated() {
+                AWSUploadManager.shared.uploadFileToAWS(
+                    file: img,
+                    bucketPath: "uploads/images/",
+                    bucketName: "schoolchimes-communication",
+                    progressHandler: { progress in
+                        // Optional: Update progress per file individually if you want
+                    },
+                    completion: { [self] url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                            
+                        } else {
+                            print("❌ Failed to upload image \(index)")
+                        }
+
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    }
+                )
+            }
+
+        default:
+            print("❌ Unsupported file type")
             return
         }
-        AWSUploadManager.shared.uploadFileToAWS(
-            file: audioURL,
-            bucketPath: "uploads/audio/",
-            bucketName: "schoolchimes-communication"
-        ) { url in
-            if let uploadedURL = url {
-                print("✅ Audio uploaded: \(uploadedURL)")
-                user_inputs.voice_link = uploadedURL
-                self.sendVoiceMessage_communication()
-            } else {
-                print("❌ Audio upload failed.")
-            }
-        }
     }
-    
+
+
+
+
     @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
@@ -278,8 +410,8 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.section
             circular_types =  circular_type.section
             getStandardsAPI()
-            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork
-            speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork)
+            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+            speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
@@ -336,6 +468,7 @@ class RecipientVc: UIViewController{
             guard let self = self else { return }
             if let label = self.selectSubject.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
+                subjectId = subjectDetails?[index].id ?? ""
                 speficBtnName.isHidden = true
             }
         }
@@ -456,44 +589,28 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             if indexPath.row < (sectionsDetails?.count ?? 0) {
                 guard var section = sectionsDetails?[indexPath.row] else { return }
                 
-                if ScreenType == screenType.isAssaignment || ScreenType == screenType.isHomeWork {
-                    for i in 0..<(sectionsDetails?.count ?? 0) {
-                        if i != indexPath.row {
-                            sectionsDetails?[i].isSelect = false
-                        } else {
-                            sectionsDetails?[i].isSelect?.toggle()
+                section.isSelect?.toggle()
+                sectionsDetails?[indexPath.row].isSelect = section.isSelect
+                if let id = section.id {
+                    if section.isSelect == true {
+                        if !array_selectedId.contains(id) {
+                            array_selectedId.append(id)
                         }
+                    } else {
+                        array_selectedId.removeAll(where: { $0 == id })
                     }
-                    getSubjectListAPI(section.id ?? "")
-                    selectSubject.isHidden = false
-                    
-                    if let id = section.id {
-                        if section.isSelect == true {
-                            if !array_selectedId.contains(id) {
-                                array_selectedId.append(id)
-                            }
-                        } else {
-                            array_selectedId.removeAll(where: { $0 == id })
-                        }
-                    }
-                } else {
-                    section.isSelect?.toggle()
-                    sectionsDetails?[indexPath.row].isSelect = section.isSelect // update back to array
-                    
-                    if let id = section.id {
-                        if section.isSelect == true {
-                            if !array_selectedId.contains(id) {
-                                array_selectedId.append(id)
-                            }
-                        } else {
-                            array_selectedId.removeAll(where: { $0 == id })
-                        }
-                    }
-                    
-                    let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
-                    speficBtnName.isEnabled = selectedSections.count == 1
-                    speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
                 }
+                let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
+                let selectedIds = selectedSections.compactMap { $0.id }
+                sectionIds = selectedIds.joined(separator: ",")
+
+                if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
+                    getSubjectListAPI(finalSectionIds)
+                }
+                selectSubject.isHidden = false
+                speficBtnName.isEnabled = selectedSections.count == 1
+                speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
+
             }
             
         case recipeint_tabBarName.Staff:
@@ -645,7 +762,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     func getSubjectListAPI(_ id:String){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: ["section_id": id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: ["section_ids": id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{

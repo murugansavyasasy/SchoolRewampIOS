@@ -76,3 +76,11 @@ class send_voicemeassageStringFile {
     static var circular_type = "circular_type"
   
 }
+
+enum UploadMessageKeys {
+    static let topic = "topic"
+    static let text = "text"
+    static let sectionCode = "section_code"
+    static let subjectId = "subject_id"
+    static let filePath = "file_path"
+}

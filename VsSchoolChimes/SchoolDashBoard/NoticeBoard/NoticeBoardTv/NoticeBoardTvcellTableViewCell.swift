@@ -20,32 +20,25 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var HomeworkSubjectLbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
-    
-    @IBOutlet weak var dicriptContent: UILabel!
+    @IBOutlet weak var dicriptContent: ExpandableLabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var CVHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionview: UICollectionView!
     @IBOutlet weak var cellview: AnimatView!
-    
     @IBOutlet weak var Pinview: UIView!
-    
     @IBOutlet weak var pinImage: UIImageView!
     @IBOutlet weak var pagecontroller: UIPageControl!
-    
     @IBOutlet weak var pagecontrollerheight: NSLayoutConstraint!
-    
-    
     @IBOutlet weak var SelectBtn: UIButton!
+    
+    
     var delegate : SelectNotice?
     var ishomework = false
     var isreciver = false
     var issenderEvent = false
-
-    let imgs: [String] = ["https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847444562956042.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457714704978.png","https://s3.ap-south-1.amazonaws.com/schoolchimes-files-bangkok/communication/2024-12-20/vc_-5499847457742399850.png"]
-    
-
+    var homeworkDocs:[FilePath]?
     var countShimmer = 0
-   
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -72,9 +65,9 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         
         Pinview.layer.cornerRadius = Pinview.frame.width/2
         
-         dicriptContent.numberOfLines = 0
-          dicriptContent.setNeedsLayout()
-          dicriptContent.layoutIfNeeded()
+        dicriptContent.numberOfLines = 0
+        dicriptContent.setNeedsLayout()
+        dicriptContent.layoutIfNeeded()
         
         let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
         collectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
@@ -82,19 +75,26 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         collectionview.delegate = self
         collectionview.dataSource = self
         
-        pagecontroller.numberOfPages = imgs.count
+        pagecontroller.numberOfPages = homeworkDocs?.count ?? 0
         
         if let flowLayout = collectionview.collectionViewLayout as? UICollectionViewFlowLayout {
-                    flowLayout.scrollDirection = .horizontal  // Set the scroll direction to horizontal
-                    flowLayout.minimumLineSpacing = 10        // Set the space between cells
-                }
+            flowLayout.scrollDirection = .horizontal  // Set the scroll direction to horizontal
+            flowLayout.minimumLineSpacing = 10        // Set the space between cells
+        }
         collectionview.reloadData()
         countShimmer = 1
         print("printing in awaken from nib")
     }
-    
+    func loadImage(urls:[FilePath]){
+        homeworkDocs = urls
+        collectionview.reloadData()
+    }
+    override func layoutSubviews() {
+            super.layoutSubviews()
+            dicriptContent.preferredMaxLayoutWidth = dicriptContent.frame.width
+        }
     @IBAction func Select(_ sender: UIButton) {
-        delegate?.didTapButton(title: TitleLbl.text!, content: dicriptContent.text!, items: imgs)
+        //        delegate?.didTapButton(title: TitleLbl.text!, content: dicriptContent.text!, items: homeworkDocs ?? [])
         
         
     }
@@ -123,7 +123,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             // Code to execute after delay
             self.cellview.animateView(enable:false)
             cellview.parentview.isHidden = true
-//            pinImage.isHidden = false
+            //            pinImage.isHidden = false
             
             if ishomework == true{
                 hideforHomework()
@@ -152,8 +152,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         dicriptContent.isHidden = false
         TitleLbl.isHidden = false
         collectionview.isHidden = false
-       // pagecontroller.isHidden = false
-//        let color = true == true ? UIColor.dashBoardClr : UIColor.white
+        // pagecontroller.isHidden = false
+        //        let color = true == true ? UIColor.dashBoardClr : UIColor.white
         cellview.backgroundColor = .white
     }
     func hideforReciverNotice(){
@@ -165,7 +165,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         dicriptContent.isHidden = false
         TitleLbl.isHidden = false
         collectionview.isHidden = false
-       // pagecontroller.isHidden = false
+        // pagecontroller.isHidden = false
         let color = true == true ? UIColor.dashBoardClr : UIColor.white
         cellview.backgroundColor = .white/*color*/
     }
@@ -184,45 +184,41 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     }
     
     
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        if countShimmer == 1{
-//            cellview.animateView(enable:true)
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) { [self] in
-//                // Code to execute after delay
-//                cellview.animateView(enable:false)
-//                countShimmer = 2
-//                pinImage.isHidden = false
-//            }
-//        }
-//    }
+    //    override func layoutSubviews() {
+    //        super.layoutSubviews()
+    //        if countShimmer == 1{
+    //            cellview.animateView(enable:true)
+    //            DispatchQueue.main.asyncAfter(deadline: .now() + 3.3) { [self] in
+    //                // Code to execute after delay
+    //                cellview.animateView(enable:false)
+    //                countShimmer = 2
+    //                pinImage.isHidden = false
+    //            }
+    //        }
+    //    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        if imgs.count == 0{
+        if homeworkDocs?.count == 0{
             CVHeight.constant = 0
-        }
-       else {
-            
+        }else {
             CVHeight.constant = 150
         }
-        
-
-        return imgs.count
+        return homeworkDocs?.count ?? 0
         
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-        
-        cell.imageView.sd_setImage(with: URL(string: imgs[indexPath.row]), placeholderImage: ImageName.placeholder)
-        
+        if let img = homeworkDocs?[indexPath.row]{
+            cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+        }
         return cell
     }
     
@@ -241,24 +237,17 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-       
         let vc = getCurrentViewController()
-
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
-       // vcc.imageIterms = imgs
-        vcc.imageURL = imgs
+        //        vcc.imageURL = homeworkDocs ?? []
         vcc.type = 2
         vcc.modalPresentationStyle = .fullScreen
-
         vc?.present(vcc, animated: true)
         
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = (collectionView.frame.width - 20) / 3 // Adjust based on how many columns you want
-//        return CGSize(width: width, height: width)
-        
         return CGSize(width: 250, height: 135)
     }
     

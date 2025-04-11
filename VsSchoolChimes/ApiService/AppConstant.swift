@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct ServiceUrl{
     static var baseurl = "http://apiv7.schoolchimes.net/"
@@ -34,6 +35,7 @@ struct ServiceUrl{
     static let comm_voice_get_voice_history  = "comm/voice/get-voice-history"
     static let comm_text_message_get_text_history  = "comm/text-message/get-text-history"
     static let comm_homework_get_homework_report  = "comm/homework/get-homework-report"
+    static let comm_homework_sendhomework  = "comm/homework/send-homework"
 }
 
 struct localData{
@@ -54,7 +56,6 @@ struct screenType{
     static let isForgotPassword  = 5
     static let is_noticeboard = 23
     static let isAssaignment = 22
-    static let isHomeWork = 9
     static var staffSelectedMenuId = 0
     static var communicationMenuId = 0
     static let communication_text = 2
@@ -65,7 +66,7 @@ struct screenType{
 struct Menu_id{
     
     static var communicationMenuId = 0
-    static var homeWorkMenuId = 22
+    static var homeWorkMenuId = 9
     
 }
 struct TargetTypes{
@@ -102,10 +103,13 @@ struct user_inputs{
     static var description = ""
     static var is_emergency : Int = 0
     static var schedule_date : [String] = []
+    static var selectedImg : [UIImage] = []
+    static var fileUrl:URL?
     static var start_time = ""
     static var end_time = ""
     static var file_name = ""
     static var circular_type = ""
+    static var selectedFileType = ""
     
 }
 struct circular_type{
@@ -135,6 +139,38 @@ func getCurrentDateString(format: String = "dd-MM-yyyy") -> String {
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: Date())
 }
+func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") -> String {
+    guard let date = date else { return "" }
+    
+    let possibleFormats = [
+        "yyyy-MM-dd",
+        "dd-MM-yyyy",
+        "EEE d MMM yyyy",
+        "dd/MM/yyyy",
+        "MMM d, yyyy",
+        "d MMM yyyy",
+        "yyyy/MM/dd"
+    ]
+    
+    let outputFormatter = DateFormatter()
+    outputFormatter.dateFormat = toFormat
+    outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+    
+    for format in possibleFormats {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = format
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let dateObj = inputFormatter.date(from: date) {
+            return outputFormatter.string(from: dateObj)
+        }
+    }
+
+    print("❌ Could not match format for: \(date)")
+    return ""
+}
+
+
 
 
 

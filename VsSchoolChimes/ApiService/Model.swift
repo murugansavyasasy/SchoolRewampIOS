@@ -220,7 +220,7 @@ struct  GetSubjectlistSuc : Codable {
     let data : [GetSubjectDetails]?
 }
 struct GetSubjectDetails:Codable{
-    let id:Int?
+    let id:String?
     let name:String?
     var isSelect:Bool?
 }
@@ -304,21 +304,22 @@ struct TextDetail: Codable {
     let date: String?
 }
 struct HomeworkResponse: Codable {
-    let status: Bool
-    let message: String
-    let data: [Homework]
+    let status: Bool?
+    let message: String?
+    let data: [Homework]?
 }
 
 struct Homework: Codable {
-    let topic: String
-    let content: String
-    let subject_name: String
-    let created_by: String
-    let file_path: [FilePath]
+    let topic: String?
+    let content: String?
+    let subject_name: String?
+    let created_by: String?
+    let file_path: [FilePath]? 
 }
 
 struct FilePath: Codable {
-    let path: String
+    let path: String?
+    let type: String?
 }
 
 struct AwsResps: Codable {
