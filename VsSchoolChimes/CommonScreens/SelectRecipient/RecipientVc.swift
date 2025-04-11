@@ -68,7 +68,16 @@ class RecipientVc: UIViewController{
         getacadmicYr()
         
         if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
+            segmentName.isHidden = true
             speficBtnName.isHidden = true
+            target_type = TargetTypes.section
+            circular_types =  circular_type.section
+            getStandardsAPI()
+            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+            speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+            contentLbl.isHidden = true
+            tv.isHidden = false
+            selectStandardDropDown.isHidden = false
         }else{
             speficBtnName.isEnabled = false
         }
