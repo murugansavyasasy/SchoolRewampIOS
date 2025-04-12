@@ -38,18 +38,26 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
     var passValue = 0
     var count = 5
     var shouldShowFooter = true
+    var studentDetails = UserDefaultFileManager.get_child_Details()
+    var TotalMessageList : [CommunicationReciverData]?
+    var FilteredMessages : [CommunicationReciverData]?
+    var ArchiveMessages : [CommunicationReciverData] = []
+    var TodayMessage : [CommunicationReciverData] = []
+    var dropDown = DropDown()
+    var isFiltered = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         buttons()
 
         StyleAndTranslate()
+        NodataLbl.isHidden = true
+       // NodataImage.isHidden = true
         
         if passValue == 1{
             NameLbl.text = ""
             StandardLbl.text = ""
         }
-        
         
         backBtn.applyBackButton()
         ButtonStyle()
@@ -58,12 +66,16 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         RegisterCell()
         
         setupTableFooter()
+        
+        getCommunicationList(detail_id: "")
+      
+        let Filtertap = UITapGestureRecognizer(target: self, action: #selector(filter))
+        FilterImage.addGestureRecognizer(Filtertap)
+        FilterImage.isUserInteractionEnabled = true
        
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
-        
-        
     }
 
     override func viewDidLayoutSubviews() {
@@ -83,7 +95,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
-        
         
         clickTextView.text = CommonStringFile.TextMessage.translated()
         backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
@@ -139,7 +150,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         clickVoiceLbl.textColor = .black
        
         clickTextView.textColor = .black
-//        voiceBtn.tintColor = tapColor
+        voiceBtn.tintColor = tapColor
         textBtn.tintColor = .black
         
     }
@@ -205,6 +216,211 @@ class ParentCommunicationVc: UIViewController, reloadDelegate {
         setupTableFooter()
         tv.reloadData()
     }
+    
+    @IBAction func filter(_ sender: UIButton) {
+        
+        
+        dropDown.dataSource = ["VOICE","TEXT","Read","Unread"]
+        dropDown.anchorView = FilterImage
+        dropDown.bottomOffset = CGPoint(x: 0, y: (FilterImage.bounds.height))
+        
+        dropDown.direction = .bottom
+        
+        dropDown.show()
+        dropDown.selectionAction = { [self] (index: Int, item: String) in
+           // self.filterBtn.setTitle(item.translated(), for: .normal)
+            
+            switch item{
+            case "VOICE":
+                FilteredMessages = TotalMessageList?.messages(ofType: "VOICE")
+               
+            case "TEXT":
+                FilteredMessages = TotalMessageList?.messages(ofType: "TEXT")
+            
+            case "Read" :
+                FilteredMessages = TotalMessageList?.readMessages()
+                
+            case "Unread" :
+                FilteredMessages = TotalMessageList?.unreadMessages()
+            
+            default:
+               
+                FilteredMessages = TotalMessageList
+            }
+            
+            isFiltered = true
+            tv.reloadData()
+            // Update the label inside the UIView
+//            if let label = self.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+//                self.filterBtn.setTitle(item.translated(), for: .normal)
+//            }
+        }
+        
+    }
+    
+    
+    func getCommunicationList(detail_id : String) {
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [self] (result : Result<CommunicationReciverResponse,Error>) in
+            
+            switch result {
+                
+                
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+//                        TotalMessageList = SuccessMessage.data
+//                        for i in 0..<(TotalMessageList?.count ?? 0){
+//                            if TotalMessageList?[i].id == detail_id{
+//                                TotalMessageList?[i].isExpand = true
+//                            }else{
+//                                TotalMessageList?[i].isExpand = false
+//                            }
+//                        }
+//
+                        
+                        TodayMessage = SuccessMessage.data
+                        tv.reloadData()
+                        
+                       // TotalMessageList?.append(contentsOf: TodayMessage)
+                        
+                    }
+                    
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        TodayMessage = []
+                        NodataLbl.text = SuccessMessage.message
+                        NodataLbl.isHidden = false
+                        tv.reloadData()
+                    }
+                }
+                
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func GetArchiveCommunicationList() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_list_archive, parameters: [:], type: ApitTypeSringFile.GET, token: studentDetails?.access_token ?? "") { [self] (result : Result<CommunicationReciverResponse,Error>) in
+            
+            switch result {
+                
+                
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        ArchiveMessages = SuccessMessage.data
+                        //TotalMessageList?.append(contentsOf: ArchiveMessages)
+                        tv.reloadData()
+                    }
+                    
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        ArchiveMessages = []
+                        
+                        tv.reloadData()
+                        
+                        NodataLbl.text = SuccessMessage.message
+                        NodataImage.isHidden = false
+
+                    }
+                }
+                
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func ReadStatusUpdate(type: String,detail_id: String) {
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+                
+                
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        //getCommunicationList(detail_id: detail_id)
+//                        for i in 0..<(MessageList?.count ?? 0){
+//                            if MessageList?[i].id == detail_id{
+//                                MessageList?[i].is_unread = false
+//                            }
+//                        }
+                        //tv.reloadData()
+                    }
+                    
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        
+                        print(SuccessMessage.message)
+                    }
+                }
+                
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func ReadStatusUpdateArchive(type: String,detail_id: String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+                
+                
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                       // getCommunicationList(detail_id: detail_id)
+                    }
+                    
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        
+                        print(SuccessMessage.message)
+                    }
+                }
+                
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
 }
 
 //MARK: Tableview Functions
@@ -216,53 +432,95 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-//        if BtnId == 0{
-//            count =  2//5
-//        }else{
-//            
-//            count =  2//5
-//        }
-        return count
+        if isFiltered{
+            return FilteredMessages?.count ?? 0
+        }else{
+            
+            TotalMessageList = TodayMessage + ArchiveMessages
+            return TotalMessageList?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if BtnId == 0{
-            
+        let message : CommunicationReciverData?
+        
+        if isFiltered{
+             message = FilteredMessages?[indexPath.row]
+        }else {
+            message = TotalMessageList?[indexPath.row]
+        }
+        
+        switch message?.type.uppercased() {
+       
+        case "TEXT":
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
+           
             cell.sendBtnheight.constant = 0
             cell.sendBtnWidth.constant = 0
             cell.DateLabel.textAlignment = .right
             cell.sendBtn.isHidden = true
-            cell.descriptContent.attributedText = descript(for:"Single Section TableView: If your table view has only one section, you don’t need to implement this method because the default number of sections is 1.", expanded: false)
-//            cell.delegate = self
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
+           
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
+           
+//            DispatchQueue.main.asyncAfter(deadline: .now()+0.0){
+            DispatchQueue.main.async {
+                
+            
+            cell.MessageTitle.text = message?.description
+            cell.DateLabel.text = (message?.time ?? "") + " " + (message?.date ?? "")
+            cell.descriptContent.attributedText = self.descript(for:message?.content ?? "", expanded: message?.isExpand ?? false)
+            cell.delegate = self
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
             cell.descriptContent.addGestureRecognizer(tapGesture)
             
-            DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
-                
                 cell.configureShimmer()
+                
+                if message?.is_unread == true{
+                    cell.newImageOuterView.isHidden = false
+                    cell.NewImageView.isHidden = false
+                }else {
+                    cell.newImageOuterView.isHidden = true
+                    cell.NewImageView.isHidden = true
+                }
             }
             return cell
-        }else{
+            
+            
+        case "VOICE":
             
             let cell = tv.dequeueReusableCell(withIdentifier: CellConfingName.HistoryTC, for: indexPath) as! HistoryTC
+            
             cell.sentBtnHeight.constant = 0
             cell.sendbtn.isHidden = true
             cell.sentBtnWidth.constant = 0
             cell.playBtn.tag = indexPath.row
             cell.datelbl.textAlignment = .right
             let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
-            cell.updatePlayState(isPlaying: playIndex == indexPath.row, url: "https://www.learningcontainer.com/wp-content/uploads/2020/02/Sample-OGG-File.ogg")
+            cell.updatePlayState(isPlaying: playIndex == indexPath.row, url: message?.content)
             cell.delegate = self
             cell.playBtn.setImage(image, for: .normal)
-            DispatchQueue.main.asyncAfter(deadline: .now()+2.5){
+            
+            cell.contentlbl.text = message?.description
+            cell.datelbl.text  = (message?.time ?? "") + " " + (message?.date ?? "")
+            
+            if message?.is_unread == true{
+                
+                cell.NewImageView.isHidden = false
+            }else {
+                cell.NewImageView.isHidden = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now()+1.0){
                 
                 cell.configureShimmer()
             }
+    
             return cell
+            
+        default:
+            return UITableViewCell()
         }
     }
     
@@ -270,59 +528,113 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         return UITableView.automaticDimension
     }
     
-    // MARK: - Tap Gesture for "See More" / "See Less"
+
+    
     @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel, let text = label.text else { return }
+        guard let label = gesture.view as? UILabel, let attributedText = label.attributedText else { return }
+        let text = attributedText.string
+
+        // Define interactive ranges for "View" and "hide".
+        let viewRange = (text as NSString).range(of: "View")
+        let hideRange = (text as NSString).range(of: "hide")
         
-        let seeMoreRange = (text as NSString).range(of: CommonStringFile.seemore.translated())
-        let seeLessRange = (text as NSString).range(of: CommonStringFile.seeLess.translated())
-        
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) ||
-            gesture.didTapAttributedTextInLabel(label: label, inRange: seeLessRange) {
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: viewRange) ||
+           gesture.didTapAttributedTextInLabel(label: label, inRange: hideRange) {
             handleSeeMoreTap(gesture)
         }
     }
-    
-    //MARK: EXPANDABLE LABLE
+
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
         let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = label.text
-        let isExpanded = label.numberOfLines == 0
-        label.numberOfLines = isExpanded ? 3 : 0
-        label.attributedText = descript(
-            for: fullDescription ?? "",
-            expanded: !isExpanded
-        )
+        
+        var message: CommunicationReciverData?
+        if isFiltered {
+            message = FilteredMessages?[indexPath.row]
+        } else {
+            message = TotalMessageList?[indexPath.row]
+        }
+        guard let fullDescription = message?.content else { return }
+
+        let threshold = 120
+        if message?.isExpand == nil { message?.isExpand = false }
+        
+        // Toggle the expanded state.
+        message?.isExpand!.toggle()
+        let expanded = message?.isExpand ?? false
+        
+        // Configure the label's number of lines and attributed text.
+        label.numberOfLines = expanded ? 0 : (fullDescription.count > threshold ? 3 : 0)
+        label.attributedText = descript(for: fullDescription, expanded: expanded)
+
+        // Update read status if required.
+        if message?.is_unread == true {
+            
+            if TodayMessage.contains(where: {$0.id == message?.id}){
+                
+                ReadStatusUpdate(type: message?.type ?? "", detail_id: message?.id ?? "")
+                
+            }else if ArchiveMessages.contains(where: {$0.id == message?.id}){
+                
+                ReadStatusUpdateArchive(type: message?.type ?? "", detail_id: message?.id ?? "")
+            }
+            
+            let cell = tv.cellForRow(at: indexPath) as! TextHistoryTVCell
+            cell.NewImageView.isHidden = true
+        }
+        
+         //Save updated message back to the data source.
+        if isFiltered {
+            FilteredMessages?[indexPath.row] = message!
+        } else {
+            TotalMessageList?[indexPath.row] = message!
+        }
+        
+        // Refresh table view layout.
         tv.beginUpdates()
         tv.endUpdates()
+       
     }
-    
-    //MARK: TEXT ADD SEE MORE
+
+
+
+    /// Returns an attributed string based on whether the text is in an expanded or collapsed state.
+    /// If the text is longer than the threshold, it appends "View" (when collapsed) or "hide" (when expanded)
+    /// as interactive links. For small text, no extra link is added.
     func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-        // If expanded, show full text with "See less"
-        if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess.translated()
-            let attributedText = NSMutableAttributedString(string: fullString)
-            let seeLessRange = (fullString as NSString).range(of: "See less")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            return attributedText
-        } else {
-            var fullString = ""
-            // Otherwise, truncate and show "See more"
-            if fullDescription.count > 120{
-                let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + CommonStringFile.seemore.translated()
-            }else{
-                fullString = fullDescription
+        let threshold = 120
+        let attributedText: NSMutableAttributedString
+        
+        if fullDescription.count > threshold {
+            // For large text with truncation and toggling.
+            if expanded {
+                // Expanded state: full text with "hide" link.
+                let fullString = fullDescription + " " + "hide"
+                attributedText = NSMutableAttributedString(string: fullString)
+                let hideRange = (fullString as NSString).range(of: "hide")
+                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: hideRange)
+            } else {
+                // Collapsed state: truncated text with "View" link.
+                let truncatedText = String(fullDescription.prefix(100))
+                let fullString = truncatedText + " " + "View"
+                attributedText = NSMutableAttributedString(string: fullString)
+                let viewRange = (fullString as NSString).range(of: "View")
+                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: viewRange)
             }
-            let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See more" text to blue and underline it
-            let seeMoreRange = (fullString as NSString).range(of: "See more")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-            return attributedText
+        } else {
+            // For small text, no "hide" label, only toggleable "View" link.
+            if expanded {
+                // Expanded state: full text with no additional label.
+                attributedText = NSMutableAttributedString(string: fullDescription)
+            } else {
+                // Collapsed state: full text + "View" link.
+                let fullString = fullDescription + " " + "View"
+                attributedText = NSMutableAttributedString(string: fullString)
+                let viewRange = (fullString as NSString).range(of: "View")
+                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: viewRange)
+            }
         }
+        return attributedText
     }
     
     // Method to load the footer from nib and set it as tableFooterView
@@ -354,15 +666,39 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 footer.alpha = 0
             }, completion: {[self] _ in
                 // Hide the footer after animation completes.
+                
+                GetArchiveCommunicationList()
+                
                 tv.tableFooterView = nil
                 shouldShowFooter = false
-                
-                count += 2
-                tv.reloadData()
             })
         } else {
             // In case footer is already nil.
             shouldShowFooter = false
         }
     }
+}
+
+
+extension Array where Element == CommunicationReciverData {
+    
+    // Filter unread messages
+    func unreadMessages() -> [CommunicationReciverData] {
+        return self.filter { $0.is_unread }
+    }
+    
+    // Filter read messages
+    func readMessages() -> [CommunicationReciverData] {
+        return self.filter { !$0.is_unread }
+    }
+    
+    // Filter by type (e.g. "TEXT", "VOICE")
+    func messages(ofType type: String) -> [CommunicationReciverData] {
+        return self.filter { $0.type.uppercased() == type.uppercased() }
+    }
+    
+    // Filter by subject
+//    func messages(withSubject subject: String) -> [CommunicationReciverData] {
+//        return self.filter { $0.subject == subject }
+//    }
 }
