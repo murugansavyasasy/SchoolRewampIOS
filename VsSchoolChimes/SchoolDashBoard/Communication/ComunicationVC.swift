@@ -119,7 +119,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var textCountLbl: UILabel!
     @IBOutlet weak var no_recordLbl: UILabel!
     @IBOutlet weak var voiceSetTitleLbl: UILabel!
-    
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     
@@ -1233,7 +1232,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func voiceview(_ sender: Any) {
-        
+        let title = "Do you want to send voice from history?"
+        let attributedTitle = NSAttributedString(string: title, attributes: [
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ])
+        moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
+        moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
         enabelVoice_view(
             isforward: false,
             voiceUrl: "",
@@ -1362,6 +1366,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     }
     @IBAction func textviewshow(_ sender: Any) {
+        
+        let title = "Do you want to send from history?"
+        let attributedTitle = NSAttributedString(string: title, attributes: [
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ])
+        moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
+        moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
+        
         recrdimg.image = ImageName.mic1
         audioRecorder?.stop()
         isRecording = false
@@ -1376,6 +1388,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
+        let title = "Send from Schedule Call History?"
+        let attributedTitle = NSAttributedString(string: title, attributes: [
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ])
+        moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
+        moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
         enabelScheduleView(
             isforward: false,
             voiceUrl: "",
