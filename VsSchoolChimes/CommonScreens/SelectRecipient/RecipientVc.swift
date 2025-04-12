@@ -669,11 +669,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
                 sectionIds = selectedIds.joined(separator: ",")
-                
-                if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
-                    getSubjectListAPI(finalSectionIds)
+                if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId{
+                    if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
+                        getSubjectListAPI(finalSectionIds)
+                    }
+                    selectSubject.isHidden = false
+                   
                 }
-                selectSubject.isHidden = false
                 speficBtnName.isEnabled = selectedSections.count == 1
                 speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
                 
