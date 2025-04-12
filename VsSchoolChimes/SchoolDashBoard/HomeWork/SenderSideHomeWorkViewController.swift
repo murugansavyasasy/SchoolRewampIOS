@@ -48,7 +48,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var CustomDateBtn: HalfColorButton!
     @IBOutlet weak var customDateLbl: UILabel!
+    @IBOutlet weak var acidamicYrDropView: UIView!
+    @IBOutlet weak var acodumicYearLbl: UILabel!
     
+    @IBOutlet weak var acodomicYearLbl: UILabel!
+    @IBOutlet weak var acodumicHeight: NSLayoutConstraint!
     var selectedImages: [UIImage] = []
     var url : URL?
     let photoPickManager = PhotoPickerManager.shared
@@ -56,6 +60,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let formatter = DateFormatter()
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
+    let acidamicdrops = DropDown()
     var image = "image/pdf"
     var delegate : HistorySelectDelegate?
     let customdate = DateFormatter()
@@ -69,9 +74,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var standardDetails: [StandardDetail]?
     var sectionList = [String]()
     var standerdList = [String]()
+    var AcadimicYearDatas : [AcadimicYearData] = []
+    var accadimYr :[String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        acodumicYearLbl.isHidden = true
+        acidamicYrDropView.isHidden = true
+        acodumicHeight.constant = 0
         selectDate()
+        getacadmicYr()
         getStandardsAPI()
         BackBtn.applyBackButton()
         DetailsTxtview.applyRightTxt()
@@ -106,7 +117,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
         SectionView.addGestureRecognizer(sectionTap)
-        
+        let acidmaciyrClick = UITapGestureRecognizer(target: self, action:
+                                                        #selector(academicYearDrop_action))
+        acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
+        acidamicYrDropView.layer.cornerRadius = 4
+        acidamicYrDropView.layer.shadowColor = UIColor.black.cgColor
+        acidamicYrDropView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        acidamicYrDropView.layer.shadowRadius = 5
+        acidamicYrDropView.layer.shadowOpacity = 0.3
+        acidamicYrDropView.layer.cornerRadius = 8
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
         ReportView.isHidden = true
@@ -114,7 +133,45 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         calenderHeight.constant = 0
         imageSelection()
     }
-    
+    @IBAction func academicYearDrop_action() {
+        accadimYr.removeAll()
+        for i in 0..<(AcadimicYearDatas.count) {
+            accadimYr.append(AcadimicYearDatas[i].year ?? "")
+        }
+        acidamicdrops.anchorView = acidamicYrDropView
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: acidamicYrDropView.bounds.height)
+        acidamicdrops.show()
+        
+        acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
+            acodomicYearLbl.text = item
+        }
+        
+    }
+    func getacadmicYr(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            //                        listTable.isHidden = true
+                            AcadimicYearDatas = successMessage.data ?? []
+                            for i in 0..<(AcadimicYearDatas.count){
+                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                    acodomicYearLbl.text = AcadimicYearDatas[i].year
+                                }
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
             colors: [Colornames.stafGradient, Colornames.stafGradient1],
@@ -298,13 +355,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBAction func HomeworkBtnAct(_ sender: Any) {
         
         ToStdOrSecBtnBottom.constant = 50
+        acodumicHeight.constant = 0
         gradientcolours(button: homeworkBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         homeworkBtn.setTitleColor(.white, for:.normal)
         ReportBtn.backgroundColor = .clear
         
         gradientcolours(button: ReportBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ReportBtn.setTitleColor(.black, for:.normal)
-        
+        acodumicYearLbl.isHidden = true
+        acidamicYrDropView.isHidden = true
         ReportView.isHidden = true
         ReportView.alpha = 0
         ComposeHomeworkView.isHidden = false
@@ -321,7 +380,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         gradientcolours(button: homeworkBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         homeworkBtn.setTitleColor(.black, for:.normal)
-        
+        acodumicYearLbl.isHidden = false
+        acidamicYrDropView.isHidden = false
+        acodumicHeight.constant = 38
         ComposeHomeworkView.isHidden = true
         ComposeHomeworkView.alpha = 0
         ReportView.isHidden = false
@@ -382,7 +443,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        if TitleTxtfield.text != nil && DetailsTxtview.text != nil{
+        if TitleTxtfield.text != ""  && DetailsTxtview.text != ""{
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.selectedImg = selectedImages
@@ -399,6 +460,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
+        }else{
+            
         }
 
     }
