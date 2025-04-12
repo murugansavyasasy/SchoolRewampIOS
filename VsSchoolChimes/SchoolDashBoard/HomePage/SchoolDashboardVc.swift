@@ -168,13 +168,11 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
     }
     
-    func configureView(
-        _ view: UIView,
+    func configureView(_ view: UIView,
         gradientColors: [UIColor],
         cornerRadius: CGFloat = 10,
         opacity: CGFloat = 0.5,
-        lightenFactor: CGFloat = 0.3
-    ) {
+        lightenFactor: CGFloat = 0.3) {
         // Set corner radius
         view.layer.cornerRadius = cornerRadius
         view.layer.masksToBounds = true

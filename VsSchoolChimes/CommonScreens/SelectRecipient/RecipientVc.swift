@@ -55,6 +55,8 @@ class RecipientVc: UIViewController{
     var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
     let acidamicdrops = DropDown()
+    var  selectedAcadimicYearId: Int?
+    var accadimYrIDs :[Int] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,15 +66,17 @@ class RecipientVc: UIViewController{
                 for: .normal
             )
         
-        configureRecipientTabs()
         getacadmicYr()
+        
+        configureRecipientTabs()
+        
         
         if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
             segmentName.isHidden = true
             speficBtnName.isHidden = true
             target_type = TargetTypes.section
             circular_types =  circular_type.section
-            getStandardsAPI()
+            getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
             speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
             contentLbl.isHidden = true
@@ -85,8 +89,6 @@ class RecipientVc: UIViewController{
         }
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
-        
-        
         applyShadowAndCornerRadius(to: selectStandardDropDown)
         applyShadowAndCornerRadius(to: selectSubject)
         applyShadowAndCornerRadius(to: acidamicYrDropView)
@@ -125,7 +127,7 @@ class RecipientVc: UIViewController{
             ]
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
-            getStandardsAPI()
+            getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             speficBtnName.isHidden = true
@@ -140,7 +142,7 @@ class RecipientVc: UIViewController{
                 ]
                 target_type = TargetTypes.standard
                 circular_types =  circular_type.standard
-                getStandardsAPI()
+                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             } else {
                 cv_itemsarry = [
                     recipeint_tabBarName.Entier_School,
@@ -161,6 +163,8 @@ class RecipientVc: UIViewController{
         }
         
         segmentName.selectedSegmentIndex = 0
+        
+       
     }
     
     
@@ -234,21 +238,25 @@ class RecipientVc: UIViewController{
                                         message: succesmessage.message ?? "",
                                         on: self
                                     ) {
-                                        self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-                                        
+                                        self.gotoDashboard()
                                     }
-                                
                             }
                         }else {
                             
                             DispatchQueue.main.async {
                                 
-                                
+                                CustomAlert
+                                    .showAlertWithOkAction(
+                                        title: "Success",
+                                        message: succesmessage.message ?? "",
+                                        on: self
+                                    ) {
+                                        self.gotoDashboard()
+                                    }
                             }
                         }
                         
                     case.failure(let error) :
-                        
                         DispatchQueue.main.async {
                             print(error.localizedDescription)
                         }
@@ -410,7 +418,7 @@ class RecipientVc: UIViewController{
         case recipeint_tabBarName.Group:
             target_type = TargetTypes.group
             circular_types =  circular_type.group
-            getGrouplistAPI()
+            getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
@@ -419,7 +427,7 @@ class RecipientVc: UIViewController{
         case recipeint_tabBarName.Standard:
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
-            getStandardsAPI()
+            getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             contentLbl.isHidden = true
             speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
@@ -428,7 +436,7 @@ class RecipientVc: UIViewController{
         case recipeint_tabBarName.Section_Student:
             target_type = TargetTypes.section
             circular_types =  circular_type.section
-            getStandardsAPI()
+            getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
             speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
             contentLbl.isHidden = true
@@ -457,6 +465,7 @@ class RecipientVc: UIViewController{
     }
     
     func setupStdDropdown() {
+        
         StdDropdown.anchorView = selectStandardDropDown
         StdDropdown.dataSource = dropDownArray
         StdDropdown.bottomOffset = CGPoint(x: 0, y: selectStandardDropDown.bounds.height)
@@ -497,6 +506,7 @@ class RecipientVc: UIViewController{
         accadimYr.removeAll()
         for i in 0..<(AcadimicYearDatas.count) {
             accadimYr.append(AcadimicYearDatas[i].year ?? "")
+            accadimYrIDs.append(AcadimicYearDatas[i].id ?? 0)
         }
         acidamicdrops.anchorView = acidamicYrDropView
         acidamicdrops.dataSource = accadimYr
@@ -505,13 +515,29 @@ class RecipientVc: UIViewController{
         
         acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
+            selectedAcadimicYearId =  AcadimicYearDatas[index].id
             
             if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
             }
             
+            if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Standard {
             
+                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+            }
+            else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Section_Student {
+            
+                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+            }
+        
+            else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Group {
+                getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+            }
+    //        else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Entier_School {
+    //
+    //        }
         }
+        
         
     }
 }
@@ -652,7 +678,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }
                 speficBtnName.isEnabled = selectedSections.count == 1
                 speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
-
+                
             }
             
         case recipeint_tabBarName.Staff:
@@ -681,11 +707,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     // MARK:  This api for  Listing Stars ============================
     
-    func getGrouplistAPI(){
+    func getGrouplistAPI(academic_year_id:Int){
         APIService.shared
             .makeApi(
                 url: ServiceUrl.recipient_get_group_list,
-                parameters: [:],
+                parameters: [COMMON_PARAMETER.academic_year_id:academic_year_id],
                 type: ApitTypeSringFile.GET ,
                 token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
             ) {
@@ -727,8 +753,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             }
     }
     
-    func getStandardsAPI(){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+    func getStandardsAPI(academic_year_id:Int){
+        dropDownArray.removeAll()
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 print("successsuccess",successMessage.data)
@@ -737,6 +764,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
                         tv.isHidden = false
+                        noRecordLbl.isHidden = true
                         standardDetails = successMessage.data
                         standardDetails?.enumerated().forEach { index, student in
                             standardDetails?[index].isSelect = false
@@ -760,6 +788,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async { [self] in
                         
                         tv.isHidden = true
+                        noRecordLbl.isHidden = false
                         noRecordLbl.text = successMessage.message
                     }
                 }
@@ -836,37 +865,40 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 result:Result <get_academic_yearSuc,
                 Error>
             ) in
-            switch result {
-            case .success(let successMessage):
-                if successMessage.status == true{
-                    DispatchQueue.main.async { [self] in
-//                        listTable.isHidden = true
-                        AcadimicYearDatas = successMessage.data ?? []
-                        for i in 0..<(AcadimicYearDatas.count){
-                            if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                                    label.text = AcadimicYearDatas[i].year
-                                    break
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            //                        listTable.isHidden = true
+                            AcadimicYearDatas = successMessage.data ?? []
+                            for i in 0..<(AcadimicYearDatas.count){
+                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                    if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                                        label.text = AcadimicYearDatas[i].year
+                                        selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                        break
+                                    }
                                 }
                             }
+                            
+                            
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            
+                            //                        listTable.isHidden = true
                         }
                     }
-                }else{
-                    DispatchQueue.main.async { [self] in
-                      
-//                        listTable.isHidden = true
-                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
             }
-        }
         
     } // MARK:   Listing  API END ===========================
     
     
     
-   
+    
     
     
     
@@ -905,7 +937,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.gotoDashboard()
                                     
                                 }
                             
@@ -967,9 +999,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     title: "Success",
                                     message: succesmessage.message ?? "",
                                     on: self
-                                ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-                                    
+                                ) { [self] in
+                                    gotoDashboard()
                                 }
                             
                         }
@@ -992,4 +1023,28 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
+    func gotoDashboard(){
+        
+        switch staff_role {
+        case PriorityType.is_staff:
+            self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+           
+        case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+            speficBtnName.isHidden = true
+            
+            if (staffDetailsCount?.count ?? 0) > 1 {
+                self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                
+            } else {
+                self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+            }
+            
+        default:
+            print("Unhandled staff role")
+        }
+        
+        // Add segments from updated array
+        
+    }
 }
