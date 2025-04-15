@@ -12,6 +12,8 @@ protocol SelectedTextDelegate{
 class TextHistoryTVCell: UITableViewCell {
     
     @IBOutlet weak var sendBtnheight: NSLayoutConstraint!
+    @IBOutlet weak var NewImageView: UIImageView!
+    @IBOutlet weak var newImageOuterView: UIView!
     @IBOutlet weak var sendBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var DateLabel: ShimmerLabel!
     @IBOutlet weak var MessageTitle: ShimmerLabel!
@@ -34,8 +36,18 @@ class TextHistoryTVCell: UITableViewCell {
         DateLabel.setFont(style: .body, size: FontSize.BodySize)
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
+        sendBtn.isHidden = true
         
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Assuming 'myLabel' is your UILabel
+        descriptContent.preferredMaxLayoutWidth = descriptContent.frame.width
+        
+        configureShimmer()
+    }
+    
     @IBAction func Select(_ sender: UIButton) {
         delegate?.select(Tittle: MessageTitle.text ?? "selectedText", descriptContent: descriptContent.text ?? "hgdsxgvbdusf")
     }
@@ -51,5 +63,6 @@ class TextHistoryTVCell: UITableViewCell {
         descriptContent.removeShimmer()
         DateLabel.removeShimmer()
         outerview.removeShimmer()
+        sendBtn.isHidden = false
     }
 }

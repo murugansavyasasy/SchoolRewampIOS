@@ -66,6 +66,7 @@ class RecipientVc: UIViewController{
                 UserDefaultFileManager.get_staff_Details()?.school_name,
                 for: .normal
             )
+        backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr()
         
@@ -117,6 +118,8 @@ class RecipientVc: UIViewController{
         
         tv.delegate = self
         tv.dataSource = self
+        
+        configureRecipientTabs()
     }
     
     
@@ -157,6 +160,7 @@ class RecipientVc: UIViewController{
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
+//                circular_types =  circular_type.
                 tableHeight.constant = 0
             }
             
@@ -192,13 +196,20 @@ class RecipientVc: UIViewController{
     
     @IBAction func send(_ sender: UIButton) {
         print("selectedId : \(array_selectedId)")
-        guard !array_selectedId.isEmpty else {
-            alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
-                on: self)
-            return
+        
+        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School{
+            
+        }else{
+            
+            guard !array_selectedId.isEmpty else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_target,
+                    on: self)
+                return
+            }
         }
+       
         switch screenType.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
@@ -291,13 +302,16 @@ class RecipientVc: UIViewController{
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     
                     if user_inputs.voice_link.contains("https:") {
+                        // Voice link is already uploaded
                         sendVoiceMessage_communication()
-                    }else{
+                    } else {
+                        // Voice link is local, needs to be uploaded first
                         uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
                             CircularProgressLoader.shared.hide()
                             self.sendVoiceMessage_communication()
                         }
                     }
+
                 default:
                     print("Unhandled communication screen type: \(ScreenType)")
                 }
@@ -931,10 +945,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             
                             
                         }
+                        
                     }else{
-                        DispatchQueue.main.async { [self] in
-                            
-                            //                        listTable.isHidden = true
+                        DispatchQueue.main.async {
+                            self.alert
+                                .showAlert(
+                                    title: "Error",
+                                    message: successMessage.message ?? "" ,
+                                    on: self
+                                )
                         }
                     }
                 case .failure(let error):

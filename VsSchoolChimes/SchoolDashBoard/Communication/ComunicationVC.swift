@@ -199,17 +199,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             staff_role == PriorityType.is_grouphead ||
             staff_role == PriorityType.is_principal || VoiceHistory != nil || TextHistory != nil{
             if isScheduleSelected{
-                emengencyCall.isHidden = true
-                EnableCallLbl.isHidden = true
+                
+                ViewAnimator.hideFade(EnableCallLbl)
+                ViewAnimator.hideFade(emengencyCall)
             }else{
-                emengencyCall.isHidden = false
-                EnableCallLbl.isHidden = false
+                
+                ViewAnimator.showFade(emengencyCall)
+                ViewAnimator.showFade(EnableCallLbl)
             }
             staffDetails = staffDetailsCount?.first
             
         } else {
-            emengencyCall.isHidden = true
-            EnableCallLbl.isHidden = true
+            ViewAnimator.hideFade(EnableCallLbl)
+            ViewAnimator.hideFade(emengencyCall)
             
         }
     }
@@ -263,8 +265,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     alert.showAlert(title: "",message: AlertstringFile.select_date,on: self)
                 }
             }
-           
-          
+            
+            
         }
         else{
             alert
@@ -494,6 +496,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         //MARK: Label font style
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
+        voiceSetTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         messageSendTime.setFont(style: .body, size: FontSize.BodySize)
         voiceTiming.setFont(style: .body, size: FontSize.BodySize)
         Timinglbl.setFont(style: .body, size: FontSize.BodySize)
@@ -681,7 +684,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         dateSelectedViewHeight.constant = 0
         doneBtn.layer.cornerRadius = 8
         
-        let title = "Do you want send from History?"
+        let title = "Send voice from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -716,7 +719,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         // Set initial times
         let initialFromTime = Date() // Current time for example
-        let initialToTime = Calendar.current.date(byAdding: .hour, value: 1, to: initialFromTime) ?? Date()
+        let initialToTime = Calendar.current.date(byAdding: .minute, value: 20, to: initialFromTime) ?? Date()
         
         fromTime.setTitle(formatter.string(from: initialFromTime), for: .normal)
         toTime.setTitle(formatter.string(from: initialToTime), for: .normal)
@@ -810,6 +813,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             return
         }
         setupRecorder()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        messageSendTime.text = "\(formatter.string(from: Date()))"
         // Access the file securely if necessary
         if selectedFileURL.startAccessingSecurityScopedResource() {
             defer { selectedFileURL.stopAccessingSecurityScopedResource() }
@@ -825,6 +831,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
                 // Optional: Use the destinationURL for further processing
                 AudioPlayUrl = destinationURL.absoluteString
+                if let filePath = AudioPlayUrl { // Your path string
+                    if let duration = getAudioDuration(from: filePath) {
+                        print("Audio Duration: \(duration)")
+                        voiceTiming.text = "\(duration)"
+                    }
+                }
+                
                 // UI updates (e.g., show player)
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
@@ -840,6 +853,20 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         } else {
             print("Failed to access security scoped resource.")
         }
+    }
+    
+    
+    func getAudioDuration(from filePath: String) -> String? {
+        let fileURL = URL(fileURLWithPath: filePath)
+        let asset = AVAsset(url: fileURL)
+        let duration = asset.duration
+        let durationInSeconds = CMTimeGetSeconds(duration)
+        
+        guard durationInSeconds.isFinite else { return nil }
+        
+        let minutes = Int(durationInSeconds) / 60
+        let seconds = Int(durationInSeconds) % 60
+        return String(format: "%02d:%02d", minutes, seconds) // e.g., "01:27"
     }
     
     // Handle cancellation
@@ -863,39 +890,39 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         tittlemessage.text = CommonStringFile.VoiceMessage.translated()
     }
-
     
-   
+    
+    
     
     //MARK: HISTORY VIEW
     func showHistoryView() {
         ViewAnimator.showFade(historyview)
         ViewAnimator.hideFade(voiceview)
         ViewAnimator.hideFade(textmessageview)
-
+        
         recrdimg.image = ImageName.mic1
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
         recordingTimer = nil
         deletRecoding()
-
+        
         ViewAnimator.animateConstraintChange { [self] in
             playerheight.constant = 0
             self.view.layoutIfNeeded()
         }
-
+        
         radio1.setImage(ImageName.circle, for: .normal)
         ViewAnimator.hideFade(calanderOuter)
-
+        
         let isTextMode = tittlemessage.text == CommonStringFile.TextMessage.translated()
-
+        
         let title = isTextMode ? CommonStringFile.BacktoTextMessage.translated() : CommonStringFile.BackToVoiceMessage.translated()
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
         historyBtn.setAttributedTitle(attributedTitle, for: .normal)
-
+        
         if isTextMode {
             get_Text_History()
         } else {
@@ -903,7 +930,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             get_Voice_History()
         }
     }
-
+    
     func get_Voice_History(){
         APIService.shared
             .makeApi(url:  ServiceUrl.comm_voice_get_voice_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
@@ -980,7 +1007,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     //MARK: DELETE RECORDING
     func deletRecoding(){
         recoderbtn.isEnabled = true
-        //        sendbtn.isEnabled = false
         dltbtn.isHidden = true
         voiceStackview.isHidden = true
         addfile.isHidden = false
@@ -1016,7 +1042,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 let duration = Date().timeIntervalSince(startTime)
                 let minutes = Int(duration) / 60
                 let seconds = Int(duration) % 60
-                voiceTiming.text = String(format: "%02d:%02d", minutes, seconds)            }
+                voiceTiming.text = String(format: "%02d:%02d", minutes, seconds)
+                let durationString =  voiceTiming.text ?? ""
+                let totalSeconds = convertTimeStringToSeconds(durationString)
+                voiceRecordedDuration = totalSeconds
+            }
+            
+            
             
             // Set message send time
             let formatter = DateFormatter()
@@ -1062,18 +1094,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let buttonFrame = button.convert(button.bounds, to: self.view)
         timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: buttonFrame.maxY + 10, width: 250, height: 200)
         doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: timePicker.frame.maxY - 40, width: 70, height: 30)
-
+        
         timePicker.backgroundColor = .white
         timePicker.layer.cornerRadius = 20
         timePicker.layer.shadowColor = UIColor.black.cgColor
         timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
         timePicker.layer.shadowRadius = 5
         timePicker.layer.shadowOpacity = 0.3
-
+        
         timePicker.fadeAndPopIn()
         doneButton.fadeAndPopIn()
     }
-
+    
     
     //MARK: UPDATE RECORDING UPDATE DURATION
     @objc func updateRecordingTime() {
@@ -1172,6 +1204,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                         voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
                         
                         voiceRecordedDuration = Int(totalDurationFormatted)
+                        
                     }
                 }
             } else {
@@ -1229,12 +1262,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func voiceview(_ sender: Any) {
-        let title = "Do you want to send voice from history?"
+        selectedDates.removeAll()
+        let title = "Send voice from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
+        
         enabelVoice_view(
             isforward: false,
             voiceUrl: "",
@@ -1244,11 +1279,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     
- 
+    
     
     @IBAction func doneSelection(_ sender: Any) {
         
-//        var newHeight: CGFloat = 0
+        //        var newHeight: CGFloat = 0
         
         if selectedDates.count == 0{
             
@@ -1262,13 +1297,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 dateSelectedViewHeight.constant = 64
                 self.view.layoutIfNeeded()
             }
-          
+            
         }else{
             ViewAnimator.animateConstraintChange { [self] in
                 dateSelectedViewHeight.constant = 120
                 self.view.layoutIfNeeded()
             }
-           
+            
         }
         ViewAnimator.hideFade(calanderOuter)
     }
@@ -1294,8 +1329,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     }
     @IBAction func textviewshow(_ sender: Any) {
-        
-        let title = "Do you want to send from history?"
+        selectedDates.removeAll()
+        let title = "Send text from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1316,7 +1351,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
-        let title = "Send from Schedule Call History?"
+        selectedDates.removeAll()
+        let title = "Schedule call from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1338,12 +1374,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             informationcontent.text = ""
             TextMsgTittle.text = ""
         }
-
+        
         ViewAnimator.hideFade(calanderOuter)
         ViewAnimator.hideFade(timePicker)
         ViewAnimator.hideFade(doneButton)
         activeButton = nil
-
+        
         textBtn.backgroundColor = backgroundcolor
         textBtn.tintColor = .white
         scheduleBtn.tintColor = .black
@@ -1355,50 +1391,50 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         clickVoiceLbl.textColor = .black
         voiceBtn.tintColor = .black
         voiceBtn.backgroundColor = .white
-
+        
         ViewAnimator.hideFade(historyview)
         ViewAnimator.showFade(textmessageview)
         ViewAnimator.hideFade(voiceview)
-
+        
         tittlemessage.text = CommonStringFile.TextMessage.translated()
         scheduleBtn.backgroundColor = .white
         isScheduleSelected = false
         ViewAnimator.hideFade(schedulCallView)
-
+        
         ViewAnimator.animateConstraintChange { [self] in
             timePickerHeight.constant = 0
             dateSelectedViewHeight.constant = 0
             self.view.layoutIfNeeded()
         }
     }
-
+    
     
     
     func enabelVoice_view(isforward: Bool, voiceUrl: String, title: String, durations: Int,url: String) {
         emengencyCall.isOn = false
         isScheduleSelected = false
         updateEmergencyCallVisibility(staff_role)
-
+        
         if isforward {
             AudioPlayUrl = url
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
-
+            
             ViewAnimator.animateConstraintChange { [self] in
                 playerheight.constant = 60
                 self.view.layoutIfNeeded()
             }
-
+            
             ViewAnimator.showFade(voiceStackview)
             ViewAnimator.showFade(dltbtn)
             recoderbtn.isEnabled = false
-
+            
             if let audioUrl = URL(string: voiceUrl) {
                 playerItem = AVPlayerItem(url: audioUrl)
                 player = AVPlayer(playerItem: playerItem)
             }
-
+            
             voiceTitleeTxt.text = title
         } else {
             recrdimg.image = ImageName.mic1
@@ -1410,17 +1446,17 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             voiceTiming.text = "00:00 / 03:00"
             voiceTitleeTxt.text = title
         }
-
+        
         voiceBtn.backgroundColor = backgroundcolor
         textClickView.backgroundColor = .white
         voiceClickView.backgroundColor = tapColor
         seduleClickView.backgroundColor = .white
         textBtn.backgroundColor = .white
-
+        
         ViewAnimator.showFade(voiceview)
         ViewAnimator.hideFade(textmessageview)
         ViewAnimator.hideFade(historyview)
-
+        
         tittlemessage.text = CommonStringFile.VoiceMessage.translated()
         clickVoiceLbl.textColor = .white
         clickTextView.textColor = .black
@@ -1429,37 +1465,37 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.tintColor = .white
         textBtn.tintColor = .black
         scheduleBtn.backgroundColor = .white
-
+        
         ViewAnimator.hideFade(schedulCallView)
         ViewAnimator.hideFade(timePicker)
         ViewAnimator.hideFade(doneButton)
         ViewAnimator.hideFade(calanderOuter)
-
+        
         ViewAnimator.animateConstraintChange { [self] in
             timePickerHeight.constant = 0
             dateSelectedViewHeight.constant = 0
             self.view.layoutIfNeeded()
         }
     }
-
+    
     func enabelScheduleView(isforward: Bool, voiceUrl: String, title: String, durations: Int,url: String) {
         emengencyCall.isOn = false
-
+        
         if isforward {
             AudioPlayUrl = url
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
-
+            
             ViewAnimator.animateConstraintChange { [self] in
                 playerheight.constant = 60
                 self.view.layoutIfNeeded()
             }
-
+            
             ViewAnimator.showFade(voiceStackview)
             ViewAnimator.showFade(dltbtn)
             recoderbtn.isEnabled = false
-
+            
             if let audioUrl = URL(string: voiceUrl) {
                 playerItem = AVPlayerItem(url: audioUrl)
                 player = AVPlayer(playerItem: playerItem)
@@ -1473,25 +1509,26 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             deletRecoding()
             voiceTiming.text = "00:00 / 03:00"
         }
-
+        
+        isScheduleSelected = true
         updateEmergencyCallVisibility(staff_role)
-
+        
         scheduleBtn.backgroundColor = backgroundcolor
         textClickView.backgroundColor = .white
         voiceClickView.backgroundColor = .white
         seduleClickView.backgroundColor = tapColor
-        isScheduleSelected = true
+        
         showVoiceMessageView()
-
+        
         ViewAnimator.showFade(schedulCallView)
         ViewAnimator.hideFade(textmessageview)
-
+        
         ViewAnimator.animateConstraintChange { [self] in
             timePickerHeight.constant = 141
             dateSelectedViewHeight.constant = 0
             self.view.layoutIfNeeded()
         }
-
+        
         textBtn.backgroundColor = .white
         voiceBtn.backgroundColor = .white
         tittlemessage.text = CommonStringFile.ScheduleCall.translated()
@@ -1502,11 +1539,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         textBtn.tintColor = .black
         scheduleBtn.tintColor = .white
         voiceBtn.tintColor = .black
-
+        
         ViewAnimator.hideFade(emengencyCall)
         ViewAnimator.hideFade(EnableCallLbl)
     }
-
+    
     // Record Button Action
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         
@@ -1573,23 +1610,23 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
 }
-        
-        //MARK: Table view Delegate Functions
-    extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
-        
-        
 
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            if tittlemessage.text == CommonStringFile.TextMessage.translated(){
-                
-                return TextHistory?.count ?? 0
-            }
-            else{
-                return VoiceHistory?.count ?? 0
-            }
-           
-        }
+//MARK: Table view Delegate Functions
+extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocumentPickerDelegate{
+    
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             
+            return TextHistory?.count ?? 0
+        }
+        else{
+            return VoiceHistory?.count ?? 0
+        }
+        
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             
@@ -1601,7 +1638,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             )
             
             cell.MessageTitle.text = TextHistory?[indexPath.row].description
-            cell.DateLabel.text = TextHistory?[indexPath.row].date
+            //            cell.DateLabel.text = TextHistory?[indexPath.row].date
             cell.delegate = self
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
             cell.descriptContent.tag = indexPath.row
@@ -1611,6 +1648,25 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
                 cell.configureShimmer()
             }
+            if let sentOn = TextHistory?[indexPath.row].date,
+               let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
+                
+                let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
+                let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
+                
+                let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
+                
+                let attributedText = NSMutableAttributedString(string: fullText)
+                
+                // Change time part color
+                if let timeRange = fullText.range(of: timeString) {
+                    let nsRange = NSRange(timeRange, in: fullText)
+                    attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
+                }
+                
+                cell.DateLabel.attributedText = attributedText
+            }
+            
             return cell
             
         }else{
@@ -1627,7 +1683,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             cell.FinishPlayingdelegate = self
             
             cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-            cell.datelbl.text = voiceData?.sent_on ?? ""
             
             let duration = voiceData?.duration ?? 0
             let formatted = formatDuration(duration)
@@ -1644,273 +1699,303 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 cell.configureShimmer()
             }
             
+            if let sentOn = voiceData?.sent_on,
+               let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
+                
+                let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
+                let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
+                
+                let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
+                
+                let attributedText = NSMutableAttributedString(string: fullText)
+                
+                // Change time part color
+                if let timeRange = fullText.range(of: timeString) {
+                    let nsRange = NSRange(timeRange, in: fullText)
+                    attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
+                }
+                
+                cell.datelbl.attributedText = attributedText
+            }
+            
+            
             return cell
         }
     }
-            
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-            
-            
-            
-        func playTapped(at index: Int) {
-            if playIndex != index {
-                player?.pause()
-                updateTimer?.invalidate()
-            }
-            playIndex = index
-            historytable.reloadData()
+    
+    
+    
+    func playTapped(at index: Int) {
+        if playIndex != index {
+            player?.pause()
+            updateTimer?.invalidate()
         }
-
-        // MARK: - Finish Playing Delegate
-        func didFinishPlaying(at index: Int) {
-            print("✅ Finished playing voice at row: \(index)")
-            playIndex = -1
-            historytable.reloadData()
+        playIndex = index
+        historytable.reloadData()
+    }
+    
+    // MARK: - Finish Playing Delegate
+    func didFinishPlaying(at index: Int) {
+        print("✅ Finished playing voice at row: \(index)")
+        playIndex = -1
+        historytable.reloadData()
+    }
+    
+    // Format seconds into mm:ss
+    func formatDuration(_ seconds: Int) -> String {
+        let minutes = seconds / 60
+        let sec = seconds % 60
+        return String(format: "%02d:%02d", minutes, sec)
+    }
+    //MARK: EXPANDABLE LABLE
+    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else { return }
+        let indexPath = IndexPath(row: label.tag, section: 0)
+        let fullDescription = label.text
+        let isExpanded = label.numberOfLines == 0
+        label.numberOfLines = isExpanded ? 3 : 0
+        label.attributedText = descript(
+            for: fullDescription ?? "",
+            expanded: !isExpanded
+        )
+        historytable.beginUpdates()
+        historytable.endUpdates()
+    }
+    
+    //MARK: TEXT ADD SEE MORE
+    
+    @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel, let text = label.text else { return }
+        
+        let seeMoreRange = (text as NSString).range(of: CommonStringFile.seemore.translated())
+        let seeLessRange = (text as NSString).range(of: CommonStringFile.seeLess.translated())
+        
+        if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) ||
+            gesture.didTapAttributedTextInLabel(label: label, inRange: seeLessRange) {
+            handleSeeMoreTap(gesture)
+        }
+    }
+    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
+        // If expanded, show full text with "See less"
+        if expanded {
+            let fullString = fullDescription + CommonStringFile.seeLess.translated()
+            let attributedText = NSMutableAttributedString(string: fullString)
+            let seeLessRange = (fullString as NSString).range(of: "See less")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
+            return attributedText
+        } else {
+            var fullString = ""
+            // Otherwise, truncate and show "See more"
+            if fullDescription.count > 120{
+                let truncatedDescription = String(fullDescription.prefix(100))
+                fullString = truncatedDescription + CommonStringFile.seemore.translated()
+            }else{
+                fullString = fullDescription
+            }
+            let attributedText = NSMutableAttributedString(string: fullString)
+            
+            // Set "See more" text to blue and underline it
+            let seeMoreRange = (fullString as NSString).range(of: "See more")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
+            return attributedText
         }
         
-        // Format seconds into mm:ss
-        func formatDuration(_ seconds: Int) -> String {
-            let minutes = seconds / 60
-            let sec = seconds % 60
-            return String(format: "%02d:%02d", minutes, sec)
+        
+    }
+    func reload(index: Int) {
+        if let currentIndex = playIndex, currentIndex != index {
+            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+            if let previousCell = historytable.cellForRow(at: previousIndexPath) as? HistoryTC {
+                previousCell.updatePlayState(isPlaying: false, url: nil)
+            }
         }
-        //MARK: EXPANDABLE LABLE
-        @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
-            guard let label = sender.view as? UILabel else { return }
-            let indexPath = IndexPath(row: label.tag, section: 0)
-            let fullDescription = label.text
-            let isExpanded = label.numberOfLines == 0
-            label.numberOfLines = isExpanded ? 3 : 0
-            label.attributedText = descript(
-                for: fullDescription ?? "",
-                expanded: !isExpanded
+        
+        playIndex = (playIndex == index) ? nil : index
+        historytable.reloadData()
+    }
+    
+    func setupTimePicker() {
+        // Initialize the picker
+        timePicker = UIDatePicker()
+        timePicker.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            timePicker.preferredDatePickerStyle = .wheels
+        }
+        timePicker.backgroundColor = .white
+        timePicker.isHidden = true // Initially hidden
+        self.view.addSubview(timePicker)
+        
+        // Add Done Button
+        doneButton = UIButton(type: .system)
+        doneButton.setTitle("Done", for: .normal)
+        doneButton.isHidden = true
+        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
+        doneButton.setTitleColor(.white, for: .normal)
+        doneButton.layer.cornerRadius = 8
+        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        self.view.addSubview(doneButton)
+    }
+    @objc func doneButtonTapped() {
+        // Format the time
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        if let activeButton = activeButton {
+            let selectedTime = formatter.string(from: timePicker.date)
+            activeButton.setTitle(selectedTime, for: .normal)
+        }
+        timePicker.isHidden = true
+        doneButton.isHidden = true
+        activeButton = nil
+    }
+    
+    func minimumDate(for calendar: FSCalendar) -> Date {
+        return Date()
+    }
+    
+    func maximumDate(for calendar: FSCalendar) -> Date {
+        return Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+    }
+    
+    func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        let firstDayOfCurrentMonth = calendar.currentPage
+        let lastDayOfCurrentMonth = Calendar.current.date(byAdding: .month, value: 1, to: firstDayOfCurrentMonth)?.addingTimeInterval(-1) ?? firstDayOfCurrentMonth
+        if !(date >= firstDayOfCurrentMonth && date <= lastDayOfCurrentMonth) {
+            
+            calendar.deselect(date)
+            let alert = UIAlertController(
+                title: AlertstringFile.invalidSelection,
+                message: AlertstringFile.selectDatesWithinMonth,
+                preferredStyle: .alert
             )
-            historytable.beginUpdates()
-            historytable.endUpdates()
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
+            return
         }
-        
-        //MARK: TEXT ADD SEE MORE
-        
-        @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
-            guard let label = gesture.view as? UILabel, let text = label.text else { return }
+        if selectedDates.count < 6 {
+            if !selectedDates.contains(date) {
+                selectedDates.append(date)
+            }
+        } else {
+            calendar.deselect(date)
             
-            let seeMoreRange = (text as NSString).range(of: CommonStringFile.seemore.translated())
-            let seeLessRange = (text as NSString).range(of: CommonStringFile.seeLess.translated())
-            
-            if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) ||
-                gesture.didTapAttributedTextInLabel(label: label, inRange: seeLessRange) {
-                handleSeeMoreTap(gesture)
-            }
-        }
-        func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-            // If expanded, show full text with "See less"
-            if expanded {
-                let fullString = fullDescription + CommonStringFile.seeLess.translated()
-                let attributedText = NSMutableAttributedString(string: fullString)
-                let seeLessRange = (fullString as NSString).range(of: "See less")
-                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-                return attributedText
-            } else {
-                var fullString = ""
-                // Otherwise, truncate and show "See more"
-                if fullDescription.count > 120{
-                    let truncatedDescription = String(fullDescription.prefix(100))
-                    fullString = truncatedDescription + CommonStringFile.seemore.translated()
-                }else{
-                    fullString = fullDescription
-                }
-                let attributedText = NSMutableAttributedString(string: fullString)
-                
-                // Set "See more" text to blue and underline it
-                let seeMoreRange = (fullString as NSString).range(of: "See more")
-                attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-                return attributedText
-            }
-            
-            
-        }
-        func reload(index: Int) {
-            if let currentIndex = playIndex, currentIndex != index {
-                let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-                if let previousCell = historytable.cellForRow(at: previousIndexPath) as? HistoryTC {
-                    previousCell.updatePlayState(isPlaying: false, url: nil)
-                }
-            }
-            
-            playIndex = (playIndex == index) ? nil : index
-            historytable.reloadData()
+            let alert = UIAlertController(
+                title: "",
+                message: AlertstringFile.Already_Reach_Your_Limit,
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
         
-        func setupTimePicker() {
-            // Initialize the picker
-            timePicker = UIDatePicker()
-            timePicker.datePickerMode = .time
-            if #available(iOS 13.4, *) {
-                timePicker.preferredDatePickerStyle = .wheels
-            }
-            timePicker.backgroundColor = .white
-            timePicker.isHidden = true // Initially hidden
-            self.view.addSubview(timePicker)
-            
-            // Add Done Button
-            doneButton = UIButton(type: .system)
-            doneButton.setTitle("Done", for: .normal)
-            doneButton.isHidden = true
-            doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
-            doneButton.setTitleColor(.white, for: .normal)
-            doneButton.layer.cornerRadius = 8
-            doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-            self.view.addSubview(doneButton)
-        }
-        @objc func doneButtonTapped() {
-            // Format the time
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            if let activeButton = activeButton {
-                let selectedTime = formatter.string(from: timePicker.date)
-                activeButton.setTitle(selectedTime, for: .normal)
-            }
-            timePicker.isHidden = true
-            doneButton.isHidden = true
-            activeButton = nil
-        }
-        
-        func minimumDate(for calendar: FSCalendar) -> Date {
-            return Date()
-        }
-        
-        func maximumDate(for calendar: FSCalendar) -> Date {
-            return Calendar.current.date(byAdding: .year, value: 1, to: Date())!
-        }
-        
-        func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-            let firstDayOfCurrentMonth = calendar.currentPage
-            let lastDayOfCurrentMonth = Calendar.current.date(byAdding: .month, value: 1, to: firstDayOfCurrentMonth)?.addingTimeInterval(-1) ?? firstDayOfCurrentMonth
-            if !(date >= firstDayOfCurrentMonth && date <= lastDayOfCurrentMonth) {
-                
-                calendar.deselect(date)
-                let alert = UIAlertController(
-                    title: AlertstringFile.invalidSelection,
-                    message: AlertstringFile.selectDatesWithinMonth,
-                    preferredStyle: .alert
-                )
-                alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
-                self.present(alert, animated: true, completion: nil)
-                return
-            }
-            if selectedDates.count < 6 {
-                if !selectedDates.contains(date) {
-                    selectedDates.append(date)
-                }
-            } else {
-                calendar.deselect(date)
-                
-                let alert = UIAlertController(
-                    title: "",
-                    message: AlertstringFile.Already_Reach_Your_Limit,
-                    preferredStyle: .alert
-                )
-                alert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default))
-                self.present(alert, animated: true, completion: nil)
-            }
-            
-            dateCV.reloadData()
-        }
-        
-        func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
-            // Remove the deselected date
-            if let index = selectedDates.firstIndex(of: date) {
-                selectedDates.remove(at: index)
-            }
-            dateCV.reloadData()
-        }
-        
-        func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-            printCurrentMonth()
-            print("Current page changed to: \(calendar.currentPage)")
-        }
-        
-        func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-            return selectedDates.contains(date) ? UIColor.green : nil
-        }
-        func deleteDelegate(index: Int) {
-            let dateToRemove = selectedDates[index]
+        dateCV.reloadData()
+    }
+    
+    func calendar(_ calendar: FSCalendar, didDeselect date: Date, at monthPosition: FSCalendarMonthPosition) {
+        // Remove the deselected date
+        if let index = selectedDates.firstIndex(of: date) {
             selectedDates.remove(at: index)
-            DateSelection.deselect(dateToRemove)
-
-            // Update height based on count
-            var newHeight: CGFloat = 0
-            if selectedDates.count == 0 {
-                newHeight = 0
-            } else if selectedDates.count <= 3 {
-                newHeight = 64
+        }
+        dateCV.reloadData()
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        printCurrentMonth()
+        print("Current page changed to: \(calendar.currentPage)")
+    }
+    
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
+        return selectedDates.contains(date) ? UIColor.green : nil
+    }
+    func deleteDelegate(index: Int) {
+        let dateToRemove = selectedDates[index]
+        selectedDates.remove(at: index)
+        DateSelection.deselect(dateToRemove)
+        
+        // Update height based on count
+        var newHeight: CGFloat = 0
+        if selectedDates.count == 0 {
+            newHeight = 0
+        } else if selectedDates.count <= 3 {
+            newHeight = 64
+        } else {
+            newHeight = 128
+        }
+        
+        // Animate constraint change
+        UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
+            self.dateSelectedViewHeight.constant = newHeight
+            self.view.layoutIfNeeded()
+        }
+        
+        dateCV.reloadData()
+    }
+    
+    
+    //MARK: Collection View Delegate Functions
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedDates.count
+    }
+    
+    // make a cell for each cell index path
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCVC, for: indexPath as IndexPath) as! DateCVC
+        
+        let selectedDate = selectedDates[indexPath.item]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium // You can change this style to your preference
+        let formattedDate = dateFormatter.string(from: selectedDate)
+        cell.dateLbl.text = formattedDate
+        cell.dateDelet.tag = indexPath.item
+        cell.delegate = self
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let with = dateCV.frame.size.width - 20
+        let cwidth = with/3
+        return CGSize(width: cwidth, height: 60)
+    }
+    func select(Tittle: String, descriptContent: String) {
+        TextMsgTittle.text = Tittle
+        informationcontent.text = descriptContent
+        placeholderLabel.isHidden = !informationcontent.text.isEmpty
+        textCountLbl.text = "\(descriptContent.count) of 500"
+        showTextMessageView(isforwardtext:true)
+    }
+    
+    func convertDateStrings(dates: [String]) -> [String] {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd MMM yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd-MM-yyyy"
+        
+        return dates.compactMap { dateString in
+            if let date = inputFormatter.date(from: dateString) {
+                return outputFormatter.string(from: date)
             } else {
-                newHeight = 128
-            }
-
-            // Animate constraint change
-            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
-                self.dateSelectedViewHeight.constant = newHeight
-                self.view.layoutIfNeeded()
-            }
-
-            dateCV.reloadData()
-        }
-
-        
-        //MARK: Collection View Delegate Functions
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return selectedDates.count
-        }
-        
-        // make a cell for each cell index path
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.DateCVC, for: indexPath as IndexPath) as! DateCVC
-            
-            let selectedDate = selectedDates[indexPath.item]
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium // You can change this style to your preference
-            let formattedDate = dateFormatter.string(from: selectedDate)
-            cell.dateLbl.text = formattedDate
-            cell.dateDelet.tag = indexPath.item
-            cell.delegate = self
-            return cell
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let with = dateCV.frame.size.width - 20
-            let cwidth = with/3
-            return CGSize(width: cwidth, height: 60)
-        }
-        func select(Tittle: String, descriptContent: String) {
-            TextMsgTittle.text = Tittle
-            informationcontent.text = descriptContent
-            placeholderLabel.isHidden = !informationcontent.text.isEmpty
-            textCountLbl.text = "\(Tittle.count) of 500"
-            showTextMessageView(isforwardtext:true)
-        }
-        
-        func convertDateStrings(dates: [String]) -> [String] {
-            let inputFormatter = DateFormatter()
-            inputFormatter.dateFormat = "dd MMM yyyy"
-            inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-            
-            let outputFormatter = DateFormatter()
-            outputFormatter.dateFormat = "dd-MM-yyyy"
-            
-            return dates.compactMap { dateString in
-                if let date = inputFormatter.date(from: dateString) {
-                    return outputFormatter.string(from: date)
-                } else {
-                    return nil
-                }
+                return nil
             }
         }
-        
+    }
+    
+    func convertTimeStringToSeconds(_ timeString: String) -> Int {
+        let components = timeString.split(separator: ":")
+        guard components.count == 2,
+              let minutes = Int(components[0]),
+              let seconds = Int(components[1]) else {
+            return 0
         }
-        
+        return (minutes * 60) + seconds
+    }
+    
+}
+
 
 
 
@@ -1925,7 +2010,7 @@ public class ViewAnimator {
             view.alpha = 1
         }
     }
-
+    
     // MARK: - Smooth Fade Out
     public static func hideFade(_ view: UIView, duration: TimeInterval = 0.3) {
         UIView.animate(withDuration: duration, animations: {
@@ -1934,7 +2019,7 @@ public class ViewAnimator {
             view.isHidden = true
         }
     }
-
+    
     // MARK: - Slide and Fade In
     public static func showSlideFade(_ view: UIView, duration: TimeInterval = 0.4) {
         view.isHidden = false
@@ -1950,7 +2035,7 @@ public class ViewAnimator {
             view.transform = .identity
         })
     }
-
+    
     // MARK: - Slide and Fade Out
     public static func hideSlideFade(_ view: UIView, duration: TimeInterval = 0.3) {
         UIView.animate(withDuration: duration, animations: {
@@ -1967,8 +2052,8 @@ public class ViewAnimator {
             animations()
         })
     }
-
-   
+    
+    
 }
 
 extension UIView {
@@ -1982,3 +2067,40 @@ extension UIView {
         }
     }
 }
+
+
+class DateFormatterHelper {
+    static let shared = DateFormatterHelper()
+    private init() {}
+    
+    private let inputFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        return formatter
+    }()
+    
+    private let outputDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        return formatter
+    }()
+    
+    private let outputTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }()
+    
+    func parseDate(from string: String) -> Date? {
+        return inputFormatter.date(from: string)
+    }
+    
+    func formatDateToDayMonthYear(date: Date) -> String {
+        return outputDateFormatter.string(from: date)
+    }
+    
+    func formatTime(date: Date) -> String {
+        return outputTimeFormatter.string(from: date)
+    }
+}
+

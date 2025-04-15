@@ -294,8 +294,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                                 nibName: nil,
                                                 bundle: nil
                                             )
-                                            
-                                            ServiceUrl.token = Data.user_details?.child_details?.first?.access_token ?? ""
                                             vc.login_astype = 2
                                             vc.modalPresentationStyle = .fullScreen
                                             present(vc, animated: true)

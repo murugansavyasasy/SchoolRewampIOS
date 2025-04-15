@@ -379,8 +379,6 @@
 		84B2E0622CEB412900561E4F /* SenderNoticeBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B2E05F2CEB412900561E4F /* SenderNoticeBoardVC.swift */; };
 		84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */; };
 		84B57EBB2D1437EC00E0EA29 /* EventResiverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EB82D1437EC00E0EA29 /* EventResiverVC.swift */; };
-		84B57EC32D148C0A00E0EA29 /* ParentCommunicationVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EC12D148C0A00E0EA29 /* ParentCommunicationVc.swift */; };
-		84B57EC42D148C0A00E0EA29 /* ParentCommunicationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EC22D148C0A00E0EA29 /* ParentCommunicationVc.xib */; };
 		84B57EC82D14A0A300E0EA29 /* ParentNoticeBoardVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EC72D14A0A300E0EA29 /* ParentNoticeBoardVc.xib */; };
 		84B57EC92D14A0A300E0EA29 /* ParentNoticeBoardVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B57EC62D14A0A300E0EA29 /* ParentNoticeBoardVc.swift */; };
 		84B57EE22D15533000E0EA29 /* submitVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84B57EE12D15533000E0EA29 /* submitVC.xib */; };
@@ -493,6 +491,8 @@
 		84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97CE2D3E13BD00EBF9F4 /* Successful.gif */; };
 		84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB97D02D3E31FF00EBF9F4 /* CompletedTVcell.swift */; };
 		84FB97D32D3E31FF00EBF9F4 /* CompletedTVcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84FB97D12D3E31FF00EBF9F4 /* CompletedTVcell.xib */; };
+		FA291CBA2DAE643C00D87C18 /* ParentCommunicationVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA291CB82DAE643C00D87C18 /* ParentCommunicationVc.xib */; };
+		FA291CBB2DAE643C00D87C18 /* ParentCommunicationVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA291CB72DAE643C00D87C18 /* ParentCommunicationVc.swift */; };
 		FA31A7C12D7023890069C954 /* VideoPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31A7BA2D7023890069C954 /* VideoPlayerVC.swift */; };
 		FA31A7C22D7023890069C954 /* VideoTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31A7BC2D7023890069C954 /* VideoTVCell.swift */; };
 		FA31A7C32D7023890069C954 /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31A7BE2D7023890069C954 /* VideoVC.swift */; };
@@ -994,8 +994,6 @@
 		84B2E0602CEB412900561E4F /* SenderNoticeBoardVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderNoticeBoardVC.xib; sourceTree = "<group>"; };
 		84B57EB82D1437EC00E0EA29 /* EventResiverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventResiverVC.swift; sourceTree = "<group>"; };
 		84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventResiverVC.xib; sourceTree = "<group>"; };
-		84B57EC12D148C0A00E0EA29 /* ParentCommunicationVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCommunicationVc.swift; sourceTree = "<group>"; };
-		84B57EC22D148C0A00E0EA29 /* ParentCommunicationVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentCommunicationVc.xib; sourceTree = "<group>"; };
 		84B57EC62D14A0A300E0EA29 /* ParentNoticeBoardVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentNoticeBoardVc.swift; sourceTree = "<group>"; };
 		84B57EC72D14A0A300E0EA29 /* ParentNoticeBoardVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentNoticeBoardVc.xib; sourceTree = "<group>"; };
 		84B57EE02D15533000E0EA29 /* submitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = submitVC.swift; sourceTree = "<group>"; };
@@ -1113,6 +1111,8 @@
 		C0C6DD99A3AA3B374733F2FB /* Pods_VsSchoolChimesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VsSchoolChimesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E70912BABA758DCA93CF7B31 /* Pods-VsSchoolChimes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimes.debug.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimes/Pods-VsSchoolChimes.debug.xcconfig"; sourceTree = "<group>"; };
 		F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VsSchoolChimesTests.release.xcconfig"; path = "Target Support Files/Pods-VsSchoolChimesTests/Pods-VsSchoolChimesTests.release.xcconfig"; sourceTree = "<group>"; };
+		FA291CB72DAE643C00D87C18 /* ParentCommunicationVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCommunicationVc.swift; sourceTree = "<group>"; };
+		FA291CB82DAE643C00D87C18 /* ParentCommunicationVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentCommunicationVc.xib; sourceTree = "<group>"; };
 		FA31A7BA2D7023890069C954 /* VideoPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerVC.swift; sourceTree = "<group>"; };
 		FA31A7BB2D7023890069C954 /* VideoPlayerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlayerVC.xib; sourceTree = "<group>"; };
 		FA31A7BC2D7023890069C954 /* VideoTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTVCell.swift; sourceTree = "<group>"; };
@@ -2501,6 +2501,7 @@
 		84A5BE822C19777500E32496 /* ParentDashBoard */ = {
 			isa = PBXGroup;
 			children = (
+				FA291CB92DAE643C00D87C18 /* Communication */,
 				840F67722D94066000AC2F5A /* Attachments */,
 				840540952D701A5200D0CA60 /* TrakingDriver */,
 				84D1FF192D4CDFE2003ACC04 /* ParentHomePage */,
@@ -2508,7 +2509,6 @@
 				849AD0062D1A837A002DEC07 /* ReciverHomework */,
 				849ACFFD2D1A8369002DEC07 /* ReciverAttendanceReport */,
 				84B57EC52D14A00100E0EA29 /* NoticeBoard */,
-				84B57EC02D148BC800E0EA29 /* Communication */,
 				84B57EB72D142E2800E0EA29 /* Event */,
 				187CF5D92D142CE0001422CE /* CertificateRequest */,
 				187CF4D12D119C27001422CE /* ClassTimeTable */,
@@ -2540,15 +2540,6 @@
 				84B57EB92D1437EC00E0EA29 /* EventResiverVC.xib */,
 			);
 			path = Event;
-			sourceTree = "<group>";
-		};
-		84B57EC02D148BC800E0EA29 /* Communication */ = {
-			isa = PBXGroup;
-			children = (
-				84B57EC12D148C0A00E0EA29 /* ParentCommunicationVc.swift */,
-				84B57EC22D148C0A00E0EA29 /* ParentCommunicationVc.xib */,
-			);
-			path = Communication;
 			sourceTree = "<group>";
 		};
 		84B57EC52D14A00100E0EA29 /* NoticeBoard */ = {
@@ -2864,6 +2855,15 @@
 				F4EBE5343E1A4979B1D174ED /* Pods-VsSchoolChimesTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		FA291CB92DAE643C00D87C18 /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				FA291CB72DAE643C00D87C18 /* ParentCommunicationVc.swift */,
+				FA291CB82DAE643C00D87C18 /* ParentCommunicationVc.xib */,
+			);
+			path = Communication;
 			sourceTree = "<group>";
 		};
 		FA31A7C02D7023890069C954 /* Video */ = {
@@ -3335,7 +3335,6 @@
 				84BB5EAB2D11334400AD0C87 /* ScheduleExamsList.xib in Resources */,
 				84B57EC82D14A0A300E0EA29 /* ParentNoticeBoardVc.xib in Resources */,
 				84EFF9CE2CCC7A6000C11C26 /* PasswordVc.xib in Resources */,
-				84B57EC42D148C0A00E0EA29 /* ParentCommunicationVc.xib in Resources */,
 				849AD0552D1A858D002DEC07 /* SenderAssignmentTextViewController.xib in Resources */,
 				849E57382C1FF6BD006119DA /* RobotoSlab-Light.ttf in Resources */,
 				840E44AA2D1A85EC00D561E8 /* SenderLeaveTV.xib in Resources */,
@@ -3402,6 +3401,7 @@
 				84D85D7A2D51D7C6006842E9 /* CustomShimmerView.xib in Resources */,
 				849970CB2CF8752400800B07 /* TextHistoryTVCell.xib in Resources */,
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
+				FA291CBA2DAE643C00D87C18 /* ParentCommunicationVc.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				84F986332D3A6169009FF065 /* QuizTVcell.xib in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
@@ -3679,6 +3679,7 @@
 				FAFF9DE62D6C7B7A00498368 /* SlotHeader.swift in Sources */,
 				FAFF9DE72D6C7B7A00498368 /* CancelSlotResponse.swift in Sources */,
 				FAFF9DE82D6C7B7A00498368 /* SlotHistoryForParentRequest.swift in Sources */,
+				FA291CBB2DAE643C00D87C18 /* ParentCommunicationVc.swift in Sources */,
 				FAFF9DE92D6C7B7A00498368 /* CancelAndCloseSlotByStaffModal.swift in Sources */,
 				FAFF9DEA2D6C7B7A00498368 /* slotValidation.swift in Sources */,
 				FAFF9DEB2D6C7B7A00498368 /* CancelAndCloseSlotStaffRequest.swift in Sources */,
@@ -3778,7 +3779,6 @@
 				84B57EE32D15533000E0EA29 /* submitVC.swift in Sources */,
 				18D718DF2D0D479B00E9EDA3 /* SectionViewController.swift in Sources */,
 				84F9862D2D3A57FC009FF065 /* QuizVC.swift in Sources */,
-				84B57EC32D148C0A00E0EA29 /* ParentCommunicationVc.swift in Sources */,
 				84F0466F2D1D5ED600C686BD /* MarkAttendenceCV.swift in Sources */,
 				84F986322D3A6169009FF065 /* QuizTVcell.swift in Sources */,
 				187CF4DC2D11A176001422CE /* ClassTimeTableTableViewCell.swift in Sources */,

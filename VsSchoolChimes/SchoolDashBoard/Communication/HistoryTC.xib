@@ -24,7 +24,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LPy-Nq-A0z">
                                 <rect key="frame" x="250" y="-40" width="80" height="100"/>
                                 <subviews>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="APM-Mw-GRr">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="APM-Mw-GRr">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="100"/>
                                     </imageView>
                                 </subviews>
@@ -53,10 +53,10 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCZ-4k-Zif" customClass="ShimmerView2" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="20" y="48" width="289" height="35"/>
+                                <rect key="frame" x="20" y="48" width="304" height="35"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAx-6D-yhf" customClass="WaveView" customModule="VsSchoolChimes" customModuleProvider="target">
-                                        <rect key="frame" x="45" y="0.0" width="239" height="33"/>
+                                        <rect key="frame" x="45" y="0.0" width="259" height="33"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DN6-Fp-pM0" customClass="ShimmerButton" customModule="VsSchoolChimes" customModuleProvider="target">
@@ -79,7 +79,7 @@
                                     <constraint firstItem="sAx-6D-yhf" firstAttribute="leading" secondItem="DN6-Fp-pM0" secondAttribute="trailing" constant="10" id="0Hz-7X-2QC"/>
                                     <constraint firstAttribute="height" constant="35" id="B9b-Hx-Eut"/>
                                     <constraint firstAttribute="bottom" secondItem="sAx-6D-yhf" secondAttribute="bottom" constant="2" id="N2c-hB-X6G"/>
-                                    <constraint firstAttribute="trailing" secondItem="sAx-6D-yhf" secondAttribute="trailing" constant="5" id="QEf-eQ-2TY"/>
+                                    <constraint firstAttribute="trailing" secondItem="sAx-6D-yhf" secondAttribute="trailing" id="QEf-eQ-2TY"/>
                                     <constraint firstItem="DN6-Fp-pM0" firstAttribute="leading" secondItem="NCZ-4k-Zif" secondAttribute="leading" constant="5" id="gCa-eZ-ZNi"/>
                                     <constraint firstItem="sAx-6D-yhf" firstAttribute="top" secondItem="NCZ-4k-Zif" secondAttribute="top" id="hvJ-go-rrw"/>
                                     <constraint firstAttribute="bottom" secondItem="DN6-Fp-pM0" secondAttribute="bottom" constant="5" id="wD9-ln-uuZ"/>
@@ -125,7 +125,7 @@
                             <constraint firstItem="QJu-7a-u55" firstAttribute="top" secondItem="GX6-rc-Pdd" secondAttribute="bottom" constant="10" id="5tb-bX-Und"/>
                             <constraint firstItem="GX6-rc-Pdd" firstAttribute="leading" secondItem="hlg-O2-bJ6" secondAttribute="leading" constant="10" id="8cK-E7-EzF"/>
                             <constraint firstAttribute="trailing" secondItem="QJu-7a-u55" secondAttribute="trailing" constant="16" id="HDf-ee-XRo"/>
-                            <constraint firstAttribute="trailing" secondItem="NCZ-4k-Zif" secondAttribute="trailing" constant="16" id="LYK-2e-dCj"/>
+                            <constraint firstAttribute="trailing" secondItem="NCZ-4k-Zif" secondAttribute="trailing" constant="1" id="LYK-2e-dCj"/>
                             <constraint firstAttribute="trailing" secondItem="GX6-rc-Pdd" secondAttribute="trailing" constant="10" id="Nfd-zX-Vkj"/>
                             <constraint firstItem="RsE-j7-zhi" firstAttribute="top" secondItem="hlg-O2-bJ6" secondAttribute="top" constant="15" id="Oiw-62-F5B"/>
                             <constraint firstItem="GX6-rc-Pdd" firstAttribute="top" secondItem="NCZ-4k-Zif" secondAttribute="bottom" constant="20" id="PLJ-wF-S3g"/>
@@ -151,7 +151,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="NewImageView" destination="LPy-Nq-A0z" id="NT2-hZ-uzA"/>
+                <outlet property="NewImageView" destination="APM-Mw-GRr" id="I6A-4R-Ge9"/>
                 <outlet property="PlayerFullview" destination="NCZ-4k-Zif" id="nbG-L0-WNB"/>
                 <outlet property="contentlbl" destination="RsE-j7-zhi" id="cPe-53-EMj"/>
                 <outlet property="datelbl" destination="GX6-rc-Pdd" id="5sT-an-Z1N"/>

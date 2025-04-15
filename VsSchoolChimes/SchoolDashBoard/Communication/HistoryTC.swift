@@ -26,7 +26,7 @@ class HistoryTC: UITableViewCell {
     var lastPlayingduration = "00:00"
     var delegate: reloadDelegate?
     var ForwordDelegate : ForwordDelegate?
-    @IBOutlet weak var NewImageView: UIView!
+    @IBOutlet weak var NewImageView: UIImageView!
     @IBOutlet weak var PlayerFullview: ShimmerView2!
     @IBOutlet weak var sentBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var sentBtnHeight: NSLayoutConstraint!
@@ -39,6 +39,8 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var outerview: ShimmerView2!
     var playIndex: Int? = nil
     weak var FinishPlayingdelegate: HistoryFinishPalyingDelegate?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -56,7 +58,45 @@ class HistoryTC: UITableViewCell {
         
         playerView.isHidden = true
         totaltime.isHidden = true
-        NewImageView.isHidden = true
+       // NewImageView.isHidden = true
+        sendbtn.isHidden = true
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Assuming 'myLabel' is your UILabel
+        configureShimmer()
+    }
+    
+    deinit {
+        updateTimer?.invalidate()
+        updateTimer = nil
+        player?.pause()
+        player = nil
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // Invalidate timer if it's active
+        updateTimer?.invalidate()
+        updateTimer = nil
+        
+        // Reset player and wave view state
+        player?.pause()
+        player = nil
+        playerItem = nil
+        isPlaying = false
+        
+        // Reset UI: hide wave view and total time until intentionally set
+        playerView.progress = 0.0
+        playerView.isHidden = true
+        totaltime.isHidden = true
+        
+        // Optionally reset button image to default play
+        playBtn.setImage(ImageName.playbutton, for: .normal)
     }
     
     func setupPlayer(with url: URL) {
@@ -172,9 +212,10 @@ class HistoryTC: UITableViewCell {
         PlayerFullview.removeShimmer()
         playBtn.removeShimmer()
 
-        NewImageView.isHidden = false
+        //NewImageView.isHidden = false
         totaltime.isHidden = false
         playerView.isHidden = false
+        sendbtn.isHidden = false
     }
     @IBAction func forword(_ sender: UIButton) {
         ForwordDelegate?.voiceforword(selectedIndex: sender.tag)

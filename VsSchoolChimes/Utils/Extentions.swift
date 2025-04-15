@@ -114,27 +114,70 @@ class CustomView:UIView{
         self.layer.cornerRadius = 8
     }
 }
+//extension UITapGestureRecognizer {
+//    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+//        guard let attributedText = label.attributedText else { return false }
+//        let textStorage = NSTextStorage(attributedString: attributedText)
+//        let layoutManager = NSLayoutManager()
+//        let textContainer = NSTextContainer(size: label.bounds.size)
+//        textContainer.lineFragmentPadding = 0
+//        textContainer.maximumNumberOfLines = label.numberOfLines
+//        textContainer.lineBreakMode = label.lineBreakMode
+//        layoutManager.addTextContainer(textContainer)
+//        textStorage.addLayoutManager(layoutManager)
+//        
+//        let location = self.location(in: label)
+//        let textBoundingBox = layoutManager.usedRect(for: textContainer)
+//        let textContainerOffset = CGPoint(x: (label.bounds.width - textBoundingBox.width) * 0.5 - textBoundingBox.origin.x, y: (label.bounds.height - textBoundingBox.height) * 0.5 - textBoundingBox.origin.y)
+//        let locationInTextContainer = CGPoint(x: location.x - textContainerOffset.x, y: location.y - textContainerOffset.y)
+//        
+//        let characterIndex = layoutManager.characterIndex(for: locationInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+//        return NSLocationInRange(characterIndex, targetRange)
+//    }
+//}
+
 extension UITapGestureRecognizer {
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
+        // Ensure there is attributed text
         guard let attributedText = label.attributedText else { return false }
+        
+        // Create instances of NSTextStorage, NSLayoutManager, and NSTextContainer.
         let textStorage = NSTextStorage(attributedString: attributedText)
         let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: label.bounds.size)
-        textContainer.lineFragmentPadding = 0
+        textStorage.addLayoutManager(layoutManager)
+        
+        // Calculate the actual drawing rect of the text in the label.
+        // This returns where the text is actually drawn, not the entire bounds.
+        let textRect = label.textRect(forBounds: label.bounds, limitedToNumberOfLines: label.numberOfLines)
+        
+        // Initialize the text container with the size of the text rectangle.
+        let textContainer = NSTextContainer(size: textRect.size)
+        textContainer.lineFragmentPadding = 0  // Remove padding
         textContainer.maximumNumberOfLines = label.numberOfLines
         textContainer.lineBreakMode = label.lineBreakMode
         layoutManager.addTextContainer(textContainer)
-        textStorage.addLayoutManager(layoutManager)
         
-        let location = self.location(in: label)
-        let textBoundingBox = layoutManager.usedRect(for: textContainer)
-        let textContainerOffset = CGPoint(x: (label.bounds.width - textBoundingBox.width) * 0.5 - textBoundingBox.origin.x, y: (label.bounds.height - textBoundingBox.height) * 0.5 - textBoundingBox.origin.y)
-        let locationInTextContainer = CGPoint(x: location.x - textContainerOffset.x, y: location.y - textContainerOffset.y)
+        // Get the tap location in the label's coordinate system.
+        let locationOfTouchInLabel = self.location(in: label)
         
-        let characterIndex = layoutManager.characterIndex(for: locationInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-        return NSLocationInRange(characterIndex, targetRange)
+        // Convert the tap coordinates to those relative to the text rectangle.
+        let locationOfTouchInTextContainer = CGPoint(
+            x: locationOfTouchInLabel.x - textRect.origin.x,
+            y: locationOfTouchInLabel.y - textRect.origin.y
+        )
+        
+        // Find the index of the character that was tapped.
+        let indexOfCharacter = layoutManager.characterIndex(
+            for: locationOfTouchInTextContainer,
+            in: textContainer,
+            fractionOfDistanceBetweenInsertionPoints: nil
+        )
+        
+        // Return true if the tapped character is within the target range.
+        return NSLocationInRange(indexOfCharacter, targetRange)
     }
 }
+
 extension String {
     func removingSlashComponent() -> String {
         let components = self.split(separator: "/").map { String($0) }

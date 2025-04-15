@@ -37,6 +37,10 @@ struct ServiceUrl{
     static let comm_homework_get_homework_report  = "comm/homework/get-homework-report"
     static let comm_homework_sendhomework  = "comm/homework/send-homework"
     static let comm_recipient_get_academic_year_list  = "comm/recipient/get-academic-year-list"
+    static let comm_communication_list  = "comm/communication/list"
+    static let comm_communication_list_archive  = "comm/communication/list-archive"
+    static let comm_communication_read_status_update  = "comm/communication/read-status-update"
+    static let  comm_communication_read_status_update_archive  = "comm/communication/read-status-update-archive"
 }
 
 struct localData{
