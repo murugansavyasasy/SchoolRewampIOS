@@ -39,6 +39,8 @@ class HistoryTC: UITableViewCell {
     @IBOutlet weak var outerview: ShimmerView2!
     var playIndex: Int? = nil
     weak var FinishPlayingdelegate: HistoryFinishPalyingDelegate?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
