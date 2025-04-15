@@ -139,7 +139,9 @@ class LoginVc: UIViewController {
     }
     
     func validate_user() {
-        
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
         let secureID = SecureIDManager.getSecureID()
         var parameters: [String: Any] = [
             
@@ -164,7 +166,9 @@ class LoginVc: UIViewController {
                                 print("No data available")
                                 return
                             }
-                            
+                            if #available(iOS 15.0, *) {
+                                hideLottieProgressLoader()
+                            }
                             UserDefaultFileManager
                                 .saveUserDetails(
                                     data: (data))
@@ -294,7 +298,9 @@ class LoginVc: UIViewController {
     
     
     func ForgotPasswordAPIcall() {
-        
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
         APIService.shared
             .makeApi(url: ServiceUrl.cred_forgot_password, parameters: [COMMON_PARAMETER.mobile_number : MobilTextFld.text ?? ""], type: ApitTypeSringFile.POST, token: ServiceUrl.token){[self] (
                 result : Result<ForgotPasswordResponeSuc,
@@ -304,9 +310,12 @@ class LoginVc: UIViewController {
                 switch result {
                     
                 case.success(let successmessage):
-
+                    DispatchQueue.main.async { [self] in
+                    if #available(iOS 15.0, *) {
+                        hideLottieProgressLoader()
+                    }
                     if successmessage.status == true {
-                        DispatchQueue.main.async { [self] in
+                        
                             let vc = OTPVc(nibName: nil, bundle: nil)
                             vc.modalPresentationStyle = .fullScreen
                             vc.mobile_number = MobilTextFld.text
@@ -314,24 +323,27 @@ class LoginVc: UIViewController {
                             vc.otpContent = successmessage.data?.first?.more_info ?? ""
                             present(vc, animated: true)
                             
+                        }else {
+                            
+                            DispatchQueue.main.async {
+                                self.AlertModal
+                                    .showAlert(
+                                        title: "",
+                                        message: successmessage.message ?? "",
+                                        on: self
+                                    )
+                            }
                         }
                         
-                    }else {
-                        
-                        DispatchQueue.main.async {
-                            AlertModal
-                                .showAlert(
-                                    title: "",
-                                    message: successmessage.message ?? "",
-                                    on: self
-                                )
-                        }
                     }
                     
                 case.failure(let error):
                     
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        if #available(iOS 15.0, *) {
+                            self.hideLottieProgressLoader()
+                        }
                     }
                     
                 }

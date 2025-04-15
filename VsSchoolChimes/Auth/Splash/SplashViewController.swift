@@ -162,10 +162,10 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             }
         
     }
-    
-    
     func validate_user() {
-        
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
         let mobile_num = UserDefaultFileManager.getLoginCredentials()?.mobile_number
         let password = UserDefaultFileManager.getLoginCredentials()?.pwd
         
@@ -187,7 +187,9 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                 case .success(let response):
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
-                            
+                            if #available(iOS 15.0, *) {
+                                hideLottieProgressLoader()
+                            }
                             guard let Data = response.data?.first else {
                                 print("No data available")
                                 return
@@ -242,7 +244,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                             else{
                                                 if let data = Data.user_details?.staff_details?.first{
                                                     UserDefaultFileManager.saveStaffDetails(data: data)}
-                                                    
+                                                
                                                 let vc = TapBarVC(
                                                     nibName: nil,
                                                     bundle: nil
@@ -255,7 +257,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                         }
                                         else{
                                             
-//
+                                            //
                                             if let data = Data.user_details?.staff_details?.first{
                                                 UserDefaultFileManager.saveStaffDetails(data: data)}
                                             
@@ -285,8 +287,8 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                                         else{
                                             
                                             if let data = Data.user_details?.child_details?.first{
-                                             UserDefaultFileManager.saveChildDetails(data: data)
-                                             }
+                                                UserDefaultFileManager.saveChildDetails(data: data)
+                                            }
                                             
                                             let vc = TapBarVC(
                                                 nibName: nil,
@@ -353,7 +355,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             let is_login :Bool?
             let userDefaults = UserDefaults.standard
             is_login = userDefaults.bool(forKey: "Logout")
-           
+            
             if is_login ==  true{
                 let vc = LoginVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
@@ -378,9 +380,9 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                 let vc = CountryVc(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
-               validate_user()
+                validate_user()
             }
-           
+            
         }
     }
     
@@ -514,5 +516,5 @@ class DeveloperModeDetector {
                 // Optionally take action like logging or alerting
             }
         }
-    } 
+    }
 }

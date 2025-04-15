@@ -10,7 +10,7 @@ import SDWebImage
 
 protocol SelectNotice: AnyObject {
     
-    func didTapButton(title: String, content: String, items: [String])
+    func didTapButton(title: String, content: String, items: [FilePath])
 }
 
 @available(iOS 14.0, *)
@@ -31,7 +31,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var pagecontrollerheight: NSLayoutConstraint!
     @IBOutlet weak var newView: UIView!
     @IBOutlet weak var SelectBtn: UIButton!
-    
+    @IBOutlet weak var viewHeight: NSLayoutConstraint!
     
     var delegate : SelectNotice?
     var ishomework = false
@@ -65,10 +65,10 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         cellview.layer.masksToBounds = false
         
         Pinview.layer.cornerRadius = Pinview.frame.width/2
-        
-        dicriptContent.numberOfLines = 0
-        dicriptContent.setNeedsLayout()
-        dicriptContent.layoutIfNeeded()
+//        
+//        dicriptContent.numberOfLines = 0
+//        dicriptContent.setNeedsLayout()
+//        dicriptContent.layoutIfNeeded()
         
         let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
         collectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
@@ -95,7 +95,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             dicriptContent.preferredMaxLayoutWidth = dicriptContent.frame.width
         }
     @IBAction func Select(_ sender: UIButton) {
-        //        delegate?.didTapButton(title: TitleLbl.text!, content: dicriptContent.text!, items: homeworkDocs ?? [])
+                delegate?.didTapButton(title: TitleLbl.text!, content: dicriptContent.text!, items: homeworkDocs ?? [])
         
         
     }
@@ -112,9 +112,9 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         dicriptContent.isHidden = hide
         TitleLbl.isHidden = hide
         Pinview.isHidden = hide
+        SelectBtnHeight.constant = 25
         collectionview.isHidden = hide
         pagecontroller.isHidden = hide
-        let color = hide == true ? UIColor.dashBoardClr : UIColor.white
         cellview.backgroundColor = .white
     }
     
@@ -146,13 +146,14 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     func hideforHomework(){
         HomeworkSubjectLbl.isHidden = false
         HomeworkTitleTop.constant = 15
-        pinImage.isHidden = true
+        pinImage.isHidden = false
         datelbl.isHidden = false
-        SelectBtnHeight.constant=0
-        Pinview.isHidden = true
+        SelectBtnHeight.constant = 25
+        Pinview.isHidden = false
         dicriptContent.isHidden = false
         TitleLbl.isHidden = false
         collectionview.isHidden = false
+        SelectBtn.isHidden = false
         // pagecontroller.isHidden = false
         //        let color = true == true ? UIColor.dashBoardClr : UIColor.white
         cellview.backgroundColor = .white
@@ -241,6 +242,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         let vc = getCurrentViewController()
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
         vcc.imageURL = homeworkDocs ?? []
+        vcc.subjectName = HomeworkSubjectLbl.text
         vcc.type = 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)

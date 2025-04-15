@@ -103,7 +103,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         }
     }
     
-    func didTapButton(title: String, content: String, items: [String]) {
+    func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
     }

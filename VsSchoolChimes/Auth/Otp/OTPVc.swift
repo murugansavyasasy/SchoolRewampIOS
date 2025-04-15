@@ -139,7 +139,9 @@ class OTPVc: UIViewController {
 
     @IBAction func validationBtn(_ sender: Any) {
         if otpTextField1.text != "" && otpTextField2.text != "" && otpTextField3.text != "" && otpTextField4.text != "" && otpTextField5.text != "" && otpTextField6.text != ""  {
-            
+            if #available(iOS 15.0, *) {
+                showLottieProgressLoader(animationName: "loader (2)")
+            }
             Validate_OTP(mobileNumber: mobile_number ?? "" , otp: otpTextField1.text! + otpTextField2.text! + otpTextField3.text! + otpTextField4.text! + otpTextField5.text! + otpTextField6.text!)
         }else{
             view.makeToast(AlertstringFile.Enter_Otp)
@@ -210,10 +212,11 @@ class OTPVc: UIViewController {
             ) in
                 switch result {
                 case .success(let successMessage):
+                    DispatchQueue.main.async { [self] in
+                    if #available(iOS 15.0, *) {
+                        hideLottieProgressLoader()
+                    }
                     if successMessage.status == true {
-                        DispatchQueue.main.async { [self] in
-                            
-                            
                             if(pageType == screenType.isForgotPassword){
                                 
                                 let vc = CreatePasswordVc(
@@ -343,18 +346,20 @@ class OTPVc: UIViewController {
                             }
                             
                             
+                        }else{
+                            DispatchQueue.main.async {
+                             
+                                self.AlertModal.showAlert(title: "", message: successMessage.message ?? "", on: self)
+                            }
                         }
                     }
-                    else{
-                        DispatchQueue.main.async {
-                         
-                            self.AlertModal.showAlert(title: "", message: successMessage.message ?? "", on: self)
-                        }
-                    }
+                    
                 case .failure(let error):
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
-                        
+                        if #available(iOS 15.0, *) {
+                            hideLottieProgressLoader()
+                        }
                     }
                 }
             }

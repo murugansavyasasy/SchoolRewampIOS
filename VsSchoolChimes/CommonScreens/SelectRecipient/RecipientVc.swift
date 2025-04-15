@@ -83,7 +83,12 @@ class RecipientVc: UIViewController{
                 contentLbl.isHidden = true
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
-                segment_selected_index = 1
+//                segment_selected_index = 9
+//                segmentName.selectedSegmentIndex = 9
+                
+                cv_itemsarry = [
+                    recipeint_tabBarName.Section_Student
+                ]
             }else{
                 speficBtnName.isEnabled = false
                 selectStandardDropDown.isHidden = true
@@ -623,7 +628,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             }
             
         default:
-            break
+            cell.cellLabel.text = sectionsDetails?[indexPath.row].name
+            if let select = sectionsDetails?[indexPath.row].isSelect {
+                cell.checkboxImg.image = select ? ImageName.checkedSquares :
+                ImageName.uncheckedSquares
+            }
+
         }
         
         return cell
@@ -704,7 +714,34 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         default:
-            break
+            if indexPath.row < (sectionsDetails?.count ?? 0) {
+                guard var section = sectionsDetails?[indexPath.row] else { return }
+                
+                section.isSelect?.toggle()
+                sectionsDetails?[indexPath.row].isSelect = section.isSelect
+                if let id = section.id {
+                    if section.isSelect == true {
+                        if !array_selectedId.contains(id) {
+                            array_selectedId.append(id)
+                        }
+                    } else {
+                        array_selectedId.removeAll(where: { $0 == id })
+                    }
+                }
+                let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
+                let selectedIds = selectedSections.compactMap { $0.id }
+                sectionIds = selectedIds.joined(separator: ",")
+                if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId{
+                    if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
+                        getSubjectListAPI(finalSectionIds)
+                    }
+                    selectSubject.isHidden = false
+                   
+                }
+                speficBtnName.isEnabled = selectedSections.count == 1
+                speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
+                
+            }
         }
         tv.reloadData()
     }
