@@ -285,13 +285,16 @@ class RecipientVc: UIViewController{
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     
                     if user_inputs.voice_link.contains("https:") {
+                        // Voice link is already uploaded
                         sendVoiceMessage_communication()
-                    }else{
+                    } else {
+                        // Voice link is local, needs to be uploaded first
                         uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
                             CircularProgressLoader.shared.hide()
                             self.sendVoiceMessage_communication()
                         }
                     }
+
                 default:
                     print("Unhandled communication screen type: \(ScreenType)")
                 }
