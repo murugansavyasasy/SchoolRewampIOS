@@ -333,6 +333,36 @@ struct AwsData: Codable {
     let fileUrl: String
 }
 
+//MARK: - Get Communication List(Reciver)
+struct CommunicationReciverResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [CommunicationReciverData]
+}
+
+struct CommunicationReciverData: Codable {
+    let type: String
+    let id: String
+    let content: String
+    let description: String
+    let date: String
+    let time: String
+    let sender_info: String
+    let is_emergency : Bool
+    var is_unread: Bool
+    var isExpand:Bool?
+    let is_archive: Bool?
+    let duration : Int?
+    
+}
+
+struct ReadStatusResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [String]
+}
+
+
 struct get_academic_yearSuc : Codable {
     
     let status: Bool?

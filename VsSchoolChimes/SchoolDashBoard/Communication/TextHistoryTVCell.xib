@@ -134,11 +134,13 @@
             <connections>
                 <outlet property="DateLabel" destination="orl-Nb-csW" id="OzO-MM-L35"/>
                 <outlet property="MessageTitle" destination="E6K-XD-RuD" id="ZkO-qV-XKD"/>
+                <outlet property="NewImageView" destination="kfH-7D-VaO" id="giV-67-XAh"/>
                 <outlet property="descriptContent" destination="ZhC-TO-4ad" id="UaZ-AG-xOz"/>
+                <outlet property="newImageOuterView" destination="gF1-fd-HlY" id="D9s-QM-OML"/>
                 <outlet property="outerview" destination="PuL-ZK-Yro" id="kpn-zC-XoS"/>
                 <outlet property="sendBtn" destination="vwk-N1-Vce" id="hqK-2M-2ub"/>
                 <outlet property="sendBtnWidth" destination="g6Y-ST-PKy" id="ff6-ce-Fyx"/>
-                <outlet property="sendBtnheight" destination="X0m-7t-AdY" id="l5z-w3-sau"/>
+                <outlet property="sendBtnheight" destination="X0m-7t-AdY" id="99y-UK-zDT"/>
             </connections>
             <point key="canvasLocation" x="6.8702290076335872" y="45.774647887323944"/>
         </tableViewCell>

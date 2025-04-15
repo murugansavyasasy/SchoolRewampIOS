@@ -59,6 +59,43 @@ class HistoryTC: UITableViewCell {
         NewImageView.isHidden = true
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // Assuming 'myLabel' is your UILabel
+        configureShimmer()
+    }
+    
+    deinit {
+        updateTimer?.invalidate()
+        updateTimer = nil
+        player?.pause()
+        player = nil
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // Invalidate timer if it's active
+        updateTimer?.invalidate()
+        updateTimer = nil
+        
+        // Reset player and wave view state
+        player?.pause()
+        player = nil
+        playerItem = nil
+        isPlaying = false
+        
+        // Reset UI: hide wave view and total time until intentionally set
+        playerView.progress = 0.0
+        playerView.isHidden = true
+        totaltime.isHidden = true
+        
+        // Optionally reset button image to default play
+        playBtn.setImage(ImageName.playbutton, for: .normal)
+    }
+    
     func setupPlayer(with url: URL) {
         player = AVPlayer(url: url)
         NotificationCenter.default.addObserver(self,
