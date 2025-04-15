@@ -60,6 +60,7 @@ class  send_textmessageStringFile {
     static var target_type = "target_type"
     static var message = "message"
     static var description = "description"
+    static var academic_year_id = "academic_year_id"
 }
 class send_voicemeassageStringFile {
     
@@ -75,7 +76,14 @@ class send_voicemeassageStringFile {
     static var end_time = "end_time"
     static var file_name = "file_name"
     static var circular_type = "circular_type"
+    static var academic_year_id = "academic_year_id"
   
+}
+class speficStudentStringFile{
+    
+    
+    static var section_id = "section_id"
+    static var academic_year_id = "academic_year_id"
 }
 
 enum UploadMessageKeys {

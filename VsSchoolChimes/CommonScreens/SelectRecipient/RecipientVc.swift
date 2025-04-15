@@ -51,6 +51,7 @@ class RecipientVc: UIViewController{
     var target_type : Int?
     let alert = CustomAlert()
     var circular_types : String?
+    var standard_sectionlabel : String?
     var subjectId : String?
     var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
@@ -282,9 +283,14 @@ class RecipientVc: UIViewController{
                 case screenType.communication_text:
                     sendtextmessage_communication()
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
-                    uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
-                        CircularProgressLoader.shared.hide()
-                        self.sendVoiceMessage_communication()
+                    
+                    if user_inputs.voice_link.contains("https:") {
+                        sendVoiceMessage_communication()
+                    }else{
+                        uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
+                            CircularProgressLoader.shared.hide()
+                            self.sendVoiceMessage_communication()
+                        }
                     }
                 default:
                     print("Unhandled communication screen type: \(ScreenType)")
@@ -391,7 +397,8 @@ class RecipientVc: UIViewController{
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
-        //        vc.standard_sectionlabel =
+        vc.selectedAcadimicYearId = self.selectedAcadimicYearId
+        vc.standard_sectionlabel = self.standard_sectionlabel
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
         
@@ -533,9 +540,9 @@ class RecipientVc: UIViewController{
             else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Group {
                 getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
-    //        else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Entier_School {
-    //
-    //        }
+//            else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Entier_School {
+//    
+//            }
         }
         
         
@@ -724,6 +731,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
                             tv.isHidden = false
+                            noRecordLbl.isHidden = true
                             groupDetails = successmessage.data
                             if var students = groupDetails {
                                 for i in students.indices {
@@ -742,6 +750,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             tv.isHidden = true
+                            noRecordLbl.isHidden = false
                             noRecordLbl.text = successmessage.message
                         }
                     }
@@ -907,17 +916,14 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     
     func sendtextmessage_communication(){
-        
-        
-        
-        
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
                 
                 send_textmessageStringFile.description : user_inputs.title,
                 send_textmessageStringFile.message : user_inputs.description,
                 send_textmessageStringFile.target_code: array_selectedId,
-                send_textmessageStringFile.target_type: target_type ?? 0
+                send_textmessageStringFile.target_type: target_type ?? 0,
+                send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
@@ -945,8 +951,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else {
                         
                         DispatchQueue.main.async {
-                            
-                            
+                            self.alert
+                                .showAlert(
+                                    title: "Error",
+                                    message: succesmessage.message ?? "" ,
+                                    on: self
+                                )
                         }
                     }
                     
@@ -980,7 +990,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 send_voicemeassageStringFile.start_time : user_inputs.start_time,
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
                 send_voicemeassageStringFile.file_name : user_inputs.file_name,
-                send_voicemeassageStringFile.circular_type : circular_types ?? ""
+                send_voicemeassageStringFile.circular_type : circular_types ?? "",
+                send_voicemeassageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
@@ -1007,7 +1018,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else {
                         
                         DispatchQueue.main.async {
-                            
+                            self.alert
+                                .showAlert(
+                                    title: "Error",
+                                    message: succesmessage.message ?? "" ,
+                                    on: self
+                                )
                             
                         }
                     }
