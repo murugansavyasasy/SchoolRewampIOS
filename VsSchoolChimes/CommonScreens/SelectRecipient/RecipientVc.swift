@@ -69,10 +69,8 @@ class RecipientVc: UIViewController{
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr()
-        
-        configureRecipientTabs()
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            configureRecipientTabs()
             if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
                 segmentName.isHidden = true
                 speficBtnName.isHidden = true
