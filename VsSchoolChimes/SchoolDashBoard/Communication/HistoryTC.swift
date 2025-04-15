@@ -57,6 +57,7 @@ class HistoryTC: UITableViewCell {
         playerView.isHidden = true
         totaltime.isHidden = true
         NewImageView.isHidden = true
+        sendbtn.isHidden = true
     }
     
     func setupPlayer(with url: URL) {
@@ -175,6 +176,7 @@ class HistoryTC: UITableViewCell {
         NewImageView.isHidden = false
         totaltime.isHidden = false
         playerView.isHidden = false
+        sendbtn.isHidden = false
     }
     @IBAction func forword(_ sender: UIButton) {
         ForwordDelegate?.voiceforword(selectedIndex: sender.tag)

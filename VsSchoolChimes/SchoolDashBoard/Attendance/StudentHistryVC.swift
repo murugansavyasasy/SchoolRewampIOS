@@ -72,6 +72,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var circular_types : String?
     var standard_sectionlabel : String? = "10"
     var selectedAcadimicYearId : Int?
+    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.setTitle(standard_sectionlabel, for: .normal)
@@ -206,9 +208,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 let indexPath = IndexPath(row: i, section: 0)
                 if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
                     if isSelectAllEnabled {
-                        customCell.CheckBoxImgview.image = UIImage(named: "checked_Tick")
+                        
+                        customCell.CheckBoxImgview.image = ImageName.checkedSquares
+                        selected_student.append(studentsDetails?[i].id ?? "" )
                     } else {
-                        customCell.CheckBoxImgview.image = UIImage(named: "CheckCircle")
+                        customCell.CheckBoxImgview.image = ImageName.uncheckedSquares
+                        selected_student.removeAll()
                     }
                 }
                 
@@ -326,7 +331,17 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     sendtextmessage_communication()
 
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
-                    uploadAndSendVoiceMessage(url : user_inputs.voice_link)
+                    if user_inputs.voice_link.contains("https:") {
+                        // Voice link is already uploaded
+                        sendVoiceMessage_communication()
+                    } else {
+                        // Voice link is local, needs to be uploaded first
+                        uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
+                            CircularProgressLoader.shared.hide()
+                            self.sendVoiceMessage_communication()
+                        }
+                    }
+                   
 
                 default:
                     print("❗️Unhandled communication screen type: \(ScreenType)")
@@ -338,26 +353,94 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         )
     }
     
-    private func uploadAndSendVoiceMessage(url: String) {
-        guard let audioURL = URL(string: url) else {
-            print("❌ Invalid audio URL.")
+    private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
+        var completed = 0
+
+        switch file {
+
+        // 🎙️ Case: Audio File from String (URL Path)
+        case let files as String:
+            guard let audioURL = URL(string: files) else {
+                print("❌ Invalid audio URL.")
+                return
+            }
+
+            let total = 1
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+
+            AWSUploadManager.shared.uploadFileToAWS(
+                file: audioURL,
+                bucketPath: "uploads/audio/",
+                bucketName: "schoolchimes-communication",
+                progressHandler: { progress in
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+                },
+                completion: { url in
+                    if let uploadedURL = url {
+                        print("✅ Audio uploaded: \(uploadedURL)")
+                        user_inputs.voice_link = uploadedURL
+                    } else {
+                        print("❌ Audio upload failed.")
+                    }
+
+                    completed += 1
+                    let progress = (Double(completed) / Double(total)) * 100
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+
+                    if completed == total {
+                        CircularProgressLoader.shared.hide()
+                        completion()
+                    }
+                }
+            )
+
+        // 🖼️ Case: Array of Images
+        case let images as [UIImage]:
+            let total = images.count
+            guard !images.isEmpty else {
+                completion()
+                return
+            }
+
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+
+            for (index, img) in images.enumerated() {
+                AWSUploadManager.shared.uploadFileToAWS(
+                    file: img,
+                    bucketPath: "uploads/images/",
+                    bucketName: "schoolchimes-communication",
+                    progressHandler: { progress in
+                        // Optional: Update progress per file individually if you want
+                    },
+                    completion: { [self] url in
+                        if let uploadedURL = url {
+//                            uploadedURLs.append(uploadedURL)
+                            
+                        } else {
+                            print("❌ Failed to upload image \(index)")
+                        }
+
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    }
+                )
+            }
+
+        default:
+            print("❌ Unsupported file type")
             return
         }
-
-        AWSUploadManager.shared.uploadFileToAWS(
-            file: audioURL,
-            bucketPath: "uploads/audio/",
-            bucketName: "schoolchimes-communication"
-        ) { url in
-            if let uploadedURL = url {
-                print("✅ Audio uploaded: \(uploadedURL)")
-                user_inputs.voice_link = uploadedURL
-                self.sendVoiceMessage_communication()
-            } else {
-                print("❌ Audio upload failed.")
-            }
-        }
     }
+
     
     
     func sendtextmessage_communication(){
@@ -388,8 +471,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     title: "Success",
                                     message: succesmessage.message ?? "",
                                     on: self
-                                ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                ) { [self] in
+                                    gotoDashboard()
                                     
                                 }
                             
@@ -452,7 +535,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                                    self.gotoDashboard()
                                     
                                 }
                             
@@ -497,8 +580,8 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             )
             
             cell.NameLbl.text =  studentsDetails?[indexPath.row].name ?? ""
-//            cell.AdmisionNoLbl.text = specificdata[indexPath.row].admissionNo
-//            cell.RollNoLbl.text = specificdata[indexPath.row].rollnumber
+            cell.AdmisionNoLbl.text = studentsDetails?[indexPath.row].admission_no ?? ""
+            cell.RollNoLbl.text = studentsDetails?[indexPath.row].roll_no ?? ""
             if let firstChar =  studentsDetails?[indexPath.row].name?.first {
                 cell.alphabetLbl.text = String(firstChar)
             } else {
@@ -597,8 +680,8 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 totalcount -= 1
             }
             
-            let img = totalcount == studentData.count ? ImageName.checkmark : ImageName.square
-            selectAllBtn.setImage(img, for: .normal)
+//            let img = totalcount == studentData.count ? ImageName.checkmark : ImageName.square
+//            selectAllBtn.setImage(img, for: .normal)
         }
         
         else{
@@ -656,6 +739,32 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // Dismiss the keyboard
+    }
+    
+    
+    
+    func gotoDashboard(){
+        
+        switch staff_role {
+        case PriorityType.is_staff:
+            self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+           
+        case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+         
+            
+            if (staffDetailsCount?.count ?? 0) > 1 {
+                self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                
+            } else {
+                self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+            }
+            
+        default:
+            print("Unhandled staff role")
+        }
+        
+        // Add segments from updated array
+        
     }
 }
 

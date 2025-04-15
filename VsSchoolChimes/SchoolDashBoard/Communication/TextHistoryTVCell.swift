@@ -34,6 +34,7 @@ class TextHistoryTVCell: UITableViewCell {
         DateLabel.setFont(style: .body, size: FontSize.BodySize)
         MessageTitle.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
+        sendBtn.isHidden = true
         
     }
     @IBAction func Select(_ sender: UIButton) {
@@ -51,5 +52,6 @@ class TextHistoryTVCell: UITableViewCell {
         descriptContent.removeShimmer()
         DateLabel.removeShimmer()
         outerview.removeShimmer()
+        sendBtn.isHidden = false
     }
 }

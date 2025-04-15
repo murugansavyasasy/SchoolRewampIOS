@@ -98,14 +98,15 @@ struct ReceiverMenuItems {
 class AlertstringFile{
     
     static let title = "Confirm Action".translated()
-    static let voice_or_title_is_required = "Voice or title is required".translated()
-    static let enter_title_description = "Enter title description".translated()
+    static let voice_or_title_is_required = "Voice and title is required".translated()
+    static let enter_title_description = "Enter title and description".translated()
     static let Choose_any_target = "Choose any target to send message".translated()
     static let Alert_title = "Alert"
-    static let select_date = "Select Date".translated()
+    static let select_date = "Select sheduled date".translated()
     
     static let Confirm = "Confirm".translated()
-    static let AreYouSureYouWantToProceed = "Are you sure you want to send? NOTE : selected target count is ".translated()
+//    static let AreYouSureYouWantToProceed = "Are you sure you want to send? NOTE : selected target count is ".translated()
+    static let AreYouSureYouWantToProceed = "Are you sure you want to send".translated()
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
@@ -245,13 +246,13 @@ class CommonStringFile{
     static let FromTime = "From Time"
     static let Schedule = "Schedule date"
     static let ToTime = "Do not dial beyond"
-    static let Emergencyvoicemessages = "Emergency voice messages"
+    static let Emergencyvoicemessages = "Enable emergency voice"
     static let VoiceMessage = "Voice"
     static let TextMessage = "Text"
     static let ScheduleCall = "Schedule Call"
     static let EnterTextHere = "Enter Text Here"
-    static let BacktoTextMessage = "Back To TextMessage"
-    static let BackToVoiceMessage = "Back To Voice Message"
+    static let BacktoTextMessage = "Back to text message"
+    static let BackToVoiceMessage = "Back To voice message"
     static let Venue = "Venue"
     static let AddPhotos = "Add Photos"
     static let EventDetails = "Event Details"

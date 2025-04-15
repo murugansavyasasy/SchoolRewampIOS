@@ -320,6 +320,7 @@ class OTPVc: UIViewController {
                                             nibName: nil,
                                             bundle: nil
                                         )
+                                       
                                         vc.modalPresentationStyle = .fullScreen
                                         present(vc, animated: true)
                                     }

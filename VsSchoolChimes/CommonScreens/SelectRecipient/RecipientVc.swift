@@ -66,12 +66,15 @@ class RecipientVc: UIViewController{
                 UserDefaultFileManager.get_staff_Details()?.school_name,
                 for: .normal
             )
+        backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [self] in
+            configureRecipientTabs()
+        }
         
-        configureRecipientTabs()
-        
-        
+       
+     
         if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
             segmentName.isHidden = true
             speficBtnName.isHidden = true
@@ -111,6 +114,8 @@ class RecipientVc: UIViewController{
         
         tv.delegate = self
         tv.dataSource = self
+        
+        configureRecipientTabs()
     }
     
     
@@ -151,6 +156,7 @@ class RecipientVc: UIViewController{
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
+//                circular_types =  circular_type.
                 tableHeight.constant = 0
             }
             
@@ -186,13 +192,20 @@ class RecipientVc: UIViewController{
     
     @IBAction func send(_ sender: UIButton) {
         print("selectedId : \(array_selectedId)")
-        guard !array_selectedId.isEmpty else {
-            alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
-                on: self)
-            return
+        
+        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School{
+            
+        }else{
+            
+            guard !array_selectedId.isEmpty else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_target,
+                    on: self)
+                return
+            }
         }
+       
         switch screenType.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
@@ -895,10 +908,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             
                             
                         }
+                        
                     }else{
-                        DispatchQueue.main.async { [self] in
-                            
-                            //                        listTable.isHidden = true
+                        DispatchQueue.main.async {
+                            self.alert
+                                .showAlert(
+                                    title: "Error",
+                                    message: successMessage.message ?? "" ,
+                                    on: self
+                                )
                         }
                     }
                 case .failure(let error):

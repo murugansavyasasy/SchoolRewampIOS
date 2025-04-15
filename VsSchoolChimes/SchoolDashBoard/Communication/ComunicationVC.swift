@@ -199,17 +199,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             staff_role == PriorityType.is_grouphead ||
             staff_role == PriorityType.is_principal || VoiceHistory != nil || TextHistory != nil{
             if isScheduleSelected{
-                emengencyCall.isHidden = true
-                EnableCallLbl.isHidden = true
+            
+                ViewAnimator.hideFade(EnableCallLbl)
+                ViewAnimator.hideFade(emengencyCall)
             }else{
-                emengencyCall.isHidden = false
-                EnableCallLbl.isHidden = false
+               
+                ViewAnimator.showFade(emengencyCall)
+                ViewAnimator.showFade(EnableCallLbl)
             }
             staffDetails = staffDetailsCount?.first
             
         } else {
-            emengencyCall.isHidden = true
-            EnableCallLbl.isHidden = true
+            ViewAnimator.hideFade(EnableCallLbl)
+            ViewAnimator.hideFade(emengencyCall)
             
         }
     }
@@ -494,6 +496,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         //MARK: Label font style
         tittlemessage.setFont(style: .title, size: FontSize.TitleSize)
+        voiceSetTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         messageSendTime.setFont(style: .body, size: FontSize.BodySize)
         voiceTiming.setFont(style: .body, size: FontSize.BodySize)
         Timinglbl.setFont(style: .body, size: FontSize.BodySize)
@@ -681,7 +684,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         dateSelectedViewHeight.constant = 0
         doneBtn.layer.cornerRadius = 8
         
-        let title = "Do you want send from History?"
+        let title = "Send voice from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -716,7 +719,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         // Set initial times
         let initialFromTime = Date() // Current time for example
-        let initialToTime = Calendar.current.date(byAdding: .hour, value: 1, to: initialFromTime) ?? Date()
+        let initialToTime = Calendar.current.date(byAdding: .minute, value: 20, to: initialFromTime) ?? Date()
         
         fromTime.setTitle(formatter.string(from: initialFromTime), for: .normal)
         toTime.setTitle(formatter.string(from: initialToTime), for: .normal)
@@ -810,6 +813,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             return
         }
         setupRecorder()
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        messageSendTime.text = "\(formatter.string(from: Date()))"
         // Access the file securely if necessary
         if selectedFileURL.startAccessingSecurityScopedResource() {
             defer { selectedFileURL.stopAccessingSecurityScopedResource() }
@@ -825,6 +831,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
                 // Optional: Use the destinationURL for further processing
                 AudioPlayUrl = destinationURL.absoluteString
+                if let filePath = AudioPlayUrl { // Your path string
+                    if let duration = getAudioDuration(from: filePath) {
+                        print("Audio Duration: \(duration)")
+                        voiceTiming.text = "\(duration)"
+                    }
+                }
+
                 // UI updates (e.g., show player)
                 playerheight.constant = 60
                 voiceStackview.isHidden = false
@@ -840,6 +853,20 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         } else {
             print("Failed to access security scoped resource.")
         }
+    }
+    
+    
+    func getAudioDuration(from filePath: String) -> String? {
+        let fileURL = URL(fileURLWithPath: filePath)
+        let asset = AVAsset(url: fileURL)
+        let duration = asset.duration
+        let durationInSeconds = CMTimeGetSeconds(duration)
+
+        guard durationInSeconds.isFinite else { return nil }
+
+        let minutes = Int(durationInSeconds) / 60
+        let seconds = Int(durationInSeconds) % 60
+        return String(format: "%02d:%02d", minutes, seconds) // e.g., "01:27"
     }
     
     // Handle cancellation
@@ -1016,7 +1043,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 let duration = Date().timeIntervalSince(startTime)
                 let minutes = Int(duration) / 60
                 let seconds = Int(duration) % 60
-                voiceTiming.text = String(format: "%02d:%02d", minutes, seconds)            }
+                voiceTiming.text = String(format: "%02d:%02d", minutes, seconds)
+                let durationString =  voiceTiming.text ?? ""
+                let totalSeconds = convertTimeStringToSeconds(durationString)
+                voiceRecordedDuration = totalSeconds
+            }
+            
+           
             
             // Set message send time
             let formatter = DateFormatter()
@@ -1172,6 +1205,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                         voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
                         
                         voiceRecordedDuration = Int(totalDurationFormatted)
+                        
                     }
                 }
             } else {
@@ -1229,12 +1263,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func voiceview(_ sender: Any) {
-        let title = "Do you want to send voice from history?"
+        selectedDates.removeAll()
+        let title = "Send voice from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
+        
         enabelVoice_view(
             isforward: false,
             voiceUrl: "",
@@ -1294,8 +1330,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     }
     @IBAction func textviewshow(_ sender: Any) {
-        
-        let title = "Do you want to send from history?"
+        selectedDates.removeAll()
+        let title = "Send text from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1316,7 +1352,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
-        let title = "Send from Schedule Call History?"
+        selectedDates.removeAll()
+        let title = "Schedule call from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1474,13 +1511,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             voiceTiming.text = "00:00 / 03:00"
         }
 
+        isScheduleSelected = true
         updateEmergencyCallVisibility(staff_role)
 
         scheduleBtn.backgroundColor = backgroundcolor
         textClickView.backgroundColor = .white
         voiceClickView.backgroundColor = .white
         seduleClickView.backgroundColor = tapColor
-        isScheduleSelected = true
+       
         showVoiceMessageView()
 
         ViewAnimator.showFade(schedulCallView)
@@ -1601,7 +1639,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             )
             
             cell.MessageTitle.text = TextHistory?[indexPath.row].description
-            cell.DateLabel.text = TextHistory?[indexPath.row].date
+//            cell.DateLabel.text = TextHistory?[indexPath.row].date
             cell.delegate = self
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
             cell.descriptContent.tag = indexPath.row
@@ -1611,6 +1649,25 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
                 cell.configureShimmer()
             }
+            if let sentOn = TextHistory?[indexPath.row].date,
+               let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
+
+                let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
+                let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
+                
+                let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
+                
+                let attributedText = NSMutableAttributedString(string: fullText)
+                
+                // Change time part color
+                if let timeRange = fullText.range(of: timeString) {
+                    let nsRange = NSRange(timeRange, in: fullText)
+                    attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
+                }
+
+                cell.DateLabel.attributedText = attributedText
+            }
+            
             return cell
             
         }else{
@@ -1627,8 +1684,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             cell.FinishPlayingdelegate = self
             
             cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-            cell.datelbl.text = voiceData?.sent_on ?? ""
-            
+          
             let duration = voiceData?.duration ?? 0
             let formatted = formatDuration(duration)
             cell.totaltime.text = "00:00 / \(formatted)"
@@ -1643,6 +1699,26 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 cell.configureShimmer()
             }
+            
+            if let sentOn = voiceData?.sent_on,
+               let date = DateFormatterHelper.shared.parseDate(from: sentOn) {
+
+                let dateString = DateFormatterHelper.shared.formatDateToDayMonthYear(date: date) // "11 Apr 2025"
+                let timeString = DateFormatterHelper.shared.formatTime(date: date) // "01:04 PM"
+                
+                let fullText = "\(dateString) \(timeString)" // "11 Apr 2025 01:04 PM"
+                
+                let attributedText = NSMutableAttributedString(string: fullText)
+                
+                // Change time part color
+                if let timeRange = fullText.range(of: timeString) {
+                    let nsRange = NSRange(timeRange, in: fullText)
+                    attributedText.addAttribute(.foregroundColor, value: UIColor.gray, range: nsRange)
+                }
+
+                cell.datelbl.attributedText = attributedText
+            }
+
             
             return cell
         }
@@ -1888,7 +1964,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             TextMsgTittle.text = Tittle
             informationcontent.text = descriptContent
             placeholderLabel.isHidden = !informationcontent.text.isEmpty
-            textCountLbl.text = "\(Tittle.count) of 500"
+            textCountLbl.text = "\(descriptContent.count) of 500"
             showTextMessageView(isforwardtext:true)
         }
         
@@ -1907,6 +1983,16 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     return nil
                 }
             }
+        }
+        
+        func convertTimeStringToSeconds(_ timeString: String) -> Int {
+            let components = timeString.split(separator: ":")
+            guard components.count == 2,
+                  let minutes = Int(components[0]),
+                  let seconds = Int(components[1]) else {
+                return 0
+            }
+            return (minutes * 60) + seconds
         }
         
         }
@@ -1982,3 +2068,38 @@ extension UIView {
         }
     }
 }
+class DateFormatterHelper {
+    static let shared = DateFormatterHelper()
+    private init() {}
+    
+    private let inputFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        return formatter
+    }()
+    
+    private let outputDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        return formatter
+    }()
+    
+    private let outputTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }()
+    
+    func parseDate(from string: String) -> Date? {
+        return inputFormatter.date(from: string)
+    }
+    
+    func formatDateToDayMonthYear(date: Date) -> String {
+        return outputDateFormatter.string(from: date)
+    }
+    
+    func formatTime(date: Date) -> String {
+        return outputTimeFormatter.string(from: date)
+    }
+}
+
