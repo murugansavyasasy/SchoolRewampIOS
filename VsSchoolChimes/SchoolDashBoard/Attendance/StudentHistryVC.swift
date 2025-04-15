@@ -71,6 +71,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var target_type : Int?
     var circular_types : String?
     var standard_sectionlabel : String? = "10"
+    var selectedAcadimicYearId : Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.setTitle(standard_sectionlabel, for: .normal)
@@ -87,7 +88,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         registerCell()
         filterData = studentData
-        recipient_get_student_list(selected_sectionId: selected_sectionID ?? "")
+        recipient_get_student_list(
+            selected_sectionId: selected_sectionID ?? "",
+            academic_year_id: selectedAcadimicYearId ?? 0
+        )
        
         search.delegate = self
         headerView.layer.cornerRadius = 10
@@ -233,41 +237,47 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         return color ?? .gradient1
     }
     
-    func recipient_get_student_list(selected_sectionId: String){
+    func recipient_get_student_list(selected_sectionId: String,academic_year_id:Int){
         APIService.shared
-            .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: ["section_id" : selected_sectionId], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.recipient_get_student_list, parameters: [
+                
+                speficStudentStringFile.section_id : selected_sectionId
+                ,speficStudentStringFile.academic_year_id : academic_year_id
+                
+            ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <GetStudentlistSuc,
                 Error>
             ) in
-            switch result {
-            case .success(let successMessage):
-                if successMessage.status == true{
-                    DispatchQueue.main.async { [self] in
-                        historyTable.isHidden = false
-                        studentsDetails = successMessage.data
-                        if var students = studentsDetails {
-                            for i in students.indices {
-                                students[i].isSelect = false
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            historyTable.isHidden = false
+                            studentsDetails = successMessage.data
+                            if var students = studentsDetails {
+                                for i in students.indices {
+                                    students[i].isSelect = false
+                                }
+                                studentsDetails = students
                             }
-                            studentsDetails = students
+                            dataVisibility = Array(repeating: false, count: studentsDetails?.count ?? 0)
+                            selectedRows = Array(repeating: false, count: studentsDetails?.count ?? 0)
+                            historyTable.reloadData()
                         }
-                        dataVisibility = Array(repeating: false, count: studentsDetails?.count ?? 0)
-                        selectedRows = Array(repeating: false, count: studentsDetails?.count ?? 0)
-                        historyTable.reloadData()
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            historyTable.isHidden = true
+                            //                        noRecordLbl.text = successMessage.message
+                        }
                     }
-                }else{
-                    DispatchQueue.main.async { [self] in
-                        historyTable.isHidden = true
-//                        noRecordLbl.text = successMessage.message
-                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-                
-            case .failure(let error):
-                print(error.localizedDescription)
             }
-        }
         
     }
+    
     
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
@@ -351,18 +361,16 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     func sendtextmessage_communication(){
-        
-        
-        
-        
+  
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
                  
                    send_textmessageStringFile.description : user_inputs.title,
                    send_textmessageStringFile.message : user_inputs.description,
                    send_textmessageStringFile.target_code: selected_student,
-                   send_textmessageStringFile.target_type: target_type ?? 0
-                 
+                   send_textmessageStringFile.target_type: target_type ?? 0,
+                   send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
+                   
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -408,8 +416,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     func sendVoiceMessage_communication() {
-        
-        
         APIService.shared
             .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
                 
@@ -424,7 +430,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 send_voicemeassageStringFile.start_time : user_inputs.start_time,
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
                 send_voicemeassageStringFile.file_name : user_inputs.file_name,
-                send_voicemeassageStringFile.circular_type  : circular_type.student
+                send_voicemeassageStringFile.circular_type  : circular_type.student,
+                send_voicemeassageStringFile.academic_year_id  : selectedAcadimicYearId ?? 0
                 
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (

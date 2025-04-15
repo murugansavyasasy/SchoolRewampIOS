@@ -28,6 +28,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
     let acidamicdrops = DropDown()
+    var selectedAcadimicYearId : Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: acidamicYrDropView)
@@ -85,6 +86,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             
+            selectedAcadimicYearId = AcadimicYearDatas[index].id ?? 0
             if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
             }
@@ -277,6 +279,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
                                     if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                                         label.text = AcadimicYearDatas[i].year
+                                        selectedAcadimicYearId = AcadimicYearDatas[i].id
                                         break
                                     }
                                 }
@@ -296,26 +299,22 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     func sendtextmessage_communication(){
         
-        
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
                 
                 send_textmessageStringFile.description : user_inputs.title,
                 send_textmessageStringFile.message : user_inputs.description,
                 send_textmessageStringFile.target_code: array_selectedSchoolId,
-                send_textmessageStringFile.target_type: TargetTypes.school
+                send_textmessageStringFile.target_type: TargetTypes.school,
+                send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
             ) in
-                
                 switch result {
-                    
                 case.success(let succesmessage) :
-                    
                     if succesmessage.status == true {
-                        
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -324,7 +323,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                                     on: self
                                 ) {
                                     self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-                                    
                                 }
                             
                         }
@@ -368,7 +366,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 send_voicemeassageStringFile.start_time : user_inputs.start_time,
                 send_voicemeassageStringFile.end_time :user_inputs.end_time,
                 send_voicemeassageStringFile.file_name : user_inputs.file_name,
-                send_voicemeassageStringFile.circular_type : circular_type.school
+                send_voicemeassageStringFile.circular_type : circular_type.school,
+                send_voicemeassageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,

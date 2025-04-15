@@ -18,12 +18,17 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 isforward: true,
                 voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
                 title: VoiceHistory?[selectedIndex ?? 0].description ?? "",
-                durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0
+                durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
+                url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
             )
         }else{
             enabelVoice_view(
                 isforward: true,
-                voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "", title: VoiceHistory?[selectedIndex ?? 0].description ?? "",durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0)
+                voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
+                title: VoiceHistory?[selectedIndex ?? 0].description ?? "",
+                durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
+                url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
+            )
         }
         
         
@@ -193,8 +198,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if staff_role == PriorityType.is_admin ||
             staff_role == PriorityType.is_grouphead ||
             staff_role == PriorityType.is_principal || VoiceHistory != nil || TextHistory != nil{
-            emengencyCall.isHidden = false
-            EnableCallLbl.isHidden = false
+            if isScheduleSelected{
+                emengencyCall.isHidden = true
+                EnableCallLbl.isHidden = true
+            }else{
+                emengencyCall.isHidden = false
+                EnableCallLbl.isHidden = false
+            }
             staffDetails = staffDetailsCount?.first
             
         } else {
@@ -219,6 +229,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func voice_sendBtn_action(_ sender: UIButton) {
+        ScheduleSelectedDate.removeAll()
+        for i in 0..<selectedDates.count{
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            let formattedDate = dateFormatter.string(from: selectedDates[i])
+            ScheduleSelectedDate.append(formattedDate)
+        }
         let today_date = getCurrentDateString()
         if(AudioPlayUrl != "" && voiceTitleeTxt.text != ""){
             
@@ -227,11 +244,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             user_inputs.duration = voiceRecordedDuration ?? 0
             user_inputs.is_schedule = isScheduleSelected
             user_inputs.is_emergency = isEmergencyVoice ?? 0
-            
+            user_inputs.file_name = "file"
             if emengencyCall.isOn || !isScheduleSelected {
                 user_inputs.schedule_date = [today_date]
                 user_inputs.start_time = ""
                 user_inputs.end_time = ""
+                recienpient_validation(isVoice : true)
             } else {
                 if ScheduleSelectedDate.count != 0{
                     let originalDates = ScheduleSelectedDate
@@ -240,12 +258,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     user_inputs.schedule_date = ScheduleSelectedDate
                     user_inputs.start_time = fromTime.titleLabel?.text ?? ""
                     user_inputs.end_time = toTime.titleLabel?.text ?? ""
+                    recienpient_validation(isVoice : true)
                 }else{
                     alert.showAlert(title: "",message: AlertstringFile.select_date,on: self)
                 }
             }
-            user_inputs.file_name = "file"
-            recienpient_validation(isVoice : true)
+           
+          
         }
         else{
             alert
@@ -838,78 +857,53 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     //MARK: VOICE MESSAGE VIEW
     func showVoiceMessageView() {
-        voiceview.isHidden = false
-        textmessageview.isHidden = true
-        historyview.isHidden = true
+        ViewAnimator.showFade(voiceview)
+        ViewAnimator.hideFade(textmessageview)
+        ViewAnimator.hideFade(historyview)
+        
         tittlemessage.text = CommonStringFile.VoiceMessage.translated()
     }
+
     
-    //MARK: TEXT MESSAGE VIEW
-    func showTextMessageView(isforwardtext:Bool) {
-        if !isforwardtext{
-            informationcontent.text = ""
-            TextMsgTittle.text = ""
-        }
-        calanderOuter.isHidden = true
-        // Hide the picker and Done button
-        timePicker.isHidden = true
-        doneButton.isHidden = true
-        activeButton = nil
-        textBtn.backgroundColor = backgroundcolor
-        textBtn.tintColor = .white
-        scheduleBtn.tintColor = .black
-        textClickView.backgroundColor = tapColor
-        voiceClickView.backgroundColor = .white
-        seduleClickView.backgroundColor = .white
-        clickTextView.textColor = .white
-        clickSchedule.textColor = .black
-        clickVoiceLbl.textColor = .black
-        voiceBtn.tintColor = .black
-        voiceBtn.backgroundColor = UIColor.white
-        historyview.isHidden = true
-        textmessageview.isHidden = false
-        voiceview.isHidden = true
-        tittlemessage.text = CommonStringFile.TextMessage.translated()
-        scheduleBtn.backgroundColor = UIColor.white
-        isScheduleSelected = false
-        schedulCallView.isHidden = true
-        timePickerHeight.constant = 0
-        dateSelectedViewHeight.constant = 0
-    }
+   
     
     //MARK: HISTORY VIEW
     func showHistoryView() {
-        historyview.isHidden = false
-        voiceview.isHidden = true
+        ViewAnimator.showFade(historyview)
+        ViewAnimator.hideFade(voiceview)
+        ViewAnimator.hideFade(textmessageview)
+
         recrdimg.image = ImageName.mic1
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
         recordingTimer = nil
         deletRecoding()
-        playerheight.constant = 0
-        textmessageview.isHidden = true
+
+        ViewAnimator.animateConstraintChange { [self] in
+            playerheight.constant = 0
+            self.view.layoutIfNeeded()
+        }
+
         radio1.setImage(ImageName.circle, for: .normal)
-        calanderOuter.isHidden = true
-        if tittlemessage.text == CommonStringFile.TextMessage.translated(){
-            let title = CommonStringFile.BacktoTextMessage.translated()
-            let attributedTitle = NSAttributedString(string: title, attributes: [
-                .underlineStyle: NSUnderlineStyle.single.rawValue
-            ])
-            
-            historyBtn.setAttributedTitle(attributedTitle, for: .normal)
+        ViewAnimator.hideFade(calanderOuter)
+
+        let isTextMode = tittlemessage.text == CommonStringFile.TextMessage.translated()
+
+        let title = isTextMode ? CommonStringFile.BacktoTextMessage.translated() : CommonStringFile.BackToVoiceMessage.translated()
+        let attributedTitle = NSAttributedString(string: title, attributes: [
+            .underlineStyle: NSUnderlineStyle.single.rawValue
+        ])
+        historyBtn.setAttributedTitle(attributedTitle, for: .normal)
+
+        if isTextMode {
             get_Text_History()
-        }else{
-            let title = CommonStringFile.BackToVoiceMessage.translated()
-            let attributedTitle = NSAttributedString(string: title, attributes: [
-                .underlineStyle: NSUnderlineStyle.single.rawValue
-            ])
-            
-            historyBtn.setAttributedTitle(attributedTitle, for: .normal)
-            updateEmergencyCallVisibility( staff_role)
+        } else {
+            updateEmergencyCallVisibility(staff_role)
             get_Voice_History()
         }
     }
+
     func get_Voice_History(){
         APIService.shared
             .makeApi(url:  ServiceUrl.comm_voice_get_voice_history, parameters: [:] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
@@ -1064,19 +1058,22 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     //MARK: TIME PICKER
     func showTimePicker(for button: UIButton) {
-        activeButton = button // Track which button is being updated
-        timePicker.isHidden = false
-        doneButton.isHidden = false
+        activeButton = button
         let buttonFrame = button.convert(button.bounds, to: self.view)
-        timePicker.frame = CGRect(x: (self.view.frame.width - 200) / 2, y: buttonFrame.maxY + 10, width: 250, height: 200)
+        timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: buttonFrame.maxY + 10, width: 250, height: 200)
+        doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: timePicker.frame.maxY - 40, width: 70, height: 30)
+
         timePicker.backgroundColor = .white
+        timePicker.layer.cornerRadius = 20
         timePicker.layer.shadowColor = UIColor.black.cgColor
         timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
         timePicker.layer.shadowRadius = 5
         timePicker.layer.shadowOpacity = 0.3
-        timePicker.layer.cornerRadius = 20
-        doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: timePicker.frame.maxY - 40, width: 70, height: 30)
+
+        timePicker.fadeAndPopIn()
+        doneButton.fadeAndPopIn()
     }
+
     
     //MARK: UPDATE RECORDING UPDATE DURATION
     @objc func updateRecordingTime() {
@@ -1242,111 +1239,38 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             isforward: false,
             voiceUrl: "",
             title: "",
-            durations: 0
+            durations: 0, url: ""
         )
     }
     
     
-    func enabelVoice_view(
-        isforward:Bool,
-        voiceUrl:String,
-        title:String,
-        durations:Int
-    ){
-        
-        emengencyCall.isOn = false
-        
-        if isforward{
-            let duration = durations
-            let formatted = formatDuration(duration)
-            voiceTiming.text  = "00:00 / \(formatted)"
-            updateEmergencyCallVisibility( staff_role)
-            AudioPlayUrl = voiceUrl
-            // UI updates (e.g., show player)
-            playerheight.constant = 60
-            voiceStackview.isHidden = false
-            dltbtn.isHidden = false
-            recoderbtn.isEnabled = false
-            if let audioUrl = URL(string: AudioPlayUrl ?? "") {
-                playerItem = AVPlayerItem(url: audioUrl)
-                player = AVPlayer(playerItem: playerItem)
-            }
-            voiceTitleeTxt.text = title
-            voiceBtn.backgroundColor = backgroundcolor
-            textClickView.backgroundColor = .white
-            voiceClickView.backgroundColor = tapColor
-            seduleClickView.backgroundColor = .white
-            textBtn.backgroundColor = UIColor.white
-            voiceview.isHidden = false
-            textmessageview.isHidden = true
-            historyview.isHidden = true
-            tittlemessage.text = CommonStringFile.VoiceMessage.translated()
-            clickVoiceLbl.textColor = .white
-            clickTextView.textColor = .black
-            clickSchedule.textColor = .black
-            scheduleBtn.tintColor = .black
-            voiceBtn.tintColor = .white
-            textBtn.tintColor = .black
-            scheduleBtn.backgroundColor = UIColor.white
-            isScheduleSelected = false
-            schedulCallView.isHidden = true
-            timePickerHeight.constant = 0
-            dateSelectedViewHeight.constant = 0
-            // Hide the picker and Done button
-            timePicker.isHidden = true
-            doneButton.isHidden = true
-            activeButton = nil
-            calanderOuter.isHidden = true
-        }else{
-            updateEmergencyCallVisibility( staff_role)
-            recrdimg.image = ImageName.mic1
-            audioRecorder?.stop()
-            isRecording = false
-            recordingTimer?.invalidate()
-            recordingTimer = nil
-            deletRecoding()
-            voiceTiming.text  = "00:00 / 03:00"
-            voiceTitleeTxt.text = title
-            voiceBtn.backgroundColor = backgroundcolor
-            textClickView.backgroundColor = .white
-            voiceClickView.backgroundColor = tapColor
-            seduleClickView.backgroundColor = .white
-            textBtn.backgroundColor = UIColor.white
-            voiceview.isHidden = false
-            textmessageview.isHidden = true
-            historyview.isHidden = true
-            tittlemessage.text = CommonStringFile.VoiceMessage.translated()
-            clickVoiceLbl.textColor = .white
-            clickTextView.textColor = .black
-            clickSchedule.textColor = .black
-            scheduleBtn.tintColor = .black
-            voiceBtn.tintColor = .white
-            textBtn.tintColor = .black
-            scheduleBtn.backgroundColor = UIColor.white
-            isScheduleSelected = false
-            schedulCallView.isHidden = true
-            timePickerHeight.constant = 0
-            dateSelectedViewHeight.constant = 0
-            // Hide the picker and Done button
-            timePicker.isHidden = true
-            doneButton.isHidden = true
-            activeButton = nil
-            calanderOuter.isHidden = true
-            
-        }
-        
-    }
+ 
     
     @IBAction func doneSelection(_ sender: Any) {
-        if selectedDates.count == 0{
-            dateSelectedViewHeight.constant = 0
-        }else if selectedDates.count <= 3{
-            dateSelectedViewHeight.constant = 64
-        }else{
-            dateSelectedViewHeight.constant = 120
-        }
         
-        calanderOuter.isHidden = true
+//        var newHeight: CGFloat = 0
+        
+        if selectedDates.count == 0{
+            
+            ViewAnimator.animateConstraintChange { [self] in
+                dateSelectedViewHeight.constant = 0
+                self.view.layoutIfNeeded()
+            }
+            
+        }else if selectedDates.count <= 3{
+            ViewAnimator.animateConstraintChange { [self] in
+                dateSelectedViewHeight.constant = 64
+                self.view.layoutIfNeeded()
+            }
+          
+        }else{
+            ViewAnimator.animateConstraintChange { [self] in
+                dateSelectedViewHeight.constant = 120
+                self.view.layoutIfNeeded()
+            }
+           
+        }
+        ViewAnimator.hideFade(calanderOuter)
     }
     @IBAction func sendEmergencycall(_ sender: UISwitch) {
         //        sender.isOn.toggle()
@@ -1362,7 +1286,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func calander(_ sender: UIButton) {
         sender.isSelected.toggle()
-        calanderOuter.isHidden = !sender.isSelected
+        if sender.isSelected {
+            ViewAnimator.showFade(calanderOuter)
+        } else {
+            ViewAnimator.hideFade(calanderOuter)
+        }
         
     }
     @IBAction func textviewshow(_ sender: Any) {
@@ -1398,92 +1326,187 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             isforward: false,
             voiceUrl: "",
             title: "",
-            durations: 0
+            durations: 0, url: ""
         )
+        
         
     }
     
-    func enabelScheduleView(
-        isforward:Bool,
-        voiceUrl:String,
-        title:String,
-        durations:Int
-    ){
-        
+    //MARK: TEXT MESSAGE VIEW
+    func showTextMessageView(isforwardtext: Bool) {
+        if !isforwardtext {
+            informationcontent.text = ""
+            TextMsgTittle.text = ""
+        }
+
+        ViewAnimator.hideFade(calanderOuter)
+        ViewAnimator.hideFade(timePicker)
+        ViewAnimator.hideFade(doneButton)
+        activeButton = nil
+
+        textBtn.backgroundColor = backgroundcolor
+        textBtn.tintColor = .white
+        scheduleBtn.tintColor = .black
+        textClickView.backgroundColor = tapColor
+        voiceClickView.backgroundColor = .white
+        seduleClickView.backgroundColor = .white
+        clickTextView.textColor = .white
+        clickSchedule.textColor = .black
+        clickVoiceLbl.textColor = .black
+        voiceBtn.tintColor = .black
+        voiceBtn.backgroundColor = .white
+
+        ViewAnimator.hideFade(historyview)
+        ViewAnimator.showFade(textmessageview)
+        ViewAnimator.hideFade(voiceview)
+
+        tittlemessage.text = CommonStringFile.TextMessage.translated()
+        scheduleBtn.backgroundColor = .white
+        isScheduleSelected = false
+        ViewAnimator.hideFade(schedulCallView)
+
+        ViewAnimator.animateConstraintChange { [self] in
+            timePickerHeight.constant = 0
+            dateSelectedViewHeight.constant = 0
+            self.view.layoutIfNeeded()
+        }
+    }
+
+    
+    
+    func enabelVoice_view(isforward: Bool, voiceUrl: String, title: String, durations: Int,url: String) {
         emengencyCall.isOn = false
-        
-        if isforward{
+        isScheduleSelected = false
+        updateEmergencyCallVisibility(staff_role)
+
+        if isforward {
+            AudioPlayUrl = url
+            let formatted = formatDuration(durations)
+            voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
-            // UI updates (e.g., show player)
-            let duration = durations
-            let formatted = formatDuration(duration)
-            voiceTiming.text  = "00:00 / \(formatted)"
-            
-            playerheight.constant = 60
-            voiceStackview.isHidden = false
-            dltbtn.isHidden = false
+
+            ViewAnimator.animateConstraintChange { [self] in
+                playerheight.constant = 60
+                self.view.layoutIfNeeded()
+            }
+
+            ViewAnimator.showFade(voiceStackview)
+            ViewAnimator.showFade(dltbtn)
             recoderbtn.isEnabled = false
-            if let audioUrl = URL(string: AudioPlayUrl ?? "") {
+
+            if let audioUrl = URL(string: voiceUrl) {
                 playerItem = AVPlayerItem(url: audioUrl)
                 player = AVPlayer(playerItem: playerItem)
             }
-            
-            updateEmergencyCallVisibility( staff_role)
-            scheduleBtn.backgroundColor = backgroundcolor
-            textClickView.backgroundColor = .white
-            voiceClickView.backgroundColor = .white
-            seduleClickView.backgroundColor = tapColor
-            isScheduleSelected = true
-            showVoiceMessageView()
-            schedulCallView.isHidden = false
-            timePickerHeight.constant = 141
-            textmessageview.isHidden = true
-            textBtn.backgroundColor = UIColor.white
-            voiceBtn.backgroundColor = UIColor.white
-            tittlemessage.text = CommonStringFile.ScheduleCall.translated()
-            clickVoiceLbl.textColor = .black
-            clickTextView.textColor = .black
-            clickSchedule.textColor = .white
-            voiceBtn.tintColor = .white
-            textBtn.tintColor = .black
-            scheduleBtn.tintColor = .white
-            voiceBtn.tintColor = .black
-            emengencyCall.isHidden = true
-            EnableCallLbl.isHidden = true
-            
-        }else{
-            
+
+            voiceTitleeTxt.text = title
+        } else {
             recrdimg.image = ImageName.mic1
             audioRecorder?.stop()
             isRecording = false
             recordingTimer?.invalidate()
             recordingTimer = nil
             deletRecoding()
-            voiceTiming.text  = "00:00 / 03:00"
-            updateEmergencyCallVisibility( staff_role)
-            scheduleBtn.backgroundColor = backgroundcolor
-            textClickView.backgroundColor = .white
-            voiceClickView.backgroundColor = .white
-            seduleClickView.backgroundColor = tapColor
-            isScheduleSelected = true
-            showVoiceMessageView()
-            schedulCallView.isHidden = false
-            timePickerHeight.constant = 141
-            textmessageview.isHidden = true
-            textBtn.backgroundColor = UIColor.white
-            voiceBtn.backgroundColor = UIColor.white
-            tittlemessage.text = CommonStringFile.ScheduleCall.translated()
-            clickVoiceLbl.textColor = .black
-            clickTextView.textColor = .black
-            clickSchedule.textColor = .white
-            voiceBtn.tintColor = .white
-            textBtn.tintColor = .black
-            scheduleBtn.tintColor = .white
-            voiceBtn.tintColor = .black
-            emengencyCall.isHidden = true
-            EnableCallLbl.isHidden = true
+            voiceTiming.text = "00:00 / 03:00"
+            voiceTitleeTxt.text = title
+        }
+
+        voiceBtn.backgroundColor = backgroundcolor
+        textClickView.backgroundColor = .white
+        voiceClickView.backgroundColor = tapColor
+        seduleClickView.backgroundColor = .white
+        textBtn.backgroundColor = .white
+
+        ViewAnimator.showFade(voiceview)
+        ViewAnimator.hideFade(textmessageview)
+        ViewAnimator.hideFade(historyview)
+
+        tittlemessage.text = CommonStringFile.VoiceMessage.translated()
+        clickVoiceLbl.textColor = .white
+        clickTextView.textColor = .black
+        clickSchedule.textColor = .black
+        scheduleBtn.tintColor = .black
+        voiceBtn.tintColor = .white
+        textBtn.tintColor = .black
+        scheduleBtn.backgroundColor = .white
+
+        ViewAnimator.hideFade(schedulCallView)
+        ViewAnimator.hideFade(timePicker)
+        ViewAnimator.hideFade(doneButton)
+        ViewAnimator.hideFade(calanderOuter)
+
+        ViewAnimator.animateConstraintChange { [self] in
+            timePickerHeight.constant = 0
+            dateSelectedViewHeight.constant = 0
+            self.view.layoutIfNeeded()
         }
     }
+
+    func enabelScheduleView(isforward: Bool, voiceUrl: String, title: String, durations: Int,url: String) {
+        emengencyCall.isOn = false
+
+        if isforward {
+            AudioPlayUrl = url
+            let formatted = formatDuration(durations)
+            voiceTiming.text = "00:00 / \(formatted)"
+            AudioPlayUrl = voiceUrl
+
+            ViewAnimator.animateConstraintChange { [self] in
+                playerheight.constant = 60
+                self.view.layoutIfNeeded()
+            }
+
+            ViewAnimator.showFade(voiceStackview)
+            ViewAnimator.showFade(dltbtn)
+            recoderbtn.isEnabled = false
+
+            if let audioUrl = URL(string: voiceUrl) {
+                playerItem = AVPlayerItem(url: audioUrl)
+                player = AVPlayer(playerItem: playerItem)
+            }
+        } else {
+            recrdimg.image = ImageName.mic1
+            audioRecorder?.stop()
+            isRecording = false
+            recordingTimer?.invalidate()
+            recordingTimer = nil
+            deletRecoding()
+            voiceTiming.text = "00:00 / 03:00"
+        }
+
+        updateEmergencyCallVisibility(staff_role)
+
+        scheduleBtn.backgroundColor = backgroundcolor
+        textClickView.backgroundColor = .white
+        voiceClickView.backgroundColor = .white
+        seduleClickView.backgroundColor = tapColor
+        isScheduleSelected = true
+        showVoiceMessageView()
+
+        ViewAnimator.showFade(schedulCallView)
+        ViewAnimator.hideFade(textmessageview)
+
+        ViewAnimator.animateConstraintChange { [self] in
+            timePickerHeight.constant = 141
+            dateSelectedViewHeight.constant = 0
+            self.view.layoutIfNeeded()
+        }
+
+        textBtn.backgroundColor = .white
+        voiceBtn.backgroundColor = .white
+        tittlemessage.text = CommonStringFile.ScheduleCall.translated()
+        clickVoiceLbl.textColor = .black
+        clickTextView.textColor = .black
+        clickSchedule.textColor = .white
+        voiceBtn.tintColor = .white
+        textBtn.tintColor = .black
+        scheduleBtn.tintColor = .white
+        voiceBtn.tintColor = .black
+
+        ViewAnimator.hideFade(emengencyCall)
+        ViewAnimator.hideFade(EnableCallLbl)
+    }
+
     // Record Button Action
     @IBAction func recordButtonTapped(_ sender: UIButton) {
         
@@ -1813,19 +1836,29 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             return selectedDates.contains(date) ? UIColor.green : nil
         }
         func deleteDelegate(index: Int) {
-            //        selectedDates.remove(at: index)
             let dateToRemove = selectedDates[index]
             selectedDates.remove(at: index)
             DateSelection.deselect(dateToRemove)
-            if selectedDates.count == 0{
-                dateSelectedViewHeight.constant = 0
-            }else if selectedDates.count <= 3{
-                dateSelectedViewHeight.constant = 64
-            }else{
-                dateSelectedViewHeight.constant = 128
+
+            // Update height based on count
+            var newHeight: CGFloat = 0
+            if selectedDates.count == 0 {
+                newHeight = 0
+            } else if selectedDates.count <= 3 {
+                newHeight = 64
+            } else {
+                newHeight = 128
             }
+
+            // Animate constraint change
+            UIView.animate(withDuration: 0.25, delay: 0, options: [.curveEaseInOut]) {
+                self.dateSelectedViewHeight.constant = newHeight
+                self.view.layoutIfNeeded()
+            }
+
             dateCV.reloadData()
         }
+
         
         //MARK: Collection View Delegate Functions
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -1841,8 +1874,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium // You can change this style to your preference
             let formattedDate = dateFormatter.string(from: selectedDate)
-            ScheduleSelectedDate.append(formattedDate)
-            
             cell.dateLbl.text = formattedDate
             cell.dateDelet.tag = indexPath.item
             cell.delegate = self
@@ -1880,3 +1911,74 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         }
         
+
+
+
+
+public class ViewAnimator {
+    
+    // MARK: - Smooth Fade In
+    public static func showFade(_ view: UIView, duration: TimeInterval = 0.3) {
+        view.isHidden = false
+        view.alpha = 0
+        UIView.animate(withDuration: duration) {
+            view.alpha = 1
+        }
+    }
+
+    // MARK: - Smooth Fade Out
+    public static func hideFade(_ view: UIView, duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration, animations: {
+            view.alpha = 0
+        }) { _ in
+            view.isHidden = true
+        }
+    }
+
+    // MARK: - Slide and Fade In
+    public static func showSlideFade(_ view: UIView, duration: TimeInterval = 0.4) {
+        view.isHidden = false
+        view.alpha = 0
+        view.transform = CGAffineTransform(translationX: 0, y: -20)
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.5,
+                       options: [],
+                       animations: {
+            view.alpha = 1
+            view.transform = .identity
+        })
+    }
+
+    // MARK: - Slide and Fade Out
+    public static func hideSlideFade(_ view: UIView, duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration, animations: {
+            view.alpha = 0
+            view.transform = CGAffineTransform(translationX: 0, y: -20)
+        }, completion: { _ in
+            view.isHidden = true
+            view.transform = .identity
+        })
+    }
+    
+    public static func animateConstraintChange(duration: TimeInterval = 0.3, animations: @escaping () -> Void) {
+        UIView.animate(withDuration: duration, animations: {
+            animations()
+        })
+    }
+
+   
+}
+
+extension UIView {
+    func fadeAndPopIn(duration: TimeInterval = 0.25) {
+        self.alpha = 0
+        self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        self.isHidden = false
+        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseOut]) {
+            self.alpha = 1
+            self.transform = .identity
+        }
+    }
+}
