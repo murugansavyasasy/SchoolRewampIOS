@@ -210,6 +210,8 @@ struct  GetStudentlistSuc : Codable {
 struct StudentDetails:Codable{
     let id:String?
     let name:String?
+    let admission_no : String?
+    let roll_no : String?
     var isSelect:Bool?
 }
 

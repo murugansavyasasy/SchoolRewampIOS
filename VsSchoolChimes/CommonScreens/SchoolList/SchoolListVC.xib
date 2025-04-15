@@ -83,17 +83,17 @@
                                         </segmentedControl>
                                     </subviews>
                                 </stackView>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="RfC-Rf-wJJ">
-                                    <rect key="frame" x="5" y="15" width="325" height="38"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="37" translatesAutoresizingMaskIntoConstraints="NO" id="RfC-Rf-wJJ">
+                                    <rect key="frame" x="12" y="15" width="373" height="38"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose academic Year :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Mc-t8-Zaf">
-                                            <rect key="frame" x="0.0" y="0.0" width="151" height="38"/>
-                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose academic year :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Mc-t8-Zaf">
+                                            <rect key="frame" x="0.0" y="0.0" width="164" height="38"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xH2-pm-eUP">
-                                            <rect key="frame" x="162" y="0.0" width="163" height="38"/>
+                                            <rect key="frame" x="210" y="0.0" width="163" height="38"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Subject" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbB-vc-bQn">
                                                     <rect key="frame" x="21" y="10" width="83.666666666666671" height="18"/>
@@ -149,17 +149,17 @@
                             </subviews>
                             <color key="backgroundColor" systemColor="systemGray6Color"/>
                             <constraints>
-                                <constraint firstItem="RfC-Rf-wJJ" firstAttribute="leading" secondItem="NvC-x6-SnF" secondAttribute="leading" constant="5" id="2Qn-13-Fhz"/>
                                 <constraint firstItem="hIj-m3-g5V" firstAttribute="top" secondItem="d71-Gb-zpY" secondAttribute="bottom" constant="8" symbolic="YES" id="BMp-9y-xRe"/>
                                 <constraint firstItem="uN1-Qt-z4x" firstAttribute="top" secondItem="RfC-Rf-wJJ" secondAttribute="bottom" constant="15" id="Fka-E7-1Hc"/>
                                 <constraint firstAttribute="bottom" secondItem="d71-Gb-zpY" secondAttribute="bottom" constant="63" id="Hzs-t4-AmU"/>
-                                <constraint firstAttribute="trailing" secondItem="RfC-Rf-wJJ" secondAttribute="trailing" constant="63" id="IXd-XH-eoq"/>
                                 <constraint firstItem="d71-Gb-zpY" firstAttribute="top" secondItem="uN1-Qt-z4x" secondAttribute="bottom" constant="10" id="Kso-Ed-XbV"/>
                                 <constraint firstAttribute="trailing" secondItem="hIj-m3-g5V" secondAttribute="trailing" constant="60" id="Rkl-uO-BRi"/>
                                 <constraint firstItem="d71-Gb-zpY" firstAttribute="leading" secondItem="NvC-x6-SnF" secondAttribute="leading" constant="5" id="W1H-v9-nja"/>
                                 <constraint firstItem="uN1-Qt-z4x" firstAttribute="leading" secondItem="NvC-x6-SnF" secondAttribute="leading" constant="5" id="W7k-Gk-f1W"/>
                                 <constraint firstAttribute="trailing" secondItem="d71-Gb-zpY" secondAttribute="trailing" constant="5" id="eiC-ro-IQy"/>
                                 <constraint firstItem="hIj-m3-g5V" firstAttribute="leading" secondItem="NvC-x6-SnF" secondAttribute="leading" constant="60" id="h6J-Fb-EO9"/>
+                                <constraint firstItem="RfC-Rf-wJJ" firstAttribute="leading" secondItem="NvC-x6-SnF" secondAttribute="leading" constant="12" id="hBR-il-KDX"/>
+                                <constraint firstAttribute="trailing" secondItem="RfC-Rf-wJJ" secondAttribute="trailing" constant="8" id="l6U-kP-SfS"/>
                                 <constraint firstAttribute="trailing" secondItem="uN1-Qt-z4x" secondAttribute="trailing" constant="5" id="rYr-uu-Ydv"/>
                                 <constraint firstItem="RfC-Rf-wJJ" firstAttribute="top" secondItem="NvC-x6-SnF" secondAttribute="top" constant="15" id="zSu-Mx-5ER"/>
                             </constraints>

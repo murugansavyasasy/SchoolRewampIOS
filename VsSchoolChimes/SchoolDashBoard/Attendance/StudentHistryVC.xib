@@ -151,7 +151,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uty-p2-UrK">
-                    <rect key="frame" x="10" y="69" width="257" height="35"/>
+                    <rect key="frame" x="10" y="69" width="229" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="oEq-AP-wXJ"/>
                     </constraints>
@@ -168,7 +168,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10th 'C' sction" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ia6-uU-gnj">
-                    <rect key="frame" x="277" y="75" width="0.0" height="23"/>
+                    <rect key="frame" x="249" y="75" width="0.0" height="23"/>
                     <constraints>
                         <constraint firstAttribute="width" id="ZW5-cb-4Yt"/>
                     </constraints>
@@ -177,10 +177,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Eh-TK-gsW">
-                    <rect key="frame" x="277" y="70" width="100" height="35"/>
+                    <rect key="frame" x="254" y="70" width="123" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="Q4N-F7-yAt"/>
-                        <constraint firstAttribute="width" constant="100" id="Uxz-Jx-ocU"/>
+                        <constraint firstAttribute="width" constant="123" id="Uxz-Jx-ocU"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -189,6 +189,11 @@
                         <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="semibold"/>
                     </state>
+                    <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" title="Select all" imagePadding="7">
+                        <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium" weight="semibold"/>
+                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
                     <connections>
                         <action selector="selectAllStd:" destination="-1" eventType="touchUpInside" id="zIU-AT-7al"/>
                     </connections>
@@ -199,7 +204,7 @@
             <constraints>
                 <constraint firstItem="vrX-am-fa0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5XT-sp-hG9"/>
                 <constraint firstItem="Ia6-uU-gnj" firstAttribute="leading" secondItem="uty-p2-UrK" secondAttribute="trailing" constant="10" id="Ba0-lV-zLY"/>
-                <constraint firstItem="2Eh-TK-gsW" firstAttribute="leading" secondItem="Ia6-uU-gnj" secondAttribute="trailing" id="IIh-6W-gza"/>
+                <constraint firstItem="2Eh-TK-gsW" firstAttribute="leading" secondItem="Ia6-uU-gnj" secondAttribute="trailing" constant="5" id="IIh-6W-gza"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vrX-am-fa0" secondAttribute="trailing" id="LD7-0a-SkJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2Eh-TK-gsW" secondAttribute="trailing" constant="16" id="LDC-4h-Mvt"/>
                 <constraint firstItem="vrX-am-fa0" firstAttribute="top" secondItem="2Eh-TK-gsW" secondAttribute="bottom" constant="10" id="Ltw-3F-tES"/>
