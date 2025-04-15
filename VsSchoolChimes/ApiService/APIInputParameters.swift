@@ -79,6 +79,13 @@ class send_voicemeassageStringFile {
     static var academic_year_id = "academic_year_id"
   
 }
+
+class ReadStatusUpdateStringFile {
+    
+    static var type = "type"
+    static var detail_id = "detail_id"
+}
+
 class speficStudentStringFile{
     
     
