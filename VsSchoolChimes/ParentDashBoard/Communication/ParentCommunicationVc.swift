@@ -16,7 +16,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         
     func reload(index: Int) {
         
-        
             if let currentIndex = playIndex, currentIndex != index {
                 let previousIndexPath = IndexPath(row: currentIndex, section: 0)
                 if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
@@ -24,8 +23,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                 }
             }
             
-            playIndex = (playIndex == index) ? nil : index
+        playIndex = (playIndex == index) ? nil : index
         var currentmessage: CommunicationReciverData?
+        
         if isFiltered {
             currentmessage = FilteredMessages?[index]
         } else {
@@ -103,7 +103,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         StyleAndTranslate()
         SearchBar.delegate = self
         NodataLbl.isHidden = true
-       // NodataImage.isHidden = true
+        NodataImage.isHidden = true
         
         if passValue == 1{
             NameLbl.text = ""
@@ -542,9 +542,6 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
            
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
-           
-//            DispatchQueue.main.asyncAfter(deadline: .now()+0.0){
-          //  DispatchQueue.main.async {
             
             cell.layoutIfNeeded()
             
@@ -565,7 +562,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                     cell.newImageOuterView.isHidden = true
                     cell.NewImageView.isHidden = true
                 }
-           // }
+            
             return cell
             
             
@@ -586,7 +583,6 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.NewImageView.isHidden = true
             
             cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-           // cell.datelbl.text = voiceData?.date ?? ""
             cell.datelbl.text = (voiceData?.time ?? "") + "  " + (voiceData?.date ?? "")
             cell.contentlbl.text = voiceData?.description ?? ""
             

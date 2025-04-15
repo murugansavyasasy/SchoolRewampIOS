@@ -26,7 +26,7 @@ class HistoryTC: UITableViewCell {
     var lastPlayingduration = "00:00"
     var delegate: reloadDelegate?
     var ForwordDelegate : ForwordDelegate?
-    @IBOutlet weak var NewImageView: UIView!
+    @IBOutlet weak var NewImageView: UIImageView!
     @IBOutlet weak var PlayerFullview: ShimmerView2!
     @IBOutlet weak var sentBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var sentBtnHeight: NSLayoutConstraint!
@@ -58,7 +58,7 @@ class HistoryTC: UITableViewCell {
         
         playerView.isHidden = true
         totaltime.isHidden = true
-        NewImageView.isHidden = true
+       // NewImageView.isHidden = true
         sendbtn.isHidden = true
     }
     
@@ -212,7 +212,7 @@ class HistoryTC: UITableViewCell {
         PlayerFullview.removeShimmer()
         playBtn.removeShimmer()
 
-        NewImageView.isHidden = false
+        //NewImageView.isHidden = false
         totaltime.isHidden = false
         playerView.isHidden = false
         sendbtn.isHidden = false
