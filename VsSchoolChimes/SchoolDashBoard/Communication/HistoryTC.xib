@@ -24,7 +24,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LPy-Nq-A0z">
                                 <rect key="frame" x="250" y="-40" width="80" height="100"/>
                                 <subviews>
-                                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="APM-Mw-GRr">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="APM-Mw-GRr">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="100"/>
                                     </imageView>
                                 </subviews>
@@ -151,7 +151,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="NewImageView" destination="LPy-Nq-A0z" id="NT2-hZ-uzA"/>
+                <outlet property="NewImageView" destination="APM-Mw-GRr" id="I6A-4R-Ge9"/>
                 <outlet property="PlayerFullview" destination="NCZ-4k-Zif" id="nbG-L0-WNB"/>
                 <outlet property="contentlbl" destination="RsE-j7-zhi" id="cPe-53-EMj"/>
                 <outlet property="datelbl" destination="GX6-rc-Pdd" id="5sT-an-Z1N"/>
