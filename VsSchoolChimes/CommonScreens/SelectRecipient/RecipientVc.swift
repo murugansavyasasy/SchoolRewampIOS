@@ -70,22 +70,23 @@ class RecipientVc: UIViewController{
         
         configureRecipientTabs()
         
-        
-        if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
-            segmentName.isHidden = true
-            speficBtnName.isHidden = true
-            target_type = TargetTypes.section
-            circular_types =  circular_type.section
-            getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-            speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-            contentLbl.isHidden = true
-            tv.isHidden = false
-            selectStandardDropDown.isHidden = false
-            segment_selected_index = 1
-        }else{
-            speficBtnName.isEnabled = false
-            selectStandardDropDown.isHidden = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
+                segmentName.isHidden = true
+                speficBtnName.isHidden = true
+                target_type = TargetTypes.section
+                circular_types =  circular_type.section
+                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+                speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+                speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+                contentLbl.isHidden = true
+                tv.isHidden = false
+                selectStandardDropDown.isHidden = false
+                segment_selected_index = 1
+            }else{
+                speficBtnName.isEnabled = false
+                selectStandardDropDown.isHidden = true
+            }
         }
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
@@ -876,6 +877,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                                         label.text = AcadimicYearDatas[i].year
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                        
                                         break
                                     }
                                 }

@@ -41,6 +41,7 @@
                 <outlet property="collectionViewHeight" destination="zvs-P9-daS" id="uHR-GN-NBa"/>
                 <outlet property="customDateLbl" destination="Sv7-QO-hSv" id="fgi-jg-f1G"/>
                 <outlet property="dateBtn" destination="1RW-Dx-0f4" id="IgZ-hY-POG"/>
+                <outlet property="datePicker" destination="8tf-r1-UX0" id="yWa-8V-jBD"/>
                 <outlet property="homeworkBtn" destination="Pd7-DK-U3y" id="p8y-P1-Swv"/>
                 <outlet property="outerView" destination="3QS-57-hEQ" id="KQo-Ko-A1J"/>
                 <outlet property="scrollView" destination="kJa-BV-PPC" id="G6c-ou-eMq"/>
@@ -111,9 +112,21 @@
                                         </stackView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M08-Qf-8hX">
                                             <rect key="frame" x="35" y="90" width="303" height="260"/>
+                                            <subviews>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="8tf-r1-UX0">
+                                                    <rect key="frame" x="0.0" y="0.0" width="303" height="260"/>
+                                                    <connections>
+                                                        <action selector="datePicker:" destination="-1" eventType="valueChanged" id="UUw-cS-E9r"/>
+                                                    </connections>
+                                                </datePicker>
+                                            </subviews>
                                             <color key="backgroundColor" red="0.93500390320000004" green="0.98591047529999998" blue="0.97450418230000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="260" id="BV7-Ht-ZVD"/>
+                                                <constraint firstAttribute="trailing" secondItem="8tf-r1-UX0" secondAttribute="trailing" id="RlX-nr-3bA"/>
+                                                <constraint firstItem="8tf-r1-UX0" firstAttribute="top" secondItem="M08-Qf-8hX" secondAttribute="top" id="UdD-4k-ILp"/>
+                                                <constraint firstItem="8tf-r1-UX0" firstAttribute="leading" secondItem="M08-Qf-8hX" secondAttribute="leading" id="iYX-w5-Fk3"/>
+                                                <constraint firstAttribute="bottom" secondItem="8tf-r1-UX0" secondAttribute="bottom" id="mMe-3g-kOC"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nwm-Ws-PSb">

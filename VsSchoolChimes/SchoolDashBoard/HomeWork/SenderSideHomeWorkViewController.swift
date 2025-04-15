@@ -53,6 +53,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     @IBOutlet weak var acodomicYearLbl: UILabel!
     @IBOutlet weak var acodumicHeight: NSLayoutConstraint!
+    @IBOutlet weak var datePicker: UIDatePicker!
     var selectedImages: [UIImage] = []
     var url : URL?
     let photoPickManager = PhotoPickerManager.shared
@@ -232,28 +233,31 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         SectionLbl.setFont(style: .title, size: FontSize.TitleSize)
         
     }
-    func showDatepicker(){
-        
-        // Create a UIDatePicker
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .inline
-
-        datePicker.maximumDate = Date()
-        let calendar = Calendar.current
-        if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
-            datePicker.minimumDate = thirtyDaysAgo
-        }
-        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65)
-        datePicker.frame = CalendarView.bounds
-        datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        CalendarView.addSubview(datePicker)
-        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-    }
     
-    @objc func dateChanged(_ sender: UIDatePicker) {
+    @IBAction func datePicker(_ sender: UIDatePicker) {
         selectDate(date: sender.date)
     }
+    
+//    func showDatepicker(){
+////        let datePicker = UIDatePicker()
+////        datePicker.datePickerMode = .date
+////        datePicker.preferredDatePickerStyle = .inline
+////
+////        datePicker.maximumDate = Date()
+////        let calendar = Calendar.current
+////        if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
+////            datePicker.minimumDate = thirtyDaysAgo
+////        }
+////        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65)
+////        datePicker.frame = CalendarView.bounds
+////        datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+////        CalendarView.addSubview(datePicker)
+//        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+//    }
+//    
+//    @objc func dateChanged(_ sender: UIDatePicker) {
+//        
+//    }
     func selectDate(date: Date = Date()) {
         formatter.dateFormat = "EEE d MMM yyyy"
         let label = formatter.string(from: date)
@@ -387,7 +391,14 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         ComposeHomeworkView.alpha = 0
         ReportView.isHidden = false
         ReportView.alpha = 1
-        showDatepicker()
+        datePicker.transform = CGAffineTransform(scaleX: 0.90, y: 0.90)
+        // Set max date to today
+        datePicker.maximumDate = Date()
+
+        // Set min date to 2 months ago
+        if let twoMonthsAgo = Calendar.current.date(byAdding: .month, value: -2, to: Date()) {
+            datePicker.minimumDate = twoMonthsAgo
+        }
     }
     
     @IBAction func backAction() {
@@ -692,7 +703,7 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         
         cell.HomeworkSubjectLbl.text = data?.subject_name
         cell.TitleLbl.text = data?.topic ?? ""
-        
+        cell.datelbl.text = dateBtn.titleLabel?.text ?? ""
         if let urls = data?.file_path {
             cell.loadImage(urls: urls)
         }
