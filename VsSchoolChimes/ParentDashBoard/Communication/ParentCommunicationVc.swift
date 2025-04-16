@@ -57,6 +57,102 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         
             tv.reloadData()
     }
+    
+//    func reload(index: Int) {
+//        
+//        if let currentIndex = playIndex, currentIndex != index {
+//            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+//            if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
+//                previousCell.updatePlayState(isPlaying: false, url: nil)
+//            }
+//        }
+//        
+//        playIndex = (playIndex == index) ? nil : index
+//        var currentmessage: CommunicationReciverData?
+//        
+//        if isFiltered {
+//            currentmessage = FilteredMessages?[index]
+//        } else {
+//            currentmessage = TotalMessageList?[index]
+//        }
+//        
+//        if currentmessage?.is_unread == true {
+//            
+//            if currentmessage?.is_archive ?? false {
+//                ReadStatusUpdateArchive(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
+//            } else {
+//                ReadStatusUpdate(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
+//            }
+//            
+//            // Update the model immediately.
+//            currentmessage?.is_unread = false
+//            
+//            if currentmessage != nil {
+//                if isFiltered {
+//                    FilteredMessages?[index] = currentmessage!
+//                } else {
+//                    TotalMessageList?[index] = currentmessage!
+//                }
+//            }
+//            
+//            // Immediately update the cell's UI before reloading the table.
+//            if let cell = tv.cellForRow(at: IndexPath(row: index, section: 0)) as? HistoryTC {
+//                cell.NewImageView.isHidden = true
+//            }
+//        }
+//        
+//        // You can reload just the affected row for a smoother update.
+//        tv.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+//    }
+    
+//    func reload(index: Int) {
+//        var indexPathsToReload = [IndexPath]()
+//
+//        // If a different row was playing, update its state
+//        if let currentIndex = playIndex, currentIndex != index {
+//            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+//            if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
+//                previousCell.updatePlayState(isPlaying: false, url: nil)
+//            }
+//            indexPathsToReload.append(previousIndexPath)
+//        }
+//        
+//        // Toggle playIndex: If it's the same index then reset, otherwise set to the new index.
+//        playIndex = (playIndex == index) ? nil : index
+//        indexPathsToReload.append(IndexPath(row: index, section: 0))
+//        
+//        // Handle unread state and update the new image indicator immediately.
+//        var currentMessage: CommunicationReciverData?
+//        if isFiltered {
+//            currentMessage = FilteredMessages?[index]
+//        } else {
+//            currentMessage = TotalMessageList?[index]
+//        }
+//        
+//        if currentMessage?.is_unread == true {
+//            if currentMessage?.is_archive ?? false {
+//                ReadStatusUpdateArchive(type: currentMessage?.type ?? "", detail_id: currentMessage?.id ?? "")
+//            } else {
+//                ReadStatusUpdate(type: currentMessage?.type ?? "", detail_id: currentMessage?.id ?? "")
+//            }
+//            
+//            currentMessage?.is_unread = false
+//            
+//            if isFiltered {
+//                FilteredMessages?[index] = currentMessage!
+//            } else {
+//                TotalMessageList?[index] = currentMessage!
+//            }
+//            
+//            // Directly update the UI of the tapped cell before reloading.
+//            if let cell = tv.cellForRow(at: IndexPath(row: index, section: 0)) as? HistoryTC {
+//                cell.NewImageView.isHidden = true
+//            }
+//        }
+//        
+//        // Finally, reload both the tapped cell and the previously playing cell.
+//        tv.reloadRows(at: indexPathsToReload, with: .none)
+//    }
 
     
     func deleteDelegate(index: Int) {
@@ -539,6 +635,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.sendBtnWidth.constant = 0
             cell.DateLabel.textAlignment = .right
             cell.sendBtn.isHidden = true
+            cell.NewImageView.isHidden = true
            
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true

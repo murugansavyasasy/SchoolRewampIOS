@@ -7,7 +7,7 @@
 
 import UIKit
 import DropDown
-
+import Kingfisher
 
 @available(iOS 14.0, *)
 class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice {
@@ -48,14 +48,21 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var CustomDateBtn: HalfColorButton!
     @IBOutlet weak var customDateLbl: UILabel!
+    @IBOutlet weak var acidamicYrDropView: UIView!
+    @IBOutlet weak var acodumicYearLbl: UILabel!
     
+    @IBOutlet weak var acodomicYearLbl: UILabel!
+    @IBOutlet weak var acodumicHeight: NSLayoutConstraint!
+    @IBOutlet weak var datePicker: UIDatePicker!
     var selectedImages: [UIImage] = []
+    var selectedImgUrl: [FilePath] = []
     var url : URL?
     let photoPickManager = PhotoPickerManager.shared
     let Img = ImageName()
     let formatter = DateFormatter()
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
+    let acidamicdrops = DropDown()
     var image = "image/pdf"
     var delegate : HistorySelectDelegate?
     let customdate = DateFormatter()
@@ -69,10 +76,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var standardDetails: [StandardDetail]?
     var sectionList = [String]()
     var standerdList = [String]()
+    var AcadimicYearDatas : [AcadimicYearData] = []
+    var accadimYr :[String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        acodumicYearLbl.isHidden = true
+        acidamicYrDropView.isHidden = true
+        acodumicHeight.constant = 0
         selectDate()
-        getStandardsAPI()
+        getacadmicYr()
         BackBtn.applyBackButton()
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
@@ -106,7 +118,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         let sectionTap = UITapGestureRecognizer(target: self, action: #selector(SelectSection))
         SectionView.addGestureRecognizer(sectionTap)
-        
+        let acidmaciyrClick = UITapGestureRecognizer(target: self, action:
+                                                        #selector(academicYearDrop_action))
+        acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
+        acidamicYrDropView.layer.cornerRadius = 4
+        acidamicYrDropView.layer.shadowColor = UIColor.black.cgColor
+        acidamicYrDropView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        acidamicYrDropView.layer.shadowRadius = 5
+        acidamicYrDropView.layer.shadowOpacity = 0.3
+        acidamicYrDropView.layer.cornerRadius = 8
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
         ReportView.isHidden = true
@@ -114,7 +134,45 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         calenderHeight.constant = 0
         imageSelection()
     }
-    
+    @IBAction func academicYearDrop_action() {
+        accadimYr.removeAll()
+        for i in 0..<(AcadimicYearDatas.count) {
+            accadimYr.append(AcadimicYearDatas[i].year ?? "")
+        }
+        acidamicdrops.anchorView = acidamicYrDropView
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: acidamicYrDropView.bounds.height)
+        acidamicdrops.show()
+        
+        acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
+            acodomicYearLbl.text = item
+        }
+        
+    }
+    func getacadmicYr(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            //                        listTable.isHidden = true
+                            AcadimicYearDatas = successMessage.data ?? []
+                            for i in 0..<(AcadimicYearDatas.count){
+                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                    acodomicYearLbl.text = AcadimicYearDatas[i].year
+                                }
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
             colors: [Colornames.stafGradient, Colornames.stafGradient1],
@@ -175,28 +233,31 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         SectionLbl.setFont(style: .title, size: FontSize.TitleSize)
         
     }
-    func showDatepicker(){
-        
-        // Create a UIDatePicker
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .inline
-
-        datePicker.maximumDate = Date()
-        let calendar = Calendar.current
-        if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
-            datePicker.minimumDate = thirtyDaysAgo
-        }
-        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65)
-        datePicker.frame = CalendarView.bounds
-        datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        CalendarView.addSubview(datePicker)
-        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
-    }
     
-    @objc func dateChanged(_ sender: UIDatePicker) {
+    @IBAction func datePicker(_ sender: UIDatePicker) {
         selectDate(date: sender.date)
     }
+    
+//    func showDatepicker(){
+////        let datePicker = UIDatePicker()
+////        datePicker.datePickerMode = .date
+////        datePicker.preferredDatePickerStyle = .inline
+////
+////        datePicker.maximumDate = Date()
+////        let calendar = Calendar.current
+////        if let thirtyDaysAgo = calendar.date(byAdding: .day, value: -30, to: Date()) {
+////            datePicker.minimumDate = thirtyDaysAgo
+////        }
+////        datePicker.transform = CGAffineTransform(scaleX: 0.75, y: 0.65)
+////        datePicker.frame = CalendarView.bounds
+////        datePicker.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+////        CalendarView.addSubview(datePicker)
+//        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+//    }
+//    
+//    @objc func dateChanged(_ sender: UIDatePicker) {
+//        
+//    }
     func selectDate(date: Date = Date()) {
         formatter.dateFormat = "EEE d MMM yyyy"
         let label = formatter.string(from: date)
@@ -298,13 +359,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBAction func HomeworkBtnAct(_ sender: Any) {
         
         ToStdOrSecBtnBottom.constant = 50
+        acodumicHeight.constant = 0
         gradientcolours(button: homeworkBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         homeworkBtn.setTitleColor(.white, for:.normal)
         ReportBtn.backgroundColor = .clear
         
         gradientcolours(button: ReportBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         ReportBtn.setTitleColor(.black, for:.normal)
-        
+        acodumicYearLbl.isHidden = true
+        acidamicYrDropView.isHidden = true
         ReportView.isHidden = true
         ReportView.alpha = 0
         ComposeHomeworkView.isHidden = false
@@ -321,12 +384,25 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         gradientcolours(button: homeworkBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         homeworkBtn.setTitleColor(.black, for:.normal)
-        
+        acodumicYearLbl.isHidden = false
+        acidamicYrDropView.isHidden = false
+        acodumicHeight.constant = 38
         ComposeHomeworkView.isHidden = true
         ComposeHomeworkView.alpha = 0
         ReportView.isHidden = false
         ReportView.alpha = 1
-        showDatepicker()
+        datePicker.transform = CGAffineTransform(scaleX: 0.90, y: 0.95)
+        // Set max date to today
+        datePicker.maximumDate = Date()
+
+        // Set min date to 2 months ago
+        if let twoMonthsAgo = Calendar.current.date(byAdding: .month, value: -2, to: Date()) {
+            datePicker.minimumDate = twoMonthsAgo
+        }
+        getStandardsAPI()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+            self.TV.reloadData()
+        }
     }
     
     @IBAction func backAction() {
@@ -382,7 +458,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        if TitleTxtfield.text != nil && DetailsTxtview.text != nil{
+        if TitleTxtfield.text != ""  && DetailsTxtview.text != ""{
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.selectedImg = selectedImages
@@ -399,6 +475,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
+        }else{
+            
         }
 
     }
@@ -482,7 +560,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     // MARK: File Attachments Actions
     func selectImages() {
         if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count - selectedImgUrl.count), from: self)
             
         }else{
             let alert = CustomAlert()
@@ -492,7 +570,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
     }
     func openCamera(){
-        if selectedImages.count != 5{
+        let count = selectedImages.count - selectedImgUrl.count
+        if count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
@@ -520,33 +599,53 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 + selectedImages.count
+        
+        return 1 + selectedImages.count + selectedImgUrl.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0{
-            let cell = uploadAttachmentView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
+        
+        // First cell is the "Add Attachment" button cell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.AttachmentCVCell,
+                for: indexPath
+            ) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
-        }else{
-            let cell = uploadAttachmentView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+        } else {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.ImageCvCell,
+                for: indexPath
+            ) as! ImageCvCell
+            
             cell.delegate = self
             cell.deleteBtn.tag = indexPath.item - 1
-            if selectedImages.count > indexPath.item - 1 {
-                // Assign the image starting from the second image in the selectedImages array
-                cell.imageViews.image = selectedImages[indexPath.item - 1]
+            
+            let adjustedIndex = indexPath.item - 1
+            
+            // First show local selectedImages, then fallback to selectedImgUrl if index goes beyond
+            if adjustedIndex < selectedImages.count {
+                cell.imageViews.image = selectedImages[adjustedIndex]
             } else {
-                cell.imageViews.image = nil
+                let urlIndex = adjustedIndex - selectedImages.count
+                if urlIndex < selectedImgUrl.count {
+                    let urlString = selectedImgUrl[urlIndex].path ?? ""
+                    if let url = URL(string: urlString) {
+                        cell.imageViews.kf.setImage(with: url)
+                    } else {
+                        cell.imageViews.image = nil
+                    }
+                }
             }
-            if selectedImages.count <= 2{
-                collectionViewHeight.constant = 120
-            }else{
-                collectionViewHeight.constant = 220
-            }
+            
+            // Set collection view height dynamically
+            let totalItems = selectedImages.count + selectedImgUrl.count
+            collectionViewHeight.constant = totalItems <= 2 ? 120 : 220
+
             return cell
         }
     }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = (uploadAttachmentView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
@@ -620,34 +719,83 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         
         cell.cellview.changeHeightAndAnimate(40, 150, 100, 80, top: 5)
         cell.ishomework = true
-        cell.CVHeight.constant = 120
+        cell.delegate = self
         cell.pagecontrollerheight.constant = 26
         cell.pagecontroller.isHidden = false
-        cell.SelectBtn.isHidden = true
+//        cell.SelectBtn.isHidden = true
         cell.newView.isHidden = true
         let data = homeWorkList?[indexPath.row]
         
         cell.HomeworkSubjectLbl.text = data?.subject_name
         cell.TitleLbl.text = data?.topic ?? ""
-        
+        cell.datelbl.text = dateBtn.titleLabel?.text ?? ""
         if let urls = data?.file_path {
             cell.loadImage(urls: urls)
+            cell.CVHeight.constant = 120
+        }else{
+            cell.CVHeight.constant = 0
         }
-        cell.dicriptContent.configure(text: data?.content ?? "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel magna vel justo gravida bibendum non a nulla. Praesent a suscipit ex. Integer a semper lacus. See how this gets trimmed and shows more or less?")
+        cell.dicriptContent.configure(text: data?.content ?? "")
         cell.dicriptContent.onTap = {
             cell.dicriptContent.isExpanded.toggle()
             tableView.beginUpdates()
             tableView.endUpdates()
         }
+        
         return cell
     }
-    
-    func didTapButton(title: String, content: String, items: [String]) {
-        delegate?.select(Title: title, Description: content, Images: [], pdf: "")
+
+    func didTapButton(title: String, content: String, items: [FilePath]) {
+        TitleTxtfield.text = title
+        DetailsTxtview.text = title
+        selectedImgUrl = items
+        uploadAttachmentView.imageCollectionview.reloadData()
+        ToStdOrSecBtnBottom.constant = 50
+        acodumicHeight.constant = 0
+        gradientcolours(button: homeworkBtn,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+        homeworkBtn.setTitleColor(.white, for:.normal)
+        ReportBtn.backgroundColor = .clear
+        
+        gradientcolours(button: ReportBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+        ReportBtn.setTitleColor(.black, for:.normal)
+        acodumicYearLbl.isHidden = true
+        acidamicYrDropView.isHidden = true
+        ReportView.isHidden = true
+        ReportView.alpha = 0
+        ComposeHomeworkView.isHidden = false
+        ComposeHomeworkView.alpha = 1
+        DetailsTxtview.textColor = .black
+        wordsCountLbl.text = "\(DetailsTxtview.text.count) of 500"
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        guard let item = homeWorkList?[indexPath.row] else {
+            return UITableView.automaticDimension
+        }
+
+        let contentWidth = tableView.frame.width - 40
+        
+        let subjectFont = UIFont.systemFont(ofSize: 22)
+        let titleFont = UIFont.boldSystemFont(ofSize: 20)
+        let descriptionFont = UIFont.systemFont(ofSize: 20)
+
+        let subjectText = item.subject_name ?? ""
+        let titleText = item.topic ?? ""
+        let descriptionText = item.content ?? ""
+
+        let subjectHeight = subjectText.boundingHeight(width: contentWidth, font: subjectFont)
+        let titleHeight = titleText.boundingHeight(width: contentWidth, font: titleFont)
+        let descriptionHeight = descriptionText.boundingHeight(width: contentWidth, font: descriptionFont)
+
+        let hasFiles = item.file_path?.isEmpty == false
+        let collectionViewHeight: CGFloat = hasFiles ? 120 : 0
+
+        let totalHeight = subjectHeight + titleHeight + descriptionHeight + collectionViewHeight + 135
+
+        return totalHeight + 35
     }
+
+
+
 }
 
 @available(iOS 14.0, *)
@@ -734,6 +882,9 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         scrollView.scrollRectToVisible(rect, animated: true)
     }
     func GetHomeWorkReport(_ sectionId:String?,_ dates:String?){
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
         let date = ConvertDateStringSmart(dates)
         APIService.shared
             .makeApi(url:  ServiceUrl.comm_homework_get_homework_report , parameters: ["section_id":sectionId ?? "","date":date] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
@@ -745,20 +896,31 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
                     
                 case.success(let succesmessage) :
                     if succesmessage.status == true {
+                        
                         DispatchQueue.main.async { [self] in
+                            
                             homeWorkList = succesmessage.data
                             TV.reloadData()
+                            if #available(iOS 15.0, *) {
+                                hideLottieProgressLoader()
+                            }
                         }
                     }else {
                         DispatchQueue.main.async { [self] in
                             homeWorkList = succesmessage.data
                             TV.reloadData()
+                            if #available(iOS 15.0, *) {
+                                hideLottieProgressLoader()
+                            }
                         }
                     }
                 case.failure(let error) :
                     
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        if #available(iOS 15.0, *) {
+                            hideLottieProgressLoader()
+                        }
                     }
                 }
                 
@@ -795,6 +957,16 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         
     }
     
+}
+extension String {
+    func boundingHeight(width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect,
+                                            options: .usesLineFragmentOrigin,
+                                            attributes: [.font: font],
+                                            context: nil)
+        return ceil(boundingBox.height)
+    }
 }
 
 

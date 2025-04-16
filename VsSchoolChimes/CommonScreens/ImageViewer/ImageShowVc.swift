@@ -24,11 +24,12 @@ class ImageShowVc: UIViewController{
     var pageName = ""
     var pdfUrl = ""
     var type = 0
+    var subjectName:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         pdfView.navigationDelegate = self
         // Do any additional setup after loading the view.
-        
+        TitleLbl.text = subjectName
         cv.delegate = self
         cv.dataSource = self
         
@@ -36,7 +37,7 @@ class ImageShowVc: UIViewController{
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     override func viewWillAppear(_ animated: Bool) {
-        type = imageURL.first?.type == "pdf" ? 0 : 0
+        type = imageURL.first?.type == "pdf" ? 0 : 2
         uiUpdate(type: type)
     }
     func uiUpdate(type:Int){

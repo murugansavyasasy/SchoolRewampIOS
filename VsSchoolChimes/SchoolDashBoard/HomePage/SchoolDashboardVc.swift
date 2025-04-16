@@ -582,7 +582,9 @@ extension SchoolDashboardVc: UISearchBarDelegate{
     }
     func get_dashboard_details(){
       
-        print("tokenefrfrdfrfdx",staffDetails?.access_token ?? "")
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
        
         APIService.shared
             .makeApi(url:  ServiceUrl.get_dashboard_details, parameters: ["member_type" :"staff"] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
@@ -595,9 +597,11 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                 case.success(let succesmessage) :
                     
                     print("succesmessagesdsds",succesmessage)
+                    DispatchQueue.main.async { [self] in
                     if succesmessage.status == true {
-                        
-                        DispatchQueue.main.async { [self] in
+                        if #available(iOS 15.0, *) {
+                            hideLottieProgressLoader()
+                        }
                             
                             menu_details = succesmessage.data?.first?.menu_details
                             if let menu_details = menu_details {
@@ -624,6 +628,9 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                     
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        if #available(iOS 15.0, *) {
+                            self.hideLottieProgressLoader()
+                        }
                     }
                 }
             }
