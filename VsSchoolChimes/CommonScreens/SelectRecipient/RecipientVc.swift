@@ -232,7 +232,7 @@ class RecipientVc: UIViewController{
                 UploadMessageKeys.subjectId: subjectId ?? "",
                 UploadMessageKeys.filePath:uploadedFiles
             ]
-
+            
             APIService.shared
                 .makeApi(url: ServiceUrl.comm_homework_sendhomework, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                     result : Result<CommonApiSuc,
@@ -278,7 +278,7 @@ class RecipientVc: UIViewController{
                     
                 }
         }
-       
+        
     }
     
     private func SendingCommunicationFlow() {
@@ -303,11 +303,11 @@ class RecipientVc: UIViewController{
                     } else {
                         // Voice link is local, needs to be uploaded first
                         uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
-                            CircularProgressLoader.shared.hide()
+                            
                             self.sendVoiceMessage_communication()
                         }
                     }
-
+                    
                 default:
                     print("Unhandled communication screen type: \(ScreenType)")
                 }
@@ -1025,7 +1025,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     
                     if succesmessage.status == true {
                         
+                        
                         DispatchQueue.main.async { [self] in
+                            CircularProgressLoader.shared.hide()
+                            
                             CustomAlert
                                 .showAlertWithOkAction(
                                     title: "Success",
@@ -1039,6 +1042,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else {
                         
                         DispatchQueue.main.async {
+                            CircularProgressLoader.shared.hide()
                             self.alert
                                 .showAlert(
                                     title: "Error",
@@ -1052,6 +1056,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 case.failure(let error) :
                     
                     DispatchQueue.main.async {
+                        CircularProgressLoader.shared.hide()
                         print(error.localizedDescription)
                     }
                 }
