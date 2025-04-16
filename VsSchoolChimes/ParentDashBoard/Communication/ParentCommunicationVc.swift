@@ -199,7 +199,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         StyleAndTranslate()
         SearchBar.delegate = self
         NodataLbl.isHidden = true
-        NodataImage.isHidden = true
+       // NodataImage.isHidden = true
         
         if passValue == 1{
             NameLbl.text = ""
@@ -244,6 +244,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         
         tv.beginUpdates()
         tv.endUpdates()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
     }
     
     //MARK: StyleAndTranslate
