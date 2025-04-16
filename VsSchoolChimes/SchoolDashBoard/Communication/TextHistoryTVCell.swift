@@ -59,9 +59,9 @@ class TextHistoryTVCell: UITableViewCell {
     }
     
     func configureShimmer() {
-        
         MessageTitle.removeShimmer()
         DateLabel.removeShimmer()
+        descriptContent.removeShimmer()
         outerview.removeShimmer()
         sendBtn.isHidden = false
     }

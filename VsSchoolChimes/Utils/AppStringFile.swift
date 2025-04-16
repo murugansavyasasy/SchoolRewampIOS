@@ -101,12 +101,18 @@ class AlertstringFile{
     static let voice_or_title_is_required = "Voice and title is required".translated()
     static let enter_title_description = "Enter title and description".translated()
     static let Choose_any_target = "Choose any target to send message".translated()
-    static let Alert_title = "Alert"
+    static let Alert_title = "Alert".translated()
+    static let Confirm_title = "Confirmation".translated()
     static let select_date = "Select sheduled date".translated()
     
     static let Confirm = "Confirm".translated()
-    static let AreYouSureYouWantToProceed = "Are you sure you want to send? NOTE : selected target count is ".translated()
-//    static let AreYouSureYouWantToProceed = "Are you sure you want to send".translated()
+    static let Change_academic_year = "NOTE : This message is addressed to students in".translated()
+    static let Change_academic_year1 = "Which is not the communication academic year ".translated()
+    static let Change_academic_year2 = "Do you want to proceed?".translated()
+    
+    static let Selected_target = "Selected target : ".translated()
+    
+    static let AreYouSureYouWantToProceed = "Are you sure you want to send this message?".translated()
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
@@ -125,6 +131,7 @@ class AlertstringFile{
     static let Terms_And_Conditions = "Please agree to the terms and conditions".translated()
     static let Enter_Otp = "Enter the otp".translated()
     static let OK = "Ok".translated()
+    static let Yes_Send = "Yes,Send".translated()
     static let  enableRemindersAccess =  "Please enable reminders access in Settings.".translated()
     static let  PermissionDenied = "Permission Denied".translated()
     static let  Done = "Done".translated()
@@ -247,12 +254,12 @@ class CommonStringFile{
     static let Schedule = "Schedule date"
     static let ToTime = "Do not dial beyond"
     static let Emergencyvoicemessages = "Enable emergency voice"
-    static let VoiceMessage = "Voice"
-    static let TextMessage = "Text"
+    static let VoiceMessage = "Instant Call"
+    static let TextMessage = "Text Message"
     static let ScheduleCall = "Schedule Call"
     static let EnterTextHere = "Enter Text Here"
-    static let BacktoTextMessage = "Back to text message"
-    static let BackToVoiceMessage = "Back To voice message"
+    static let BacktoTextMessage = "Back to compose"
+    static let BackToVoiceMessage = "Back to compose"
     static let Venue = "Venue"
     static let AddPhotos = "Add Photos"
     static let EventDetails = "Event Details"

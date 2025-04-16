@@ -96,7 +96,7 @@ struct recipeint_tabBarName{
     static let Group = "Groups"
     static let Section_Student = "Section/Students"
     static let Staff = "Staff"
-    static let Entier_School = "Entier School"
+    static let Entier_School = "Entire School"
 }
 
 struct user_inputs{

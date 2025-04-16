@@ -124,6 +124,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var textCountLbl: UILabel!
     @IBOutlet weak var no_recordLbl: UILabel!
     @IBOutlet weak var voiceSetTitleLbl: UILabel!
+    
+    @IBOutlet weak var recordImgHeightCon: NSLayoutConstraint!
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     
@@ -535,7 +537,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Discription" //CommonStringFile.EnterTextHere.translated()
+        placeholderLabel.text = "Description" //CommonStringFile.EnterTextHere.translated()
         placeholderLabel.font = informationcontent.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -684,7 +686,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         dateSelectedViewHeight.constant = 0
         doneBtn.layer.cornerRadius = 8
         
-        let title = "Send voice from history?"
+        let title = "Select from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -812,6 +814,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             print("No file selected.")
             return
         }
+        recordImgHeightCon.constant = 0
+        Timinglbl.isHidden = true
         setupRecorder()
         let formatter = DateFormatter()
         formatter.timeStyle = .short
@@ -1265,7 +1269,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func voiceview(_ sender: Any) {
         selectedDates.removeAll()
-        let title = "Send voice from history?"
+        let title = "Select  from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1332,7 +1336,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     @IBAction func textviewshow(_ sender: Any) {
         selectedDates.removeAll()
-        let title = "Send text from history?"
+        let title = "Select from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1358,7 +1362,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
 //                }
         selectedDates.removeAll()
        
-        let title = "Schedule call from history?"
+        let title = "Select from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ])
@@ -1422,6 +1426,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         updateEmergencyCallVisibility(staff_role)
         
         if isforward {
+            recordImgHeightCon.constant = 0
+            Timinglbl.isHidden = true
             AudioPlayUrl = url
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
@@ -1443,6 +1449,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
             voiceTitleeTxt.text = title
         } else {
+            recordImgHeightCon.constant = 80
+            Timinglbl.isHidden = false
             recrdimg.image = ImageName.mic1
             audioRecorder?.stop()
             isRecording = false
@@ -1488,6 +1496,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         emengencyCall.isOn = false
         
         if isforward {
+            recordImgHeightCon.constant = 0
+            Timinglbl.isHidden = true
             AudioPlayUrl = url
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
@@ -1507,6 +1517,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 player = AVPlayer(playerItem: playerItem)
             }
         } else {
+            recordImgHeightCon.constant = 80
+            Timinglbl.isHidden = false
             recrdimg.image = ImageName.mic1
             audioRecorder?.stop()
             isRecording = false
@@ -1637,8 +1649,11 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-            cell.descriptContent.configure(text: TextHistory?[indexPath.row].content ?? "")
-            cell.descriptContent.onTap = {
+            cell.descriptContent
+                .setupExpandable(
+                    text: TextHistory?[indexPath.row].content ?? ""
+                )
+            cell.descriptContent.onExpandableTap = {
                 cell.descriptContent.isExpanded.toggle()
                 tableView.beginUpdates()
                 tableView.endUpdates()

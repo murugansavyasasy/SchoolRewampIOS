@@ -10,6 +10,8 @@ import DropDown
 
 class RecipientVc: UIViewController{
     
+    @IBOutlet weak var acidmicYrLbl: UILabel!
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var backbtnMName: UIButton!
     @IBOutlet weak var drpodonLbl: UILabel!
     @IBOutlet weak var segmentName: UISegmentedControl!
@@ -58,9 +60,11 @@ class RecipientVc: UIViewController{
     let acidamicdrops = DropDown()
     var  selectedAcadimicYearId: Int?
     var accadimYrIDs :[Int] = []
+    var accadmicDefaultYrName : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        speficBtnName.isHidden = true
         backbtnMName
             .setTitle(
                 UserDefaultFileManager.get_staff_Details()?.school_name,
@@ -73,7 +77,7 @@ class RecipientVc: UIViewController{
             configureRecipientTabs()
             if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
                 segmentName.isHidden = true
-                speficBtnName.isHidden = true
+                
                 target_type = TargetTypes.section
                 circular_types =  circular_type.section
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
@@ -89,7 +93,7 @@ class RecipientVc: UIViewController{
                     recipeint_tabBarName.Section_Student
                 ]
             }else{
-                speficBtnName.isEnabled = false
+                speficBtnName.isEnabled = true
                 selectStandardDropDown.isHidden = true
             }
         }
@@ -99,7 +103,6 @@ class RecipientVc: UIViewController{
         applyShadowAndCornerRadius(to: selectSubject)
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
-        speficBtnName.backgroundColor = UIColor.gray
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectedSubject))
         let acidmaciyrClick = UITapGestureRecognizer(target: self, action:
@@ -118,6 +121,7 @@ class RecipientVc: UIViewController{
         tv.dataSource = self
         
         configureRecipientTabs()
+    
     }
     
     
@@ -138,7 +142,6 @@ class RecipientVc: UIViewController{
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-            speficBtnName.isHidden = true
             
             if (staffDetailsCount?.count ?? 0) > 1 {
                 contentLbl.isHidden = true
@@ -284,14 +287,22 @@ class RecipientVc: UIViewController{
     }
     
     private func SendingCommunicationFlow() {
-        let message = AlertstringFile.AreYouSureYouWantToProceed + "\(array_selectedId.count)"
-//        let message = AlertstringFile.AreYouSureYouWantToProceed 
-        let title = AlertstringFile.Alert_title
+        
+        var message : String?
+        if accadmicDefaultYrName == acidmicYrLbl.text{
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        }else{
+            
+          message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        }
+        
+        let title = AlertstringFile.Confirm_title
         
         alert.showAlertCancel(
             title: title,
-            message: message,
-            actionLbl1: AlertstringFile.OK,
+            message: message ?? "",
+            actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
             onOk: { [self] in
@@ -437,16 +448,15 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.school
             circular_types =  circular_type.school
             contentLbl.isHidden = false
-            speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
+            
             
         case recipeint_tabBarName.Group:
             target_type = TargetTypes.group
             circular_types =  circular_type.group
             getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             contentLbl.isHidden = true
-            speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
@@ -455,7 +465,6 @@ class RecipientVc: UIViewController{
             circular_types =  circular_type.standard
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             contentLbl.isHidden = true
-            speficBtnName.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
@@ -463,8 +472,11 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.section
             circular_types =  circular_type.section
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+            
+//            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+            
             speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+            
             contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
@@ -543,9 +555,7 @@ class RecipientVc: UIViewController{
             guard let self = self else { return }
             selectedAcadimicYearId =  AcadimicYearDatas[index].id
             
-            if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = item
-            }
+            acidmicYrLbl.text = item
             
             if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Standard {
             
@@ -708,7 +718,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                    
                 }
                 speficBtnName.isEnabled = selectedSections.count == 1
-                speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
+                speficBtnName.isHidden = selectedSections.count == 1 ? false : true
                 
             }
             
@@ -752,7 +762,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                    
                 }
                 speficBtnName.isEnabled = selectedSections.count == 1
-                speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
+                speficBtnName.isHidden = selectedSections.count == 1 ? false : true
                 
             }
         }
@@ -933,12 +943,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             AcadimicYearDatas = successMessage.data ?? []
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                                        label.text = AcadimicYearDatas[i].year
+                                        acidmicYrLbl.text = AcadimicYearDatas[i].year
+                                    accadmicDefaultYrName = AcadimicYearDatas[i].year
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
-                                        
                                         break
-                                    }
                                 }
                             }
                             
