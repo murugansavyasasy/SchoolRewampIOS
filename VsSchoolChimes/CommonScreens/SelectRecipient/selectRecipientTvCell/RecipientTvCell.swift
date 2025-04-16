@@ -9,10 +9,16 @@ import UIKit
 
 class RecipientTvCell: UITableViewCell {
 
+   
     @IBOutlet weak var cellLabel: UILabel!
     @IBOutlet weak var checkboxImg: UIImageView!
+    
+    @IBOutlet weak var outerView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    
 }

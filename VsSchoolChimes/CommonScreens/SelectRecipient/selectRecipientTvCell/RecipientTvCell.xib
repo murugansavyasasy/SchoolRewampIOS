@@ -19,10 +19,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v1d-jS-ca9">
-                        <rect key="frame" x="10" y="10" width="300" height="74"/>
+                        <rect key="frame" x="10" y="5" width="300" height="84"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkedSquare" translatesAutoresizingMaskIntoConstraints="NO" id="AzD-Mn-u4i">
-                                <rect key="frame" x="8" y="22" width="30" height="30"/>
+                                <rect key="frame" x="8" y="27" width="30" height="30"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="CPO-Yx-S7h"/>
@@ -30,7 +30,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1st standard" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="10i-HM-fmA">
-                                <rect key="frame" x="56" y="27" width="229" height="20.333333333333329"/>
+                                <rect key="frame" x="56" y="32" width="229" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -48,15 +48,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="v1d-jS-ca9" secondAttribute="trailing" constant="10" id="GFP-eT-3aY"/>
-                    <constraint firstItem="v1d-jS-ca9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="bLb-mv-leS"/>
+                    <constraint firstItem="v1d-jS-ca9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="bLb-mv-leS"/>
                     <constraint firstItem="v1d-jS-ca9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="eKu-Oz-hmI"/>
-                    <constraint firstAttribute="bottom" secondItem="v1d-jS-ca9" secondAttribute="bottom" constant="10" id="nXB-kH-eev"/>
+                    <constraint firstAttribute="bottom" secondItem="v1d-jS-ca9" secondAttribute="bottom" constant="5" id="nXB-kH-eev"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="cellLabel" destination="10i-HM-fmA" id="Aq0-KI-GiO"/>
+                <outlet property="cellLabel" destination="10i-HM-fmA" id="nce-PC-Ssf"/>
                 <outlet property="checkboxImg" destination="AzD-Mn-u4i" id="lVZ-q1-m4x"/>
+                <outlet property="outerView" destination="v1d-jS-ca9" id="a6G-tw-duW"/>
             </connections>
             <point key="canvasLocation" x="126.71755725190839" y="37.323943661971832"/>
         </tableViewCell>
