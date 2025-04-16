@@ -10,7 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class ReciverHomeworkVC: UIViewController, SelectNotice {
 
-    func didTapButton(title: String, content: String, items: [String]) {
+    func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
     

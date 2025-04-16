@@ -17,6 +17,7 @@ fileprivate var lottieOverlay: UIView?
 fileprivate var loaderContainerView: UIView?
 @available(iOS 15.0, *)
 fileprivate var loaderAnimationView: LottieAnimationView?
+private var loaderBackgroundView: UIView?
 extension UIImageView {
     func applyRTLFlip(_ isRTL: Bool) {
         if isRTL {
@@ -262,18 +263,31 @@ extension UIViewController {
     func showLottieProgressLoader(animationName: String = "loader") {
         hideLottieProgressLoader()
 
+        // Create full-screen background layer that blocks interactions
+        let backgroundView = UIView(frame: view.bounds)
+        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.3) // semi-transparent
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.isUserInteractionEnabled = true // block interactions
+        view.addSubview(backgroundView)
+        
+        NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
         let containerSize: CGFloat = 100
         let container = UIView(frame: CGRect(x: 0, y: 0, width: containerSize, height: containerSize))
-        
         container.backgroundColor = .white
         container.translatesAutoresizingMaskIntoConstraints = false
         container.layer.cornerRadius = 16
         container.layer.masksToBounds = true
-        view.addSubview(container)
+        backgroundView.addSubview(container)
         
         NSLayoutConstraint.activate([
-            container.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            container.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            container.centerXAnchor.constraint(equalTo: backgroundView.centerXAnchor),
+            container.centerYAnchor.constraint(equalTo: backgroundView.centerYAnchor),
             container.widthAnchor.constraint(equalToConstant: containerSize),
             container.heightAnchor.constraint(equalToConstant: containerSize)
         ])
@@ -296,8 +310,9 @@ extension UIViewController {
 
         loaderContainerView = container
         loaderAnimationView = animationView
+        loaderBackgroundView = backgroundView
     }
-    
+
     func updateLottieProgress(to percent: Double) {
         let percentageText = "\(Int(percent))%"
         DispatchQueue.main.async {
@@ -307,9 +322,10 @@ extension UIViewController {
 
     func hideLottieProgressLoader() {
         loaderAnimationView?.stop()
-        loaderContainerView?.removeFromSuperview()
+        loaderBackgroundView?.removeFromSuperview()
         loaderContainerView = nil
         loaderAnimationView = nil
+        loaderBackgroundView = nil
     }
 }
 

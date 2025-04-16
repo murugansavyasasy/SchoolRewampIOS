@@ -11,18 +11,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="443" id="KGk-i7-Jjw" customClass="NoticeBoardTvcellTableViewCell" customModule="VsSchoolChimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="395" height="443"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="403" id="KGk-i7-Jjw" customClass="NoticeBoardTvcellTableViewCell" customModule="VsSchoolChimes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="529" height="403"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="395" height="443"/>
+                <rect key="frame" x="0.0" y="0.0" width="529" height="403"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLP-ce-oCO" customClass="AnimatView" customModule="VsSchoolChimes" customModuleProvider="target">
-                        <rect key="frame" x="10" y="30" width="375" height="403"/>
+                        <rect key="frame" x="10" y="30" width="509" height="363"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BJu-JI-lEX">
-                                <rect key="frame" x="295" y="-40" width="80" height="100"/>
+                                <rect key="frame" x="429" y="-40" width="80" height="100"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="EMw-Xu-aq7">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="100"/>
@@ -39,7 +39,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-UY-KqC">
-                                <rect key="frame" x="8" y="54" width="359" height="120"/>
+                                <rect key="frame" x="8" y="107.33333333333334" width="493" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="pyv-Ob-4eX"/>
@@ -52,14 +52,14 @@
                                 </collectionViewFlowLayout>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annual Day Celebrations" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3lM-Ge-F8d">
-                                <rect key="frame" x="8" y="15" width="347" height="19"/>
+                                <rect key="frame" x="8" y="25.000000000000004" width="481" height="62.333333333333343"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Palatino-Bold" family="Palatino" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view hidden="YES" alpha="0.84999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dRZ-ZP-W8D">
-                                <rect key="frame" x="180" y="10" width="15" height="15"/>
+                                <rect key="frame" x="247" y="10" width="15" height="15"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="4Fg-oK-PjM"/>
@@ -67,31 +67,23 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15 Nov 2024" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZlO-yr-9O1">
-                                <rect key="frame" x="270" y="340" width="97" height="20"/>
+                                <rect key="frame" x="404" y="298" width="97" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="97" id="Dyk-Xz-Ecp"/>
                                     <constraint firstAttribute="height" constant="20" id="m85-1i-40Y"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kz9-cN-IxL" customClass="ExpandableLabel" customModule="VsSchoolChimes" customModuleProvider="target">
-                                <rect key="frame" x="8" y="214.33333333333334" width="347" height="115.66666666666666"/>
-                                <string key="text">Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoticePin" translatesAutoresizingMaskIntoConstraints="NO" id="0ta-Ym-h3a">
-                                <rect key="frame" x="182" y="-15" width="35" height="35"/>
+                                <rect key="frame" x="249" y="-15" width="35" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="6bW-9v-mcF"/>
                                     <constraint firstAttribute="width" constant="35" id="LQ0-K2-Mv1"/>
                                 </constraints>
                             </imageView>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="3fk-V0-e47">
-                                <rect key="frame" x="151" y="148" width="73" height="26"/>
+                                <rect key="frame" x="218" y="201.33333333333334" width="73" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="ven-wA-ptx"/>
                                 </constraints>
@@ -99,7 +91,7 @@
                                 <color key="currentPageIndicatorTintColor" systemColor="systemBlueColor"/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NLk-6b-9PN">
-                                <rect key="frame" x="287" y="370" width="80" height="25"/>
+                                <rect key="frame" x="421" y="328" width="80" height="25"/>
                                 <color key="backgroundColor" systemColor="systemMintColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="JU8-tr-UAF"/>
@@ -114,40 +106,49 @@
                                     <action selector="Select:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ycj-iq-2mo"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annual Day Celebration" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9K-0e-z3J">
-                                <rect key="frame" x="8" y="184" width="357" height="20.333333333333343"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5N6-Jb-Vnf">
+                                <rect key="frame" x="16" y="237.33333333333329" width="477" height="50.666666666666657"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Annual Day Celebration" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9K-0e-z3J">
+                                        <rect key="frame" x="0.0" y="0.0" width="477" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fva-ZY-0vY" customClass="ExpandableLabel" customModule="VsSchoolChimes" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="30.333333333333371" width="477" height="20.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="3lM-Ge-F8d" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="0nb-4l-Pox"/>
                             <constraint firstAttribute="trailing" secondItem="kwf-UY-KqC" secondAttribute="trailing" constant="8" id="2KB-LP-m1b"/>
                             <constraint firstItem="0ta-Ym-h3a" firstAttribute="centerX" secondItem="dRZ-ZP-W8D" secondAttribute="centerX" constant="12" id="8bM-xq-iAh"/>
-                            <constraint firstItem="3lM-Ge-F8d" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="15" id="8pH-ET-Jfo"/>
+                            <constraint firstItem="3lM-Ge-F8d" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="25" id="8pH-ET-Jfo"/>
                             <constraint firstItem="dRZ-ZP-W8D" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="8sb-FD-fmm"/>
                             <constraint firstAttribute="trailing" secondItem="3lM-Ge-F8d" secondAttribute="trailing" constant="20" id="BPr-Rj-qMp"/>
-                            <constraint firstAttribute="trailing" secondItem="m9K-0e-z3J" secondAttribute="trailing" constant="10" id="Fpe-Vr-fgN"/>
+                            <constraint firstItem="ZlO-yr-9O1" firstAttribute="top" secondItem="5N6-Jb-Vnf" secondAttribute="bottom" constant="10" id="FNC-3I-bJL"/>
+                            <constraint firstAttribute="trailing" secondItem="5N6-Jb-Vnf" secondAttribute="trailing" constant="16" id="Iae-Es-QR8"/>
                             <constraint firstItem="NLk-6b-9PN" firstAttribute="top" secondItem="ZlO-yr-9O1" secondAttribute="bottom" constant="10" id="JVm-jd-T8t"/>
                             <constraint firstItem="3fk-V0-e47" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="Jc2-QS-qX3"/>
                             <constraint firstAttribute="trailing" secondItem="BJu-JI-lEX" secondAttribute="trailing" id="Lna-Lc-WU3"/>
-                            <constraint firstItem="Kz9-cN-IxL" firstAttribute="top" secondItem="m9K-0e-z3J" secondAttribute="bottom" constant="10" id="R1R-S7-baH"/>
                             <constraint firstAttribute="trailing" secondItem="NLk-6b-9PN" secondAttribute="trailing" constant="8" id="SiI-jt-r6T"/>
                             <constraint firstItem="3fk-V0-e47" firstAttribute="bottom" secondItem="kwf-UY-KqC" secondAttribute="bottom" id="XIP-6g-gUH"/>
                             <constraint firstItem="BJu-JI-lEX" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="-40" id="aXh-jh-wnL"/>
                             <constraint firstAttribute="trailing" secondItem="ZlO-yr-9O1" secondAttribute="trailing" constant="8" id="bH7-tW-QXV"/>
-                            <constraint firstItem="ZlO-yr-9O1" firstAttribute="top" secondItem="Kz9-cN-IxL" secondAttribute="bottom" constant="10" id="bff-Xf-hIP"/>
-                            <constraint firstAttribute="trailing" secondItem="Kz9-cN-IxL" secondAttribute="trailing" constant="20" id="eKx-4Z-jxJ"/>
+                            <constraint firstItem="5N6-Jb-Vnf" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="16" id="ei5-HN-e5E"/>
                             <constraint firstItem="0ta-Ym-h3a" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="-15" id="gmH-j7-GUP"/>
                             <constraint firstItem="kwf-UY-KqC" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="ix2-dq-YQi"/>
-                            <constraint firstItem="m9K-0e-z3J" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="jbu-1Y-Qho"/>
                             <constraint firstItem="kwf-UY-KqC" firstAttribute="top" secondItem="3lM-Ge-F8d" secondAttribute="bottom" constant="20" id="kcL-hJ-J1a"/>
-                            <constraint firstItem="m9K-0e-z3J" firstAttribute="top" secondItem="kwf-UY-KqC" secondAttribute="bottom" constant="10" id="pMU-wi-0wB"/>
-                            <constraint firstAttribute="bottom" secondItem="NLk-6b-9PN" secondAttribute="bottom" constant="8" id="q0f-BZ-Btm"/>
+                            <constraint firstAttribute="height" constant="363" id="kfj-eG-JUX"/>
+                            <constraint firstAttribute="bottom" secondItem="NLk-6b-9PN" secondAttribute="bottom" constant="10" id="q0f-BZ-Btm"/>
                             <constraint firstItem="dRZ-ZP-W8D" firstAttribute="top" secondItem="iLP-ce-oCO" secondAttribute="top" constant="10" id="roz-UW-uPs"/>
-                            <constraint firstItem="Kz9-cN-IxL" firstAttribute="leading" secondItem="iLP-ce-oCO" secondAttribute="leading" constant="8" id="yhp-gc-1wX"/>
+                            <constraint firstItem="5N6-Jb-Vnf" firstAttribute="top" secondItem="kwf-UY-KqC" secondAttribute="bottom" constant="10" id="vUK-vY-dYX"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -171,13 +172,14 @@
                 <outlet property="cellview" destination="iLP-ce-oCO" id="fHG-Ug-O8M"/>
                 <outlet property="collectionview" destination="kwf-UY-KqC" id="NPj-aA-lIp"/>
                 <outlet property="datelbl" destination="ZlO-yr-9O1" id="tge-7U-oWz"/>
-                <outlet property="dicriptContent" destination="Kz9-cN-IxL" id="vXj-NR-FnU"/>
+                <outlet property="dicriptContent" destination="Fva-ZY-0vY" id="KtI-yd-skh"/>
                 <outlet property="newView" destination="BJu-JI-lEX" id="hPK-Un-tcN"/>
                 <outlet property="pagecontroller" destination="3fk-V0-e47" id="8Ui-Eb-NEa"/>
                 <outlet property="pagecontrollerheight" destination="ven-wA-ptx" id="ehF-aM-kJC"/>
                 <outlet property="pinImage" destination="0ta-Ym-h3a" id="Pic-M1-3qO"/>
+                <outlet property="viewHeight" destination="kfj-eG-JUX" id="1Re-xe-ZpB"/>
             </connections>
-            <point key="canvasLocation" x="187.02290076335876" y="136.26760563380282"/>
+            <point key="canvasLocation" x="289.3129770992366" y="121.47887323943662"/>
         </tableViewCell>
     </objects>
     <resources>
@@ -185,13 +187,13 @@
         <image name="newimg" width="498" height="501"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -69,27 +69,29 @@ class RecipientVc: UIViewController{
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
             configureRecipientTabs()
-        }
-        
-       
-     
-        if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
-            segmentName.isHidden = true
-            speficBtnName.isHidden = true
-            target_type = TargetTypes.section
-            circular_types =  circular_type.section
-            getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-            speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-            contentLbl.isHidden = true
-            tv.isHidden = false
-            selectStandardDropDown.isHidden = false
-            segment_selected_index = 1
-        }else{
-            speficBtnName.isEnabled = false
-            selectStandardDropDown.isHidden = true
+            if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
+                segmentName.isHidden = true
+                speficBtnName.isHidden = true
+                target_type = TargetTypes.section
+                circular_types =  circular_type.section
+                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+                speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+                speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+                contentLbl.isHidden = true
+                tv.isHidden = false
+                selectStandardDropDown.isHidden = false
+//                segment_selected_index = 9
+//                segmentName.selectedSegmentIndex = 9
+                
+                cv_itemsarry = [
+                    recipeint_tabBarName.Section_Student
+                ]
+            }else{
+                speficBtnName.isEnabled = false
+                selectStandardDropDown.isHidden = true
+            }
         }
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
@@ -638,7 +640,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             }
             
         default:
-            break
+            cell.cellLabel.text = sectionsDetails?[indexPath.row].name
+            if let select = sectionsDetails?[indexPath.row].isSelect {
+                cell.checkboxImg.image = select ? ImageName.checkedSquares :
+                ImageName.uncheckedSquares
+            }
+
         }
         
         return cell
@@ -719,7 +726,34 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         default:
-            break
+            if indexPath.row < (sectionsDetails?.count ?? 0) {
+                guard var section = sectionsDetails?[indexPath.row] else { return }
+                
+                section.isSelect?.toggle()
+                sectionsDetails?[indexPath.row].isSelect = section.isSelect
+                if let id = section.id {
+                    if section.isSelect == true {
+                        if !array_selectedId.contains(id) {
+                            array_selectedId.append(id)
+                        }
+                    } else {
+                        array_selectedId.removeAll(where: { $0 == id })
+                    }
+                }
+                let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
+                let selectedIds = selectedSections.compactMap { $0.id }
+                sectionIds = selectedIds.joined(separator: ",")
+                if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId{
+                    if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
+                        getSubjectListAPI(finalSectionIds)
+                    }
+                    selectSubject.isHidden = false
+                   
+                }
+                speficBtnName.isEnabled = selectedSections.count == 1
+                speficBtnName.backgroundColor = selectedSections.count == 1 ? .button : .gray
+                
+            }
         }
         tv.reloadData()
     }
@@ -901,6 +935,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                                         label.text = AcadimicYearDatas[i].year
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                        
                                         break
                                     }
                                 }

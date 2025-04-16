@@ -270,6 +270,7 @@
 		848F7A702CF8CBCD004EF617 /* AnimatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */; };
 		8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494B6632CD1EC8D004B0746 /* TapBarVC.swift */; };
 		8494B6662CD1EC8D004B0746 /* TapBarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8494B6642CD1EC8D004B0746 /* TapBarVC.xib */; };
+		849507312DAE3EDD004343C4 /* loader (2).json in Resources */ = {isa = PBXBuildFile; fileRef = 849507302DAE3EDD004343C4 /* loader (2).json */; };
 		8497570D2D2BA575006A27FD /* SelectRecipientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8497570A2D2BA575006A27FD /* SelectRecipientVC.swift */; };
 		8497570E2D2BA575006A27FD /* Std_Grp_header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757072D2BA575006A27FD /* Std_Grp_header.swift */; };
 		8497570F2D2BA575006A27FD /* RecipientTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849757052D2BA575006A27FD /* RecipientTvCell.swift */; };
@@ -880,6 +881,7 @@
 		848F7A6F2CF8CBCD004EF617 /* AnimatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatView.swift; sourceTree = "<group>"; };
 		8494B6632CD1EC8D004B0746 /* TapBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapBarVC.swift; sourceTree = "<group>"; };
 		8494B6642CD1EC8D004B0746 /* TapBarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TapBarVC.xib; sourceTree = "<group>"; };
+		849507302DAE3EDD004343C4 /* loader (2).json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "loader (2).json"; sourceTree = "<group>"; };
 		849757052D2BA575006A27FD /* RecipientTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientTvCell.swift; sourceTree = "<group>"; };
 		849757062D2BA575006A27FD /* RecipientTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipientTvCell.xib; sourceTree = "<group>"; };
 		849757072D2BA575006A27FD /* Std_Grp_header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Std_Grp_header.swift; sourceTree = "<group>"; };
@@ -2236,6 +2238,7 @@
 				849E572E2C1FF65F006119DA /* right-arrow.json */,
 				8464BA682DA6774100A52D8B /* percentage-circle.json */,
 				841ACC8E2DA5076800326D52 /* loader.json */,
+				849507302DAE3EDD004343C4 /* loader (2).json */,
 			);
 			path = Gif;
 			sourceTree = "<group>";
@@ -3324,6 +3327,7 @@
 				84EFFAF42CCFB68A00C11C26 /* ImageCvCell.xib in Resources */,
 				8466E83E2D6ED0CB004F4EFC /* PopupVC.xib in Resources */,
 				8442A90E2CDC8B2D0006068E /* FAQTableViewCell.xib in Resources */,
+				849507312DAE3EDD004343C4 /* loader (2).json in Resources */,
 				8442A90F2CDC8B2D0006068E /* FAQViewController.xib in Resources */,
 				849E573A2C1FF6BD006119DA /* RobotoSlab-Regular.ttf in Resources */,
 				187CF5DC2D142D06001422CE /* CertificateRequestViewController.xib in Resources */,
