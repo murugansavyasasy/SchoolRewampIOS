@@ -20,7 +20,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
     @IBOutlet weak var HomeworkSubjectLbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
-    @IBOutlet weak var dicriptContent: ExpandableLabel!
+    @IBOutlet weak var dicriptContent: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var CVHeight: NSLayoutConstraint!
     @IBOutlet weak var collectionview: UICollectionView!
