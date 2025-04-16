@@ -58,102 +58,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
             tv.reloadData()
     }
     
-//    func reload(index: Int) {
-//        
-//        if let currentIndex = playIndex, currentIndex != index {
-//            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-//            if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
-//                previousCell.updatePlayState(isPlaying: false, url: nil)
-//            }
-//        }
-//        
-//        playIndex = (playIndex == index) ? nil : index
-//        var currentmessage: CommunicationReciverData?
-//        
-//        if isFiltered {
-//            currentmessage = FilteredMessages?[index]
-//        } else {
-//            currentmessage = TotalMessageList?[index]
-//        }
-//        
-//        if currentmessage?.is_unread == true {
-//            
-//            if currentmessage?.is_archive ?? false {
-//                ReadStatusUpdateArchive(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
-//            } else {
-//                ReadStatusUpdate(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
-//            }
-//            
-//            // Update the model immediately.
-//            currentmessage?.is_unread = false
-//            
-//            if currentmessage != nil {
-//                if isFiltered {
-//                    FilteredMessages?[index] = currentmessage!
-//                } else {
-//                    TotalMessageList?[index] = currentmessage!
-//                }
-//            }
-//            
-//            // Immediately update the cell's UI before reloading the table.
-//            if let cell = tv.cellForRow(at: IndexPath(row: index, section: 0)) as? HistoryTC {
-//                cell.NewImageView.isHidden = true
-//            }
-//        }
-//        
-//        // You can reload just the affected row for a smoother update.
-//        tv.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
-//    }
-    
-//    func reload(index: Int) {
-//        var indexPathsToReload = [IndexPath]()
-//
-//        // If a different row was playing, update its state
-//        if let currentIndex = playIndex, currentIndex != index {
-//            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
-//            if let previousCell = tv.cellForRow(at: previousIndexPath) as? HistoryTC {
-//                previousCell.updatePlayState(isPlaying: false, url: nil)
-//            }
-//            indexPathsToReload.append(previousIndexPath)
-//        }
-//        
-//        // Toggle playIndex: If it's the same index then reset, otherwise set to the new index.
-//        playIndex = (playIndex == index) ? nil : index
-//        indexPathsToReload.append(IndexPath(row: index, section: 0))
-//        
-//        // Handle unread state and update the new image indicator immediately.
-//        var currentMessage: CommunicationReciverData?
-//        if isFiltered {
-//            currentMessage = FilteredMessages?[index]
-//        } else {
-//            currentMessage = TotalMessageList?[index]
-//        }
-//        
-//        if currentMessage?.is_unread == true {
-//            if currentMessage?.is_archive ?? false {
-//                ReadStatusUpdateArchive(type: currentMessage?.type ?? "", detail_id: currentMessage?.id ?? "")
-//            } else {
-//                ReadStatusUpdate(type: currentMessage?.type ?? "", detail_id: currentMessage?.id ?? "")
-//            }
-//            
-//            currentMessage?.is_unread = false
-//            
-//            if isFiltered {
-//                FilteredMessages?[index] = currentMessage!
-//            } else {
-//                TotalMessageList?[index] = currentMessage!
-//            }
-//            
-//            // Directly update the UI of the tapped cell before reloading.
-//            if let cell = tv.cellForRow(at: IndexPath(row: index, section: 0)) as? HistoryTC {
-//                cell.NewImageView.isHidden = true
-//            }
-//        }
-//        
-//        // Finally, reload both the tapped cell and the previously playing cell.
-//        tv.reloadRows(at: indexPathsToReload, with: .none)
-//    }
-
     
     func deleteDelegate(index: Int) {
         
@@ -174,6 +78,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     @IBOutlet weak var voiceBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NodataImage: UIImageView!
+    @IBOutlet weak var NodataImgHeight: NSLayoutConstraint!
+    @IBOutlet weak var NodataImgTop: NSLayoutConstraint!
+    
     
     var BtnId = 1
     let backgroundcolor = Colornames.topBackgroundCLr
@@ -186,20 +93,21 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var TotalMessageList : [CommunicationReciverData]?
     var FilteredMessages : [CommunicationReciverData]?
-    var ArchiveMessages : [CommunicationReciverData] = []
-    var TodayMessage : [CommunicationReciverData] = []
+//    var ArchiveMessages : [CommunicationReciverData] = []
+//    var TodayMessage : [CommunicationReciverData] = []
     var dropDown = DropDown()
     var isFiltered = false
-    var isArchive = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         buttons()
 
         StyleAndTranslate()
-        SearchBar.delegate = self
+        NodataImgTop.constant = 0
+        NodataImgHeight.constant = 0
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
+        SearchBar.delegate = self
         
         if passValue == 1{
             NameLbl.text = ""
@@ -224,13 +132,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         tv.dataSource = self
         tv.reloadData()
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        tv.beginUpdates()
-//        tv.endUpdates()
-//    }
-
 
     override func viewDidLayoutSubviews() {
         
@@ -246,8 +147,24 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         tv.endUpdates()
     }
     
+   
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Stop audio for all visible cells
+        for cell in tv.visibleCells {
+            if let historyCell = cell as? HistoryTC {
+                historyCell.stopAudioPlayback()
+            }
+        }
+    }
+
+    
     //MARK: StyleAndTranslate
     func StyleAndTranslate(){
+        
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = (studentDetails?.standard_name ?? "") + " " + (studentDetails?.section_name ?? "")
         
         backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -434,7 +351,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     
                     DispatchQueue.main.async { [self] in
                         
-//                        TotalMessageList = SuccessMessage.data
+                        TotalMessageList = SuccessMessage.data
 //                        for i in 0..<(TotalMessageList?.count ?? 0){
 //                            if TotalMessageList?[i].id == detail_id{
 //                                TotalMessageList?[i].isExpand = true
@@ -443,8 +360,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
 //                            }
 //                        }
 //
-                        
-                        TodayMessage = SuccessMessage.data
+                        NodataImgTop.constant = 0
+                        NodataImgHeight.constant = 0
+                        NodataLbl.isHidden = true
+                        NodataImage.isHidden = true
                         tv.reloadData()
                         
                        // TotalMessageList?.append(contentsOf: TodayMessage)
@@ -454,10 +373,12 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                 }else {
                     
                     DispatchQueue.main.async { [self] in
-                        
-                        TodayMessage = []
+
                         NodataLbl.text = SuccessMessage.message
                         NodataLbl.isHidden = false
+                        NodataImgTop.constant = 50
+                        NodataImgHeight.constant = 300
+                        NodataImage.isHidden = false
                         tv.isScrollEnabled = false
                         tv.reloadData()
                     }
@@ -485,13 +406,18 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     
                     DispatchQueue.main.async { [self] in
                         
-                        ArchiveMessages = SuccessMessage.data
-                        isArchive  = true
+                        TotalMessageList?.append(contentsOf: SuccessMessage.data)
+                       
                         if isFiltered{
-                            TotalMessageList?.append(contentsOf: SuccessMessage.data)
+                           //TotalMessageList?.append(contentsOf: SuccessMessage.data)
                             filterSelection(FilterType:  dropDown.selectedItem ?? "")
                         }
-                        //TotalMessageList?.append(contentsOf: ArchiveMessages)
+                        
+                        NodataImgTop.constant = 0
+                        NodataImgHeight.constant = 0
+                        NodataLbl.isHidden = true
+                        NodataImage.isHidden = true
+                        tv.isHidden = false
                         tv.isScrollEnabled = true
                         tv.reloadData()
                     }
@@ -499,8 +425,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                 }else {
                     
                     DispatchQueue.main.async { [self] in
-                        
-                        ArchiveMessages = []
                         
                         tv.reloadData()
                         
@@ -542,9 +466,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
 //                            }
 //                        }
                         
-                        getCommunicationList()
-                        
-                        //tv.reloadData()
+//                        if type == "VOICE"{
+//                            
+//                             getCommunicationList()
+//                              tv.reloadData()
+//                        }
                     }
                     
                 }else {
@@ -578,6 +504,12 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     DispatchQueue.main.async { [self] in
                         
                        // getCommunicationList(detail_id: detail_id)
+                        
+//                        if type == "VOICE"{
+//                            
+//                            GetArchiveCommunicationList()
+//                              tv.reloadData()
+//                        }
                     }
                     
                 }else {
@@ -611,7 +543,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             return FilteredMessages?.count ?? 0
         }else{
             
-            TotalMessageList = TodayMessage + ArchiveMessages
+           // TotalMessageList = TodayMessage + ArchiveMessages
+            
             return TotalMessageList?.count ?? 0
         }
     }
@@ -640,15 +573,20 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
             
-            cell.layoutIfNeeded()
-            
             cell.MessageTitle.text = message?.description
             cell.DateLabel.text = (message?.time ?? "") + "  " + (message?.date ?? "")
             
             cell.descriptContent.attributedText = self.descript(for:message?.content ?? "", expanded: message?.isExpand ?? false)
+            
+          //  cell.descriptContent.numberOfLines = (message?.isExpand ?? false) ? 0 : ((message?.content.count ?? 0) > 120 ? 3 : 0)
+
+            
             cell.delegate = self
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
+            
             cell.descriptContent.addGestureRecognizer(tapGesture)
+            
+                cell.layoutIfNeeded()
             
                 cell.configureShimmer()
                 
@@ -713,6 +651,13 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         return UITableView.automaticDimension
     }
     
+        func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+            if let historyCell = cell as? HistoryTC {
+                historyCell.stopAudioPlayback()
+            }
+        }
+    
+
     @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let label = gesture.view as? UILabel, let attributedText = label.attributedText else { return }
         let text = attributedText.string
@@ -766,9 +711,12 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         
          //Save updated message back to the data source.
         if isFiltered {
-            FilteredMessages?[indexPath.row] = message!
+            FilteredMessages?[indexPath.row].isExpand = message?.isExpand
+            FilteredMessages?[indexPath.row].is_unread = ((message?.is_unread) != nil)
         } else {
-            TotalMessageList?[indexPath.row] = message!
+            TotalMessageList?[indexPath.row].isExpand = message?.isExpand
+            TotalMessageList?[indexPath.row].is_unread = ((message?.is_unread) != nil)
+            print("TotalMessageList",TotalMessageList?[indexPath.row].isExpand)
         }
         
         // Refresh table view layout.
@@ -875,8 +823,6 @@ extension ParentCommunicationVc : UISearchBarDelegate {
          isFiltered = true
          tv.reloadData()
         }
-    
-    
 }
 
 extension Array where Element == CommunicationReciverData {
