@@ -285,6 +285,7 @@ class RecipientVc: UIViewController{
     
     private func SendingCommunicationFlow() {
         let message = AlertstringFile.AreYouSureYouWantToProceed + "\(array_selectedId.count)"
+//        let message = AlertstringFile.AreYouSureYouWantToProceed 
         let title = AlertstringFile.Alert_title
         
         alert.showAlertCancel(

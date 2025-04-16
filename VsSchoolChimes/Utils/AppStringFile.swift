@@ -105,8 +105,8 @@ class AlertstringFile{
     static let select_date = "Select sheduled date".translated()
     
     static let Confirm = "Confirm".translated()
-//    static let AreYouSureYouWantToProceed = "Are you sure you want to send? NOTE : selected target count is ".translated()
-    static let AreYouSureYouWantToProceed = "Are you sure you want to send".translated()
+    static let AreYouSureYouWantToProceed = "Are you sure you want to send? NOTE : selected target count is ".translated()
+//    static let AreYouSureYouWantToProceed = "Are you sure you want to send".translated()
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()

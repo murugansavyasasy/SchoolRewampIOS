@@ -1020,6 +1020,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     func startRecording() {
         addfile.isHidden = true
+        sendbtn.isUserInteractionEnabled = false
         recrdimg.image = UIImage.gifImageWithName("Mic")
         isRecording = true
         recordingStartTime = Date()
@@ -1031,6 +1032,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     func stopRecording() {
         recrdimg.image = ImageName.mic1
+        sendbtn.isUserInteractionEnabled = true
         audioRecorder?.stop()
         isRecording = false
         recordingTimer?.invalidate()
@@ -1351,9 +1353,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
-        for i in 0..<selectedDates.count {
-                    DateSelection.deselect(selectedDates[i])
-                }
+//        for i in 0..<selectedDates.count {
+//                    DateSelection.deselect(selectedDates[i])
+//                }
         selectedDates.removeAll()
        
         let title = "Schedule call from history?"
@@ -1635,19 +1637,15 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             
             let cell = historytable.dequeueReusableCell(withIdentifier: CellConfingName.TextHistoryTVCell, for: indexPath) as! TextHistoryTVCell
-            
-            cell.descriptContent.attributedText = descript(
-                for:TextHistory?[indexPath.row].content ?? "",
-                expanded: false
-            )
-            
+            cell.descriptContent.configure(text: TextHistory?[indexPath.row].content ?? "")
+            cell.descriptContent.onTap = {
+                cell.descriptContent.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+           
             cell.MessageTitle.text = TextHistory?[indexPath.row].description
-            //            cell.DateLabel.text = TextHistory?[indexPath.row].date
             cell.delegate = self
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
-            cell.descriptContent.tag = indexPath.row
-            cell.descriptContent.isUserInteractionEnabled = true
-            cell.descriptContent.addGestureRecognizer(tapGesture)
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
                 
                 cell.configureShimmer()
@@ -1755,61 +1753,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         let sec = seconds % 60
         return String(format: "%02d:%02d", minutes, sec)
     }
-    //MARK: EXPANDABLE LABLE
-    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel else { return }
-        let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = label.text
-        let isExpanded = label.numberOfLines == 0
-        label.numberOfLines = isExpanded ? 3 : 0
-        label.attributedText = descript(
-            for: fullDescription ?? "",
-            expanded: !isExpanded
-        )
-        historytable.beginUpdates()
-        historytable.endUpdates()
-    }
-    
-    //MARK: TEXT ADD SEE MORE
-    
-    @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
-        guard let label = gesture.view as? UILabel, let text = label.text else { return }
-        
-        let seeMoreRange = (text as NSString).range(of: CommonStringFile.seemore.translated())
-        let seeLessRange = (text as NSString).range(of: CommonStringFile.seeLess.translated())
-        
-        if gesture.didTapAttributedTextInLabel(label: label, inRange: seeMoreRange) ||
-            gesture.didTapAttributedTextInLabel(label: label, inRange: seeLessRange) {
-            handleSeeMoreTap(gesture)
-        }
-    }
-    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-        // If expanded, show full text with "See less"
-        if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess.translated()
-            let attributedText = NSMutableAttributedString(string: fullString)
-            let seeLessRange = (fullString as NSString).range(of: "See less")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            return attributedText
-        } else {
-            var fullString = ""
-            // Otherwise, truncate and show "See more"
-            if fullDescription.count > 120{
-                let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + CommonStringFile.seemore.translated()
-            }else{
-                fullString = fullDescription
-            }
-            let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See more" text to blue and underline it
-            let seeMoreRange = (fullString as NSString).range(of: "See more")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-            return attributedText
-        }
-        
-        
-    }
+   
     func reload(index: Int) {
         if let currentIndex = playIndex, currentIndex != index {
             let previousIndexPath = IndexPath(row: currentIndex, section: 0)

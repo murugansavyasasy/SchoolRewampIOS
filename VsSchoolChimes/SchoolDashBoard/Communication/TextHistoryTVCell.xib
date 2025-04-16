@@ -135,7 +135,7 @@
                 <outlet property="DateLabel" destination="orl-Nb-csW" id="OzO-MM-L35"/>
                 <outlet property="MessageTitle" destination="E6K-XD-RuD" id="ZkO-qV-XKD"/>
                 <outlet property="NewImageView" destination="kfH-7D-VaO" id="giV-67-XAh"/>
-                <outlet property="descriptContent" destination="ZhC-TO-4ad" id="UaZ-AG-xOz"/>
+                <outlet property="descriptContent" destination="ZhC-TO-4ad" id="C04-QW-SRb"/>
                 <outlet property="newImageOuterView" destination="gF1-fd-HlY" id="D9s-QM-OML"/>
                 <outlet property="outerview" destination="PuL-ZK-Yro" id="kpn-zC-XoS"/>
                 <outlet property="sendBtn" destination="vwk-N1-Vce" id="hqK-2M-2ub"/>
