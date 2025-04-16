@@ -535,7 +535,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Content"//CommonStringFile.EnterTextHere.translated()
+        placeholderLabel.text = "Discription" //CommonStringFile.EnterTextHere.translated()
         placeholderLabel.font = informationcontent.font
         placeholderLabel.textColor = .lightGray
         placeholderLabel.sizeToFit()
@@ -1351,7 +1351,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     @IBAction func scheduleCall(_ sender: UIButton) {
+        for i in 0..<selectedDates.count {
+                    DateSelection.deselect(selectedDates[i])
+                }
         selectedDates.removeAll()
+       
         let title = "Schedule call from history?"
         let attributedTitle = NSAttributedString(string: title, attributes: [
             .underlineStyle: NSUnderlineStyle.single.rawValue
@@ -1914,7 +1918,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         let dateToRemove = selectedDates[index]
         selectedDates.remove(at: index)
         DateSelection.deselect(dateToRemove)
-        
+        DateSelection.reloadData()
         // Update height based on count
         var newHeight: CGFloat = 0
         if selectedDates.count == 0 {
