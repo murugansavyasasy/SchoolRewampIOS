@@ -188,6 +188,8 @@
 		843C9F662D8D6BCB00443ED2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A5BE472C19719700E32496 /* Main.storyboard */; };
 		843ED8C12D3F7FB700EC59C3 /* CertificateRequestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */; };
 		843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */; };
+		843F9A2C2DAF71FF00215973 /* SenderHomeWorkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843F9A2B2DAF71FF00215973 /* SenderHomeWorkVC.xib */; };
+		843F9A2D2DAF71FF00215973 /* SenderHomeWorkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
 		8441887C2CC90E98006483C3 /* Colornames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441887B2CC90E98006483C3 /* Colornames.swift */; };
 		844188832CC91179006483C3 /* LoginVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844188822CC91179006483C3 /* LoginVc.xib */; };
@@ -790,6 +792,8 @@
 		843960262D1193AD00FC3242 /* Bundle+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Language.swift"; sourceTree = "<group>"; };
 		843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateRequestVC.swift; sourceTree = "<group>"; };
 		843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateRequestVC.xib; sourceTree = "<group>"; };
+		843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderHomeWorkVC.swift; sourceTree = "<group>"; };
+		843F9A2B2DAF71FF00215973 /* SenderHomeWorkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderHomeWorkVC.xib; sourceTree = "<group>"; };
 		8441886E2CC8E18B006483C3 /* Models.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Models.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		844188782CC9019B006483C3 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		8441887B2CC90E98006483C3 /* Colornames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colornames.swift; sourceTree = "<group>"; };
@@ -2145,6 +2149,8 @@
 				849AD00C2D1A83CA002DEC07 /* HomeworkreportTV.xib */,
 				849AD00D2D1A83CA002DEC07 /* SenderSideHomeWorkViewController.swift */,
 				849AD00E2D1A83CA002DEC07 /* SenderSideHomeWorkViewController.xib */,
+				843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */,
+				843F9A2B2DAF71FF00215973 /* SenderHomeWorkVC.xib */,
 			);
 			path = HomeWork;
 			sourceTree = "<group>";
@@ -3426,6 +3432,7 @@
 				84B57EE22D15533000E0EA29 /* submitVC.xib in Resources */,
 				84F0466A2D1D3FE300C686BD /* MarkAtendenceTV.xib in Resources */,
 				840A7CE72D24FDAA0061EAEA /* MarkTvCell.xib in Resources */,
+				843F9A2C2DAF71FF00215973 /* SenderHomeWorkVC.xib in Resources */,
 				840A7CE82D24FDAA0061EAEA /* ExamMarkCV.xib in Resources */,
 				840A7CEA2D24FDAA0061EAEA /* ExamMarkTV.xib in Resources */,
 				840A7CEB2D24FDAA0061EAEA /* ExammarkFooterView.xib in Resources */,
@@ -3655,6 +3662,7 @@
 				18926C542D02DE81002BBB97 /* SubmitResponseForSkillModal.swift in Sources */,
 				FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */,
 				FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */,
+				843F9A2D2DAF71FF00215973 /* SenderHomeWorkVC.swift in Sources */,
 				FAFF9DD42D6C7B7A00498368 /* SltoCreationViewController.swift in Sources */,
 				FAFF9DD52D6C7B7A00498368 /* GetTeacherWiseSlotRequest.swift in Sources */,
 				FAFF9DD62D6C7B7A00498368 /* CancelAndReopenSlotStaffRequest.swift in Sources */,

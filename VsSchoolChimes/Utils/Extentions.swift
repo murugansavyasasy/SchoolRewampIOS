@@ -469,99 +469,108 @@ class CircularProgressLoader: UIView {
         }
     }
 }
-class ExpandableLabel: UILabel {
-
-    // MARK: - Public Properties
-    var isExpanded: Bool = false {
-        didSet {
-            updateLabel()
-        }
-    }
+fileprivate class ExpandableLabelState {
+    var fullText: String = ""
+    var isExpanded: Bool = false
     var onTap: (() -> Void)?
-    
-    // MARK: - Private Properties
-    private var fullText: String = ""
-    private let maxTrimLength = 100
+}
 
-    // MARK: - Configure Label
-    func configure(text: String, isExpanded: Bool = false) {
-        self.fullText = text
-        self.isExpanded = isExpanded
-        self.numberOfLines = 0
-        updateLabel()
-        addTapGesture()
+extension UILabel {
+
+    private struct AssociatedKeys {
+        static var expandableState = "expandableState"
     }
 
-    // MARK: - Update Attributed Text
-    private func updateLabel() {
-        self.attributedText = createAttributedText(text: fullText)
+    private var expandableState: ExpandableLabelState {
+        if let state = objc_getAssociatedObject(self, &AssociatedKeys.expandableState) as? ExpandableLabelState {
+            return state
+        }
+        let state = ExpandableLabelState()
+        objc_setAssociatedObject(self, &AssociatedKeys.expandableState, state, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        return state
     }
 
-    // MARK: - Create Attributed Text
-    private func createAttributedText(text: String) -> NSAttributedString {
-        guard let font = self.font else { return NSAttributedString(string: text) }
-        
-        if isExpanded {
-            let fullString = text + " " + CommonStringFile.seeLess.translated()
-            let attributed = NSMutableAttributedString(string: fullString, attributes: [.font: font])
-            let seeLessRange = (fullString as NSString).range(of: CommonStringFile.seeLess.translated())
-            attributed.addAttributes([
-                .foregroundColor: UIColor.link,
-                .font: UIFont.boldSystemFont(ofSize: font.pointSize)
-            ], range: seeLessRange)
-            return attributed
-        } else {
-            var displayText = text
-            if text.count > maxTrimLength {
-                displayText = String(text.prefix(maxTrimLength)).trimmingCharacters(in: .whitespacesAndNewlines)
-                displayText += "... " + CommonStringFile.seemore.translated()
-            }
-            let attributed = NSMutableAttributedString(string: displayText, attributes: [.font: font])
-            let seeMoreRange = (displayText as NSString).range(of: CommonStringFile.seemore.translated())
-            if seeMoreRange.location != NSNotFound {
-                attributed.addAttributes([
-                    .foregroundColor: UIColor.link,
-                    .font: UIFont.boldSystemFont(ofSize: font.pointSize)
-                ], range: seeMoreRange)
-            }
-            return attributed
+    var isExpanded: Bool {
+        get { expandableState.isExpanded }
+        set {
+            expandableState.isExpanded = newValue
+            updateExpandableLabel()
         }
     }
 
-    // MARK: - Add Tap Gesture
-    private func addTapGesture() {
+    var onExpandableTap: (() -> Void)? {
+        get { expandableState.onTap }
+        set { expandableState.onTap = newValue }
+    }
+
+    func setupExpandable(text: String, isExpanded: Bool = false) {
+        expandableState.fullText = text
+        expandableState.isExpanded = isExpanded
+        self.numberOfLines = 0
+        updateExpandableLabel()
+        addExpandableTapGesture()
+    }
+
+    private func updateExpandableLabel() {
+        let fullText = expandableState.fullText
+        guard let font = self.font else { return }
+
+        if fullText.count <= 100 {
+            self.attributedText = NSAttributedString(string: fullText, attributes: [.font: font])
+            return
+        }
+
+        if expandableState.isExpanded {
+            let text = fullText + " " + CommonStringFile.seeLess.translated()
+            let attr = NSMutableAttributedString(string: text, attributes: [.font: font])
+            let range = (text as NSString).range(of: CommonStringFile.seeLess.translated())
+            attr.addAttributes([.foregroundColor: UIColor.link, .font: UIFont.boldSystemFont(ofSize: font.pointSize)], range: range)
+            self.attributedText = attr
+        } else {
+            var trimmed = String(fullText.prefix(100)).trimmingCharacters(in: .whitespacesAndNewlines)
+            trimmed += "... " + CommonStringFile.seemore.translated()
+            let attr = NSMutableAttributedString(string: trimmed, attributes: [.font: font])
+            let range = (trimmed as NSString).range(of: CommonStringFile.seemore.translated())
+            attr.addAttributes([.foregroundColor: UIColor.link, .font: UIFont.boldSystemFont(ofSize: font.pointSize)], range: range)
+            self.attributedText = attr
+        }
+    }
+
+    private func addExpandableTapGesture() {
         isUserInteractionEnabled = true
         gestureRecognizers?.forEach { removeGestureRecognizer($0) }
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleExpandableLabelTap(_:)))
         addGestureRecognizer(tap)
     }
 
-    // MARK: - Handle Tap
-    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+    @objc private func handleExpandableLabelTap(_ gesture: UITapGestureRecognizer) {
         guard let text = self.attributedText?.string else { return }
+
+        // Only handle tap if full text is longer than 100
+        if expandableState.fullText.count <= 100 { return }
+
         let nsText = text as NSString
-        let tappableText = isExpanded ? CommonStringFile.seeLess.translated() : CommonStringFile.seemore.translated()
-        let tappableRange = nsText.range(of: tappableText)
+        let keyword = expandableState.isExpanded ? CommonStringFile.seeLess.translated() : CommonStringFile.seemore.translated()
+        let range = nsText.range(of: keyword)
 
-        let tapLocation = gesture.location(in: self)
-        let index = indexOfCharacter(at: tapLocation)
+        let tapPoint = gesture.location(in: self)
+        let index = indexOfCharacter(at: tapPoint)
 
-        if NSLocationInRange(index, tappableRange) {
-            onTap?()
+        if NSLocationInRange(index, range) {
+            expandableState.onTap?()
         }
     }
 
-    // MARK: - Get Index of Character at Tap Point
     private func indexOfCharacter(at point: CGPoint) -> Int {
         guard let attributedText = self.attributedText else { return NSNotFound }
 
         let textStorage = NSTextStorage(attributedString: attributedText)
         let layoutManager = NSLayoutManager()
-        let textContainer = NSTextContainer(size: self.bounds.size)
+        let textContainer = NSTextContainer(size: bounds.size)
 
         textContainer.lineFragmentPadding = 0
-        textContainer.lineBreakMode = self.lineBreakMode
-        textContainer.maximumNumberOfLines = self.numberOfLines
+        textContainer.lineBreakMode = lineBreakMode
+        textContainer.maximumNumberOfLines = numberOfLines
 
         layoutManager.addTextContainer(textContainer)
         textStorage.addLayoutManager(layoutManager)
@@ -569,4 +578,3 @@ class ExpandableLabel: UILabel {
         return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
 }
-

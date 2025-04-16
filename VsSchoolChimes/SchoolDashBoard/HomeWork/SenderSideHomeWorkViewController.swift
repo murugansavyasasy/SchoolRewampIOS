@@ -735,13 +735,12 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
         }else{
             cell.CVHeight.constant = 0
         }
-        cell.dicriptContent.configure(text: data?.content ?? "")
-        cell.dicriptContent.onTap = {
+        cell.dicriptContent.setupExpandable(text: data?.content ?? "")
+        cell.dicriptContent.onExpandableTap = {
             cell.dicriptContent.isExpanded.toggle()
             tableView.beginUpdates()
             tableView.endUpdates()
         }
-        
         return cell
     }
 
@@ -791,7 +790,7 @@ extension SenderSideHomeWorkViewController: UITableViewDelegate, UITableViewData
 
         let totalHeight = subjectHeight + titleHeight + descriptionHeight + collectionViewHeight + 135
 
-        return totalHeight + 35
+        return totalHeight
     }
 
 

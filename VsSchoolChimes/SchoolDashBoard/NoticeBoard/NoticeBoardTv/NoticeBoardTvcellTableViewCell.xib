@@ -115,7 +115,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fva-ZY-0vY" customClass="ExpandableLabel" customModule="VsSchoolChimes" customModuleProvider="target">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fva-ZY-0vY">
                                         <rect key="frame" x="0.0" y="30.333333333333371" width="477" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -172,7 +172,7 @@
                 <outlet property="cellview" destination="iLP-ce-oCO" id="fHG-Ug-O8M"/>
                 <outlet property="collectionview" destination="kwf-UY-KqC" id="NPj-aA-lIp"/>
                 <outlet property="datelbl" destination="ZlO-yr-9O1" id="tge-7U-oWz"/>
-                <outlet property="dicriptContent" destination="Fva-ZY-0vY" id="KtI-yd-skh"/>
+                <outlet property="dicriptContent" destination="Fva-ZY-0vY" id="d61-Pq-GyU"/>
                 <outlet property="newView" destination="BJu-JI-lEX" id="hPK-Un-tcN"/>
                 <outlet property="pagecontroller" destination="3fk-V0-e47" id="8Ui-Eb-NEa"/>
                 <outlet property="pagecontrollerheight" destination="ven-wA-ptx" id="ehF-aM-kJC"/>
@@ -187,13 +187,13 @@
         <image name="newimg" width="498" height="501"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
