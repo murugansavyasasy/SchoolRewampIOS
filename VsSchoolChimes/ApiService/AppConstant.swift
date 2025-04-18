@@ -41,6 +41,7 @@ struct ServiceUrl{
     static let comm_communication_list_archive  = "comm/communication/list-archive"
     static let comm_communication_read_status_update  = "comm/communication/read-status-update"
     static let  comm_communication_read_status_update_archive  = "comm/communication/read-status-update-archive"
+    static let  comm_attachment_send_attachment  = "comm/attachment/send-attachment"
 }
 
 struct localData{
@@ -72,6 +73,7 @@ struct Menu_id{
     static var communicationMenuId = 0
     static var homeWorkMenuId = 9
     static let isAssaignment = 22
+    static let AttachmentMenuId = 22
 }
 struct TargetTypes{
     

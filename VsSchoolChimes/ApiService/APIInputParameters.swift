@@ -100,3 +100,17 @@ enum UploadMessageKeys {
     static let subjectId = "subject_id"
     static let filePath = "file_path"
 }
+
+class SendAttachmentStringFile {
+    
+    static let title = "title"
+    static let file_type = "file_type"
+    static let file_path = "file_path"
+    static let target_type = "target_type"
+    static let target_code = "target_code"
+    static let description = "description"
+    static let iframe = "iframe"
+    static let file_size = "file_size"
+    static let academic_year_id = "academic_year_id"
+}
+

@@ -142,7 +142,8 @@ class MenuRedirectHandler {
         
     }
     func ScheduleExamVCNavigat(from viewController: UIViewController){
-        let vc = ExamCreatVC(nibName: nil, bundle: nil)
+       // let vc = ExamCreatVC(nibName: nil, bundle: nil)
+        let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

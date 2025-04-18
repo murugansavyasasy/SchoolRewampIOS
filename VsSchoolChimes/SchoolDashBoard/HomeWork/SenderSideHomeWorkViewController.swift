@@ -70,7 +70,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let maxHeight: CGFloat = 300
     var homeWorkList:[Homework]?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
-    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var sectionsDetails: [sectionsDetail]?
     var standardDetails: [StandardDetail]?
@@ -188,6 +188,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     
     func StyleAndTranslater(){
+        
         //MARK: UI Update
         TextViewheight.constant = initialHeight
         Buttonstackview.layer.cornerRadius = 20
@@ -691,7 +692,6 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 vc.selectedFileURL = url
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
-                //
                 present(vc, animated: true)
             }
             

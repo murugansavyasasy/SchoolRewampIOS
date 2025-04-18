@@ -66,9 +66,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         super.viewDidLoad()
 
         
-            SchoolNameLabel.text = staffDetails?.school_name
-            AddressLabel.text = staffDetails?.city
-            schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
        
         
         let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
@@ -76,6 +73,30 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
         
         
+     
+        
+        
+        
+        if(staff_roll == PriorityType.is_staff){
+            SchoolNameLabel.text = staffDetails?.school_name
+            AddressLabel.text = staffDetails?.school_address
+            schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
+       
+            
+         }
+        else{
+            if staffDetailsCount?.count ?? 0 > 1{
+                SchoolNameLabel.text = staffDetails?.role
+              
+           }
+            else{
+                SchoolNameLabel.text = staffDetails?.school_name
+                AddressLabel.text = staffDetails?.school_address
+                schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
+           
+           }
+
+}
         
         
         if is_staff == true && is_parent == true{
@@ -95,6 +116,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
             }
             
         }
+        
         
        
        

@@ -378,3 +378,13 @@ struct AcadimicYearData : Codable {
     let year: String?
     let current_academic_year: Bool?
 }
+
+//MARK: Send Attachment
+
+struct Send_AttachmentResponse : Codable {
+    
+    let status: Bool
+    let message: String
+    let data: [String]
+    
+}

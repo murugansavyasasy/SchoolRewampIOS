@@ -373,7 +373,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                 }else {
                     
                     DispatchQueue.main.async { [self] in
-
+                        TotalMessageList = []
                         NodataLbl.text = SuccessMessage.message
                         NodataLbl.isHidden = false
                         NodataImgTop.constant = 50
@@ -418,7 +418,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
                         tv.isHidden = false
-                        tv.isScrollEnabled = true
+                       // tv.isScrollEnabled = true
                         tv.reloadData()
                     }
                     
@@ -577,10 +577,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.DateLabel.text = (message?.time ?? "") + "  " + (message?.date ?? "")
             
             cell.descriptContent.attributedText = self.descript(for:message?.content ?? "", expanded: message?.isExpand ?? false)
-            
-          //  cell.descriptContent.numberOfLines = (message?.isExpand ?? false) ? 0 : ((message?.content.count ?? 0) > 120 ? 3 : 0)
 
-            
             cell.delegate = self
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
             
@@ -715,7 +712,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             FilteredMessages?[indexPath.row].is_unread = ((message?.is_unread) != nil)
         } else {
             TotalMessageList?[indexPath.row].isExpand = message?.isExpand
-            TotalMessageList?[indexPath.row].is_unread = ((message?.is_unread) != nil)
+            TotalMessageList?[indexPath.row].is_unread = message?.is_unread ?? false
             print("TotalMessageList",TotalMessageList?[indexPath.row].isExpand)
         }
         

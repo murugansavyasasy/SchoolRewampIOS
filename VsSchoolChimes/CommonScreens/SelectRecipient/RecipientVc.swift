@@ -213,9 +213,43 @@ class RecipientVc: UIViewController{
             SendingCommunicationFlow()
         case Menu_id.homeWorkMenuId:
             handleHomeworkFlow()
+//        case Menu_id.AttachmentMenuId:
+            
         default:
             print("Unhandled menu ID: \(screenType.staffSelectedMenuId)")
         }
+    }
+    
+    
+    private func SendingAttachmentFlow() {
+        
+        uploadAndSendVoiceMessage(file: user_inputs.selectedImg) { [self] in
+            
+            CircularProgressLoader.shared.hide()
+            
+            let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+                return [
+                    "path": url,
+                    "type": user_inputs.selectedFileType
+                ]
+            }
+            
+            
+            
+            let parameters: [String: Any] = [SendAttachmentStringFile.title: user_inputs.title,SendAttachmentStringFile.file_type: "",SendAttachmentStringFile.file_path: uploadedFiles,SendAttachmentStringFile.target_type:0,SendAttachmentStringFile.target_code:0,SendAttachmentStringFile.description: user_inputs.description,SendAttachmentStringFile.iframe: "",SendAttachmentStringFile.file_size: "",SendAttachmentStringFile.academic_year_id: 0]
+            
+            APIService.shared.makeApi(url: ServiceUrl.comm_attachment_send_attachment, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self](result: Result<Send_AttachmentResponse,Error>) in
+                
+                switch result{
+                    
+                case .success(_):
+                    
+                case .failure(_):
+                    
+                }
+            }
+        }
+       
     }
     
     private func handleHomeworkFlow() {
