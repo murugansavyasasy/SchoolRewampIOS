@@ -213,11 +213,10 @@ class RecipientVc: UIViewController{
         switch screenType.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
-        case Menu_id.AttachmentMenuId:
-            SendingAttachmentFlow()
         case Menu_id.homeWorkMenuId:
             handleHomeworkFlow()
-//        case Menu_id.AttachmentMenuId:
+        case Menu_id.AttachmentMenuId:
+            SendingAttachmentFlow()
             
         default:
             print("Unhandled menu ID: \(screenType.staffSelectedMenuId)")
@@ -226,21 +225,29 @@ class RecipientVc: UIViewController{
     
     
     private func SendingAttachmentFlow() {
-        
-        uploadAndSendVoiceMessage(file: user_inputs.docUrl) { [self] in
+        let file : Any = user_inputs.selectedFileType == "IMAGE" ? user_inputs.selectedImg:user_inputs.docUrl
+        uploadAndSendVoiceMessage(file: file) { [self] in
             
             CircularProgressLoader.shared.hide()
             let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                user_inputs.selectedFileType = getExtension(from: url) ?? ""
+//                user_inputs.selectedFileType = getExtension(from: url) ?? ""
                 return [
-                    "path": url,
-                    "type": user_inputs.selectedFileType
+                    "path": url
+//                    "type": user_inputs.selectedFileType
                 ]
             }
             
             print(uploadedFiles)
             
-      let parameters: [String: Any] = [SendAttachmentStringFile.title: user_inputs.title,SendAttachmentStringFile.file_type: "",SendAttachmentStringFile.file_path: uploadedFiles,SendAttachmentStringFile.target_type:0,SendAttachmentStringFile.target_code:0,SendAttachmentStringFile.description: user_inputs.description,SendAttachmentStringFile.iframe: "",SendAttachmentStringFile.file_size: "",SendAttachmentStringFile.academic_year_id: 0]
+            let parameters: [String: Any] = [SendAttachmentStringFile.title: user_inputs.title,
+                                             SendAttachmentStringFile.file_type: user_inputs.selectedFileType,
+                                             SendAttachmentStringFile.file_path: uploadedFiles,
+                                             SendAttachmentStringFile.target_type: target_type ?? "",
+                                             SendAttachmentStringFile.target_code: array_selectedId,
+                                             SendAttachmentStringFile.description: user_inputs.description,
+                                             SendAttachmentStringFile.iframe: "",
+                                             SendAttachmentStringFile.file_size: "",
+                                             SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""]
             
             APIService.shared.makeApi(url: ServiceUrl.comm_attachment_send_attachment, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self](result: Result<Send_AttachmentResponse,Error>) in
                 
@@ -250,14 +257,38 @@ class RecipientVc: UIViewController{
                     
                     if successMessage.status{
                         
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: "Success",
+                                    message: successMessage.message,
+                                    on: self
+                                ) {
+                                    self.gotoDashboard()
+                                }
+                        }
+                        
+                    }else {
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: "Error",
+                                    message: successMessage.message,
+                                    on: self
+                                ) {
+                                    self.gotoDashboard()
+                                }
+                        }
                     }
                     
-                case .failure(_):
                     
+                case .failure(let error):
+                    
+                    print(error.localizedDescription)
                 }
             }
         }
-       
+        
     }
     
     

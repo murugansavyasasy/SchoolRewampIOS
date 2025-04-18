@@ -19,9 +19,10 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     
     func deleteImage(index: Int) {
         selectedImages.remove(at: index)
-        fileUrls.remove(at: index)
-        fileType.remove(at: index)
-        
+        if fileUrls.count != 0{
+            fileUrls.remove(at: index)
+        }
+    
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
@@ -79,7 +80,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var selectedImgUrl: [FilePath] = []
     var url : URL?
     var fileUrls = [String]()
-    var fileType = [String]()
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
@@ -126,36 +126,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         imageSelection()
     }
     
-    
-//    func imageSelection(){
-//        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-//            // handle camera image
-//            selectedImages.append(image)
-//            selectImgPdfview.imageCollectionview.reloadData()
-//        }
-//
-//        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-//            selectedImages.append(contentsOf: images)
-//            selectImgPdfview.imageCollectionview.reloadData()
-//        }
-//
-//        PhotoPickerManager.shared.onPdfPicked = { [self] data in
-//            // handle picked PDF
-//            selectedImages.removeAll()
-//            selectedImages.append(ImageName.pdf!)
-//            selectImgPdfview.imageCollectionview.reloadData()
-//        }
-//
-//    }
-    
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             if url != nil{
                 selectedImages.removeAll()
+                fileUrls.removeAll()
                 url = nil
             }
             selectedImages.append(image)
-            user_inputs.selectedFileType = "IMAGE"
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
@@ -163,8 +141,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             if url != nil{
                 selectedImages.removeAll()
                 url = nil
+                fileUrls.removeAll()
             }
-            user_inputs.selectedFileType = "IMAGE"
             selectedImages.append(contentsOf: images)
             selectImgPdfview.imageCollectionview.reloadData()
         }
@@ -175,7 +153,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 fileUrls.append(ulr)
             }
             
-            user_inputs.selectedFileType = "pdf"
+            
            
             selectedImages.append(ImageName.pdf!)
             selectImgPdfview.imageCollectionview.reloadData()
@@ -187,8 +165,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
      return URL(string: filePath)?.pathExtension.lowercased()
     }
      
-   
-    
     override func viewDidLayoutSubviews() {
         
         view.applyGradient(
@@ -206,8 +182,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     func  StyleAndTranslater(){
         
         TextviewHeight.constant = initialHeight
-        //MARK: UI Update
         
+        //MARK: UI Update
         AddAtachmentStack.isHidden = true
         VideoView.isHidden = true
         selectImgPdfview.isHidden = true
@@ -220,8 +196,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         contentTextView.layer.borderColor = UIColor.gray.cgColor
         chooseRecipientsBtn.backgroundColor = .button
         chooseRecipientsBtn.layer.cornerRadius = 10
-//        collectionViewHeght.constant = 0
-//        addphotosheight.constant = 0
         AssignmentTypeview.layer.borderWidth = 1
         AssignmentTypeview.layer.borderColor = UIColor.lightGray.cgColor
         AssignmentTypeview.backgroundColor = .white
@@ -257,7 +231,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             user_inputs.description = contentTextView.text ?? ""
             user_inputs.selectedImg = selectedImages
             user_inputs.docUrl.append(contentsOf: fileUrls)
-            user_inputs.fileTypes.append(contentsOf: fileType)
             
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
@@ -270,6 +243,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
+            
         } else{
             
         }
@@ -292,7 +266,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     @IBAction  func typeDropdown (){
-        TypeDropDown.dataSource = ["IMAGE", "PDF","VIDEO"]
+        TypeDropDown.dataSource = ["IMAGE", "DOCUMENT","VIDEO"]
         self.view.layoutIfNeeded()
         TypeDropDown.width = AssignmentTypeview.bounds.width
         TypeDropDown.bottomOffset = CGPoint(x: 0, y: AssignmentTypeview.bounds.height - 220)
@@ -311,8 +285,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 self!.AddAtachmentStack.isHidden = false
                 self!.selectImgPdfview.isHidden = true
                 self!.AddAttachmentsLbl.text = "Add Video".translated()
+                user_inputs.selectedFileType = "VIDEO"
             }
-            else if item == "PDF"{
+            else if item == "DOCUMENT"{
                 
                 self!.isImage = false
                 self!.VideoView.isHidden = true
@@ -321,8 +296,10 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
 //                self!.collectionViewHeght.constant = 120
 //                self!.addphotosheight.constant = 20
                 self!.AddAttachmentsLbl.text = CommonStringFile.AddPdf.translated()
+                user_inputs.selectedFileType = "DOCUMENT"
             }
             else{
+                
                 self!.isImage = true
                 self!.VideoView.isHidden = true
                 self!.AddAtachmentStack.isHidden = false
@@ -330,7 +307,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
 //                self!.collectionViewHeght.constant = 120
 //                self!.addphotosheight.constant = 20
                 self!.AddAttachmentsLbl.text = CommonStringFile.AddPhotos.translated()
+                user_inputs.selectedFileType = "IMAGE"
             }
+            
             if let label = self?.AssignmentTypeview.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self!.AssignmenttypeLbl.text = item
             }
@@ -346,23 +325,23 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
         }
-        
     }
+    
     func openCamera(){
+        
         let count = selectedImages.count - selectedImgUrl.count
         if count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
         }
     }
+    
     func selectPDF() {
-        PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
         
+        PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
