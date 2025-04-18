@@ -10,6 +10,8 @@ import DropDown
 
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var chooseDefaultLbl: UILabel!
+    @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var acidamicYrDropView: UIView!
     @IBOutlet weak var sendBtnName: UIButton!
     @IBOutlet weak var segmentName: UISegmentedControl!
@@ -29,23 +31,29 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var accadimYr :[String] = []
     let acidamicdrops = DropDown()
     var selectedAcadimicYearId : Int?
+    var accadmicDefaultYrName : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         target_type = TargetTypes.school
-        sendBtnName.isHidden = true
+       
+        ViewAnimator.hideFade(chooseDefaultLbl)
+        ViewAnimator.hideFade(acidamicYrDropView)
+        ViewAnimator.hideFade(sendBtnName)
+        
         switch screen_type {
         case isEmergency, isNoticeBoard:
-            segmentName.isHidden = true
+            ViewAnimator.hideFade(segmentName)
+            ViewAnimator.showFade(sendBtnName)
             segmentName.selectedSegmentIndex = 1
-            sendBtnName.isHidden = false
 
         case Menu_id.homeWorkMenuId,Menu_id.isAssaignment:
-            segmentName.isHidden = true
+            
+            ViewAnimator.hideFade(segmentName)
+            ViewAnimator.showFade(sendBtnName)
             segmentName.selectedSegmentIndex = 0
-            sendBtnName.isHidden = false
         default:
-            segmentName.isHidden = false
+            ViewAnimator.showFade(segmentName)
         }
 
         for i in 0..<(school_details?.count ?? 0) {
@@ -87,9 +95,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             guard let self = self else { return }
             
             selectedAcadimicYearId = AcadimicYearDatas[index].id ?? 0
-            if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = item
-            }
+            acidmicYrLbl.text = item
            
     
         }
@@ -108,10 +114,15 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
        
         if segmentName.selectedSegmentIndex == 0 {
            
-            sendBtnName.isHidden = true
+            ViewAnimator.hideFade(chooseDefaultLbl)
+            ViewAnimator.hideFade(sendBtnName)
+            ViewAnimator.hideFade(acidamicYrDropView)
             listTable.reloadData()
         }else{
-            sendBtnName.isHidden = false
+           
+            ViewAnimator.showFade(sendBtnName)
+            ViewAnimator.showFade(chooseDefaultLbl)
+            ViewAnimator.showFade(acidamicYrDropView)
             listTable.reloadData()
         }
         
@@ -211,12 +222,19 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     
     private func SendingCommunicationFlow() {
-        let message = AlertstringFile.AreYouSureYouWantToProceed + "\(array_selectedSchoolId.count)"
+        var message : String?
+        if accadmicDefaultYrName == acidmicYrLbl.text{
+            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        }else{
+            
+          message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        }
         let title = AlertstringFile.Alert_title
 
         alert.showAlertCancel(
             title: title,
-            message: message,
+            message: message ?? "",
             actionLbl1: AlertstringFile.OK,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -277,11 +295,12 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                             acidamicYrDropView.isUserInteractionEnabled = true
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    if let label = self.acidamicYrDropView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                                        label.text = AcadimicYearDatas[i].year
+                                    
+                                    acidmicYrLbl.text = AcadimicYearDatas[i].year
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id
+                                        accadmicDefaultYrName = AcadimicYearDatas[i].year ?? ""
                                         break
-                                    }
+                                    
                                 }
                             }
                         }

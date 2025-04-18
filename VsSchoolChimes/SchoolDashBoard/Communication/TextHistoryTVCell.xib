@@ -64,7 +64,7 @@
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Forward" image="paperplane" catalog="system">
+                                <state key="normal" title="Select" image="paperplane" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                 </state>
                                 <connections>
@@ -135,7 +135,7 @@
                 <outlet property="DateLabel" destination="orl-Nb-csW" id="OzO-MM-L35"/>
                 <outlet property="MessageTitle" destination="E6K-XD-RuD" id="ZkO-qV-XKD"/>
                 <outlet property="NewImageView" destination="kfH-7D-VaO" id="giV-67-XAh"/>
-                <outlet property="descriptContent" destination="ZhC-TO-4ad" id="UaZ-AG-xOz"/>
+                <outlet property="descriptContent" destination="ZhC-TO-4ad" id="C04-QW-SRb"/>
                 <outlet property="newImageOuterView" destination="gF1-fd-HlY" id="D9s-QM-OML"/>
                 <outlet property="outerview" destination="PuL-ZK-Yro" id="kpn-zC-XoS"/>
                 <outlet property="sendBtn" destination="vwk-N1-Vce" id="hqK-2M-2ub"/>

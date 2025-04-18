@@ -223,3 +223,17 @@ class HistoryTC: UITableViewCell {
     
 }
 
+extension HistoryTC {
+    func stopAudioPlayback() {
+        // Pause the player and invalidate timer
+        player?.pause()
+        updateTimer?.invalidate()
+        updateTimer = nil
+        isPlaying = false
+        // Reset UI to show the play button instead of pause
+        playBtn.setImage(ImageName.playbutton, for: .normal)
+        // Optionally, reset the progress and time labels
+        playerView.progress = 0.0
+        totaltime.text = "00:00 / \(totalsecont)"
+    }
+}

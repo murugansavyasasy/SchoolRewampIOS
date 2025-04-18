@@ -488,6 +488,9 @@
 		84F0466F2D1D5ED600C686BD /* MarkAttendenceCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F0466C2D1D5ED600C686BD /* MarkAttendenceCV.swift */; };
 		84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */; };
 		84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */; };
+		84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F911862DB0C13F001A6408 /* bubbleview.swift */; };
+		84F9118B2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */; };
+		84F9118C2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */; };
 		84F9862D2D3A57FC009FF065 /* QuizVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9862B2D3A57FC009FF065 /* QuizVC.swift */; };
 		84F9862E2D3A57FC009FF065 /* QuizVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F9862C2D3A57FC009FF065 /* QuizVC.xib */; };
 		84F986322D3A6169009FF065 /* QuizTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F986302D3A6169009FF065 /* QuizTVcell.swift */; };
@@ -1109,6 +1112,9 @@
 		84F0466D2D1D5ED600C686BD /* MarkAttendenceCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkAttendenceCV.xib; sourceTree = "<group>"; };
 		84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSelection.xib; sourceTree = "<group>"; };
 		84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
+		84F911862DB0C13F001A6408 /* bubbleview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bubbleview.swift; sourceTree = "<group>"; };
+		84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyInfoPopoverVCViewController.swift; sourceTree = "<group>"; };
+		84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmergencyInfoPopoverVCViewController.xib; sourceTree = "<group>"; };
 		84F9862B2D3A57FC009FF065 /* QuizVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizVC.swift; sourceTree = "<group>"; };
 		84F9862C2D3A57FC009FF065 /* QuizVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizVC.xib; sourceTree = "<group>"; };
 		84F986302D3A6169009FF065 /* QuizTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTVcell.swift; sourceTree = "<group>"; };
@@ -2478,6 +2484,7 @@
 				8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */,
 				8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */,
 				8476882E2D892DBB00EAB9DB /* SecureidFile.swift */,
+				84F911862DB0C13F001A6408 /* bubbleview.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2688,6 +2695,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				84F911882DB0C435001A6408 /* popoverVc */,
 				FA99ED352DA656E700F6AF0E /* Seemore Footer */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
@@ -2834,6 +2842,15 @@
 				84EFFAF32CCFB68A00C11C26 /* ImageCvCell.xib */,
 			);
 			path = ReportBugVc;
+			sourceTree = "<group>";
+		};
+		84F911882DB0C435001A6408 /* popoverVc */ = {
+			isa = PBXGroup;
+			children = (
+				84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */,
+				84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */,
+			);
+			path = popoverVc;
 			sourceTree = "<group>";
 		};
 		84F9862A2D3A57DD009FF065 /* Quiz */ = {
@@ -3325,6 +3342,7 @@
 				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
 				18926C5E2D02DE81002BBB97 /* LsrwListShowViewController.xib in Resources */,
 				18926C5F2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.xib in Resources */,
+				84F9118B2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib in Resources */,
 				18926C602D02DE81002BBB97 /* SubmitLsrwViewController.xib in Resources */,
 				18926C612D02DE81002BBB97 /* RestrictionTableViewCell.xib in Resources */,
 				18926C622D02DE81002BBB97 /* PreviewLsrwViewController.xib in Resources */,
@@ -3792,6 +3810,7 @@
 				84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */,
 				18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */,
 				848126D92D91820500BE6979 /* CountryListVC.swift in Sources */,
+				84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */,
 				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
 				18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */,
 				18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */,
@@ -3877,6 +3896,7 @@
 				84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */,
 				84C829C32D0807CD0024A46A /* ConfettiLayer.swift in Sources */,
 				846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */,
+				84F9118C2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift in Sources */,
 				846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */,
 				187CF5C02D13F009001422CE /* WeekDaysNameCollectionViewCell.swift in Sources */,
 				849ACFFE2D1A8369002DEC07 /* ReciverAttendanceReportVC.swift in Sources */,

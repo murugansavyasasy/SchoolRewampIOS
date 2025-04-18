@@ -9,6 +9,7 @@ import UIKit
 
 class ParentTVCell: UITableViewCell {
     
+    @IBOutlet weak var SchoolnameRegeion: UILabel!
     @IBOutlet weak var arrowImg: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var REgisterNoLbl: UILabel!
@@ -40,6 +41,7 @@ class ParentTVCell: UITableViewCell {
         REgisterNoLbl.setFont(style: .title, size: FontSize.TitleSize)
         AddressLbl.setFont(style: .body, size: FontSize.BodySize)
         SchoolnameLbl.setFont(style: .title, size: FontSize.TitleSize)
+        SchoolnameRegeion.setFont(style: .title, size: FontSize.TitleSize)
         StdSecLbl.setFont(style: .body, size: FontSize.BodySize)
     }
     

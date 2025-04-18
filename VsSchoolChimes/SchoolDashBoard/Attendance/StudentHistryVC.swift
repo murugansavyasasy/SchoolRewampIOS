@@ -265,8 +265,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                 }
                                 studentsDetails = students
                             }
-                            dataVisibility = Array(repeating: false, count: studentsDetails?.count ?? 0)
-                            selectedRows = Array(repeating: false, count: studentsDetails?.count ?? 0)
+                            dataVisibility = Array(
+                                repeating: true,
+                                count: studentsDetails?.count ?? 0
+                            )
+                            selectedRows = Array(
+                                repeating: true,
+                                count: studentsDetails?.count ?? 0
+                            )
                             historyTable.reloadData()
                         }
                     }else{

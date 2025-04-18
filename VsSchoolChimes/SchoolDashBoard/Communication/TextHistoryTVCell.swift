@@ -17,6 +17,7 @@ class TextHistoryTVCell: UITableViewCell {
     @IBOutlet weak var sendBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var DateLabel: ShimmerLabel!
     @IBOutlet weak var MessageTitle: ShimmerLabel!
+    
     @IBOutlet weak var descriptContent: ShimmerLabel!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var outerview: ShimmerView2!
@@ -58,10 +59,9 @@ class TextHistoryTVCell: UITableViewCell {
     }
     
     func configureShimmer() {
-        
         MessageTitle.removeShimmer()
-        descriptContent.removeShimmer()
         DateLabel.removeShimmer()
+        descriptContent.removeShimmer()
         outerview.removeShimmer()
         sendBtn.isHidden = false
     }

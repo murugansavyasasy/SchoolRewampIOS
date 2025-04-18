@@ -10,6 +10,7 @@ import UIKit
 @available(iOS 14.0, *)
 class PriorityVC: UIViewController {
     
+    @IBOutlet weak var ProceedInstructionLbl: UILabel!
     @IBOutlet weak var TeacherParentlbl: UILabel!
     @IBOutlet weak var ChooseRoleLabel: UILabel!
     @IBOutlet weak var NextButtonView: UIButton!
@@ -76,6 +77,7 @@ class PriorityVC: UIViewController {
        ChooseRoleLabel.setFont(style: .title, size: FontSize.TitleSize)
        teacherButton.setTitleFont(style: .body, size: FontSize.BodySize)
        ParentButton.setTitleFont(style: .body, size: FontSize.BodySize)
+       ProceedInstructionLbl.setFont(style: .body, size: FontSize.BodySize)
        
        //MARK: Translate
        let rollname = UserDefaultFileManager.getUserDetails()?.user_details?.role_name ?? ""
@@ -101,8 +103,10 @@ class PriorityVC: UIViewController {
        
        if staff_role == PriorityType.is_staff{
            NextButtonView.isHidden = true
+           ProceedInstructionLbl.isHidden = true
        }else{
            NextButtonView.isHidden = false
+           ProceedInstructionLbl.isHidden = false
        }
        
        
@@ -115,8 +119,10 @@ class PriorityVC: UIViewController {
     @IBAction func teacherAct(_ sender: Any) {
         if staff_role == PriorityType.is_staff{
             NextButtonView.isHidden = true
+            ProceedInstructionLbl.isHidden = true
         }else{
             NextButtonView.isHidden = false
+            ProceedInstructionLbl.isHidden = false
         }
         
         gradientcolours(button: teacherButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
@@ -136,6 +142,7 @@ class PriorityVC: UIViewController {
         
        
             NextButtonView.isHidden = true
+        ProceedInstructionLbl.isHidden = true
        
         
         gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
@@ -226,6 +233,17 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.NameLbl.text = staffDetails?[indexPath.row].staff_name
             cell.RoleLbl.text = staffDetails?[indexPath.row].role
             cell.SchoolNamelbl.text = staffDetails?[indexPath.row].school_name
+            
+            if ((staffDetails?[indexPath.row].school_name_regional?.isEmpty) != nil) {
+                cell.SchoolNameRegional.isHidden = true
+            }else{
+                
+            }
+        
+            cell.SchoolNameRegional.text = staffDetails?[indexPath.row].school_name_regional
+            
+            cell.SchoolNameRegional.isHidden = ((staffDetails?[indexPath.row].school_name_regional?.isEmpty) != nil)
+            
             //cell.AddressLbl.text = staffDetails?[indexPath.row].city
            // cell.imgview.image = UIImage(named: staffDetails?[indexPath.row].school_logo ?? "")
             
@@ -248,6 +266,14 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.namelabel.text = childDetails?[indexPath.row].name
             cell.StdSecLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
             cell.SchoolnameLbl.text = childDetails?[indexPath.row].school_name
+            
+            if ((childDetails?[indexPath.row].school_name_regional?.isEmpty) != nil){
+                cell.SchoolnameRegeion.isHidden = true
+            }else {
+                cell.SchoolnameRegeion.text = childDetails?[indexPath.row].school_name_regional
+                cell.SchoolnameRegeion.isHidden = false
+            }
+           
             cell.AddressLbl.text = childDetails?[indexPath.row].school_city
             
             if indexPath.row == 8{

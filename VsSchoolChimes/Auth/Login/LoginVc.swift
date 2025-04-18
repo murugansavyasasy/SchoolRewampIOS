@@ -272,6 +272,10 @@ class LoginVc: UIViewController {
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
+                            
+                            if #available(iOS 15.0, *) {
+                                hideLottieProgressLoader()
+                            }
                             AlertModal
                                 .showAlert(
                                     title: "",
