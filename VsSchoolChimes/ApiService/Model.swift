@@ -318,6 +318,15 @@ struct Homework: Codable {
     let created_by: String?
     let file_path: [FilePath]? 
 }
+struct HomeworListkResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [HomeworkList]?
+}
+struct HomeworkList: Codable {
+    let date: String?
+    let homework: [Homework]?
+}
 
 struct FilePath: Codable {
     let path: String?

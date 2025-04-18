@@ -21,14 +21,15 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     var expandedSections: Set<Int> = [] // Tracks expanded sections
-    let sections = ["11 Dec 2024","12 Dec 2024","13 Dec 2024","14 Dec 2024"]
     var delegate : HistorySelectDelegate?
+    var homeWorkList:[HomeworkList]?
+    var FilterHomeWorkList:[HomeworkList]?
     var playIndex : Int = 0
     var shouldShowFooter = true
-    
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        GetHomeWorkReport()
         StyleAndTranslate()
         searchBar.addDoneButton()
         backBtn.applyBackButton()
@@ -41,7 +42,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         TV.dataSource = self
         
     }
-
+  
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
@@ -61,8 +62,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     
     //MARK: Cell Registration
     func RegisterCell(){
-        let nib = UINib(nibName: CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
-        TV.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
+        let nib = UINib(nibName: CellConfingName.HomeWorkTVC, bundle: nil)
+        TV.register(nib, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
         
         let nib1 = UINib(nibName: CellConfingName.HomeworkreportTV, bundle: nil)
         TV.register(nib1, forCellReuseIdentifier: CellConfingName.HomeworkreportTV)
@@ -74,6 +75,58 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     @IBAction func BackBtnAct(_ sender: Any) {
         dismiss(animated: true)
     }
+    func GetHomeWorkReport() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_homework_get_homework_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: studentDetails?.access_token ?? ""
+        ) { [self] (result: Result<HomeworListkResponse, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
+                }
+
+                switch result {
+                case .success(let successMessage):
+                    self.homeWorkList = successMessage.data
+                    self.FilterHomeWorkList = successMessage.data
+                    self.TV.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    func GetHomeWorkArchive() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_homework_get_homework_list_archive,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6IjkzNjM1MTkiLCJzY2hvb2xfaWQiOiI1NTEyIiwiY2xhc3NfaWQiOjIyMzEsInNlY3Rpb25faWQiOjg5NDUsImlhdCI6MTc0NDI2NzI3Nn0.dtnAoNIp05C2nmG9ol1I1r83n_B0ZtM5WhvnwXVSGbc"
+        ) { [self] (result: Result<HomeworListkResponse, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
+                }
+
+                switch result {
+                case .success(let successMessage):
+                    self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
+                    self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
+                    self.TV.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
 }
 
 //MARK: Tableview Functions
@@ -81,12 +134,12 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
 extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        return FilterHomeWorkList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.ReciverHomeworkHeader) as! ReciverHomeworkHeader
-        cell.HeaderLbl.text = sections[section]
+        cell.HeaderLbl.text = FilterHomeWorkList?[section].date
         cell.HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
         cell.HeaderView.layer.cornerRadius = 10
         cell.HeaderView.layer.borderWidth = 1
@@ -117,151 +170,74 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return rows only for expanded sections
-        return expandedSections.contains(section) ? 3 : 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-//            cell.layoutMargins = UIEdgeInsets.zero
-//            cell.contentView.layoutMargins = UIEdgeInsets.zero
-            cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
-            cell.ishomework = true
-            cell.CVHeight.constant = 120
-            cell.pagecontrollerheight.constant = 26
-            cell.pagecontroller.isHidden = false
-            cell.SelectBtn.isHidden = true
-            cell.HomeworkSubjectLbl.text = "Tamil"
-            cell.TitleLbl.text = "Write Assignment"
-            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality.", expanded: false)
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-            cell.delegate = self
-            cell.dicriptContent.tag = indexPath.row
-            cell.dicriptContent.isUserInteractionEnabled = true
-            cell.dicriptContent.addGestureRecognizer(tapGesture)
-            
-            return cell
-        } else if indexPath.row == 1 {
-            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.HomeworkreportTV, for: indexPath) as! HomeworkreportTV
-            
-            cell.HomeworkTitleLbl.text = "Write Assignment"
-            cell.DescriptionLbl.text = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality."
-            cell.SubjectLbl.text = "Tamil"
-            let image = playIndex == indexPath.row ? ImageName.pausebutton: ImageName.playbutton
-            let isPlaying = (playIndex == indexPath.row)
-            cell.updatePlayState(isPlaying: isPlaying, url: "http://vs5.voicesnapforschools.com/nodejs/voice/VS_1718181818812.wav")
-            //cell.delegate = self
-            cell.PlayBtn.setImage(image, for: .normal)
-            return cell
-        } else {
-            let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-            
-            cell.cellview.changeHeightAndAnimate(40, 0, 31, 80, top: 5)
-            cell.ishomework = true
-            cell.pagecontrollerheight.constant = 0
-            cell.pagecontroller.isHidden = true
-            
-            cell.datelbl.isHidden = true
-            cell.pinImage.isHidden = true
-            cell.Pinview.isHidden = true
-            cell.SelectBtn.isHidden = true
-            cell.SelectBtnHeight.constant = 0
-            cell.CVHeight.constant = 0
-            cell.HomeworkSubjectLbl.text = "Tamil"
-            cell.TitleLbl.text = "Write Assignment"
-            cell.dicriptContent.attributedText = descript(for: "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality.", expanded: false)
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-            cell.delegate = self
-            cell.dicriptContent.tag = indexPath.row
-            cell.dicriptContent.isUserInteractionEnabled = true
-            cell.dicriptContent.addGestureRecognizer(tapGesture)
-            
-            return cell
-        }
-    }
-    
-//    @objc func toggleSection(_ sender: UITapGestureRecognizer) {
-//        guard let headerView = sender.view else { return }
-//        let section = headerView.tag
-//        
-//        if expandedSections.contains(section){
-//            expandedSections.remove(section)
-//            TV.reloadSections(IndexSet(integer: section), with: .automatic)
-//        }
-//        else if expandedSections.isEmpty == false {
-//            expandedSections.removeFirst()
-//            TV.reloadSections(IndexSet(integer: 0), with: .automatic)
-//        }
-//        else{
-//            expandedSections.insert(section)
-//            TV.reloadSections(IndexSet(integer: section), with: .automatic)
-//        }
-//    }
-    @objc func toggleSection(_ sender: UITapGestureRecognizer) {
-        guard let headerView = sender.view else { return }
-        let section = headerView.tag
-        
-        if expandedSections.contains(section) {
-            expandedSections.remove(section)
-            TV.reloadSections(IndexSet(integer: section), with: .automatic)
-        } else {
-        //MARK: if let only works when the expandedSections.first is not nil
-            if let previousSection = expandedSections.first {
-                expandedSections.remove(previousSection)
-                TV.reloadSections(IndexSet(integer: previousSection), with: .automatic)
-            }
-            
-            expandedSections.insert(section)
-            TV.reloadSections(IndexSet(integer: section), with: .automatic)
-        }
+        return expandedSections.contains(section) ? (FilterHomeWorkList?[section].homework?.count ?? 0) : 0
     }
 
     
-    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel else { return }
-        let fullDescription = "Dear Students, as you prepare to write your assignment, please follow these steps to ensure clarity and quality. Begin by thoroughly understanding the topic and conducting comprehensive research using reliable sources. Create a detailed outline to structure your thoughts and arguments logically. Write a clear and concise introduction that sets the tone and context for your assignment."
-        
-        let isExpanded = label.numberOfLines == 0
-        label.numberOfLines = isExpanded ? 3 : 0
-        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
-        
-        TV.beginUpdates()
-        TV.endUpdates()
-    }
-    
-    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-        if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess.translated()
-            let attributedText = NSMutableAttributedString(string: fullString)
-            let seeLessRange = (fullString as NSString).range(of: "See less")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            return attributedText
-        } else {
-            let truncatedDescription = String(fullDescription.prefix(100)) + CommonStringFile.seemore.translated()
-            let attributedText = NSMutableAttributedString(string: truncatedDescription)
-            let seeMoreRange = (truncatedDescription as NSString).range(of: "See more")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-            return attributedText
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as? HomeWorkTVC,
+              let sectionData = FilterHomeWorkList?[indexPath.section],
+              let homework = sectionData.homework?[indexPath.row] else {
+            return UITableViewCell()
         }
+
+        // Configure cell data
+        cell.subjectName.text = homework.subject_name
+        cell.topics.text = homework.topic ?? ""
+        cell.dateLble.text = sectionData.date
+        cell.forwordBtn.isHidden = true
+        cell.SelectBtnHeight.constant = 0
+
+        // Load image if available
+        if let urls = homework.file_path {
+            cell.loadImage(urls: urls)
+        }
+        let contentText = homework.content ?? ""
+        cell.descriptionLbl.setupExpandable(text: contentText)
+        cell.newView.isHidden = contentText.count <= 100
+        cell.descriptionLbl.onExpandableTap = { [weak tableView] in
+            cell.descriptionLbl.isExpanded.toggle()
+            cell.newView.isHidden = true
+            tableView?.beginUpdates()
+            tableView?.endUpdates()
+        }
+
+        cell.cellview.layoutIfNeeded()
+        return cell
     }
-    
+
+
+    @objc func toggleSection(_ sender: UITapGestureRecognizer) {
+        guard let headerView = sender.view else { return }
+        let section = headerView.tag
+
+        var sectionsToReload = IndexSet()
+
+        if expandedSections.contains(section) {
+            expandedSections.remove(section)
+            sectionsToReload.insert(section)
+        } else {
+            if let previousSection = expandedSections.first {
+                expandedSections.remove(previousSection)
+                sectionsToReload.insert(previousSection)
+            }
+
+            expandedSections.insert(section)
+            sectionsToReload.insert(section)
+        }
+
+        TV.reloadSections(sectionsToReload, with: .automatic)
+    }
+
     
     // Method to load the footer from nib and set it as tableFooterView
     func setupTableFooter() {
         if shouldShowFooter {
             if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-                // Adjust the frame based on your needs.
                 footer.frame = CGRect(x: 0, y: 0, width: TV.frame.width, height: 60)
-                
-                // Add a tap gesture recognizer to the button to trigger the hide action.
                 let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
                 footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
                 footer.SeeMoreBtn.isUserInteractionEnabled = true
-                
-                // Set the footer view.
                 TV.tableFooterView = footer
             }
         } else {
@@ -280,8 +256,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
                 // Hide the footer after animation completes.
                 TV.tableFooterView = nil
                 shouldShowFooter = false
-                
-                TV.reloadData()
+                GetHomeWorkArchive()
             })
         } else {
             // In case footer is already nil.
@@ -297,6 +272,44 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         searchBar.resignFirstResponder()
+    }
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchText.isEmpty {
+//            FilterHomeWorkList = homeWorkList
+//        } else {
+//            FilterHomeWorkList = homeWorkList?.compactMap { homeworkDate in
+//                let filteredHomeworks = homeworkDate.homework?.filter {
+//                    ($0.topic?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+//                    ($0.subject_name?.localizedCaseInsensitiveContains(searchText) ?? false)
+//                }
+//            }
+//        }
+//        TV.reloadData()
+//    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            FilterHomeWorkList = homeWorkList
+            expandedSections.removeAll()
+        } else {
+            let lowercasedSearch = searchText.lowercased()
+
+            FilterHomeWorkList = homeWorkList?.compactMap { hwList in
+                guard let homeworkItems = hwList.homework else { return nil }
+
+                let filteredHomework = homeworkItems.filter { hw in
+                    hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
+                    hw.topic?.lowercased().contains(lowercasedSearch) == true ||
+                    hw.content?.lowercased().contains(lowercasedSearch) == true
+                }
+
+                return filteredHomework.isEmpty ? nil : HomeworkList(date: hwList.date, homework: filteredHomework)
+            }
+
+            expandedSections = Set(0..<(FilterHomeWorkList?.count ?? 0)) // ✅ This works for Set<Int>
+        }
+
+        TV.reloadData()
+
     }
 
 }
