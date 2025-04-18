@@ -10,6 +10,7 @@ import UIKit
 class RecipientTvCell: UITableViewCell {
 
    
+    @IBOutlet weak var createdOnlbl: UILabel!
     @IBOutlet weak var cellLabel: UILabel!
     @IBOutlet weak var checkboxImg: UIImageView!
     

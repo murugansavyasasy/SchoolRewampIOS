@@ -168,6 +168,8 @@
 		8420316E2D390CED003C4076 /* TimetableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8420316B2D390CED003C4076 /* TimetableVC.swift */; };
 		842031782D390FE9003C4076 /* TimetableTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842031772D390FE9003C4076 /* TimetableTv.swift */; };
 		8420317A2D390FF3003C4076 /* TimetableTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842031792D390FF3003C4076 /* TimetableTv.xib */; };
+		842214272DAFACAD00D38D16 /* CommonPageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842214262DAFACAD00D38D16 /* CommonPageVC.xib */; };
+		842214282DAFACAD00D38D16 /* CommonPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842214252DAFACAD00D38D16 /* CommonPageVC.swift */; };
 		842F95CC2D85606E007A4A98 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 842F95CB2D85606E007A4A98 /* Kingfisher */; };
 		842FBABB2D0BEDBF007C0B51 /* ReportStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB72D0BEDBF007C0B51 /* ReportStudentTVC.xib */; };
 		842FBABC2D0BEDBF007C0B51 /* ReportStudentListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */; };
@@ -438,6 +440,10 @@
 		84E795DE2D2FF3DF000B36BC /* ChatCvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E795DC2D2FF3DF000B36BC /* ChatCvcell.xib */; };
 		84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E795DF2D2FF684000B36BC /* InteractionVC.swift */; };
 		84E795E22D2FF684000B36BC /* InteractionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84E795E02D2FF684000B36BC /* InteractionVC.xib */; };
+		84EA0E9A2DAF91E9001630FB /* HomeWorkTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EA0E992DAF91E9001630FB /* HomeWorkTVC.xib */; };
+		84EA0E9B2DAF91E9001630FB /* HomeWorkTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA0E982DAF91E9001630FB /* HomeWorkTVC.swift */; };
+		84EAE7832DB20B250083AD9E /* ReciverAttachmentrVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */; };
+		84EAE7842DB20B250083AD9E /* ReciverAttachmentrVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EAE7812DB20B250083AD9E /* ReciverAttachmentrVC.swift */; };
 		84EE541B2CDDEE26005A95F3 /* PiechartCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */; };
 		84EE541C2CDDEE26005A95F3 /* PiechartCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */; };
 		84EFF4962CE388B800E39BEA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */; };
@@ -484,6 +490,9 @@
 		84F0466F2D1D5ED600C686BD /* MarkAttendenceCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F0466C2D1D5ED600C686BD /* MarkAttendenceCV.swift */; };
 		84F34C8F2CFDBECD007BCF9C /* ImageSelection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */; };
 		84F34C912CFDBFD2007BCF9C /* ImageSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */; };
+		84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F911862DB0C13F001A6408 /* bubbleview.swift */; };
+		84F9118B2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */; };
+		84F9118C2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */; };
 		84F9862D2D3A57FC009FF065 /* QuizVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F9862B2D3A57FC009FF065 /* QuizVC.swift */; };
 		84F9862E2D3A57FC009FF065 /* QuizVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84F9862C2D3A57FC009FF065 /* QuizVC.xib */; };
 		84F986322D3A6169009FF065 /* QuizTVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F986302D3A6169009FF065 /* QuizTVcell.swift */; };
@@ -776,6 +785,8 @@
 		8420316C2D390CED003C4076 /* TimetableVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableVC.xib; sourceTree = "<group>"; };
 		842031772D390FE9003C4076 /* TimetableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableTv.swift; sourceTree = "<group>"; };
 		842031792D390FF3003C4076 /* TimetableTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableTv.xib; sourceTree = "<group>"; };
+		842214252DAFACAD00D38D16 /* CommonPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPageVC.swift; sourceTree = "<group>"; };
+		842214262DAFACAD00D38D16 /* CommonPageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonPageVC.xib; sourceTree = "<group>"; };
 		842FBAB42D0BEDBF007C0B51 /* ReportStudentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentListVC.swift; sourceTree = "<group>"; };
 		842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportStudentListVC.xib; sourceTree = "<group>"; };
 		842FBAB62D0BEDBF007C0B51 /* ReportStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentTVC.swift; sourceTree = "<group>"; };
@@ -1057,6 +1068,10 @@
 		84E795DC2D2FF3DF000B36BC /* ChatCvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatCvcell.xib; sourceTree = "<group>"; };
 		84E795DF2D2FF684000B36BC /* InteractionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionVC.swift; sourceTree = "<group>"; };
 		84E795E02D2FF684000B36BC /* InteractionVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InteractionVC.xib; sourceTree = "<group>"; };
+		84EA0E982DAF91E9001630FB /* HomeWorkTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWorkTVC.swift; sourceTree = "<group>"; };
+		84EA0E992DAF91E9001630FB /* HomeWorkTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeWorkTVC.xib; sourceTree = "<group>"; };
+		84EAE7812DB20B250083AD9E /* ReciverAttachmentrVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReciverAttachmentrVC.swift; sourceTree = "<group>"; };
+		84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReciverAttachmentrVC.xib; sourceTree = "<group>"; };
 		84EE54192CDDEE26005A95F3 /* PiechartCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiechartCVCell.swift; sourceTree = "<group>"; };
 		84EE541A2CDDEE26005A95F3 /* PiechartCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PiechartCVCell.xib; sourceTree = "<group>"; };
 		84EFF48D2CE388B800E39BEA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -1103,6 +1118,9 @@
 		84F0466D2D1D5ED600C686BD /* MarkAttendenceCV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkAttendenceCV.xib; sourceTree = "<group>"; };
 		84F34C8E2CFDBECD007BCF9C /* ImageSelection.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageSelection.xib; sourceTree = "<group>"; };
 		84F34C902CFDBFD2007BCF9C /* ImageSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSelection.swift; sourceTree = "<group>"; };
+		84F911862DB0C13F001A6408 /* bubbleview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bubbleview.swift; sourceTree = "<group>"; };
+		84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyInfoPopoverVCViewController.swift; sourceTree = "<group>"; };
+		84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmergencyInfoPopoverVCViewController.xib; sourceTree = "<group>"; };
 		84F9862B2D3A57FC009FF065 /* QuizVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizVC.swift; sourceTree = "<group>"; };
 		84F9862C2D3A57FC009FF065 /* QuizVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizVC.xib; sourceTree = "<group>"; };
 		84F986302D3A6169009FF065 /* QuizTVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizTVcell.swift; sourceTree = "<group>"; };
@@ -1788,6 +1806,8 @@
 				840F67782D94128F00AC2F5A /* cell1Tv.xib */,
 				840F677B2D9412B400AC2F5A /* cell2Tv.swift */,
 				840F677C2D9412B400AC2F5A /* cell2Tv.xib */,
+				84EAE7812DB20B250083AD9E /* ReciverAttachmentrVC.swift */,
+				84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -2155,6 +2175,10 @@
 				849AD00E2D1A83CA002DEC07 /* SenderSideHomeWorkViewController.xib */,
 				843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */,
 				843F9A2B2DAF71FF00215973 /* SenderHomeWorkVC.xib */,
+				84EA0E982DAF91E9001630FB /* HomeWorkTVC.swift */,
+				84EA0E992DAF91E9001630FB /* HomeWorkTVC.xib */,
+				842214252DAFACAD00D38D16 /* CommonPageVC.swift */,
+				842214262DAFACAD00D38D16 /* CommonPageVC.xib */,
 			);
 			path = HomeWork;
 			sourceTree = "<group>";
@@ -2470,6 +2494,7 @@
 				8476882A2D88316C00EAB9DB /* userDefaultFileManager.swift */,
 				8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */,
 				8476882E2D892DBB00EAB9DB /* SecureidFile.swift */,
+				84F911862DB0C13F001A6408 /* bubbleview.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -2681,6 +2706,7 @@
 		84DCF5F02CECC03200C42504 /* CommonScreens */ = {
 			isa = PBXGroup;
 			children = (
+				84F911882DB0C435001A6408 /* popoverVc */,
 				FA99ED352DA656E700F6AF0E /* Seemore Footer */,
 				84C4159C2D94073F007BF478 /* CustomPopup */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
@@ -2827,6 +2853,15 @@
 				84EFFAF32CCFB68A00C11C26 /* ImageCvCell.xib */,
 			);
 			path = ReportBugVc;
+			sourceTree = "<group>";
+		};
+		84F911882DB0C435001A6408 /* popoverVc */ = {
+			isa = PBXGroup;
+			children = (
+				84F911892DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift */,
+				84F9118A2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib */,
+			);
+			path = popoverVc;
 			sourceTree = "<group>";
 		};
 		84F9862A2D3A57DD009FF065 /* Quiz */ = {
@@ -3269,6 +3304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				842214272DAFACAD00D38D16 /* CommonPageVC.xib in Resources */,
 				84D1FF1D2D4CE00A003ACC04 /* ParentDashboardVc.xib in Resources */,
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
 				8442A86C2CDB787A0006068E /* ParentTVCell.xib in Resources */,
@@ -3327,6 +3363,7 @@
 				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
 				18926C5E2D02DE81002BBB97 /* LsrwListShowViewController.xib in Resources */,
 				18926C5F2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.xib in Resources */,
+				84F9118B2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.xib in Resources */,
 				18926C602D02DE81002BBB97 /* SubmitLsrwViewController.xib in Resources */,
 				18926C612D02DE81002BBB97 /* RestrictionTableViewCell.xib in Resources */,
 				18926C622D02DE81002BBB97 /* PreviewLsrwViewController.xib in Resources */,
@@ -3446,6 +3483,7 @@
 				84EFFA3C2CCCB49200C11C26 /* ContactUsTVCell.xib in Resources */,
 				84B57EE22D15533000E0EA29 /* submitVC.xib in Resources */,
 				84F0466A2D1D3FE300C686BD /* MarkAtendenceTV.xib in Resources */,
+				84EA0E9A2DAF91E9001630FB /* HomeWorkTVC.xib in Resources */,
 				840A7CE72D24FDAA0061EAEA /* MarkTvCell.xib in Resources */,
 				843F9A2C2DAF71FF00215973 /* SenderHomeWorkVC.xib in Resources */,
 				840A7CE82D24FDAA0061EAEA /* ExamMarkCV.xib in Resources */,
@@ -3480,6 +3518,7 @@
 				846D83E62D02D91000B69344 /* Tvcell.xib in Resources */,
 				84BB5EB72D11467700AD0C87 /* SchedulePopupVC.xib in Resources */,
 				846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */,
+				84EAE7832DB20B250083AD9E /* ReciverAttachmentrVC.xib in Resources */,
 				846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */,
 				840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */,
 				18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */,
@@ -3738,6 +3777,7 @@
 				8466E83F2D6ED0CB004F4EFC /* PopupVC.swift in Sources */,
 				18926C5A2D02DE81002BBB97 /* PreviewLsrwViewController.swift in Sources */,
 				18926C5B2D02DE81002BBB97 /* TakeReadingSkillTableViewCell.swift in Sources */,
+				84EA0E9B2DAF91E9001630FB /* HomeWorkTVC.swift in Sources */,
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
 				FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */,
 				848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */,
@@ -3792,6 +3832,7 @@
 				84E795E12D2FF684000B36BC /* InteractionVC.swift in Sources */,
 				18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */,
 				848126D92D91820500BE6979 /* CountryListVC.swift in Sources */,
+				84F911872DB0C13F001A6408 /* bubbleview.swift in Sources */,
 				18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */,
 				18D718D62D0D479B00E9EDA3 /* ClassTableViewCell.swift in Sources */,
 				18D718D82D0D479B00E9EDA3 /* SectionTvTableViewCell copy.swift in Sources */,
@@ -3878,6 +3919,7 @@
 				84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */,
 				84C829C32D0807CD0024A46A /* ConfettiLayer.swift in Sources */,
 				846D83E92D02D91000B69344 /* SideTvcell.swift in Sources */,
+				84F9118C2DB0C461001A6408 /* EmergencyInfoPopoverVCViewController.swift in Sources */,
 				846D83EA2D02D91000B69344 /* Tvcell.swift in Sources */,
 				187CF5C02D13F009001422CE /* WeekDaysNameCollectionViewCell.swift in Sources */,
 				849ACFFE2D1A8369002DEC07 /* ReciverAttendanceReportVC.swift in Sources */,
@@ -3907,6 +3949,7 @@
 				84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				84C829FB2D086A490024A46A /* FountainFirework.swift in Sources */,
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
+				84EAE7842DB20B250083AD9E /* ReciverAttachmentrVC.swift in Sources */,
 				84C829FD2D086A490024A46A /* ImageSparkView.swift in Sources */,
 				84C829FE2D086A490024A46A /* CGPoint+Extensions.swift in Sources */,
 				84E420BE2D2CF11500AA9D87 /* SpecificStudentTvcell.swift in Sources */,
@@ -3914,6 +3957,7 @@
 				84C82A002D086A490024A46A /* Firework.swift in Sources */,
 				84C82A012D086A490024A46A /* FountainFireworkController.swift in Sources */,
 				187CF4932D11355D001422CE /* MessageFromManagementViewController.swift in Sources */,
+				842214282DAFACAD00D38D16 /* CommonPageVC.swift in Sources */,
 				84C82A022D086A490024A46A /* ImageSparkViewFactory.swift in Sources */,
 				84C82A032D086A490024A46A /* FireworkSpark.swift in Sources */,
 				84C82A042D086A490024A46A /* FireworkSparkScheduler.swift in Sources */,

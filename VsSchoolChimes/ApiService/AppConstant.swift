@@ -35,6 +35,8 @@ struct ServiceUrl{
     static let comm_voice_get_voice_history  = "comm/voice/get-voice-history"
     static let comm_text_message_get_text_history  = "comm/text-message/get-text-history"
     static let comm_homework_get_homework_report  = "comm/homework/get-homework-report"
+    static let comm_homework_get_homework_list_archive  = "comm/homework/get-homework-list-archive"
+    static let comm_homework_get_homework_list  = "comm/homework/get-homework-list"
     static let comm_homework_sendhomework  = "comm/homework/send-homework"
     static let comm_recipient_get_academic_year_list  = "comm/recipient/get-academic-year-list"
     static let comm_communication_list  = "comm/communication/list"
@@ -98,7 +100,7 @@ struct recipeint_tabBarName{
     static let Group = "Groups"
     static let Section_Student = "Section/Students"
     static let Staff = "Staff"
-    static let Entier_School = "Entier School"
+    static let Entier_School = "Entire School"
 }
 
 struct user_inputs{
@@ -111,6 +113,7 @@ struct user_inputs{
     static var schedule_date : [String] = []
     static var selectedImg : [UIImage] = []
     static var fileUrl:URL?
+    static var docUrl = [String]()
     static var start_time = ""
     static var end_time = ""
     static var file_name = ""

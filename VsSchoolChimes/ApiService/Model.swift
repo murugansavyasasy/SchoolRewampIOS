@@ -180,6 +180,7 @@ struct  GrouplistSuc : Codable {
 struct GroupDetail:Codable{
     let id:String?
     let name:String?
+    let created_on:String?
     var isSelect:Bool?
 }
 //MARK: GetStandard API
@@ -317,6 +318,15 @@ struct Homework: Codable {
     let subject_name: String?
     let created_by: String?
     let file_path: [FilePath]? 
+}
+struct HomeworListkResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [HomeworkList]?
+}
+struct HomeworkList: Codable {
+    let date: String?
+    let homework: [Homework]?
 }
 
 struct FilePath: Codable {

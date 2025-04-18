@@ -48,6 +48,7 @@ class CellConfingName {
     static let AttendenceReportTVCell = "AttendenceReportTVCell"
    
     static let NoticeBoardTvcellTableViewCell = "NoticeBoardTvcellTableViewCell"
+    static let HomeWorkTVC = "HomeWorkTVC"
     static let SectionCollectionViewCell = "SectionCollectionViewCell"
     static let SectionTvTableViewCell = "SectionTvTableViewCell"
     static let CVIconCollectionViewCell = "CVIconCollectionViewCell"
