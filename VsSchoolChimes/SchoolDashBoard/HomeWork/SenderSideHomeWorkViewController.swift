@@ -147,7 +147,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.selectedImg = selectedImages
-            
+            if let url = url?.absoluteString{
+                user_inputs.docUrl.append(url)
+            }
             
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)

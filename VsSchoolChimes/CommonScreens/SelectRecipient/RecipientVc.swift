@@ -221,7 +221,8 @@ class RecipientVc: UIViewController{
     }
     
     private func handleHomeworkFlow() {
-        uploadAndSendVoiceMessage(file: user_inputs.selectedImg) { [self] in
+        let file: Any = user_inputs.selectedFileType == "pdf" ? user_inputs.docUrl : user_inputs.selectedImg
+        uploadAndSendVoiceMessage(file: file) { [self] in
             CircularProgressLoader.shared.hide()
             let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
                 return [
@@ -408,7 +409,49 @@ class RecipientVc: UIViewController{
                     }
                 )
             }
+            // 🖼️ Case: Array of Images
+        case let files as [String]:
+                let total = files.count
+                guard !files.isEmpty else {
+                    completion()
+                    return
+                }
 
+                CircularProgressLoader.shared.show(style: .circle)
+                CircularProgressLoader.shared.updateProgress(to: 0)
+
+                for (index, url) in files.enumerated() {
+                    guard let PdfURL = URL(string: url) else {
+                        print("❌ Invalid audio URL.")
+                        return
+                    }
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: PdfURL,
+                        bucketPath: "uploads/Documents/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: { progress in
+                            // Optional: Update progress per file individually if you want
+                        },
+                        completion: { [self] url in
+                            if let uploadedURL = url {
+                                uploadedURLs.append(uploadedURL)
+                                
+                            } else {
+                                print("❌ Failed to upload image \(index)")
+                            }
+
+                            completed += 1
+                            let progress = (Double(completed) / Double(total)) * 100
+                            CircularProgressLoader.shared.updateProgress(to: progress)
+
+                            if completed == total {
+                                CircularProgressLoader.shared.hide()
+                                // Do something with uploadedURLs if needed
+                                completion()
+                            }
+                        }
+                    )
+                }
         default:
             print("❌ Unsupported file type")
             return

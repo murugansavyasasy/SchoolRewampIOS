@@ -578,3 +578,53 @@ extension UILabel {
         return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
 }
+func downloadFile(from urlString: String, folderName: String, fileName: String) {
+    guard let url = URL(string: urlString) else {
+        print("Invalid URL")
+        return
+    }
+    
+    let fileManager = FileManager.default
+    
+    // 1. Create folder in Documents directory
+    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+    let folderURL = documentsURL.appendingPathComponent(folderName)
+
+    do {
+        if !fileManager.fileExists(atPath: folderURL.path) {
+            try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
+            print("📁 Folder created at: \(folderURL.path)")
+        }
+    } catch {
+        print("❌ Failed to create folder: \(error.localizedDescription)")
+        return
+    }
+    
+    // 2. Destination file URL
+    let destinationURL = folderURL.appendingPathComponent(fileName)
+    
+    // 3. Start downloading
+    let task = URLSession.shared.downloadTask(with: url) { tempLocalURL, response, error in
+        if let error = error {
+            print("❌ Download error: \(error.localizedDescription)")
+            return
+        }
+
+        guard let tempLocalURL = tempLocalURL else {
+            print("❌ No temp file URL")
+            return
+        }
+
+        do {
+            if fileManager.fileExists(atPath: destinationURL.path) {
+                try fileManager.removeItem(at: destinationURL)
+            }
+            try fileManager.moveItem(at: tempLocalURL, to: destinationURL)
+            print("✅ File downloaded to: \(destinationURL.path)")
+        } catch {
+            print("❌ File saving error: \(error.localizedDescription)")
+        }
+    }
+    
+    task.resume()
+}
