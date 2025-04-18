@@ -101,13 +101,15 @@ class AlertstringFile{
     static let voice_or_title_is_required = "Voice and title is required".translated()
     static let enter_title_description = "Enter title and description".translated()
     static let Choose_any_target = "Choose any target to send message".translated()
+    static let Audio_exceeds_3_minutes = "Audio exceeds 3 minutes. Please select a shorter audio.".translated()
     static let Alert_title = "Alert".translated()
     static let Confirm_title = "Confirmation".translated()
     static let select_date = "Select sheduled date".translated()
+    static let Warning = "Warning".translated()
     
     static let Confirm = "Confirm".translated()
     static let Change_academic_year = "NOTE : This message is addressed to students in".translated()
-    static let Change_academic_year1 = "Which is not the communication academic year ".translated()
+    static let Change_academic_year1 = " which is not the communication academic year ".translated()
     static let Change_academic_year2 = "Do you want to proceed?".translated()
     
     static let Selected_target = "Selected target : ".translated()
@@ -253,7 +255,7 @@ class CommonStringFile{
     static let FromTime = "From Time"
     static let Schedule = "Schedule date"
     static let ToTime = "Do not dial beyond"
-    static let Emergencyvoicemessages = "Enable emergency voice"
+    static let Emergencyvoicemessages = " Emergency call   ℹ️ "
     static let VoiceMessage = "Instant Call"
     static let TextMessage = "Text Message"
     static let ScheduleCall = "Schedule Call"

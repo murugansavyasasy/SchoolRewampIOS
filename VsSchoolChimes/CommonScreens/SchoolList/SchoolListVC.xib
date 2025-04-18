@@ -14,6 +14,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SchoolListVC" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
                 <outlet property="acidamicYrDropView" destination="xH2-pm-eUP" id="v0L-lU-Jcp"/>
+                <outlet property="acidmicYrLbl" destination="fbB-vc-bQn" id="dG0-SO-A5E"/>
+                <outlet property="chooseDefaultLbl" destination="6Mc-t8-Zaf" id="8Po-7x-Xlq"/>
                 <outlet property="listTable" destination="d71-Gb-zpY" id="rVe-S1-jO7"/>
                 <outlet property="segmentName" destination="vG8-IU-045" id="eLO-uS-8tH"/>
                 <outlet property="sendBtnName" destination="hIj-m3-g5V" id="JJ4-O7-X6t"/>

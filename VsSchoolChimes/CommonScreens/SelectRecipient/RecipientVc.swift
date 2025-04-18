@@ -75,6 +75,7 @@ class RecipientVc: UIViewController{
         getacadmicYr()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
             configureRecipientTabs()
+            
             if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
                 segmentName.isHidden = true
                 
@@ -86,9 +87,7 @@ class RecipientVc: UIViewController{
                 contentLbl.isHidden = true
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
-//                segment_selected_index = 9
-//                segmentName.selectedSegmentIndex = 9
-                
+
                 cv_itemsarry = [
                     recipeint_tabBarName.Section_Student
                 ]
@@ -158,10 +157,10 @@ class RecipientVc: UIViewController{
                 cv_itemsarry = [
                     recipeint_tabBarName.Entier_School,
                     recipeint_tabBarName.Standard,
+                    recipeint_tabBarName.Section_Student,
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
-//                circular_types =  circular_type.
                 tableHeight.constant = 0
             }
             
@@ -311,13 +310,10 @@ class RecipientVc: UIViewController{
                     sendtextmessage_communication()
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     
-                    if user_inputs.voice_link.contains("https:") {
-                        // Voice link is already uploaded
+                    if user_inputs.voice_link.contains("https:") { // MARK: FORWARD VOICE
                         sendVoiceMessage_communication()
                     } else {
-                        // Voice link is local, needs to be uploaded first
                         uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
-                            
                             self.sendVoiceMessage_communication()
                         }
                     }
@@ -435,6 +431,7 @@ class RecipientVc: UIViewController{
     }
     @IBAction func segment_action(_ sender: UISegmentedControl) {
         array_selectedId.removeAll()
+        speficBtnName.isHidden = true
         segment_selected_index = sender.selectedSegmentIndex
         guard segment_selected_index ?? 0 >= 0, segment_selected_index ?? 0 < cv_itemsarry.count else {
             print("Invalid segment index.")
@@ -604,174 +601,213 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let baseCount: Int
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            return groupDetails?.count ?? 0
+            baseCount = groupDetails?.count ?? 0
         case recipeint_tabBarName.Standard:
-            return standardDetails?.count ?? 0
+            baseCount = standardDetails?.count ?? 0
         case recipeint_tabBarName.Section_Student:
-            return sectionsDetails?.count ?? 0
+            baseCount = sectionsDetails?.count ?? 0
         case recipeint_tabBarName.Staff:
-            return staffDetails?.count ?? 0
+            baseCount = staffDetails?.count ?? 0
         default:
-            return 0
+            baseCount = 0
         }
+        
+        return baseCount + 1 // +1 for "Select All"
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell, for: indexPath) as! RecipientTvCell
         
-        switch cv_itemsarry[segment_selected_index ?? 0] {
-        case recipeint_tabBarName.Group:
-            cell.checkboxImg.isUserInteractionEnabled = true
-            cell.cellLabel.text = groupDetails?[indexPath.row].name
-            if let select = groupDetails?[indexPath.row].isSelect {
-                cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                ImageName.uncheckedSquares
-            }
-            
-        case recipeint_tabBarName.Standard:
-            cell.cellLabel.text = standardDetails?[indexPath.row].name
-            if let select = standardDetails?[indexPath.row].isSelect {
-                cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                ImageName.uncheckedSquares
-            }
-        case recipeint_tabBarName.Section_Student:
-            cell.cellLabel.text = sectionsDetails?[indexPath.row].name
-            if let select = sectionsDetails?[indexPath.row].isSelect {
-                cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                ImageName.uncheckedSquares
-            }
-            
-        case recipeint_tabBarName.Staff:
-            cell.cellLabel.text = staffDetails?[indexPath.row].name
-            if let select = staffDetails?[indexPath.row].isSelect {
-                cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                ImageName.uncheckedSquares
-            }
-            
-        default:
-            cell.cellLabel.text = sectionsDetails?[indexPath.row].name
-            if let select = sectionsDetails?[indexPath.row].isSelect {
-                cell.checkboxImg.image = select ? ImageName.checkedSquares :
-                ImageName.uncheckedSquares
-            }
-
+        if indexPath.row == 0 {
+            cell.cellLabel.text = "Select All"
+            cell.createdOnlbl.isHidden = true
+            let allSelected = isAllSelected()
+            cell.checkboxImg.image = allSelected ? ImageName.checkedSquares : ImageName.uncheckedSquares
+            return cell
         }
         
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let dataIndex = indexPath.row - 1
+        
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            if indexPath.row < (groupDetails?.count ?? 0) {
-                groupDetails?[indexPath.row].isSelect?.toggle()
-                
-                if let id =  groupDetails?[indexPath.row].id {
-                    if  groupDetails?[indexPath.row].isSelect == true {
-                        if !array_selectedId.contains(id) {
-                            array_selectedId.append(id)
-                        }
-                    } else {
-                        array_selectedId.removeAll(where: { $0 == id})
-                    }
-                }
+            if let item = groupDetails?[dataIndex] {
+                cell.cellLabel.text = item.name
+                cell.createdOnlbl.isHidden = false
+                cell.createdOnlbl.text =  "Created On: \(item.created_on ?? "")"
+                cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         case recipeint_tabBarName.Standard:
-            if indexPath.row < (standardDetails?.count ?? 0) {
-                standardDetails?[indexPath.row].isSelect?.toggle()
-                
-                if let id = standardDetails?[indexPath.row].id {
-                    if standardDetails?[indexPath.row].isSelect == true {
-                        if !array_selectedId.contains(id) {
-                            array_selectedId.append(id)
-                        }
-                    } else {
-                        array_selectedId.removeAll(where: { $0 == id })
-                    }
-                }
+            if let item = standardDetails?[dataIndex] {
+                cell.cellLabel.text = item.name
+                cell.createdOnlbl.isHidden = true
+                cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         case recipeint_tabBarName.Section_Student:
-            if indexPath.row < (sectionsDetails?.count ?? 0) {
-                guard var section = sectionsDetails?[indexPath.row] else { return }
+            if let item = sectionsDetails?[dataIndex] {
+                cell.cellLabel.text = item.name
+                cell.createdOnlbl.isHidden = true
+                cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
+            }
+        case recipeint_tabBarName.Staff:
+            if let item = staffDetails?[dataIndex] {
+                cell.cellLabel.text = item.name
+                cell.createdOnlbl.isHidden = true
+                cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
+            }
+        default:
+            break
+        }
+
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            handleSelectAllToggle()
+            tableView.reloadData()
+            return
+        }
+
+        let dataIndex = indexPath.row - 1
+        
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+        case recipeint_tabBarName.Group:
+            if var item = groupDetails?[dataIndex] {
+                item.isSelect?.toggle()
+                groupDetails?[dataIndex].isSelect = item.isSelect
+                updateSelectionArray(id: item.id, isSelected: item.isSelect)
+            }
+            
+        case recipeint_tabBarName.Standard:
+            if var item = standardDetails?[dataIndex] {
+                item.isSelect?.toggle()
+                standardDetails?[dataIndex].isSelect = item.isSelect
+                updateSelectionArray(id: item.id, isSelected: item.isSelect)
+            }
+            
+        case recipeint_tabBarName.Section_Student:
+            if var item = sectionsDetails?[dataIndex] {
+                item.isSelect?.toggle()
+                sectionsDetails?[dataIndex].isSelect = item.isSelect
+                updateSelectionArray(id: item.id, isSelected: item.isSelect)
                 
-                section.isSelect?.toggle()
-                sectionsDetails?[indexPath.row].isSelect = section.isSelect
-                if let id = section.id {
-                    if section.isSelect == true {
-                        if !array_selectedId.contains(id) {
-                            array_selectedId.append(id)
-                        }
-                    } else {
-                        array_selectedId.removeAll(where: { $0 == id })
-                    }
-                }
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
                 sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId{
+                
+                if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId {
                     if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                         getSubjectListAPI(finalSectionIds)
                     }
                     selectSubject.isHidden = false
-                   
                 }
-                speficBtnName.isEnabled = selectedSections.count == 1
-                speficBtnName.isHidden = selectedSections.count == 1 ? false : true
                 
+                speficBtnName.isEnabled = selectedSections.count == 1
+                speficBtnName.isHidden = !(selectedSections.count == 1)
             }
             
         case recipeint_tabBarName.Staff:
-            if indexPath.row < (staffDetails?.count ?? 0) {
-                staffDetails?[indexPath.row].isSelect?.toggle()
-                
-                if let id = staffDetails?[indexPath.row].id {
-                    if staffDetails?[indexPath.row].isSelect == true {
-                        if !array_selectedId.contains(id) {
-                            array_selectedId.append(id)
-                        }
-                    } else {
-                        array_selectedId.removeAll(where: { $0 == id })
-                    }
-                }
+            if var item = staffDetails?[dataIndex] {
+                item.isSelect?.toggle()
+                staffDetails?[dataIndex].isSelect = item.isSelect
+                updateSelectionArray(id: item.id, isSelected: item.isSelect)
             }
+
         default:
-            if indexPath.row < (sectionsDetails?.count ?? 0) {
-                guard var section = sectionsDetails?[indexPath.row] else { return }
-                
-                section.isSelect?.toggle()
-                sectionsDetails?[indexPath.row].isSelect = section.isSelect
-                if let id = section.id {
-                    if section.isSelect == true {
-                        if !array_selectedId.contains(id) {
-                            array_selectedId.append(id)
-                        }
-                    } else {
-                        array_selectedId.removeAll(where: { $0 == id })
-                    }
-                }
-                let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
-                let selectedIds = selectedSections.compactMap { $0.id }
-                sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId{
-                    if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
-                        getSubjectListAPI(finalSectionIds)
-                    }
-                    selectSubject.isHidden = false
-                   
-                }
-                speficBtnName.isEnabled = selectedSections.count == 1
-                speficBtnName.isHidden = selectedSections.count == 1 ? false : true
-                
-            }
+            break
         }
-        tv.reloadData()
+
+        tableView.reloadData()
     }
+
+    // MARK: - Helper Function to update selection array
+    func updateSelectionArray(id: String?, isSelected: Bool?) {
+        guard let id = id else { return }
+        
+        if isSelected == true {
+            if !array_selectedId.contains(id) {
+                array_selectedId.append(id)
+            }
+        } else {
+            array_selectedId.removeAll(where: { $0 == id })
+        }
+    }
+
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return UITableView.automaticDimension
     }
+    
+    
+    func isAllSelected() -> Bool {
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+        case recipeint_tabBarName.Group:
+            return groupDetails?.allSatisfy { $0.isSelect == true } ?? false
+        case recipeint_tabBarName.Standard:
+            return standardDetails?.allSatisfy { $0.isSelect == true } ?? false
+        case recipeint_tabBarName.Section_Student:
+            return sectionsDetails?.allSatisfy { $0.isSelect == true } ?? false
+        case recipeint_tabBarName.Staff:
+            return staffDetails?.allSatisfy { $0.isSelect == true } ?? false
+        default:
+            return false
+        }
+    }
+    
+    func handleSelectAllToggle() {
+        let selecting = !isAllSelected()
+
+        switch cv_itemsarry[segment_selected_index ?? 0] {
+        case recipeint_tabBarName.Group:
+            groupDetails = groupDetails?.map {
+                var item = $0
+                item.isSelect = selecting
+                return item
+            }
+            array_selectedId = selecting ? groupDetails?.compactMap { $0.id } ?? [] : []
+
+        case recipeint_tabBarName.Standard:
+            standardDetails = standardDetails?.map {
+                var item = $0
+                item.isSelect = selecting
+                return item
+            }
+            array_selectedId = selecting ? standardDetails?.compactMap { $0.id } ?? [] : []
+
+        case recipeint_tabBarName.Section_Student:
+            sectionsDetails = sectionsDetails?.map {
+                var item = $0
+                item.isSelect = selecting
+                return item
+            }
+            array_selectedId = selecting ? sectionsDetails?.compactMap { $0.id } ?? [] : []
+            sectionIds = array_selectedId.joined(separator: ",")
+            
+            if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId {
+                if selecting, let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
+                    getSubjectListAPI(finalSectionIds)
+                }
+                selectSubject.isHidden = !selecting
+                speficBtnName.isEnabled = selecting && array_selectedId.count == 1
+                speficBtnName.isHidden = !(selecting && array_selectedId.count == 1)
+            }
+
+        case recipeint_tabBarName.Staff:
+            staffDetails = staffDetails?.map {
+                var item = $0
+                item.isSelect = selecting
+                return item
+            }
+            array_selectedId = selecting ? staffDetails?.compactMap { $0.id } ?? [] : []
+
+        default:
+            break
+        }
+    }
+
     
     // MARK:  This api for  Listing Stars ============================
     
@@ -794,6 +830,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             tv.isHidden = false
                             noRecordLbl.isHidden = true
                             groupDetails = successmessage.data
+                            
                             if var students = groupDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
@@ -802,6 +839,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             }
                             
                             tv.reloadData()
+                            
                             DispatchQueue.main.async {
                                 self.tableHeight.constant = self.tv.contentSize.height
                                 self.view.layoutIfNeeded()
@@ -848,6 +886,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         }
                         drpodonLbl.text = standardDetails?.first?.name
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
+                        
                         tv.reloadData()
                         DispatchQueue.main.async {
                             self.tableHeight.constant = self.tv.contentSize.height
@@ -856,7 +895,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
-                        
+                        selectStandardDropDown.isHidden = true
                         tv.isHidden = true
                         noRecordLbl.isHidden = false
                         noRecordLbl.text = successMessage.message
@@ -888,6 +927,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 staffDetails = students
                             }
                             tv.reloadData()
+                            
+                            DispatchQueue.main.async {
+                                self.tableHeight.constant = self.tv.contentSize.height
+                                self.view.layoutIfNeeded()
+                            }
                         }
                     }else{
                         DispatchQueue.main.async { [self] in

@@ -180,6 +180,7 @@ struct  GrouplistSuc : Codable {
 struct GroupDetail:Codable{
     let id:String?
     let name:String?
+    let created_on:String?
     var isSelect:Bool?
 }
 //MARK: GetStandard API
