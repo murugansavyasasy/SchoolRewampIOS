@@ -115,7 +115,6 @@ struct user_inputs{
     static var selectedImg : [UIImage] = []
     static var fileUrl:URL?
     static var docUrl = [String]()
-    static var fileTypes = [String]()
     static var start_time = ""
     static var end_time = ""
     static var file_name = ""
