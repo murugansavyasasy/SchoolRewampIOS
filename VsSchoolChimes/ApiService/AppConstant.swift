@@ -75,7 +75,7 @@ struct Menu_id{
     static var communicationMenuId = 0
     static var homeWorkMenuId = 9
     static let isAssaignment = 22
-    static let AttachmentMenuId = 22
+    static let AttachmentMenuId = 11
 }
 struct TargetTypes{
     
@@ -114,6 +114,7 @@ struct user_inputs{
     static var selectedImg : [UIImage] = []
     static var fileUrl:URL?
     static var docUrl = [String]()
+    static var fileTypes = [String]()
     static var start_time = ""
     static var end_time = ""
     static var file_name = ""

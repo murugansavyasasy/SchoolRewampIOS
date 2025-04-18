@@ -213,6 +213,8 @@ class RecipientVc: UIViewController{
         switch screenType.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
+        case Menu_id.AttachmentMenuId:
+            SendingAttachmentFlow()
         case Menu_id.homeWorkMenuId:
             handleHomeworkFlow()
 //        case Menu_id.AttachmentMenuId:
@@ -225,26 +227,30 @@ class RecipientVc: UIViewController{
     
     private func SendingAttachmentFlow() {
         
-        uploadAndSendVoiceMessage(file: user_inputs.selectedImg) { [self] in
+        uploadAndSendVoiceMessage(file: user_inputs.docUrl) { [self] in
             
             CircularProgressLoader.shared.hide()
-            
             let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+                user_inputs.selectedFileType = getExtension(from: url) ?? ""
                 return [
                     "path": url,
                     "type": user_inputs.selectedFileType
                 ]
             }
             
+            print(uploadedFiles)
             
-            
-            let parameters: [String: Any] = [SendAttachmentStringFile.title: user_inputs.title,SendAttachmentStringFile.file_type: "",SendAttachmentStringFile.file_path: uploadedFiles,SendAttachmentStringFile.target_type:0,SendAttachmentStringFile.target_code:0,SendAttachmentStringFile.description: user_inputs.description,SendAttachmentStringFile.iframe: "",SendAttachmentStringFile.file_size: "",SendAttachmentStringFile.academic_year_id: 0]
+      let parameters: [String: Any] = [SendAttachmentStringFile.title: user_inputs.title,SendAttachmentStringFile.file_type: "",SendAttachmentStringFile.file_path: uploadedFiles,SendAttachmentStringFile.target_type:0,SendAttachmentStringFile.target_code:0,SendAttachmentStringFile.description: user_inputs.description,SendAttachmentStringFile.iframe: "",SendAttachmentStringFile.file_size: "",SendAttachmentStringFile.academic_year_id: 0]
             
             APIService.shared.makeApi(url: ServiceUrl.comm_attachment_send_attachment, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self](result: Result<Send_AttachmentResponse,Error>) in
                 
                 switch result{
                     
-                case .success(_):
+                case .success(let successMessage):
+                    
+                    if successMessage.status{
+                        
+                    }
                     
                 case .failure(_):
                     
@@ -253,6 +259,12 @@ class RecipientVc: UIViewController{
         }
        
     }
+    
+    
+    func getExtension(from filePath: String) -> String? {
+     return URL(string: filePath)?.pathExtension.lowercased()
+    }
+    
     
     private func handleHomeworkFlow() {
         let file: Any = user_inputs.selectedFileType == "pdf" ? user_inputs.docUrl : user_inputs.selectedImg

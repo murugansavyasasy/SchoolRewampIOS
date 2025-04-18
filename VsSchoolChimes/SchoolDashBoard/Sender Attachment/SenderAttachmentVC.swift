@@ -19,6 +19,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     
     func deleteImage(index: Int) {
         selectedImages.remove(at: index)
+        fileUrls.remove(at: index)
+        fileType.remove(at: index)
+        
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
@@ -75,6 +78,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var isImage = false
     var selectedImgUrl: [FilePath] = []
     var url : URL?
+    var fileUrls = [String]()
+    var fileType = [String]()
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
@@ -163,18 +168,26 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             selectedImages.append(contentsOf: images)
             selectImgPdfview.imageCollectionview.reloadData()
         }
-        
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
-            // handle picked PDF
-            selectedImages.removeAll()
+
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
             url = data.absoluteURL
+            if let ulr = url?.absoluteString{
+                fileUrls.append(ulr)
+            }
+            
             user_inputs.selectedFileType = "pdf"
+           
             selectedImages.append(ImageName.pdf!)
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
     }
     
+    func getExtension(from filePath: String) -> String? {
+     return URL(string: filePath)?.pathExtension.lowercased()
+    }
+     
+   
     
     override func viewDidLayoutSubviews() {
         
@@ -243,7 +256,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             user_inputs.title = assignTitleTxtFld.text ?? ""
             user_inputs.description = contentTextView.text ?? ""
             user_inputs.selectedImg = selectedImages
-            
+            user_inputs.docUrl.append(contentsOf: fileUrls)
+            user_inputs.fileTypes.append(contentsOf: fileType)
             
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
@@ -347,7 +361,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         }
     }
     func selectPDF() {
-        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
         
     }
     
@@ -833,6 +847,8 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
+                
+                vc.selectedFileURL = url
                 
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]

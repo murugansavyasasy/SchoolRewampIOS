@@ -243,6 +243,20 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     private override init() {}
 
     // MARK: - Public API
+//    func presentPicker(ofType type: PickerType, from viewController: UIViewController) {
+//        switch type {
+//        case .camera:
+//            openCamera(from: viewController)
+//        case .gallery(let selectionLimit):
+//            openPhotoLibrary(from: viewController, selectionLimit: selectionLimit)
+//        case .video:
+//            openVideoPicker(from: viewController)
+//        case .pdf:
+//            openDocumentPicker(from: viewController, types: [UTType.pdf])
+//        case .file:
+//            openDocumentPicker(from: viewController, types: [UTType.item])
+//        }
+//    }
     func presentPicker(ofType type: PickerType, from viewController: UIViewController) {
         switch type {
         case .camera:
@@ -254,7 +268,17 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         case .pdf:
             openDocumentPicker(from: viewController, types: [UTType.pdf])
         case .file:
-            openDocumentPicker(from: viewController, types: [UTType.item])
+            let supportedTypes: [UTType] = [
+                UTType.item,
+                UTType.text,
+                UTType.rtf,
+                UTType.plainText,
+                UTType.pdf,
+                UTType(filenameExtension: "docx")!,
+                UTType(filenameExtension: "xlsx")!,
+                UTType(filenameExtension: "pptx")!
+            ]
+            openDocumentPicker(from: viewController, types: supportedTypes)
         }
     }
 
@@ -340,22 +364,28 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
-
     // MARK: - UIDocumentPickerDelegate
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let fileURL = urls.first else { return }
+        let fileExtension = fileURL.pathExtension.lowercased()
 
-        if fileURL.pathExtension.lowercased() == "pdf" {
+        switch fileExtension {
+        case "pdf":
             do {
                 let data = try Data(contentsOf: fileURL)
                 onPdfPicked?(fileURL)
             } catch {
                 print("Error reading PDF data: \(error)")
             }
-        } else {
+
+        case "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf":
             onFilePicked?(fileURL)
+
+        default:
+            print("Unsupported file type: \(fileExtension)")
         }
     }
+
 
     // MARK: - Utility
     private func showAlert(title: String, message: String, on vc: UIViewController) {
