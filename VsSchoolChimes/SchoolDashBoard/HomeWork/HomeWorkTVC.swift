@@ -1,15 +1,7 @@
-//
-//  HomeWorkTVC.swift
-//  VsSchoolChimes
-//
-//  Created by Chandhru on 16/04/25.
-//
-
 import UIKit
+import UniformTypeIdentifiers
 
-class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate,UICollectionViewDelegateFlowLayout{
-
-    
+class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var newView: UIImageView!
     @IBOutlet weak var forwordBtn: UIButton!
@@ -23,15 +15,19 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var pinImage: UIImageView!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
-    var delegate : SelectNotice?
+
+    var delegate: SelectNotice?
     var ishomework = false
     var isreciver = false
     var issenderEvent = false
-    var homeworkDocs:[FilePath]?
+    var homeworkDocs: [FilePath]?
     var countShimmer = 0
+
+    private var docController: UIDocumentInteractionController?
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
         dateLble.setFont(style: .body, size: FontSize.BodySize)
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         topics.setFont(style: .title, size: FontSize.TitleSize)
@@ -43,78 +39,141 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellview.layer.shadowRadius = 3
         cellview.layer.masksToBounds = false
-        
-        Pinview.layer.cornerRadius = Pinview.frame.width/2
-        let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
+
+        Pinview.layer.cornerRadius = Pinview.frame.width / 2
+
+        let collection = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
         ImageCollectionView.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
-        
+
         ImageCollectionView.delegate = self
         ImageCollectionView.dataSource = self
-        
+
         pageViewController.numberOfPages = homeworkDocs?.count ?? 0
-        
+
         if let flowLayout = ImageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
-            flowLayout.minimumLineSpacing = 10        // Set the space between cells
+            flowLayout.minimumLineSpacing = 10
         }
+
         ImageCollectionView.reloadData()
         countShimmer = 1
     }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         configureShimmer()
     }
-    func loadImage(urls:[FilePath]){
-        ImageCollectionView.isHidden = false
-        homeworkDocs = urls
-        ImageCollectionView.reloadData()
-    }
-    @IBAction func forword(_ sender: UIButton) {
-        delegate?.didTapButton(title: topics.text!, content: descriptionLbl.text!, items: homeworkDocs ?? [])
-    }
 
     func configureShimmer() {
-        
         dateLble.removeShimmer()
         descriptionLbl.removeShimmer()
         topics.removeShimmer()
         subjectName.removeShimmer()
     }
+
+    func loadImage(urls: [FilePath]) {
+        ImageCollectionView.isHidden = false
+        homeworkDocs = urls
+        ImageCollectionView.reloadData()
+    }
+
+    @IBAction func forword(_ sender: UIButton) {
+        delegate?.didTapButton(title: topics.text ?? "", content: descriptionLbl.text ?? "", items: homeworkDocs ?? [])
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return homeworkDocs?.count ?? 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-        if let img = homeworkDocs?[indexPath.row]{
+        if let img = homeworkDocs?[indexPath.row] {
             cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
         }
         return cell
     }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height:ImageCollectionView.frame.height)
+        return CGSize(width: 150, height: ImageCollectionView.frame.height)
     }
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
+        let fileExtension = url.pathExtension.lowercased()
         
-        let vc = getCurrentViewController()
-        let vcc = ImageShowVc(nibName: nil, bundle: nil)
-        vcc.imageURL = homeworkDocs ?? []
-        vcc.subjectName = subjectName.text
-        vcc.type = 2
-        vcc.modalPresentationStyle = .fullScreen
-        vc?.present(vcc, animated: true)
-        
-    }
-    func getCurrentViewController() -> UIViewController? {
-        
-        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
-            var currentController: UIViewController! = rootController
-            while( currentController.presentedViewController != nil ) {
-                currentController = currentController.presentedViewController
-            }
-            return currentController
+        if isWebViewPreviewable(fileExtension) {
+            let vc = getCurrentViewController()
+            let vcc = ImageShowVc(nibName: nil, bundle: nil)
+            vcc.imageURL = homeworkDocs ?? []
+            vcc.subjectName = subjectName.text
+            vcc.type = 2
+            vcc.modalPresentationStyle = .fullScreen
+            vc?.present(vcc, animated: true)
+        } else {
+                openWithDocumentInteraction(url: url)
         }
-        return nil
-        
+    }
+
+    func isWebViewPreviewable(_ ext: String) -> Bool {
+        return ["pdf", "txt", "docx", "pptx", "xlsx"].contains(ext)
+    }
+
+    func openWithDocumentInteraction(url: URL) {
+        docController = UIDocumentInteractionController(url: url)
+        docController?.delegate = getCurrentViewController() as? UIDocumentInteractionControllerDelegate
+
+        if !(docController?.presentPreview(animated: true) ?? false) {
+            let fileExtension = url.pathExtension.lowercased()
+            let appSuggestion = getAppSuggestion(for: fileExtension)
+
+            let alert = UIAlertController(
+                title: "App Required",
+                message: "To open this '\(fileExtension)' file, please install a suitable app. For example: \(appSuggestion).",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            getCurrentViewController()?.present(alert, animated: true)
+        }
+    }
+
+    func getAppSuggestion(for ext: String) -> String {
+        switch ext {
+        case "pdf":
+            return "Adobe Acrobat Reader"
+        case "doc", "docx":
+            return "Microsoft Word or WPS Office"
+        case "ppt", "pptx":
+            return "Microsoft PowerPoint"
+        case "xls", "xlsx":
+            return "Microsoft Excel"
+        case "txt", "rtf":
+            return "Notepad++ or Apple Notes"
+        default:
+            return "a compatible document viewer"
+        }
+    }
+
+
+    func getCurrentViewController() -> UIViewController? {
+        return UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
+            .first?.rootViewController?.topMostViewController()
+    }
+}
+
+// MARK: - TopMost VC helper
+extension UIViewController {
+    func topMostViewController() -> UIViewController {
+        if let presented = self.presentedViewController {
+            return presented.topMostViewController()
+        }
+        if let nav = self as? UINavigationController {
+            return nav.visibleViewController?.topMostViewController() ?? nav
+        }
+        if let tab = self as? UITabBarController {
+            return tab.selectedViewController?.topMostViewController() ?? tab
+        }
+        return self
     }
 }

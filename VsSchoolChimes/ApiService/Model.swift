@@ -398,3 +398,25 @@ struct Send_AttachmentResponse : Codable {
     let data: [String]
     
 }
+struct AttachmentsResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [Attachment]?
+}
+
+struct Attachment: Codable {
+    let id: String?
+    let type: String?
+    let title: String?
+    let description: String?
+    let date: String?
+    let time: String?
+    let sender_info: String?
+    let is_unread: Bool?
+    let is_archive: Bool?
+    let file_path: [AttachmentFilePath]?
+}
+
+struct AttachmentFilePath: Codable {
+    let path: String?
+}
