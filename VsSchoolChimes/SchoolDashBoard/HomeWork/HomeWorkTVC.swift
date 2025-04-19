@@ -101,7 +101,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
         let fileExtension = url.pathExtension.lowercased()
         
-        if isWebViewPreviewable(fileExtension) {
+        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
             let vc = getCurrentViewController()
             let vcc = ImageShowVc(nibName: nil, bundle: nil)
             vcc.imageURL = homeworkDocs ?? []
@@ -114,8 +114,11 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         }
     }
 
+//    func isWebViewPreviewable(_ ext: String) -> Bool {
+//        return ["pdf", "txt", "docx", "pptx", "xlsx"].contains(ext)
+//    }
     func isWebViewPreviewable(_ ext: String) -> Bool {
-        return ["pdf", "txt", "docx", "pptx", "xlsx"].contains(ext)
+        return ["pdf", "txt"].contains(ext.lowercased())
     }
 
     func openWithDocumentInteraction(url: URL) {
