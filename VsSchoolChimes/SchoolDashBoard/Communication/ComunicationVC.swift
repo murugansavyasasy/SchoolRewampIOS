@@ -404,6 +404,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             if(isVoice == true){
              
                     let vc = RecipientVc(nibName: nil, bundle: nil)
+                if(isEmergencyVoice == 1){
+                    vc.ScreenType = screenType.is_emergencyvoice
+                }else{
+                    vc.ScreenType = screenType.non_emergencyvoice
+                }
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 

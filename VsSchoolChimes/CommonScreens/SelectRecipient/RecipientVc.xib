@@ -54,6 +54,7 @@
                                 <segment title="Group"/>
                                 <segment title="Standard"/>
                                 <segment title="Section/Spefic Student"/>
+                                <segment title="Staff"/>
                             </segments>
                             <connections>
                                 <action selector="segment_action:" destination="-1" eventType="valueChanged" id="RZ1-kn-tPX"/>

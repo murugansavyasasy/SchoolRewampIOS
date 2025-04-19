@@ -127,7 +127,14 @@ class RecipientVc: UIViewController{
     func configureRecipientTabs() {
         segmentName.removeAllSegments()
         cv_itemsarry.removeAll()
-        
+        segmentName
+            .setTitleTextAttributes(
+                [
+                    .font: UIFont.boldSystemFont(ofSize: 12),
+                    .foregroundColor: UIColor.black
+                ],
+                for: .normal
+            )
         switch staff_role {
         case PriorityType.is_staff:
             contentLbl.isHidden = true
@@ -343,7 +350,7 @@ class RecipientVc: UIViewController{
                                 
                                 CustomAlert
                                     .showAlertWithOkAction(
-                                        title: "Success",
+                                        title: "Error",
                                         message: succesmessage.message ?? "",
                                         on: self
                                     ) {
@@ -759,6 +766,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 cell.createdOnlbl.text =  "Created On: \(item.created_on ?? "")"
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
+           
+            
+            
         case recipeint_tabBarName.Standard:
             if let item = standardDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
@@ -780,7 +790,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+        
+        DispatchQueue.main.async {
+            self.tableHeight.constant = self.tv.contentSize.height
+            self.view.layoutIfNeeded()
+        }
 
+        
         return cell
     }
 
@@ -960,10 +976,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             
                             tv.reloadData()
                             
-                            DispatchQueue.main.async {
-                                self.tableHeight.constant = self.tv.contentSize.height
-                                self.view.layoutIfNeeded()
-                            }
                             
                         }
                     }else{
