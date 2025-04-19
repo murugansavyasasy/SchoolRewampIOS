@@ -99,6 +99,7 @@ enum UploadMessageKeys {
     static let sectionCode = "section_code"
     static let subjectId = "subject_id"
     static let filePath = "file_path"
+    static let academic_year_id = "academic_year_id"
 }
 
 class SendAttachmentStringFile {

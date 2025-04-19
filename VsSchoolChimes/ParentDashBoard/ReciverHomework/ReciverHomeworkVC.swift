@@ -9,7 +9,7 @@ import UIKit
 
 @available(iOS 14.0, *)
 class ReciverHomeworkVC: UIViewController, SelectNotice {
-
+    
     func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
@@ -42,7 +42,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         TV.dataSource = self
         
     }
-  
+    
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
     }
@@ -89,7 +89,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
                 if #available(iOS 15.0, *) {
                     self.hideLottieProgressLoader()
                 }
-
+                
                 switch result {
                 case .success(let successMessage):
                     self.homeWorkList = successMessage.data
@@ -109,23 +109,22 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
             url: ServiceUrl.comm_homework_get_homework_list_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6IjkzNjM1MTkiLCJzY2hvb2xfaWQiOiI1NTEyIiwiY2xhc3NfaWQiOjIyMzEsInNlY3Rpb25faWQiOjg5NDUsImlhdCI6MTc0NDI2NzI3Nn0.dtnAoNIp05C2nmG9ol1I1r83n_B0ZtM5WhvnwXVSGbc"
-        ) { [self] (result: Result<HomeworListkResponse, Error>) in
-            DispatchQueue.main.async {
-                if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
-                }
-
-                switch result {
-                case .success(let successMessage):
-                    self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
-                    self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
-                    self.TV.reloadData()
-                case .failure(let error):
-                    print(error.localizedDescription)
+            token:studentDetails?.access_token ?? "") { [self] (result: Result<HomeworListkResponse, Error>) in
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
+                    }
+                    
+                    switch result {
+                    case .success(let successMessage):
+                        self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
+                        self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
+                        self.TV.reloadData()
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
                 }
             }
-        }
     }
 }
 
@@ -172,7 +171,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return expandedSections.contains(section) ? (FilterHomeWorkList?[section].homework?.count ?? 0) : 0
     }
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as? HomeWorkTVC,
@@ -180,14 +179,14 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
               let homework = sectionData.homework?[indexPath.row] else {
             return UITableViewCell()
         }
-
+        
         // Configure cell data
         cell.subjectName.text = homework.subject_name
         cell.topics.text = homework.topic ?? ""
         cell.dateLble.text = sectionData.date
         cell.forwordBtn.isHidden = true
         cell.SelectBtnHeight.constant = 0
-
+        
         // Load image if available
         if let urls = homework.file_path {
             cell.loadImage(urls: urls)
@@ -201,18 +200,18 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             tableView?.beginUpdates()
             tableView?.endUpdates()
         }
-
+        
         cell.cellview.layoutIfNeeded()
         return cell
     }
-
-
+    
+    
     @objc func toggleSection(_ sender: UITapGestureRecognizer) {
         guard let headerView = sender.view else { return }
         let section = headerView.tag
-
+        
         var sectionsToReload = IndexSet()
-
+        
         if expandedSections.contains(section) {
             expandedSections.remove(section)
             sectionsToReload.insert(section)
@@ -221,14 +220,14 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
                 expandedSections.remove(previousSection)
                 sectionsToReload.insert(previousSection)
             }
-
+            
             expandedSections.insert(section)
             sectionsToReload.insert(section)
         }
-
+        
         TV.reloadSections(sectionsToReload, with: .automatic)
     }
-
+    
     
     // Method to load the footer from nib and set it as tableFooterView
     func setupTableFooter() {
@@ -273,43 +272,43 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
         
         searchBar.resignFirstResponder()
     }
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        if searchText.isEmpty {
-//            FilterHomeWorkList = homeWorkList
-//        } else {
-//            FilterHomeWorkList = homeWorkList?.compactMap { homeworkDate in
-//                let filteredHomeworks = homeworkDate.homework?.filter {
-//                    ($0.topic?.localizedCaseInsensitiveContains(searchText) ?? false) ||
-//                    ($0.subject_name?.localizedCaseInsensitiveContains(searchText) ?? false)
-//                }
-//            }
-//        }
-//        TV.reloadData()
-//    }
+    //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    //        if searchText.isEmpty {
+    //            FilterHomeWorkList = homeWorkList
+    //        } else {
+    //            FilterHomeWorkList = homeWorkList?.compactMap { homeworkDate in
+    //                let filteredHomeworks = homeworkDate.homework?.filter {
+    //                    ($0.topic?.localizedCaseInsensitiveContains(searchText) ?? false) ||
+    //                    ($0.subject_name?.localizedCaseInsensitiveContains(searchText) ?? false)
+    //                }
+    //            }
+    //        }
+    //        TV.reloadData()
+    //    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             FilterHomeWorkList = homeWorkList
             expandedSections.removeAll()
         } else {
             let lowercasedSearch = searchText.lowercased()
-
+            
             FilterHomeWorkList = homeWorkList?.compactMap { hwList in
                 guard let homeworkItems = hwList.homework else { return nil }
-
+                
                 let filteredHomework = homeworkItems.filter { hw in
                     hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
                     hw.topic?.lowercased().contains(lowercasedSearch) == true ||
                     hw.content?.lowercased().contains(lowercasedSearch) == true
                 }
-
+                
                 return filteredHomework.isEmpty ? nil : HomeworkList(date: hwList.date, homework: filteredHomework)
             }
-
-            expandedSections = Set(0..<(FilterHomeWorkList?.count ?? 0)) // ✅ This works for Set<Int>
+            
+            expandedSections = Set(0..<(FilterHomeWorkList?.count ?? 0))
         }
-
+        
         TV.reloadData()
-
+        
     }
-
+    
 }
