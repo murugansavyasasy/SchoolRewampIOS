@@ -414,9 +414,10 @@ struct Attachment: Codable {
     let sender_info: String?
     let is_unread: Bool?
     let is_archive: Bool?
-    let file_path: [AttachmentFilePath]?
+    let file_path: [FilePath]?
 }
 
 struct AttachmentFilePath: Codable {
     let path: String?
+    let type:String
 }

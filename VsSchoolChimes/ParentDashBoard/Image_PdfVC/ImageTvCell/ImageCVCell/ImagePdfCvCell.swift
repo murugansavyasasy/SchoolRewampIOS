@@ -15,7 +15,6 @@ class ImagePdfCvCell: UICollectionViewCell {
    
     @IBOutlet weak var IndicaterImageView: UIImageView!
     @IBOutlet weak var fullView: UIView!
-    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,15 +24,12 @@ class ImagePdfCvCell: UICollectionViewCell {
         webView.isHidden = true
         
         fullView.layer.cornerRadius = Colornames.CORadius15
-        fullView.backgroundColor = .white // Ensure it's white if not set in the storyboard
-               
-               // Apply shadow properties
-        fullView.layer.shadowColor = UIColor.lightGray.cgColor // Softer shadow color
-        fullView.layer.shadowOpacity = 0.3 // Slightly transparent
-        fullView.layer.shadowOffset = CGSize(width: 0, height: 8) // Subtle drop shadow
-        fullView.layer.shadowRadius = 15 // Soft and diffused shadow
-               
-               // Optional: Use shadowPath for better performance
+        imageView.layer.cornerRadius = Colornames.CORadius15
+        fullView.backgroundColor = .white
+        fullView.layer.shadowColor = UIColor.lightGray.cgColor
+        fullView.layer.shadowOpacity = 0.3
+        fullView.layer.shadowOffset = CGSize(width: 0, height: 8)
+        fullView.layer.shadowRadius = 15
         fullView.layer.shadowPath = UIBezierPath(roundedRect: fullView.bounds, cornerRadius: 16).cgPath
         
         

@@ -45,6 +45,7 @@ struct ServiceUrl{
     static let  comm_communication_read_status_update_archive  = "comm/communication/read-status-update-archive"
     static let  comm_attachment_send_attachment  = "comm/attachment/send-attachment"
     static let  comm_communication_attachment_list  = "comm/communication/attachment-list"
+    static let  comm_communication_attachment_list_archive  = "comm/communication/attachment-list-archive"
     static let  staff_attd_geometric_entry_using_app  = "staff-attd/geometric/entry-using-app"
     static let  staff_attd_geometric_set_geometric_location  = "staff-attd/geometric/set-geometric-location" 
     static let  staff_attd_geometric_get_geometric_location_history  = "staff-attd/geometric/get-geometric-location-history"

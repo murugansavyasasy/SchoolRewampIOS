@@ -9,6 +9,9 @@ import UIKit
 
 class SchoolListTVC: UITableViewCell {
 
+    @IBOutlet weak var arrowWidth: NSLayoutConstraint!
+    @IBOutlet weak var selectBtnWidth: NSLayoutConstraint!
+    @IBOutlet weak var rightArrow: UIButton!
     @IBOutlet weak var schoolRelignLangLbl: UILabel!
     @IBOutlet weak var selectedBtn: UIButton!
     @IBOutlet weak var address: UILabel!
