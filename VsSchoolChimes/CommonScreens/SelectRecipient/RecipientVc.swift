@@ -85,7 +85,6 @@ class RecipientVc: UIViewController{
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
                 speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
                 speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-                contentLbl.isHidden = true
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
 
@@ -138,7 +137,6 @@ class RecipientVc: UIViewController{
             )
         switch staff_role {
         case PriorityType.is_staff:
-            contentLbl.isHidden = true
             cv_itemsarry = [
                 recipeint_tabBarName.Standard,
                 recipeint_tabBarName.Section_Student,
@@ -151,7 +149,6 @@ class RecipientVc: UIViewController{
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             
             if (staffDetailsCount?.count ?? 0) > 1 {
-                contentLbl.isHidden = true
                 cv_itemsarry = [
                     recipeint_tabBarName.Standard,
                     recipeint_tabBarName.Section_Student,
@@ -169,6 +166,8 @@ class RecipientVc: UIViewController{
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
+                nodataFound.isHidden = false
+                noRecordLbl.isHidden = false
                 tableHeight.constant = 0
             }
             
@@ -574,7 +573,8 @@ class RecipientVc: UIViewController{
         case recipeint_tabBarName.Entier_School:
             target_type = TargetTypes.school
             circular_types =  circular_type.school
-            contentLbl.isHidden = false
+            nodataFound.isHidden = false
+            noRecordLbl.isHidden = false
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
             
@@ -583,7 +583,6 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.group
             circular_types =  circular_type.group
             getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            contentLbl.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
@@ -591,7 +590,6 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            contentLbl.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
@@ -604,7 +602,7 @@ class RecipientVc: UIViewController{
             
             speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
             
-            contentLbl.isHidden = true
+
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
             
@@ -612,7 +610,6 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.staff
             circular_types =  circular_type.staff
             getStaffListAPI()
-            contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
             
@@ -963,36 +960,27 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 case .success(let successmessage):
                     
                     if successmessage.status == true{
-                        
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
-                            tv.isHidden = false
-                            noRecordLbl.isHidden = true
                             groupDetails = successmessage.data
-                            nodata(true)
+                            nodata(true, message: "")
                             if var students = groupDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
                                 }
                                 groupDetails = students
                             }
-                            
                             tv.reloadData()
-                            
-                            
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
-                            tv.isHidden = true
-                            noRecordLbl.isHidden = false
-                            noRecordLbl.text = successmessage.message
-                            nodata(false)
+                            nodata(false, message: successmessage.message ?? "" )
                         }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
-                        nodata(false)
+                        self.nodata(false, message: error.localizedDescription)
                     }
                 }
             }
@@ -1004,18 +992,16 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             switch result {
             case .success(let successMessage):
                 print("successsuccess",successMessage.data)
-                
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
-                        nodata(true)
+                        nodata(true, message: "")
                         standardDetails = successMessage.data
                         standardDetails?.enumerated().forEach { index, student in
                             standardDetails?[index].isSelect = false
                             dropDownArray.append(student.name ?? "")
-                            
                             if let sections = student.sections {
                                 for j in 0..<sections.count {
                                     standardDetails?[index].sections?[j].isSelect = false
@@ -1024,7 +1010,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         }
                         drpodonLbl.text = standardDetails?.first?.name
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
-                        
                         tv.reloadData()
                         DispatchQueue.main.async {
                             self.tableHeight.constant = self.tv.contentSize.height
@@ -1034,22 +1019,25 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectStandardDropDown.isHidden = true
-                        tv.isHidden = true
-                        nodata(false)
-                        noRecordLbl.isHidden = false
-                        noRecordLbl.text = successMessage.message
+                        nodata(false, message: successMessage.message ?? "")
                     }
                 }
-                
             case .failure(let error):
-                print(error.localizedDescription)
-                nodata(false)
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+                    nodata(false, message: error.localizedDescription)
+                }
+                
             }
         }
         
     }
-    func nodata(_ ishide:Bool){
+    func nodata(_ ishide:Bool,message:String){
         nodataFound.isHidden = ishide
+        sendbtnName.isHidden = !ishide
+        tv.isHidden = !ishide
+        noRecordLbl.isHidden = ishide
+        noRecordLbl.text = message
     }
     func getStaffListAPI(){
         APIService.shared
@@ -1061,8 +1049,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 case .success(let successMessage):
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
-                            tv.isHidden = false
-                            nodata(true)
+                            nodata(true, message: "")
                             staffDetails = successMessage.data
                             if var students = staffDetails {
                                 for i in students.indices {
@@ -1071,7 +1058,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 staffDetails = students
                             }
                             tv.reloadData()
-                            
                             DispatchQueue.main.async {
                                 self.tableHeight.constant = self.tv.contentSize.height
                                 self.view.layoutIfNeeded()
@@ -1080,14 +1066,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             selectSubject.isHidden = true
+                            sendbtnName.isHidden = true
                             tv.isHidden = true
-                            noRecordLbl.text = successMessage.message
-                            nodata(false)
+
+                            nodata(false, message: successMessage.message ?? "")
                         }
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    nodata(false)
+                    nodata(false, message: "Something went wrong")
                 }
             }
         
