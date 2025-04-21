@@ -238,6 +238,8 @@
 		84666AE82CE866E30010DA24 /* NoticeBoardVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84666AE32CE866E30010DA24 /* NoticeBoardVc.xib */; };
 		8466E83E2D6ED0CB004F4EFC /* PopupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8466E83D2D6ED0CB004F4EFC /* PopupVC.xib */; };
 		8466E83F2D6ED0CB004F4EFC /* PopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */; };
+		846BDD752DB60387001DB91A /* TAttacmentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846BDD732DB60387001DB91A /* TAttacmentTVC.swift */; };
+		846BDD762DB60387001DB91A /* TAttacmentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846BDD742DB60387001DB91A /* TAttacmentTVC.xib */; };
 		846D83E62D02D91000B69344 /* Tvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83E12D02D91000B69344 /* Tvcell.xib */; };
 		846D83E72D02D91000B69344 /* ExamTmTblVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83E42D02D91000B69344 /* ExamTmTblVCViewController.xib */; };
 		846D83E82D02D91000B69344 /* SideTvcell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 846D83DE2D02D91000B69344 /* SideTvcell.xib */; };
@@ -864,6 +866,8 @@
 		84666AE32CE866E30010DA24 /* NoticeBoardVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeBoardVc.xib; sourceTree = "<group>"; };
 		8466E83C2D6ED0CB004F4EFC /* PopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupVC.swift; sourceTree = "<group>"; };
 		8466E83D2D6ED0CB004F4EFC /* PopupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PopupVC.xib; sourceTree = "<group>"; };
+		846BDD732DB60387001DB91A /* TAttacmentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TAttacmentTVC.swift; sourceTree = "<group>"; };
+		846BDD742DB60387001DB91A /* TAttacmentTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TAttacmentTVC.xib; sourceTree = "<group>"; };
 		846D83DD2D02D91000B69344 /* SideTvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideTvcell.swift; sourceTree = "<group>"; };
 		846D83DE2D02D91000B69344 /* SideTvcell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideTvcell.xib; sourceTree = "<group>"; };
 		846D83E02D02D91000B69344 /* Tvcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tvcell.swift; sourceTree = "<group>"; };
@@ -1808,6 +1812,8 @@
 				840F677C2D9412B400AC2F5A /* cell2Tv.xib */,
 				84EAE7812DB20B250083AD9E /* ReciverAttachmentrVC.swift */,
 				84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */,
+				846BDD732DB60387001DB91A /* TAttacmentTVC.swift */,
+				846BDD742DB60387001DB91A /* TAttacmentTVC.xib */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -3342,6 +3348,7 @@
 				84EFFAE02CCF9EEA00C11C26 /* NotificationViewController.xib in Resources */,
 				84EFF9F22CCCAFF800C11C26 /* HelpVc.xib in Resources */,
 				84EFFA382CCCB44300C11C26 /* ContactUsVc.xib in Resources */,
+				846BDD762DB60387001DB91A /* TAttacmentTVC.xib in Resources */,
 				FA99ED372DA6571800F6AF0E /* SeeMoreFooterView.xib in Resources */,
 				849E573B2C1FF6BD006119DA /* RobotoSlab-Thin.ttf in Resources */,
 				84A5BE4B2C19719900E32496 /* Assets.xcassets in Resources */,
@@ -3706,6 +3713,7 @@
 				18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */,
 				18D718612D0D471A00E9EDA3 /* DailyCollReq.swift in Sources */,
 				84E795DD2D2FF3DF000B36BC /* ChatCvcell.swift in Sources */,
+				846BDD752DB60387001DB91A /* TAttacmentTVC.swift in Sources */,
 				187CF4D72D119C82001422CE /* ClassTimeTableViewController.swift in Sources */,
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
 				FA3230BE2D9556160070BA51 /* ExameMarVC.swift in Sources */,

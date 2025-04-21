@@ -45,6 +45,7 @@ struct ServiceUrl{
     static let  comm_communication_read_status_update_archive  = "comm/communication/read-status-update-archive"
     static let  comm_attachment_send_attachment  = "comm/attachment/send-attachment"
     static let  comm_communication_attachment_list  = "comm/communication/attachment-list"
+    static let  comm_communication_attachment_list_archive  = "comm/communication/attachment-list-archive"
 }
 
 struct localData{

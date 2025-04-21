@@ -143,9 +143,17 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             let img = schools_details?.isSelected ?? false ? UIImage(named: "checkedSquare") : UIImage(
                 named: "uncheckedSquare")
             cell.selectedBtn.setImage(img, for: .normal)
-        }else{
+            cell.rightArrow.isHidden = true
+            cell.arrowWidth.constant = 0
+            cell.selectBtnWidth.constant = 20
+            cell.selectedBtn.isHidden = false
             
-            cell.selectedBtn.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        }else{
+            cell.selectedBtn.isHidden = true
+            cell.rightArrow.isHidden = false
+            cell.arrowWidth.constant = 20
+            cell.selectBtnWidth.constant = 0
+            cell.rightArrow.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         }
        
         
