@@ -320,6 +320,7 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     private func openDocumentPicker(from viewController: UIViewController, types: [UTType]) {
         let picker = UIDocumentPickerViewController(forOpeningContentTypes: types, asCopy: true)
         picker.delegate = self
+        picker.allowsMultipleSelection = true
         viewController.present(picker, animated: true)
     }
 
@@ -365,24 +366,44 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         picker.dismiss(animated: true)
     }
     // MARK: - UIDocumentPickerDelegate
+//    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+//        guard let fileURL = urls.first else { return }
+//        let fileExtension = fileURL.pathExtension.lowercased()
+//
+//        switch fileExtension {
+////        case "pdf":
+////            do {
+////                let data = try Data(contentsOf: fileURL)
+////                onPdfPicked?(fileURL)
+////            } catch {
+////                print("Error reading PDF data: \(error)")
+////            }
+//
+//        case "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf","pdf":
+//            onFilePicked?(fileURL)
+//
+//        default:
+//            print("Unsupported file type: \(fileExtension)")
+//        }
+//    }
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let fileURL = urls.first else { return }
-        let fileExtension = fileURL.pathExtension.lowercased()
+        let supportedExtensions = ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf", "pdf"]
+        let supportedFiles = urls.filter {
+            supportedExtensions.contains($0.pathExtension.lowercased())
+        }
+        
+        // Enforce limit
+        if supportedFiles.count > 5 {
+            // Show alert and exit
+            let alert = UIAlertController(title: "Limit Exceeded", message: "You can only select up to 5 files.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            controller.present(alert, animated: true)
+            return
+        }
 
-        switch fileExtension {
-        case "pdf":
-            do {
-                let data = try Data(contentsOf: fileURL)
-                onPdfPicked?(fileURL)
-            } catch {
-                print("Error reading PDF data: \(error)")
-            }
-
-        case "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf":
+        // If within limit, proceed
+        for fileURL in supportedFiles {
             onFilePicked?(fileURL)
-
-        default:
-            print("Unsupported file type: \(fileExtension)")
         }
     }
 

@@ -14,6 +14,8 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var outerView: UIView!
+    @IBOutlet weak var pdfView: WKWebView!
+    
     var img :UIImage?
     var selectedFileURL : URL?
     var type:String?
@@ -26,6 +28,10 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
         if type?.uppercased() != "IMAGE" {
             imgView.isHidden = true
             pdfView.isHidden = false
+            if let url = selectedFileURL{
+                loadPDF(url)
+            }
+            
         }else{
             if img != nil{
                 imgView.image = img
@@ -77,9 +83,11 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         ActivityIndicator.startAnimating()
     }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         ActivityIndicator.stopAnimating()
     }
+    
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: any Error) {
         ActivityIndicator.stopAnimating()
     }

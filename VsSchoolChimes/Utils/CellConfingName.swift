@@ -106,6 +106,7 @@ class CellConfingName {
     static let  cell2Tv = "cell2Tv"
     static let  Std_Grp_header = "Std_Grp_header"
     static let  SeeMoreFooterView = "SeeMoreFooterView"
+    static let  FiltersCvCell = "FiltersCvCell"
     static let  TAttacmentTVC = "TAttacmentTVC"
     
 }
