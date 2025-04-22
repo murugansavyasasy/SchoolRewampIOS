@@ -19,25 +19,44 @@ class AttachmentsVC: UIViewController {
             MediaItem(title: "Animations in iOS", disreptions: "Implement smooth animations using Swift.", image: ["https://example.com/animation.jpg"], pdf: [""], video: [""], typeId: 1),
             MediaItem(title: "Networking in Swift", disreptions: "Manage network requests effectively in Swift.", image: [""], pdf: ["https://example.com/networking.pdf"], video: [""], typeId: 2)
         ]
+    var attachmentData:[Attachment]?
+    var studentDetails = UserDefaultFileManager.get_child_Details()
        override func viewDidLoad() {
            super.viewDidLoad()
            
-           tv
-               .register(
-                UINib(nibName: CellConfingName.cell1Tv, bundle: nil),
-                forCellReuseIdentifier: CellConfingName.cell1Tv
-               )
+           tv.register(UINib(nibName: CellConfingName.cell1Tv, bundle: nil),forCellReuseIdentifier:CellConfingName.cell1Tv)
            
-           tv
-               .register(
-                UINib(nibName: CellConfingName.cell2Tv, bundle: nil),
-                forCellReuseIdentifier: CellConfingName.cell2Tv
-               )
+           tv.register(UINib(nibName: CellConfingName.cell2Tv, bundle: nil),
+                forCellReuseIdentifier: CellConfingName.cell2Tv)
            tv.dataSource = self
            tv.delegate = self
-           tv.reloadData()
        }
-       
+    func GetHomeWorkArchive() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_homework_get_homework_list_archive,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token:studentDetails?.access_token ?? ""
+        ) { [self] (result: Result<AttachmentsResponse, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
+                }
+
+                switch result {
+                case .success(let successMessage):
+                    self.attachmentData = successMessage.data
+                    self.tv.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+
        
    }
 

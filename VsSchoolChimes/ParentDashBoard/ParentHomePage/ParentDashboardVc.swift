@@ -519,9 +519,7 @@ extension ParentDashboardVc: UISearchBarDelegate{
     }
 
     func get_dashboard_details(){
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
+
         print("tokenefrfrdfrfdx",ServiceUrl.token)
         APIService.shared
             .makeApi(url:  ServiceUrl.get_dashboard_details, parameters: ["member_type" : "parent"] , type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
@@ -533,9 +531,6 @@ extension ParentDashboardVc: UISearchBarDelegate{
                 
             case.success(let succesmessage) :
                 DispatchQueue.main.async { [self] in
-                    if #available(iOS 15.0, *) {
-                        hideLottieProgressLoader()
-                    }
                 print("succesmessagesdsds",succesmessage)
                 if succesmessage.status == true {
                         menu_details = succesmessage.data?.first?.menu_details
@@ -566,9 +561,6 @@ extension ParentDashboardVc: UISearchBarDelegate{
                 
                 DispatchQueue.main.async {
                     print(error.localizedDescription)
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
                 }
             }
             

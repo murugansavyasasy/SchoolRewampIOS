@@ -22,6 +22,7 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var selectStandardDropDown: UIView!
     @IBOutlet weak var selectSubject: UIView!
     
+    @IBOutlet weak var nodataFound: UIImageView!
     @IBOutlet weak var tableHeight: NSLayoutConstraint!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var noRecordLbl: UILabel!
@@ -308,11 +309,13 @@ class RecipientVc: UIViewController{
                 ]
             }
             let parameters: [String: Any] = [
+                UploadMessageKeys.academic_year_id:selectedAcadimicYearId ?? 0,
                 UploadMessageKeys.topic: user_inputs.title,
                 UploadMessageKeys.text: user_inputs.description,
                 UploadMessageKeys.sectionCode: array_selectedId,
                 UploadMessageKeys.subjectId: subjectId ?? "",
                 UploadMessageKeys.filePath:uploadedFiles
+                
             ]
             
             APIService.shared
@@ -950,7 +953,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             tv.isHidden = false
                             noRecordLbl.isHidden = true
                             groupDetails = successmessage.data
-                            
+                            nodata(true)
                             if var students = groupDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
@@ -971,11 +974,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             tv.isHidden = true
                             noRecordLbl.isHidden = false
                             noRecordLbl.text = successmessage.message
+                            nodata(false)
                         }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
+                        nodata(false)
                     }
                 }
             }
@@ -993,6 +998,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         selectSubject.isHidden = true
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
+                        nodata(true)
                         standardDetails = successMessage.data
                         standardDetails?.enumerated().forEach { index, student in
                             standardDetails?[index].isSelect = false
@@ -1017,6 +1023,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async { [self] in
                         selectStandardDropDown.isHidden = true
                         tv.isHidden = true
+                        nodata(false)
                         noRecordLbl.isHidden = false
                         noRecordLbl.text = successMessage.message
                     }
@@ -1024,9 +1031,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 
             case .failure(let error):
                 print(error.localizedDescription)
+                nodata(false)
             }
         }
         
+    }
+    func nodata(_ ishide:Bool){
+        nodataFound.isHidden = ishide
     }
     func getStaffListAPI(){
         APIService.shared
@@ -1039,6 +1050,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             tv.isHidden = false
+                            nodata(true)
                             staffDetails = successMessage.data
                             if var students = staffDetails {
                                 for i in students.indices {
@@ -1058,10 +1070,12 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             selectSubject.isHidden = true
                             tv.isHidden = true
                             noRecordLbl.text = successMessage.message
+                            nodata(false)
                         }
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    nodata(false)
                 }
             }
         
@@ -1081,8 +1095,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
-                        tv.isHidden = true
-                        noRecordLbl.text = successMessage.message
                     }
                 }
             case .failure(let error):
