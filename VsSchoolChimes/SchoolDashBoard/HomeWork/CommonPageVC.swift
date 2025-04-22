@@ -157,6 +157,7 @@ class CommonPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCo
     func didTapButton(title: String, content: String, items: [FilePath]) {
         if #available(iOS 14.0, *) {
             if let page1 = pages.first as? SenderSideHomeWorkViewController{
+                segmentController.selectedSegmentIndex = 0
                 page1.setSelectedHomeWork(title: title, content: content, imageUrls: items)
                 let currentIndex =  pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
                 let direction: UIPageViewController.NavigationDirection = 0 > currentIndex ? .forward : .reverse

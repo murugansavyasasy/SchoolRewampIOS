@@ -34,7 +34,6 @@
                 <outlet property="selectYrsview" destination="XfH-En-hmW" id="Q55-J6-Mwc"/>
                 <outlet property="selectyrDrop" destination="m4t-0H-cjj" id="CFb-qh-wm8"/>
                 <outlet property="switchBtn" destination="8fj-GS-E9h" id="erf-xo-QxL"/>
-                <outlet property="tv" destination="zfy-bl-J32" id="ctf-dR-JDo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -361,10 +360,6 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </view>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="zfy-bl-J32">
-                            <rect key="frame" x="0.0" y="168" width="393" height="581"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        </tableView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J8S-Fx-ATK">
                             <rect key="frame" x="20" y="410" width="353" height="19.333333333333314"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
@@ -449,8 +444,6 @@
                         <constraint firstItem="Vay-8w-T4w" firstAttribute="top" secondItem="LpL-kN-N4i" secondAttribute="top" id="0aN-30-sUb"/>
                         <constraint firstItem="XfH-En-hmW" firstAttribute="leading" secondItem="LpL-kN-N4i" secondAttribute="leading" constant="53" id="3je-Ee-l1K"/>
                         <constraint firstAttribute="trailing" secondItem="JsX-xx-kRS" secondAttribute="trailing" id="4qF-9f-Nq9"/>
-                        <constraint firstItem="zfy-bl-J32" firstAttribute="leading" secondItem="LpL-kN-N4i" secondAttribute="leading" id="5uw-eo-Vp8"/>
-                        <constraint firstAttribute="trailing" secondItem="zfy-bl-J32" secondAttribute="trailing" id="7HS-bq-XRP"/>
                         <constraint firstAttribute="bottom" secondItem="TaV-yV-77D" secondAttribute="bottom" id="8Me-hn-VYS"/>
                         <constraint firstAttribute="bottom" secondItem="cKK-k6-k32" secondAttribute="bottom" constant="25" id="8tT-lX-gGx"/>
                         <constraint firstItem="D3W-Ac-li4" firstAttribute="leading" secondItem="XfH-En-hmW" secondAttribute="trailing" constant="27.329999999999998" id="93v-2w-RNd"/>
@@ -459,7 +452,6 @@
                         <constraint firstItem="YdH-fp-M2G" firstAttribute="leading" secondItem="LpL-kN-N4i" secondAttribute="leading" constant="20" id="BfU-IL-ER8"/>
                         <constraint firstItem="63o-Kq-6GO" firstAttribute="centerX" secondItem="LpL-kN-N4i" secondAttribute="centerX" id="EiK-Js-QW2"/>
                         <constraint firstItem="JsX-xx-kRS" firstAttribute="leading" secondItem="LpL-kN-N4i" secondAttribute="leading" id="GVr-QL-S3q"/>
-                        <constraint firstAttribute="bottom" secondItem="zfy-bl-J32" secondAttribute="bottom" constant="10" id="H5l-Iw-vlD"/>
                         <constraint firstAttribute="trailing" secondItem="Vay-8w-T4w" secondAttribute="trailing" id="Ina-2u-6MJ"/>
                         <constraint firstItem="TaV-yV-77D" firstAttribute="leading" secondItem="LpL-kN-N4i" secondAttribute="leading" id="JP5-jP-nQa"/>
                         <constraint firstItem="63o-Kq-6GO" firstAttribute="centerY" secondItem="LpL-kN-N4i" secondAttribute="centerY" id="KWH-Dx-9Au"/>
@@ -477,7 +469,6 @@
                         <constraint firstAttribute="trailing" secondItem="TaV-yV-77D" secondAttribute="trailing" id="q8O-Hf-qG8"/>
                         <constraint firstItem="XfH-En-hmW" firstAttribute="top" secondItem="JsX-xx-kRS" secondAttribute="bottom" constant="15" id="rDV-Pk-PrT"/>
                         <constraint firstItem="63o-Kq-6GO" firstAttribute="leading" secondItem="LpL-kN-N4i" secondAttribute="leading" constant="20" id="sGT-j3-3BC"/>
-                        <constraint firstItem="zfy-bl-J32" firstAttribute="top" secondItem="XfH-En-hmW" secondAttribute="bottom" constant="20" id="sNe-11-wFM"/>
                         <constraint firstAttribute="trailing" secondItem="cKK-k6-k32" secondAttribute="trailing" constant="7" id="zIG-jS-t57"/>
                         <constraint firstItem="J8S-Fx-ATK" firstAttribute="centerX" secondItem="LpL-kN-N4i" secondAttribute="centerX" id="zP0-s2-BWh"/>
                     </constraints>
@@ -642,10 +633,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="viewFlipsideBackgroundColor">
             <color red="0.12156862745098039" green="0.12941176470588237" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

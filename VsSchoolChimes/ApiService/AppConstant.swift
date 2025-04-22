@@ -114,6 +114,8 @@ struct user_inputs{
     static var is_emergency : Int = 0
     static var schedule_date : [String] = []
     static var selectedImg : [UIImage] = []
+    static var selectedImgUrls : [FilePath] = []
+    static var SelectedUrls : [AttachmentItem] = []
     static var fileUrl:URL?
     static var docUrl = [String]()
     static var start_time = ""

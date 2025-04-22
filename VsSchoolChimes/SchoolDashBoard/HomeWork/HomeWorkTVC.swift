@@ -11,8 +11,6 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var pageViewController: UIPageControl!
     @IBOutlet weak var ImageCollectionView: UICollectionView!
     @IBOutlet weak var subjectName: ShimmerLabel!
-    @IBOutlet weak var Pinview: UIView!
-    @IBOutlet weak var pinImage: UIImageView!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
 
@@ -31,7 +29,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         dateLble.setFont(style: .body, size: FontSize.BodySize)
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         topics.setFont(style: .title, size: FontSize.TitleSize)
-        forwordBtn.layer.cornerRadius = 10
+        forwordBtn.layer.cornerRadius = 4
         forwordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         cellview.layer.cornerRadius = 10
         cellview.layer.shadowColor = UIColor.black.cgColor
@@ -39,8 +37,6 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellview.layer.shadowRadius = 3
         cellview.layer.masksToBounds = false
-
-        Pinview.layer.cornerRadius = Pinview.frame.width / 2
 
         let collection = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
         ImageCollectionView.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
@@ -72,7 +68,6 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     }
 
     func loadImage(urls: [FilePath]) {
-        ImageCollectionView.isHidden = false
         homeworkDocs = urls
         ImageCollectionView.reloadData()
     }
@@ -89,6 +84,10 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = homeworkDocs?[indexPath.row] {
             cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+            let fileURL = URL(fileURLWithPath: img.path ?? "")
+            let iconName = getFileIconName(for: fileURL)
+            let iconImage = UIImage(named: iconName)
+            cell.IndicaterImageView.image = iconImage
         }
         return cell
     }
@@ -101,7 +100,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
         let fileExtension = url.pathExtension.lowercased()
         
-        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
+//        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
             let vc = getCurrentViewController()
             let vcc = ImageShowVc(nibName: nil, bundle: nil)
             vcc.imageURL = homeworkDocs ?? []
@@ -109,9 +108,9 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             vcc.type = 2
             vcc.modalPresentationStyle = .fullScreen
             vc?.present(vcc, animated: true)
-        } else {
-                openWithDocumentInteraction(url: url)
-        }
+//        } else {
+//                openWithDocumentInteraction(url: url)
+//        }
     }
 
 //    func isWebViewPreviewable(_ ext: String) -> Bool {
