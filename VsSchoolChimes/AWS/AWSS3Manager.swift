@@ -168,7 +168,8 @@ class AWSPreSignedURL {
         completion: @escaping (Result<AwsResps, Error>) -> Void
     ) {
         let fileBaseName = fileName.lastPathComponent
-
+        let fname = fileName.lastPathComponent
+        print("fname \(fname)")
         var components = URLComponents(string: "https://api.schoolchimes.com/nodejs/api/MergedApi/get-s3-presigned-url")!
         components.queryItems = [
             URLQueryItem(name: "bucket", value: bucket),

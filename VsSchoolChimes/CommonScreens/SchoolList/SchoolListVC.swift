@@ -32,6 +32,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     let acidamicdrops = DropDown()
     var selectedAcadimicYearId : Int?
     var accadmicDefaultYrName : String?
+    var uploadedURLs: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: acidamicYrDropView)
@@ -41,20 +42,20 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         ViewAnimator.hideFade(acidamicYrDropView)
         ViewAnimator.hideFade(sendBtnName)
         
-        switch screen_type {
-        case isEmergency, isNoticeBoard:
-            ViewAnimator.hideFade(segmentName)
-            ViewAnimator.showFade(sendBtnName)
-            segmentName.selectedSegmentIndex = 1
-
-        case Menu_id.homeWorkMenuId,Menu_id.isAssaignment:
-            
-            ViewAnimator.hideFade(segmentName)
-            ViewAnimator.showFade(sendBtnName)
-            segmentName.selectedSegmentIndex = 0
-        default:
-            ViewAnimator.showFade(segmentName)
-        }
+//        switch screen_type {
+//        case isEmergency, isNoticeBoard:
+//            ViewAnimator.hideFade(segmentName)
+//            ViewAnimator.showFade(sendBtnName)
+//            segmentName.selectedSegmentIndex = 1
+//
+//        case Menu_id.homeWorkMenuId,Menu_id.isAssaignment:
+//            
+//            ViewAnimator.hideFade(segmentName)
+//            ViewAnimator.showFade(sendBtnName)
+//            segmentName.selectedSegmentIndex = 0
+//        default:
+//            ViewAnimator.showFade(segmentName)
+//        }
 
         for i in 0..<(school_details?.count ?? 0) {
             school_details?[i].isSelected = true
@@ -252,8 +253,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                     sendtextmessage_communication()
 
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
-                    uploadAndSendVoiceMessage(url : user_inputs.voice_link)
-
+                    uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
+                        self.sendVoiceMessage_communication()
+                    }
                 default:
                     print("❗️Unhandled communication screen type: \(screen_type)")
                 }
@@ -264,26 +266,136 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         )
     }
     
-    private func uploadAndSendVoiceMessage(url: String) {
-        guard let audioURL = URL(string: url) else {
-            print("❌ Invalid audio URL.")
+    private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
+        var completed = 0
+
+        switch file {
+
+        // 🎙️ Case: Audio File from String (URL Path)
+        case let files as String:
+            guard let audioURL = URL(string: files) else {
+                print("❌ Invalid audio URL.")
+                return
+            }
+            let total = 1
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            let today_date = AwsCurrentDateString()
+            AWSUploadManager.shared.uploadFileToAWS(
+                file: audioURL,
+                bucketPath:   today_date + "/" + (
+                    school_details?.first?.school_id ?? ""),
+                bucketName: "schoolchimes-communication",
+                progressHandler: { progress in
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+                },
+                completion: { url in
+                    if let uploadedURL = url {
+                        print("✅ Audio uploaded: \(uploadedURL)")
+                        user_inputs.voice_link = uploadedURL
+                    } else {
+                        print("❌ Audio upload failed.")
+                    }
+
+                    completed += 1
+                    let progress = (Double(completed) / Double(total)) * 100
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+
+                    if completed == total {
+                        CircularProgressLoader.shared.hide()
+                        completion()
+                    }
+                }
+            )
+
+        // 🖼️ Case: Array of Images
+        case let images as [UIImage]:
+            let total = images.count
+            guard !images.isEmpty else {
+                completion()
+                return
+            }
+
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+
+            for (index, img) in images.enumerated() {
+                AWSUploadManager.shared.uploadFileToAWS(
+                    file: img,
+                    bucketPath: "uploads/images/",
+                    bucketName: "schoolchimes-communication",
+                    progressHandler: { progress in
+                        // Optional: Update progress per file individually if you want
+                    },
+                    completion: { [self] url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                            
+                        } else {
+                            print("❌ Failed to upload image \(index)")
+                        }
+
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    }
+                )
+            }
+            // 🖼️ Case: Array of Images
+        case let files as [String]:
+                let total = files.count
+                guard !files.isEmpty else {
+                    completion()
+                    return
+                }
+
+                CircularProgressLoader.shared.show(style: .circle)
+                CircularProgressLoader.shared.updateProgress(to: 0)
+
+                for (index, url) in files.enumerated() {
+                    guard let PdfURL = URL(string: url) else {
+                        print("❌ Invalid audio URL.")
+                        return
+                    }
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: PdfURL,
+                        bucketPath: "uploads/Documents/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: { progress in
+                            // Optional: Update progress per file individually if you want
+                        },
+                        completion: { [self] url in
+                            if let uploadedURL = url {
+                                uploadedURLs.append(uploadedURL)
+                                
+                            } else {
+                                print("❌ Failed to upload image \(index)")
+                            }
+
+                            completed += 1
+                            let progress = (Double(completed) / Double(total)) * 100
+                            CircularProgressLoader.shared.updateProgress(to: progress)
+
+                            if completed == total {
+                                CircularProgressLoader.shared.hide()
+                                // Do something with uploadedURLs if needed
+                                completion()
+                            }
+                        }
+                    )
+                }
+        default:
+            print("❌ Unsupported file type")
             return
         }
-
-        AWSUploadManager.shared.uploadFileToAWS(
-            file: audioURL,
-            bucketPath: "uploads/audio/",
-            bucketName: "schoolchimes-communication"
-        ) { url in
-            if let uploadedURL = url {
-                print("✅ Audio uploaded: \(uploadedURL)")
-                user_inputs.voice_link = uploadedURL
-                self.sendVoiceMessage_communication()
-            } else {
-                print("❌ Audio upload failed.")
-            }
-        }
     }
+
     
     
     

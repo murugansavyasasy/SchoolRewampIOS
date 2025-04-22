@@ -74,8 +74,16 @@ class RecipientVc: UIViewController{
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr()
+        
+        let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
+        tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
+        
+        tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
+        
+        
+      
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-            configureRecipientTabs()
+//            configureRecipientTabs()
             
             if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
                 segmentName.isHidden = true
@@ -109,16 +117,8 @@ class RecipientVc: UIViewController{
         selectStandardDropDown.addGestureRecognizer(tap2)
         selectSubject.addGestureRecognizer(tap3)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
-        
-        
-        let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
-        tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
-        
-        tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
-        
         tv.delegate = self
         tv.dataSource = self
-        
         configureRecipientTabs()
     
     }
@@ -148,17 +148,18 @@ class RecipientVc: UIViewController{
             
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             
-            if (staffDetailsCount?.count ?? 0) > 1 {
-                cv_itemsarry = [
-                    recipeint_tabBarName.Standard,
-                    recipeint_tabBarName.Section_Student,
-                    recipeint_tabBarName.Group,
-                    recipeint_tabBarName.Staff
-                ]
-                target_type = TargetTypes.standard
-                circular_types =  circular_type.standard
-                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            } else {
+//            if (staffDetailsCount?.count ?? 0) > 1 {
+//                cv_itemsarry = [
+//                    recipeint_tabBarName.Entier_School,
+//                    recipeint_tabBarName.Standard,
+//                    recipeint_tabBarName.Section_Student,
+//                    recipeint_tabBarName.Group,
+//                    recipeint_tabBarName.Staff
+//                ]
+//                target_type = TargetTypes.standard
+//                circular_types =  circular_type.standard
+//                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+//            } else {
                 cv_itemsarry = [
                     recipeint_tabBarName.Entier_School,
                     recipeint_tabBarName.Standard,
@@ -166,10 +167,11 @@ class RecipientVc: UIViewController{
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
+            array_selectedId.append(staffDetailsCount?.first?.school_id ?? "")
                 nodataFound.isHidden = false
                 noRecordLbl.isHidden = false
                 tableHeight.constant = 0
-            }
+//            }
             
         default:
             print("Unhandled staff role")
@@ -425,14 +427,14 @@ class RecipientVc: UIViewController{
                 print("❌ Invalid audio URL.")
                 return
             }
-
             let total = 1
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-
+            let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath: "uploads/audio/",
+                bucketPath:   today_date + "/" + (
+                    staffDetailsCount?.first?.school_id ?? ""),
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -571,10 +573,13 @@ class RecipientVc: UIViewController{
         switch selectedTitle {
             
         case recipeint_tabBarName.Entier_School:
+            array_selectedId.append(staffDetailsCount?.first?.school_id ?? "")
             target_type = TargetTypes.school
             circular_types =  circular_type.school
             nodataFound.isHidden = false
             noRecordLbl.isHidden = false
+            noRecordLbl.text = "Tap SEND to share this message with everyone in the school."
+            sendbtnName.isHidden = false
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
             
@@ -731,6 +736,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let baseCount: Int
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
+
             baseCount = groupDetails?.count ?? 0
         case recipeint_tabBarName.Standard:
             baseCount = standardDetails?.count ?? 0
@@ -760,6 +766,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
+            
             if let item = groupDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
