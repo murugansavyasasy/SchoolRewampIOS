@@ -114,27 +114,6 @@ class CustomView:UIView{
         self.layer.cornerRadius = 8
     }
 }
-//extension UITapGestureRecognizer {
-//    func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
-//        guard let attributedText = label.attributedText else { return false }
-//        let textStorage = NSTextStorage(attributedString: attributedText)
-//        let layoutManager = NSLayoutManager()
-//        let textContainer = NSTextContainer(size: label.bounds.size)
-//        textContainer.lineFragmentPadding = 0
-//        textContainer.maximumNumberOfLines = label.numberOfLines
-//        textContainer.lineBreakMode = label.lineBreakMode
-//        layoutManager.addTextContainer(textContainer)
-//        textStorage.addLayoutManager(layoutManager)
-//        
-//        let location = self.location(in: label)
-//        let textBoundingBox = layoutManager.usedRect(for: textContainer)
-//        let textContainerOffset = CGPoint(x: (label.bounds.width - textBoundingBox.width) * 0.5 - textBoundingBox.origin.x, y: (label.bounds.height - textBoundingBox.height) * 0.5 - textBoundingBox.origin.y)
-//        let locationInTextContainer = CGPoint(x: location.x - textContainerOffset.x, y: location.y - textContainerOffset.y)
-//        
-//        let characterIndex = layoutManager.characterIndex(for: locationInTextContainer, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-//        return NSLocationInRange(characterIndex, targetRange)
-//    }
-//}
 
 extension UITapGestureRecognizer {
     func didTapAttributedTextInLabel(label: UILabel, inRange targetRange: NSRange) -> Bool {
@@ -628,3 +607,32 @@ func downloadFile(from urlString: String, folderName: String, fileName: String) 
     
     task.resume()
 }
+
+
+extension DateFormatter {
+    func convertDate(_ dateString: String, fromFormat: String = "dd-MM-yyyy", toFormat: String = "dd MMM yyyy") -> String? {
+        self.dateFormat = fromFormat
+
+        if let date = self.date(from: dateString) {
+            self.dateFormat = toFormat
+            return self.string(from: date)
+        }
+        return nil
+    }
+}
+
+extension UILabel {
+    func setStyledDateTime(dateString: String, timeString: String?) {
+        let dateAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.black]
+        let timeAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.gray]
+
+        let attributedText = NSMutableAttributedString(string: dateString, attributes: dateAttributes)
+        if let time = timeString {
+            let timeAttributedString = NSAttributedString(string: "  " + time, attributes: timeAttributes)
+            attributedText.append(timeAttributedString)
+        }
+
+        self.attributedText = attributedText
+    }
+}
+
