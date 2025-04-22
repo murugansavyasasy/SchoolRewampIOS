@@ -190,7 +190,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
 //            enableDisable()
         }
     
-        
+        if staff_role == "p3"{
+            seduleClickView.isHidden = true
+        }else{
+            seduleClickView.isHidden = false
+        }
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleWaveViewProgressChange(_:)), name: NSNotification.Name("WaveViewSliderChanged"), object: nil)

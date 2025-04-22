@@ -47,34 +47,6 @@
                   startingLineNumber = "299"
                   endingLineNumber = "299">
                </Location>
-               <Location
-                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - d0060f81892849ee"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "299"
-                  endingLineNumber = "299">
-               </Location>
-               <Location
-                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - d0060f81892849ee"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "299"
-                  endingLineNumber = "299">
-               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -93,34 +65,6 @@
             landmarkName = "Validate_OTP(mobileNumber:otp:)"
             landmarkType = "7">
             <Locations>
-               <Location
-                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - d0060f8189284b5c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "281"
-                  endingLineNumber = "281">
-               </Location>
-               <Location
-                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - d0060f8189284b5c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "281"
-                  endingLineNumber = "281">
-               </Location>
                <Location
                   uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - d0060f8189284b5c"
                   shouldBeEnabled = "Yes"

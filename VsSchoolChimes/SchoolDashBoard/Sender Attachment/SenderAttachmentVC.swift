@@ -127,6 +127,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     func imageSelection(){
+        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             if url != nil{
                 selectedImages.removeAll()
@@ -153,8 +154,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 fileUrls.append(ulr)
             }
             
-            
-           
             selectedImages.append(ImageName.pdf!)
             selectImgPdfview.imageCollectionview.reloadData()
         }
@@ -340,8 +339,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     func selectPDF() {
+        let count = selectedImages.count - selectedImgUrl.count
         
-        PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
+        if count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
+        }else{
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -704,15 +709,11 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 
                 refreshAlert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: { [self] (action: UIAlertAction!) in
                 }))
-                
 
                 present(refreshAlert, animated: true, completion: nil)
-                
-                
             }
         }
     }
-    
 }
 
 
@@ -823,11 +824,16 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             // Present the alert
             self.present(alertController, animated: true, completion: nil)
         }else{
+            
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
                 
-                vc.selectedFileURL = url
+                if fileUrls.count != 0{
+                    if let url = URL(string: fileUrls[indexPath.item - 1]){
+                        vc.selectedFileURL = url
+                    }
+                }
                 
                 // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]

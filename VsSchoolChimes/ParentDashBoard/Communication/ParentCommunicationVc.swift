@@ -63,24 +63,17 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         
     }
     
+    @IBOutlet weak var FilterCV: UICollectionView!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var NodataLbl: UILabel!
     @IBOutlet weak var FilterImage: UIImageView!
     @IBOutlet weak var backBtn: UIButton!
-    @IBOutlet weak var clickTextView: UILabel!
-    @IBOutlet weak var clickVoiceLbl: UILabel!
-    @IBOutlet weak var textBtn: UIButton!
-    @IBOutlet weak var voiceClickView: UIView!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
     @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var textClickView: UIView!
-    @IBOutlet weak var voiceBtn: UIButton!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NodataImgHeight: NSLayoutConstraint!
-    @IBOutlet weak var NodataImgTop: NSLayoutConstraint!
-    
     
     var BtnId = 1
     let backgroundcolor = Colornames.topBackgroundCLr
@@ -93,21 +86,19 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var TotalMessageList : [CommunicationReciverData]?
     var FilteredMessages : [CommunicationReciverData]?
-//    var ArchiveMessages : [CommunicationReciverData] = []
-//    var TodayMessage : [CommunicationReciverData] = []
     var dropDown = DropDown()
     var isFiltered = false
+    let dateFormatter = DateFormatter()
+    let Filters = ["All","VOICE","TEXT","Read","Unread"]
+    var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        buttons()
-
+    
         StyleAndTranslate()
-        NodataImgTop.constant = 0
-        NodataImgHeight.constant = 0
-        NodataLbl.isHidden = true
-        NodataImage.isHidden = true
+       
         SearchBar.delegate = self
+        SearchBar.searchTextField.addDoneButton()
         
         if passValue == 1{
             NameLbl.text = ""
@@ -115,8 +106,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         }
         
         backBtn.applyBackButton()
-        ButtonStyle()
-        // Do any additional setup after loading the view.
+        
       
         RegisterCell()
         
@@ -131,6 +121,9 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
+        
+        FilterCV.delegate = self
+        FilterCV.dataSource = self
     }
 
     override func viewDidLayoutSubviews() {
@@ -163,6 +156,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     //MARK: StyleAndTranslate
     func StyleAndTranslate(){
         
+        NodataLbl.isHidden = true
+        NodataImage.isHidden = true
+        NodataLbl.setFont(style: .title, size: 17)
+        
         NameLbl.text = studentDetails?.name
         StandardLbl.text = (studentDetails?.standard_name ?? "") + " " + (studentDetails?.section_name ?? "")
         
@@ -170,9 +167,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         
-        clickTextView.text = CommonStringFile.TextMessage.translated()
         backBtn.setTitle(MenuStringFile.Communication.translated(), for: .normal)
-        clickVoiceLbl.text = CommonStringFile.VoiceMessage.translated()
     }
     
     //MARK: Cell registration
@@ -185,110 +180,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         
         let footerNib = UINib(nibName:CellConfingName.SeeMoreFooterView , bundle: nil)
         tv.register(footerNib, forHeaderFooterViewReuseIdentifier: CellConfingName.SeeMoreFooterView)
-    }
-    
-    func ButtonStyle(){
-        textClickView.backgroundColor = .white
-        textBtn.backgroundColor = UIColor.white
-        clickVoiceLbl.textColor = .black
-        clickTextView.textColor = .black
-        textBtn.tintColor = .black
-        //voiceBtn.backgroundColor = .white
-        voiceClickView.layer.cornerRadius = 8
-        voiceClickView.layer.cornerRadius = 8
-        //voiceClickView.backgroundColor = tapColor
-        voiceBtn.layer.cornerRadius = 20
-        voiceBtn.layer.shadowColor = UIColor.black.cgColor
-        voiceBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
-        voiceBtn.layer.shadowRadius = 5
-        voiceBtn.layer.shadowOpacity = 0.3
-        gradientcolours(view: voiceClickView,colours:[
-            UIColor(hex: "7ED957").withAlphaComponent(0.5).cgColor,
-            UIColor(hex: "0097B2").withAlphaComponent(0.5).cgColor
-        ])
         
-        gradientcolours(view: textClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-    }
-    
-    func buttons(){
-        //MARK: TEXT BUTTON BACKGROUND
-        textBtn.layer.cornerRadius = 20
-        textBtn.layer.shadowColor = UIColor.black.cgColor
-        textBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
-        textBtn.layer.shadowRadius = 5
-        textBtn.layer.shadowOpacity = 0.3
-        textClickView.layer.cornerRadius = 8
-        textClickView.backgroundColor = backgroundcolor
-        voiceClickView.backgroundColor = .white
-        textBtn.backgroundColor = UIColor.white
-        clickVoiceLbl.textColor = .black
-       
-        clickTextView.textColor = .black
-        voiceBtn.tintColor = tapColor
-        textBtn.tintColor = .black
-        
-    }
-    
-    func textButtonStyle(){
-        textClickView.backgroundColor = backgroundcolor
-        voiceClickView.backgroundColor = .white
-        textBtn.backgroundColor = UIColor.white
-        clickVoiceLbl.textColor = .black
-       
-        clickTextView.textColor = .black
-//        voiceBtn.tintColor = tapColor
-        textBtn.tintColor = .black
-        
-        //MARK: TEXT BUTTON BACKGROUND
-        textBtn.layer.cornerRadius = 20
-        textBtn.layer.shadowColor = UIColor.black.cgColor
-        textBtn.layer.shadowOffset = CGSize(width: 0, height: 2)
-        textBtn.layer.shadowRadius = 5
-        textBtn.layer.shadowOpacity = 0.3
-        textClickView.layer.cornerRadius = 8
-        gradientcolours(view: textClickView,colours: [
-            UIColor(hex: "7ED957").withAlphaComponent(0.5).cgColor,
-            UIColor(hex: "0097B2").withAlphaComponent(0.5).cgColor
-        ])
-        gradientcolours(view: voiceClickView,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-    }
-    
-    func gradientcolours(view: UIView, colours: [CGColor]) {
-        // Remove any existing gradient layers to avoid duplication
-        view.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        
-        // Create and configure the gradient layer
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colours
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-        gradientLayer.frame = view.bounds
-        gradientLayer.cornerRadius = view.layer.cornerRadius
-        
-        // Insert the gradient layer into the view's layer
-        view.layer.insertSublayer(gradientLayer, at: 0)
+        let cvnib = UINib(nibName:CellConfingName.FiltersCvCell , bundle: nil)
+        FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
     }
 
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
-    }
-    @IBAction func voiceMessgBtn(_ sender: Any) {
-        BtnId = 1
-        ButtonStyle()
-        shouldShowFooter = true
-        setupTableFooter()
-        tv.reloadData()
-        
-    }
-    
-    @IBAction func TextMessageBtn(_ sender: Any) {
-        
-        BtnId = 0
-        textButtonStyle()
-        shouldShowFooter = true
-        setupTableFooter()
-        tv.reloadData()
     }
     
     @IBAction func filter(_ sender: UIButton) {
@@ -344,7 +243,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
             
             switch result {
                 
-                
             case .success(let SuccessMessage):
                 
                 if SuccessMessage.status == true {
@@ -352,32 +250,17 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     DispatchQueue.main.async { [self] in
                         
                         TotalMessageList = SuccessMessage.data
-//                        for i in 0..<(TotalMessageList?.count ?? 0){
-//                            if TotalMessageList?[i].id == detail_id{
-//                                TotalMessageList?[i].isExpand = true
-//                            }else{
-//                                TotalMessageList?[i].isExpand = false
-//                            }
-//                        }
-//
-                        NodataImgTop.constant = 0
-                        NodataImgHeight.constant = 0
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
                         tv.reloadData()
-                        
-                       // TotalMessageList?.append(contentsOf: TodayMessage)
-                        
                     }
                     
                 }else {
                     
                     DispatchQueue.main.async { [self] in
                         TotalMessageList = []
-                        NodataLbl.text = SuccessMessage.message
+                        NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
                         NodataLbl.isHidden = false
-                        NodataImgTop.constant = 50
-                        NodataImgHeight.constant = 300
                         NodataImage.isHidden = false
                         tv.isScrollEnabled = false
                         tv.reloadData()
@@ -399,7 +282,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
             
             switch result {
                 
-                
             case .success(let SuccessMessage):
                 
                 if SuccessMessage.status == true {
@@ -409,16 +291,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                         TotalMessageList?.append(contentsOf: SuccessMessage.data)
                        
                         if isFiltered{
-                           //TotalMessageList?.append(contentsOf: SuccessMessage.data)
+                            
                             filterSelection(FilterType:  dropDown.selectedItem ?? "")
                         }
                         
-                        NodataImgTop.constant = 0
-                        NodataImgHeight.constant = 0
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
                         tv.isHidden = false
-                       // tv.isScrollEnabled = true
+                        tv.isScrollEnabled = true
                         tv.reloadData()
                     }
                     
@@ -430,10 +310,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                         
                         if TotalMessageList?.count == 0 {
                             NodataLbl.text = SuccessMessage.message
+                            //NodataLbl.text = "Something went wrong! Try again Later"
                             tv.isHidden = true
                             NodataImage.isHidden = false
+                            NodataLbl.isHidden = false
                         }
-                       
                     }
                 }
                 
@@ -459,18 +340,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     
                     DispatchQueue.main.async { [self] in
                         
-                        //getCommunicationList(detail_id: detail_id)
-//                        for i in 0..<(MessageList?.count ?? 0){
-//                            if MessageList?[i].id == detail_id{
-//                                MessageList?[i].is_unread = false
-//                            }
-//                        }
-                        
-//                        if type == "VOICE"{
-//                            
-//                             getCommunicationList()
-//                              tv.reloadData()
-//                        }
+                        print(SuccessMessage.message)
                     }
                     
                 }else {
@@ -503,13 +373,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     
                     DispatchQueue.main.async { [self] in
                         
-                       // getCommunicationList(detail_id: detail_id)
-                        
-//                        if type == "VOICE"{
-//                            
-//                            GetArchiveCommunicationList()
-//                              tv.reloadData()
-//                        }
+                        print(SuccessMessage.message)
                     }
                     
                 }else {
@@ -543,8 +407,6 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             return FilteredMessages?.count ?? 0
         }else{
             
-           // TotalMessageList = TodayMessage + ArchiveMessages
-            
             return TotalMessageList?.count ?? 0
         }
     }
@@ -574,8 +436,11 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.descriptContent.isUserInteractionEnabled = true
             
             cell.MessageTitle.text = message?.description
-            cell.DateLabel.text = (message?.time ?? "") + "  " + (message?.date ?? "")
+           
+            let formattedDateString = dateFormatter.convertDate(message?.date ?? "") ?? ""
             
+            cell.DateLabel.setStyledDateTime(dateString: formattedDateString, timeString: message?.time)
+
             cell.descriptContent.attributedText = self.descript(for:message?.content ?? "", expanded: message?.isExpand ?? false)
 
             cell.delegate = self
@@ -615,11 +480,18 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.NewImageView.isHidden = true
             
             cell.playBtn.setImage(isPlaying ? ImageName.pausebutton : ImageName.playbutton, for: .normal)
-            cell.datelbl.text = (voiceData?.time ?? "") + "  " + (voiceData?.date ?? "")
+           
+          
+                let formattedDateString = dateFormatter.convertDate(message?.date ?? "") ?? ""
+                cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: message?.time)
+            
+            
             cell.contentlbl.text = voiceData?.description ?? ""
             
             let duration = voiceData?.duration ?? 0
+            print("duration1",duration)
             let formatted = formatDuration(duration)
+            print("duration",formatted)
             cell.totaltime.text = "00:00 / \(formatted)"
             
             if !isPlaying {
@@ -701,19 +573,22 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 ReadStatusUpdate(type: message?.type ?? "", detail_id: message?.id ?? "")
             }
             message?.is_unread = false
-            
             let cell = tv.cellForRow(at: indexPath) as! TextHistoryTVCell
             cell.NewImageView.isHidden = true
         }
         
          //Save updated message back to the data source.
         if isFiltered {
-            FilteredMessages?[indexPath.row].isExpand = message?.isExpand
-            FilteredMessages?[indexPath.row].is_unread = ((message?.is_unread) != nil)
+            
+            if let updatedMessage = message{
+                FilteredMessages?[indexPath.row] = updatedMessage
+            }
+           
         } else {
-            TotalMessageList?[indexPath.row].isExpand = message?.isExpand
-            TotalMessageList?[indexPath.row].is_unread = message?.is_unread ?? false
-            print("TotalMessageList",TotalMessageList?[indexPath.row].isExpand)
+            
+            if let updatedMessage = message{
+                TotalMessageList?[indexPath.row] = updatedMessage
+            }
         }
         
         // Refresh table view layout.
@@ -767,9 +642,20 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         if shouldShowFooter {
             if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
                 // Adjust the frame based on your needs.
-                footer.frame = CGRect(x: 0, y: 0, width: tv.frame.width, height: 20)
+                footer.frame = CGRect(x: 0, y: 0, width: tv.frame.width, height: 200)
+               
+                let buttonTitle = "See More"
+                let attributedString = NSMutableAttributedString(string: buttonTitle)
+
+                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
+                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
                 
-                // Add a tap gesture recognizer to the button to trigger the hide action.
+                // Apply underline style
+                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
+
+                // Set attributed title to UIButton
+                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
+
                 let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
                 footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
                 footer.SeeMoreBtn.isUserInteractionEnabled = true
@@ -803,23 +689,94 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     }
 }
 
+extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
+    
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return Filters.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
+        
+        cell.FilterLbl.text = Filters[indexPath.item]
+        
+        cell.cellView.backgroundColor = indexPath == selectedIndex ? .systemGreen.withAlphaComponent(0.3) : .systemGray5
+            
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        selectedIndex = indexPath // Update selected index
+        
+        filterSelection(FilterType: Filters[indexPath.item])
+        
+        isFiltered = true
+        tv.reloadData()
+        
+        if FilteredMessages?.count == 0{
+            
+            NodataImage.isHidden = false
+            NodataLbl.isHidden = false
+            NodataLbl.text = "No Data Found"
+        }else {
+            
+            NodataImage.isHidden = true
+            NodataLbl.isHidden = true
+        }
+        
+        FilterCV.reloadData()
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let text = Filters[indexPath.item] // Assuming your label text is from a data source
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
+        label.text = text
+        label.sizeToFit()
+
+        let width = label.frame.width + 20 // Add padding
+        return CGSize(width: width, height: 40) // Adjust height accordingly
+    }
+}
 
 extension ParentCommunicationVc : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            if searchText.isEmpty {
-                FilteredMessages = TotalMessageList
-            } else {
-                FilteredMessages = TotalMessageList?.filter {
-                    $0.content.lowercased().contains(searchText.lowercased()) ||
-                    $0.description.lowercased().contains(searchText.lowercased()) ||
-                    $0.date.lowercased().contains(searchText.lowercased())  ||
-                    $0.type.lowercased().contains(searchText.lowercased())
-                }
-            }
-         isFiltered = true
-         tv.reloadData()
+        guard let totalMessages = TotalMessageList else {
+            FilteredMessages = []
+            tv.reloadData()
+            return
         }
+
+        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            FilteredMessages = totalMessages
+        } else {
+            let lowercasedSearch = searchText.lowercased()
+
+            FilteredMessages = totalMessages.filter { message in
+                let content = message.content.lowercased()
+                let description = message.description.lowercased()
+                let dateString = dateFormatter.convertDate(message.date ?? "")?.lowercased() ?? ""
+                let type = message.type.lowercased()
+
+                return content.contains(lowercasedSearch) ||
+                       description.contains(lowercasedSearch) ||
+                       dateString.contains(lowercasedSearch) ||
+                       type.contains(lowercasedSearch)
+            }
+        }
+
+        isFiltered = true
+        tv.reloadData()
+    }
+
 }
 
 extension Array where Element == CommunicationReciverData {
