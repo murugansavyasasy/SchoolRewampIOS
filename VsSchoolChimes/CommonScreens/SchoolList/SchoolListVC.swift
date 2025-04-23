@@ -10,6 +10,7 @@ import DropDown
 
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var chooseDefaultLbl: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var acidamicYrDropView: UIView!
@@ -17,6 +18,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var listTable: UITableView!
    
+    @IBOutlet weak var norecordImg: UIImageView!
     var screen_type : Int?
     var isEmergency : Int = 1
     var isNoticeBoard : Int = 1
@@ -236,11 +238,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
         }else{
             
-          message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
         }
         let title = AlertstringFile.Alert_title
-
+        
         alert.showAlertCancel(
             title: title,
             message: message ?? "",
@@ -251,7 +253,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 switch screen_type {
                 case screenType.communication_text:
                     sendtextmessage_communication()
-
+                    
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
                         self.sendVoiceMessage_communication()
@@ -412,22 +414,54 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         DispatchQueue.main.async { [self] in
                             //                        listTable.isHidden = true
                             AcadimicYearDatas = successMessage.data ?? []
-                            acidamicYrDropView.isUserInteractionEnabled = true
+                            var hasCurrentYear = false
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    
-                                    acidmicYrLbl.text = AcadimicYearDatas[i].year
-                                        selectedAcadimicYearId = AcadimicYearDatas[i].id
-                                        accadmicDefaultYrName = AcadimicYearDatas[i].year ?? ""
+                                        acidmicYrLbl.text = AcadimicYearDatas[i].year
+                                    accadmicDefaultYrName = AcadimicYearDatas[i].year
+                                        selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                    hasCurrentYear = true
+                                    segmentName.isUserInteractionEnabled = hasCurrentYear
                                         break
-                                    
                                 }
                             }
+                            
+                            if !hasCurrentYear {
+                                segmentName.isUserInteractionEnabled = false
+//                                nodata(false, message: "")
+                                norecordImg.isHidden = true
+                                acidamicYrDropView.isUserInteractionEnabled = false
+                                
+                                let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
+                                let attributedString = NSMutableAttributedString(string: fullText)
+
+                                let email = "support@savyasasy.com"
+                                if let range = fullText.range(of: email) {
+                                    let nsRange = NSRange(range, in: fullText)
+                                    
+                                    // Color and underline
+                                    attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
+                                    attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
+                                }
+
+                                noRecordLbl.attributedText = attributedString
+                                noRecordLbl.isUserInteractionEnabled = true
+                                
+                                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
+                                noRecordLbl.addGestureRecognizer(tapGesture)
+
+                            }
+                            
                         }
+                        
                     }else{
-                        DispatchQueue.main.async { [self] in
-                            acidamicYrDropView.isUserInteractionEnabled = false
-                            listTable.isHidden = true
+                        DispatchQueue.main.async {
+                            self.alert
+                                .showAlert(
+                                    title: "Error",
+                                    message: successMessage.message ?? "" ,
+                                    on: self
+                                )
                         }
                     }
                 case .failure(let error):
@@ -435,6 +469,45 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 }
             }
         
+    }
+    
+    @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = noRecordLbl.attributedText?.string else { return }
+           let email = "support@savyasasy.com"
+
+           if let range = text.range(of: email) {
+               let nsRange = NSRange(range, in: text)
+
+               let tapLocation = gesture.location(in: noRecordLbl)
+               let layoutManager = NSLayoutManager()
+               let textContainer = NSTextContainer(size: noRecordLbl.bounds.size)
+               let textStorage = NSTextStorage(attributedString: noRecordLbl.attributedText!)
+
+               textContainer.lineFragmentPadding = 0
+               textContainer.maximumNumberOfLines = noRecordLbl.numberOfLines
+               textContainer.lineBreakMode = noRecordLbl.lineBreakMode
+               layoutManager.addTextContainer(textContainer)
+               textStorage.addLayoutManager(layoutManager)
+
+               let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+               if NSLocationInRange(index, nsRange) {
+                   let subject = ""
+                   let body = ""
+                   
+                   // URL encode
+                   let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   
+                   // Try Gmail URL
+                   if let gmailURL = URL(string: "googlegmail://co?to=\(email)&subject=\(encodedSubject)&body=\(encodedBody)"),
+                      UIApplication.shared.canOpenURL(gmailURL) {
+                       UIApplication.shared.open(gmailURL)
+                   } else if let fallbackURL = URL(string: "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)") {
+                       UIApplication.shared.open(fallbackURL)
+                   }
+               }
+           }
     }
     func sendtextmessage_communication(){
         

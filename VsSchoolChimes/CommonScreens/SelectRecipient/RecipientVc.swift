@@ -167,8 +167,14 @@ class RecipientVc: UIViewController{
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
-            array_selectedId.append(staffDetailsCount?.first?.school_id ?? "")
+            circular_types = circular_type.school
+            target_type = TargetTypes.school
+            array_selectedId
+                .append(
+                    UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
+                )
                 nodataFound.isHidden = false
+            nodataFound.image = ImageName.girl_and_boy_are
                 noRecordLbl.isHidden = false
                 tableHeight.constant = 0
 //            }
@@ -573,13 +579,14 @@ class RecipientVc: UIViewController{
         switch selectedTitle {
             
         case recipeint_tabBarName.Entier_School:
-            array_selectedId.append(staffDetailsCount?.first?.school_id ?? "")
+            array_selectedId.append( UserDefaultFileManager.get_staff_Details()?.school_id ?? "")
             target_type = TargetTypes.school
             circular_types =  circular_type.school
             nodataFound.isHidden = false
             noRecordLbl.isHidden = false
             noRecordLbl.text = "Tap SEND to share this message with everyone in the school."
             sendbtnName.isHidden = false
+            nodataFound.image = ImageName.girl_and_boy_are
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
             
@@ -1040,6 +1047,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     func nodata(_ ishide:Bool,message:String){
+        nodataFound.image = ImageName.missing_file
         nodataFound.isHidden = ishide
         sendbtnName.isHidden = !ishide
         tv.isHidden = !ishide
@@ -1123,15 +1131,43 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         DispatchQueue.main.async { [self] in
                             //                        listTable.isHidden = true
                             AcadimicYearDatas = successMessage.data ?? []
+                            var hasCurrentYear = false
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
                                         acidmicYrLbl.text = AcadimicYearDatas[i].year
                                     accadmicDefaultYrName = AcadimicYearDatas[i].year
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                    hasCurrentYear = true
+                                    segmentName.isUserInteractionEnabled = hasCurrentYear
                                         break
                                 }
                             }
                             
+                            if !hasCurrentYear {
+                                segmentName.isUserInteractionEnabled = false
+                                nodata(false, message: "")
+                                nodataFound.isHidden = true
+                                acidamicYrDropView.isUserInteractionEnabled = false
+                                
+                                let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
+                                let attributedString = NSMutableAttributedString(string: fullText)
+
+                                let email = "support@savyasasy.com"
+                                if let range = fullText.range(of: email) {
+                                    let nsRange = NSRange(range, in: fullText)
+                                    
+                                    // Color and underline
+                                    attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
+                                    attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
+                                }
+
+                                noRecordLbl.attributedText = attributedString
+                                noRecordLbl.isUserInteractionEnabled = true
+                                
+                                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
+                                noRecordLbl.addGestureRecognizer(tapGesture)
+
+                            }
                             
                         }
                         
@@ -1150,7 +1186,50 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         
-    } // MARK:   Listing  API END ===========================
+    }
+    
+    @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = noRecordLbl.attributedText?.string else { return }
+           let email = "support@savyasasy.com"
+
+           if let range = text.range(of: email) {
+               let nsRange = NSRange(range, in: text)
+
+               let tapLocation = gesture.location(in: noRecordLbl)
+               let layoutManager = NSLayoutManager()
+               let textContainer = NSTextContainer(size: noRecordLbl.bounds.size)
+               let textStorage = NSTextStorage(attributedString: noRecordLbl.attributedText!)
+
+               textContainer.lineFragmentPadding = 0
+               textContainer.maximumNumberOfLines = noRecordLbl.numberOfLines
+               textContainer.lineBreakMode = noRecordLbl.lineBreakMode
+               layoutManager.addTextContainer(textContainer)
+               textStorage.addLayoutManager(layoutManager)
+
+               let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+               if NSLocationInRange(index, nsRange) {
+                   let subject = ""
+                   let body = ""
+                   
+                   // URL encode
+                   let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   
+                   // Try Gmail URL
+                   if let gmailURL = URL(string: "googlegmail://co?to=\(email)&subject=\(encodedSubject)&body=\(encodedBody)"),
+                      UIApplication.shared.canOpenURL(gmailURL) {
+                       UIApplication.shared.open(gmailURL)
+                   } else if let fallbackURL = URL(string: "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)") {
+                       UIApplication.shared.open(fallbackURL)
+                   }
+               }
+           }
+    }
+
+    
+    
+    // MARK:   Listing  API END ===========================
     
     
     
