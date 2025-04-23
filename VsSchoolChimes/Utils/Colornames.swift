@@ -64,7 +64,7 @@ class ImageName{
     static let p1 = UIImage(named: "p1")
     static let placeholder = UIImage(named: "placeholder")
     static let checkedsquare = UIImage(named: "checkedsquare")
-    static let pdf = UIImage(named: "pdf")
+    static let pdf = UIImage(named: "pdf (1)")
     static let playbutton = UIImage(named: "play-button")
     static let pausebutton = UIImage(named: "pause-button")
     static let completed = UIImage(named: "completed")

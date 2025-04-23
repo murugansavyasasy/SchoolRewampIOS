@@ -284,7 +284,7 @@ class MenuRedirectHandler {
     }
     
     func receiverImgPdfNavigate(from viewController: UIViewController) {
-        let vc = ReciverAttachmentrVC(nibName: nil, bundle: nil)
+        let vc = AttachmentsVC(nibName: nil, bundle: nil)
 //        vc.passValue = 0
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)

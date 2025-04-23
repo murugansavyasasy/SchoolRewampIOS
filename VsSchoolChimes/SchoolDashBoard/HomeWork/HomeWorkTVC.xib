@@ -21,6 +21,17 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJY-vF-Hye">
                         <rect key="frame" x="5" y="10" width="486" height="375"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annual Day Celebrations" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQc-mA-nNL" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
+                                <rect key="frame" x="10" y="20" width="396" height="19"/>
+                                <fontDescription key="fontDescription" name="Palatino-Bold" family="Palatino" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shimmerLeadingInset">
+                                        <real key="value" value="100"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4c-dx-BEU">
                                 <rect key="frame" x="406" y="0.0" width="80" height="50"/>
                                 <subviews>
@@ -38,22 +49,11 @@
                                     <constraint firstAttribute="height" constant="50" id="qMP-x8-kFo"/>
                                 </constraints>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="5un-PW-NqL">
-                                <rect key="frame" x="10" y="35" width="466" height="64"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5un-PW-NqL">
+                                <rect key="frame" x="10" y="49" width="466" height="0.0"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Annual Day Celebrations" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IQc-mA-nNL" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="466" height="19"/>
-                                        <fontDescription key="fontDescription" name="Palatino-Bold" family="Palatino" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="shimmerLeadingInset">
-                                                <real key="value" value="100"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
                                     <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="eag-O8-f1n">
-                                        <rect key="frame" x="0.0" y="28.666666666666671" width="466" height="120.00000000000001"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="466" height="120"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="120" id="Ki8-9H-VzH"/>
@@ -65,8 +65,8 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                     </collectionView>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="5Ua-w9-cMY">
-                                        <rect key="frame" x="0.0" y="38" width="466" height="26"/>
+                                    <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="5Ua-w9-cMY">
+                                        <rect key="frame" x="0.0" y="0.0" width="466" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="26" id="GmI-hX-wcs"/>
                                         </constraints>
@@ -75,14 +75,6 @@
                                     </pageControl>
                                 </subviews>
                             </stackView>
-                            <view alpha="0.85000002384185791" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qid-hO-G0d">
-                                <rect key="frame" x="235.66666666666666" y="10" width="15" height="15"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="15" id="1kt-ii-Dfg"/>
-                                    <constraint firstAttribute="height" constant="15" id="gx6-uH-CH7"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15 Nov 2024" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sc4-7F-pX6" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
                                 <rect key="frame" x="381" y="310" width="97" height="20"/>
                                 <constraints>
@@ -92,13 +84,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoticePin" translatesAutoresizingMaskIntoConstraints="NO" id="LSg-oW-GXb">
-                                <rect key="frame" x="237.66666666666666" y="-15" width="34.999999999999972" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="35" id="HJY-aA-NBQ"/>
-                                    <constraint firstAttribute="height" constant="35" id="pDf-Jz-0yG"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kjf-xH-6gN">
                                 <rect key="frame" x="398" y="340" width="80" height="25"/>
                                 <color key="backgroundColor" systemColor="systemMintColor"/>
@@ -116,7 +101,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Lta-Ma-KZA">
-                                <rect key="frame" x="16" y="99" width="454" height="201"/>
+                                <rect key="frame" x="16" y="49" width="454" height="251"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Annual Day Celebration" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gtn-Jw-Tbx" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="454" height="20.333333333333332"/>
@@ -130,7 +115,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6oK-hD-tt7" customClass="ShimmerLabel" customModule="VsSchoolChimes" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="180.66666666666669" width="454" height="20.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="230.66666666666669" width="454" height="20.333333333333343"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -148,19 +133,18 @@
                             <constraint firstAttribute="trailing" secondItem="Kjf-xH-6gN" secondAttribute="trailing" constant="8" id="3uS-1a-hO0"/>
                             <constraint firstAttribute="bottom" secondItem="Kjf-xH-6gN" secondAttribute="bottom" constant="10" id="6ek-YN-DXI"/>
                             <constraint firstItem="Lta-Ma-KZA" firstAttribute="top" secondItem="5un-PW-NqL" secondAttribute="bottom" id="9LL-jl-VUl"/>
+                            <constraint firstItem="P4c-dx-BEU" firstAttribute="leading" secondItem="IQc-mA-nNL" secondAttribute="trailing" id="DXp-KE-u35"/>
                             <constraint firstAttribute="trailing" secondItem="P4c-dx-BEU" secondAttribute="trailing" id="EN4-tA-8dR"/>
                             <constraint firstItem="P4c-dx-BEU" firstAttribute="top" secondItem="EJY-vF-Hye" secondAttribute="top" id="GbN-vr-Qc6"/>
+                            <constraint firstItem="5un-PW-NqL" firstAttribute="top" secondItem="IQc-mA-nNL" secondAttribute="bottom" constant="10" id="Iji-2f-78p"/>
                             <constraint firstAttribute="trailing" secondItem="Lta-Ma-KZA" secondAttribute="trailing" constant="16" id="NKn-wc-iZl"/>
-                            <constraint firstItem="Qid-hO-G0d" firstAttribute="top" secondItem="EJY-vF-Hye" secondAttribute="top" constant="10" id="RVY-Sq-Xu2"/>
-                            <constraint firstItem="LSg-oW-GXb" firstAttribute="centerX" secondItem="Qid-hO-G0d" secondAttribute="centerX" constant="12" id="W0Z-ct-O9V"/>
+                            <constraint firstItem="IQc-mA-nNL" firstAttribute="top" secondItem="EJY-vF-Hye" secondAttribute="top" constant="20" id="Tk1-w6-CrM"/>
+                            <constraint firstItem="IQc-mA-nNL" firstAttribute="leading" secondItem="EJY-vF-Hye" secondAttribute="leading" constant="10" id="V1e-dt-CGB"/>
                             <constraint firstAttribute="trailing" secondItem="sc4-7F-pX6" secondAttribute="trailing" constant="8" id="W5D-3x-ACD"/>
-                            <constraint firstItem="Qid-hO-G0d" firstAttribute="centerX" secondItem="EJY-vF-Hye" secondAttribute="centerX" id="cwh-Ce-3UP"/>
                             <constraint firstItem="sc4-7F-pX6" firstAttribute="top" secondItem="Lta-Ma-KZA" secondAttribute="bottom" constant="10" id="eZ2-8y-Odl"/>
                             <constraint firstItem="5un-PW-NqL" firstAttribute="leading" secondItem="EJY-vF-Hye" secondAttribute="leading" constant="10" id="efh-AL-GQN"/>
-                            <constraint firstItem="5un-PW-NqL" firstAttribute="top" secondItem="Qid-hO-G0d" secondAttribute="bottom" constant="10" id="gJp-se-Yuq"/>
                             <constraint firstItem="Lta-Ma-KZA" firstAttribute="leading" secondItem="EJY-vF-Hye" secondAttribute="leading" constant="16" id="puS-PK-frB"/>
                             <constraint firstItem="Kjf-xH-6gN" firstAttribute="top" secondItem="sc4-7F-pX6" secondAttribute="bottom" constant="10" id="vUC-42-vNq"/>
-                            <constraint firstItem="LSg-oW-GXb" firstAttribute="top" secondItem="EJY-vF-Hye" secondAttribute="top" constant="-15" id="wWM-Io-9ol"/>
                             <constraint firstAttribute="trailing" secondItem="5un-PW-NqL" secondAttribute="trailing" constant="10" id="xHi-fD-vxX"/>
                         </constraints>
                     </view>
@@ -175,7 +159,6 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="ImageCollectionView" destination="eag-O8-f1n" id="3hq-wK-BhR"/>
-                <outlet property="Pinview" destination="Qid-hO-G0d" id="5Ou-i6-fKO"/>
                 <outlet property="SelectBtnHeight" destination="fDy-qZ-NNl" id="kka-aX-mQH"/>
                 <outlet property="cellview" destination="EJY-vF-Hye" id="dEF-AT-Lcc"/>
                 <outlet property="dateLble" destination="sc4-7F-pX6" id="jhE-Bk-Bge"/>
@@ -183,7 +166,6 @@
                 <outlet property="forwordBtn" destination="Kjf-xH-6gN" id="iqV-F4-taT"/>
                 <outlet property="newView" destination="z6a-Xi-cx6" id="ceP-7M-E5L"/>
                 <outlet property="pageViewController" destination="5Ua-w9-cMY" id="VEU-rm-Anl"/>
-                <outlet property="pinImage" destination="LSg-oW-GXb" id="bet-1Q-kLb"/>
                 <outlet property="subjectName" destination="IQc-mA-nNL" id="X6I-p3-2Jf"/>
                 <outlet property="topics" destination="Gtn-Jw-Tbx" id="csD-I0-j0p"/>
             </connections>
@@ -191,7 +173,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="NoticePin" width="128" height="128"/>
         <image name="newimg" width="498" height="501"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="linkColor">

@@ -38,6 +38,10 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = homeworkDocs?[indexPath.row] {
             cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+            let fileURL = URL(fileURLWithPath: img.path ?? "")
+            let iconName = getFileIconName(for: fileURL)
+            let iconImage = UIImage(named: iconName)
+            cell.IndicaterImageView.image = iconImage
         }
         return cell
     }

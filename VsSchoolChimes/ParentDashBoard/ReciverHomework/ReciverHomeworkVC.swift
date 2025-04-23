@@ -29,6 +29,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
+        NameLbl.text = studentDetails?.name
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
         GetHomeWorkReport()
         StyleAndTranslate()
         searchBar.addDoneButton()

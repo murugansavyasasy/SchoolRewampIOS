@@ -205,4 +205,32 @@ class AWSPreSignedURL {
             }
         }.resume()
     }
+    
+    func deleteFileFromS3(withURL urlString: String) {
+        guard let url = URL(string: urlString) else {
+            print("❌ Invalid URL")
+            return
+        }
+
+        // ✅ Extract the S3 object key from the URL
+        guard let key = url.pathComponents.dropFirst().joined(separator: "/").removingPercentEncoding else {
+            print("❌ Could not extract key from URL")
+            return
+        }
+
+        let s3 = AWSS3.default()
+        let deleteObjectRequest = AWSS3DeleteObjectRequest()!
+        deleteObjectRequest.bucket = "schoolchimes-communication"
+        deleteObjectRequest.key = key
+
+        s3.deleteObject(deleteObjectRequest).continueWith { (task) -> Any? in
+            if let error = task.error {
+                print("❌ Failed to delete: \(error.localizedDescription)")
+            } else {
+                print("🗑️ File deleted successfully from S3: \(key)")
+            }
+            return nil
+        }
+    }
+    
 }

@@ -29,18 +29,17 @@
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p43-r7-nQ5">
                         <rect key="frame" x="10" y="10" width="192" height="105"/>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trashcan" translatesAutoresizingMaskIntoConstraints="NO" id="amK-p2-KzG">
-                        <rect key="frame" x="177" y="88" width="25" height="28"/>
+                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P1s-O8-NbB">
+                        <rect key="frame" x="182" y="5" width="25" height="25"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="tintColor" systemColor="systemRedColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="25" id="hD8-2u-Ie6"/>
-                            <constraint firstAttribute="height" constant="28" id="nnH-9p-2EX"/>
+                            <constraint firstAttribute="height" constant="25" id="0gM-gA-TqB"/>
+                            <constraint firstAttribute="width" constant="25" id="C4A-M9-CqH"/>
                         </constraints>
-                    </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P1s-O8-NbB">
-                        <rect key="frame" x="177" y="88" width="25" height="28"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" image="delete (1)">
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                        </state>
                         <connections>
                             <action selector="deleteImg:" destination="gTV-IL-0wX" eventType="touchUpInside" id="4qZ-e6-FbX"/>
                         </connections>
@@ -53,6 +52,17 @@
                         </constraints>
                         <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </activityIndicatorView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+6" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Np9-HB-K4e">
+                        <rect key="frame" x="85" y="54" width="42" height="42"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="42" id="8XI-jj-tQS"/>
+                            <constraint firstAttribute="height" constant="42" id="h0H-CP-AwJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -60,25 +70,24 @@
                 <constraint firstItem="7MX-fw-h8e" firstAttribute="top" secondItem="p43-r7-nQ5" secondAttribute="top" id="3dw-Sf-c2B"/>
                 <constraint firstItem="6Hk-15-U5u" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="6u4-aG-eMs"/>
                 <constraint firstItem="p43-r7-nQ5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="AzC-Vj-Hao"/>
-                <constraint firstItem="P1s-O8-NbB" firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" id="B58-wl-Vfa"/>
-                <constraint firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" constant="10" id="D9k-4s-TJc"/>
+                <constraint firstItem="P1s-O8-NbB" firstAttribute="top" secondItem="p43-r7-nQ5" secondAttribute="top" constant="-5" id="Cvo-Kn-U8p"/>
                 <constraint firstAttribute="trailing" secondItem="p43-r7-nQ5" secondAttribute="trailing" constant="10" id="KT4-Mp-Ixk"/>
+                <constraint firstItem="Np9-HB-K4e" firstAttribute="centerY" secondItem="ZTg-uK-7eu" secondAttribute="centerY" id="LXq-ud-Cv2"/>
                 <constraint firstItem="6Hk-15-U5u" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="OPU-2A-J5h"/>
-                <constraint firstItem="P1s-O8-NbB" firstAttribute="leading" secondItem="amK-p2-KzG" secondAttribute="leading" id="PtN-yB-MEo"/>
-                <constraint firstAttribute="bottom" secondItem="amK-p2-KzG" secondAttribute="bottom" constant="9" id="Tjn-ab-Qvu"/>
-                <constraint firstItem="P1s-O8-NbB" firstAttribute="trailing" secondItem="amK-p2-KzG" secondAttribute="trailing" id="lNM-Pl-Viy"/>
+                <constraint firstItem="P1s-O8-NbB" firstAttribute="trailing" secondItem="p43-r7-nQ5" secondAttribute="trailing" constant="5" id="P7I-yJ-I3N"/>
+                <constraint firstItem="Np9-HB-K4e" firstAttribute="centerX" secondItem="ZTg-uK-7eu" secondAttribute="centerX" id="djT-ci-c4A"/>
                 <constraint firstAttribute="bottom" secondItem="p43-r7-nQ5" secondAttribute="bottom" constant="10" id="qzx-2x-hNo"/>
                 <constraint firstItem="7MX-fw-h8e" firstAttribute="trailing" secondItem="p43-r7-nQ5" secondAttribute="trailing" id="rmS-aQ-UX8"/>
                 <constraint firstItem="p43-r7-nQ5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="uqd-c2-eLG"/>
                 <constraint firstItem="7MX-fw-h8e" firstAttribute="leading" secondItem="p43-r7-nQ5" secondAttribute="leading" id="x4M-cT-Tjp"/>
                 <constraint firstItem="7MX-fw-h8e" firstAttribute="bottom" secondItem="p43-r7-nQ5" secondAttribute="bottom" id="yAL-Ix-0Zq"/>
-                <constraint firstItem="P1s-O8-NbB" firstAttribute="top" secondItem="amK-p2-KzG" secondAttribute="top" id="yuM-zs-yKM"/>
             </constraints>
             <size key="customSize" width="187" height="94"/>
             <connections>
                 <outlet property="ActivityIndicator" destination="6Hk-15-U5u" id="l1w-Js-2zC"/>
-                <outlet property="TrashIcon" destination="amK-p2-KzG" id="LVs-dT-38d"/>
+                <outlet property="TrashIcon" destination="P1s-O8-NbB" id="cK1-5Y-PyH"/>
                 <outlet property="deleteBtn" destination="P1s-O8-NbB" id="Reg-UE-1M8"/>
+                <outlet property="imageCount" destination="Np9-HB-K4e" id="TYA-ha-J1M"/>
                 <outlet property="imageViews" destination="p43-r7-nQ5" id="hJk-zK-BF2"/>
                 <outlet property="pdf" destination="7MX-fw-h8e" id="40g-RU-g4u"/>
             </connections>
@@ -86,9 +95,9 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="trashcan" width="48" height="48"/>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <image name="delete (1)" width="16" height="16"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

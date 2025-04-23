@@ -44,7 +44,7 @@ class ImageShowVc: UIViewController{
         DispatchQueue.main.async { [self] in
             switch type{
             case 0:
-                if let pdfURL = URL(string: "https://icseindia.org/document/sample.pdf") {
+                if let pdfURL = URL(string: imageURL.first?.path ?? "") {
                       let request = URLRequest(url: pdfURL)
                     pdfView.load(request)
                     
@@ -63,7 +63,7 @@ class ImageShowVc: UIViewController{
                 pdfView.isHidden = true
                 textView.isHidden = true
             default:
-                if let pdfURL = URL(string: "https://icseindia.org/document/sample.pdf") {
+                if let pdfURL = URL(string: imageURL.first?.path ?? "") {
                       let request = URLRequest(url: pdfURL)
                     pdfView.load(request)
                     

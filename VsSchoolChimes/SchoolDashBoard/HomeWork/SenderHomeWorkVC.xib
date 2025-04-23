@@ -18,6 +18,7 @@
                 <outlet property="acodomicYearLbl" destination="Agk-gr-aOD" id="rGV-nw-KFu"/>
                 <outlet property="dateLbl" destination="jwt-QO-JHP" id="SId-EI-VfC"/>
                 <outlet property="dateView" destination="jrt-ed-2r4" id="HAW-o9-ZGI"/>
+                <outlet property="dropDownStack" destination="JxM-Kh-jbu" id="lUi-XI-vek"/>
                 <outlet property="homeWorkTable" destination="ZFn-GK-QVq" id="cH6-R5-Gmo"/>
                 <outlet property="searchBar" destination="VID-OE-cAy" id="zQz-94-WzI"/>
                 <outlet property="sectionView" destination="dCT-6E-8Sm" id="sSa-Qq-Li6"/>
@@ -36,7 +37,7 @@
                     <rect key="frame" x="0.0" y="62" width="440" height="860"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oAn-ev-L6a">
-                            <rect key="frame" x="0.0" y="0.0" width="440" height="947"/>
+                            <rect key="frame" x="0.0" y="0.0" width="440" height="886"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xlt-md-Fu0">
                                     <rect key="frame" x="20" y="20" width="400" height="40"/>
@@ -163,7 +164,7 @@
                                         <constraint firstItem="Kc7-uE-pPb" firstAttribute="centerY" secondItem="kop-BK-OcZ" secondAttribute="centerY" id="rhf-3p-iIl"/>
                                     </constraints>
                                 </view>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JxM-Kh-jbu">
+                                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JxM-Kh-jbu">
                                     <rect key="frame" x="16" y="136" width="408" height="40"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vAE-1z-vgv">
@@ -242,17 +243,17 @@
                                     </connections>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FOD-x4-1v7">
-                                    <rect key="frame" x="10" y="186" width="420" height="761"/>
+                                    <rect key="frame" x="10" y="186" width="420" height="700"/>
                                     <subviews>
-                                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VID-OE-cAy">
-                                            <rect key="frame" x="0.0" y="0.0" width="420" height="56"/>
+                                        <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="VID-OE-cAy">
+                                            <rect key="frame" x="0.0" y="0.0" width="420" height="0.0"/>
                                             <textInputTraits key="textInputTraits"/>
                                             <connections>
                                                 <outlet property="delegate" destination="-1" id="EuN-oh-FEA"/>
                                             </connections>
                                         </searchBar>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZFn-GK-QVq">
-                                            <rect key="frame" x="0.0" y="61" width="420" height="700"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="420" height="700"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="700" id="gBP-La-NQz"/>
@@ -326,7 +327,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -22,6 +22,7 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var selectStandardDropDown: UIView!
     @IBOutlet weak var selectSubject: UIView!
     
+    @IBOutlet weak var heightSegment: NSLayoutConstraint!
     @IBOutlet weak var nodataFound: UIImageView!
     @IBOutlet weak var tableHeight: NSLayoutConstraint!
     @IBOutlet weak var tv: UITableView!
@@ -95,7 +96,7 @@ class RecipientVc: UIViewController{
                 speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
-
+                heightSegment.constant = 0
                 cv_itemsarry = [
                     recipeint_tabBarName.Section_Student
                 ]
@@ -313,15 +314,23 @@ class RecipientVc: UIViewController{
     
     
     private func handleHomeworkFlow() {
-        let file: Any = user_inputs.selectedFileType == "pdf" ? user_inputs.docUrl : user_inputs.selectedImg
+        uploadedURLs.removeAll()
+        let file: Any = user_inputs.SelectedUrls
         uploadAndSendVoiceMessage(file: file) { [self] in
             CircularProgressLoader.shared.hide()
             let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+                if let url = URL(string: url) {
+                    let type = url.pathExtension.lowercased()
+                    user_inputs.selectedFileType = type == "jpg" ? "IMAGE" : type
+                }
+
                 return [
                     "path": url,
                     "type": user_inputs.selectedFileType
                 ]
             }
+
+         print("uploadedFiles",uploadedFiles)
             let parameters: [String: Any] = [
                 UploadMessageKeys.academic_year_id:selectedAcadimicYearId ?? 0,
                 UploadMessageKeys.topic: user_inputs.title,
@@ -424,7 +433,14 @@ class RecipientVc: UIViewController{
     }
     private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
         var completed = 0
-
+        func updateAndCheckCompletion(total: Int) {
+            let progress = (Double(completed) / Double(total)) * 100
+            CircularProgressLoader.shared.updateProgress(to: progress)
+            if completed == total {
+                CircularProgressLoader.shared.hide()
+                completion()
+            }
+        }
         switch file {
 
         // 🎙️ Case: Audio File from String (URL Path)
@@ -547,12 +563,69 @@ class RecipientVc: UIViewController{
                         }
                     )
                 }
+        case let attachments as [AttachmentItem]:
+            let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
+            let total = uploadableItems.count
+            guard total > 0 else {
+                completion()
+                return
+            }
+
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+
+            for item in uploadableItems {
+                if let image = item.image {
+                    // 🖼️ Upload local image
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: image,
+                        bucketPath: "uploads/images/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: nil,
+                        completion: { url in
+                            if let uploadedURL = url {
+                                self.uploadedURLs.append(uploadedURL)
+                            }
+                            completed += 1
+                            updateAndCheckCompletion(total: total)
+                        }
+                    )
+                } else if let fileURLStr = item.imageURL {
+                    if fileURLStr.lowercased().starts(with: "http") {
+                        self.uploadedURLs.append(fileURLStr)
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    } else if let fileURL = URL(string: fileURLStr) {
+                        let path = item.fileType.lowercased() == "pdf" ? "uploads/Documents/" : "uploads/images/"
+
+                        AWSUploadManager.shared.uploadFileToAWS(
+                            file: fileURL,
+                            bucketPath: path,
+                            bucketName: "schoolchimes-communication",
+                            progressHandler: nil,
+                            completion: { url in
+                                if let uploadedURL = url {
+                                    self.uploadedURLs.append(uploadedURL)
+                                }
+                                completed += 1
+                                updateAndCheckCompletion(total: total)
+                            }
+                        )
+                    } else {
+                        print("❌ Invalid fileURL: \(fileURLStr)")
+                        completed += 1
+                        updateAndCheckCompletion(total: total)
+                    }
+                }
+            }
+
+
         default:
             print("❌ Unsupported file type")
             return
         }
     }
-
+  
 
 
 
@@ -664,9 +737,17 @@ class RecipientVc: UIViewController{
         StdDropdown.anchorView = selectSubject
         StdDropdown.dataSource = subjectList
         StdDropdown.bottomOffset = CGPoint(x: 0, y: selectSubject.bounds.height)
-        StdDropdown.direction = .bottom
         StdDropdown.show()
-        
+        let tableView = self.StdDropdown.tableView
+            let visibleCellCount = tableView.visibleCells.count
+        let visibleHeight = CGFloat(visibleCellCount) * 44.0
+        if visibleHeight < 200 {
+            self.StdDropdown.direction = .top
+        } else {
+            self.StdDropdown.direction = .bottom
+        }
+
+       
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             if let label = self.selectSubject.subviews.first(where: { $0 is UILabel }) as? UILabel {

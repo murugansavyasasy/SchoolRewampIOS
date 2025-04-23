@@ -69,11 +69,20 @@
                             <constraint firstAttribute="bottom" secondItem="aHk-oc-IXw" secondAttribute="bottom" constant="10" id="wS9-kJ-t8G"/>
                         </constraints>
                     </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newimg" translatesAutoresizingMaskIntoConstraints="NO" id="HJ6-zu-8FQ">
+                        <rect key="frame" x="348" y="-15" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="4Fr-Wq-JBC"/>
+                            <constraint firstAttribute="height" constant="50" id="kYK-P3-2Pe"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="SH0-3l-1xg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="TXO-B8-FCi"/>
                     <constraint firstItem="SH0-3l-1xg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="V1t-vM-22H"/>
                     <constraint firstAttribute="trailing" secondItem="SH0-3l-1xg" secondAttribute="trailing" constant="10" id="YFb-3L-Q8H"/>
+                    <constraint firstItem="HJ6-zu-8FQ" firstAttribute="trailing" secondItem="SH0-3l-1xg" secondAttribute="trailing" id="fU5-7X-HIR"/>
+                    <constraint firstItem="HJ6-zu-8FQ" firstAttribute="top" secondItem="SH0-3l-1xg" secondAttribute="top" constant="-20" id="nZ0-Np-2Bt"/>
                     <constraint firstAttribute="bottom" secondItem="SH0-3l-1xg" secondAttribute="bottom" constant="5" id="nqA-qg-NNb"/>
                 </constraints>
             </tableViewCellContentView>
@@ -89,6 +98,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="newimg" width="498" height="501"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
