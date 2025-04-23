@@ -21,8 +21,15 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJ7-jD-bLj">
                         <rect key="frame" x="2" y="2" width="222" height="46"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xt7-50-BZL">
-                                <rect key="frame" x="5" y="5" width="212" height="36"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheckCircle" translatesAutoresizingMaskIntoConstraints="NO" id="eUh-lz-sUt">
+                                <rect key="frame" x="12" y="13" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="taN-9Q-UW1"/>
+                                    <constraint firstAttribute="height" constant="20" id="vN8-t6-0x7"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xt7-50-BZL">
+                                <rect key="frame" x="37" y="5" width="170" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -30,10 +37,12 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="xt7-50-BZL" firstAttribute="leading" secondItem="eUh-lz-sUt" secondAttribute="trailing" constant="5" id="0H9-iN-UAz"/>
                             <constraint firstItem="xt7-50-BZL" firstAttribute="top" secondItem="aJ7-jD-bLj" secondAttribute="top" constant="5" id="Ety-MV-BDK"/>
                             <constraint firstAttribute="bottom" secondItem="xt7-50-BZL" secondAttribute="bottom" constant="5" id="TRy-cB-SFb"/>
-                            <constraint firstAttribute="trailing" secondItem="xt7-50-BZL" secondAttribute="trailing" constant="5" id="ncH-m0-O2s"/>
-                            <constraint firstItem="xt7-50-BZL" firstAttribute="leading" secondItem="aJ7-jD-bLj" secondAttribute="leading" constant="5" id="voO-Nf-R9y"/>
+                            <constraint firstItem="eUh-lz-sUt" firstAttribute="leading" secondItem="aJ7-jD-bLj" secondAttribute="leading" constant="12" id="lHV-yA-cDr"/>
+                            <constraint firstAttribute="trailing" secondItem="xt7-50-BZL" secondAttribute="trailing" constant="15" id="ncH-m0-O2s"/>
+                            <constraint firstItem="xt7-50-BZL" firstAttribute="centerY" secondItem="eUh-lz-sUt" secondAttribute="centerY" id="rR7-Yz-ehu"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -47,13 +56,15 @@
             </constraints>
             <size key="customSize" width="226" height="50"/>
             <connections>
+                <outlet property="CheckboxImg" destination="eUh-lz-sUt" id="QaK-20-wSE"/>
                 <outlet property="FilterLbl" destination="xt7-50-BZL" id="b12-7l-g0U"/>
                 <outlet property="cellView" destination="aJ7-jD-bLj" id="76j-wh-PQF"/>
             </connections>
-            <point key="canvasLocation" x="273.28244274809157" y="19.718309859154932"/>
+            <point key="canvasLocation" x="271.75572519083971" y="19.718309859154932"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="CheckCircle" width="42.666667938232422" height="42.666667938232422"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
