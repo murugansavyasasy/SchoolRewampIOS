@@ -2,217 +2,9 @@
 //  PhotoPickManager.swift
 //  VsSchoolChimes
 //
-//  Created by Apple on 11/16/24.
+//  Created by Chandhru on 16/04/25.
 //
 
-//import Foundation
-//import UIKit
-//import PhotosUI
-//import AWSS3
-//
-//@available(iOS 14.0, *)
-//class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate,UIDocumentPickerDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-//    var selectedImages: [UIImage] = []
-//    var pdfData : Data? = nil
-//    var convertedImagesUrlArray = NSMutableArray()
-//    var  getImagePdfType : String!
-//    var imageUrlArray = NSMutableArray()
-//    var imageStr : [String] = []
-//    var currentImageCount = 0
-//    var totalImageCount = 0
-//    var originalImagesArray = [UIImage]()
-//    var onImagesPicked: (([UIImage]) -> Void)?
-//    static let shared = PhotoPickerManager()
-//    var onPdfPicked: ((Data) -> Void)?
-//    var pdfUrl :((URL) -> Void)?
-//    var onImagePicked: (([UIImage]) -> Void)?
-//    var onCameraImagePicked: ((UIImage) -> Void)?
-//    var onPdfString: ((String) -> Void)?
-//    
-//    private override init() {
-//        
-//    }
-//    
-//    static func createInstance() -> PhotoPickerManager {
-//        return PhotoPickerManager()
-//    }
-//    
-//    // Function to present the photo picker
-//    func presentPhotoPicker(from viewController: UIViewController, selectionLimit: Int) {
-//        var configuration = PHPickerConfiguration()
-//        configuration.selectionLimit = selectionLimit
-//        configuration.filter = .images // Only images
-//        
-//        let picker = PHPickerViewController(configuration: configuration)
-//        picker.delegate = self
-//        viewController.present(picker, animated: true, completion: nil)
-//    }
-//    
-//    // Delegate method to handle selected items
-//    // MARK: - PHPickerViewControllerDelegate
-//    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-//        picker.dismiss(animated: true, completion: nil)
-//
-//        var images = [UIImage]()
-//        let totalCount = results.count
-//        var loadedCount = 0
-//
-//        // 🌀 Show Circular Progress Loader
-//        CircularProgressLoader.shared.show()
-//
-//        let dispatchGroup = DispatchGroup()
-//        
-//        for result in results {
-//            if result.itemProvider.canLoadObject(ofClass: UIImage.self) {
-//                dispatchGroup.enter()
-//                result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
-//                    defer {
-//                        // ✅ Update progress
-//                        DispatchQueue.main.async {
-//                            loadedCount += 1
-//                            let percent = (Double(loadedCount) / Double(totalCount)) * 100
-//                            CircularProgressLoader.shared.updateProgress(to: percent)
-//                        }
-//                        dispatchGroup.leave()
-//                    }
-//
-//                    if let image = object as? UIImage {
-//                        images.append(image)
-//                    }
-//                }
-//            }
-//        }
-//
-//        dispatchGroup.notify(queue: .main) { [weak self] in
-//            // ✅ Ensure loader is hidden at end (just in case)
-//            CircularProgressLoader.shared.hide()
-//            self?.onImagePicked?(images)
-//        }
-//    }
-//
-////    import Foundation
-////    import UIKit
-//
-//    // Function to upload an image using a presigned URL
-//    func uploadAWSUsingPresignedURL(image: UIImage, presignedURL: String, completion: @escaping (Result<String, Error>) -> Void) {
-//        // Convert the UIImage to JPEG data
-//        guard let imageData = image.jpegData(compressionQuality: 0.9),
-//              let url = URL(string: presignedURL) else {
-//            completion(.failure(NSError(domain: "InvalidInput", code: 400, userInfo: [NSLocalizedDescriptionKey: "Invalid image or URL"])))
-//            return
-//        }
-//
-//        // Create a URLRequest for the presigned URL
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "PUT"
-//        request.setValue("image/jpeg", forHTTPHeaderField: "Content-Type")
-//
-//        // Use URLSession to upload the image
-//        let uploadTask = URLSession.shared.uploadTask(with: request, from: imageData) { data, response, error in
-//            if let error = error {
-//                print("Upload failed: \(error.localizedDescription)")
-//                completion(.failure(error))
-//                return
-//            }
-//
-//            if let httpResponse = response as? HTTPURLResponse {
-//                if httpResponse.statusCode == 200 {
-//                    print("Upload successful!")
-//                    completion(.success(presignedURL)) // Returning the presigned URL as confirmation
-//                } else {
-//                    print("Upload failed with status code: \(httpResponse.statusCode)")
-//                    let uploadError = NSError(domain: "UploadError", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "Failed with status code \(httpResponse.statusCode)"])
-//                    completion(.failure(uploadError))
-//                }
-//            }
-//        }
-//
-//        // Start the upload task
-//        uploadTask.resume()
-//    }
-//    
-//    func pickPDF(from viewController: UIViewController) {
-//        print("SELECT PDF")
-//        let documentPicker = UIDocumentPickerViewController(documentTypes: ["com.adobe.pdf"], in: .import)
-//        documentPicker.delegate = self
-//        viewController.present(documentPicker, animated: true, completion: nil)
-//    }
-//    
-//    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt urls: URL) {
-//        let fileurl: URL = urls as URL
-//        let filename = urls.lastPathComponent
-//        let fileextension = urls.pathExtension
-//        print("URL: \(fileurl)", "NAME: \(filename)", "EXTENSION: \(fileextension)")
-//        let imageData = NSData(contentsOf: urls)
-//        do {
-//            pdfData = try Data(contentsOf: urls, options: NSData.ReadingOptions())
-//        } catch {
-//            print("set PDF filer error : ", error)
-//        }
-//        let dispatchGroup = DispatchGroup()
-//        dispatchGroup.notify(queue: .main) { [weak self] in
-//            print("set PDF filer errr")
-//            self?.onPdfPicked?(self!.pdfData!)
-//            self?.pdfUrl?(fileurl)
-//        }
-//        
-//    }
-//    
-//    func convertURLToData(from url: URL) -> Data? {
-//        do {
-//            let data = try Data(contentsOf: url)
-//            return data
-//        } catch {
-//            print("Error converting URL to Data: \(error)")
-//            return nil
-//        }
-//    }
-//  
-//    
-//     func openCamera(from viewController: UIViewController) {
-//        // Check if the camera is available
-//         print("camera")
-//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-//            let imagePicker = UIImagePickerController()
-//            imagePicker.delegate = self
-//            imagePicker.sourceType = .camera
-//            imagePicker.allowsEditing = true // Allows editing of the captured image
-//            viewController.present(imagePicker, animated: true, completion: nil)
-//        } else {
-//            // Camera is not available, show an alert
-//            let alert = UIAlertController(title: "Camera Not Available".translated(), message: "This device has no camera.".translated(), preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK".translated(), style: .default, handler: nil))
-//            viewController.present(alert, animated: true, completion: nil)
-//        }
-//    }
-//    
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//            if let editedImage = info[.editedImage] as? UIImage {
-//                // Use the edited image
-//                print("Captured Edited Image: \(editedImage)")
-//                self.selectedImages.append(editedImage)
-//                let dispatchGroup = DispatchGroup()
-//               
-//                dispatchGroup.notify(queue: .main) { [weak self] in
-//                    self?.onCameraImagePicked?(editedImage)
-//                }
-//            } else if let originalImage = info[.originalImage] as? UIImage {
-//                // Use the original image
-//                print("Captured Original Image: \(originalImage)")
-//                self.selectedImages.append(originalImage)
-//            }
-//            
-//            picker.dismiss(animated: true, completion: nil)
-//        }
-//        
-//    
-//    // Handle cancellation
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        picker.dismiss(animated: true, completion: nil)
-//    }
-//    
-//    
-//}
 import Foundation
 import UIKit
 import PhotosUI
@@ -239,24 +31,11 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
 //    var onPdfPicked: ((Data) -> Void)?
     var onPdfPicked: ((URL) -> Void)?
     var onFilePicked: ((URL) -> Void)?
-
+    var limiSelection = 0
     private override init() {}
 
     // MARK: - Public API
-//    func presentPicker(ofType type: PickerType, from viewController: UIViewController) {
-//        switch type {
-//        case .camera:
-//            openCamera(from: viewController)
-//        case .gallery(let selectionLimit):
-//            openPhotoLibrary(from: viewController, selectionLimit: selectionLimit)
-//        case .video:
-//            openVideoPicker(from: viewController)
-//        case .pdf:
-//            openDocumentPicker(from: viewController, types: [UTType.pdf])
-//        case .file:
-//            openDocumentPicker(from: viewController, types: [UTType.item])
-//        }
-//    }
+
     func presentPicker(ofType type: PickerType, from viewController: UIViewController) {
         switch type {
         case .camera:
@@ -365,48 +144,50 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
-    // MARK: - UIDocumentPickerDelegate
 //    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-//        guard let fileURL = urls.first else { return }
-//        let fileExtension = fileURL.pathExtension.lowercased()
+//        let supportedExtensions = ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf", "pdf"]
+//        let supportedFiles = urls.filter {
+//            supportedExtensions.contains($0.pathExtension.lowercased())
+//        }
+//        
+//        // Enforce limit
+//        if supportedFiles.count > limiSelection {
+//            // Show alert and exit
+//            let alert = UIAlertController(title: "Limit Exceeded", message: "You can only select up to 5 files.", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .default))
+//            controller.present(alert, animated: true)
+//            return
+//        }
 //
-//        switch fileExtension {
-////        case "pdf":
-////            do {
-////                let data = try Data(contentsOf: fileURL)
-////                onPdfPicked?(fileURL)
-////            } catch {
-////                print("Error reading PDF data: \(error)")
-////            }
-//
-//        case "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf","pdf":
+//        // If within limit, proceed
+//        for fileURL in supportedFiles {
 //            onFilePicked?(fileURL)
-//
-//        default:
-//            print("Unsupported file type: \(fileExtension)")
 //        }
 //    }
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         let supportedExtensions = ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf", "pdf"]
-        let supportedFiles = urls.filter {
-            supportedExtensions.contains($0.pathExtension.lowercased())
-        }
-        
-        // Enforce limit
-        if supportedFiles.count > 5 {
-            // Show alert and exit
-            let alert = UIAlertController(title: "Limit Exceeded", message: "You can only select up to 5 files.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            controller.present(alert, animated: true)
-            return
-        }
+        let supportedFiles = urls.filter { supportedExtensions.contains($0.pathExtension.lowercased()) }
 
-        // If within limit, proceed
-        for fileURL in supportedFiles {
-            onFilePicked?(fileURL)
+        if supportedFiles.count > limiSelection {
+            let filesToProcess = supportedFiles.prefix(limiSelection)
+            let alert = UIAlertController(title: "Limit Exceeded",
+                                         message: "You can only select up to \(limiSelection) files. Only the first \(limiSelection) will be processed.",
+                                         preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                for fileURL in filesToProcess {
+                    self.onFilePicked?(fileURL)
+                }
+            })
+            
+            controller.present(alert, animated: true)
+        } else {
+            // If within limit, proceed immediately
+            for fileURL in supportedFiles {
+                onFilePicked?(fileURL)
+            }
         }
     }
-
 
     // MARK: - Utility
     private func showAlert(title: String, message: String, on vc: UIViewController) {

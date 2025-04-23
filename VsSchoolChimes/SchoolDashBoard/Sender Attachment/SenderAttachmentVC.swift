@@ -229,7 +229,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             user_inputs.title = assignTitleTxtFld.text ?? ""
             user_inputs.description = contentTextView.text ?? ""
             user_inputs.selectedImg = selectedImages
-            user_inputs.docUrl.append(contentsOf: fileUrls)
+            user_inputs.docUrl = fileUrls
             
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
