@@ -264,9 +264,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 ViewAnimator.hideFade(emengencyCall)
             }else{
                 
-                ViewAnimator.showFade(emengencyCall)
-                ViewAnimator.showFade(EnableCallLbl)
-            
+                if staff_role == PriorityType.is_staff{
+                    
+                    ViewAnimator.hideFade(EnableCallLbl)
+                    ViewAnimator.hideFade(emengencyCall)
+                }else{
+                    ViewAnimator.showFade(emengencyCall)
+                    ViewAnimator.showFade(EnableCallLbl)
+                }
 
             }
             staffDetails = staffDetailsCount?.first
@@ -1450,6 +1455,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if !isforwardtext {
             informationcontent.text = ""
             TextMsgTittle.text = ""
+            textCountLbl.text = "0 of 500"
+            textMsgVoiceCountLbl.text = "0 of 50"
         }
         
         ViewAnimator.hideFade(calanderOuter)
