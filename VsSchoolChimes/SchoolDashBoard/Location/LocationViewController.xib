@@ -12,6 +12,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationViewController" customModule="VsSchoolChimes" customModuleProvider="target">
             <connections>
+                <outlet property="LocationErrorStack" destination="RIc-NL-ApQ" id="ImH-le-2Zq"/>
+                <outlet property="punchStack" destination="LcP-hF-7dl" id="Jr3-MI-dUs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -41,37 +43,85 @@
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EJc-Or-2f4">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="634"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1Bu-za-cdB">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="209"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1Bu-za-cdB">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="517"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RIc-NL-ApQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="209"/>
+                                                    <rect key="frame" x="5" y="0.0" width="383" height="253.33333333333334"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VaK-n4-J9q">
-                                                            <rect key="frame" x="76.666666666666686" y="0.0" width="240" height="128"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Progress" translatesAutoresizingMaskIntoConstraints="NO" id="VaK-n4-J9q">
+                                                            <rect key="frame" x="121.66666666666669" y="0.0" width="140" height="128"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="128" id="FkI-GJ-J7n"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow location acess to mark your attendance !" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ke-om-O2Z">
-                                                            <rect key="frame" x="20" y="138" width="353.33333333333331" height="20.333333333333343"/>
+                                                            <rect key="frame" x="15" y="138" width="353.33333333333331" height="20.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To enhance your experience and provide accurate loaction-based features,please enabel GPS." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfn-B8-d46">
-                                                            <rect key="frame" x="5" y="168.33333333333331" width="383" height="40.666666666666657"/>
+                                                            <rect key="frame" x="0.0" y="168.33333333333331" width="383" height="40.666666666666657"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axU-rJ-vfk">
+                                                            <rect key="frame" x="119" y="219" width="145" height="34.333333333333343"/>
+                                                            <color key="tintColor" name="ButtonColor"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="filled" title="Enabel Location"/>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LcP-hF-7dl">
+                                                    <rect key="frame" x="0.0" y="253.33333333333329" width="393" height="263.66666666666674"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SchoolStudent" translatesAutoresizingMaskIntoConstraints="NO" id="URq-Dc-C3N">
+                                                            <rect key="frame" x="0.0" y="0.0" width="393" height="128"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="128" id="G90-6m-k84"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow location acess to mark your attendance !" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPl-q0-qXt">
+                                                            <rect key="frame" x="20" y="133.00000000000006" width="353.33333333333331" height="0.0"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNx-Bq-cfI">
+                                                            <rect key="frame" x="0.0" y="138.00000000000006" width="393" height="81.333333333333314"/>
+                                                            <string key="text">Tap on the "Punch" button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked.</string>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWZ-QJ-87i">
+                                                            <rect key="frame" x="125.66666666666667" y="229.33333333333331" width="141.66666666666663" height="34.333333333333314"/>
+                                                            <color key="tintColor" name="ButtonColor"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="filled" title="Tap to Punch In"/>
+                                                        </button>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
                                         </stackView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gwd-d5-wsP">
+                                            <rect key="frame" x="259" y="527" width="124" height="59.666666666666629"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbr-iP-cdc">
+                                                    <rect key="frame" x="0.0" y="0.0" width="124" height="59.666666666666664"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="mappin.and.ellipse" catalog="system" imagePlacement="top" title="Add Location" imagePadding="5"/>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="gwd-d5-wsP" secondAttribute="trailing" constant="10" id="D4g-UP-Wep"/>
                                         <constraint firstAttribute="trailing" secondItem="1Bu-za-cdB" secondAttribute="trailing" id="ED9-RI-21e"/>
+                                        <constraint firstItem="gwd-d5-wsP" firstAttribute="top" secondItem="1Bu-za-cdB" secondAttribute="bottom" constant="10" id="LFq-fi-bMy"/>
                                         <constraint firstItem="1Bu-za-cdB" firstAttribute="top" secondItem="EJc-Or-2f4" secondAttribute="top" id="SgL-EB-giF"/>
                                         <constraint firstItem="1Bu-za-cdB" firstAttribute="leading" secondItem="EJc-Or-2f4" secondAttribute="leading" id="bqS-Mu-nMe"/>
                                         <constraint firstAttribute="bottom" secondItem="1Bu-za-cdB" secondAttribute="bottom" id="wqr-DU-Izp"/>
@@ -124,21 +174,20 @@
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
         </view>
-        <view contentMode="scaleToFill" id="wvf-Qs-KZn">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <viewLayoutGuide key="safeArea" id="9g7-Ke-2T3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="790" y="5"/>
-        </view>
     </objects>
     <resources>
+        <image name="Progress" width="140" height="140"/>
+        <image name="SchoolStudent" width="5500" height="4000"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="mappin.and.ellipse" catalog="system" width="110" height="128"/>
         <namedColor name="AppDark">
             <color red="0.31700000166893005" green="0.10499999672174454" blue="0.2630000114440918" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonColor">
+            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

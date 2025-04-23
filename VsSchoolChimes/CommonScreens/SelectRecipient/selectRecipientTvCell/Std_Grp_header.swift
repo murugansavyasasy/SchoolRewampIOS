@@ -9,6 +9,7 @@ import UIKit
 
 class Std_Grp_header: UITableViewHeaderFooterView {
 
+    @IBOutlet weak var createdOnDefaultLbl: UILabel!
     @IBOutlet weak var HeaderLabel: UILabel!
     /*
     // Only override draw() if you perform custom drawing.

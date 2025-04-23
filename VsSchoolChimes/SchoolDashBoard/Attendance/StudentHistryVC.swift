@@ -378,8 +378,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath:   today_date + "/" + (
-                    staffDetailsCount?.first?.school_id ?? ""),
+                bucketPath:  "communication" + "/" + (UserDefaultFileManager
+                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
+                    ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)

@@ -439,8 +439,9 @@ class RecipientVc: UIViewController{
             let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath:   today_date + "/" + (
-                    staffDetailsCount?.first?.school_id ?? ""),
+                bucketPath:  "communication" + "/" + (UserDefaultFileManager
+                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
+                    ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -723,12 +724,16 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
             head.HeaderLabel.text = recipeint_tabBarName.Group
+            head.createdOnDefaultLbl.isHidden = false
         case recipeint_tabBarName.Standard:
             head.HeaderLabel.text = recipeint_tabBarName.Standard
+            head.createdOnDefaultLbl.isHidden = true
         case recipeint_tabBarName.Section_Student:
             head.HeaderLabel.text = recipeint_tabBarName.Section_Student
+            head.createdOnDefaultLbl.isHidden = true
         case recipeint_tabBarName.Staff:
             head.HeaderLabel.text = recipeint_tabBarName.Staff
+            head.createdOnDefaultLbl.isHidden = true
         default:
             head.HeaderLabel.text = ""
         }
@@ -777,7 +782,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             if let item = groupDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
-                cell.createdOnlbl.text =  "Created On: \(item.created_on ?? "")"
+                cell.createdOnlbl.text =  item.created_on
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
            
