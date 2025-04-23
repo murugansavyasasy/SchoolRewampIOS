@@ -249,18 +249,13 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             cell.RoleLbl.text = staffDetails?[indexPath.row].role
             cell.SchoolNamelbl.text = staffDetails?[indexPath.row].school_name
             
-            if ((staffDetails?[indexPath.row].school_name_regional?.isEmpty) != nil) {
-                cell.SchoolNameRegional.isHidden = true
+            if (staffDetails?[indexPath.row].school_name_regional ?? "").isEmpty {
+                cell.SchoolNameRegional.isHidden = false
+                cell.SchoolNameRegional.text = staffDetails?[indexPath.row].school_name_regional
             }else{
-                
+                cell.SchoolNameRegional.isHidden = true
             }
         
-            cell.SchoolNameRegional.text = staffDetails?[indexPath.row].school_name_regional
-            
-            cell.SchoolNameRegional.isHidden = ((staffDetails?[indexPath.row].school_name_regional?.isEmpty) != nil)
-            
-            //cell.AddressLbl.text = staffDetails?[indexPath.row].city
-           // cell.imgview.image = UIImage(named: staffDetails?[indexPath.row].school_logo ?? "")
             
             if let color1 = colour1, let color2 = colour2 {
                 cell.setGradientColors([color2.cgColor, color1.cgColor])

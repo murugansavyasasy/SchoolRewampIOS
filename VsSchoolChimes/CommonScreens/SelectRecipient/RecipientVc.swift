@@ -67,6 +67,7 @@ class RecipientVc: UIViewController{
         super.viewDidLoad()
         
         speficBtnName.isHidden = true
+        tv.isHidden = true
         backbtnMName
             .setTitle(
                 UserDefaultFileManager.get_staff_Details()?.school_name,
@@ -178,7 +179,6 @@ class RecipientVc: UIViewController{
                 nodataFound.isHidden = false
             nodataFound.image = ImageName.girl_and_boy_are
                 noRecordLbl.isHidden = false
-                tableHeight.constant = 0
 //            }
             
         default:
