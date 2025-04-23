@@ -63,6 +63,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         
     }
     
+    
+    @IBOutlet weak var ReadUnreadStack: UIStackView!
+    @IBOutlet weak var UnreadBtn: UIButton!
+    @IBOutlet weak var ReadBtn: UIButton!
+    @IBOutlet weak var AllBtn: UIButton!
     @IBOutlet weak var FilterCV: UICollectionView!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var NodataLbl: UILabel!
@@ -89,8 +94,12 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     var dropDown = DropDown()
     var isFiltered = false
     let dateFormatter = DateFormatter()
-    let Filters = ["All","VOICE","TEXT","Read","Unread"]
+    let Filters = ["All","VOICE","TEXT"/*,"Read","Unread"*/]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
+    
+    var readStatus = 0  //All = 0, read = 1, unread = 2
+    
+    var showfilter = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,6 +165,19 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     //MARK: StyleAndTranslate
     func StyleAndTranslate(){
         
+        FilterCV.isHidden = true
+        ReadUnreadStack.isHidden = true
+        
+        ReadBtn.layer.cornerRadius = 12
+        UnreadBtn.layer.cornerRadius = 12
+        AllBtn.layer.cornerRadius = 12
+        
+        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+        
+        ReadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        UnreadBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        AllBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
         NodataLbl.setFont(style: .title, size: 17)
@@ -190,25 +212,97 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         dismiss(animated: true)
     }
     
+    
+    @IBAction func AllAct(_ sender: Any) {
+        
+        isFiltered = true
+        AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+        ReadBtn.backgroundColor = .systemGray5
+        UnreadBtn.backgroundColor = .systemGray5
+        readStatus = 0
+        
+        filterSelection(FilterType: Filters[selectedIndex.row])
+        
+        tv.reloadData()
+    }
+    
+    @IBAction func UnreadAct(_ sender: Any) {
+        isFiltered = true
+        UnreadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+        ReadBtn.backgroundColor = .systemGray5
+        AllBtn.backgroundColor = .systemGray5
+        readStatus = 2
+         
+        if selectedIndex.row == 0{
+            
+            FilteredMessages = TotalMessageList?.unreadMessages()
+            
+        }else{
+            
+            FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[selectedIndex.row])
+        }
+        
+      
+    
+        tv.reloadData()
+    }
+    
+    @IBAction func ReadAct(_ sender: Any) {
+        isFiltered = true
+        ReadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+        UnreadBtn.backgroundColor = .systemGray5
+        AllBtn.backgroundColor = .systemGray5
+        readStatus = 1
+        
+        if selectedIndex.row == 0{
+            
+            FilteredMessages = TotalMessageList?.readMessages()
+            
+        }else{
+            
+            FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
+        }
+        
+       // FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
+        
+        tv.reloadData()
+    }
+    
+    
     @IBAction func filter(_ sender: UIButton) {
         
         
-        dropDown.dataSource = ["VOICE","TEXT","Read","Unread","All"]
-        dropDown.anchorView = FilterImage
-        dropDown.bottomOffset = CGPoint(x: 0, y: (FilterImage.bounds.height))
+//        dropDown.dataSource = ["VOICE","TEXT","Read","Unread","All"]
+//        dropDown.anchorView = FilterImage
+//        dropDown.bottomOffset = CGPoint(x: 0, y: (FilterImage.bounds.height))
+//        
+//        dropDown.direction = .bottom
+//        
+//        dropDown.show()
+//        dropDown.selectionAction = { [self] (index: Int, item: String) in
+//           // self.filterBtn.setTitle(item.translated(), for: .normal)
+//            
+//            filterSelection(FilterType: item)
+//            
+//            isFiltered = true
+//            tv.reloadData()
+//            
+//        }
         
-        dropDown.direction = .bottom
+        FilterCV.isHidden = false
+        ReadUnreadStack.isHidden = false
         
-        dropDown.show()
-        dropDown.selectionAction = { [self] (index: Int, item: String) in
-           // self.filterBtn.setTitle(item.translated(), for: .normal)
-            
-            filterSelection(FilterType: item)
-            
-            isFiltered = true
-            tv.reloadData()
-            
+        showfilter.toggle()
+        
+       if showfilter == true {
+            ViewAnimator.showFade(FilterCV)
+            ViewAnimator.showFade(ReadUnreadStack)
+        }else {
+            ViewAnimator.hideFade(FilterCV)
+            ViewAnimator.hideFade(ReadUnreadStack)
         }
+        
+       
         
     }
     
@@ -221,11 +315,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         case "TEXT":
             FilteredMessages = TotalMessageList?.messages(ofType: "TEXT")
         
-        case "Read" :
-            FilteredMessages = TotalMessageList?.readMessages()
-            
-        case "Unread" :
-            FilteredMessages = TotalMessageList?.unreadMessages()
+//        case "Read" :
+//            FilteredMessages = TotalMessageList?.readMessages()
+//            
+//        case "Unread" :
+//            FilteredMessages = TotalMessageList?.unreadMessages()
             
         case "All" :
             FilteredMessages = TotalMessageList
@@ -292,7 +386,28 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                        
                         if isFiltered{
                             
-                            filterSelection(FilterType:  dropDown.selectedItem ?? "")
+                            if selectedIndex.row == 0{
+                                
+                                if readStatus == 1 {
+                                    FilteredMessages = TotalMessageList?.readMessages()
+                                    
+                                }else if readStatus == 2{
+                                    
+                                    FilteredMessages = TotalMessageList?.unreadMessages()
+                                }else{
+                                    filterSelection(FilterType:  Filters[selectedIndex.item])
+                                }
+                            }else {
+                                
+                                if readStatus == 1 {
+                                    FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[ selectedIndex.row])
+                                }else if readStatus == 2 {
+                                    
+                                    FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[ selectedIndex.row])
+                                }
+                            }
+                          
+                            
                         }
                         
                         NodataLbl.isHidden = true
@@ -402,6 +517,17 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+//        if FilteredMessages?.count == 0{
+//            
+//            NodataImage.isHidden = false
+//            NodataLbl.isHidden = false
+//            NodataLbl.text = "No Data Found"
+//        }else {
+//            
+//            NodataImage.isHidden = true
+//            NodataLbl.isHidden = true
+//        }
         
         if isFiltered{
             return FilteredMessages?.count ?? 0
@@ -703,8 +829,9 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
         
         cell.FilterLbl.text = Filters[indexPath.item]
         
-        cell.cellView.backgroundColor = indexPath == selectedIndex ? .systemGreen.withAlphaComponent(0.3) : .systemGray5
-            
+//        cell.cellView.backgroundColor = indexPath == selectedIndex ? .systemGreen.withAlphaComponent(0.3) : .systemGray5
+        
+        cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
         
         return cell
     }
@@ -713,21 +840,47 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
         
         selectedIndex = indexPath // Update selected index
         
-        filterSelection(FilterType: Filters[indexPath.item])
+      
+        
+        if readStatus == 2 {
+            
+            if selectedIndex.row == 0 {
+                
+                FilteredMessages = TotalMessageList?.unreadMessages()
+            }else{
+                
+                FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[indexPath.item])
+            }
+        }
+        
+        else if readStatus == 1 {
+            
+            if selectedIndex.row == 0 {
+                FilteredMessages = TotalMessageList?.readMessages()
+            }else {
+                FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[indexPath.item])
+            }
+        }
+        
+        else{
+            
+            filterSelection(FilterType: Filters[indexPath.item])
+        }
         
         isFiltered = true
-        tv.reloadData()
+       
+//        if FilteredMessages?.count == 0{
+//            
+//            NodataImage.isHidden = false
+//            NodataLbl.isHidden = false
+//            NodataLbl.text = "No Data Found"
+//        }else {
+//            
+//            NodataImage.isHidden = true
+//            NodataLbl.isHidden = true
+//        }
         
-        if FilteredMessages?.count == 0{
-            
-            NodataImage.isHidden = false
-            NodataLbl.isHidden = false
-            NodataLbl.text = "No Data Found"
-        }else {
-            
-            NodataImage.isHidden = true
-            NodataLbl.isHidden = true
-        }
+        tv.reloadData()
         
         FilterCV.reloadData()
         
@@ -741,7 +894,7 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
         label.text = text
         label.sizeToFit()
 
-        let width = label.frame.width + 20 // Add padding
+        let width = label.frame.width + 60  // Add padding
         return CGSize(width: width, height: 40) // Adjust height accordingly
     }
 }
@@ -794,5 +947,15 @@ extension Array where Element == CommunicationReciverData {
     // Filter by type (e.g. "TEXT", "VOICE")
     func messages(ofType type: String) -> [CommunicationReciverData] {
         return self.filter { $0.type.uppercased() == type.uppercased() }
+    }
+    
+    // Filter unread messages of a specific type
+    func unreadMessages(ofType type: String) -> [CommunicationReciverData] {
+        return self.filter { $0.is_unread && $0.type.uppercased() == type.uppercased() }
+    }
+    
+    // Filter read messages of a specific type
+    func readMessages(ofType type: String) -> [CommunicationReciverData] {
+        return self.filter { !$0.is_unread && $0.type.uppercased() == type.uppercased() }
     }
 }

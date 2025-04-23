@@ -936,5 +936,4 @@ extension SenderAttachmentVC : UITextViewDelegate{
         print("TextView content has exceeded the initial height.")
     }
     
-    
 }

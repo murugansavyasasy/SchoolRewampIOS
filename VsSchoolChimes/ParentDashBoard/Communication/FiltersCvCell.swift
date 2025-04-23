@@ -11,6 +11,7 @@ class FiltersCvCell: UICollectionViewCell {
 
     @IBOutlet weak var cellView: UIView!
     @IBOutlet weak var FilterLbl: UILabel!
+    @IBOutlet weak var CheckboxImg: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
