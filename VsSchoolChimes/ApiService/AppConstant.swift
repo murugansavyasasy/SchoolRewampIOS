@@ -46,6 +46,11 @@ struct ServiceUrl{
     static let  comm_attachment_send_attachment  = "comm/attachment/send-attachment"
     static let  comm_communication_attachment_list  = "comm/communication/attachment-list"
     static let  comm_communication_attachment_list_archive  = "comm/communication/attachment-list-archive"
+    static let  staff_attd_geometric_entry_using_app  = "staff-attd/geometric/entry-using-app"
+    static let  staff_attd_geometric_set_geometric_location  = "staff-attd/geometric/set-geometric-location" 
+    static let  staff_attd_geometric_get_geometric_location_history  = "staff-attd/geometric/get-geometric-location-history"
+    
+    
 }
 
 struct localData{
@@ -148,6 +153,11 @@ func isValidIndianMobileNumber(_ mobileNumber: String) -> Bool {
 }
 
 func getCurrentDateString(format: String = "dd-MM-yyyy") -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = format
+    return dateFormatter.string(from: Date())
+}
+func AwsCurrentDateString(format: String = "YYYY-MM-DD") -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = format
     return dateFormatter.string(from: Date())

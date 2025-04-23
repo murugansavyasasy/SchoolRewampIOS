@@ -75,8 +75,16 @@ class RecipientVc: UIViewController{
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr()
+        
+        let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
+        tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
+        
+        tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
+        
+        
+      
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-            configureRecipientTabs()
+//            configureRecipientTabs()
             
             if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
                 segmentName.isHidden = true
@@ -86,7 +94,6 @@ class RecipientVc: UIViewController{
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
                 speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
                 speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-                contentLbl.isHidden = true
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
                 heightSegment.constant = 0
@@ -111,16 +118,8 @@ class RecipientVc: UIViewController{
         selectStandardDropDown.addGestureRecognizer(tap2)
         selectSubject.addGestureRecognizer(tap3)
         acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
-        
-        
-        let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
-        tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
-        
-        tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
-        
         tv.delegate = self
         tv.dataSource = self
-        
         configureRecipientTabs()
     
     }
@@ -129,10 +128,16 @@ class RecipientVc: UIViewController{
     func configureRecipientTabs() {
         segmentName.removeAllSegments()
         cv_itemsarry.removeAll()
-        
+        segmentName
+            .setTitleTextAttributes(
+                [
+                    .font: UIFont.boldSystemFont(ofSize: 12),
+                    .foregroundColor: UIColor.black
+                ],
+                for: .normal
+            )
         switch staff_role {
         case PriorityType.is_staff:
-            contentLbl.isHidden = true
             cv_itemsarry = [
                 recipeint_tabBarName.Standard,
                 recipeint_tabBarName.Section_Student,
@@ -144,18 +149,18 @@ class RecipientVc: UIViewController{
             
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             
-            if (staffDetailsCount?.count ?? 0) > 1 {
-                contentLbl.isHidden = true
-                cv_itemsarry = [
-                    recipeint_tabBarName.Standard,
-                    recipeint_tabBarName.Section_Student,
-                    recipeint_tabBarName.Group,
-                    recipeint_tabBarName.Staff
-                ]
-                target_type = TargetTypes.standard
-                circular_types =  circular_type.standard
-                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            } else {
+//            if (staffDetailsCount?.count ?? 0) > 1 {
+//                cv_itemsarry = [
+//                    recipeint_tabBarName.Entier_School,
+//                    recipeint_tabBarName.Standard,
+//                    recipeint_tabBarName.Section_Student,
+//                    recipeint_tabBarName.Group,
+//                    recipeint_tabBarName.Staff
+//                ]
+//                target_type = TargetTypes.standard
+//                circular_types =  circular_type.standard
+//                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+//            } else {
                 cv_itemsarry = [
                     recipeint_tabBarName.Entier_School,
                     recipeint_tabBarName.Standard,
@@ -163,8 +168,17 @@ class RecipientVc: UIViewController{
                     recipeint_tabBarName.Group,
                     recipeint_tabBarName.Staff
                 ]
+            circular_types = circular_type.school
+            target_type = TargetTypes.school
+            array_selectedId
+                .append(
+                    UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
+                )
+                nodataFound.isHidden = false
+            nodataFound.image = ImageName.girl_and_boy_are
+                noRecordLbl.isHidden = false
                 tableHeight.constant = 0
-            }
+//            }
             
         default:
             print("Unhandled staff role")
@@ -355,7 +369,7 @@ class RecipientVc: UIViewController{
                                 
                                 CustomAlert
                                     .showAlertWithOkAction(
-                                        title: "Success",
+                                        title: "Error",
                                         message: succesmessage.message ?? "",
                                         on: self
                                     ) {
@@ -435,14 +449,14 @@ class RecipientVc: UIViewController{
                 print("❌ Invalid audio URL.")
                 return
             }
-
             let total = 1
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-
+            let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath: "uploads/audio/",
+                bucketPath:   today_date + "/" + (
+                    staffDetailsCount?.first?.school_id ?? ""),
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -638,9 +652,14 @@ class RecipientVc: UIViewController{
         switch selectedTitle {
             
         case recipeint_tabBarName.Entier_School:
+            array_selectedId.append( UserDefaultFileManager.get_staff_Details()?.school_id ?? "")
             target_type = TargetTypes.school
             circular_types =  circular_type.school
-            contentLbl.isHidden = false
+            nodataFound.isHidden = false
+            noRecordLbl.isHidden = false
+            noRecordLbl.text = "Tap SEND to share this message with everyone in the school."
+            sendbtnName.isHidden = false
+            nodataFound.image = ImageName.girl_and_boy_are
             selectStandardDropDown.isHidden = true
             tv.isHidden = true
             
@@ -649,7 +668,6 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.group
             circular_types =  circular_type.group
             getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            contentLbl.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
@@ -657,7 +675,6 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            contentLbl.isHidden = true
             selectStandardDropDown.isHidden = true
             tv.isHidden = false
             
@@ -670,7 +687,7 @@ class RecipientVc: UIViewController{
             
             speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
             
-            contentLbl.isHidden = true
+
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
             
@@ -678,7 +695,6 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.staff
             circular_types =  circular_type.staff
             getStaffListAPI()
-            contentLbl.isHidden = true
             tv.isHidden = false
             selectStandardDropDown.isHidden = true
             
@@ -808,6 +824,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let baseCount: Int
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
+
             baseCount = groupDetails?.count ?? 0
         case recipeint_tabBarName.Standard:
             baseCount = standardDetails?.count ?? 0
@@ -837,12 +854,16 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
+            
             if let item = groupDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
                 cell.createdOnlbl.text =  "Created On: \(item.created_on ?? "")"
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
+           
+            
+            
         case recipeint_tabBarName.Standard:
             if let item = standardDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
@@ -864,7 +885,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+        
+        DispatchQueue.main.async {
+            self.tableHeight.constant = self.tv.contentSize.height
+            self.view.layoutIfNeeded()
+        }
 
+        
         return cell
     }
 
@@ -1028,40 +1055,27 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 case .success(let successmessage):
                     
                     if successmessage.status == true{
-                        
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
-                            tv.isHidden = false
-                            noRecordLbl.isHidden = true
                             groupDetails = successmessage.data
-                            nodata(true)
+                            nodata(true, message: "")
                             if var students = groupDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
                                 }
                                 groupDetails = students
                             }
-                            
                             tv.reloadData()
-                            
-                            DispatchQueue.main.async {
-                                self.tableHeight.constant = self.tv.contentSize.height
-                                self.view.layoutIfNeeded()
-                            }
-                            
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
-                            tv.isHidden = true
-                            noRecordLbl.isHidden = false
-                            noRecordLbl.text = successmessage.message
-                            nodata(false)
+                            nodata(false, message: successmessage.message ?? "" )
                         }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
-                        nodata(false)
+                        self.nodata(false, message: error.localizedDescription)
                     }
                 }
             }
@@ -1073,18 +1087,16 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             switch result {
             case .success(let successMessage):
                 print("successsuccess",successMessage.data)
-                
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
-                        nodata(true)
+                        nodata(true, message: "")
                         standardDetails = successMessage.data
                         standardDetails?.enumerated().forEach { index, student in
                             standardDetails?[index].isSelect = false
                             dropDownArray.append(student.name ?? "")
-                            
                             if let sections = student.sections {
                                 for j in 0..<sections.count {
                                     standardDetails?[index].sections?[j].isSelect = false
@@ -1093,7 +1105,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         }
                         drpodonLbl.text = standardDetails?.first?.name
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
-                        
                         tv.reloadData()
                         DispatchQueue.main.async {
                             self.tableHeight.constant = self.tv.contentSize.height
@@ -1103,22 +1114,26 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectStandardDropDown.isHidden = true
-                        tv.isHidden = true
-                        nodata(false)
-                        noRecordLbl.isHidden = false
-                        noRecordLbl.text = successMessage.message
+                        nodata(false, message: successMessage.message ?? "")
                     }
                 }
-                
             case .failure(let error):
-                print(error.localizedDescription)
-                nodata(false)
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+                    nodata(false, message: error.localizedDescription)
+                }
+                
             }
         }
         
     }
-    func nodata(_ ishide:Bool){
+    func nodata(_ ishide:Bool,message:String){
+        nodataFound.image = ImageName.missing_file
         nodataFound.isHidden = ishide
+        sendbtnName.isHidden = !ishide
+        tv.isHidden = !ishide
+        noRecordLbl.isHidden = ishide
+        noRecordLbl.text = message
     }
     func getStaffListAPI(){
         APIService.shared
@@ -1130,8 +1145,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 case .success(let successMessage):
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
-                            tv.isHidden = false
-                            nodata(true)
+                            nodata(true, message: "")
                             staffDetails = successMessage.data
                             if var students = staffDetails {
                                 for i in students.indices {
@@ -1140,7 +1154,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 staffDetails = students
                             }
                             tv.reloadData()
-                            
                             DispatchQueue.main.async {
                                 self.tableHeight.constant = self.tv.contentSize.height
                                 self.view.layoutIfNeeded()
@@ -1149,14 +1162,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             selectSubject.isHidden = true
+                            sendbtnName.isHidden = true
                             tv.isHidden = true
-                            noRecordLbl.text = successMessage.message
-                            nodata(false)
+
+                            nodata(false, message: successMessage.message ?? "")
                         }
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    nodata(false)
+                    nodata(false, message: "Something went wrong")
                 }
             }
         
@@ -1198,15 +1212,43 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         DispatchQueue.main.async { [self] in
                             //                        listTable.isHidden = true
                             AcadimicYearDatas = successMessage.data ?? []
+                            var hasCurrentYear = false
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
                                         acidmicYrLbl.text = AcadimicYearDatas[i].year
                                     accadmicDefaultYrName = AcadimicYearDatas[i].year
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                    hasCurrentYear = true
+                                    segmentName.isUserInteractionEnabled = hasCurrentYear
                                         break
                                 }
                             }
                             
+                            if !hasCurrentYear {
+                                segmentName.isUserInteractionEnabled = false
+                                nodata(false, message: "")
+                                nodataFound.isHidden = true
+                                acidamicYrDropView.isUserInteractionEnabled = false
+                                
+                                let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
+                                let attributedString = NSMutableAttributedString(string: fullText)
+
+                                let email = "support@savyasasy.com"
+                                if let range = fullText.range(of: email) {
+                                    let nsRange = NSRange(range, in: fullText)
+                                    
+                                    // Color and underline
+                                    attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
+                                    attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
+                                }
+
+                                noRecordLbl.attributedText = attributedString
+                                noRecordLbl.isUserInteractionEnabled = true
+                                
+                                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
+                                noRecordLbl.addGestureRecognizer(tapGesture)
+
+                            }
                             
                         }
                         
@@ -1225,7 +1267,50 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         
-    } // MARK:   Listing  API END ===========================
+    }
+    
+    @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = noRecordLbl.attributedText?.string else { return }
+           let email = "support@savyasasy.com"
+
+           if let range = text.range(of: email) {
+               let nsRange = NSRange(range, in: text)
+
+               let tapLocation = gesture.location(in: noRecordLbl)
+               let layoutManager = NSLayoutManager()
+               let textContainer = NSTextContainer(size: noRecordLbl.bounds.size)
+               let textStorage = NSTextStorage(attributedString: noRecordLbl.attributedText!)
+
+               textContainer.lineFragmentPadding = 0
+               textContainer.maximumNumberOfLines = noRecordLbl.numberOfLines
+               textContainer.lineBreakMode = noRecordLbl.lineBreakMode
+               layoutManager.addTextContainer(textContainer)
+               textStorage.addLayoutManager(layoutManager)
+
+               let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+               if NSLocationInRange(index, nsRange) {
+                   let subject = ""
+                   let body = ""
+                   
+                   // URL encode
+                   let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   
+                   // Try Gmail URL
+                   if let gmailURL = URL(string: "googlegmail://co?to=\(email)&subject=\(encodedSubject)&body=\(encodedBody)"),
+                      UIApplication.shared.canOpenURL(gmailURL) {
+                       UIApplication.shared.open(gmailURL)
+                   } else if let fallbackURL = URL(string: "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)") {
+                       UIApplication.shared.open(fallbackURL)
+                   }
+               }
+           }
+    }
+
+    
+    
+    // MARK:   Listing  API END ===========================
     
     
     

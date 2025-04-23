@@ -93,6 +93,8 @@ class ImageName{
     static let eye_slash = UIImage(systemName: "eye.slash.fill")
     static let uncheckedSquares = UIImage(named: "uncheckedSquare")
     static let checkedSquares = UIImage(named: "checkedSquare")
+    static let girl_and_boy_are = UIImage(named: "girl-and-boy-are-together-deciding-to-send-an-email-message")
+    static let missing_file = UIImage(named: "missing-file")
                                        
   
 }
