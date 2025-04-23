@@ -314,7 +314,7 @@ class RecipientVc: UIViewController{
     
     
     private func handleHomeworkFlow() {
-        
+        uploadedURLs.removeAll()
         let file: Any = user_inputs.SelectedUrls
         uploadAndSendVoiceMessage(file: file) { [self] in
             CircularProgressLoader.shared.hide()
