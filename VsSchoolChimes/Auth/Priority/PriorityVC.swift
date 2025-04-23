@@ -191,6 +191,15 @@ class PriorityVC: UIViewController {
         vc.login_astype = login_astype
         present(vc, animated: true)
     }
+    @IBAction func logout(_ sender: UIButton) {
+        
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "Logout")
+        
+        let vc = LogoutViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: false)
+    }
     
     
 }
@@ -320,6 +329,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
     
 }
 
