@@ -146,7 +146,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
 
             user_inputs.selectedFileType = "pdf"
@@ -242,7 +242,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
     func selectPDF() {
-        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
         
     }
     

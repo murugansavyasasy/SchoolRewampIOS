@@ -607,10 +607,6 @@ func downloadFile(from urlString: String, folderName: String, fileName: String) 
     
     task.resume()
 }
-func getFileIconName(for fileURL: URL) -> String {
-    let ext = fileURL.pathExtension.lowercased()
-
-
 extension DateFormatter {
     func convertDate(_ dateString: String, fromFormat: String = "dd-MM-yyyy", toFormat: String = "dd MMM yyyy") -> String? {
         self.dateFormat = fromFormat
@@ -637,6 +633,8 @@ extension UILabel {
         self.attributedText = attributedText
     }
 }
+func getFileIconName(for fileURL: URL) -> String {
+    let ext = fileURL.pathExtension.lowercased()
 
     switch ext {
     case "jpg", "jpeg", "png", "gif", "heic", "heif":
@@ -650,6 +648,6 @@ extension UILabel {
     case "ppt", "pptx":
         return "ppt"                // 📽 PowerPoint icon
     default:
-        return "default_file_icon"  // 🔄 Fallback icon
+        return "txt-file"  // 🔄 Fallback icon
     }
 }

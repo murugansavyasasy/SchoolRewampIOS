@@ -180,36 +180,6 @@
             endingLineNumber = "1327"
             landmarkName = "doneSelection(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C92CD500-3159-40D4-B059-F7FA35A11660 - e18c0a41bd2a93e7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VsSchoolChimes.ComunicationVC.doneSelection(Any) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1327"
-                  endingLineNumber = "1327">
-               </Location>
-               <Location
-                  uuid = "C92CD500-3159-40D4-B059-F7FA35A11660 - f784226d637b99b3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in VsSchoolChimes.ComunicationVC.doneSelection(Any) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1328"
-                  endingLineNumber = "1328">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -19,7 +19,6 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
     var img :UIImage?
     var selectedFileURL : URL?
     var type:String?
-    @IBOutlet weak var pdfView: WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
         pdfView.navigationDelegate = self
@@ -28,9 +27,6 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
         if type?.uppercased() != "IMAGE" {
             imgView.isHidden = true
             pdfView.isHidden = false
-            if let url = selectedFileURL{
-                loadPDF(url)
-            }
             
         }else{
             if img != nil{
