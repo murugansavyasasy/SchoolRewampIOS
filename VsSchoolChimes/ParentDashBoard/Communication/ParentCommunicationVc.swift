@@ -849,8 +849,7 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
                 FilteredMessages = TotalMessageList?.unreadMessages()
             }else{
                 
-                FilteredMessages = TotalMessageList?
-                    .unreadMessages(ofType: Filters[indexPath.item])
+                FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[indexPath.item])
             }
         }
         

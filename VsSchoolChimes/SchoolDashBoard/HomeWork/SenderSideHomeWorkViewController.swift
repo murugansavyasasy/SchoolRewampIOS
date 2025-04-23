@@ -243,7 +243,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     }
     func selectPDF() {
         PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-        
+        PhotoPickerManager.shared.limiSelection = 5 - attachments.count
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
