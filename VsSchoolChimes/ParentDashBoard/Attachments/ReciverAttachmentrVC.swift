@@ -18,7 +18,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
     var filteredAttachments:[Attachment]?
     var filterDropDown = DropDown()
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var shouldShowFooter = false
+    var shouldShowFooter = true
     override func viewDidLoad() {
         super.viewDidLoad()
         studentName.text = studentDetails?.name
@@ -26,7 +26,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
         studentName.setFont(style: .body, size: FontSize.BodySize)
         standerd.setFont(style: .body, size:10)
         setupView()
-//        fetchAttachments()
+        fetchAttachments()
         setupTableFooter()
     }
     func setupTableFooter() {
@@ -54,7 +54,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
                 // Hide the footer after animation completes.
                 attachmentTable.tableFooterView = nil
                 shouldShowFooter = false
-                fetchAttachments()
+                fetchArchiveAttachments()
             })
         } else {
             // In case footer is already nil.
@@ -94,7 +94,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
         attachmentTable.reloadData()
     }
     
-    private func fetchAttachments() {
+    private func fetchArchiveAttachments() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
@@ -112,6 +112,33 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
                 
                 switch result {
                 case .success(let response):
+                    self?.attachmentData?.append(contentsOf: response.data ?? [])
+                    self?.filteredAttachments?.append(contentsOf: response.data ?? [])
+                    self?.attachmentTable.reloadData()
+                case .failure(let error):
+                    print("Error fetching attachments:", error.localizedDescription)
+                }
+            }
+        }
+    }
+    private func fetchAttachments() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_communication_attachment_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token:studentDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<AttachmentsResponse, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self?.hideLottieProgressLoader()
+                }
+                
+                switch result {
+                case .success(let response):
                     self?.attachmentData = response.data
                     self?.filteredAttachments = response.data
                     self?.attachmentTable.reloadData()
@@ -121,7 +148,6 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
             }
         }
     }
-    
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }

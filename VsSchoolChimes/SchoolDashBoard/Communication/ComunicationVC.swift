@@ -15,7 +15,8 @@ extension ComunicationVC: UIPopoverPresentationControllerDelegate {
         return .none // Ensures popover on iPhone
     }
 }
-class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate, ForwordDelegate, HistoryFinishPalyingDelegate{
+class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate, ForwordDelegate, HistoryFinishPalyingDelegate,UITextFieldDelegate{
+
     func voiceforword(selectedIndex: Int?) {
         voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].description ?? ""
         
@@ -67,6 +68,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     var placeholderLabel: UILabel!
     let alert = CustomAlert()
     
+    @IBOutlet weak var textMsgVoiceCountLbl: UILabel!
+    @IBOutlet weak var voiceTileTextFldCount: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var acidamicYrDropView: UIView!
     @IBOutlet weak var chooseAcidyrDefaultLbl: UILabel!
@@ -159,9 +162,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         super.viewDidLoad()
         acidamicYrDropView.isHidden = true
         chooseAcidyrDefaultLbl.isHidden = true
-        
+        voiceTileTextFldCount.text = "0/50"
+        textMsgVoiceCountLbl.text = "0/50"
         enableVoiceHistory.isHidden = true
         enableVoiceHistoryLabel.isHidden = true
+        voiceTitleeTxt.delegate = self
+        TxtTitle.delegate = self
         updateEmergencyCallVisibility( staff_role)
         applyShadowAndCornerRadius(to:acidamicYrDropView)
         sendbtn.isEnabled = true
@@ -408,6 +414,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             if(isVoice == true){
              
                     let vc = RecipientVc(nibName: nil, bundle: nil)
+                if(isEmergencyVoice == 1){
+                    vc.ScreenType = screenType.is_emergencyvoice
+                }else{
+                    vc.ScreenType = screenType.non_emergencyvoice
+                }
                     vc.modalPresentationStyle = .fullScreen
                     present(vc, animated: true)
                 
@@ -687,6 +698,21 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     func hideCalendarHeader() {
         DateSelection.headerHeight = 0
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // Get the current text
+        let currentText = textField.text ?? ""
+
+        // Apply the change
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        // ✅ Update character count label
+        voiceTileTextFldCount.text = "\(updatedText.count)/50"
+
+        // ✅ Limit to 50 characters
+        return updatedText.count <= 49
+    }
+
     
     //MARK: CELL REGISTRATION
     func CellRegistre(){
@@ -746,10 +772,18 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     //MARK: GET AUDIO URL
     func getFileUrl() -> URL {
-        let filename = "myRecording.m4a"
+//        https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/voice/2025-04-10/5512/VS_1744266744694.wav
+        let filename = getTimestampedFileName()
         let filePath = getDocumentsDirectory().appendingPathComponent(filename)
         AudioPlayUrl = filePath.absoluteString // Store the file path for later use
         return filePath
+    }
+    
+    func getTimestampedFileName(extension ext: String = "m4a") -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd_HHmmss"
+        let timestamp = formatter.string(from: Date())
+        return "Audio_\(timestamp).\(ext)"
     }
     
     //MARK: Setup Audio Session
@@ -1462,7 +1496,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
-            
+            voiceTileTextFldCount.text = "\(title.count) of 500"
             ViewAnimator.animateConstraintChange { [self] in
                 playerheight.constant = 60
                 self.view.layoutIfNeeded()
@@ -1522,7 +1556,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     
-    func enabelScheduleView(isforward: Bool, voiceUrl: String, title: String, durations: Int,url: String) {
+    func enabelScheduleView(
+        isforward: Bool,
+        voiceUrl: String,
+        title: String,
+        durations: Int,
+        url: String
+    ) {
         emengencyCall.isOn = false
         
         if isforward {
@@ -1530,6 +1570,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             Timinglbl.isHidden = true
             addfile.isHidden = true
             AudioPlayUrl = url
+            voiceTileTextFldCount.text = "\(title.count) of 500"
             let formatted = formatDuration(durations)
             voiceTiming.text = "00:00 / \(formatted)"
             AudioPlayUrl = voiceUrl
@@ -1959,6 +2000,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         informationcontent.text = descriptContent
         placeholderLabel.isHidden = !informationcontent.text.isEmpty
         textCountLbl.text = "\(descriptContent.count) of 500"
+        textMsgVoiceCountLbl.text = "\(Tittle.count) of 50"
         showTextMessageView(isforwardtext:true)
     }
     

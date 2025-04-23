@@ -115,3 +115,21 @@ class SendAttachmentStringFile {
     static let academic_year_id = "academic_year_id"
 }
 
+
+class PunchStringFile {
+    
+    var staff_or_student = "staff_or_student"
+    var device_id = "device_id"
+    var punch_type = "punch_type"
+    var device_model  = "device_model"
+    
+}
+
+
+class punchDetaiShapeStringFile {
+    
+    var location = "location"
+    var longitude = "longitude"
+    var latitude = "latitude"
+    var distance = "distance"
+}

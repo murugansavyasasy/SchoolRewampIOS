@@ -27,6 +27,8 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     @IBOutlet weak var standerdView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var acodomicYearLbl: UILabel!
+    
+    @IBOutlet weak var dropDownStack: UIStackView!
     @IBOutlet weak var todayLbl: UILabel!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var acodemicView: UIView!
@@ -61,6 +63,8 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     var selectNotice : SelectNotice?
     override func viewDidLoad() {
         super.viewDidLoad()
+        getacadmicYr()
+        getStandardsAPI()
         acodemicView.cornerRadius()
         standerdView.cornerRadius()
         sectionView.cornerRadius()
@@ -95,13 +99,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         dateLbl.text = formattedDate
     }
     
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        getacadmicYr()
-        getStandardsAPI()
-    }
-    
+
     func getacadmicYr(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
@@ -205,10 +203,11 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         cell.subjectName.text = data?.subject_name
         cell.topics.text = data?.topic ?? ""
         cell.dateLble.text = dateLbl.text ?? ""
+        cell.ImageCollectionView.isHidden = (data?.file_path?.isEmpty ?? true)
         if let urls = data?.file_path {
             cell.loadImage(urls: urls)
-            
         }
+        
         cell.descriptionLbl.setupExpandable(text: data?.content ?? "")
         cell.descriptionLbl.onExpandableTap = {
             cell.descriptionLbl.isExpanded.toggle()
@@ -267,9 +266,8 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             switch result {
             case .success(let successMessage):
                 print("successsuccess",successMessage.data)
-                
+                DispatchQueue.main.async { [self] in
                 if successMessage.status == true{
-                    DispatchQueue.main.async { [self] in
                         
                         standardDetails = successMessage.data
                         standardDetails?.enumerated().forEach { index, student in
@@ -284,10 +282,19 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                         GetHomeWorkReport(standardDetails?.first?.sections?.first?.id, dateLbl.text ?? "")
                         StandardLbl.text = standardDetails?.first?.name
                         SectionLbl.text = standardDetails?.first?.sections?.first?.name ?? ""
+                    dropDownStack.isHidden = false
+                    searchBar.isHidden = false
+                    }else{
+                        dropDownStack.isHidden = true
+                        searchBar.isHidden = true
                     }
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+                    dropDownStack.isHidden = true
+                    searchBar.isHidden = true
+                }
             }
         }
         

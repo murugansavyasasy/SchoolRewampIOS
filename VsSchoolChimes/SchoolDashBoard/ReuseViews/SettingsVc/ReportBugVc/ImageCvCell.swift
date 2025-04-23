@@ -13,8 +13,9 @@ class ImageCvCell: UICollectionViewCell, WKUIDelegate, WKNavigationDelegate {
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageViews: UIImageView!
     
+    @IBOutlet weak var imageCount: UILabel!
     @IBOutlet weak var pdf: WKWebView!
-    @IBOutlet weak var TrashIcon: UIImageView!
+    @IBOutlet weak var TrashIcon: UIButton!
     @IBOutlet weak var deleteBtn: UIButton!
     var delegate:DeleteImge?
     var selectedFileURL : URL? = nil
@@ -22,6 +23,10 @@ class ImageCvCell: UICollectionViewCell, WKUIDelegate, WKNavigationDelegate {
         super.awakeFromNib()
         // Initialization code
         pdf.navigationDelegate = self
+        imageCount.layer.cornerRadius = imageCount.frame.width/2
+        TrashIcon.layer.cornerRadius = TrashIcon.frame.width/2
+        TrashIcon.layer.borderWidth = 1
+        TrashIcon.layer.borderColor = UIColor.black.cgColor
         ActivityIndicator.stopAnimating()
         let filePath = "file:///private/var/mobile/Containers/Data/Application/4881C40B-0842-4004-A75C-A6C2B640BCCF/tmp/com.voicesnap.schoolmessenger-Inbox/sample.pdf"
         guard let fileURL = URL(string: filePath) else {

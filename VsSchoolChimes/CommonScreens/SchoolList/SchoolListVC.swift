@@ -10,6 +10,7 @@ import DropDown
 
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var chooseDefaultLbl: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var acidamicYrDropView: UIView!
@@ -17,6 +18,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var listTable: UITableView!
    
+    @IBOutlet weak var norecordImg: UIImageView!
     var screen_type : Int?
     var isEmergency : Int = 1
     var isNoticeBoard : Int = 1
@@ -32,6 +34,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     let acidamicdrops = DropDown()
     var selectedAcadimicYearId : Int?
     var accadmicDefaultYrName : String?
+    var uploadedURLs: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: acidamicYrDropView)
@@ -41,20 +44,20 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         ViewAnimator.hideFade(acidamicYrDropView)
         ViewAnimator.hideFade(sendBtnName)
         
-        switch screen_type {
-        case isEmergency, isNoticeBoard:
-            ViewAnimator.hideFade(segmentName)
-            ViewAnimator.showFade(sendBtnName)
-            segmentName.selectedSegmentIndex = 1
-
-        case Menu_id.homeWorkMenuId,Menu_id.isAssaignment:
-            
-            ViewAnimator.hideFade(segmentName)
-            ViewAnimator.showFade(sendBtnName)
-            segmentName.selectedSegmentIndex = 0
-        default:
-            ViewAnimator.showFade(segmentName)
-        }
+//        switch screen_type {
+//        case isEmergency, isNoticeBoard:
+//            ViewAnimator.hideFade(segmentName)
+//            ViewAnimator.showFade(sendBtnName)
+//            segmentName.selectedSegmentIndex = 1
+//
+//        case Menu_id.homeWorkMenuId,Menu_id.isAssaignment:
+//            
+//            ViewAnimator.hideFade(segmentName)
+//            ViewAnimator.showFade(sendBtnName)
+//            segmentName.selectedSegmentIndex = 0
+//        default:
+//            ViewAnimator.showFade(segmentName)
+//        }
 
         for i in 0..<(school_details?.count ?? 0) {
             school_details?[i].isSelected = true
@@ -235,11 +238,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
         }else{
             
-          message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+            message = AlertstringFile.Selected_target + "\(array_selectedSchoolId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
         }
         let title = AlertstringFile.Alert_title
-
+        
         alert.showAlertCancel(
             title: title,
             message: message ?? "",
@@ -250,10 +253,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 switch screen_type {
                 case screenType.communication_text:
                     sendtextmessage_communication()
-
+                    
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
-                    uploadAndSendVoiceMessage(url : user_inputs.voice_link)
-
+                    uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
+                        self.sendVoiceMessage_communication()
+                    }
                 default:
                     print("❗️Unhandled communication screen type: \(screen_type)")
                 }
@@ -264,26 +268,136 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         )
     }
     
-    private func uploadAndSendVoiceMessage(url: String) {
-        guard let audioURL = URL(string: url) else {
-            print("❌ Invalid audio URL.")
+    private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
+        var completed = 0
+
+        switch file {
+
+        // 🎙️ Case: Audio File from String (URL Path)
+        case let files as String:
+            guard let audioURL = URL(string: files) else {
+                print("❌ Invalid audio URL.")
+                return
+            }
+            let total = 1
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            let today_date = AwsCurrentDateString()
+            AWSUploadManager.shared.uploadFileToAWS(
+                file: audioURL,
+                bucketPath:   today_date + "/" + (
+                    school_details?.first?.school_id ?? ""),
+                bucketName: "schoolchimes-communication",
+                progressHandler: { progress in
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+                },
+                completion: { url in
+                    if let uploadedURL = url {
+                        print("✅ Audio uploaded: \(uploadedURL)")
+                        user_inputs.voice_link = uploadedURL
+                    } else {
+                        print("❌ Audio upload failed.")
+                    }
+
+                    completed += 1
+                    let progress = (Double(completed) / Double(total)) * 100
+                    CircularProgressLoader.shared.updateProgress(to: progress)
+
+                    if completed == total {
+                        CircularProgressLoader.shared.hide()
+                        completion()
+                    }
+                }
+            )
+
+        // 🖼️ Case: Array of Images
+        case let images as [UIImage]:
+            let total = images.count
+            guard !images.isEmpty else {
+                completion()
+                return
+            }
+
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+
+            for (index, img) in images.enumerated() {
+                AWSUploadManager.shared.uploadFileToAWS(
+                    file: img,
+                    bucketPath: "uploads/images/",
+                    bucketName: "schoolchimes-communication",
+                    progressHandler: { progress in
+                        // Optional: Update progress per file individually if you want
+                    },
+                    completion: { [self] url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                            
+                        } else {
+                            print("❌ Failed to upload image \(index)")
+                        }
+
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    }
+                )
+            }
+            // 🖼️ Case: Array of Images
+        case let files as [String]:
+                let total = files.count
+                guard !files.isEmpty else {
+                    completion()
+                    return
+                }
+
+                CircularProgressLoader.shared.show(style: .circle)
+                CircularProgressLoader.shared.updateProgress(to: 0)
+
+                for (index, url) in files.enumerated() {
+                    guard let PdfURL = URL(string: url) else {
+                        print("❌ Invalid audio URL.")
+                        return
+                    }
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: PdfURL,
+                        bucketPath: "uploads/Documents/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: { progress in
+                            // Optional: Update progress per file individually if you want
+                        },
+                        completion: { [self] url in
+                            if let uploadedURL = url {
+                                uploadedURLs.append(uploadedURL)
+                                
+                            } else {
+                                print("❌ Failed to upload image \(index)")
+                            }
+
+                            completed += 1
+                            let progress = (Double(completed) / Double(total)) * 100
+                            CircularProgressLoader.shared.updateProgress(to: progress)
+
+                            if completed == total {
+                                CircularProgressLoader.shared.hide()
+                                // Do something with uploadedURLs if needed
+                                completion()
+                            }
+                        }
+                    )
+                }
+        default:
+            print("❌ Unsupported file type")
             return
         }
-
-        AWSUploadManager.shared.uploadFileToAWS(
-            file: audioURL,
-            bucketPath: "uploads/audio/",
-            bucketName: "schoolchimes-communication"
-        ) { url in
-            if let uploadedURL = url {
-                print("✅ Audio uploaded: \(uploadedURL)")
-                user_inputs.voice_link = uploadedURL
-                self.sendVoiceMessage_communication()
-            } else {
-                print("❌ Audio upload failed.")
-            }
-        }
     }
+
     
     
     
@@ -300,22 +414,54 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         DispatchQueue.main.async { [self] in
                             //                        listTable.isHidden = true
                             AcadimicYearDatas = successMessage.data ?? []
-                            acidamicYrDropView.isUserInteractionEnabled = true
+                            var hasCurrentYear = false
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    
-                                    acidmicYrLbl.text = AcadimicYearDatas[i].year
-                                        selectedAcadimicYearId = AcadimicYearDatas[i].id
-                                        accadmicDefaultYrName = AcadimicYearDatas[i].year ?? ""
+                                        acidmicYrLbl.text = AcadimicYearDatas[i].year
+                                    accadmicDefaultYrName = AcadimicYearDatas[i].year
+                                        selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                    hasCurrentYear = true
+                                    segmentName.isUserInteractionEnabled = hasCurrentYear
                                         break
-                                    
                                 }
                             }
+                            
+                            if !hasCurrentYear {
+                                segmentName.isUserInteractionEnabled = false
+//                                nodata(false, message: "")
+                                norecordImg.isHidden = true
+                                acidamicYrDropView.isUserInteractionEnabled = false
+                                
+                                let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
+                                let attributedString = NSMutableAttributedString(string: fullText)
+
+                                let email = "support@savyasasy.com"
+                                if let range = fullText.range(of: email) {
+                                    let nsRange = NSRange(range, in: fullText)
+                                    
+                                    // Color and underline
+                                    attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
+                                    attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
+                                }
+
+                                noRecordLbl.attributedText = attributedString
+                                noRecordLbl.isUserInteractionEnabled = true
+                                
+                                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
+                                noRecordLbl.addGestureRecognizer(tapGesture)
+
+                            }
+                            
                         }
+                        
                     }else{
-                        DispatchQueue.main.async { [self] in
-                            acidamicYrDropView.isUserInteractionEnabled = false
-                            listTable.isHidden = true
+                        DispatchQueue.main.async {
+                            self.alert
+                                .showAlert(
+                                    title: "Error",
+                                    message: successMessage.message ?? "" ,
+                                    on: self
+                                )
                         }
                     }
                 case .failure(let error):
@@ -323,6 +469,45 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 }
             }
         
+    }
+    
+    @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
+        guard let text = noRecordLbl.attributedText?.string else { return }
+           let email = "support@savyasasy.com"
+
+           if let range = text.range(of: email) {
+               let nsRange = NSRange(range, in: text)
+
+               let tapLocation = gesture.location(in: noRecordLbl)
+               let layoutManager = NSLayoutManager()
+               let textContainer = NSTextContainer(size: noRecordLbl.bounds.size)
+               let textStorage = NSTextStorage(attributedString: noRecordLbl.attributedText!)
+
+               textContainer.lineFragmentPadding = 0
+               textContainer.maximumNumberOfLines = noRecordLbl.numberOfLines
+               textContainer.lineBreakMode = noRecordLbl.lineBreakMode
+               layoutManager.addTextContainer(textContainer)
+               textStorage.addLayoutManager(layoutManager)
+
+               let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+
+               if NSLocationInRange(index, nsRange) {
+                   let subject = ""
+                   let body = ""
+                   
+                   // URL encode
+                   let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                   
+                   // Try Gmail URL
+                   if let gmailURL = URL(string: "googlegmail://co?to=\(email)&subject=\(encodedSubject)&body=\(encodedBody)"),
+                      UIApplication.shared.canOpenURL(gmailURL) {
+                       UIApplication.shared.open(gmailURL)
+                   } else if let fallbackURL = URL(string: "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)") {
+                       UIApplication.shared.open(fallbackURL)
+                   }
+               }
+           }
     }
     func sendtextmessage_communication(){
         

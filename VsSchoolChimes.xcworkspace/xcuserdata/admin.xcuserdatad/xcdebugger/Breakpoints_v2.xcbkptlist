@@ -162,7 +162,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1325"
             endingLineNumber = "1325"
-            landmarkName = "calander(_:)"
+            landmarkName = "doneSelection(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -178,38 +178,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1327"
             endingLineNumber = "1327"
-            landmarkName = "calander(_:)"
+            landmarkName = "doneSelection(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C92CD500-3159-40D4-B059-F7FA35A11660 - e18c0a41bd2a93e7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VsSchoolChimes.ComunicationVC.doneSelection(Any) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1327"
-                  endingLineNumber = "1327">
-               </Location>
-               <Location
-                  uuid = "C92CD500-3159-40D4-B059-F7FA35A11660 - f784226d637b99b3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 () -&gt; () in VsSchoolChimes.ComunicationVC.doneSelection(Any) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Communication/ComunicationVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1328"
-                  endingLineNumber = "1328">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -231,38 +201,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EE71866F-7AA0-4775-98DA-B560FADED163"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
-            landmarkName = "uploadAndSendVoiceMessage(file:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BAD6BBAC-E786-40DE-9688-43E1A43382BE"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
-            landmarkName = "handleHomeworkFlow()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "028AF28A-E6CC-49C9-8D93-E6A8144AB292"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -270,8 +208,8 @@
             filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
             landmarkName = "handleHomeworkFlow()"
             landmarkType = "7">
          </BreakpointContent>
@@ -279,16 +217,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "13BA0B7A-A91A-47F0-B637-9EC647C71339"
+            uuid = "D74212BB-7732-48EB-B97A-744F43F11C82"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+            filePath = "VsSchoolChimes/AWS/AWSS3Manager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
-            landmarkName = "handleHomeworkFlow()"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "deleteFileFromS3(withURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

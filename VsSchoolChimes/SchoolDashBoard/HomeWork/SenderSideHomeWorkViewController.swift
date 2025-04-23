@@ -15,7 +15,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         print("sdhbh")
     }
     func deleteImage(index: Int) {
-        selectedImages.remove(at: index)
+        attachments.remove(at: index)
         uploadAttachmentView.imageCollectionview.reloadData()
     }
     
@@ -33,9 +33,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
-    var selectedImages: [UIImage] = []
-    var selectedImgUrl: [FilePath] = []
-    var url : URL?
+//    var selectedImages: [UIImage] = []
+    
+//    var selectedImgUrl: [FilePath] = []
+//    var urls : [String] = []
+    var attachments: [AttachmentItem] = []
     let photoPickManager = PhotoPickerManager.shared
     let Img = ImageName()
     let formatter = DateFormatter()
@@ -78,7 +80,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.text = content
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
         TitleTxtfield.text = title
-        selectedImgUrl = imageUrls
+        let imageItems = imageUrls.map {
+            AttachmentItem(image: nil, imageURL: $0.path, fileType:$0.type ?? "")
+        }
+        attachments.removeAll()
+        attachments.append(contentsOf: imageItems)
         wordsCountLbl.text = "\(content.count) of 500"
         uploadAttachmentView.imageCollectionview.reloadData()
     }
@@ -110,31 +116,41 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
-            selectedImages.append(image)
+//            let fileURL = URL(fileURLWithPath: attachments.first?.imageURL ?? "")
+//            let iconName = getFileIconName(for: fileURL)
+//            if "image" == iconName{
+//                attachments.removeAll()
+//            }
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: "IMAGE"))
+            
             user_inputs.selectedFileType = "IMAGE"
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
+
+//            let fileURL = URL(fileURLWithPath: attachments.first?.imageURL ?? "")
+//            let iconName = getFileIconName(for: fileURL)
+//            if "image" == iconName{
+//                attachments.removeAll()
+//            }
+            
             user_inputs.selectedFileType = "IMAGE"
-            selectedImages.append(contentsOf: images)
+//            selectedImages.append(contentsOf: images)
+
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: "IMAGE")
+            }
+            attachments.append(contentsOf: imageItems)
+            
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
-            selectedImages.removeAll()
-            url = data.absoluteURL
+
             user_inputs.selectedFileType = "pdf"
-            selectedImages.append(ImageName.pdf!)
+            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: "pdf"))
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -147,10 +163,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         if TitleTxtfield.text != ""  && DetailsTxtview.text != ""{
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
-            user_inputs.selectedImg = selectedImages
-            if let url = url?.absoluteString{
-                user_inputs.docUrl.append(url)
-            }
+            user_inputs.SelectedUrls = attachments
+
             
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
@@ -184,47 +198,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
 
-    @available(iOS 15.0, *)
-    func uploadSelectedImages() {
-        guard !selectedImages.isEmpty else { return }
-        
-        var uploadedImageURLs: [String] = []
-        let total = selectedImages.count
-        var completed = 0
-        
-        DispatchQueue.main.async {
-            CircularProgressLoader.shared.show(style: .circle)
-            CircularProgressLoader.shared.updateProgress(to: 0)
-        }
-        
-        for image in selectedImages {
-            AWSUploadManager.shared
-                .uploadFileToAWS(
-                    file: image,
-                    bucketPath: "uploads/images/",
-                    bucketName: "schoolchimes-communication"
-                ) { url in
-                if let url = url {
-                    uploadedImageURLs.append(url)
-                }
-                
-                completed += 1
-                let progress = (Double(completed) / Double(total)) * 100
-                
-                DispatchQueue.main.async {
-                    CircularProgressLoader.shared.updateProgress(to: progress)
-                    print(progress)
-                    if completed == total {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            CircularProgressLoader.shared.hide()
-                            print("✅ Uploads finished: \(uploadedImageURLs)")
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
+  
     
     
     // MARK: Set gradient colours for Button
@@ -247,8 +221,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     // MARK: File Attachments Actions
     func selectImages() {
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count - selectedImgUrl.count), from: self)
+        if attachments.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - attachments.count), from: self)
             
         }else{
             let alert = CustomAlert()
@@ -258,7 +232,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
     }
     func openCamera(){
-        let count = selectedImages.count - selectedImgUrl.count
+        let count = attachments.count
         if count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
@@ -268,7 +242,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
     func selectPDF() {
-        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
+        PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
         
     }
     
@@ -288,7 +262,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 1 + selectedImages.count + selectedImgUrl.count
+        return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -307,28 +281,26 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                 for: indexPath
             ) as! ImageCvCell
             
-            cell.delegate = self
-            cell.deleteBtn.tag = indexPath.item - 1
-            
             let adjustedIndex = indexPath.item - 1
-            
-            // First show local selectedImages, then fallback to selectedImgUrl if index goes beyond
-            if adjustedIndex < selectedImages.count {
-                cell.imageViews.image = selectedImages[adjustedIndex]
-            } else {
-                let urlIndex = adjustedIndex - selectedImages.count
-                if urlIndex < selectedImgUrl.count {
-                    let urlString = selectedImgUrl[urlIndex].path ?? ""
-                    if let url = URL(string: urlString) {
-                        cell.imageViews.kf.setImage(with: url)
-                    } else {
-                        cell.imageViews.image = nil
-                    }
-                }
-            }
+            let item = attachments[adjustedIndex]
+               cell.delegate = self
+               cell.deleteBtn.tag = adjustedIndex
+
+               if let image = item.image {
+                   cell.imageViews.image = image
+               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                   if item.fileType.lowercased() != "image" {
+                       let iconName = getFileIconName(for: url)
+                       cell.imageViews.image = UIImage(named: iconName)
+                   } else {
+                       cell.imageViews.kf.setImage(with: url)
+                   }
+               } else {
+                   cell.imageViews.image = nil
+               }
             
             // Set collection view height dynamically
-            let totalItems = selectedImages.count + selectedImgUrl.count
+            let totalItems = attachments.count
             collectionViewHeight.constant = totalItems <= 2 ? 120 : 220
 
             return cell
@@ -353,7 +325,6 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             
             // Gallery option
             let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-                //
                 selectImages()
                 //
             }
@@ -361,7 +332,6 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             
             //             PDF option
             let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-                
                 selectPDF()
             }
             alertController.addAction(pdfAction)
@@ -370,20 +340,27 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
-            // Present the alert
             self.present(alertController, animated: true, completion: nil)
         }else{
-            if selectedImages.count > indexPath.item - 1 {
+            if attachments.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                vc.selectedFileURL = url
-                // Safe unwrapping of imgView before assigning
-                vc.img = selectedImages[indexPath.item - 1]
+                if attachments[indexPath.item - 1].fileType != "IMAGE"{
+                    if let url = attachments[indexPath.item - 1].imageURL{
+                        vc.selectedFileURL = URL(string: url)
+                    }
+                } else{
+                    if let img = attachments[indexPath.item - 1].image {
+                        vc.img = attachments[indexPath.item - 1].image
+                    }else{
+                        vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
+                    }
+                   
+                }
+                vc.type = attachments[indexPath.item - 1].fileType
                 present(vc, animated: true)
             }
-            
         }
-        
         
         func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
             
@@ -493,4 +470,8 @@ extension String {
     }
 }
 
-
+struct AttachmentItem {
+    var image: UIImage?         // for local images
+    var imageURL: String?       // for remote
+    var fileType: String        // "image", "pdf", etc.
+}

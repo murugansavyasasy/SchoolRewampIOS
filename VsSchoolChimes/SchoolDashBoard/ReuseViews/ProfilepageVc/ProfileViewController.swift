@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProfileViewController: UIViewController {
     
@@ -24,7 +25,6 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var locationimg: UIImageView!
     @IBOutlet weak var bloodimg: UIImageView!
     @IBOutlet weak var familyDetailsView: UIView!
-    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var fullview: UIView!
     @IBOutlet weak var Profile: UILabel!
     @IBOutlet weak var RegisterNo: UILabel!
@@ -39,7 +39,26 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var Motheroccupation: UILabel!
     @IBOutlet weak var SeconadaryphoneNo: UILabel!
     @IBOutlet weak var topview: UIView!
+    @IBOutlet weak var userNameLbl: UILabel!
+    @IBOutlet weak var schoolNameLbl: UILabel!
+    @IBOutlet weak var mobileNoLbl: UILabel!
+    @IBOutlet weak var emailLbl: UILabel!
+    @IBOutlet weak var blodLbl: UILabel!
+    @IBOutlet weak var addressLbl: UILabel!
+    @IBOutlet weak var LiveinLbl: UILabel!
+    @IBOutlet weak var fatherLbl: UILabel!
+    @IBOutlet weak var motherLbl: UILabel!
+    @IBOutlet weak var fatherOcupationLbl: UILabel!
+    @IBOutlet weak var motherOcupationLbl: UILabel!
+    @IBOutlet weak var secondryMnoLbl: UILabel!
     
+    
+    
+    
+    
+    
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
+    var childDetails = UserDefaultFileManager.get_child_Details()
     var passvalue = 1
     var HideBackButton = true
     
@@ -52,6 +71,46 @@ class ProfileViewController: UIViewController {
         
         StyleAndTranslater()
         BackBtn.isHidden = HideBackButton
+        imgview.layer.cornerRadius = imgview.frame.width/2
+        imgview.layer.borderWidth = 1
+        imgview.layer.borderColor = UIColor.black.cgColor
+        if passvalue == 1{
+            familyDetailsView.isHidden = true
+            standardView.isHidden = true
+            imgview.kf.setImage(with:URL(string: staffDetails?.school_logo ?? ""),placeholder: UIImage(named: "Default_profile"))
+            schoolNameLbl.text = childDetails?.school_name
+            userNameLbl.text = staffDetails?.staff_name ?? ""
+            RegisterNo.text = "Employee ID : \(childDetails?.roll_number ?? "")"
+//            mobileNoLbl.text = staffDetails?.
+//            emailLbl.text = staffDetails?.e
+//            blodLbl.text = childDetails?.blood_group
+//            addressLbl.text = childDetails?.student_address
+//            LiveinLbl.text = childDetails?.school_city
+//            RegisterNo.text = "Employee Id : \(staffDetails.school_naame ?? "")"
+//            section.text = "Section : \(childDetails?.section_name ?? "")"
+//            standard.text = "Standard : \(childDetails?.standard_name ?? "")"
+        }else{
+            familyDetailsView.isHidden = false
+            imgview.kf.setImage(with:URL(string: childDetails?.school_logo_url ?? ""),placeholder: UIImage(named: "Default_profile"))
+            schoolNameLbl.text = childDetails?.school_name
+            userNameLbl.text = childDetails?.name
+            mobileNoLbl.text = childDetails?.whatsapp_number
+            emailLbl.text = childDetails?.email
+            blodLbl.text = childDetails?.blood_group
+            addressLbl.text = childDetails?.student_address
+            LiveinLbl.text = childDetails?.school_city
+            fatherLbl.text = ": \(childDetails?.father_name ?? "")"
+            motherLbl.text = ": \(childDetails?.mother_name ?? "")"
+            fatherOcupationLbl.text = ": \(childDetails?.father_occupation ?? "")"
+            motherOcupationLbl.text = ": \(childDetails?.mother_occupation ?? "")"
+            secondryMnoLbl.text = ": \(childDetails?.secondary_mobile ?? "")"
+            RegisterNo.text = "Register no : \(childDetails?.roll_number ?? "")"
+            section.text = "Section : \(childDetails?.section_name ?? "")"
+            standard.text = "Standard : \(childDetails?.standard_name ?? "")"
+        }
+        
+        
+        
     }
     
     override func viewDidLayoutSubviews() {

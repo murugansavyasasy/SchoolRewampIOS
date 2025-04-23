@@ -73,7 +73,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var standard_sectionlabel : String? = "10"
     var selectedAcadimicYearId : Int?
     let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var uploadedURLs: [String] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.setTitle(standard_sectionlabel, for: .normal)
@@ -370,14 +372,14 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 print("❌ Invalid audio URL.")
                 return
             }
-
             let total = 1
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-
+            let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath: "uploads/audio/",
+                bucketPath:   today_date + "/" + (
+                    staffDetailsCount?.first?.school_id ?? ""),
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -422,7 +424,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     },
                     completion: { [self] url in
                         if let uploadedURL = url {
-//                            uploadedURLs.append(uploadedURL)
+                            uploadedURLs.append(uploadedURL)
                             
                         } else {
                             print("❌ Failed to upload image \(index)")
@@ -440,14 +442,54 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     }
                 )
             }
+            // 🖼️ Case: Array of Images
+        case let files as [String]:
+                let total = files.count
+                guard !files.isEmpty else {
+                    completion()
+                    return
+                }
 
+                CircularProgressLoader.shared.show(style: .circle)
+                CircularProgressLoader.shared.updateProgress(to: 0)
+
+                for (index, url) in files.enumerated() {
+                    guard let PdfURL = URL(string: url) else {
+                        print("❌ Invalid audio URL.")
+                        return
+                    }
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: PdfURL,
+                        bucketPath: "uploads/Documents/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: { progress in
+                            // Optional: Update progress per file individually if you want
+                        },
+                        completion: { [self] url in
+                            if let uploadedURL = url {
+                                uploadedURLs.append(uploadedURL)
+                                
+                            } else {
+                                print("❌ Failed to upload image \(index)")
+                            }
+
+                            completed += 1
+                            let progress = (Double(completed) / Double(total)) * 100
+                            CircularProgressLoader.shared.updateProgress(to: progress)
+
+                            if completed == total {
+                                CircularProgressLoader.shared.hide()
+                                // Do something with uploadedURLs if needed
+                                completion()
+                            }
+                        }
+                    )
+                }
         default:
             print("❌ Unsupported file type")
             return
         }
     }
-
-    
     
     func sendtextmessage_communication(){
   

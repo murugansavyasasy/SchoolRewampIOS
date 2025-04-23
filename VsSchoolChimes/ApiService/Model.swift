@@ -107,7 +107,23 @@ struct ChildDetails: Codable {
     let display_message: String?
     let access_token: String?
     let school_id: String?
+    let student_address: String?
+    let class_id: Int?
+    let section_id: Int?
+    let email: String?
+    let father_name: String?
+    let mother_name: String?
+    let father_occupation: String?
+    let mother_occupation: String?
+    let blood_group: String?
+    let secondary_mobile: String?
+    let whatsapp_number: String?
+    let class_teacher: String?
 }
+
+
+                       
+                       
 
 // MARK: Validate OTP
 struct ValidateOTPSuc: Codable {

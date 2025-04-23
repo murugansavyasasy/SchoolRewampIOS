@@ -26,6 +26,8 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
     
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
+    @IBOutlet weak var scrollCollection: UIScrollView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var TopCv: UICollectionView!
@@ -45,7 +47,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var currentIndex = 0
     var autoScrollTimer: Timer?
     private let tabBar = UITabBar()
-    private var containerView = UIView()
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
@@ -119,8 +120,9 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
         
        
-       
-        
+        schoolLogoImg.layer.cornerRadius = schoolLogoImg.frame.width/2
+        schoolLogoImg.layer.borderWidth = 1
+        schoolLogoImg.layer.borderColor = UIColor.black.cgColor
         StyleAndTranslater()
         setupVideoBackground()
         DeviceTokenAPIcall()
@@ -602,52 +604,64 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                 
             }
     }
-    func get_dashboard_details(){
-       
-        APIService.shared
-            .makeApi(url:  ServiceUrl.get_dashboard_details, parameters: ["member_type" :"staff"] , type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? ""){ [self] (
-                result : Result<DashboardResponse,
-                Error>
-            ) in
+    func get_dashboard_details() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.get_dashboard_details,
+            parameters: ["member_type": "staff"],
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<DashboardResponse, Error>) in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let response):
+                print("Dashboard Response:", response)
                 
-                switch result {
-                    
-                case.success(let succesmessage) :
-                    
-                    print("succesmessagesdsds",succesmessage)
-                    DispatchQueue.main.async { [self] in
-                    if succesmessage.status == true {
-                            
-                            menu_details = succesmessage.data?.first?.menu_details
-                            if let menu_details = menu_details {
-                                // Extract names from menu_details
-                                displayedCategories = menu_details.prefix(9).map {
-                                    $0.name ?? ""
-                                }
-                                filteredMenu_details =  Array(menu_details.prefix(9))
-                                if filteredMenu_details?.count ?? 0 > 5 {
-                                    filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
-                                }
-                                filteredItems = menu_details
-                            } else {
-                                displayedCategories = []
-                                filteredItems = []
-                            }
-                            bottomCv.reloadData()
-                            let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
-                            collectionHeight.constant = contentViewHeight
-                            
+                DispatchQueue.main.async {
+                    if response.status == true, let details = response.data?.first?.menu_details {
+                        self.menu_details = details
+                        
+                        // Extract names from menu_details
+                        self.displayedCategories = details.prefix(9).map { $0.name ?? "" }
+                        self.filteredMenu_details = Array(details.prefix(9))
+                        
+                        // Insert "Add" item if count > 5
+                        if self.filteredMenu_details?.count ?? 0 > 5 {
+                            self.filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
                         }
-                    }
-                case.failure(let error) :
-                    
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
+                        
+                        self.filteredItems = details
+                        self.bottomCv.reloadData()
+                        
+                        // Calculate and apply dynamic height
+                        let contentViewHeight = self.bottomCv.collectionViewLayout.collectionViewContentSize.height
+                        let maxHeight = self.containerView.frame.height
+                            - 140
+                            - self.SchoolNameLabel.frame.height
+                            - self.AddressLabel.frame.height
+                        
+                        self.collectionHeight.constant = max(contentViewHeight, maxHeight)
+                        
+                        // Enable scrolling if more than 6 items
+                        self.scrollCollection.isScrollEnabled = details.count > 6
+                    } else {
+                        // Fallback if menu is nil or status false
+                        self.displayedCategories = []
+                        self.filteredItems = []
+                        self.bottomCv.reloadData()
+                        self.collectionHeight.constant = 500 // Default height
+                        self.scrollCollection.isScrollEnabled = false
                     }
                 }
+                
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("API Error:", error.localizedDescription)
+                }
             }
+        }
     }
-    
+
     
    
 }

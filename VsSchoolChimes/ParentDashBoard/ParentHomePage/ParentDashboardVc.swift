@@ -12,6 +12,7 @@ import Kingfisher
 @available(iOS 14.0, *)
 class ParentDashboardVc: UIViewController {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var seeAllButton: UIButton!
     @IBOutlet weak var Profileimage: UIImageViewX!
@@ -26,6 +27,8 @@ class ParentDashboardVc: UIViewController {
     @IBOutlet weak var BellImage: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
+    @IBOutlet weak var scrollCollection: UIScrollView!
+    
     @IBOutlet weak var bottomCv: UICollectionView!
     @IBOutlet weak var userNameLbl: UILabel!
     var filteredItems: [MenuDetail]?
@@ -34,7 +37,6 @@ class ParentDashboardVc: UIViewController {
     var currentIndex = 0
     var autoScrollTimer: Timer?
     
-    private var containerView = UIView()
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
@@ -65,7 +67,8 @@ class ParentDashboardVc: UIViewController {
        
         bottomCv.delegate = self
         bottomCv.dataSource = self
-      
+        Profileimage.layer.borderWidth = 1
+        Profileimage.layer.borderColor = UIColor.black.cgColor
         let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
         let is_parent =  UserDefaultFileManager.getUserDetails()?.user_details?.is_parent
         
@@ -81,9 +84,9 @@ class ParentDashboardVc: UIViewController {
             
         }
         
-            userNameLbl.text = childDetails?.name
+        userNameLbl.text = "Hello, " + (childDetails?.name ?? "")
             SchoolNameLabel.text = childDetails?.school_name
-            AddressLabel.text = childDetails?.school_city
+        AddressLabel.text = childDetails?.student_address
             Profileimage.kf.setImage(with: URL(string: childDetails?.school_logo_url ?? ""))
         
         DeviceTokenAPIcall()
@@ -518,54 +521,112 @@ extension ParentDashboardVc: UISearchBarDelegate{
         }
     }
 
-    func get_dashboard_details(){
-
-        print("tokenefrfrdfrfdx",ServiceUrl.token)
-        APIService.shared
-            .makeApi(url:  ServiceUrl.get_dashboard_details, parameters: ["member_type" : "parent"] , type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
-                result : Result<DashboardResponse,
-                Error>
-            ) in
+//    func get_dashboard_details(){
+//
+//        print("tokenefrfrdfrfdx",ServiceUrl.token)
+//        APIService.shared
+//            .makeApi(url:  ServiceUrl.get_dashboard_details, parameters: ["member_type" : "parent"] , type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? ""){ [self] (
+//                result : Result<DashboardResponse,
+//                Error>
+//            ) in
+//            
+//            switch result {
+//                
+//            case.success(let succesmessage) :
+//                DispatchQueue.main.async { [self] in
+//                print("succesmessagesdsds",succesmessage)
+//                if succesmessage.status == true {
+//                        menu_details = succesmessage.data?.first?.menu_details
+//                        if let menu_details = menu_details {
+//                            // Extract names from menu_details
+//                            displayedCategories = menu_details.prefix(9).map {
+//                                $0.name ?? ""
+//                            }
+//                            filteredMenu_details =  Array(menu_details.prefix(9))
+//                            if filteredMenu_details?.count ?? 0 > 5 {
+//                                filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
+//                            }
+//                            filteredItems = menu_details
+//                        } else {
+//                            displayedCategories = []
+//                            filteredItems = []
+//                        }
+//                        bottomCv.reloadData()
+//                        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
+//                    let maxHeight = containerView.frame.size.height - 140 - userNameLbl.frame.height - SchoolNameLabel.frame.height
+//
+//                    collectionHeight.constant = max(contentViewHeight, maxHeight)
+//                    scrollCollection.isScrollEnabled = menu_details.count > 6
+//                 
+//                    }
+//                }
+//                
+//            case.failure(let error) :
+//                
+//                DispatchQueue.main.async {
+//                    print(error.localizedDescription)
+//                }
+//            }
+//            
+//        }
+//    }
+    func get_dashboard_details() {
+        print("Access Token:", ServiceUrl.token)
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.get_dashboard_details,
+            parameters: ["member_type": "parent"],
+            type: ApitTypeSringFile.GET,
+            token: childDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<DashboardResponse, Error>) in
+            guard let self = self else { return }
             
             switch result {
-                
-            case.success(let succesmessage) :
-                DispatchQueue.main.async { [self] in
-                print("succesmessagesdsds",succesmessage)
-                if succesmessage.status == true {
-                        menu_details = succesmessage.data?.first?.menu_details
-                        if let menu_details = menu_details {
-                            // Extract names from menu_details
-                            displayedCategories = menu_details.prefix(9).map {
-                                $0.name ?? ""
-                            }
-                            filteredMenu_details =  Array(menu_details.prefix(9))
-                            if filteredMenu_details?.count ?? 0 > 5 {
-                                filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
-                            }
-                            filteredItems = menu_details
-                        } else {
-                            displayedCategories = []
-                            filteredItems = []
+            case .success(let response):
+                DispatchQueue.main.async {
+                    print("Dashboard Response:", response)
+                    
+                    if response.status == true, let details = response.data?.first?.menu_details {
+                        self.menu_details = details
+                        
+                        // Display first 9 categories
+                        self.displayedCategories = details.prefix(9).map { $0.name ?? "" }
+                        self.filteredMenu_details = Array(details.prefix(9))
+                        
+                        // Add "Add" button if more than 5 items
+                        if self.filteredMenu_details?.count ?? 0 > 5 {
+                            self.filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)
                         }
-                        bottomCv.reloadData()
-                        let contentViewHeight = bottomCv.collectionViewLayout.collectionViewContentSize.height
-                        collectionHeight.constant = contentViewHeight
                         
-                    }else {
+                        self.filteredItems = details
+                        self.bottomCv.reloadData()
                         
+                        // Adjust collection view height
+                        let contentViewHeight = self.bottomCv.collectionViewLayout.collectionViewContentSize.height
+                        let maxHeight = self.containerView.frame.size.height
+                            - 140
+                            - self.userNameLbl.frame.height
+                            - self.SchoolNameLabel.frame.height
+                        
+                        self.collectionHeight.constant = max(contentViewHeight, maxHeight)
+                        
+                        // Enable scrolling if more than 6 items
+                        self.scrollCollection.isScrollEnabled = details.count > 6
+                    } else {
+                        self.displayedCategories = []
+                        self.filteredItems = []
+                        self.bottomCv.reloadData()
                     }
                 }
                 
-            case.failure(let error) :
-                
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    print(error.localizedDescription)
+                    print("Dashboard API Error:", error.localizedDescription)
                 }
             }
-            
         }
     }
+
     
     
 }

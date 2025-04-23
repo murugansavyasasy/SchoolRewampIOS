@@ -64,7 +64,7 @@ class ImageName{
     static let p1 = UIImage(named: "p1")
     static let placeholder = UIImage(named: "placeholder")
     static let checkedsquare = UIImage(named: "checkedsquare")
-    static let pdf = UIImage(named: "pdf")
+    static let pdf = UIImage(named: "pdf (1)")
     static let playbutton = UIImage(named: "play-button")
     static let pausebutton = UIImage(named: "pause-button")
     static let completed = UIImage(named: "completed")
@@ -93,6 +93,8 @@ class ImageName{
     static let eye_slash = UIImage(systemName: "eye.slash.fill")
     static let uncheckedSquares = UIImage(named: "uncheckedSquare")
     static let checkedSquares = UIImage(named: "checkedSquare")
+    static let girl_and_boy_are = UIImage(named: "girl-and-boy-are-together-deciding-to-send-an-email-message")
+    static let missing_file = UIImage(named: "missing-file")
                                        
   
 }
