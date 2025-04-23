@@ -22,9 +22,10 @@ class ImageShowVc: UIViewController{
     var imageURL : [FilePath] = []
     var delegate:DidSelectDelegate?
     var pageName = ""
-    var pdfUrl = ""
-    var type = 0
+    var pdfUrl:String?
+    var type:Int?
     var subjectName:String?
+    var scrollIndex:IndexPath?
     override func viewDidLoad() {
         super.viewDidLoad()
         pdfView.navigationDelegate = self
@@ -32,19 +33,24 @@ class ImageShowVc: UIViewController{
         TitleLbl.text = subjectName
         cv.delegate = self
         cv.dataSource = self
-        
         cv.register(UINib(nibName: CellConfingName.ImageShowCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageShowCVCell)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DispatchQueue.main.async { [self] in
+            for i in 0..<imageURL.count{
+                if imageURL[i].path == pdfUrl{
+                    self.cv.scrollToItem(at: IndexPath(item: i, section: 0), at: .centeredHorizontally, animated: true)
+                }
+            }
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
-        type = imageURL.first?.type == "pdf" ? 0 : 2
-        uiUpdate(type: type)
+        uiUpdate(type: type ?? 0)
     }
     func uiUpdate(type:Int){
         DispatchQueue.main.async { [self] in
             switch type{
             case 0:
-                if let pdfURL = URL(string: imageURL.first?.path ?? "") {
+                if let pdfURL = URL(string: pdfUrl ?? "") {
                       let request = URLRequest(url: pdfURL)
                     pdfView.load(request)
                     
@@ -63,7 +69,7 @@ class ImageShowVc: UIViewController{
                 pdfView.isHidden = true
                 textView.isHidden = true
             default:
-                if let pdfURL = URL(string: imageURL.first?.path ?? "") {
+                if let pdfURL = URL(string: pdfUrl ?? "" ?? "") {
                       let request = URLRequest(url: pdfURL)
                     pdfView.load(request)
                     

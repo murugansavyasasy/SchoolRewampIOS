@@ -2,7 +2,7 @@ import UIKit
 import UniformTypeIdentifiers
 
 class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-
+    
     @IBOutlet weak var newView: UIImageView!
     @IBOutlet weak var forwordBtn: UIButton!
     @IBOutlet weak var dateLble: ShimmerLabel!
@@ -13,19 +13,20 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var subjectName: ShimmerLabel!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
-
+    
     var delegate: SelectNotice?
     var ishomework = false
     var isreciver = false
     var issenderEvent = false
     var homeworkDocs: [FilePath]?
     var countShimmer = 0
-
+    
     private var docController: UIDocumentInteractionController?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        ImageCollectionView.isHidden = true
+        pageViewController.isHidden = true
         dateLble.setFont(style: .body, size: FontSize.BodySize)
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         topics.setFont(style: .title, size: FontSize.TitleSize)
@@ -37,49 +38,53 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellview.layer.shadowRadius = 3
         cellview.layer.masksToBounds = false
-
+        
         let collection = UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil)
         ImageCollectionView.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
-
+        
         ImageCollectionView.delegate = self
         ImageCollectionView.dataSource = self
-
+        
         pageViewController.numberOfPages = homeworkDocs?.count ?? 0
-
+        
         if let flowLayout = ImageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
             flowLayout.minimumLineSpacing = 10
         }
-
+        
         ImageCollectionView.reloadData()
         countShimmer = 1
     }
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         configureShimmer()
     }
-
+    
     func configureShimmer() {
         dateLble.removeShimmer()
         descriptionLbl.removeShimmer()
         topics.removeShimmer()
         subjectName.removeShimmer()
     }
-
+    
     func loadImage(urls: [FilePath]) {
+        ImageCollectionView.isHidden = false
+        pageViewController.isHidden = false
         homeworkDocs = urls
+        pageViewController.numberOfPages = homeworkDocs?.count ?? 0
+        pageViewController.currentPage = 0
         ImageCollectionView.reloadData()
     }
-
+    
     @IBAction func forword(_ sender: UIButton) {
         delegate?.didTapButton(title: topics.text ?? "", content: descriptionLbl.text ?? "", items: homeworkDocs ?? [])
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return homeworkDocs?.count ?? 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = homeworkDocs?[indexPath.row] {
@@ -91,43 +96,52 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         }
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 150, height: ImageCollectionView.frame.height)
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let maxVisibleIndex = collectionView.indexPathsForVisibleItems.map({ $0.item }).max() {
+            pageViewController.currentPage = maxVisibleIndex
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
         let fileExtension = url.pathExtension.lowercased()
         
-//        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
-            let vc = getCurrentViewController()
-            let vcc = ImageShowVc(nibName: nil, bundle: nil)
-            vcc.imageURL = homeworkDocs ?? []
-            vcc.subjectName = subjectName.text
-            vcc.type = 2
-            vcc.modalPresentationStyle = .fullScreen
-            vc?.present(vcc, animated: true)
-//        } else {
-//                openWithDocumentInteraction(url: url)
-//        }
+        //        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
+        let vc = getCurrentViewController()
+        let vcc = ImageShowVc(nibName: nil, bundle: nil)
+        vcc.imageURL = homeworkDocs?.filter({ img in
+            img.type?.lowercased() == "image"
+        }) ?? []
+        vcc.subjectName = subjectName.text
+        vcc.pdfUrl = homeworkDocs?[indexPath.row].path
+        vcc.scrollIndex = indexPath
+        vcc.type = homeworkDocs?[indexPath.row].type?.lowercased() != "image" ? 0 : 2
+        vcc.modalPresentationStyle = .fullScreen
+        vc?.present(vcc, animated: true)
+        //        } else {
+        //                openWithDocumentInteraction(url: url)
+        //        }
     }
-
-//    func isWebViewPreviewable(_ ext: String) -> Bool {
-//        return ["pdf", "txt", "docx", "pptx", "xlsx"].contains(ext)
-//    }
+    
+    //    func isWebViewPreviewable(_ ext: String) -> Bool {
+    //        return ["pdf", "txt", "docx", "pptx", "xlsx"].contains(ext)
+    //    }
     func isWebViewPreviewable(_ ext: String) -> Bool {
         return ["pdf", "txt"].contains(ext.lowercased())
     }
-
+    
     func openWithDocumentInteraction(url: URL) {
         docController = UIDocumentInteractionController(url: url)
         docController?.delegate = getCurrentViewController() as? UIDocumentInteractionControllerDelegate
-
+        
         if !(docController?.presentPreview(animated: true) ?? false) {
             let fileExtension = url.pathExtension.lowercased()
             let appSuggestion = getAppSuggestion(for: fileExtension)
-
+            
             let alert = UIAlertController(
                 title: "App Required",
                 message: "To open this '\(fileExtension)' file, please install a suitable app. For example: \(appSuggestion).",
@@ -137,7 +151,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             getCurrentViewController()?.present(alert, animated: true)
         }
     }
-
+    
     func getAppSuggestion(for ext: String) -> String {
         switch ext {
         case "pdf":
@@ -154,8 +168,8 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             return "a compatible document viewer"
         }
     }
-
-
+    
+    
     func getCurrentViewController() -> UIViewController? {
         return UIApplication.shared.connectedScenes
             .filter { $0.activationState == .foregroundActive }

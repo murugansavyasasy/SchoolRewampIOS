@@ -171,14 +171,13 @@ extension SettingsViewController : UITableViewDelegate , UITableViewDataSource{
         
         
         else if  sections[indexPath.section].items[indexPath.row] == menuname.logout{
-            
-            UserDefaultFileManager.removeLoginCredentials()
+    
             let userDefaults = UserDefaults.standard
             userDefaults.set(true, forKey: "Logout")
             
             let vc = LogoutViewController(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .overFullScreen
-            present(vc, animated: true)
+            present(vc, animated: false)
             
         }
         

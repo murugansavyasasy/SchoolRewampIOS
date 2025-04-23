@@ -40,7 +40,7 @@ class LogoutViewController: UIViewController {
     }
     
     @IBAction func LogoutAct(_ sender: Any) {
-        
+        UserDefaultFileManager.removeLoginCredentials()
         if #available(iOS 14.0, *) {
             let vc = LoginVc(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
@@ -52,7 +52,7 @@ class LogoutViewController: UIViewController {
     }
     
     @objc func CancelAct(_ sender: Any){
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
     
 }

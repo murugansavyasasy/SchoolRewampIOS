@@ -170,6 +170,7 @@ class RecipientVc: UIViewController{
                 ]
             circular_types = circular_type.school
             target_type = TargetTypes.school
+            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
             array_selectedId
                 .append(
                     UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
@@ -276,7 +277,7 @@ class RecipientVc: UIViewController{
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Success",
+                                    title: AlertstringFile.Sccuess,
                                     message: successMessage.message,
                                     on: self
                                 ) {
@@ -288,7 +289,7 @@ class RecipientVc: UIViewController{
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Error",
+                                    title: AlertstringFile.Alert_title,
                                     message: successMessage.message,
                                     on: self
                                 ) {
@@ -356,7 +357,7 @@ class RecipientVc: UIViewController{
                             DispatchQueue.main.async { [self] in
                                 CustomAlert
                                     .showAlertWithOkAction(
-                                        title: "Success",
+                                        title: AlertstringFile.Sccuess,
                                         message: succesmessage.message ?? "",
                                         on: self
                                     ) {
@@ -369,7 +370,7 @@ class RecipientVc: UIViewController{
                                 
                                 CustomAlert
                                     .showAlertWithOkAction(
-                                        title: "Error",
+                                        title: AlertstringFile.Alert_title,
                                         message: succesmessage.message ?? "",
                                         on: self
                                     ) {
@@ -455,8 +456,9 @@ class RecipientVc: UIViewController{
             let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath:   today_date + "/" + (
-                    staffDetailsCount?.first?.school_id ?? ""),
+                bucketPath:  "communication" + "/" + (UserDefaultFileManager
+                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
+                    ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -629,10 +631,19 @@ class RecipientVc: UIViewController{
 
 
     @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
+        var message : String?
+        if accadmicDefaultYrName == acidmicYrLbl.text{
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        }else{
+            
+          message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        }
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
+        vc.AlertMessageContent = message
         vc.selectedAcadimicYearId = self.selectedAcadimicYearId
         vc.standard_sectionlabel = self.standard_sectionlabel
         vc.modalPresentationStyle = .fullScreen
@@ -657,7 +668,7 @@ class RecipientVc: UIViewController{
             circular_types =  circular_type.school
             nodataFound.isHidden = false
             noRecordLbl.isHidden = false
-            noRecordLbl.text = "Tap SEND to share this message with everyone in the school."
+            noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
             sendbtnName.isHidden = false
             nodataFound.image = ImageName.girl_and_boy_are
             selectStandardDropDown.isHidden = true
@@ -682,12 +693,7 @@ class RecipientVc: UIViewController{
             target_type = TargetTypes.section
             circular_types =  circular_type.section
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            
-//            speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-            
             speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-            
-
             tv.isHidden = false
             selectStandardDropDown.isHidden = false
             
@@ -799,17 +805,23 @@ class RecipientVc: UIViewController{
 extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let head = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Std_Grp_header") as! Std_Grp_header
+        let head = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: CellConfingName.Std_Grp_header
+        ) as! Std_Grp_header
         
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
             head.HeaderLabel.text = recipeint_tabBarName.Group
+            head.createdOnDefaultLbl.isHidden = false
         case recipeint_tabBarName.Standard:
             head.HeaderLabel.text = recipeint_tabBarName.Standard
+            head.createdOnDefaultLbl.isHidden = true
         case recipeint_tabBarName.Section_Student:
             head.HeaderLabel.text = recipeint_tabBarName.Section_Student
+            head.createdOnDefaultLbl.isHidden = true
         case recipeint_tabBarName.Staff:
             head.HeaderLabel.text = recipeint_tabBarName.Staff
+            head.createdOnDefaultLbl.isHidden = true
         default:
             head.HeaderLabel.text = ""
         }
@@ -858,7 +870,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             if let item = groupDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
-                cell.createdOnlbl.text =  "Created On: \(item.created_on ?? "")"
+                cell.createdOnlbl.text =  item.created_on
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
            
@@ -1176,7 +1188,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     func getSubjectListAPI(_ id:String){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: ["section_ids": id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: [
+            
+            COMMON_PARAMETER.section_ids: id
+            
+        ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (result:Result <GetSubjectlistSuc,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
@@ -1230,10 +1246,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 nodataFound.isHidden = true
                                 acidamicYrDropView.isUserInteractionEnabled = false
                                 
-                                let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"
+                                let fullText = CommonStringFile.Your_academic_year_configuration
                                 let attributedString = NSMutableAttributedString(string: fullText)
 
-                                let email = "support@savyasasy.com"
+                                let email = CommonStringFile.support_savyasasy_com
                                 if let range = fullText.range(of: email) {
                                     let nsRange = NSRange(range, in: fullText)
                                     
@@ -1271,7 +1287,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
         guard let text = noRecordLbl.attributedText?.string else { return }
-           let email = "support@savyasasy.com"
+           let email = CommonStringFile.support_savyasasy_com
 
            if let range = text.range(of: email) {
                let nsRange = NSRange(range, in: text)
@@ -1346,7 +1362,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Success",
+                                    title: AlertstringFile.Sccuess,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
@@ -1360,7 +1376,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         DispatchQueue.main.async {
                             self.alert
                                 .showAlert(
-                                    title: "Error",
+                                    title: AlertstringFile.Alert_title,
                                     message: succesmessage.message ?? "" ,
                                     on: self
                                 )
@@ -1417,7 +1433,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Success",
+                                    title: AlertstringFile.Sccuess,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in
@@ -1431,7 +1447,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             CircularProgressLoader.shared.hide()
                             self.alert
                                 .showAlert(
-                                    title: "Error",
+                                    title: AlertstringFile.Alert_title,
                                     message: succesmessage.message ?? "" ,
                                     on: self
                                 )

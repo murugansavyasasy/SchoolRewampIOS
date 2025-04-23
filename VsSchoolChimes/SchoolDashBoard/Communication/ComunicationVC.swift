@@ -264,9 +264,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 ViewAnimator.hideFade(emengencyCall)
             }else{
                 
-                ViewAnimator.showFade(emengencyCall)
-                ViewAnimator.showFade(EnableCallLbl)
-            
+                if staff_role == PriorityType.is_staff{
+                    
+                    ViewAnimator.hideFade(EnableCallLbl)
+                    ViewAnimator.hideFade(emengencyCall)
+                }else{
+                    ViewAnimator.showFade(emengencyCall)
+                    ViewAnimator.showFade(EnableCallLbl)
+                }
 
             }
             staffDetails = staffDetailsCount?.first
@@ -708,6 +713,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
 
         // ✅ Update character count label
         voiceTileTextFldCount.text = "\(updatedText.count)/50"
+        textMsgVoiceCountLbl.text = "\(updatedText.count)/50"
 
         // ✅ Limit to 50 characters
         return updatedText.count <= 49
@@ -843,6 +849,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 guard duration.isFinite else { return }
                 
                 // ✅ Check if the audio is more than 30 seconds
+                voiceRecordedDuration = Int(duration)
                 if emengencyCall.isOn{
                     if duration > 30 {
                         alert.showAlert(title: "Alert", message: "Audio file should be less than 30 seconds", on: self)
@@ -854,6 +861,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                         return
                     }
                 }
+                
                 
 
                 // Proceed if valid duration
@@ -877,6 +885,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 if let filePath = AudioPlayUrl,
                    let durationStr = getAudioDuration(from: filePath) {
                     voiceTiming.text = durationStr
+                   
                 }
 
                 playerheight.constant = 60
@@ -1446,6 +1455,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         if !isforwardtext {
             informationcontent.text = ""
             TextMsgTittle.text = ""
+            textCountLbl.text = "0 of 500"
+            textMsgVoiceCountLbl.text = "0 of 50"
         }
         
         ViewAnimator.hideFade(calanderOuter)
@@ -1893,7 +1904,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {
-        return Calendar.current.date(byAdding: .year, value: 1, to: Date())!
+        return Calendar.current.date(byAdding: .day, value: 7, to: Date())!
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {

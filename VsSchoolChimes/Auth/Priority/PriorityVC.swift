@@ -110,8 +110,14 @@ class PriorityVC: UIViewController {
        }
        
        
-       
-       TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\(rollname ?? "") \(CommonStringFile.OrParent.translated())"
+       if staff_role == PriorityType.is_principal{
+           
+           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\("Managment" ?? "") \(CommonStringFile.OrParent.translated())"
+       }else{
+           
+           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\(rollname ?? "") \(CommonStringFile.OrParent.translated())"
+       }
+     
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
        teacherButton.setTitle(rollname, for: .normal)
     }
@@ -190,6 +196,15 @@ class PriorityVC: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         vc.login_astype = login_astype
         present(vc, animated: true)
+    }
+    @IBAction func logout(_ sender: UIButton) {
+        
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(true, forKey: "Logout")
+        
+        let vc = LogoutViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: false)
     }
     
     
@@ -320,6 +335,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
     
 }
 

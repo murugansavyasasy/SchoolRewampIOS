@@ -4,6 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -35,20 +37,20 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="758"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="female-teacher-teaching-boy-in-school" translatesAutoresizingMaskIntoConstraints="NO" id="484-M4-0Y6">
-                                    <rect key="frame" x="8" y="8" width="377" height="170"/>
+                                    <rect key="frame" x="8" y="10" width="377" height="170"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="170" id="OYL-u7-TfD"/>
                                         <constraint firstAttribute="width" constant="377" id="kW3-a8-20S"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your role" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJI-52-t63">
-                                    <rect key="frame" x="20" y="186" width="353" height="20"/>
+                                    <rect key="frame" x="20" y="188" width="353" height="20"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Fd-Jo-Dka">
-                                    <rect key="frame" x="42" y="265.33333333333331" width="308" height="40"/>
+                                    <rect key="frame" x="42" y="267.33333333333331" width="308" height="40"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="JJN-tz-BHC">
                                             <rect key="frame" x="0.0" y="0.0" width="308" height="40"/>
@@ -89,13 +91,13 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login as a teacher or parent" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3w-cO-gNT">
-                                    <rect key="frame" x="20" y="214" width="353" height="20.333333333333343"/>
+                                    <rect key="frame" x="20" y="216" width="353" height="20.333333333333343"/>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vDi-Yd-4hE">
-                                    <rect key="frame" x="10" y="340.66666666666674" width="373" height="417.33333333333326"/>
+                                    <rect key="frame" x="10" y="342.66666666666674" width="373" height="415.33333333333326"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
@@ -113,16 +115,36 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click proceed to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86y-aT-C5X">
-                                    <rect key="frame" x="30" y="315.33333333333331" width="333" height="20.333333333333314"/>
+                                    <rect key="frame" x="30" y="317.33333333333331" width="333" height="20.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFQ-J7-xat">
+                                    <rect key="frame" x="302.66666666666669" y="10" width="80.333333333333314" height="0.0"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" id="kcg-LB-35m"/>
+                                    </constraints>
+                                    <color key="tintColor" name="Red"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal">
+                                        <imageReference key="image" image="power.circle" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                    </state>
+                                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="LogOut">
+                                        <imageReference key="image" image="power.circle" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                                    </buttonConfiguration>
+                                    <connections>
+                                        <action selector="logout:" destination="-1" eventType="touchUpInside" id="PbO-DM-jvP"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="484-M4-0Y6" secondAttribute="trailing" constant="8" id="18M-dV-blR"/>
                                 <constraint firstItem="86y-aT-C5X" firstAttribute="top" secondItem="3Fd-Jo-Dka" secondAttribute="bottom" constant="10" id="2BQ-lZ-MdW"/>
+                                <constraint firstAttribute="trailing" secondItem="aFQ-J7-xat" secondAttribute="trailing" constant="10" id="BE8-nt-v7s"/>
                                 <constraint firstAttribute="trailing" secondItem="bJI-52-t63" secondAttribute="trailing" constant="20" id="C0c-do-V4b"/>
                                 <constraint firstItem="86y-aT-C5X" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="30" id="C5z-xv-3wB"/>
                                 <constraint firstItem="bJI-52-t63" firstAttribute="top" secondItem="484-M4-0Y6" secondAttribute="bottom" constant="8" id="Dt1-xQ-kzs"/>
@@ -130,10 +152,10 @@
                                 <constraint firstItem="vDi-Yd-4hE" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="10" id="Ki8-zl-bzl"/>
                                 <constraint firstAttribute="trailing" secondItem="u3w-cO-gNT" secondAttribute="trailing" constant="20" id="MrD-xn-tjP"/>
                                 <constraint firstAttribute="trailing" secondItem="86y-aT-C5X" secondAttribute="trailing" constant="30" id="N0a-AG-trc"/>
-                                <constraint firstItem="484-M4-0Y6" firstAttribute="top" secondItem="m8F-aZ-FCz" secondAttribute="top" constant="8" id="OV1-WS-aFd"/>
                                 <constraint firstItem="u3w-cO-gNT" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="20" id="Ovc-xG-VMz"/>
                                 <constraint firstItem="bJI-52-t63" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="20" id="QfP-KZ-MpR"/>
                                 <constraint firstAttribute="bottom" secondItem="vDi-Yd-4hE" secondAttribute="bottom" id="SX1-Em-DvX"/>
+                                <constraint firstItem="484-M4-0Y6" firstAttribute="top" secondItem="aFQ-J7-xat" secondAttribute="bottom" id="WmT-2m-asK"/>
                                 <constraint firstItem="u3w-cO-gNT" firstAttribute="centerX" secondItem="m8F-aZ-FCz" secondAttribute="centerX" id="YrB-eY-j1g"/>
                                 <constraint firstItem="3Fd-Jo-Dka" firstAttribute="top" secondItem="u3w-cO-gNT" secondAttribute="bottom" constant="31" id="ZRK-dz-ggl"/>
                                 <constraint firstAttribute="trailing" secondItem="3Fd-Jo-Dka" secondAttribute="trailing" constant="43" id="cNw-Mn-41D"/>
@@ -141,6 +163,7 @@
                                 <constraint firstItem="GGr-hG-jio" firstAttribute="centerX" secondItem="m8F-aZ-FCz" secondAttribute="centerX" id="gxR-tz-fEj"/>
                                 <constraint firstItem="484-M4-0Y6" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="8" id="hVR-jq-qA7"/>
                                 <constraint firstAttribute="bottom" secondItem="GGr-hG-jio" secondAttribute="bottom" constant="16" id="r86-BI-5xI"/>
+                                <constraint firstItem="aFQ-J7-xat" firstAttribute="top" secondItem="m8F-aZ-FCz" secondAttribute="top" constant="10" id="rzF-9Z-s0g"/>
                                 <constraint firstAttribute="trailing" secondItem="vDi-Yd-4hE" secondAttribute="trailing" constant="10" id="sW9-Wl-9xY"/>
                                 <constraint firstItem="3Fd-Jo-Dka" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="42" id="swZ-an-7rB"/>
                                 <constraint firstItem="vDi-Yd-4hE" firstAttribute="top" secondItem="86y-aT-C5X" secondAttribute="bottom" constant="5" id="tc1-q7-lcM"/>
@@ -170,6 +193,10 @@
     </objects>
     <resources>
         <image name="female-teacher-teaching-boy-in-school" width="1400" height="1400"/>
+        <image name="power.circle" catalog="system" width="128" height="123"/>
+        <namedColor name="Red">
+            <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
