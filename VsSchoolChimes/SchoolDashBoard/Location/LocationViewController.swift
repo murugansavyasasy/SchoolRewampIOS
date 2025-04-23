@@ -44,8 +44,48 @@ class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        checkLocationAuthorization()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(appDidBecomeActive),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.applyGradient(
+            colors: [Colornames.stafGradient, Colornames.stafGradient1],
+            startPoint: CGPoint(x: 1, y: 0.5),
+            endPoint: CGPoint(x: 0, y: 0.5)
+        )
+    }
+    @objc func appDidBecomeActive() {
+        
+        checkLocationAuthorization()
+    }
+    
+    
+    
+    func handleLocationAuthorizationStatus(_ status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            print("Location permission not determined yet.")
+        case .restricted:
+            print("Location permission is restricted (e.g., parental controls).")
+        case .denied:
+            print("Location permission denied.")
+            showCustomLocationView(ishiden: false)
+        case .authorizedWhenInUse, .authorizedAlways:
+            print("Location permission granted.")
+            showCustomLocationView(ishiden: true)
+            
+        @unknown default:
+            break
+        }
+    }
     func getDeviceModelName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -141,5 +181,45 @@ class LocationViewController: UIViewController {
         return modelMap[modelCode] ?? modelCode // Returns modelCode if not found in the map
     }
     
+    @IBAction func backBtn(_ sender: Any) {
+        
+        dismiss(animated: true)
+    }
+    
+
+    
+    
+    func checkLocationAuthorization() {
+        let status = CLLocationManager.authorizationStatus()
+        switch status {
+        case .notDetermined:
+            // Request permission
+           ""
+        case .restricted, .denied:
+            // Show alert to guide the user to settings
+            showCustomLocationView(ishiden: false)
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Start location updates
+            showCustomLocationView(
+                ishiden: true
+            )
+        @unknown default:
+            break
+        }
+    }
+
+    
+    func showCustomLocationView(ishiden:Bool){
+        
+        LocationErrorStack.isHidden = ishiden
+        punchStack.isHidden = !ishiden
+        
+    }
+    @IBAction func enableLocationButtonTapped(_ sender: UIButton) {
+        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(appSettings)
+        }
+    }
+
     
 }
