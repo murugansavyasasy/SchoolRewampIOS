@@ -456,7 +456,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 
             case 12:
                 
-                MenuRedirect.senderLeaveRequestNavigate(from: self)
+                MenuRedirect.senderLocationNavigate(from: self)
                 
                 
             case 13:

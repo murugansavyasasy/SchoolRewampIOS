@@ -110,8 +110,14 @@ class PriorityVC: UIViewController {
        }
        
        
-       
-       TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\(rollname ?? "") \(CommonStringFile.OrParent.translated())"
+       if staff_role == PriorityType.is_principal{
+           
+           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\("Managment" ?? "") \(CommonStringFile.OrParent.translated())"
+       }else{
+           
+           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\(rollname ?? "") \(CommonStringFile.OrParent.translated())"
+       }
+     
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
        teacherButton.setTitle(rollname, for: .normal)
     }

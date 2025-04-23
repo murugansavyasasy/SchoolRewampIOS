@@ -76,6 +76,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var uploadedURLs: [String] = []
+    var AlertMessageContent:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.setTitle(standard_sectionlabel, for: .normal)
@@ -324,8 +325,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     private func SendingCommunicationFlow() {
-        let message = AlertstringFile.AreYouSureYouWantToProceed + "\(selected_student.count)"
-        let title = AlertstringFile.Alert_title
+        let message = AlertMessageContent ?? ""
+        let title = AlertstringFile.Confirm_title
 
         alert.showAlertCancel(
             title: title,
@@ -378,8 +379,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
                 file: audioURL,
-                bucketPath:   today_date + "/" + (
-                    staffDetailsCount?.first?.school_id ?? ""),
+                bucketPath:  "communication" + "/" + (UserDefaultFileManager
+                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
+                    ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)

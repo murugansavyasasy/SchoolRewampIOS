@@ -37,20 +37,20 @@
                             <rect key="frame" x="0.0" y="0.0" width="393" height="758"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="female-teacher-teaching-boy-in-school" translatesAutoresizingMaskIntoConstraints="NO" id="484-M4-0Y6">
-                                    <rect key="frame" x="8" y="50" width="377" height="170"/>
+                                    <rect key="frame" x="8" y="10" width="377" height="170"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="170" id="OYL-u7-TfD"/>
                                         <constraint firstAttribute="width" constant="377" id="kW3-a8-20S"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your role" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bJI-52-t63">
-                                    <rect key="frame" x="20" y="228" width="353" height="20"/>
+                                    <rect key="frame" x="20" y="188" width="353" height="20"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Fd-Jo-Dka">
-                                    <rect key="frame" x="42" y="307.33333333333331" width="308" height="40"/>
+                                    <rect key="frame" x="42" y="267.33333333333331" width="308" height="40"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="JJN-tz-BHC">
                                             <rect key="frame" x="0.0" y="0.0" width="308" height="40"/>
@@ -91,13 +91,13 @@
                                     </constraints>
                                 </view>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login as a teacher or parent" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u3w-cO-gNT">
-                                    <rect key="frame" x="20" y="256" width="353" height="20.333333333333314"/>
+                                    <rect key="frame" x="20" y="216" width="353" height="20.333333333333343"/>
                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vDi-Yd-4hE">
-                                    <rect key="frame" x="10" y="382.66666666666674" width="373" height="375.33333333333326"/>
+                                    <rect key="frame" x="10" y="342.66666666666674" width="373" height="415.33333333333326"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
@@ -115,16 +115,15 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click proceed to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86y-aT-C5X">
-                                    <rect key="frame" x="30" y="357.33333333333331" width="333" height="20.333333333333314"/>
+                                    <rect key="frame" x="30" y="317.33333333333331" width="333" height="20.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFQ-J7-xat">
-                                    <rect key="frame" x="343" y="10" width="40" height="40"/>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aFQ-J7-xat">
+                                    <rect key="frame" x="302.66666666666669" y="10" width="80.333333333333314" height="0.0"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="kcg-LB-35m"/>
-                                        <constraint firstAttribute="width" constant="40" id="sTA-O5-0B4"/>
+                                        <constraint firstAttribute="height" id="kcg-LB-35m"/>
                                     </constraints>
                                     <color key="tintColor" name="Red"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -132,16 +131,14 @@
                                         <imageReference key="image" image="power.circle" catalog="system" symbolScale="large"/>
                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                     </state>
+                                    <buttonConfiguration key="configuration" style="plain" imagePlacement="top" title="LogOut">
+                                        <imageReference key="image" image="power.circle" catalog="system" symbolScale="large"/>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                                    </buttonConfiguration>
                                     <connections>
                                         <action selector="logout:" destination="-1" eventType="touchUpInside" id="PbO-DM-jvP"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXr-w5-LBu">
-                                    <rect key="frame" x="338" y="50" width="45" height="15.666666666666671"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                    <color key="textColor" name="Red"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
@@ -165,8 +162,6 @@
                                 <constraint firstItem="u3w-cO-gNT" firstAttribute="top" secondItem="bJI-52-t63" secondAttribute="bottom" constant="8" id="gEL-3N-HZp"/>
                                 <constraint firstItem="GGr-hG-jio" firstAttribute="centerX" secondItem="m8F-aZ-FCz" secondAttribute="centerX" id="gxR-tz-fEj"/>
                                 <constraint firstItem="484-M4-0Y6" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="8" id="hVR-jq-qA7"/>
-                                <constraint firstItem="zXr-w5-LBu" firstAttribute="top" secondItem="aFQ-J7-xat" secondAttribute="bottom" id="jhF-yl-O85"/>
-                                <constraint firstAttribute="trailing" secondItem="zXr-w5-LBu" secondAttribute="trailing" constant="10" id="p1P-og-AeH"/>
                                 <constraint firstAttribute="bottom" secondItem="GGr-hG-jio" secondAttribute="bottom" constant="16" id="r86-BI-5xI"/>
                                 <constraint firstItem="aFQ-J7-xat" firstAttribute="top" secondItem="m8F-aZ-FCz" secondAttribute="top" constant="10" id="rzF-9Z-s0g"/>
                                 <constraint firstAttribute="trailing" secondItem="vDi-Yd-4hE" secondAttribute="trailing" constant="10" id="sW9-Wl-9xY"/>

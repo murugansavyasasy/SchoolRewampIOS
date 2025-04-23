@@ -12,28 +12,52 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="Std_Grp_header" customModule="VsSchoolChimes" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="393" height="93"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ok2-88-xXS">
-                    <rect key="frame" x="25" y="36.333333333333336" width="343" height="20.333333333333336"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uoB-nl-jQB">
+                    <rect key="frame" x="5" y="5" width="383" height="34"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="180" translatesAutoresizingMaskIntoConstraints="NO" id="H5F-eo-pZR">
+                            <rect key="frame" x="0.0" y="0.0" width="383" height="34"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ok2-88-xXS">
+                                    <rect key="frame" x="0.0" y="0.0" width="101.66666666666667" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Created On" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9E-Xf-iN2">
+                                    <rect key="frame" x="281.66666666666669" y="0.0" width="101.33333333333331" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="H5F-eo-pZR" secondAttribute="bottom" id="81e-8l-NZf"/>
+                        <constraint firstItem="H5F-eo-pZR" firstAttribute="top" secondItem="uoB-nl-jQB" secondAttribute="top" id="cl0-lb-Wwz"/>
+                        <constraint firstItem="H5F-eo-pZR" firstAttribute="leading" secondItem="uoB-nl-jQB" secondAttribute="leading" id="itI-xh-zPA"/>
+                        <constraint firstAttribute="trailing" secondItem="H5F-eo-pZR" secondAttribute="trailing" id="pdQ-G0-891"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="Ok2-88-xXS" secondAttribute="trailing" constant="25" id="5mI-1S-F5x"/>
-                <constraint firstItem="Ok2-88-xXS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="nAP-7c-Opn"/>
-                <constraint firstItem="Ok2-88-xXS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="u4n-6J-tgo"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uoB-nl-jQB" secondAttribute="trailing" constant="5" id="9ji-MU-X7y"/>
+                <constraint firstItem="uoB-nl-jQB" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="fdh-AX-4fi"/>
+                <constraint firstAttribute="bottom" secondItem="uoB-nl-jQB" secondAttribute="bottom" constant="5" id="uk3-Wq-IMN"/>
+                <constraint firstItem="uoB-nl-jQB" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="yhd-Fk-T65"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="HeaderLabel" destination="Ok2-88-xXS" id="zjT-WG-ze5"/>
+                <outlet property="createdOnDefaultLbl" destination="S9E-Xf-iN2" id="dC1-V4-c38"/>
             </connections>
-            <point key="canvasLocation" x="127.48091603053435" y="258.0985915492958"/>
+            <point key="canvasLocation" x="127.48091603053435" y="240.84507042253523"/>
         </view>
     </objects>
     <resources>

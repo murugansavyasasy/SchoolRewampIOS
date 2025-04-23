@@ -177,10 +177,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Eh-TK-gsW">
-                    <rect key="frame" x="254" y="70" width="123" height="35"/>
+                    <rect key="frame" x="220" y="70" width="157" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="Q4N-F7-yAt"/>
-                        <constraint firstAttribute="width" constant="123" id="Uxz-Jx-ocU"/>
+                        <constraint firstAttribute="width" constant="157" id="Uxz-Jx-ocU"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -204,7 +204,7 @@
             <constraints>
                 <constraint firstItem="vrX-am-fa0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5XT-sp-hG9"/>
                 <constraint firstItem="Ia6-uU-gnj" firstAttribute="leading" secondItem="uty-p2-UrK" secondAttribute="trailing" constant="10" id="Ba0-lV-zLY"/>
-                <constraint firstItem="2Eh-TK-gsW" firstAttribute="leading" secondItem="Ia6-uU-gnj" secondAttribute="trailing" constant="5" id="IIh-6W-gza"/>
+                <constraint firstItem="2Eh-TK-gsW" firstAttribute="leading" secondItem="Ia6-uU-gnj" secondAttribute="trailing" constant="-29" id="IIh-6W-gza"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vrX-am-fa0" secondAttribute="trailing" id="LD7-0a-SkJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="2Eh-TK-gsW" secondAttribute="trailing" constant="16" id="LDC-4h-Mvt"/>
                 <constraint firstItem="vrX-am-fa0" firstAttribute="top" secondItem="2Eh-TK-gsW" secondAttribute="bottom" constant="10" id="Ltw-3F-tES"/>

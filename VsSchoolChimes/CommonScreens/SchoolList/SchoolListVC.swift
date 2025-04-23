@@ -43,22 +43,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         ViewAnimator.hideFade(chooseDefaultLbl)
         ViewAnimator.hideFade(acidamicYrDropView)
         ViewAnimator.hideFade(sendBtnName)
-        
-//        switch screen_type {
-//        case isEmergency, isNoticeBoard:
-//            ViewAnimator.hideFade(segmentName)
-//            ViewAnimator.showFade(sendBtnName)
-//            segmentName.selectedSegmentIndex = 1
-//
-//        case Menu_id.homeWorkMenuId,Menu_id.isAssaignment:
-//            
-//            ViewAnimator.hideFade(segmentName)
-//            ViewAnimator.showFade(sendBtnName)
-//            segmentName.selectedSegmentIndex = 0
-//        default:
-//            ViewAnimator.showFade(segmentName)
-//        }
-
+    
+        getacadmicYr()
         for i in 0..<(school_details?.count ?? 0) {
             school_details?[i].isSelected = true
             if let school_id = school_details?[i].school_id{
@@ -67,7 +53,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             }
         }
         
-        getacadmicYr()
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
         
         let acidmaciyrClick = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
@@ -121,12 +106,14 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             ViewAnimator.hideFade(sendBtnName)
             ViewAnimator.hideFade(acidamicYrDropView)
             listTable.reloadData()
+            
         }else{
            
             ViewAnimator.showFade(sendBtnName)
             ViewAnimator.showFade(chooseDefaultLbl)
             ViewAnimator.showFade(acidamicYrDropView)
             listTable.reloadData()
+            
         }
         
     }
@@ -284,9 +271,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             CircularProgressLoader.shared.updateProgress(to: 0)
             let today_date = AwsCurrentDateString()
             AWSUploadManager.shared.uploadFileToAWS(
+               
                 file: audioURL,
-                bucketPath:   today_date + "/" + (
-                    school_details?.first?.school_id ?? ""),
+                bucketPath:  "communication" + "/" + (UserDefaultFileManager
+                    .get_staff_Details()?.school_id ?? "") + "/" + today_date
+                    ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -422,14 +411,19 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
                                     hasCurrentYear = true
                                     segmentName.isUserInteractionEnabled = hasCurrentYear
+                                    listTable.reloadData()
                                         break
+                                   
                                 }
                             }
                             
                             if !hasCurrentYear {
+                                listTable.isHidden = true
+                                sendBtnName.isHidden = true
                                 segmentName.isUserInteractionEnabled = false
 //                                nodata(false, message: "")
-                                norecordImg.isHidden = true
+                                norecordImg.isHidden = false
+                                noRecordLbl.isHidden = false
                                 acidamicYrDropView.isUserInteractionEnabled = false
                                 
                                 let fullText = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com"

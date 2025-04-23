@@ -16,6 +16,7 @@ class COMMON_PARAMETER{
     static var new_password = "new_password"
     static var  country_id = "country_id"
     static var  academic_year_id = "academic_year_id"
+    static var section_ids = "section_ids"
 }
 
 class mobileNumber{
@@ -133,3 +134,4 @@ class punchDetaiShapeStringFile {
     var latitude = "latitude"
     var distance = "distance"
 }
+
