@@ -137,7 +137,7 @@
                     <rect key="frame" x="0.0" y="114" width="393" height="704"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="b0v-AN-vkw">
-                            <rect key="frame" x="16" y="49.999999999999943" width="361" height="940.66666666666652"/>
+                            <rect key="frame" x="16" y="0.0" width="361" height="940.66666666666674"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="slk-NT-5mS">
                                     <rect key="frame" x="0.0" y="0.0" width="361" height="220"/>
@@ -250,7 +250,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" image="Phone" translatesAutoresizingMaskIntoConstraints="NO" id="aci-SS-mWA">
-                                            <rect key="frame" x="8" y="46.333333333333371" width="44" height="32.333333333333343"/>
+                                            <rect key="frame" x="8" y="46.333333333333314" width="44" height="32.333333333333343"/>
                                             <color key="tintColor" systemColor="tintColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="44" id="AdH-Tn-f0i"/>
@@ -501,7 +501,7 @@
                             </subviews>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nL6-Li-e17">
-                            <rect key="frame" x="130.33333333333337" y="1000.6666666666667" width="132.66666666666663" height="40"/>
+                            <rect key="frame" x="130.33333333333337" y="950.66666666666674" width="132.66666666666663" height="40"/>
                             <color key="backgroundColor" name="ButtonColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="UTr-bq-swk"/>
@@ -515,7 +515,7 @@
                         <constraint firstItem="b0v-AN-vkw" firstAttribute="leading" secondItem="8PE-Os-Ini" secondAttribute="leading" constant="16" id="1yc-gz-CPq"/>
                         <constraint firstItem="nL6-Li-e17" firstAttribute="centerX" secondItem="8PE-Os-Ini" secondAttribute="centerX" id="Q9n-Td-XJy"/>
                         <constraint firstItem="nL6-Li-e17" firstAttribute="top" secondItem="b0v-AN-vkw" secondAttribute="bottom" constant="10" id="X23-K5-EAv"/>
-                        <constraint firstItem="b0v-AN-vkw" firstAttribute="top" secondItem="8PE-Os-Ini" secondAttribute="top" constant="50" id="nZL-Nb-m2g"/>
+                        <constraint firstItem="b0v-AN-vkw" firstAttribute="top" secondItem="8PE-Os-Ini" secondAttribute="top" id="nZL-Nb-m2g"/>
                         <constraint firstAttribute="trailing" secondItem="b0v-AN-vkw" secondAttribute="trailing" constant="16" id="ynk-V2-lrn"/>
                         <constraint firstAttribute="bottom" secondItem="nL6-Li-e17" secondAttribute="bottom" constant="20" id="ytC-Lx-yOL"/>
                     </constraints>
