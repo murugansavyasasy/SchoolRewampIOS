@@ -101,7 +101,7 @@ class RecipientVc: UIViewController{
         tv.delegate = self
         tv.dataSource = self
         configureRecipientTabs()
-    
+        
     }
     
     
@@ -111,7 +111,7 @@ class RecipientVc: UIViewController{
         segmentName
             .setTitleTextAttributes(
                 [
-                    .font: UIFont.boldSystemFont(ofSize: 12),
+                    .font: UIFont.boldSystemFont(ofSize: 10),
                     .foregroundColor: UIColor.black
                 ],
                 for: .normal
@@ -128,26 +128,13 @@ class RecipientVc: UIViewController{
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-            
-//            if (staffDetailsCount?.count ?? 0) > 1 {
-//                cv_itemsarry = [
-//                    recipeint_tabBarName.Entier_School,
-//                    recipeint_tabBarName.Standard,
-//                    recipeint_tabBarName.Section_Student,
-//                    recipeint_tabBarName.Group,
-//                    recipeint_tabBarName.Staff
-//                ]
-//                target_type = TargetTypes.standard
-//                circular_types =  circular_type.standard
-//                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-//            } else {
-                cv_itemsarry = [
-                    recipeint_tabBarName.Entier_School,
-                    recipeint_tabBarName.Standard,
-                    recipeint_tabBarName.Section_Student,
-                    recipeint_tabBarName.Group,
-                    recipeint_tabBarName.Staff
-                ]
+            cv_itemsarry = [
+                recipeint_tabBarName.Entier_School,
+                recipeint_tabBarName.Standard,
+                recipeint_tabBarName.Section_Student,
+                recipeint_tabBarName.Group,
+                recipeint_tabBarName.Staff
+            ]
             circular_types = circular_type.school
             target_type = TargetTypes.school
             noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
@@ -155,11 +142,9 @@ class RecipientVc: UIViewController{
                 .append(
                     UserDefaultFileManager.get_staff_Details()?.school_id ?? ""
                 )
-                nodataFound.isHidden = false
+            nodataFound.isHidden = false
             nodataFound.image = ImageName.girl_and_boy_are
-                noRecordLbl.isHidden = false
-//            }
-            
+            noRecordLbl.isHidden = false
         default:
             print("Unhandled staff role")
         }
@@ -171,7 +156,7 @@ class RecipientVc: UIViewController{
         
         segmentName.selectedSegmentIndex = 0
         
-       
+        
     }
     func homeWorkShowProps(){
         if accedmicYrEligible{
@@ -198,14 +183,7 @@ class RecipientVc: UIViewController{
         }
     }
     
-    func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
-        view.layer.cornerRadius = cornerRadius
-        view.layer.shadowColor = shadowColor.cgColor
-        view.layer.shadowOffset = shadowOffset
-        view.layer.shadowOpacity = shadowOpacity
-        view.layer.shadowRadius = shadowRadius
-        view.backgroundColor = backgroundColor
-    }
+    
     
     
     @IBAction func backbtn(_ sender: Any) {
@@ -217,9 +195,7 @@ class RecipientVc: UIViewController{
         print("selectedId : \(array_selectedId)")
         
         if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School{
-            
         }else{
-            
             guard !array_selectedId.isEmpty else {
                 alert.showAlert(
                     title: AlertstringFile.Alert_title,
@@ -228,7 +204,6 @@ class RecipientVc: UIViewController{
                 return
             }
         }
-       
         switch screenType.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
@@ -236,7 +211,6 @@ class RecipientVc: UIViewController{
             handleHomeworkFlow()
         case Menu_id.AttachmentMenuId:
             SendingAttachmentFlow()
-            
         default:
             print("Unhandled menu ID: \(screenType.staffSelectedMenuId)")
         }
@@ -246,18 +220,13 @@ class RecipientVc: UIViewController{
     private func SendingAttachmentFlow() {
         let file : Any = user_inputs.selectedFileType == "IMAGE" ? user_inputs.selectedImg:user_inputs.docUrl
         uploadAndSendVoiceMessage(file: file) { [self] in
-            
             CircularProgressLoader.shared.hide()
             let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-//                user_inputs.selectedFileType = getExtension(from: url) ?? ""
                 return [
                     "path": url
-//                    "type": user_inputs.selectedFileType
                 ]
             }
-            
             print(uploadedFiles)
-            
             let parameters: [String: Any] = [SendAttachmentStringFile.title: user_inputs.title,
                                              SendAttachmentStringFile.file_type: user_inputs.selectedFileType,
                                              SendAttachmentStringFile.file_path: uploadedFiles,
@@ -269,13 +238,9 @@ class RecipientVc: UIViewController{
                                              SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""]
             
             APIService.shared.makeApi(url: ServiceUrl.comm_attachment_send_attachment, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self](result: Result<Send_AttachmentResponse,Error>) in
-                
                 switch result{
-                    
                 case .success(let successMessage):
-                    
                     if successMessage.status{
-                        
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -295,12 +260,9 @@ class RecipientVc: UIViewController{
                                     message: successMessage.message,
                                     on: self
                                 ) {
-                                    self.gotoDashboard()
-                                }
+                                    self.gotoDashboard()}
                         }
                     }
-                    
-                    
                 case .failure(let error):
                     
                     print(error.localizedDescription)
@@ -312,9 +274,8 @@ class RecipientVc: UIViewController{
     
     
     func getExtension(from filePath: String) -> String? {
-     return URL(string: filePath)?.pathExtension.lowercased()
+        return URL(string: filePath)?.pathExtension.lowercased()
     }
-    
     
     private func handleHomeworkFlow() {
         uploadedURLs.removeAll()
@@ -326,14 +287,11 @@ class RecipientVc: UIViewController{
                     let type = url.pathExtension.lowercased()
                     user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
                 }
-
                 return [
                     CommonStringFile.path: url,
                     CommonStringFile.type: user_inputs.selectedFileType
                 ]
             }
-
-         print("uploadedFiles",uploadedFiles)
             let parameters: [String: Any] = [
                 UploadMessageKeys.academic_year_id:selectedAcadimicYearId ?? 0,
                 UploadMessageKeys.title: user_inputs.title,
@@ -341,21 +299,15 @@ class RecipientVc: UIViewController{
                 UploadMessageKeys.sectionCode: array_selectedId,
                 UploadMessageKeys.subjectId: subjectId ?? "",
                 UploadMessageKeys.filePath:uploadedFiles
-                
             ]
-            
             APIService.shared
                 .makeApi(url: ServiceUrl.comm_homework_sendhomework, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                     result : Result<CommonApiSuc,
                     Error>
                 ) in
-                    
                     switch result {
-                        
                     case.success(let succesmessage) :
-                        
                         if succesmessage.status == true {
-                            
                             DispatchQueue.main.async { [self] in
                                 CustomAlert
                                     .showAlertWithOkAction(
@@ -369,7 +321,6 @@ class RecipientVc: UIViewController{
                         }else {
                             
                             DispatchQueue.main.async {
-                                
                                 CustomAlert
                                     .showAlertWithOkAction(
                                         title: AlertstringFile.Alert_title,
@@ -399,12 +350,11 @@ class RecipientVc: UIViewController{
             message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
         }else{
             
-          message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
         }
         
         let title = AlertstringFile.Confirm_title
-        
         alert.showAlertCancel(
             title: title,
             message: message ?? "",
@@ -445,8 +395,7 @@ class RecipientVc: UIViewController{
             }
         }
         switch file {
-
-        // 🎙️ Case: Audio File from String (URL Path)
+            // 🎙️ Case: Audio File from String (URL Path)
         case let files as String:
             guard let audioURL = URL(string: files) else {
                 print("❌ Invalid audio URL.")
@@ -460,7 +409,7 @@ class RecipientVc: UIViewController{
                 file: audioURL,
                 bucketPath:  "communication" + "/" + (UserDefaultFileManager
                     .get_staff_Details()?.school_id ?? "") + "/" + today_date
-                    ,
+                ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -472,29 +421,29 @@ class RecipientVc: UIViewController{
                     } else {
                         print("❌ Audio upload failed.")
                     }
-
+                    
                     completed += 1
                     let progress = (Double(completed) / Double(total)) * 100
                     CircularProgressLoader.shared.updateProgress(to: progress)
-
+                    
                     if completed == total {
                         CircularProgressLoader.shared.hide()
                         completion()
                     }
                 }
             )
-
-        // 🖼️ Case: Array of Images
+            
+            // 🖼️ Case: Array of Images
         case let images as [UIImage]:
             let total = images.count
             guard !images.isEmpty else {
                 completion()
                 return
             }
-
+            
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-
+            
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
@@ -510,11 +459,11 @@ class RecipientVc: UIViewController{
                         } else {
                             print("❌ Failed to upload image \(index)")
                         }
-
+                        
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
                         CircularProgressLoader.shared.updateProgress(to: progress)
-
+                        
                         if completed == total {
                             CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
@@ -525,47 +474,47 @@ class RecipientVc: UIViewController{
             }
             // 🖼️ Case: Array of Images
         case let files as [String]:
-                let total = files.count
-                guard !files.isEmpty else {
-                    completion()
+            let total = files.count
+            guard !files.isEmpty else {
+                completion()
+                return
+            }
+            
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            
+            for (index, url) in files.enumerated() {
+                guard let PdfURL = URL(string: url) else {
+                    print("❌ Invalid audio URL.")
                     return
                 }
-
-                CircularProgressLoader.shared.show(style: .circle)
-                CircularProgressLoader.shared.updateProgress(to: 0)
-
-                for (index, url) in files.enumerated() {
-                    guard let PdfURL = URL(string: url) else {
-                        print("❌ Invalid audio URL.")
-                        return
-                    }
-                    AWSUploadManager.shared.uploadFileToAWS(
-                        file: PdfURL,
-                        bucketPath: "uploads/Documents/",
-                        bucketName: "schoolchimes-communication",
-                        progressHandler: { progress in
-                            // Optional: Update progress per file individually if you want
-                        },
-                        completion: { [self] url in
-                            if let uploadedURL = url {
-                                uploadedURLs.append(uploadedURL)
-                                
-                            } else {
-                                print("❌ Failed to upload image \(index)")
-                            }
-
-                            completed += 1
-                            let progress = (Double(completed) / Double(total)) * 100
-                            CircularProgressLoader.shared.updateProgress(to: progress)
-
-                            if completed == total {
-                                CircularProgressLoader.shared.hide()
-                                // Do something with uploadedURLs if needed
-                                completion()
-                            }
+                AWSUploadManager.shared.uploadFileToAWS(
+                    file: PdfURL,
+                    bucketPath: "uploads/Documents/",
+                    bucketName: "schoolchimes-communication",
+                    progressHandler: { progress in
+                        // Optional: Update progress per file individually if you want
+                    },
+                    completion: { [self] url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                            
+                        } else {
+                            print("❌ Failed to upload image \(index)")
                         }
-                    )
-                }
+                        
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+                        
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    }
+                )
+            }
         case let attachments as [AttachmentItem]:
             let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
             let total = uploadableItems.count
@@ -573,10 +522,10 @@ class RecipientVc: UIViewController{
                 completion()
                 return
             }
-
+            
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-
+            
             for item in uploadableItems {
                 if let image = item.image {
                     // 🖼️ Upload local image
@@ -600,7 +549,7 @@ class RecipientVc: UIViewController{
                         updateAndCheckCompletion(total: total)
                     } else if let fileURL = URL(string: fileURLStr) {
                         let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
-
+                        
                         AWSUploadManager.shared.uploadFileToAWS(
                             file: fileURL,
                             bucketPath: path,
@@ -621,17 +570,15 @@ class RecipientVc: UIViewController{
                     }
                 }
             }
-
-
         default:
             print("❌ Unsupported file type")
             return
         }
     }
-  
-
-
-
+    
+    
+    
+    
     @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
         var message : Bool?
         if accadmicDefaultYrName == acidmicYrLbl.text{
@@ -639,7 +586,6 @@ class RecipientVc: UIViewController{
         }else{
             message = false
         }
-        
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
@@ -662,7 +608,6 @@ class RecipientVc: UIViewController{
         let selectedTitle = cv_itemsarry[segment_selected_index ?? 0]
         
         switch selectedTitle {
-            
         case recipeint_tabBarName.Entier_School:
             array_selectedId.append( UserDefaultFileManager.get_staff_Details()?.school_id ?? "")
             target_type = TargetTypes.school
@@ -724,7 +669,6 @@ class RecipientVc: UIViewController{
         StdDropdown.dataSource = dropDownArray
         StdDropdown.bottomOffset = CGPoint(x: 0, y: selectStandardDropDown.bounds.height)
         StdDropdown.show()
-        
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             self.sectionsDetails = self.standardDetails?.first(where: { $0.name == item })?.sections
@@ -745,15 +689,13 @@ class RecipientVc: UIViewController{
         StdDropdown.bottomOffset = CGPoint(x: 0, y: selectSubject.bounds.height)
         StdDropdown.show()
         let tableView = self.StdDropdown.tableView
-            let visibleCellCount = tableView.visibleCells.count
+        let visibleCellCount = tableView.visibleCells.count
         let visibleHeight = CGFloat(visibleCellCount) * 44.0
         if visibleHeight < 200 {
             self.StdDropdown.direction = .top
         } else {
             self.StdDropdown.direction = .bottom
         }
-
-       
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             if let label = self.selectSubject.subviews.first(where: { $0 is UILabel }) as? UILabel {
@@ -774,28 +716,19 @@ class RecipientVc: UIViewController{
         acidamicdrops.dataSource = accadimYr
         acidamicdrops.bottomOffset = CGPoint(x: 0, y: acidamicYrDropView.bounds.height)
         acidamicdrops.show()
-        
         acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             selectedAcadimicYearId =  AcadimicYearDatas[index].id
-            
             acidmicYrLbl.text = item
-            
             if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Standard {
-            
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
             else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Section_Student {
-            
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
-        
             else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Group {
                 getGrouplistAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
-//            else if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Entier_School {
-//    
-//            }
         }
         
         
@@ -837,7 +770,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         let baseCount: Int
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-
             baseCount = groupDetails?.count ?? 0
         case recipeint_tabBarName.Standard:
             baseCount = standardDetails?.count ?? 0
@@ -848,13 +780,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         default:
             baseCount = 0
         }
-        
         return baseCount + 1 // +1 for "Select All"
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.RecipientTvCell, for: indexPath) as! RecipientTvCell
-        
         if indexPath.row == 0 {
             cell.cellLabel.text = "Select All"
             cell.createdOnlbl.isHidden = true
@@ -864,19 +794,14 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         }
         
         let dataIndex = indexPath.row - 1
-        
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
-            
             if let item = groupDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
                 cell.createdOnlbl.text =  item.created_on
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
-           
-            
-            
         case recipeint_tabBarName.Standard:
             if let item = standardDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
@@ -903,20 +828,19 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             self.tableHeight.constant = self.tv.contentSize.height
             self.view.layoutIfNeeded()
         }
-
+        
         
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             handleSelectAllToggle()
             tableView.reloadData()
             return
         }
-
-        let dataIndex = indexPath.row - 1
         
+        let dataIndex = indexPath.row - 1
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
             if var item = groupDetails?[dataIndex] {
@@ -924,31 +848,26 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 groupDetails?[dataIndex].isSelect = item.isSelect
                 updateSelectionArray(id: item.id, isSelected: item.isSelect)
             }
-            
         case recipeint_tabBarName.Standard:
             if var item = standardDetails?[dataIndex] {
                 item.isSelect?.toggle()
                 standardDetails?[dataIndex].isSelect = item.isSelect
                 updateSelectionArray(id: item.id, isSelected: item.isSelect)
             }
-            
         case recipeint_tabBarName.Section_Student:
             if var item = sectionsDetails?[dataIndex] {
                 item.isSelect?.toggle()
                 sectionsDetails?[dataIndex].isSelect = item.isSelect
                 updateSelectionArray(id: item.id, isSelected: item.isSelect)
-                
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
                 sectionIds = selectedIds.joined(separator: ",")
-                
                 if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId {
                     if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                         getSubjectListAPI(finalSectionIds)
                     }
                     selectSubject.isHidden = false
                 }
-                
                 speficBtnName.isEnabled = selectedSections.count == 1
                 speficBtnName.isHidden = !(selectedSections.count == 1)
             }
@@ -959,18 +878,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 staffDetails?[dataIndex].isSelect = item.isSelect
                 updateSelectionArray(id: item.id, isSelected: item.isSelect)
             }
-
+            
         default:
             break
         }
-
+        
         tableView.reloadData()
     }
-
+    
     // MARK: - Helper Function to update selection array
     func updateSelectionArray(id: String?, isSelected: Bool?) {
         guard let id = id else { return }
-        
         if isSelected == true {
             if !array_selectedId.contains(id) {
                 array_selectedId.append(id)
@@ -979,12 +897,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             array_selectedId.removeAll(where: { $0 == id })
         }
     }
-
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
     
     func isAllSelected() -> Bool {
         switch cv_itemsarry[segment_selected_index ?? 0] {
@@ -1000,10 +915,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             return false
         }
     }
-    
     func handleSelectAllToggle() {
         let selecting = !isAllSelected()
-
+        
         switch cv_itemsarry[segment_selected_index ?? 0] {
         case recipeint_tabBarName.Group:
             groupDetails = groupDetails?.map {
@@ -1012,7 +926,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? groupDetails?.compactMap { $0.id } ?? [] : []
-
+            
         case recipeint_tabBarName.Standard:
             standardDetails = standardDetails?.map {
                 var item = $0
@@ -1020,7 +934,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? standardDetails?.compactMap { $0.id } ?? [] : []
-
+            
         case recipeint_tabBarName.Section_Student:
             sectionsDetails = sectionsDetails?.map {
                 var item = $0
@@ -1038,7 +952,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 speficBtnName.isEnabled = selecting && array_selectedId.count == 1
                 speficBtnName.isHidden = !(selecting && array_selectedId.count == 1)
             }
-
+            
         case recipeint_tabBarName.Staff:
             staffDetails = staffDetails?.map {
                 var item = $0
@@ -1046,15 +960,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? staffDetails?.compactMap { $0.id } ?? [] : []
-
+            
         default:
             break
         }
     }
-
     
     // MARK:  This api for  Listing Stars ============================
-    
     func getGrouplistAPI(academic_year_id:Int){
         APIService.shared
             .makeApi(
@@ -1066,7 +978,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 [self] (result: Result<GrouplistSuc,Error>) in
                 switch result {
                 case .success(let successmessage):
-                    
                     if successmessage.status == true{
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
@@ -1177,7 +1088,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             selectSubject.isHidden = true
                             sendbtnName.isHidden = true
                             tv.isHidden = true
-
+                            
                             nodata(false, message: successMessage.message ?? "")
                         }
                     }
@@ -1232,13 +1143,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             var hasCurrentYear = false
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                        acidmicYrLbl.text = AcadimicYearDatas[i].year
+                                    acidmicYrLbl.text = AcadimicYearDatas[i].year
                                     accadmicDefaultYrName = AcadimicYearDatas[i].year
-                                        selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
+                                    selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
                                     hasCurrentYear = true
                                     accedmicYrEligible = true
                                     segmentName.isUserInteractionEnabled = hasCurrentYear
-                                        break
+                                    break
                                 }
                             }
                             
@@ -1256,7 +1167,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 selectStandardDropDown.isHidden = true
                                 let fullText = CommonStringFile.Your_academic_year_configuration
                                 let attributedString = NSMutableAttributedString(string: fullText)
-
+                                
                                 let email = CommonStringFile.support_savyasasy_com
                                 if let range = fullText.range(of: email) {
                                     let nsRange = NSRange(range, in: fullText)
@@ -1265,13 +1176,13 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
                                     attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
                                 }
-
+                                
                                 noRecordLbl.attributedText = attributedString
                                 noRecordLbl.isUserInteractionEnabled = true
                                 
                                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
                                 noRecordLbl.addGestureRecognizer(tapGesture)
-
+                                
                             }
                             homeWorkShowProps()
                         }
@@ -1295,43 +1206,43 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     @objc func handleEmailTap(_ gesture: UITapGestureRecognizer) {
         guard let text = noRecordLbl.attributedText?.string else { return }
-           let email = CommonStringFile.support_savyasasy_com
-
-           if let range = text.range(of: email) {
-               let nsRange = NSRange(range, in: text)
-
-               let tapLocation = gesture.location(in: noRecordLbl)
-               let layoutManager = NSLayoutManager()
-               let textContainer = NSTextContainer(size: noRecordLbl.bounds.size)
-               let textStorage = NSTextStorage(attributedString: noRecordLbl.attributedText!)
-
-               textContainer.lineFragmentPadding = 0
-               textContainer.maximumNumberOfLines = noRecordLbl.numberOfLines
-               textContainer.lineBreakMode = noRecordLbl.lineBreakMode
-               layoutManager.addTextContainer(textContainer)
-               textStorage.addLayoutManager(layoutManager)
-
-               let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
-
-               if NSLocationInRange(index, nsRange) {
-                   let subject = "Request to configure communication academic year"
-                   let body = "Dear School Chimes Team,\n\n Please configure communication academic year  as 20xx - 20xx for any queries contact .\n\n Your name,\nMobile No"
-                   
-                   // URL encode
-                   let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-                   let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-                   
-                   // Try Gmail URL
-                   if let gmailURL = URL(string: "googlegmail://co?to=\(email)&subject=\(encodedSubject)&body=\(encodedBody)"),
-                      UIApplication.shared.canOpenURL(gmailURL) {
-                       UIApplication.shared.open(gmailURL)
-                   } else if let fallbackURL = URL(string: "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)") {
-                       UIApplication.shared.open(fallbackURL)
-                   }
-               }
-           }
+        let email = CommonStringFile.support_savyasasy_com
+        
+        if let range = text.range(of: email) {
+            let nsRange = NSRange(range, in: text)
+            
+            let tapLocation = gesture.location(in: noRecordLbl)
+            let layoutManager = NSLayoutManager()
+            let textContainer = NSTextContainer(size: noRecordLbl.bounds.size)
+            let textStorage = NSTextStorage(attributedString: noRecordLbl.attributedText!)
+            
+            textContainer.lineFragmentPadding = 0
+            textContainer.maximumNumberOfLines = noRecordLbl.numberOfLines
+            textContainer.lineBreakMode = noRecordLbl.lineBreakMode
+            layoutManager.addTextContainer(textContainer)
+            textStorage.addLayoutManager(layoutManager)
+            
+            let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+            
+            if NSLocationInRange(index, nsRange) {
+                let subject = "Request to configure communication academic year"
+                let body = "Dear School Chimes Team,\n\n Please configure communication academic year  as 20xx - 20xx for any queries contact .\n\n Your name,\nMobile No"
+                
+                // URL encode
+                let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                let encodedBody = body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+                
+                // Try Gmail URL
+                if let gmailURL = URL(string: "googlegmail://co?to=\(email)&subject=\(encodedSubject)&body=\(encodedBody)"),
+                   UIApplication.shared.canOpenURL(gmailURL) {
+                    UIApplication.shared.open(gmailURL)
+                } else if let fallbackURL = URL(string: "mailto:\(email)?subject=\(encodedSubject)&body=\(encodedBody)") {
+                    UIApplication.shared.open(fallbackURL)
+                }
+            }
+        }
     }
-
+    
     
     
     // MARK:   Listing  API END ===========================
@@ -1481,7 +1392,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         switch staff_role {
         case PriorityType.is_staff:
             self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-           
+            
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             speficBtnName.isHidden = true
             

@@ -49,6 +49,7 @@ struct ServiceUrl{
     static let  staff_attd_geometric_entry_using_app  = "staff-attd/geometric/entry-using-app"
     static let  staff_attd_geometric_set_geometric_location  = "staff-attd/geometric/set-geometric-location" 
     static let  staff_attd_geometric_get_geometric_location_history  = "staff-attd/geometric/get-geometric-location-history"
+    static let  geometric_principal_attendance_report  = "geometric-principal-attendance-report"
     
     
 }
@@ -202,4 +203,12 @@ func formatDuration(_ duration: Int) -> String {
 }
 
 
+func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
+    view.layer.cornerRadius = cornerRadius
+    view.layer.shadowColor = shadowColor.cgColor
+    view.layer.shadowOffset = shadowOffset
+    view.layer.shadowOpacity = shadowOpacity
+    view.layer.shadowRadius = shadowRadius
+    view.backgroundColor = backgroundColor
+}
 
