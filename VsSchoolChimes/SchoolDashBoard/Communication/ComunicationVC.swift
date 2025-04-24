@@ -1989,6 +1989,19 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         cell.delegate = self
         return cell
     }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let playIndex = playIndex else { return }
+        let indexPath = IndexPath(row: playIndex, section: 0)
+        if let visiblePaths = historytable.indexPathsForVisibleRows {
+            let isVisible = visiblePaths.contains(indexPath)
+            if !isVisible {
+                if let cell = historytable.cellForRow(at: indexPath) as? HistoryTC {
+                    self.playIndex = nil
+                    cell.player = nil
+                }
+            }
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let with = dateCV.frame.size.width - 20
         let cwidth = with/3
