@@ -445,3 +445,34 @@ struct AttachmentFilePath: Codable {
     let path: String?
     let type:String
 }
+
+struct PunchHistory:Codable{
+    let status:Bool?
+    let message:String?
+    let data:[PunchList]?
+}
+struct PunchList:Codable{
+    let date:String?
+    let timings:[puchHistoryList]?
+}
+struct puchHistoryList:Codable{
+    let time:String?
+    let punch_type:punchType?
+    let device_model:String?
+    let device_id:String?
+}
+struct punchType:Codable{
+    let id:Int?
+    let value:String?
+}
+struct StaffGeometricLocation:Codable{
+    let status:Bool?
+    let message:String?
+    let data:[GeometricLocation]?
+}
+struct GeometricLocation:Codable{
+    let latitude:String?
+    let longitude:String?
+    let location:String?
+    let distance:String?
+}
