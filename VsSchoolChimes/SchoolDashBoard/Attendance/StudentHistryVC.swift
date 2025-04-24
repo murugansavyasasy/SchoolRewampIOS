@@ -76,7 +76,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     let staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var uploadedURLs: [String] = []
-    var AlertMessageContent:String?
+    var AlertMessageContent:Bool?
+    var accidmaticNAme:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.setTitle(standard_sectionlabel, for: .normal)
@@ -86,6 +87,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         StyleAndTranslater()
         BackBtn.applyBackButton()
        
+        
+        
         if id == 1{
             HeaderviewHeight.constant = 0
             headerView.isHidden = true
@@ -325,12 +328,24 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     private func SendingCommunicationFlow() {
-        let message = AlertMessageContent ?? ""
+        
+        
+        let message : String?
         let title = AlertstringFile.Confirm_title
 
+        if AlertMessageContent ?? false{
+            
+            message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+           
+        }else{
+            
+          message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+            accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            
+        }
         alert.showAlertCancel(
             title: title,
-            message: message,
+            message: message ?? "",
             actionLbl1: AlertstringFile.OK,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -474,7 +489,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                             } else {
                                 print("❌ Failed to upload image \(index)")
                             }
-
                             completed += 1
                             let progress = (Double(completed) / Double(total)) * 100
                             CircularProgressLoader.shared.updateProgress(to: progress)
@@ -518,7 +532,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Success",
+                                    title: AlertstringFile.Sccuess,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in
@@ -581,7 +595,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: "Success",
+                                    title: AlertstringFile.Sccuess,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
@@ -679,7 +693,10 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 return cell
             }else{
                 
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MarkAtendenceTV", for: indexPath) as! MarkAtendenceTV
+                let cell = tableView.dequeueReusableCell(
+                    withIdentifier: CellConfingName.MarkAtendenceTV,
+                    for: indexPath
+                ) as! MarkAtendenceTV
                 cell.nameLbl.text = filterData?[indexPath.row].name
                 cell.addmisionLbl.text = filterData?[indexPath.row].phoneNo
                 cell.rollNoLbl.text = filterData?[indexPath.row].rollnumber
@@ -729,9 +746,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                                   completion: nil)
                 totalcount -= 1
             }
-            
-//            let img = totalcount == studentData.count ? ImageName.checkmark : ImageName.square
-//            selectAllBtn.setImage(img, for: .normal)
+        
         }
         
         else{

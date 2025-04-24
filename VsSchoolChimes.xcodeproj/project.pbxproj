@@ -988,7 +988,7 @@
 		84A271762CEDAB9F0033EB02 /* ImagePdfTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfTv.xib; sourceTree = "<group>"; };
 		84A271782CEDAB9F0033EB02 /* ImagePdfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePdfVC.swift; sourceTree = "<group>"; };
 		84A271792CEDAB9F0033EB02 /* ImagePdfVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfVC.xib; sourceTree = "<group>"; };
-		84A5BE3E2C19719700E32496 /* SchoolChimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchoolChimes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		84A5BE3E2C19719700E32496 /* School Chimes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "School Chimes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A5BE412C19719700E32496 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84A5BE432C19719700E32496 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		84A5BE452C19719700E32496 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -2356,7 +2356,7 @@
 		84A5BE3F2C19719700E32496 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				84A5BE3E2C19719700E32496 /* SchoolChimes.app */,
+				84A5BE3E2C19719700E32496 /* School Chimes.app */,
 				84A5BE542C19719A00E32496 /* VsSchoolChimesTests.xctest */,
 				84A5BE5E2C19719A00E32496 /* VsSchoolChimesUITests.xctest */,
 				8441886E2CC8E18B006483C3 /* Models.framework */,
@@ -3160,9 +3160,9 @@
 			productReference = 8441886E2CC8E18B006483C3 /* Models.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		84A5BE3D2C19719700E32496 /* SchoolChimes */ = {
+		84A5BE3D2C19719700E32496 /* School Chimes */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 84A5BE682C19719A00E32496 /* Build configuration list for PBXNativeTarget "SchoolChimes" */;
+			buildConfigurationList = 84A5BE682C19719A00E32496 /* Build configuration list for PBXNativeTarget "School Chimes" */;
 			buildPhases = (
 				CEC8D77C151B97DBD687C772 /* [CP] Check Pods Manifest.lock */,
 				84A5BE3A2C19719700E32496 /* Sources */,
@@ -3185,7 +3185,7 @@
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
 				84E0FBF72D8E73D800CACCFE /* SchoolList */,
 			);
-			name = SchoolChimes;
+			name = "School Chimes";
 			packageProductDependencies = (
 				18BAF3E42CE8A27800517441 /* FSCalendar */,
 				84759C622CEDE02400E7D367 /* SDWebImage */,
@@ -3194,7 +3194,7 @@
 				841ACC9B2DA50C7A00326D52 /* Lottie */,
 			);
 			productName = VsSchoolChimes;
-			productReference = 84A5BE3E2C19719700E32496 /* SchoolChimes.app */;
+			productReference = 84A5BE3E2C19719700E32496 /* School Chimes.app */;
 			productType = "com.apple.product-type.application";
 		};
 		84A5BE532C19719A00E32496 /* VsSchoolChimesTests */ = {
@@ -3288,7 +3288,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				84A5BE3D2C19719700E32496 /* SchoolChimes */,
+				84A5BE3D2C19719700E32496 /* School Chimes */,
 				84A5BE532C19719A00E32496 /* VsSchoolChimesTests */,
 				84A5BE5D2C19719A00E32496 /* VsSchoolChimesUITests */,
 				8441886D2CC8E18B006483C3 /* Models */,
@@ -4055,12 +4055,12 @@
 		};
 		84A5BE562C19719A00E32496 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 84A5BE3D2C19719700E32496 /* SchoolChimes */;
+			target = 84A5BE3D2C19719700E32496 /* School Chimes */;
 			targetProxy = 84A5BE552C19719A00E32496 /* PBXContainerItemProxy */;
 		};
 		84A5BE602C19719A00E32496 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 84A5BE3D2C19719700E32496 /* SchoolChimes */;
+			target = 84A5BE3D2C19719700E32496 /* School Chimes */;
 			targetProxy = 84A5BE5F2C19719A00E32496 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -4526,7 +4526,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		84A5BE682C19719A00E32496 /* Build configuration list for PBXNativeTarget "SchoolChimes" */ = {
+		84A5BE682C19719A00E32496 /* Build configuration list for PBXNativeTarget "School Chimes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				84A5BE692C19719A00E32496 /* Debug */,

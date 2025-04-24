@@ -48,7 +48,6 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
             openDocumentPicker(from: viewController, types: [UTType.pdf])
         case .file:
             let supportedTypes: [UTType] = [
-                UTType.item,
                 UTType.text,
                 UTType.rtf,
                 UTType.plainText,

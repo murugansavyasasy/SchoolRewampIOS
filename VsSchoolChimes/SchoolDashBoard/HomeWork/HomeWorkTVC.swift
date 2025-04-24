@@ -114,12 +114,12 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         let vc = getCurrentViewController()
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
         vcc.imageURL = homeworkDocs?.filter({ img in
-            img.type?.lowercased() == "image"
+            img.type?.uppercased() == CommonStringFile.IMAGE
         }) ?? []
         vcc.subjectName = subjectName.text
         vcc.pdfUrl = homeworkDocs?[indexPath.row].path
         vcc.scrollIndex = indexPath
-        vcc.type = homeworkDocs?[indexPath.row].type?.lowercased() != "image" ? 0 : 2
+        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
         //        } else {

@@ -59,9 +59,10 @@ class  DeviceTokenStringFile {
 class  send_textmessageStringFile {
     static var target_code = "target_code"
     static var target_type = "target_type"
-    static var message = "message"
-    static var description = "description"
+    static var message = "title"
+    static var description = "content"
     static var academic_year_id = "academic_year_id"
+   
 }
 class send_voicemeassageStringFile {
     
@@ -69,7 +70,7 @@ class send_voicemeassageStringFile {
     static var target_code = "target_code"
     static var target_type = "target_type"
     static var duration = "duration"
-    static var description = "description"
+    static var description = "title"
     static var is_emergency = "is_emergency"
     static var is_schedule = "is_schedule"
     static var schedule_date = "schedule_date"
@@ -95,8 +96,8 @@ class speficStudentStringFile{
 }
 
 enum UploadMessageKeys {
-    static let topic = "topic"
-    static let text = "text"
+    static let title = "title"
+    static let description = "description"
     static let sectionCode = "section_code"
     static let subjectId = "subject_id"
     static let filePath = "file_path"

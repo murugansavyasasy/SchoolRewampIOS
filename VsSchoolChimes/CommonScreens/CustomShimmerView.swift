@@ -46,7 +46,7 @@ class CustomShimmerView: UIView {
         // MARK: - Shimmer Animation
         private func startShimmer(for view: UIView) {
             view.layer.sublayers?.forEach { layer in
-                if layer.name == SchoolChimes.CustomShimmerView.shimmerLayerIdentifier {
+                if layer.name == School_Chimes.CustomShimmerView.shimmerLayerIdentifier {
                     layer.removeFromSuperlayer()
                 }
             }
@@ -57,7 +57,7 @@ class CustomShimmerView: UIView {
             shimmerLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
             shimmerLayer.colors = [colorA, colorB, colorA]
             shimmerLayer.locations = [0.0, 0.5, 1.0]
-            shimmerLayer.name = SchoolChimes.CustomShimmerView.shimmerLayerIdentifier
+            shimmerLayer.name = School_Chimes.CustomShimmerView.shimmerLayerIdentifier
             
             view.layer.addSublayer(shimmerLayer)
             
@@ -72,7 +72,7 @@ class CustomShimmerView: UIView {
         
         private func stopShimmer(for view: UIView) {
             view.layer.sublayers?.forEach { layer in
-                if layer.name == SchoolChimes.CustomShimmerView.shimmerLayerIdentifier {
+                if layer.name == School_Chimes.CustomShimmerView.shimmerLayerIdentifier {
                     layer.removeFromSuperlayer()
                 }
             }

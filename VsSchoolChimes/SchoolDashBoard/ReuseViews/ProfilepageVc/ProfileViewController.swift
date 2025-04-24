@@ -97,7 +97,7 @@ class ProfileViewController: UIViewController {
             mobileNoLbl.text = childDetails?.whatsapp_number
             emailLbl.text = childDetails?.email
             blodLbl.text = childDetails?.blood_group
-            addressLbl.text = childDetails?.student_address
+            addressLbl.text = childDetails?.address
             LiveinLbl.text = childDetails?.school_city
             fatherLbl.text = ": \(childDetails?.father_name ?? "")"
             motherLbl.text = ": \(childDetails?.mother_name ?? "")"

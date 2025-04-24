@@ -184,7 +184,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         
         // Configure cell data
         cell.subjectName.text = homework.subject_name
-        cell.topics.text = homework.topic ?? ""
+        cell.topics.text = homework.title ?? ""
         cell.dateLble.text = sectionData.date
         cell.forwordBtn.isHidden = true
         cell.SelectBtnHeight.constant = 0
@@ -193,7 +193,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         if let urls = homework.file_path {
             cell.loadImage(urls: urls)
         }
-        let contentText = homework.content ?? ""
+        let contentText = homework.description ?? ""
         cell.descriptionLbl.setupExpandable(text: contentText)
         cell.newView.isHidden = contentText.count <= 100
         cell.descriptionLbl.onExpandableTap = { [weak tableView] in
@@ -299,8 +299,8 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
                 
                 let filteredHomework = homeworkItems.filter { hw in
                     hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
-                    hw.topic?.lowercased().contains(lowercasedSearch) == true ||
-                    hw.content?.lowercased().contains(lowercasedSearch) == true
+                    hw.title?.lowercased().contains(lowercasedSearch) == true ||
+                    hw.description?.lowercased().contains(lowercasedSearch) == true
                 }
                 
                 return filteredHomework.isEmpty ? nil : HomeworkList(date: hwList.date, homework: filteredHomework)

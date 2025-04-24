@@ -108,6 +108,7 @@ class CellConfingName {
     static let  SeeMoreFooterView = "SeeMoreFooterView"
     static let  FiltersCvCell = "FiltersCvCell"
     static let  TAttacmentTVC = "TAttacmentTVC"
+    static let  MarkAtendenceTV = "MarkAtendenceTV"
    
     
 }

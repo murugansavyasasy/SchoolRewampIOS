@@ -18,13 +18,13 @@ extension ComunicationVC: UIPopoverPresentationControllerDelegate {
 class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate, ForwordDelegate, HistoryFinishPalyingDelegate,UITextFieldDelegate{
 
     func voiceforword(selectedIndex: Int?) {
-        voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].description ?? ""
+        voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].title ?? ""
         
         if isScheduleSelected{
             enabelScheduleView(
                 isforward: true,
                 voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                title: VoiceHistory?[selectedIndex ?? 0].description ?? "",
+                title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
                 durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
                 url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
             )
@@ -32,7 +32,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             enabelVoice_view(
                 isforward: true,
                 voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                title: VoiceHistory?[selectedIndex ?? 0].description ?? "",
+                title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
                 durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
                 url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
             )
@@ -453,35 +453,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         )
     }
     
-//    func enableDisable() {
-//        if staffDetailsCount?.count ?? 0 > 1 {
-//            
-//            sendbtn.setTitle("Next", for: .normal)
-//            sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
-//            
-//        }else{
-//            if(staff_role == PriorityType.is_staff ){
-//                sendbtn.setTitle("Next", for: .normal)
-//                sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
-//            }
-//            else{
-//                if(isEmergencyVoice == 1){
-//                    sendbtn.setTitle("Send", for: .normal)
-//                    sendbtn.setImage( UIImage(systemName: "paperplane"), for: .normal)
-//                    acidamicYrDropView.isHidden = false
-//                    chooseAcidyrDefaultLbl.isHidden = false
-//                }
-//                else{
-//                    sendbtn.setTitle("Next", for: .normal)
-//                    sendbtn.setImage( UIImage(systemName: "arrowshape.right.fill"), for: .normal)
-//                }
-//                
-//            }
-//            
-//        }
-//        
-//    }
-//    
+
     func StyleAndTranslater() {
         
         //MARK: Translate
@@ -1322,6 +1294,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func backToHome(_ sender: UIButton) {
+        playbackOff()
         if tittlemessage.text == CommonStringFile.TextMessage.translated(){
             showTextMessageView(isforwardtext: false)
             
@@ -1340,6 +1313,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func voiceview(_ sender: Any) {
+        playbackOff()
         selectedDates.removeAll()
         let title = "Select  from history"
         let attributedTitle = NSAttributedString(string: title, attributes: [
@@ -1354,8 +1328,20 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             title: "",
             durations: 0, url: ""
         )
+        
     }
     
+    func playbackOff(){
+        if let currentIndex = playIndex{
+            let previousIndexPath = IndexPath(row: currentIndex, section: 0)
+            if let previousCell = historytable.cellForRow(at: previousIndexPath) as? HistoryTC {
+                previousCell.updatePlayState(isPlaying: false, url: nil)
+                previousCell.player = nil
+                playIndex = nil
+
+            }
+        }
+    }
     
     
     
@@ -1407,6 +1393,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
     }
     @IBAction func textviewshow(_ sender: Any) {
+        playbackOff()
         selectedDates.removeAll()
         let title = "Select from history"
         let attributedTitle = NSAttributedString(string: title, attributes: [
@@ -1432,6 +1419,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
 //        for i in 0..<selectedDates.count {
 //                    DateSelection.deselect(selectedDates[i])
 //                }
+        playbackOff()
         selectedDates.removeAll()
        
         let title = "Select from history"
@@ -1743,7 +1731,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 tableView.endUpdates()
             }
            
-            cell.MessageTitle.text = TextHistory?[indexPath.row].description
+            cell.MessageTitle.text = TextHistory?[indexPath.row].title
             cell.delegate = self
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
                 
@@ -1788,7 +1776,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             let duration = voiceData?.duration ?? 0
             let formatted = formatDuration(duration)
             cell.totaltime.text = "00:00 / \(formatted)"
-            cell.contentlbl.text = voiceData?.description ?? ""
+            cell.contentlbl.text = voiceData?.title ?? ""
             
             if !isPlaying {
                 cell.playerView.progress = 0.0
@@ -2000,6 +1988,19 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         cell.dateDelet.tag = indexPath.item
         cell.delegate = self
         return cell
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let playIndex = playIndex else { return }
+        let indexPath = IndexPath(row: playIndex, section: 0)
+        if let visiblePaths = historytable.indexPathsForVisibleRows {
+            let isVisible = visiblePaths.contains(indexPath)
+            if !isVisible {
+                if let cell = historytable.cellForRow(at: indexPath) as? HistoryTC {
+                    self.playIndex = nil
+                    cell.player = nil
+                }
+            }
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let with = dateCV.frame.size.width - 20
