@@ -103,7 +103,7 @@ class AlertstringFile{
     static let Choose_any_target = "Choose any target to send message".translated()
     static let Audio_exceeds_3_minutes = "Audio exceeds 3 minutes. Please select a shorter audio.".translated()
     static let Alert_title = "Alert".translated()
-    static let Sccuess = "Sccuess".translated()
+    static let Sccuess = "Success".translated()
     static let Confirm_title = "Confirmation".translated()
     static let select_date = "Select sheduled date".translated()
     static let Warning = "Warning".translated()

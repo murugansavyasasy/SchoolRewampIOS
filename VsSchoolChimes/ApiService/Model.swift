@@ -253,6 +253,8 @@ struct  GetStafflistSuc : Codable {
 struct GetStaffDetails:Codable{
     let id:String?
     let name:String?
+    let emp_id:String?
+    let designation:String?
     var isSelect:Bool?
 }
 

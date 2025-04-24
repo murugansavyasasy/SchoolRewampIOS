@@ -43,15 +43,7 @@ class LocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        checkLocationAuthorization()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(appDidBecomeActive),
-            name: UIApplication.willEnterForegroundNotification,
-            object: nil
-        )
+      
     }
     
     override func viewDidLayoutSubviews() {
@@ -65,6 +57,15 @@ class LocationViewController: UIViewController {
     @objc func appDidBecomeActive() {
         
         checkLocationAuthorization()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkLocationAuthorization()
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     
