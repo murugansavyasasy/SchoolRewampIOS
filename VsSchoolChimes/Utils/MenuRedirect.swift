@@ -157,9 +157,9 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func RecipientNavigat(from viewController: UIViewController){
-        let vc = SelectRecipientVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        viewController.present(vc, animated: true)
+//        let vc = SelectRecipientVC(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        viewController.present(vc, animated: true)
     }
     func senderAssignmentNavigate(from viewController: UIViewController) {
         let vc = SenderAssignmentTextViewController(nibName: nil, bundle: nil)

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationReportVC" customModule="SchoolChimes" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bF-6m-iAX">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBE-LZ-2WJ">
+                            <rect key="frame" x="30" y="369" width="333" height="240"/>
+                            <color key="backgroundColor" name="Red"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <constraints>
+                        <constraint firstItem="UBE-LZ-2WJ" firstAttribute="leading" secondItem="4bF-6m-iAX" secondAttribute="leading" constant="30" id="3CU-UI-Xia"/>
+                        <constraint firstItem="UBE-LZ-2WJ" firstAttribute="top" secondItem="4bF-6m-iAX" secondAttribute="top" constant="369" id="NZZ-7A-8Qx"/>
+                        <constraint firstAttribute="bottom" secondItem="UBE-LZ-2WJ" secondAttribute="bottom" constant="150" id="eb7-vC-eal"/>
+                        <constraint firstAttribute="trailing" secondItem="UBE-LZ-2WJ" secondAttribute="trailing" constant="30" id="z5M-ra-Vgv"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="4bF-6m-iAX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="CnI-Yy-ysa"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4bF-6m-iAX" secondAttribute="trailing" id="WM9-oA-qlP"/>
+                <constraint firstItem="4bF-6m-iAX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="bxH-3k-WPI"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4bF-6m-iAX" secondAttribute="bottom" id="iZa-Qa-ny8"/>
+            </constraints>
+            <point key="canvasLocation" x="107" y="21"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Red">
+            <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

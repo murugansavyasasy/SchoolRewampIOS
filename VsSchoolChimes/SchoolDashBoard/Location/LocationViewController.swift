@@ -12,9 +12,24 @@ import DropDown
 import LocalAuthentication
 class LocationViewController: UIViewController {
     
+    
+    @IBOutlet weak var TaptoPunchBtn: UIButton!
+    @IBOutlet weak var PunchDescriptionLbl: UILabel!
+    @IBOutlet weak var PunchThumbnail: UIImageView!
+    @IBOutlet weak var EnableLocationBtn: UIButton!
+    @IBOutlet weak var AllowLocationDescribeLbl: UILabel!
+    @IBOutlet weak var AllowLocationLbl: UILabel!
+    
+    @IBOutlet weak var AllowLoactionThumbnail: UIImageView!
+    @IBOutlet weak var addLocationBtn: UIButton!
+    
+    @IBOutlet weak var ScrollView: UIScrollView!
+    
+    @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var LocationErrorStack: UIStackView!
     @IBOutlet weak var punchStack: UIStackView!
-    
+    @IBOutlet weak var SegmentControl: UISegmentedControl!
+    @IBOutlet weak var containerView: UIView!
     
     let locationManager = CLLocationManager()
     var allowedDistance = CLLocationDistance() // 5 meters
@@ -41,9 +56,16 @@ class LocationViewController: UIViewController {
     let firstParagraph = "Note : You are outside the institutes boundary. you will not be able to mark your attendanc"
     let secondParagraph = "Please try again when you are within the designated area."
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       
+      //  LocationErrorStack.isHidden = true
+        punchStack.isHidden = true
+        
+        LocationErrorStack.layer.cornerRadius = 10
+        LocationErrorStack.backgroundColor = .systemBlue.withAlphaComponent(0.4)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -54,14 +76,14 @@ class LocationViewController: UIViewController {
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
-    @objc func appDidBecomeActive() {
-        
-        checkLocationAuthorization()
-    }
+//    @objc func appDidBecomeActive() {
+//        
+//        checkLocationAuthorization()
+//    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkLocationAuthorization()
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+//        checkLocationAuthorization()
+        //NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     deinit {
@@ -69,24 +91,24 @@ class LocationViewController: UIViewController {
     }
     
     
-    
-    func handleLocationAuthorizationStatus(_ status: CLAuthorizationStatus) {
-        switch status {
-        case .notDetermined:
-            print("Location permission not determined yet.")
-        case .restricted:
-            print("Location permission is restricted (e.g., parental controls).")
-        case .denied:
-            print("Location permission denied.")
-            showCustomLocationView(ishiden: false)
-        case .authorizedWhenInUse, .authorizedAlways:
-            print("Location permission granted.")
-            showCustomLocationView(ishiden: true)
-            
-        @unknown default:
-            break
-        }
-    }
+//    
+//    func handleLocationAuthorizationStatus(_ status: CLAuthorizationStatus) {
+//        switch status {
+//        case .notDetermined:
+//            print("Location permission not determined yet.")
+//        case .restricted:
+//            print("Location permission is restricted (e.g., parental controls).")
+//        case .denied:
+//            print("Location permission denied.")
+//            showCustomLocationView(ishiden: false)
+//        case .authorizedWhenInUse, .authorizedAlways:
+//            print("Location permission granted.")
+//            showCustomLocationView(ishiden: true)
+//            
+//        @unknown default:
+//            break
+//        }
+//    }
     func getDeviceModelName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -188,34 +210,89 @@ class LocationViewController: UIViewController {
     }
     
 
-    
-    
-    func checkLocationAuthorization() {
-        let status = CLLocationManager.authorizationStatus()
-        switch status {
-        case .notDetermined:
-            // Request permission
-           ""
-        case .restricted, .denied:
-            // Show alert to guide the user to settings
-            showCustomLocationView(ishiden: false)
-        case .authorizedWhenInUse, .authorizedAlways:
-            // Start location updates
-            showCustomLocationView(
-                ishiden: true
-            )
-        @unknown default:
-            break
+    @IBAction func SegmentAction(_ sender: Any) {
+        
+        if SegmentControl.selectedSegmentIndex == 1{
+            addChildViewControllerToContainer()
+        }else{
+            removeChildVC()
         }
     }
+    
+    @IBAction func PunchBtnAct(_ sender: Any) {
+    }
+    
+    @IBAction func AddLocationAct(_ sender: Any) {
+    }
+    
+    
+    
+//    func addChildViewControllerToContainer() {
+//        let storyboard = UIStoryboard(name: "LocationReportVC", bundle: nil)
+//        guard let childVC = storyboard.instantiateViewController(withIdentifier: "LocationReportVC") as? LocationReportVC else { return }
+//
+//        addChild(childVC) // Step 1: Add child
+//        childVC.view.frame = containerView.bounds // Step 2: Set size to container
+//        containerView.addSubview(childVC.view) // Step 3: Add view to container
+//        childVC.didMove(toParent: self) // Step 4: Notify child
+//    }
+    
+    var childVC: LocationReportVC?
+
+    func addChildViewControllerToContainer() {
+      
+        
+        
+        let vc = LocationReportVC(nibName: nil, bundle: nil)
+        
+        addChild(vc)
+        vc.view.frame = containerView.bounds
+        containerView.addSubview(vc.view)
+        vc.didMove(toParent: self)
+        
+        self.childVC = vc // Save reference
+    }
+
+    func removeChildVC() {
+        guard let vc = childVC else { return }
+
+        vc.willMove(toParent: nil)
+        vc.view.removeFromSuperview()
+        vc.removeFromParent()
+        
+        childVC = nil
+    }
+
 
     
-    func showCustomLocationView(ishiden:Bool){
-        
-        LocationErrorStack.isHidden = ishiden
-        punchStack.isHidden = !ishiden
-        
-    }
+    
+//    
+//    func checkLocationAuthorization() {
+//        let status = CLLocationManager.authorizationStatus()
+//        switch status {
+//        case .notDetermined:
+//            // Request permission
+//           ""
+//        case .restricted, .denied:
+//            // Show alert to guide the user to settings
+//            showCustomLocationView(ishiden: false)
+//        case .authorizedWhenInUse, .authorizedAlways:
+//            // Start location updates
+//            showCustomLocationView(
+//                ishiden: true
+//            )
+//        @unknown default:
+//            break
+//        }
+//    }
+
+    
+//    func showCustomLocationView(ishiden:Bool){
+//        
+//        LocationErrorStack.isHidden = ishiden
+//        punchStack.isHidden = !ishiden
+//        
+//    }
     @IBAction func enableLocationButtonTapped(_ sender: UIButton) {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings)
