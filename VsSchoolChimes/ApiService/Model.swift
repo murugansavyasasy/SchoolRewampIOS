@@ -83,7 +83,6 @@ struct StaffDetails: Codable {
     var isSelected: Bool?
     let school_name: String?
     let school_name_regional: String?
-    let city: String?
     let school_logo: String?
     let role: String?
     let is_payment_pending: String?  // Changed from String? to Bool?
@@ -93,6 +92,13 @@ struct StaffDetails: Codable {
     let allow_video_download: Bool?
     let access_token: String?
     let school_address : String?
+    let emp_id : String?
+    let mobile_no : String?
+    let address : String?
+    let email : String?
+    let blood_group : String?
+    let staff_profile : String?
+    let school_city : String?
 }
 
 struct ChildDetails: Codable {
@@ -107,7 +113,7 @@ struct ChildDetails: Codable {
     let display_message: String?
     let access_token: String?
     let school_id: String?
-    let student_address: String?
+    let address: String?
     let class_id: Int?
     let section_id: Int?
     let email: String?
@@ -306,7 +312,7 @@ struct VoiceResponse: Codable {
 struct VoiceData: Codable {
     let file_path: String?
     let url: String?
-    let description: String?
+    let title: String?
     let sent_on: String?
     let school_id: String?
     let header_id: String?
@@ -320,8 +326,8 @@ struct TextDetailsResponse: Codable {
 
 struct TextDetail: Codable {
     let id: String?
+    let title: String?
     let content: String?
-    let description: String?
     let date: String?
 }
 struct HomeworkResponse: Codable {

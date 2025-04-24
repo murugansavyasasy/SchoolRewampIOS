@@ -18,13 +18,13 @@ extension ComunicationVC: UIPopoverPresentationControllerDelegate {
 class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, FSCalendarDelegate, FSCalendarDataSource, SelectedTextDelegate, UITextViewDelegate, ForwordDelegate, HistoryFinishPalyingDelegate,UITextFieldDelegate{
 
     func voiceforword(selectedIndex: Int?) {
-        voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].description ?? ""
+        voiceTitleeTxt.text = VoiceHistory?[selectedIndex ?? 0].title ?? ""
         
         if isScheduleSelected{
             enabelScheduleView(
                 isforward: true,
                 voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                title: VoiceHistory?[selectedIndex ?? 0].description ?? "",
+                title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
                 durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
                 url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
             )
@@ -32,7 +32,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             enabelVoice_view(
                 isforward: true,
                 voiceUrl:VoiceHistory?[selectedIndex ?? 0].url ?? "",
-                title: VoiceHistory?[selectedIndex ?? 0].description ?? "",
+                title: VoiceHistory?[selectedIndex ?? 0].title ?? "",
                 durations: VoiceHistory?[selectedIndex ?? 0].duration ?? 0,
                 url: VoiceHistory?[selectedIndex ?? 0].url ?? ""
             )
@@ -1743,7 +1743,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
                 tableView.endUpdates()
             }
            
-            cell.MessageTitle.text = TextHistory?[indexPath.row].description
+            cell.MessageTitle.text = TextHistory?[indexPath.row].title
             cell.delegate = self
             DispatchQueue.main.asyncAfter(deadline: .now()+2.0){
                 
@@ -1788,7 +1788,7 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
             let duration = voiceData?.duration ?? 0
             let formatted = formatDuration(duration)
             cell.totaltime.text = "00:00 / \(formatted)"
-            cell.contentlbl.text = voiceData?.description ?? ""
+            cell.contentlbl.text = voiceData?.title ?? ""
             
             if !isPlaying {
                 cell.playerView.progress = 0.0
