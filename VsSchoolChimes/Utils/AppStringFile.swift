@@ -297,7 +297,7 @@ class CommonStringFile{
     static let OrParent = "or Student/Parent".translated()
     static let Principal = "Principal".translated()
     static let LoginAsTeacherOrParent = "Login As Teacher Or Parent".translated()
-    static let LoginAs = "Login As ".translated()
+    static let LoginAs = "Login As".translated()
     static let ChooseYourRole = "Choose Your Role".translated()
     static let Proceed = "Proceed".translated()
     static let CreateEvent = "Create Event".translated()

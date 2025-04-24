@@ -228,14 +228,14 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 //        vc.modalPresentationStyle = .fullScreen
 //        present(vc, animated: true)
 //        
-//        
+        
 //        let detailViewController = SelectRecipientVC()
 //        let nav = UINavigationController(rootViewController: detailViewController)
 //        
 //        // 1 - Set modal presentation style
 //        nav.modalPresentationStyle = .pageSheet
-//        
-//        // 2 - Configure bottom sheet
+        
+        // 2 - Configure bottom sheet
 //        if #available(iOS 15.0, *) {
 //            if let sheet = nav.sheetPresentationController {
 //                if #available(iOS 16.0, *) {
@@ -248,14 +248,14 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 //            }
 //        } else {
 //            // Fallback on earlier versions
-////        }
+//        }
 //        
 //        // 3 - Prevent dismiss on swipe down
 //        nav.isModalInPresentation = true
 //        
 //        // 4 - Present the bottom sheet
 //        present(nav, animated: true)
-        
+//        
     }
     
     // MARK: This method is pick Video From Gallery
