@@ -212,36 +212,6 @@
             endingLineNumber = "369"
             landmarkName = "handleHomeworkFlow()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "028AF28A-E6CC-49C9-8D93-E6A8144AB292 - 263168e329aaf3f5"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Result&lt;VsSchoolChimes.CommonApiSuc, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in VsSchoolChimes.RecipientVc.handleHomeworkFlow() -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "369"
-                  endingLineNumber = "369">
-               </Location>
-               <Location
-                  uuid = "028AF28A-E6CC-49C9-8D93-E6A8144AB292 - 140dbd882a7a7955"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;VsSchoolChimes.CommonApiSuc, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in VsSchoolChimes.RecipientVc.handleHomeworkFlow() -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "371"
-                  endingLineNumber = "371">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -267,44 +237,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/ReuseViews/SettingsVc/ReportBugVc/ReportBugVcViewController.swift"
+            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "uploadImage()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AA9EF57E-F1DF-4607-898E-EAF513F83B12"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/HomeWork/SenderSideHomeWorkViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "247"
-            endingLineNumber = "247"
-            landmarkName = "selectPDF()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1F3F6269-0910-41E6-B9D8-00C4F7F6181B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Communication/ParentCommunicationVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
-            landmarkName = "GetArchiveCommunicationList()"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "handleHomeworkFlow()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -322,20 +322,20 @@ class RecipientVc: UIViewController{
             let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
                 if let url = URL(string: url) {
                     let type = url.pathExtension.lowercased()
-                    user_inputs.selectedFileType = type == "jpg" ? "IMAGE" : type
+                    user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
                 }
 
                 return [
-                    "path": url,
-                    "type": user_inputs.selectedFileType
+                    CommonStringFile.path: url,
+                    CommonStringFile.type: user_inputs.selectedFileType
                 ]
             }
 
          print("uploadedFiles",uploadedFiles)
             let parameters: [String: Any] = [
                 UploadMessageKeys.academic_year_id:selectedAcadimicYearId ?? 0,
-                UploadMessageKeys.topic: user_inputs.title,
-                UploadMessageKeys.text: user_inputs.description,
+                UploadMessageKeys.title: user_inputs.title,
+                UploadMessageKeys.description: user_inputs.description,
                 UploadMessageKeys.sectionCode: array_selectedId,
                 UploadMessageKeys.subjectId: subjectId ?? "",
                 UploadMessageKeys.filePath:uploadedFiles
@@ -597,7 +597,7 @@ class RecipientVc: UIViewController{
                         completed += 1
                         updateAndCheckCompletion(total: total)
                     } else if let fileURL = URL(string: fileURLStr) {
-                        let path = item.fileType.lowercased() == "pdf" ? "uploads/Documents/" : "uploads/images/"
+                        let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
 
                         AWSUploadManager.shared.uploadFileToAWS(
                             file: fileURL,

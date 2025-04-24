@@ -95,8 +95,8 @@ class speficStudentStringFile{
 }
 
 enum UploadMessageKeys {
-    static let topic = "topic"
-    static let text = "text"
+    static let title = "title"
+    static let description = "description"
     static let sectionCode = "section_code"
     static let subjectId = "subject_id"
     static let filePath = "file_path"
