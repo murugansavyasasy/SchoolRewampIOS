@@ -229,32 +229,32 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 //        present(vc, animated: true)
 //        
         
-        let detailViewController = SelectRecipientVC()
-        let nav = UINavigationController(rootViewController: detailViewController)
-        
-        // 1 - Set modal presentation style
-        nav.modalPresentationStyle = .pageSheet
-        
-        // 2 - Configure bottom sheet
-        if #available(iOS 15.0, *) {
-            if let sheet = nav.sheetPresentationController {
-                if #available(iOS 16.0, *) {
-                    sheet.detents = [.custom { _ in 470 }, .large()]
-                } else {
-                    // Fallback on earlier versions
-                }
-                sheet.prefersGrabberVisible = false // Hide grabber
-                sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
-            }
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        // 3 - Prevent dismiss on swipe down
-        nav.isModalInPresentation = true
-        
-        // 4 - Present the bottom sheet
-        present(nav, animated: true)
+//        let detailViewController = SelectRecipientVC()
+//        let nav = UINavigationController(rootViewController: detailViewController)
+//        
+//        // 1 - Set modal presentation style
+//        nav.modalPresentationStyle = .pageSheet
+//        
+//        // 2 - Configure bottom sheet
+//        if #available(iOS 15.0, *) {
+//            if let sheet = nav.sheetPresentationController {
+//                if #available(iOS 16.0, *) {
+//                    sheet.detents = [.custom { _ in 470 }, .large()]
+//                } else {
+//                    // Fallback on earlier versions
+//                }
+//                sheet.prefersGrabberVisible = false // Hide grabber
+//                sheet.largestUndimmedDetentIdentifier = .large // REMOVE BACKGROUND DIMMING
+//            }
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//        
+//        // 3 - Prevent dismiss on swipe down
+//        nav.isModalInPresentation = true
+//        
+//        // 4 - Present the bottom sheet
+//        present(nav, animated: true)
         
     }
     

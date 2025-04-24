@@ -419,9 +419,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     @IBAction func chooseSchool(_ sender: UIButton) {
         if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{
-            let vc = SelectRecipientVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+//            let vc = SelectRecipientVC(nibName: nil, bundle: nil)
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "Alert", message: AlertstringFile.Fill_All_Required_Fields, on: self)
