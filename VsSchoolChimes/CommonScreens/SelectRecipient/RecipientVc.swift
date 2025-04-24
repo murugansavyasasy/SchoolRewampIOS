@@ -10,6 +10,7 @@ import DropDown
 
 class RecipientVc: UIViewController{
     
+    @IBOutlet weak var chooseDefaultLbl: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var backbtnMName: UIButton!
@@ -63,6 +64,7 @@ class RecipientVc: UIViewController{
     var  selectedAcadimicYearId: Int?
     var accadimYrIDs :[Int] = []
     var accadmicDefaultYrName : String?
+    var accedmicYrEligible = false
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,29 +85,29 @@ class RecipientVc: UIViewController{
         tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
         
         
-      
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-//            configureRecipientTabs()
-            
-            if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
-                segmentName.isHidden = true
-                
-                target_type = TargetTypes.section
-                circular_types =  circular_type.section
-                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-                speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-                speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-                tv.isHidden = false
-                selectStandardDropDown.isHidden = false
-                heightSegment.constant = 0
-                cv_itemsarry = [
-                    recipeint_tabBarName.Section_Student
-                ]
-            }else{
-                speficBtnName.isEnabled = true
-                selectStandardDropDown.isHidden = true
+        if accedmicYrEligible{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+                if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
+                    segmentName.isHidden = true
+                    
+                    target_type = TargetTypes.section
+                    circular_types =  circular_type.section
+                    getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+                    speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+                    speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+                    tv.isHidden = false
+                    selectStandardDropDown.isHidden = false
+                    heightSegment.constant = 0
+                    cv_itemsarry = [
+                        recipeint_tabBarName.Section_Student
+                    ]
+                }else{
+                    speficBtnName.isEnabled = true
+                    selectStandardDropDown.isHidden = true
+                }
             }
         }
+        
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
         applyShadowAndCornerRadius(to: selectStandardDropDown)
@@ -394,10 +396,10 @@ class RecipientVc: UIViewController{
         
         var message : String?
         if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
         }else{
             
-          message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+          message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
         }
         
@@ -631,19 +633,18 @@ class RecipientVc: UIViewController{
 
 
     @IBAction func spefic_student_actionBtn(_ sender: UIButton) {
-        var message : String?
+        var message : Bool?
         if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = true
         }else{
-            
-          message = AlertstringFile.Selected_target + "\(array_selectedId.count)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            message = false
         }
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.selected_sectionID = array_selectedId.first
         vc.ScreenType = ScreenType
         vc.AlertMessageContent = message
+        vc.accidmaticNAme = acidmicYrLbl.text
         vc.selectedAcadimicYearId = self.selectedAcadimicYearId
         vc.standard_sectionlabel = self.standard_sectionlabel
         vc.modalPresentationStyle = .fullScreen
@@ -1235,6 +1236,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                     accadmicDefaultYrName = AcadimicYearDatas[i].year
                                         selectedAcadimicYearId = AcadimicYearDatas[i].id ?? 0
                                     hasCurrentYear = true
+                                    accedmicYrEligible = true
                                     segmentName.isUserInteractionEnabled = hasCurrentYear
                                         break
                                 }
@@ -1243,9 +1245,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             if !hasCurrentYear {
                                 segmentName.isUserInteractionEnabled = false
                                 nodata(false, message: "")
-                                nodataFound.isHidden = true
-                                acidamicYrDropView.isUserInteractionEnabled = false
                                 
+                                nodataFound.isHidden = false
+                                nodataFound.image = ImageName.customer_support
+                                acidamicYrDropView.isUserInteractionEnabled = false
+                                heightSegment.constant = 0
+                                chooseDefaultLbl.isHidden = true
+                                segmentName.isHidden = true
+                                acidamicYrDropView.isHidden = true
+                                selectStandardDropDown.isHidden = true
                                 let fullText = CommonStringFile.Your_academic_year_configuration
                                 let attributedString = NSMutableAttributedString(string: fullText)
 
@@ -1306,8 +1314,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                let index = layoutManager.characterIndex(for: tapLocation, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
 
                if NSLocationInRange(index, nsRange) {
-                   let subject = ""
-                   let body = ""
+                   let subject = "Request to configure communication academic year"
+                   let body = "Dear School Chimes Team,\n\n Please configure communication academic year  as 20xx - 20xx for any queries contact .\n\n Your name,\nMobile No"
                    
                    // URL encode
                    let encodedSubject = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""

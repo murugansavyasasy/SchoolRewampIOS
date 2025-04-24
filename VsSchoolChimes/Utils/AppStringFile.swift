@@ -305,7 +305,7 @@ class CommonStringFile{
     static let AddPdfoptional = "Add Pdf (Optional?)".translated()
     static let AddPdf = "Add Pdf".translated()
     static let Tap_SEND_to_share_this = "Tap SEND to share this message with everyone in the school.".translated()
-    static let Your_academic_year_configuration = "Your academic year configuration are incorrect. Please contact your School Chimes at support@savyasasy.com".translated()
+    static let Your_academic_year_configuration = "The academic year configuration for your school are incorrect. Please contact  School Chimes at support@savyasasy.com".translated()
     static let support_savyasasy_com = "support@savyasasy.com"
     static let jpg = "jpg"
     static let IMAGE = "IMAGE"

@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "84A5BE3D2C19719700E32496"
-               BuildableName = "SchoolChimes.app"
-               BlueprintName = "SchoolChimes"
+               BuildableName = "School Chimes.app"
+               BlueprintName = "School Chimes"
                ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84A5BE3D2C19719700E32496"
-            BuildableName = "SchoolChimes.app"
-            BlueprintName = "SchoolChimes"
+            BuildableName = "School Chimes.app"
+            BlueprintName = "School Chimes"
             ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "84A5BE3D2C19719700E32496"
-            BuildableName = "SchoolChimes.app"
-            BlueprintName = "SchoolChimes"
+            BuildableName = "School Chimes.app"
+            BlueprintName = "School Chimes"
             ReferencedContainer = "container:VsSchoolChimes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
