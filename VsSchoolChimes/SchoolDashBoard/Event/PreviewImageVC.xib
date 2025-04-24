@@ -9,9 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewImageVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PreviewImageVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="ActivityIndicator" destination="aet-zo-NYi" id="40Y-Wh-Ge4"/>
+                <outlet property="deleteBtn" destination="qkX-dV-Ofn" id="GSe-Np-t5o"/>
                 <outlet property="imgView" destination="4yl-s2-YkC" id="3gd-W1-glF"/>
                 <outlet property="outerView" destination="ydE-Gv-3Nj" id="1aa-iC-fyc"/>
                 <outlet property="pdfView" destination="mFu-pa-TRI" id="Tc9-lN-dWK"/>
@@ -23,6 +24,20 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkX-dV-Ofn">
+                    <rect key="frame" x="348" y="74" width="35" height="35"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="4Oq-Bo-9ds"/>
+                        <constraint firstAttribute="height" constant="35" id="vy1-P8-gH0"/>
+                    </constraints>
+                    <color key="tintColor" systemColor="systemRedColor"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" image="delete (1)"/>
+                    <connections>
+                        <action selector="back:" destination="-1" eventType="touchUpInside" id="bAu-kg-Jxa"/>
+                    </connections>
+                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ydE-Gv-3Nj">
                     <rect key="frame" x="16" y="109" width="361" height="659"/>
                     <subviews>
@@ -37,19 +52,6 @@
                                 <wkPreferences key="preferences"/>
                             </wkWebViewConfiguration>
                         </wkWebView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qkX-dV-Ofn">
-                            <rect key="frame" x="326" y="0.0" width="35" height="35"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="35" id="4Oq-Bo-9ds"/>
-                                <constraint firstAttribute="height" constant="35" id="vy1-P8-gH0"/>
-                            </constraints>
-                            <color key="tintColor" systemColor="systemRedColor"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" image="multiply.circle.fill" catalog="system"/>
-                            <connections>
-                                <action selector="back:" destination="-1" eventType="touchUpInside" id="bAu-kg-Jxa"/>
-                            </connections>
-                        </button>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="aet-zo-NYi">
                             <rect key="frame" x="160.66666666666666" y="309.66666666666669" width="40" height="40"/>
                             <constraints>
@@ -65,10 +67,8 @@
                         <constraint firstItem="mFu-pa-TRI" firstAttribute="top" secondItem="4yl-s2-YkC" secondAttribute="top" id="1Rt-Ed-UPZ"/>
                         <constraint firstItem="mFu-pa-TRI" firstAttribute="leading" secondItem="4yl-s2-YkC" secondAttribute="leading" id="IKc-uH-uzM"/>
                         <constraint firstItem="mFu-pa-TRI" firstAttribute="trailing" secondItem="4yl-s2-YkC" secondAttribute="trailing" id="K5S-LH-OJA"/>
-                        <constraint firstAttribute="trailing" secondItem="qkX-dV-Ofn" secondAttribute="trailing" id="LQz-eQ-caO"/>
                         <constraint firstItem="4yl-s2-YkC" firstAttribute="top" secondItem="ydE-Gv-3Nj" secondAttribute="top" id="PY8-Wu-GI4"/>
                         <constraint firstItem="aet-zo-NYi" firstAttribute="centerX" secondItem="ydE-Gv-3Nj" secondAttribute="centerX" id="aTx-eN-FJs"/>
-                        <constraint firstItem="qkX-dV-Ofn" firstAttribute="top" secondItem="ydE-Gv-3Nj" secondAttribute="top" id="e3F-Nj-uMC"/>
                         <constraint firstAttribute="bottom" secondItem="4yl-s2-YkC" secondAttribute="bottom" id="iZO-lJ-VT4"/>
                         <constraint firstAttribute="trailing" secondItem="4yl-s2-YkC" secondAttribute="trailing" id="jaq-Wr-uYA"/>
                         <constraint firstItem="aet-zo-NYi" firstAttribute="centerY" secondItem="ydE-Gv-3Nj" secondAttribute="centerY" id="wYr-hB-Jlt"/>
@@ -81,6 +81,8 @@
             <constraints>
                 <constraint firstItem="ydE-Gv-3Nj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="7VU-jY-r0W"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ydE-Gv-3Nj" secondAttribute="trailing" constant="16" id="C7s-FT-QFh"/>
+                <constraint firstItem="ydE-Gv-3Nj" firstAttribute="top" secondItem="qkX-dV-Ofn" secondAttribute="bottom" id="G9L-jV-Ir7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qkX-dV-Ofn" secondAttribute="trailing" constant="10" id="W03-Qh-9YW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ydE-Gv-3Nj" secondAttribute="bottom" constant="50" id="ga8-wN-Ecc"/>
                 <constraint firstItem="ydE-Gv-3Nj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="ptr-V4-D0Y"/>
             </constraints>
@@ -88,12 +90,12 @@
         </view>
     </objects>
     <resources>
-        <image name="multiply.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="delete (1)" width="16" height="16"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

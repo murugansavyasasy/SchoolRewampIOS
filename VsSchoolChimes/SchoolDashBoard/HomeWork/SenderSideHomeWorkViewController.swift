@@ -49,6 +49,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
         DetailsTxtview.applyRightTxt()
@@ -121,9 +122,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 //            if "image" == iconName{
 //                attachments.removeAll()
 //            }
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: "IMAGE"))
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             
-            user_inputs.selectedFileType = "IMAGE"
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -135,11 +136,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 //                attachments.removeAll()
 //            }
             
-            user_inputs.selectedFileType = "IMAGE"
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
 //            selectedImages.append(contentsOf: images)
 
             let imageItems = images.map {
-                AttachmentItem(image: $0, imageURL: nil, fileType: "IMAGE")
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
             
@@ -149,8 +150,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
 
-            user_inputs.selectedFileType = "pdf"
-            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: "pdf"))
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -160,7 +161,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        if TitleTxtfield.text != ""  && DetailsTxtview.text != ""{
+        if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.SelectedUrls = attachments
@@ -178,7 +179,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 present(vc, animated: true)
             }
         }else{
-            
+            alert
+                .showAlert(
+                    title: "",
+                    message: AlertstringFile.enter_title_description,
+                    on: self)
         }
 
     }
@@ -289,7 +294,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                if let image = item.image {
                    cell.imageViews.image = image
                } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                   if item.fileType.lowercased() != "image" {
+                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
                        let iconName = getFileIconName(for: url)
                        cell.imageViews.image = UIImage(named: iconName)
                    } else {
@@ -306,6 +311,8 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             return cell
         }
     }
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = (uploadAttachmentView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
@@ -345,7 +352,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             if attachments.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                if attachments[indexPath.item - 1].fileType != "IMAGE"{
+                if attachments[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
                     if let url = attachments[indexPath.item - 1].imageURL{
                         vc.selectedFileURL = URL(string: url)
                     }

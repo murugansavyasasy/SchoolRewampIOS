@@ -11,6 +11,7 @@ import Kingfisher
 
 class PreviewImageVC: UIViewController,WKNavigationDelegate {
 
+    @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var outerView: UIView!
@@ -22,7 +23,9 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         pdfView.navigationDelegate = self
-        
+        deleteBtn.layer.cornerRadius = deleteBtn.frame.width/2
+        deleteBtn.layer.borderColor = UIColor.black.cgColor
+        deleteBtn.layer.borderWidth = 1
        
         if type?.uppercased() != "IMAGE" {
             imgView.isHidden = true

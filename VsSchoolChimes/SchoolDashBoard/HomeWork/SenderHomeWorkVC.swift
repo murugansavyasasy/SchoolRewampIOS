@@ -201,14 +201,14 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         cell.delegate = self
         let data = FilterHomeWorkList?[indexPath.row]
         cell.subjectName.text = data?.subject_name
-        cell.topics.text = data?.topic ?? ""
+        cell.topics.text = data?.title ?? ""
         cell.dateLble.text = dateLbl.text ?? ""
         cell.ImageCollectionView.isHidden = (data?.file_path?.isEmpty ?? true)
         if let urls = data?.file_path {
             cell.loadImage(urls: urls)
         }
         
-        cell.descriptionLbl.setupExpandable(text: data?.content ?? "")
+        cell.descriptionLbl.setupExpandable(text: data?.description ?? "")
         cell.descriptionLbl.onExpandableTap = {
             cell.descriptionLbl.isExpanded.toggle()
             tableView.beginUpdates()
@@ -306,8 +306,8 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             FilterHomeWorkList = homeWorkList?.filter { item in
                 let lowercasedSearchText = searchText.lowercased()
                 return item.subject_name?.lowercased().contains(lowercasedSearchText) == true ||
-                       item.topic?.lowercased().contains(lowercasedSearchText) == true ||
-                       item.content?.lowercased().contains(lowercasedSearchText) == true
+                item.title?.lowercased().contains(lowercasedSearchText) == true ||
+                item.description?.lowercased().contains(lowercasedSearchText) == true
             }
         }
         homeWorkTable.reloadData()

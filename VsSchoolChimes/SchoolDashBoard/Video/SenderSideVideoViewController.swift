@@ -228,7 +228,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 //        vc.modalPresentationStyle = .fullScreen
 //        present(vc, animated: true)
 //        
-        
+//        
 //        let detailViewController = SelectRecipientVC()
 //        let nav = UINavigationController(rootViewController: detailViewController)
 //        
@@ -248,7 +248,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
 //            }
 //        } else {
 //            // Fallback on earlier versions
-//        }
+////        }
 //        
 //        // 3 - Prevent dismiss on swipe down
 //        nav.isModalInPresentation = true

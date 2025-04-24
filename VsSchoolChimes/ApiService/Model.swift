@@ -337,8 +337,8 @@ struct HomeworkResponse: Codable {
 }
 
 struct Homework: Codable {
-    let topic: String?
-    let content: String?
+    let title: String?
+    let description: String?
     let subject_name: String?
     let created_by: String?
     let file_path: [FilePath]? 
