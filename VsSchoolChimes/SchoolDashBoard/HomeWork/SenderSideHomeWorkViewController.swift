@@ -49,6 +49,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    var alert = CustomAlert()
     override func viewDidLoad() {
         super.viewDidLoad()
         DetailsTxtview.applyRightTxt()
@@ -160,7 +161,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
-        if TitleTxtfield.text != ""  && DetailsTxtview.text != ""{
+        if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.SelectedUrls = attachments
@@ -178,7 +179,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 present(vc, animated: true)
             }
         }else{
-            
+            alert
+                .showAlert(
+                    title: "",
+                    message: AlertstringFile.enter_title_description,
+                    on: self)
         }
 
     }

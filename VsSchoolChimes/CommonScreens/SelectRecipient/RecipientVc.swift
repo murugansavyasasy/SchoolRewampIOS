@@ -85,29 +85,6 @@ class RecipientVc: UIViewController{
         tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
         
         
-        if accedmicYrEligible{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-                if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
-                    segmentName.isHidden = true
-                    
-                    target_type = TargetTypes.section
-                    circular_types =  circular_type.section
-                    getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-                    speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-                    speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-                    tv.isHidden = false
-                    selectStandardDropDown.isHidden = false
-                    heightSegment.constant = 0
-                    cv_itemsarry = [
-                        recipeint_tabBarName.Section_Student
-                    ]
-                }else{
-                    speficBtnName.isEnabled = true
-                    selectStandardDropDown.isHidden = true
-                }
-            }
-        }
-        
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
         applyShadowAndCornerRadius(to: selectStandardDropDown)
@@ -196,7 +173,30 @@ class RecipientVc: UIViewController{
         
        
     }
-    
+    func homeWorkShowProps(){
+        if accedmicYrEligible{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+                if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
+                    segmentName.isHidden = true
+                    
+                    target_type = TargetTypes.section
+                    circular_types =  circular_type.section
+                    getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+                    speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+                    speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+                    tv.isHidden = false
+                    selectStandardDropDown.isHidden = false
+                    heightSegment.constant = 0
+                    cv_itemsarry = [
+                        recipeint_tabBarName.Section_Student
+                    ]
+                }else{
+                    speficBtnName.isEnabled = true
+                    selectStandardDropDown.isHidden = true
+                }
+            }
+        }
+    }
     
     func applyShadowAndCornerRadius(to view: UIView, cornerRadius: CGFloat = 10, shadowColor: UIColor = .black, shadowOffset: CGSize = CGSize(width: 4, height: 4), shadowOpacity: Float = 0.5, shadowRadius: CGFloat = 4, backgroundColor: UIColor = .white) {
         view.layer.cornerRadius = cornerRadius
@@ -1273,7 +1273,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 noRecordLbl.addGestureRecognizer(tapGesture)
 
                             }
-                            
+                            homeWorkShowProps()
                         }
                         
                     }else{
