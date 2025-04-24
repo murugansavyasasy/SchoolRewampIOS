@@ -86,7 +86,7 @@ class ParentDashboardVc: UIViewController {
         
         userNameLbl.text = "Hello, " + (childDetails?.name ?? "")
             SchoolNameLabel.text = childDetails?.school_name
-        AddressLabel.text = childDetails?.student_address
+        AddressLabel.text = childDetails?.address
             Profileimage.kf.setImage(with: URL(string: childDetails?.school_logo_url ?? ""))
         
         DeviceTokenAPIcall()
