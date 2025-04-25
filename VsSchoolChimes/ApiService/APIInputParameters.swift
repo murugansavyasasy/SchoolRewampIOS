@@ -120,19 +120,25 @@ class SendAttachmentStringFile {
 
 class PunchStringFile {
     
-    var staff_or_student = "staff_or_student"
-    var device_id = "device_id"
-    var punch_type = "punch_type"
-    var device_model  = "device_model"
+    static var staff_or_student = "staff_or_student"
+    static var device_id = "device_id"
+    static var punch_type = "punch_type"
+    static  var device_model  = "device_model"
     
 }
 
 
 class punchDetaiShapeStringFile {
     
-    var location = "location"
-    var longitude = "longitude"
-    var latitude = "latitude"
-    var distance = "distance"
+    static var location = "location"
+    static var longitude = "longitude"
+    static var latitude = "latitude"
+    static var distance = "distance"
 }
 
+class principalAttendenceReportStringFile {
+    
+    static var attendance_month = "attendance_month"
+    static var attendance_dt = "attendance_dt"
+    static var staff_id = "staff_id"
+}

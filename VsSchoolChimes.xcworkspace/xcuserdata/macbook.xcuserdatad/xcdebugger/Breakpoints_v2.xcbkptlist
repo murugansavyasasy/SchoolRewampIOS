@@ -20,12 +20,12 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - d0060f81892849ee"
+                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - 41819c12853b386"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -34,12 +34,12 @@
                   endingLineNumber = "299">
                </Location>
                <Location
-                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - d0060f81892849ee"
+                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - 41819c12853b386"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -66,12 +66,12 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - d0060f8189284b5c"
+                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - 41819c12853b134"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -80,12 +80,12 @@
                   endingLineNumber = "281">
                </Location>
                <Location
-                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - d0060f8189284b5c"
+                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - 41819c12853b134"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;VsSchoolChimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in VsSchoolChimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "VsSchoolChimes.debug.dylib"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -110,6 +110,36 @@
             endingLineNumber = "291"
             landmarkName = "SendingAttachmentFlow()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "102D8895-A194-452D-81C6-D5FAAB57F8E2 - 3cea9ee705ebc57d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;School_Chimes.Send_AttachmentResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in School_Chimes.RecipientVc.SendingAttachmentFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "291"
+                  endingLineNumber = "291">
+               </Location>
+               <Location
+                  uuid = "102D8895-A194-452D-81C6-D5FAAB57F8E2 - 18324cab954d92b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 (Swift.Result&lt;School_Chimes.Send_AttachmentResponse, Swift.Error&gt;) -&gt; () in closure #1 () -&gt; () in School_Chimes.RecipientVc.SendingAttachmentFlow() -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "292"
+                  endingLineNumber = "292">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -31,6 +31,7 @@ class PriorityVC: UIViewController {
     var staffDetails = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var childDetails = UserDefaultFileManager.getUserDetails()?.user_details?.child_details
     var staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    let rollname = UserDefaultFileManager.getUserDetails()?.user_details?.role_name ?? ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,7 +81,7 @@ class PriorityVC: UIViewController {
        ProceedInstructionLbl.setFont(style: .body, size: FontSize.BodySize)
        
        //MARK: Translate
-       let rollname = UserDefaultFileManager.getUserDetails()?.user_details?.role_name ?? ""
+      
        ChooseRoleLabel.text =  CommonStringFile.ChooseYourRole.translated()
        
        let isstaff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff ?? false
@@ -112,10 +113,10 @@ class PriorityVC: UIViewController {
        
        if staff_role == PriorityType.is_principal{
            
-           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\("Managment" ?? "") \(CommonStringFile.OrParent.translated())"
+           TeacherParentlbl.text = (CommonStringFile.LoginAs.translated())+" Managment"
        }else{
            
-           TeacherParentlbl.text = "\(CommonStringFile.LoginAs.translated())\(rollname ?? "") \(CommonStringFile.OrParent.translated())"
+           TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + (rollname)
        }
      
        ParentButton.setTitle(CommonStringFile.Parent.translated(), for: .normal)
@@ -123,6 +124,15 @@ class PriorityVC: UIViewController {
     }
     
     @IBAction func teacherAct(_ sender: Any) {
+        
+        if staff_role == PriorityType.is_principal{
+            
+            TeacherParentlbl.text = (CommonStringFile.LoginAs.translated())+" Managment"
+        }else{
+            
+            TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + (rollname)
+        }
+        
         if staff_role == PriorityType.is_staff{
             NextButtonView.isHidden = true
             ProceedInstructionLbl.isHidden = true
@@ -150,6 +160,7 @@ class PriorityVC: UIViewController {
             NextButtonView.isHidden = true
         ProceedInstructionLbl.isHidden = true
        
+        TeacherParentlbl.text = (CommonStringFile.LoginAs.translated()) + " " + "Parent"
         
         gradientcolours(button: ParentButton,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
         ParentButton.setTitleColor(.white, for:.normal)

@@ -486,6 +486,8 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderAssignmentNavigate(from: self)
             case 23:
                 MenuRedirect.senderMgmt(from: self)
+            case 1022:
+                MenuRedirect.StaffWiseAttendance(from: self)
                 
             case 24:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)

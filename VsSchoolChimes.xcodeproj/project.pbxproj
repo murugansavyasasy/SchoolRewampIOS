@@ -527,6 +527,8 @@
 		FA99ED392DA657AE00F6AF0E /* SeeMoreFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */; };
 		FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */; };
 		FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */; };
+		FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */; };
+		FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */; };
 		FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */; };
 		FAFF9DD32D6C7B7A00498368 /* CancelSlotByParentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DA12D6C7B7A00498368 /* CancelSlotByParentRequest.swift */; };
 		FAFF9DD42D6C7B7A00498368 /* SltoCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9D982D6C7B7A00498368 /* SltoCreationViewController.swift */; };
@@ -1163,6 +1165,8 @@
 		FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreFooterView.swift; sourceTree = "<group>"; };
 		FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressCell.swift; sourceTree = "<group>"; };
 		FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressCell.xib; sourceTree = "<group>"; };
+		FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportVC.swift; sourceTree = "<group>"; };
+		FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationReportVC.xib; sourceTree = "<group>"; };
 		FAFF9D8E2D6C7B7A00498368 /* CheckAviableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTv.swift; sourceTree = "<group>"; };
 		FAFF9D8F2D6C7B7A00498368 /* CheckAviableTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CheckAviableTv.xib; sourceTree = "<group>"; };
 		FAFF9D902D6C7B7A00498368 /* CheckAviableTvHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTvHeader.swift; sourceTree = "<group>"; };
@@ -1680,6 +1684,8 @@
 				18D718922D0D477900E9EDA3 /* CreateLocationViewController.xib */,
 				18D718932D0D477900E9EDA3 /* LocationViewController.swift */,
 				18D718942D0D477900E9EDA3 /* LocationViewController.xib */,
+				FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */,
+				FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */,
 				18D718952D0D477900E9EDA3 /* Map Location.gif */,
 				18D718962D0D477900E9EDA3 /* PunchHistoryListVC.swift */,
 				18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */,
@@ -3450,6 +3456,7 @@
 				18926D322D04140B002BBB97 /* PendingFeeReportViewController.xib in Resources */,
 				18926D332D04140B002BBB97 /* PendingFeeReportTableViewHeaderFooterViewTableViewCell.xib in Resources */,
 				849970CA2CF8752400800B07 /* HistoryTC.xib in Resources */,
+				FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */,
 				84079FF72D15A7B000D6DF04 /* NavigationVC.xib in Resources */,
 				8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */,
 				FA3230972D95292B0070BA51 /* ExamDetailsVC.xib in Resources */,
@@ -3923,6 +3930,7 @@
 				849970BC2CF8750B00800B07 /* AssignmentListCTVC.swift in Sources */,
 				849970BD2CF8750B00800B07 /* ImageTVC.swift in Sources */,
 				848B94692CFD728400FFC5C2 /* SenderImgPdfVC.swift in Sources */,
+				FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */,
 				84C829C12D0807CD0024A46A /* ConfettiEmitter.swift in Sources */,
 				84C829C22D0807CD0024A46A /* ConfettiView.swift in Sources */,
 				84C829C32D0807CD0024A46A /* ConfettiLayer.swift in Sources */,

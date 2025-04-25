@@ -45,7 +45,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var id = 1
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
-
+    
     var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
                                  Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
                                  Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
@@ -86,7 +86,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         circular_types =  circular_type.student
         StyleAndTranslater()
         BackBtn.applyBackButton()
-       
+        
         
         
         if id == 1{
@@ -100,7 +100,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             selected_sectionId: selected_sectionID ?? "",
             academic_year_id: selectedAcadimicYearId ?? 0
         )
-       
+        
         search.delegate = self
         headerView.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
@@ -139,8 +139,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         historyTable.register(UINib(nibName: CellConfingName.SpecificStudentTvcell, bundle: nil), forCellReuseIdentifier: CellConfingName.SpecificStudentTvcell)
         historyTable.register(UINib(nibName: CellConfingName.AttendenceTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.AttendenceTVC)
         historyTable.register(UINib(nibName: CellConfingName.StudentHistryTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.StudentHistryTVC)
-        historyTable.register(UINib(nibName: "MarkAtendenceTV", bundle: nil), forCellReuseIdentifier: "MarkAtendenceTV")
-       
+        historyTable.register(UINib(nibName: CellConfingName.MarkAtendenceTV, bundle: nil), forCellReuseIdentifier: CellConfingName.MarkAtendenceTV)
+        
     }
     
     @IBAction func fliter(_ sender: UIButton) {
@@ -300,26 +300,26 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     @IBAction func sendBtnAction(_ sender: UIButton) {
         
         guard !selected_student.isEmpty else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_target,
-                    on: self
-                )
-                return
-            }
-
-            switch screenType.staffSelectedMenuId {
-            case Menu_id.communicationMenuId:
-                SendingCommunicationFlow()
-
-            case Menu_id.homeWorkMenuId:
-                handleHomeworkFlow()
-
-            default:
-                print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
-            }
+            alert.showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Choose_any_target,
+                on: self
+            )
+            return
+        }
+        
+        switch screenType.staffSelectedMenuId {
+        case Menu_id.communicationMenuId:
+            SendingCommunicationFlow()
+            
+        case Menu_id.homeWorkMenuId:
+            handleHomeworkFlow()
+            
+        default:
+            print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+        }
     }
-   
+    
     
     
     private func handleHomeworkFlow() {
@@ -332,15 +332,15 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         let message : String?
         let title = AlertstringFile.Confirm_title
-
+        
         if AlertMessageContent ?? false{
             
             message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
-           
+            
         }else{
             
-          message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-            accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+            message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
             
         }
         alert.showAlertCancel(
@@ -353,7 +353,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 switch ScreenType {
                 case screenType.communication_text:
                     sendtextmessage_communication()
-
+                    
                 case screenType.is_emergencyvoice, screenType.non_emergencyvoice:
                     if user_inputs.voice_link.contains("https:") {
                         // Voice link is already uploaded
@@ -365,8 +365,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                             self.sendVoiceMessage_communication()
                         }
                     }
-                   
-
+                    
+                    
                 default:
                     print("❗️Unhandled communication screen type: \(ScreenType)")
                 }
@@ -379,10 +379,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
         var completed = 0
-
+        
         switch file {
-
-        // 🎙️ Case: Audio File from String (URL Path)
+            
+            // 🎙️ Case: Audio File from String (URL Path)
         case let files as String:
             guard let audioURL = URL(string: files) else {
                 print("❌ Invalid audio URL.")
@@ -396,7 +396,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 file: audioURL,
                 bucketPath:  "communication" + "/" + (UserDefaultFileManager
                     .get_staff_Details()?.school_id ?? "") + "/" + today_date
-                    ,
+                ,
                 bucketName: "schoolchimes-communication",
                 progressHandler: { progress in
                     CircularProgressLoader.shared.updateProgress(to: progress)
@@ -408,29 +408,29 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     } else {
                         print("❌ Audio upload failed.")
                     }
-
+                    
                     completed += 1
                     let progress = (Double(completed) / Double(total)) * 100
                     CircularProgressLoader.shared.updateProgress(to: progress)
-
+                    
                     if completed == total {
                         CircularProgressLoader.shared.hide()
                         completion()
                     }
                 }
             )
-
-        // 🖼️ Case: Array of Images
+            
+            // 🖼️ Case: Array of Images
         case let images as [UIImage]:
             let total = images.count
             guard !images.isEmpty else {
                 completion()
                 return
             }
-
+            
             CircularProgressLoader.shared.show(style: .circle)
             CircularProgressLoader.shared.updateProgress(to: 0)
-
+            
             for (index, img) in images.enumerated() {
                 AWSUploadManager.shared.uploadFileToAWS(
                     file: img,
@@ -446,11 +446,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         } else {
                             print("❌ Failed to upload image \(index)")
                         }
-
+                        
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
                         CircularProgressLoader.shared.updateProgress(to: progress)
-
+                        
                         if completed == total {
                             CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
@@ -461,46 +461,46 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             }
             // 🖼️ Case: Array of Images
         case let files as [String]:
-                let total = files.count
-                guard !files.isEmpty else {
-                    completion()
+            let total = files.count
+            guard !files.isEmpty else {
+                completion()
+                return
+            }
+            
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            
+            for (index, url) in files.enumerated() {
+                guard let PdfURL = URL(string: url) else {
+                    print("❌ Invalid audio URL.")
                     return
                 }
-
-                CircularProgressLoader.shared.show(style: .circle)
-                CircularProgressLoader.shared.updateProgress(to: 0)
-
-                for (index, url) in files.enumerated() {
-                    guard let PdfURL = URL(string: url) else {
-                        print("❌ Invalid audio URL.")
-                        return
-                    }
-                    AWSUploadManager.shared.uploadFileToAWS(
-                        file: PdfURL,
-                        bucketPath: "uploads/Documents/",
-                        bucketName: "schoolchimes-communication",
-                        progressHandler: { progress in
-                            // Optional: Update progress per file individually if you want
-                        },
-                        completion: { [self] url in
-                            if let uploadedURL = url {
-                                uploadedURLs.append(uploadedURL)
-                                
-                            } else {
-                                print("❌ Failed to upload image \(index)")
-                            }
-                            completed += 1
-                            let progress = (Double(completed) / Double(total)) * 100
-                            CircularProgressLoader.shared.updateProgress(to: progress)
-
-                            if completed == total {
-                                CircularProgressLoader.shared.hide()
-                                // Do something with uploadedURLs if needed
-                                completion()
-                            }
+                AWSUploadManager.shared.uploadFileToAWS(
+                    file: PdfURL,
+                    bucketPath: "uploads/Documents/",
+                    bucketName: "schoolchimes-communication",
+                    progressHandler: { progress in
+                        // Optional: Update progress per file individually if you want
+                    },
+                    completion: { [self] url in
+                        if let uploadedURL = url {
+                            uploadedURLs.append(uploadedURL)
+                            
+                        } else {
+                            print("❌ Failed to upload image \(index)")
                         }
-                    )
-                }
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+                        
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    }
+                )
+            }
         default:
             print("❌ Unsupported file type")
             return
@@ -508,16 +508,16 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     func sendtextmessage_communication(){
-  
+        
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
-                 
-                   send_textmessageStringFile.description : user_inputs.title,
-                   send_textmessageStringFile.message : user_inputs.description,
-                   send_textmessageStringFile.target_code: selected_student,
-                   send_textmessageStringFile.target_type: target_type ?? 0,
-                   send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
-                   
+                
+                send_textmessageStringFile.description : user_inputs.title,
+                send_textmessageStringFile.message : user_inputs.description,
+                send_textmessageStringFile.target_code: selected_student,
+                send_textmessageStringFile.target_type: target_type ?? 0,
+                send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
+                
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
                 Error>
@@ -661,7 +661,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             cell.RollNoLbl.isHidden = !dataVisibility[indexPath.row]
             cell.AdmisionNoLbl.isHidden = !dataVisibility[indexPath.row]
             
-//             Configure tap action
+            //             Configure tap action
             cell.tapAction = { [weak self] in
                 self?.handleImageTap(at: indexPath)
             }
@@ -746,7 +746,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                                   completion: nil)
                 totalcount -= 1
             }
-        
+            
         }
         
         else{
@@ -813,9 +813,9 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         switch staff_role {
         case PriorityType.is_staff:
             self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
-           
+            
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-         
+            
             
             if (staffDetailsCount?.count ?? 0) > 1 {
                 self.presentingViewController?.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
