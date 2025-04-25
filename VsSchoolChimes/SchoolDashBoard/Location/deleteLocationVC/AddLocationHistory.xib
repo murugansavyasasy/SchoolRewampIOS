@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="deleteVc" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddLocationHistory" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="backView" destination="n52-nB-r34" id="B9m-bc-f6K"/>
                 <outlet property="imageView" destination="STC-ds-Or5" id="zNO-s6-gIF"/>
@@ -26,7 +26,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Zb-O7-1J3">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRg-UK-BB5" customClass="UIViewX" customModule="VsSchoolChimes" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TRg-UK-BB5" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
                             <rect key="frame" x="10" y="0.0" width="373" height="759"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n52-nB-r34">
