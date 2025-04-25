@@ -103,18 +103,17 @@ class AlertstringFile{
     static let Choose_any_target = "Choose any target to send message".translated()
     static let Audio_exceeds_3_minutes = "Audio exceeds 3 minutes. Please select a shorter audio.".translated()
     static let Alert_title = "Alert".translated()
+    static let Audio_file_should80 = "Audio file should be less than 30 seconds".translated()
+    static let Audio_file_should180 = "Audio file should be less than 180 seconds".translated()
     static let Sccuess = "Success".translated()
     static let Confirm_title = "Confirmation".translated()
     static let select_date = "Select sheduled date".translated()
     static let Warning = "Warning".translated()
-    
     static let Confirm = "Confirm".translated()
     static let Change_academic_year = "NOTE : This message is addressed to students in".translated()
     static let Change_academic_year1 = " which is not the communication academic year ".translated()
     static let Change_academic_year2 = "Do you want to proceed?".translated()
-    
     static let Selected_target = "Selected target : ".translated()
-    
     static let AreYouSureYouWantToProceed = "Are you sure you want to send this message?".translated()
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
@@ -125,7 +124,7 @@ class AlertstringFile{
     static let Successfully_password_created = "Successfully password created".translated()
     static let Password_Missmatched = "Password Missmatched".translated()
     static let enter_valid_password = "Enter valid password".translated()
-    
+    static let Select_from_history = "Select from history".translated()
     static let Enter_the_new_password = "Enter the new password".translated()
     static let Enterthe_confirm_password = "Enter the confirm password".translated()
     static let Enter_valid_Mobile = "Enter valid Mobile Number".translated()
@@ -140,8 +139,6 @@ class AlertstringFile{
     static let  Done = "Done".translated()
     static let  Reach_Your_Limit = "Reach Your Limit".translated()
     static let  Already_Reach_Your_Limit = "Already Reach Your Maximum Limit".translated()
-    
-    
     static let Sectionorstudent = "Section or student".translated()
     static let Standardorsection = "Standard or section".translated()
     static let Select = "Select".translated()
@@ -153,14 +150,10 @@ class AlertstringFile{
     static let PDF = "PDF".translated()
     static let Cancel = "Cancel".translated()
     static let  LeaveRequest = " Leave Request".translated()
-  
-   
     static let Mark_All_as_Present = "Mark All as Present?"
-   
     static let Failed_to_upload_video = "Failed to upload video".translated()
     static let Please_choose_video = "Please choose a Video".translated()
     static let Fill_All_Required_Fields = "Fill All Required Fields".translated()
-    
     static let invalidSelection = "invalidSelection".translated()
     static let selectDatesWithinMonth = "selectDatesWithinMonth".translated()
     
@@ -239,7 +232,7 @@ class CommonStringFile{
     static let Absent = "Absent".translated()
     static let getAllStudent = "get All Student".translated()
     static let Logout = "Logout".translated()
-    
+    static let Select_from_history = "Select from history".translated()
     static let RollNo = "Roll No".translated()
     static let Name = "Name".translated()
     static let Status = "Status".translated()

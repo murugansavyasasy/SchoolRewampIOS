@@ -163,7 +163,6 @@ class RecipientVc: UIViewController{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
                 if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
                     segmentName.isHidden = true
-                    
                     target_type = TargetTypes.section
                     circular_types =  circular_type.section
                     getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
