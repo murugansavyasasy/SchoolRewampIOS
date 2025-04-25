@@ -51,6 +51,9 @@ struct ServiceUrl{
     static let  staff_attd_geometric_get_geometric_location_history  = "staff-attd/geometric/get-geometric-location-history"
     static let  geometric_principal_attendance_report  = "staff-attd/geometric/geometric-principal-attendance-report"
     static let  staff_attd_geometric_remove_geometric_location  = "staff-attd/geometric/remove-geometric-location"
+    static let  geometric_principal_attendance_report  = "staff-attd/geometric/geometric-principal-attendance-report" 
+    static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/geometric/get-staff-geometric-location"
+    
     
     
 }
