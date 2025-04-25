@@ -109,6 +109,7 @@ struct ChildDetails: Codable {
     let school_name_regional: String?
     let school_city: String?
     let school_logo_url: String?
+    let profile: String?
     let roll_number: String?
     let display_message: String?
     let access_token: String?
@@ -443,7 +444,23 @@ struct Attachment: Codable {
 
 struct AttachmentFilePath: Codable {
     let path: String?
-    let type:String
+    let type:String?
+}
+
+struct StaffAttendanceResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StaffAttendance]?
+}
+
+struct StaffAttendance: Codable {
+    let name: String?
+    let date: String?
+    let leave_type: String?
+    let attendance_type: String?
+    let in_time: String?
+    let out_time: String?
+    let working_hours: String?
 }
 
 struct PunchHistory:Codable{

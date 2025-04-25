@@ -10,7 +10,7 @@ import UIKit
 import DropDown
 class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
- 
+    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var seachHeight: NSLayoutConstraint!
     @IBOutlet weak var todayDefaultLbl: UILabel!
@@ -45,22 +45,26 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var url_date : String!
     var dateAndMoth : String!
     
-    let attendanceRecords: [Attendance] = [
-        Attendance(staffName: "Alice Johnson", dayType: "Full Day", status: "Present", firstIn: "08:45", lastOut: "17:30", workingHours: "8.75"),
-        Attendance(staffName: "Bob Smith", dayType: "Half Day", status: "Present", firstIn: "09:00", lastOut: "13:00", workingHours: "4.0"),
-        Attendance(staffName: "Charlie Brown", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
-        Attendance(staffName: "Diana Ross", dayType: "Full Day", status: "Present", firstIn: "09:15", lastOut: "18:00", workingHours: "8.75"),
-        Attendance(staffName: "Ethan Hunt", dayType: "Half Day", status: "Present", firstIn: "10:00", lastOut: "14:00", workingHours: "4.0"),
-        Attendance(staffName: "Fiona Green", dayType: "Full Day", status: "Present", firstIn: "08:30", lastOut: "17:45", workingHours: "9.25"),
-        Attendance(staffName: "George White", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
-        Attendance(staffName: "Hannah Blue", dayType: "Full Day", status: "Present", firstIn: "09:00", lastOut: "18:30", workingHours: "9.5"),
-        Attendance(staffName: "Ian Black", dayType: "Half Day", status: "Present", firstIn: "12:00", lastOut: "16:00", workingHours: "4.0"),
-        Attendance(staffName: "Julia Red", dayType: "Full Day", status: "Present", firstIn: "09:30", lastOut: "18:15", workingHours: "8.75")
-    ]
-
-    
+    //    let attendanceRecords: [Attendance] = [
+    //        Attendance(staffName: "Alice Johnson", dayType: "Full Day", status: "Present", firstIn: "08:45", lastOut: "17:30", workingHours: "8.75"),
+    //        Attendance(staffName: "Bob Smith", dayType: "Half Day", status: "Present", firstIn: "09:00", lastOut: "13:00", workingHours: "4.0"),
+    //        Attendance(staffName: "Charlie Brown", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
+    //        Attendance(staffName: "Diana Ross", dayType: "Full Day", status: "Present", firstIn: "09:15", lastOut: "18:00", workingHours: "8.75"),
+    //        Attendance(staffName: "Ethan Hunt", dayType: "Half Day", status: "Present", firstIn: "10:00", lastOut: "14:00", workingHours: "4.0"),
+    //        Attendance(staffName: "Fiona Green", dayType: "Full Day", status: "Present", firstIn: "08:30", lastOut: "17:45", workingHours: "9.25"),
+    //        Attendance(staffName: "George White", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
+    //        Attendance(staffName: "Hannah Blue", dayType: "Full Day", status: "Present", firstIn: "09:00", lastOut: "18:30", workingHours: "9.5"),
+    //        Attendance(staffName: "Ian Black", dayType: "Half Day", status: "Present", firstIn: "12:00", lastOut: "16:00", workingHours: "4.0"),
+    //        Attendance(staffName: "Julia Red", dayType: "Full Day", status: "Present", firstIn: "09:30", lastOut: "18:15", workingHours: "8.75")
+    //    ]
+    var staffDetails: [GetStaffDetails]?
+    var staffAttendanceDetails: [StaffAttendance]?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        applyShadowAndCornerRadius(to:yearsView)
+        applyShadowAndCornerRadius(to:staffDropView)
+        applyShadowAndCornerRadius(to:monthView)
         todayStaffView.applyGradient(
             colors: [UIColor.blue,UIColor.systemTeal],
             startPoint: CGPoint(x: 0, y: 0.5),
@@ -109,7 +113,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
             tv.delegate = self
             tv.dataSource = self
-            tv.reloadData()
             
             let today = UITapGestureRecognizer(target: self, action: #selector(todayView))
             todayStaffView.addGestureRecognizer(today)
@@ -138,6 +141,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     @IBAction func todayView(){
         seachHeight.constant = 56
+        
         tv.isHidden = false
         
         todayStaffView.applyGradient(
@@ -167,10 +171,12 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         display_date = formattedDate
         noRecordLbl.isHidden = true
         RefId = 1
-        tv.reloadData()
+        geometric_principal_attendance_report()
+       
     }
     
     @IBAction func allStaffVIew(){
+        
         seachHeight.constant = 0
         noRecordLbl.isHidden = true
         allsatffView.applyGradient(
@@ -185,7 +191,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         )
         todayDefaultLbl.textColor = .gray
         staffWiseDefaultLbl.textColor = .white
-        
         RefId = 2
         monthView.isHidden = false
         yearsView.isHidden = false
@@ -194,8 +199,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         selctStaffHeight.constant = 38
         staffDefaultsLbl.isHidden = false
         tv.isHidden = false
-        tv.reloadData()
         dateAndMoth = ""
+        getStaffListAPI()
     }
     
     @IBAction func selectYearsViewClick(){
@@ -230,8 +235,10 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     @IBAction func staffDropDownList(){
-        var StaffId: [Int] = []
         var staffName: [String] = []
+        for i in 0..<(staffDetails?.count ?? 0) {
+            staffName.append(staffDetails?[i].name ?? "")
+        }
         dropDown.dataSource = staffName
         dropDown.anchorView = staffDropView
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
@@ -240,14 +247,17 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         dropDown.show()
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
-            staffId = StaffId[index]
+            
+            staffId = Int(staffDetails?[index].id ?? "")
             stafNameLbl.text = item
+            
+            geometric_principal_attendance_report()
             
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return attendanceRecords.count
+        return staffAttendanceDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -269,12 +279,18 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
         
-        cell.namelbl.text = attendanceRecords[indexPath.row].staffName
-        cell.attendanceTypeLbl.text = attendanceRecords[indexPath.row].dayType
-        cell.firstInLbl.text = "First in - " + attendanceRecords[indexPath.row].firstIn
-        cell.toDateLbl.text = "Last out - " + attendanceRecords[indexPath.row].lastOut
-        cell.workingHrsLbl.text = "Working Hours - " + attendanceRecords[indexPath.row].workingHours
-        cell.StatusLbl.text = attendanceRecords[indexPath.row].status
+        cell.namelbl.text = staffAttendanceDetails?[indexPath.row].name
+        cell.attendanceTypeLbl.text = staffAttendanceDetails?[indexPath.row].attendance_type
+        cell.firstInLbl.text = "First in - " + (
+            staffAttendanceDetails?[indexPath.row].in_time ?? ""
+        )
+        cell.toDateLbl.text = "Last out - " + (
+            staffAttendanceDetails?[indexPath.row].out_time ?? ""
+        )
+        cell.workingHrsLbl.text = "Working Hours - " +  (
+            staffAttendanceDetails?[indexPath.row].working_hours ?? ""
+        )
+        cell.StatusLbl.text = staffAttendanceDetails?[indexPath.row].leave_type
         if cell.StatusLbl.text == "Absent" {
             cell.StatusLbl.backgroundColor = .systemRed
         }
@@ -291,7 +307,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-   
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -319,8 +335,93 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         tv.alpha = 1
         self.tv.reloadData()
     }
+    
+    
+    func getStaffListAPI(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.recipient_get_staff_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <GetStafflistSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            staffDetails = successMessage.data
+                            staffId = Int((staffDetails?.first?.id ?? ""))
+                            stafNameLbl.text = staffDetails?.first?.name ?? ""
+                            geometric_principal_attendance_report()
+                        }
+                    }else{
+                        DispatchQueue.main.async { [self] in
+                            
+                            
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    
+                }
+            }
+        
+    }
+    
+    func geometric_principal_attendance_report(){
+        var YearLbl = ""
+        var param: [String: Any]
+        let today = getCurrentDateString()
+        let year = yearLbl.text!
+        let monthName = selectMthLbl.text!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM" // Full month name format
+        
+        if let date = dateFormatter.date(from: monthName) {
+            let calendar = Calendar.current
+            let monthNumber = calendar.component(.month, from: date)
+            print("The month number for \(monthName) is \(monthNumber).")
+            if  monthNumber == 1 || monthNumber == 2 || monthNumber == 3 || monthNumber == 4 || monthNumber == 5 || monthNumber == 6 || monthNumber == 7 || monthNumber == 8 || monthNumber == 9 {
+                YearLbl = year +  "-" + "0" + String(monthNumber)
+            }else{
+                YearLbl = year +  "-"  + String(monthNumber)
+                
+            }
+            if RefId == 1{
+                param = [principalAttendenceReportStringFile.attendance_dt: today ]
+            }else{
+                param = [ principalAttendenceReportStringFile.attendance_month: YearLbl,
+                          principalAttendenceReportStringFile.staff_id: staffId ?? ""]
+            }
+            
+            APIService.shared
+                .makeApi(url: ServiceUrl.geometric_principal_attendance_report,parameters:param, type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                    result:Result <StaffAttendanceResponse,
+                    Error>
+                ) in
+                    switch result {
+                    case .success(let successMessage):
+                        if successMessage.status == true{
+                            DispatchQueue.main.async { [self] in
+                                noRecordLbl.isHidden = true
+                                staffAttendanceDetails = successMessage.data
+                                tv.isHidden = false
+                                tv.reloadData()
+                            }
+                        }else{
+                            DispatchQueue.main.async { [self] in
+                                noRecordLbl.isHidden = false
+                                noRecordLbl.text = successMessage.message
+                                tv.isHidden = true
+                            }
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        
+                    }
+                }
+            
+        }
+    }
 }
-
 class ShowPunchHistiryClick : UITapGestureRecognizer{
     var date : String!
     var staffId : Int!
