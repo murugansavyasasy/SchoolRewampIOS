@@ -489,7 +489,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 1022:
                 MenuRedirect.StaffWiseAttendance(from: self)
                 
-            case 24:
+            case 1021:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 break
                 
