@@ -204,7 +204,7 @@ class MenuRedirectHandler {
     
     
     func senderMarkAttendanceNavigate(from viewController: UIViewController) {
-        let vc = MarkAttendenceVC(nibName: nil, bundle: nil)
+        let vc = CreateLocationViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
