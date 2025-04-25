@@ -92,7 +92,7 @@
 		18D718A42D0D477900E9EDA3 /* EditLocResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718892D0D477900E9EDA3 /* EditLocResp.swift */; };
 		18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718792D0D477900E9EDA3 /* fechLocationResq.swift */; };
 		18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7186F2D0D477900E9EDA3 /* LocationTableViewCell.swift */; };
-		18D718A72D0D477900E9EDA3 /* deleteVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7188B2D0D477900E9EDA3 /* deleteVc.swift */; };
+		18D718A72D0D477900E9EDA3 /* AddLocationHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7188B2D0D477900E9EDA3 /* AddLocationHistory.swift */; };
 		18D718A82D0D477900E9EDA3 /* DeleteReq.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D7187B2D0D477900E9EDA3 /* DeleteReq.swift */; };
 		18D718A92D0D477900E9EDA3 /* punchResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718812D0D477900E9EDA3 /* punchResp.swift */; };
 		18D718AA2D0D477900E9EDA3 /* locationResp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D718822D0D477900E9EDA3 /* locationResp.swift */; };
@@ -111,7 +111,7 @@
 		18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */ = {isa = PBXBuildFile; fileRef = 18D718952D0D477900E9EDA3 /* Map Location.gif */; };
 		18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718722D0D477900E9EDA3 /* deleteTV.xib */; };
 		18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718972D0D477900E9EDA3 /* PunchHistoryListVC.xib */; };
-		18D718BA2D0D477900E9EDA3 /* deleteVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188C2D0D477900E9EDA3 /* deleteVc.xib */; };
+		18D718BA2D0D477900E9EDA3 /* AddLocationHistory.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188C2D0D477900E9EDA3 /* AddLocationHistory.xib */; };
 		18D718BB2D0D477900E9EDA3 /* PunchHistTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718752D0D477900E9EDA3 /* PunchHistTableViewCell.xib */; };
 		18D718BC2D0D477900E9EDA3 /* LocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D718942D0D477900E9EDA3 /* LocationViewController.xib */; };
 		18D718BD2D0D477900E9EDA3 /* LocationHistoryVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18D7188F2D0D477900E9EDA3 /* LocationHistoryVc.xib */; };
@@ -727,8 +727,8 @@
 		18D718872D0D477900E9EDA3 /* DeleteResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteResp.swift; sourceTree = "<group>"; };
 		18D718882D0D477900E9EDA3 /* PunchHistryResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PunchHistryResp.swift; sourceTree = "<group>"; };
 		18D718892D0D477900E9EDA3 /* EditLocResp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLocResp.swift; sourceTree = "<group>"; };
-		18D7188B2D0D477900E9EDA3 /* deleteVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteVc.swift; sourceTree = "<group>"; };
-		18D7188C2D0D477900E9EDA3 /* deleteVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = deleteVc.xib; sourceTree = "<group>"; };
+		18D7188B2D0D477900E9EDA3 /* AddLocationHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationHistory.swift; sourceTree = "<group>"; };
+		18D7188C2D0D477900E9EDA3 /* AddLocationHistory.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddLocationHistory.xib; sourceTree = "<group>"; };
 		18D7188E2D0D477900E9EDA3 /* LocationHistoryVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHistoryVc.swift; sourceTree = "<group>"; };
 		18D7188F2D0D477900E9EDA3 /* LocationHistoryVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationHistoryVc.xib; sourceTree = "<group>"; };
 		18D718912D0D477900E9EDA3 /* CreateLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateLocationViewController.swift; sourceTree = "<group>"; };
@@ -1659,8 +1659,8 @@
 		18D7188D2D0D477900E9EDA3 /* deleteLocationVC */ = {
 			isa = PBXGroup;
 			children = (
-				18D7188B2D0D477900E9EDA3 /* deleteVc.swift */,
-				18D7188C2D0D477900E9EDA3 /* deleteVc.xib */,
+				18D7188B2D0D477900E9EDA3 /* AddLocationHistory.swift */,
+				18D7188C2D0D477900E9EDA3 /* AddLocationHistory.xib */,
 			);
 			path = deleteLocationVC;
 			sourceTree = "<group>";
@@ -3335,7 +3335,7 @@
 				84F0466E2D1D5ED600C686BD /* MarkAttendenceCV.xib in Resources */,
 				18D718B92D0D477900E9EDA3 /* PunchHistoryListVC.xib in Resources */,
 				84BB5EA72D11330E00AD0C87 /* ScheduleExamVC.xib in Resources */,
-				18D718BA2D0D477900E9EDA3 /* deleteVc.xib in Resources */,
+				18D718BA2D0D477900E9EDA3 /* AddLocationHistory.xib in Resources */,
 				18D718BB2D0D477900E9EDA3 /* PunchHistTableViewCell.xib in Resources */,
 				18D718BC2D0D477900E9EDA3 /* LocationViewController.xib in Resources */,
 				18D718BD2D0D477900E9EDA3 /* LocationHistoryVc.xib in Resources */,
@@ -3843,7 +3843,7 @@
 				84D32C982D55CE2300A420A9 /* QuizListTvCell.swift in Sources */,
 				18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */,
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
-				18D718A72D0D477900E9EDA3 /* deleteVc.swift in Sources */,
+				18D718A72D0D477900E9EDA3 /* AddLocationHistory.swift in Sources */,
 				840F67752D9406EE00AC2F5A /* AttachmentsVC.swift in Sources */,
 				848CC17E2D8A999A00CD0255 /* CreatePasswordVc.swift in Sources */,
 				840F67792D94128F00AC2F5A /* cell1Tv.swift in Sources */,

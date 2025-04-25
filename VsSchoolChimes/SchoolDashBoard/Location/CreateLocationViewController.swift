@@ -230,6 +230,12 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                     distanceTxt.text = item
                 }
     }
+    @IBAction func history(_ sender: UIButton) {
+        let vc = AddLocationHistory(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
+    }
+    
 }
 
 // MARK: - Extensions
