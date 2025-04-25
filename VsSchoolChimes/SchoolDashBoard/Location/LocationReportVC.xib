@@ -4,14 +4,14 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationReportVC" customModule="SchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationReportVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
+                <outlet property="Tv" destination="086-G3-ee4" id="vbF-GB-OZ9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -23,20 +23,17 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bF-6m-iAX">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UBE-LZ-2WJ">
-                            <rect key="frame" x="30" y="369" width="333" height="240"/>
-                            <color key="backgroundColor" name="Red"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="086-G3-ee4">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="UBE-LZ-2WJ" firstAttribute="leading" secondItem="4bF-6m-iAX" secondAttribute="leading" constant="30" id="3CU-UI-Xia"/>
-                        <constraint firstItem="UBE-LZ-2WJ" firstAttribute="top" secondItem="4bF-6m-iAX" secondAttribute="top" constant="369" id="NZZ-7A-8Qx"/>
-                        <constraint firstAttribute="bottom" secondItem="UBE-LZ-2WJ" secondAttribute="bottom" constant="150" id="eb7-vC-eal"/>
-                        <constraint firstAttribute="trailing" secondItem="UBE-LZ-2WJ" secondAttribute="trailing" constant="30" id="z5M-ra-Vgv"/>
+                        <constraint firstItem="086-G3-ee4" firstAttribute="top" secondItem="4bF-6m-iAX" secondAttribute="top" id="bDR-0r-Zng"/>
+                        <constraint firstItem="086-G3-ee4" firstAttribute="leading" secondItem="4bF-6m-iAX" secondAttribute="leading" id="f7Q-ln-HSa"/>
+                        <constraint firstAttribute="bottom" secondItem="086-G3-ee4" secondAttribute="bottom" id="ldw-E9-Ige"/>
+                        <constraint firstAttribute="trailing" secondItem="086-G3-ee4" secondAttribute="trailing" id="zsQ-4P-Noe"/>
                     </constraints>
                 </view>
             </subviews>
@@ -52,14 +49,8 @@
         </view>
     </objects>
     <resources>
-        <namedColor name="Red">
-            <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

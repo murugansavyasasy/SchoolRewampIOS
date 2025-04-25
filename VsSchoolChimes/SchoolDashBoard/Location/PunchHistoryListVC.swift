@@ -49,12 +49,7 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    
-    
 }
-
-
 
 /*
  // MARK: variable declare

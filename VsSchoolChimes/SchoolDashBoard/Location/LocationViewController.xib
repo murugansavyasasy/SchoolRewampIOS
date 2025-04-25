@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationViewController" customModule="SchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="AllowLoactionThumbnail" destination="VaK-n4-J9q" id="vrx-hi-Tm7"/>
                 <outlet property="AllowLocationDescribeLbl" destination="nfn-B8-d46" id="hZd-Zw-jsE"/>
@@ -89,7 +89,7 @@
                                                                     <rect key="frame" x="99" y="259.66666666666663" width="145" height="34.333333333333314"/>
                                                                     <color key="tintColor" name="ButtonColor"/>
                                                                     <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="filled" title="Enabel Location"/>
+                                                                    <buttonConfiguration key="configuration" style="filled" title="Enable Location"/>
                                                                     <connections>
                                                                         <action selector="enableLocationButtonTapped:" destination="-1" eventType="touchUpInside" id="Ej2-yv-3o1"/>
                                                                     </connections>

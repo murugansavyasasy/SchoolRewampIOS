@@ -66,6 +66,18 @@ class LocationViewController: UIViewController {
         LocationErrorStack.layer.cornerRadius = 10
         LocationErrorStack.backgroundColor = .systemBlue.withAlphaComponent(0.4)
         
+        StyleAndTranslate()
+    }
+    
+    func StyleAndTranslate(){
+        
+        AllowLocationLbl.setFont(style: .body, size: FontSize.BodySize)
+        AllowLocationDescribeLbl.setFont(style: .body, size: FontSize.BodySize)
+        PunchDescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+        
+        EnableLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        TaptoPunchBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        addLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
     }
     
     override func viewDidLayoutSubviews() {
