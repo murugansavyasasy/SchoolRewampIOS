@@ -234,6 +234,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             
             todayDefaultLbl.textColor = .gray
             staffWiseDefaultLbl.textColor = .white
+            
             RefId = 2
             monthView.isHidden = false
             yearsView.isHidden = false
