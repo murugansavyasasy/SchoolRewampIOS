@@ -816,7 +816,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         case recipeint_tabBarName.Staff:
             if let item = staffDetails?[dataIndex] {
                 cell.cellLabel.text = item.name
-                cell.createdOnlbl.isHidden = true
+                cell.createdOnlbl.isHidden = false
+                cell.createdOnlbl.textAlignment = .left
+                cell.createdOnlbl.text = "\(item.designation ?? "fcg fdgrdtr vjyhdthtrd fdxgrerdxg") - \(item.emp_id ?? "234556")"
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         default:
