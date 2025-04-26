@@ -60,11 +60,14 @@ class LocationViewController: UIViewController {
     var ExstingLat:String?
     var ExstingDistance:String?
     var isPopupVisible = false
+    var childVC: LocationReportVC?
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        checkLocationAuthorization()
         LocationErrorStack.isHidden = true
         punchStack.isHidden = true
+        EnableLocationBtn.layer.cornerRadius = 10
+        TaptoPunchBtn.layer.cornerRadius = 10
         LocationErrorStack.layer.cornerRadius = 10
         LocationErrorStack.backgroundColor = .systemBlue.withAlphaComponent(0.4)
         StyleAndTranslate()
@@ -92,18 +95,6 @@ class LocationViewController: UIViewController {
         checkLocationAuthorization()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        checkLocationAuthorization()
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    
-//    
    
     func getDeviceModelName() -> String {
         var systemInfo = utsname()
@@ -146,8 +137,8 @@ class LocationViewController: UIViewController {
             "iPhone10,4": "iPhone 8 (GSM)",
             "iPhone10,2": "iPhone 8 Plus",
             "iPhone10,5": "iPhone 8 Plus (GSM)",
-            "iPhone9,1": "iPhone 7",
-            "iPhone9,3": "iPhone 7 (GSM)",
+             "iPhone9,1": "iPhone 7",
+             "iPhone9,3": "iPhone 7 (GSM)",
             "iPhone9,2": "iPhone 7 Plus",
             "iPhone9,4": "iPhone 7 Plus (GSM)",
             "iPhone8,1": "iPhone 6s",
@@ -216,57 +207,34 @@ class LocationViewController: UIViewController {
     }
     
     @IBAction func PunchBtnAct(_ sender: Any) {
+        Punch_Api()
     }
     
     @IBAction func AddLocationAct(_ sender: Any) {
+        
+        let vc = CreateLocationViewController(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
-    
-    
-//    func addChildViewControllerToContainer() {
-//        let storyboard = UIStoryboard(name: "LocationReportVC", bundle: nil)
-//        guard let childVC = storyboard.instantiateViewController(withIdentifier: "LocationReportVC") as? LocationReportVC else { return }
-//
-//        addChild(childVC) // Step 1: Add child
-//        childVC.view.frame = containerView.bounds // Step 2: Set size to container
-//        containerView.addSubview(childVC.view) // Step 3: Add view to container
-//        childVC.didMove(toParent: self) // Step 4: Notify child
-//    }
-    
-    var childVC: LocationReportVC?
-
     func addChildViewControllerToContainer() {
-      
-        
-        
         let vc = LocationReportVC(nibName: nil, bundle: nil)
-        
         addChild(vc)
         vc.view.frame = containerView.bounds
         containerView.addSubview(vc.view)
         vc.didMove(toParent: self)
-        
         self.childVC = vc // Save reference
     }
 
     func removeChildVC() {
         guard let vc = childVC else { return }
-
         vc.willMove(toParent: nil)
         vc.view.removeFromSuperview()
         vc.removeFromParent()
-        
         childVC = nil
     }
 
-
-    
-    
-//    
-   
-    
     func showCustomLocationView(ishiden:Bool){
-        
         LocationErrorStack.isHidden = ishiden
         punchStack.isHidden = !ishiden
         
@@ -277,9 +245,6 @@ class LocationViewController: UIViewController {
         }
     }
 
-    
-    
-    
     func checkLocationAuthorization() {
         let status = CLLocationManager.authorizationStatus()
         switch status {
@@ -293,6 +258,9 @@ class LocationViewController: UIViewController {
             showCustomLocationView(ishiden: false)
         case .authorizedWhenInUse, .authorizedAlways:
             // Start location updates
+            LocationErrorStack.isHidden = true
+            punchStack.isHidden = false
+           
             call_locationManager()
             locationManager.startUpdatingLocation()
         @unknown default:
@@ -300,55 +268,13 @@ class LocationViewController: UIViewController {
         }
     }
     
-    
 
-    @objc func handleAppDidBecomeActive() {
-        let status = CLLocationManager.authorizationStatus()
-        handleLocationAuthorizationStatus(status)
-    }
-    
-    func handleLocationAuthorizationStatus(_ status: CLAuthorizationStatus) {
-        switch status {
-        case .notDetermined:
-            print("Location permission not determined yet.")
-        case .restricted:
-            print("Location permission is restricted (e.g., parental controls).")
-        case .denied:
-            print("Location permission denied.")
-          
-                
-                self.isPopupVisible = false
-                LocationErrorStack.isHidden = false
-                punchStack.isHidden = true
-                
-        case .authorizedWhenInUse, .authorizedAlways:
-            print("Location permission granted.")
-            if isPopupVisible {
-                
-                        self.isPopupVisible = false
-                        LocationErrorStack.isHidden = true
-                        punchStack.isHidden = false
-                        call_locationManager()
-                    }
-        @unknown default:
-            break
-        }
-    }
-    
     func call_locationManager(){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
-    
-    
-    
-    
-    
-    
-    @IBAction func punchInBtn(_ sender: Any) {
-        Punch_Api()
-    }
+
     
    
     
@@ -375,9 +301,7 @@ func authenticateUser(context: LAContext, policy: LAPolicy) {
                 if success {
                     print("Authentication successful")
                     // Proceed with your functionality
-                   
                 } else {
-                    
                     // Authentication failed
                     if let error = authenticationError {
                         print("Authentication failed: \(error.localizedDescription)")
@@ -391,9 +315,7 @@ func authenticateUser(context: LAContext, policy: LAPolicy) {
 
 
 extension LocationViewController:CLLocationManagerDelegate{
-    
-    
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let clError = error as? CLError {
             switch clError.code {
@@ -422,12 +344,16 @@ extension LocationViewController:CLLocationManagerDelegate{
         print("distanceeeewdas",distanceInMeters)
         let location = CLLocation(latitude: currentLatitude, longitude: currentLongitude)
         convertCoordinatesToAddress(location: location)
+        get_locationDetails(
+            curentLogittude : currentLogi ?? "" ,
+            currentLatitute : currentLat ?? "",
+            distance: Int(distanceInMeters)
+        )
         locationManager.stopUpdatingLocation()
     }
     // Handle errors
     func convertCoordinatesToAddress(location: CLLocation) {
         let geocoder = CLGeocoder()
-        
         geocoder.reverseGeocodeLocation(location) { [self] (placemarks, error) in
             if let error = error {
                 print("Error in reverse geocoding: \(error.localizedDescription)")
@@ -487,12 +413,12 @@ extension LocationViewController:CLLocationManagerDelegate{
     func Punch_Api(){
         
         APIService.shared
-            .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
+            .makeApi(url: ServiceUrl.staff_attd_geometric_entry_using_app, parameters:[
                 
-                PunchStringFile.device_id : "",
-                PunchStringFile.device_model : "",
-                PunchStringFile.punch_type : "",
-                PunchStringFile.staff_or_student : ""
+                PunchStringFile.device_id : SecureIDManager.getSecureID(),
+                PunchStringFile.device_model : device,
+                PunchStringFile.punch_type : punch_type,
+                PunchStringFile.staff_or_student : "staff"
                 
             ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<CommonApiSuc,
@@ -502,14 +428,13 @@ extension LocationViewController:CLLocationManagerDelegate{
                 case.success(let succesmessage) :
                     if succesmessage.status == true {
                         DispatchQueue.main.async { [self] in
+                            
                             CustomAlert
                                 .showAlertWithOkAction(
                                     title: AlertstringFile.Sccuess,
-                                    message: succesmessage.message ?? "",
+                                    message:succesmessage.message ?? "" ,
                                     on: self
-                                ) {
-                                    
-                                }
+                                )
                         }
                     }else {
                         
@@ -527,7 +452,7 @@ extension LocationViewController:CLLocationManagerDelegate{
             }
     }
     
-    func get_locationDetails() {
+    func get_locationDetails(curentLogittude : String , currentLatitute : String, distance : Int) {
         APIService.shared
             .makeApi(url: ServiceUrl.staff_attd_geometric_get_staff_geometric_location, parameters:[:] , type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
                 result : Result<StaffGeometricLocation,
@@ -539,14 +464,49 @@ extension LocationViewController:CLLocationManagerDelegate{
                         DispatchQueue.main.async { [self] in
                             
                             getlocationDataDetails = succesmessage.data ?? []
-                            if let extlat = succesmessage.data?.first?.latitude,let extlog = succesmessage.data?.first?.longitude ,let distance = succesmessage.data?.first?.distance{
-                                ExstingLat = extlat
-                                ExstingLogi = extlog
-                                ExstingDistance = distance
-                            }else{
-//                                BioMatricImageView.isHidden = true
-//                                punchHeigh.constant = 0
+                            
+                            for i in 0..<(succesmessage.data?.count ?? 0){
+                                var distanceInt = Int(succesmessage.data?[i].distance ?? "")
+                                let distance = haversineDistance(
+                                    lat1: Double(
+                                        succesmessage.data?[i].latitude ?? ""
+                                    )!,
+                                    lon1: Double(
+                                        succesmessage.data?[i].longitude ?? ""
+                                    )!,
+                                    lat2: Double(currentLatitute)!,
+                                    lon2: Double(curentLogittude)!
+                                )
+                                currentDistanceForPuchCheck = distance
+                                apiDistanceForPuchCheck = distanceInt
+                                
+                                // Check if the distance is smaller
+                                if distance <= Double(distanceInt!) {
+                                  
+                                    punchStack.isHidden = false
+//                                    .isHidden = true
+                                    LocationErrorStack.isHidden = true
+                                    
+                                    PunchDescriptionLbl.text = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
+                                    break
+                                    
+                                } else {
+                                   
+                                    AllowLoactionThumbnail.image = ImageName.need_location_access
+                                    punchStack.layer.cornerRadius = 10
+                                    punchStack.backgroundColor = .red
+                                        .withAlphaComponent(0.4)
+                                    PunchDescriptionLbl.text = "Note : You are outside the institutes boundary. you will not be able to mark your attendanc \n\n Please try again when you are within the designated area."
+                                    LocationErrorStack.isHidden = false
+                                    punchStack.isHidden = true
+                                    AllowLoactionThumbnail.isHidden = true
+//                                    errorLabel.isHidden = false
+//                                    punchFullView.isHidden = true
+//                                    ErrorLablelView.isHidden = false
+                                }
+                                
                             }
+                            
                         }
                     }else {
                         

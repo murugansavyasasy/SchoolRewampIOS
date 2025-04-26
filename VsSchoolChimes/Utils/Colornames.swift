@@ -96,6 +96,7 @@ class ImageName{
     static let girl_and_boy_are = UIImage(named: "girl-and-boy-are-together-deciding-to-send-an-email-message")
     static let missing_file = UIImage(named: "missing-file")
     static let customer_support = UIImage(named: "customer-support")
+    static let need_location_access = UIImage(named: "need-location-access")
                                        
   
 }
