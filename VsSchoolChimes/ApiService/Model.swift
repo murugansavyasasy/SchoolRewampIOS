@@ -381,7 +381,7 @@ struct CommunicationReciverData: Codable {
     let type: String
     let id: String
     let content: String
-    let description: String
+    let title: String
     let date: String
     let time: String
     let sender_info: String
@@ -463,7 +463,7 @@ struct StaffAttendance: Codable {
     let working_hours: String?
 }
 
-struct PunchHistory:Codable{
+struct PunchHistoryResponse:Codable{
     let status:Bool?
     let message:String?
     let data:[PunchList]?

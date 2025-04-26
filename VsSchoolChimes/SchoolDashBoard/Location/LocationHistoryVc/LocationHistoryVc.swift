@@ -30,6 +30,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var staffDropView: UIViewX!
     @IBOutlet weak var monthView: UIViewX!
     @IBOutlet weak var yearsView: UIViewX!
+    @IBOutlet weak var SegmentControl: UISegmentedControl!
+    
     
     var type : Int!
     var instituteId : Int!
@@ -175,6 +177,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
        
     }
     
+    
+    
     @IBAction func allStaffVIew(){
         
         seachHeight.constant = 0
@@ -202,6 +206,48 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         dateAndMoth = ""
         getStaffListAPI()
     }
+    
+    @IBAction func segmentAction(_ sender: Any) {
+        
+        if SegmentControl.selectedSegmentIndex == 0{
+            
+            todayDefaultLbl.textColor = .white
+            staffWiseDefaultLbl.textColor = .gray
+            
+            monthView.isHidden = true
+            yearsView.isHidden = true
+            staffDropViewHeight.constant = 0
+            selectYrHeight.constant = 0
+            selctStaffHeight.constant = 0
+            staffDefaultsLbl.isHidden = true
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let formattedDate = dateFormatter.string(from: currentDate)
+            print(formattedDate) // Example output: "Mo
+            display_date = formattedDate
+            noRecordLbl.isHidden = true
+            RefId = 1
+            geometric_principal_attendance_report()
+            
+        }else{
+            
+            todayDefaultLbl.textColor = .gray
+            staffWiseDefaultLbl.textColor = .white
+            
+            RefId = 2
+            monthView.isHidden = false
+            yearsView.isHidden = false
+            staffDropViewHeight.constant = 137
+            selectYrHeight.constant = 30
+            selctStaffHeight.constant = 38
+            staffDefaultsLbl.isHidden = false
+            tv.isHidden = false
+            dateAndMoth = ""
+            getStaffListAPI()
+        }
+    }
+    
     
     @IBAction func selectYearsViewClick(){
         if RefId == 1{
@@ -385,6 +431,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 YearLbl = year +  "-"  + String(monthNumber)
                 
             }
+            
             if RefId == 1{
                 param = [principalAttendenceReportStringFile.attendance_dt: today ]
             }else{

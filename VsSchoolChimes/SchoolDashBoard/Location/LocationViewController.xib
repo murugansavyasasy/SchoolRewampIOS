@@ -62,10 +62,10 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="634"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1Bu-za-cdB">
-                                                    <rect key="frame" x="0.0" y="100" width="393" height="434"/>
+                                                    <rect key="frame" x="0.0" y="-42.333333333333371" width="393" height="718.99999999999989"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RIc-NL-ApQ">
-                                                            <rect key="frame" x="25" y="0.0" width="343" height="354"/>
+                                                            <rect key="frame" x="25" y="0.0" width="343" height="349.66666666666669"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Progress" translatesAutoresizingMaskIntoConstraints="NO" id="VaK-n4-J9q">
                                                                     <rect key="frame" x="101.66666666666669" y="0.0" width="140" height="128"/>
@@ -74,28 +74,29 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow location acess to mark your attendance !" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ke-om-O2Z">
-                                                                    <rect key="frame" x="5" y="138" width="333" height="40.666666666666657"/>
+                                                                    <rect key="frame" x="5" y="138.00000000000003" width="333" height="40.666666666666657"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To enhance your experience and provide accurate loaction-based features,please enabel GPS." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfn-B8-d46">
-                                                                    <rect key="frame" x="5" y="188.66666666666669" width="333" height="61"/>
+                                                                    <rect key="frame" x="5" y="188.66666666666666" width="333" height="61"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axU-rJ-vfk">
-                                                                    <rect key="frame" x="99" y="259.66666666666663" width="145" height="34.333333333333314"/>
-                                                                    <color key="tintColor" name="ButtonColor"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="filled" title="Enable Location"/>
+                                                                    <rect key="frame" x="117" y="259.66666666666663" width="109" height="30"/>
+                                                                    <color key="backgroundColor" name="ButtonColor"/>
+                                                                    <color key="tintColor" red="0.99215686270000003" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" title="Enable Location"/>
                                                                     <connections>
                                                                         <action selector="enableLocationButtonTapped:" destination="-1" eventType="touchUpInside" id="Ej2-yv-3o1"/>
                                                                     </connections>
                                                                 </button>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vb7-50-JAy">
-                                                                    <rect key="frame" x="51.666666666666686" y="304" width="240" height="50"/>
+                                                                    <rect key="frame" x="51.666666666666686" y="299.66666666666663" width="240" height="50"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 </view>
                                                             </subviews>
@@ -106,8 +107,8 @@
                                                                 <constraint firstAttribute="trailing" secondItem="nfn-B8-d46" secondAttribute="trailing" constant="5" id="WGT-Gt-SjL"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LcP-hF-7dl">
-                                                            <rect key="frame" x="10" y="364" width="373" height="188"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="LcP-hF-7dl">
+                                                            <rect key="frame" x="10" y="369.66666666666663" width="373" height="349.33333333333337"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SchoolStudent" translatesAutoresizingMaskIntoConstraints="NO" id="URq-Dc-C3N">
                                                                     <rect key="frame" x="0.0" y="0.0" width="373" height="128"/>
@@ -116,27 +117,28 @@
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow location acess to mark your attendance !" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPl-q0-qXt">
-                                                                    <rect key="frame" x="10" y="138" width="353.33333333333331" height="0.0"/>
+                                                                    <rect key="frame" x="10" y="138.00000000000006" width="353.33333333333331" height="0.0"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNx-Bq-cfI">
-                                                                    <rect key="frame" x="5" y="148" width="363" height="0.0"/>
+                                                                    <rect key="frame" x="5" y="148.00000000000006" width="363" height="81.333333333333314"/>
                                                                     <string key="text">Tap on the "Punch" button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked.</string>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfC-hA-mW7">
-                                                                    <rect key="frame" x="66.666666666666686" y="168" width="240" height="0.0"/>
+                                                                    <rect key="frame" x="66.666666666666686" y="249.33333333333331" width="240" height="50"/>
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 </view>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWZ-QJ-87i">
-                                                                    <rect key="frame" x="115.66666666666667" y="188" width="141.66666666666663" height="0.0"/>
-                                                                    <color key="tintColor" name="ButtonColor"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="filled" title="Tap to Punch In"/>
+                                                                    <rect key="frame" x="133.66666666666666" y="319.33333333333331" width="106" height="30"/>
+                                                                    <color key="backgroundColor" name="ButtonColor"/>
+                                                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" title="Tap to Punch In"/>
                                                                     <connections>
                                                                         <action selector="PunchBtnAct:" destination="-1" eventType="touchUpInside" id="oWb-PH-SwS"/>
                                                                     </connections>
@@ -147,11 +149,11 @@
                                                                 <constraint firstAttribute="trailing" secondItem="VNx-Bq-cfI" secondAttribute="trailing" constant="5" id="GU7-Eq-r2F"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcB-y3-evb">
-                                                            <rect key="frame" x="10" y="374" width="373" height="60"/>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcB-y3-evb">
+                                                            <rect key="frame" x="10" y="719" width="373" height="59.666666666666629"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fbr-iP-cdc">
-                                                                    <rect key="frame" x="249" y="0.0" width="124" height="60"/>
+                                                                    <rect key="frame" x="249" y="0.0" width="124" height="59.666666666666664"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="59.670000000000002" id="Guv-83-Qdb"/>
                                                                         <constraint firstAttribute="width" constant="124" id="YhZ-hf-I3x"/>
@@ -234,16 +236,31 @@
                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="1FK-9H-oDT"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEZ-4d-Kha">
+                    <rect key="frame" x="243.33333333333337" y="69" width="144.66666666666663" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
+                    <state key="normal" title="Add Location" image="plus.circle.fill" catalog="system"/>
+                    <buttonConfiguration key="configuration" style="plain" image="plus.circle.fill" catalog="system" imagePlacement="trailing" title="Add Location" imagePadding="5">
+                        <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
+                    </buttonConfiguration>
+                    <connections>
+                        <action selector="AddLocationAct:" destination="-1" eventType="touchUpInside" id="GTf-df-9Wi"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="topBackgroundCLr"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="eEZ-4d-Kha" secondAttribute="trailing" constant="5" id="AC0-Da-Qqj"/>
                 <constraint firstItem="qan-o4-VIq" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Awu-yV-qni"/>
+                <constraint firstItem="eEZ-4d-Kha" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="C6M-yA-tA3"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="qan-o4-VIq" secondAttribute="bottom" id="EQ9-2j-qGX"/>
                 <constraint firstItem="rmT-ng-G65" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="H1o-I5-Zn3"/>
                 <constraint firstItem="qan-o4-VIq" firstAttribute="top" secondItem="rmT-ng-G65" secondAttribute="bottom" constant="10" id="Rjj-LG-iGR"/>
                 <constraint firstItem="rmT-ng-G65" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="XMv-Wd-GLR"/>
                 <constraint firstItem="qan-o4-VIq" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="kfv-2P-veL"/>
+                <constraint firstItem="qan-o4-VIq" firstAttribute="top" secondItem="eEZ-4d-Kha" secondAttribute="bottom" constant="4" id="oHU-G4-nZO"/>
             </constraints>
             <point key="canvasLocation" x="130.53435114503816" y="-11.267605633802818"/>
         </view>
@@ -262,6 +279,7 @@
         <image name="SchoolStudent" width="5500" height="4000"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
         <image name="mappin.and.ellipse" catalog="system" width="110" height="128"/>
+        <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

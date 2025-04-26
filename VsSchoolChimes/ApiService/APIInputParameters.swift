@@ -143,4 +143,13 @@ class principalAttendenceReportStringFile {
     static var staff_id = "staff_id"
 }
 
+class punchHistoryStringFile {
+    
+    static var from_date = "from_date"
+    static var to_date = "to_date"
+}
 
+class StaffAttendanceReportStringFile {
+    
+    static var attendance_dt = "attendance_dt"
+}
