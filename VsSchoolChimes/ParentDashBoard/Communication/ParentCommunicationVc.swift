@@ -8,11 +8,12 @@
 import UIKit
 import DropDown
 
-class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDelegate {
+class ParentCommunicationVc: UIViewController, reloadDelegate{
     
-    func select(Tittle: String, descriptContent: String) {
+    func deleteDelegate(index: Int) {
         
     }
+    
         
     func reload(index: Int) {
         
@@ -26,16 +27,12 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         playIndex = (playIndex == index) ? nil : index
         var currentmessage: CommunicationReciverData?
         
-        if isFiltered {
-            currentmessage = FilteredMessages?[index]
-        } else {
-            currentmessage = TotalMessageList?[index]
-        }
+
+        currentmessage = SearchMessages?[index]
         
         if currentmessage?.is_unread == true {
             
             if currentmessage?.is_archive ?? false {
-                
                 ReadStatusUpdateArchive(type: currentmessage?.type ?? "", detail_id: currentmessage?.id ?? "")
             }else {
                 
@@ -43,26 +40,14 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
             }
             
             currentmessage?.is_unread = false
-                
-            if currentmessage != nil {
-                currentmessage?.is_unread = false
-                
-                if isFiltered {
-                    FilteredMessages?[index] = currentmessage!
-                } else {
-                    TotalMessageList?[index] = currentmessage!
-                }
+            
+            if let PlayingMessage = currentmessage{
+                SearchMessages?[index] = PlayingMessage
             }
         }
         
             tv.reloadData()
     }
-    
-    
-    func deleteDelegate(index: Int) {
-        
-    }
-    
     
     @IBOutlet weak var ReadUnreadStack: UIStackView!
     @IBOutlet weak var UnreadBtn: UIButton!
@@ -79,6 +64,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NodataImgHeight: NSLayoutConstraint!
+    @IBOutlet weak var SearchbarStack: UIStackView!
+    
     
     var BtnId = 1
     let backgroundcolor = Colornames.topBackgroundCLr
@@ -91,8 +78,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var TotalMessageList : [CommunicationReciverData]?
     var FilteredMessages : [CommunicationReciverData]?
+    var SearchMessages : [CommunicationReciverData]?
     var dropDown = DropDown()
-    var isFiltered = false
     let dateFormatter = DateFormatter()
     let Filters = ["All","VOICE","TEXT"/*,"Read","Unread"*/]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
@@ -212,43 +199,30 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
         dismiss(animated: true)
     }
     
+    //MARK: Filter Buttons Actions
     
     @IBAction func AllAct(_ sender: Any) {
         
-        isFiltered = true
         AllBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
         ReadBtn.backgroundColor = .systemGray5
         UnreadBtn.backgroundColor = .systemGray5
         readStatus = 0
         
-        filterSelection(FilterType: Filters[selectedIndex.row])
-        
-        tv.reloadData()
-    }
-    
-    @IBAction func UnreadAct(_ sender: Any) {
-        isFiltered = true
-        UnreadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
-        ReadBtn.backgroundColor = .systemGray5
-        AllBtn.backgroundColor = .systemGray5
-        readStatus = 2
-         
         if selectedIndex.row == 0{
             
-            FilteredMessages = TotalMessageList?.unreadMessages()
+            FilteredMessages = TotalMessageList
+        }else {
             
-        }else{
-            
-            FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[selectedIndex.row])
+            FilteredMessages = TotalMessageList?.messages(ofType: Filters[selectedIndex.row])
         }
         
-      
-    
+        SearchMessages = FilteredMessages
+        
         tv.reloadData()
     }
     
     @IBAction func ReadAct(_ sender: Any) {
-        isFiltered = true
+        
         ReadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
         UnreadBtn.backgroundColor = .systemGray5
         AllBtn.backgroundColor = .systemGray5
@@ -263,7 +237,28 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
             FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
         }
         
-       // FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
+        SearchMessages = FilteredMessages
+        
+        tv.reloadData()
+    }
+    
+    @IBAction func UnreadAct(_ sender: Any) {
+        
+        UnreadBtn.backgroundColor = .systemGreen.withAlphaComponent(0.3)
+        ReadBtn.backgroundColor = .systemGray5
+        AllBtn.backgroundColor = .systemGray5
+        readStatus = 2
+         
+        if selectedIndex.row == 0{
+            
+            FilteredMessages = TotalMessageList?.unreadMessages()
+            
+        }else{
+            
+            FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[selectedIndex.row])
+        }
+        
+        SearchMessages = FilteredMessages
         
         tv.reloadData()
     }
@@ -344,8 +339,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     DispatchQueue.main.async { [self] in
                         
                         TotalMessageList = SuccessMessage.data
+                        SearchMessages = TotalMessageList
+                        FilteredMessages = TotalMessageList
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
+                        SearchbarStack.isHidden = false
                         tv.reloadData()
                     }
                     
@@ -353,6 +351,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     
                     DispatchQueue.main.async { [self] in
                         TotalMessageList = []
+                        SearchbarStack.isHidden = true
                         NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
                         NodataLbl.isHidden = false
                         NodataImage.isHidden = false
@@ -383,33 +382,48 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                     DispatchQueue.main.async { [self] in
                         
                         TotalMessageList?.append(contentsOf: SuccessMessage.data)
-                       
-                        if isFiltered{
+                        
+//                        FilteredMessages = TotalMessageList
+//                        SearchMessages = TotalMessageList
                             
                             if selectedIndex.row == 0{
-                                
-                                if readStatus == 1 {
+
+                                switch readStatus {
+                                    
+                                case 0 :
+                                    FilteredMessages = TotalMessageList
+                                    
+                                case 1 :
                                     FilteredMessages = TotalMessageList?.readMessages()
                                     
-                                }else if readStatus == 2{
-                                    
+                                case 2:
                                     FilteredMessages = TotalMessageList?.unreadMessages()
-                                }else{
-                                    filterSelection(FilterType:  Filters[selectedIndex.item])
+                               
+                                default:
+                                    FilteredMessages = TotalMessageList
                                 }
+                                
                             }else {
                                 
-                                if readStatus == 1 {
-                                    FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[ selectedIndex.row])
-                                }else if readStatus == 2 {
+                                switch readStatus {
                                     
+                                case 0:
+                                    FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
+                                    
+                                case 1:
+                                    FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[ selectedIndex.row])
+                                case 2:
                                     FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[ selectedIndex.row])
+                                    
+                                default:
+                                    FilteredMessages = TotalMessageList?.messages(ofType: Filters[ selectedIndex.row])
                                 }
+                                
                             }
                           
-                            
-                        }
+                        SearchMessages = FilteredMessages
                         
+                        SearchbarStack.isHidden = false
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
                         tv.isHidden = false
@@ -424,6 +438,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate, SelectedTextDeleg
                         tv.reloadData()
                         
                         if TotalMessageList?.count == 0 {
+                            SearchbarStack.isHidden = true
                             NodataLbl.text = SuccessMessage.message
                             //NodataLbl.text = "Something went wrong! Try again Later"
                             tv.isHidden = true
@@ -517,37 +532,13 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-//        if FilteredMessages?.count == 0{
-//            
-//            NodataImage.isHidden = false
-//            NodataLbl.isHidden = false
-//            NodataLbl.text = "No Data Found"
-//        }else {
-//            
-//            NodataImage.isHidden = true
-//            NodataLbl.isHidden = true
-//        }
-        
-        if isFiltered{
-            return FilteredMessages?.count ?? 0
-        }else{
-            
-            return TotalMessageList?.count ?? 0
-        }
+    
+          return SearchMessages?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        print("",)
-        
-        let message : CommunicationReciverData?
-        
-        if isFiltered{
-             message = FilteredMessages?[indexPath.row]
-        }else {
-            message = TotalMessageList?[indexPath.row]
-        }
+        let message = SearchMessages?[indexPath.row]
         
         switch message?.type.uppercased() {
        
@@ -571,7 +562,6 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
 
             cell.descriptContent.attributedText = self.descript(for:message?.content ?? "", expanded: message?.isExpand ?? false)
 
-            cell.delegate = self
                 let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleLabelTap(_:)))
             
             cell.descriptContent.addGestureRecognizer(tapGesture)
@@ -674,11 +664,9 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         let indexPath = IndexPath(row: label.tag, section: 0)
         
         var message: CommunicationReciverData?
-        if isFiltered {
-            message = FilteredMessages?[indexPath.row]
-        } else {
-            message = TotalMessageList?[indexPath.row]
-        }
+
+        message = SearchMessages?[indexPath.row]
+
         guard let fullDescription = message?.content else { return }
 
         let threshold = 120
@@ -706,18 +694,10 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
         }
         
          //Save updated message back to the data source.
-        if isFiltered {
             
             if let updatedMessage = message{
-                FilteredMessages?[indexPath.row] = updatedMessage
+                SearchMessages?[indexPath.row] = updatedMessage
             }
-           
-        } else {
-            
-            if let updatedMessage = message{
-                TotalMessageList?[indexPath.row] = updatedMessage
-            }
-        }
         
         // Refresh table view layout.
         tv.beginUpdates()
@@ -831,8 +811,6 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
         
         cell.FilterLbl.text = Filters[indexPath.item]
         
-//        cell.cellView.backgroundColor = indexPath == selectedIndex ? .systemGreen.withAlphaComponent(0.3) : .systemGray5
-        
         cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
         
         return cell
@@ -842,50 +820,46 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
         
         selectedIndex = indexPath // Update selected index
         
-      
-        
-        if readStatus == 2 {
+        if selectedIndex.row == 0{
             
-            if selectedIndex.row == 0 {
+            switch readStatus {
                 
-                FilteredMessages = TotalMessageList?.unreadMessages()
-            }else{
+            case 0:
+                FilteredMessages = TotalMessageList
                 
-                FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[indexPath.item])
-            }
-        }
-        
-        else if readStatus == 1 {
-            
-            if selectedIndex.row == 0 {
+            case 1:
                 FilteredMessages = TotalMessageList?.readMessages()
-            }else {
-                FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[indexPath.item])
+                
+            case 2:
+                FilteredMessages = TotalMessageList?.unreadMessages()
+                
+            default:
+                FilteredMessages = TotalMessageList
             }
-        }
-        
-        else{
             
-            filterSelection(FilterType: Filters[indexPath.item])
+        }else {
+            
+            switch readStatus {
+                
+            case 0:
+                FilteredMessages = TotalMessageList?.messages(ofType: Filters[selectedIndex.row])
+                
+            case 1:
+                FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
+                
+            case 2:
+                FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[selectedIndex.row])
+                
+            default:
+                FilteredMessages = TotalMessageList?.messages(ofType: Filters[selectedIndex.row])
+            }
+            
         }
         
-        isFiltered = true
-       
-//        if FilteredMessages?.count == 0{
-//            
-//            NodataImage.isHidden = false
-//            NodataLbl.isHidden = false
-//            NodataLbl.text = "No Data Found"
-//        }else {
-//            
-//            NodataImage.isHidden = true
-//            NodataLbl.isHidden = true
-//        }
+        SearchMessages = FilteredMessages
         
         tv.reloadData()
-        
         FilterCV.reloadData()
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -905,22 +879,22 @@ extension ParentCommunicationVc : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        
-        guard let totalMessages = TotalMessageList else {
+        guard let totalMessages = FilteredMessages else {
             FilteredMessages = []
             tv.reloadData()
             return
         }
 
         if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            FilteredMessages = totalMessages
+            SearchMessages = totalMessages
         } else {
+            
             let lowercasedSearch = searchText.lowercased()
 
-            FilteredMessages = totalMessages.filter { message in
+            SearchMessages = totalMessages.filter { message in
                 let content = message.content.lowercased()
-                let description = message.title.lowercased()
-                let dateString = dateFormatter.convertDate(message.date ?? "")?.lowercased() ?? ""
+                let description = message.content.lowercased()
+                let dateString = dateFormatter.convertDate(message.date)?.lowercased() ?? ""
                 let type = message.type.lowercased()
 
                 return content.contains(lowercasedSearch) ||
@@ -930,7 +904,6 @@ extension ParentCommunicationVc : UISearchBarDelegate {
             }
         }
 
-        isFiltered = true
         tv.reloadData()
     }
 
