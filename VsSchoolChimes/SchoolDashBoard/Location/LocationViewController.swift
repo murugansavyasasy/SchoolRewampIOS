@@ -213,6 +213,9 @@ class LocationViewController: UIViewController {
     @IBAction func AddLocationAct(_ sender: Any) {
         
         let vc = CreateLocationViewController(nibName: nil, bundle: nil)
+        vc.longitude = currentLogi ?? ""
+        vc.latitude = currentLat ?? ""
+        vc.refrenceAddress = RefrenceAddress
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

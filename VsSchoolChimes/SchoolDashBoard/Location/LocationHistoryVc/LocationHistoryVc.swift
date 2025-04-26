@@ -13,8 +13,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var seachHeight: NSLayoutConstraint!
-    @IBOutlet weak var todayDefaultLbl: UILabel!
-    @IBOutlet weak var staffWiseDefaultLbl: UILabel!
     @IBOutlet weak var selectYrHeight: NSLayoutConstraint!
     @IBOutlet weak var selctStaffHeight: NSLayoutConstraint!
     @IBOutlet weak var noRecordLbl: UILabel!
@@ -22,8 +20,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     @IBOutlet weak var selectMthLbl: UILabel!
     @IBOutlet weak var yearLbl: UILabel!
     @IBOutlet weak var stafNameLbl: UILabel!
-    @IBOutlet weak var allsatffView: UIViewX!
-    @IBOutlet weak var todayStaffView: UIViewX!
     @IBOutlet weak var staffDropViewHeight: NSLayoutConstraint!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var tv: UITableView!
@@ -67,13 +63,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         applyShadowAndCornerRadius(to:yearsView)
         applyShadowAndCornerRadius(to:staffDropView)
         applyShadowAndCornerRadius(to:monthView)
-        todayStaffView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        todayDefaultLbl.textColor = .white
-        staffWiseDefaultLbl.textColor = .gray
+       
         noRecordLbl.isHidden = true
         yearsView.isHidden = true
         monthView.isHidden = true
@@ -116,10 +106,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             tv.delegate = self
             tv.dataSource = self
             
-            let today = UITapGestureRecognizer(target: self, action: #selector(todayView))
-            todayStaffView.addGestureRecognizer(today)
-            let allStaff = UITapGestureRecognizer(target: self, action: #selector(allStaffVIew))
-            allsatffView.addGestureRecognizer(allStaff)
+           
             let seletYrs = UITapGestureRecognizer(target: self, action: #selector(selectYearsViewClick))
             yearsView.addGestureRecognizer(seletYrs)
             let selectMonth = UITapGestureRecognizer(target: self, action: #selector(selectMonthViewClick))
@@ -141,78 +128,10 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         dismiss(animated: true)
     }
     
-    @IBAction func todayView(){
-        seachHeight.constant = 56
-        
-        tv.isHidden = false
-        
-        todayStaffView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        allsatffView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        todayDefaultLbl.textColor = .white
-        staffWiseDefaultLbl.textColor = .gray
-        
-        monthView.isHidden = true
-        yearsView.isHidden = true
-        staffDropViewHeight.constant = 0
-        selectYrHeight.constant = 0
-        selctStaffHeight.constant = 0
-        staffDefaultsLbl.isHidden = true
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let formattedDate = dateFormatter.string(from: currentDate)
-        print(formattedDate) // Example output: "Mo
-        display_date = formattedDate
-        noRecordLbl.isHidden = true
-        RefId = 1
-        geometric_principal_attendance_report()
-       
-    }
-    
-    
-    
-    @IBAction func allStaffVIew(){
-        
-        seachHeight.constant = 0
-        noRecordLbl.isHidden = true
-        allsatffView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        todayStaffView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        todayDefaultLbl.textColor = .gray
-        staffWiseDefaultLbl.textColor = .white
-        RefId = 2
-        monthView.isHidden = false
-        yearsView.isHidden = false
-        staffDropViewHeight.constant = 137
-        selectYrHeight.constant = 30
-        selctStaffHeight.constant = 38
-        staffDefaultsLbl.isHidden = false
-        tv.isHidden = false
-        dateAndMoth = ""
-        getStaffListAPI()
-    }
-    
     @IBAction func segmentAction(_ sender: Any) {
         
         if SegmentControl.selectedSegmentIndex == 0{
             
-            todayDefaultLbl.textColor = .white
-            staffWiseDefaultLbl.textColor = .gray
             
             monthView.isHidden = true
             yearsView.isHidden = true
@@ -232,8 +151,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             
         }else{
             
-            todayDefaultLbl.textColor = .gray
-            staffWiseDefaultLbl.textColor = .white
             
             RefId = 2
             monthView.isHidden = false

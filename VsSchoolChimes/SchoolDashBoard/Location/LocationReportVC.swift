@@ -44,7 +44,7 @@ class LocationReportVC: UIViewController{
         
         MonthLbl.text = Months[0]
         
-       // Geometric_Punch_History()
+        Geometric_Punch_History()
         
         let YearTap = UITapGestureRecognizer(target: self, action: #selector(YearSelection))
         SelectYearDropdownView.addGestureRecognizer(YearTap)

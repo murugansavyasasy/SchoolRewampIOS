@@ -41,7 +41,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     let secondParagraph = """
         Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
         """
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
