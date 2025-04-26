@@ -45,7 +45,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="72U-SE-NOh" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="616.33333333333337"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="671.33333333333337"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxK-kN-s1W">
                                                     <rect key="frame" x="16" y="60" width="361" height="61.666666666666657"/>
@@ -95,7 +95,7 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="vXk-cE-N7b"/>
                                                     </constraints>
-                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wLX-WV-fVY">
@@ -222,7 +222,7 @@
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jKr-2q-hom">
-                                                    <rect key="frame" x="20" y="464.66666666666663" width="353" height="71.666666666666629"/>
+                                                    <rect key="frame" x="20" y="519.66666666666663" width="353" height="71.666666666666629"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mXm-xH-b7x">
                                                             <rect key="frame" x="10" y="9.9999999999999964" width="333" height="55.666666666666657"/>
@@ -251,7 +251,7 @@
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpx-PQ-O7g">
-                                                    <rect key="frame" x="121.66666666666669" y="556.33333333333337" width="150" height="40"/>
+                                                    <rect key="frame" x="121.66666666666669" y="611.33333333333337" width="150" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="6oj-fM-ODr"/>
                                                         <constraint firstAttribute="height" constant="40" id="I2u-A2-1h8"/>
@@ -264,8 +264,8 @@
                                                         </backgroundConfiguration>
                                                     </buttonConfiguration>
                                                 </button>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="dLW-q0-sE7">
-                                                    <rect key="frame" x="20" y="344.66666666666669" width="353" height="100"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dLW-q0-sE7">
+                                                    <rect key="frame" x="20" y="344.66666666666669" width="353" height="155"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0E-px-AkB">
                                                             <rect key="frame" x="0.0" y="0.0" width="353" height="100"/>
@@ -284,8 +284,8 @@
                                                                 <constraint firstAttribute="trailing" secondItem="8fu-b1-a9i" secondAttribute="trailing" id="wiG-A5-2vk"/>
                                                             </constraints>
                                                         </view>
-                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znG-wN-GIT">
-                                                            <rect key="frame" x="0.0" y="0.0" width="353" height="35"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znG-wN-GIT">
+                                                            <rect key="frame" x="0.0" y="119.99999999999994" width="353" height="35"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="35" id="yEt-Qo-iOs"/>
                                                             </constraints>
@@ -296,6 +296,9 @@
                                                                     <color key="backgroundColor" red="0.35737061129999997" green="0.6401742909" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 </backgroundConfiguration>
                                                             </buttonConfiguration>
+                                                            <connections>
+                                                                <action selector="history:" destination="-1" eventType="touchUpInside" id="V6E-Rg-S10"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>

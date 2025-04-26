@@ -539,6 +539,8 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+//        print("",)
+        
         let message : CommunicationReciverData?
         
         if isFiltered{
@@ -561,7 +563,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
             cell.descriptContent.tag = indexPath.row // Tag the label with the row index
             cell.descriptContent.isUserInteractionEnabled = true
             
-            cell.MessageTitle.text = message?.description
+            cell.MessageTitle.text = message?.title
            
             let formattedDateString = dateFormatter.convertDate(message?.date ?? "") ?? ""
             
@@ -612,7 +614,7 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
                 cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: message?.time)
             
             
-            cell.contentlbl.text = voiceData?.description ?? ""
+            cell.contentlbl.text = voiceData?.title ?? ""
             
             let duration = voiceData?.duration ?? 0
             print("duration1",duration)
@@ -902,6 +904,8 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
 extension ParentCommunicationVc : UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        
         guard let totalMessages = TotalMessageList else {
             FilteredMessages = []
             tv.reloadData()
@@ -915,7 +919,7 @@ extension ParentCommunicationVc : UISearchBarDelegate {
 
             FilteredMessages = totalMessages.filter { message in
                 let content = message.content.lowercased()
-                let description = message.description.lowercased()
+                let description = message.title.lowercased()
                 let dateString = dateFormatter.convertDate(message.date ?? "")?.lowercased() ?? ""
                 let type = message.type.lowercased()
 
