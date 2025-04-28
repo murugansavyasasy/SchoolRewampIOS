@@ -41,7 +41,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     let secondParagraph = """
         Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
         """
-
+    var AlertModal = CustomAlert()
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -51,7 +52,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         
         if !isManualLocationSet {
             isManualLocationSet = true
-            updateMapToManualLocation(lat: 13.0108, lon: 80.2206)
+            updateMapToManualLocation(lat:Double(latitude) ?? 0.0, lon: Double(longitude) ?? 0.0)
             locationManager.stopUpdatingLocation()
         }
     }
@@ -234,6 +235,39 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         let vc = AddLocationHistory(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true)
+    }
+    @IBAction func saveLocation(_ sender: UIButton) {
+        if locationNameTxt.text != "" && longitude != "" && latitude != "" && distanceTxt.text != ""{
+            if #available(iOS 15.0, *) {
+                showLottieProgressLoader(animationName: "loader (2)")
+            }
+            
+            APIService.shared.makeApi(
+                url: ServiceUrl.staff_attd_geometric_set_geometric_location,
+                parameters: [  "location": locationNameTxt.text ?? "",
+                               "longitude":longitude,
+                               "latitude": latitude,
+                               "distance": distanceTxt.text ?? ""],
+                type: ApitTypeSringFile.POST,
+                token:staffDetails?.access_token ?? ""
+            ) { [self] (result: Result<StaffGeometricLocation, Error>) in
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
+                    }
+                    
+                    switch result {
+                    case .success(let response):
+                        self.AlertModal.showAlert(title: "", message: response.message ?? "", on: self)
+                    case .failure(let error):
+                        print("Error fetching attachments:", error.localizedDescription)
+                        self.AlertModal.showAlert(title: "", message: error.localizedDescription, on: self)
+                    }
+                }
+            }
+            
+        }
+        
     }
     
 }

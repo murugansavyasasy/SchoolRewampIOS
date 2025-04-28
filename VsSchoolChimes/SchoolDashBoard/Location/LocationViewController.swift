@@ -537,7 +537,12 @@ extension LocationViewController:CLLocationManagerDelegate{
                         print("API Error: \(error.localizedDescription)")
                     }
                 }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
             }
+        }
     }
     private func updatePunchUI(isInside: Bool) {
         if isInside {
