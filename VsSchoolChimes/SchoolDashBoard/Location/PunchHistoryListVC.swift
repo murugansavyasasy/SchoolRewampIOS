@@ -19,7 +19,8 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     var staffdetails = UserDefaultFileManager.get_staff_Details()
     
-    var PunchDetails:[PunchList]? =  []
+    var PunchDetails:[puchHistoryList]? =  []
+    var selectedDate = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,9 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         noRecordLbl.isHidden = true
         let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
         backView.addGestureRecognizer(back)
+        
+        Geometric_Punch_History()
+        
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
@@ -40,7 +44,7 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func Geometric_Punch_History(){
         
-        let param = [punchHistoryStringFile.from_date : "",punchHistoryStringFile.to_date : ""]
+        let param = [punchHistoryStringFile.from_date : selectedDate,punchHistoryStringFile.to_date : selectedDate]
         
         APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (result: Result<PunchHistoryResponse,Error>) in
             
@@ -50,12 +54,25 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 if successMessage.status == true {
                     
-                    PunchDetails = successMessage.data
+                    DispatchQueue.main.async { [self] in
+                        
+                        PunchDetails = successMessage.data?.first?.timings
+                        tv.reloadData()
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                      
+                    }
                 }
                 
             case .failure(let error):
                 
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    
+                    print(error.localizedDescription)
+                }
             }
         }
     }
@@ -66,10 +83,12 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let punch = PunchDetails?[indexPath.row]
+        
         let cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell
-        cell.timing.text = PunchDetails?[indexPath.row].timings?[0].time//"9.00 AM"
-        cell.punchType.text = PunchDetails?[indexPath.row].timings?[0].punch_type?.value//"Fingerprint"
-        cell.phoneModel.text = PunchDetails?[indexPath.row].timings?[0].device_model//"Realme 11 Pro"
+        cell.timing.text = punch?.time
+        cell.punchType.text = punch?.punch_type?.value//"Fingerprint"
+        cell.phoneModel.text = punch?.device_model//"Realme 11 Pro"
         return cell
     }
     

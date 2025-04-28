@@ -26,6 +26,7 @@ class LocationReportVC: UIViewController{
     var Months: [String] = []
     var dropDown = DropDown()
     var SelectedMonthCode = ""
+    var SendDate = ""
     
     override func viewDidLoad() {
         
@@ -131,6 +132,8 @@ class LocationReportVC: UIViewController{
                         AttendanceDetails = successMessage.data
                         
                         NoDataLbl.isHidden = true
+                        
+                        Tv.reloadData()
                     }
                     
                 }else {
@@ -140,6 +143,7 @@ class LocationReportVC: UIViewController{
                         AttendanceDetails = successMessage.data
                         NoDataLbl.text = successMessage.message
                         NoDataLbl.isHidden = false
+                        Tv.reloadData()
                     }
                 }
                 
@@ -221,22 +225,72 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         cell.StatusLbl.text = AttendanceDetails?[indexPath.row].leave_type
         if cell.StatusLbl.text == "Absent" {
             cell.StatusLbl.backgroundColor = .systemRed
+        }else{
+            cell.StatusLbl.backgroundColor = .systemGreen
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let historyTap = UITapGestureRecognizer(target: self, action: #selector(GoTOHISTORY))
-        cell.historyTimImage.addGestureRecognizer(historyTap)
-        cell.historyTimImage.isUserInteractionEnabled = true
+        
+        if let components = convertDateComponents(from: AttendanceDetails?[indexPath.row].date ?? "") {
+           
+            cell.datelbl.text = components.day
+            cell.mnthLbl.text = components.month
+            cell.dayLbl.text = components.weekday
+        }
+
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedDate = AttendanceDetails?[indexPath.row].date
+        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        vc.selectedDate = selectedDate ?? ""
+        present(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
-    @objc func GoTOHISTORY(){
+    
+    func convertDateComponents(from dateString: String) -> (day: String, month: String, weekday: String)? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let date = inputFormatter.date(from: dateString) else {
+            return nil
+        }
+        
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "dd"
+        
+        let monthFormatter = DateFormatter()
+        monthFormatter.dateFormat = "MMM" // Short month format: Jan, Feb, Mar...
+        
+        let weekdayFormatter = DateFormatter()
+        weekdayFormatter.dateFormat = "EEEE" // Full day name: Monday, Tuesday...
+        
+        let day = dayFormatter.string(from: date)
+        let month = monthFormatter.string(from: date)
+        let weekday = weekdayFormatter.string(from: date)
+        
+        return (day, month, weekday)
+    }
+
+    
+    @objc func GoTOHISTORY(_ sender: UITapGestureRecognizer) {
+        guard let row = sender.view?.tag else { return }
+       
+        let selectedDate = AttendanceDetails?[row].date// Assuming you have a date property
+        
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
+        
+        // Now pass the date to vc
+        vc.selectedDate = selectedDate ?? ""
+        
         present(vc, animated: true)
     }
+
 }

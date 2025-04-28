@@ -42,21 +42,10 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var RefId = 1
     var url_date : String!
     var dateAndMoth : String!
-    
-    //    let attendanceRecords: [Attendance] = [
-    //        Attendance(staffName: "Alice Johnson", dayType: "Full Day", status: "Present", firstIn: "08:45", lastOut: "17:30", workingHours: "8.75"),
-    //        Attendance(staffName: "Bob Smith", dayType: "Half Day", status: "Present", firstIn: "09:00", lastOut: "13:00", workingHours: "4.0"),
-    //        Attendance(staffName: "Charlie Brown", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
-    //        Attendance(staffName: "Diana Ross", dayType: "Full Day", status: "Present", firstIn: "09:15", lastOut: "18:00", workingHours: "8.75"),
-    //        Attendance(staffName: "Ethan Hunt", dayType: "Half Day", status: "Present", firstIn: "10:00", lastOut: "14:00", workingHours: "4.0"),
-    //        Attendance(staffName: "Fiona Green", dayType: "Full Day", status: "Present", firstIn: "08:30", lastOut: "17:45", workingHours: "9.25"),
-    //        Attendance(staffName: "George White", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
-    //        Attendance(staffName: "Hannah Blue", dayType: "Full Day", status: "Present", firstIn: "09:00", lastOut: "18:30", workingHours: "9.5"),
-    //        Attendance(staffName: "Ian Black", dayType: "Half Day", status: "Present", firstIn: "12:00", lastOut: "16:00", workingHours: "4.0"),
-    //        Attendance(staffName: "Julia Red", dayType: "Full Day", status: "Present", firstIn: "09:30", lastOut: "18:15", workingHours: "8.75")
-    //    ]
     var staffDetails: [GetStaffDetails]?
     var staffAttendanceDetails: [StaffAttendance]?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -101,11 +90,13 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     monthNames.append(monthName)
                 }
             }
+            
+            geometric_principal_attendance_report()
+            
             let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
             tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
             tv.delegate = self
             tv.dataSource = self
-            
            
             let seletYrs = UITapGestureRecognizer(target: self, action: #selector(selectYearsViewClick))
             yearsView.addGestureRecognizer(seletYrs)
@@ -132,7 +123,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         if SegmentControl.selectedSegmentIndex == 0{
             
-            
             monthView.isHidden = true
             yearsView.isHidden = true
             staffDropViewHeight.constant = 0
@@ -150,7 +140,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             geometric_principal_attendance_report()
             
         }else{
-            
             
             RefId = 2
             monthView.isHidden = false
@@ -215,7 +204,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             stafNameLbl.text = item
             
             geometric_principal_attendance_report()
-            
         }
     }
     
@@ -254,27 +242,61 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             staffAttendanceDetails?[indexPath.row].working_hours ?? ""
         )
         cell.StatusLbl.text = staffAttendanceDetails?[indexPath.row].leave_type
+        
         if cell.StatusLbl.text == "Absent" {
             cell.StatusLbl.backgroundColor = .systemRed
+        }else{
+            cell.StatusLbl.backgroundColor = .systemGreen
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let historyTap = UITapGestureRecognizer(target: self, action: #selector(GoTOHISTORY))
-        cell.historyTimImage.addGestureRecognizer(historyTap)
-        cell.historyTimImage.isUserInteractionEnabled = true
+        
+        if let components = convertDateComponents(from: staffAttendanceDetails?[indexPath.row].date ?? "") {
+           
+            cell.datelbl.text = components.day
+            cell.mnthLbl.text = components.month
+            cell.dayLbl.text = components.weekday
+        }
+        
         return cell
     }
     
-    @objc func GoTOHISTORY(){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedDate = staffAttendanceDetails?[indexPath.row].date
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
+        vc.selectedDate = selectedDate ?? ""
         present(vc, animated: true)
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func convertDateComponents(from dateString: String) -> (day: String, month: String, weekday: String)? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let date = inputFormatter.date(from: dateString) else {
+            return nil
+        }
+        
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "dd"
+        
+        let monthFormatter = DateFormatter()
+        monthFormatter.dateFormat = "MMM" // Short month format: Jan, Feb, Mar...
+        
+        let weekdayFormatter = DateFormatter()
+        weekdayFormatter.dateFormat = "EEEE" // Full day name: Monday, Tuesday...
+        
+        let day = dayFormatter.string(from: date)
+        let month = monthFormatter.string(from: date)
+        let weekday = weekdayFormatter.string(from: date)
+        
+        return (day, month, weekday)
+    }
+
     
     @IBAction func ShowHistory(ges : ShowPunchHistiryClick){
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)

@@ -491,6 +491,8 @@ extension LocationViewController:CLLocationManagerDelegate{
                                     LocationErrorStack.isHidden = true
                                     
                                     PunchDescriptionLbl.text = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
+                                    punchStack.backgroundColor = .white
+                                    
                                     break
                                     
                                 } else {
