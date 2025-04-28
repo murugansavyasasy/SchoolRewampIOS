@@ -348,8 +348,8 @@ extension LocationViewController:CLLocationManagerDelegate{
         let location = CLLocation(latitude: currentLatitude, longitude: currentLongitude)
         convertCoordinatesToAddress(location: location)
         get_locationDetails(
-            curentLogittude : currentLogi ?? "" ,
-            currentLatitute : currentLat ?? "",
+            currentLongitude : currentLogi ?? "" ,
+            currentLatitude : currentLat ?? "",
             distance: Int(distanceInMeters)
         )
         locationManager.stopUpdatingLocation()
@@ -455,84 +455,71 @@ extension LocationViewController:CLLocationManagerDelegate{
             }
     }
     
-    func get_locationDetails(curentLogittude : String , currentLatitute : String, distance : Int) {
-        APIService.shared
-            .makeApi(url: ServiceUrl.staff_attd_geometric_get_staff_geometric_location, parameters:[:] , type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                result : Result<StaffGeometricLocation,
-                Error>
-            ) in
-                switch result {
-                case.success(let succesmessage) :
-                    if succesmessage.status == true {
-                        DispatchQueue.main.async { [self] in
-                            
-                            getlocationDataDetails = succesmessage.data ?? []
-                            
-                            for i in 0..<(succesmessage.data?.count ?? 0){
-                                var distanceInt = Int(succesmessage.data?[i].distance ?? "")
-                                let distance = haversineDistance(
-                                    lat1: Double(
-                                        succesmessage.data?[i].latitude ?? ""
-                                    )!,
-                                    lon1: Double(
-                                        succesmessage.data?[i].longitude ?? ""
-                                    )!,
-                                    lat2: Double(currentLatitute)!,
-                                    lon2: Double(curentLogittude)!
-                                )
-                                currentDistanceForPuchCheck = distance
-                                apiDistanceForPuchCheck = distanceInt
-                                
-                                // Check if the distance is smaller
-                                if distance <= Double(distanceInt!) {
-                                  
-                                    punchStack.isHidden = false
-//                                    .isHidden = true
-                                    LocationErrorStack.isHidden = true
-                                    
-                                    PunchDescriptionLbl.text = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
-                                    break
-                                    
-                                } else {
-                                   
-                                    AllowLoactionThumbnail.image = ImageName.need_location_access
-                                    punchStack.layer.cornerRadius = 10
-                                    punchStack.backgroundColor = .red
-                                        .withAlphaComponent(0.4)
-                                    PunchDescriptionLbl.text = "Note : You are outside the institutes boundary. you will not be able to mark your attendanc \n\n Please try again when you are within the designated area."
-                                    LocationErrorStack.isHidden = false
-                                    punchStack.isHidden = true
-                                    AllowLoactionThumbnail.isHidden = true
-//                                    errorLabel.isHidden = false
-//                                    punchFullView.isHidden = true
-//                                    ErrorLablelView.isHidden = false
-                                }
-                                
+    func get_locationDetails(currentLongitude: String, currentLatitude: String, distance: Int) {
+        APIService.shared.makeApi(
+            url: ServiceUrl.staff_attd_geometric_get_staff_geometric_location,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true {
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        
+                        self.getlocationDataDetails = successMessage.data ?? []
+                        
+                        for i in 0..<(successMessage.data?.count ?? 0) {
+                            guard let locationData = successMessage.data?[i],
+                                  let distanceInt = Int(locationData.distance ?? ""),
+                                  let lat1 = Double(locationData.latitude ?? ""),
+                                  let lon1 = Double(locationData.longitude ?? ""),
+                                  let lat2 = Double(currentLatitude),
+                                  let lon2 = Double(currentLongitude)
+                            else {
+                                continue
                             }
                             
+                            let calculatedDistance = self.haversineDistance(
+                                lat1: lat1,
+                                lon1: lon1,
+                                lat2: lat2,
+                                lon2: lon2
+                            )
+                            
+                            self.currentDistanceForPuchCheck = calculatedDistance
+                            self.apiDistanceForPuchCheck = distanceInt
+                            
+                            if calculatedDistance <= Double(distanceInt) {
+                                self.punchStack.isHidden = false
+                                self.LocationErrorStack.isHidden = true
+                                self.PunchDescriptionLbl.text = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
+                                break
+                            } else {
+                                self.AllowLoactionThumbnail.image = ImageName.need_location_access
+                                self.punchStack.layer.cornerRadius = 10
+                                self.punchStack.backgroundColor = UIColor.red.withAlphaComponent(0.4)
+                                self.PunchDescriptionLbl.text = """
+                                Note: You are outside the institute's boundary. You will not be able to mark your attendance. 
+
+                                Please try again when you are within the designated area.
+                                """
+                                self.LocationErrorStack.isHidden = false
+                                self.punchStack.isHidden = true
+                                self.AllowLoactionThumbnail.isHidden = true
+                            }
                         }
-                    }else {
-                        
-                        DispatchQueue.main.async {
-//                            CustomAlert
-//                                .showAlertWithOkAction(
-//                                    title: AlertstringFile.Sccuess,
-//                                    message: succesmessage.message ?? "",
-//                                    on: self
-//                                ) {
-//                                    
-//                                }
-                        }
-                    }
-                    
-                case.failure(let error) :
-                    
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
                     }
                 }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
             }
+        }
     }
+
     
     
     
