@@ -55,9 +55,6 @@ struct ServiceUrl{
     static let  staff_attd_geometric_remove_geometric_location  = "staff-attd/geometric/remove-geometric-location"
 
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/geometric/get-staff-geometric-location"
-    
-    
-    
 }
 
 struct localData{

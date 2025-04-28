@@ -7,52 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Auth/Otp/OTPVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "299"
-            endingLineNumber = "299"
-            landmarkName = "Validate_OTP(mobileNumber:otp:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - 41819c12853b386"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "299"
-                  endingLineNumber = "299">
-               </Location>
-               <Location
-                  uuid = "6D0AD0FD-EA86-432F-BD80-AF28168CD5BD - 41819c12853b386"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "299"
-                  endingLineNumber = "299">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -64,36 +18,6 @@
             endingLineNumber = "281"
             landmarkName = "Validate_OTP(mobileNumber:otp:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - 41819c12853b134"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "281"
-                  endingLineNumber = "281">
-               </Location>
-               <Location
-                  uuid = "4C9E41EC-0271-4E4F-9D1A-45E6BC3F32E4 - 41819c12853b134"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ValidateOTPSuc, Swift.Error&gt;) -&gt; () in School_Chimes.OTPVc.Validate_OTP(mobileNumber: Swift.String, otp: Swift.String) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macbook/Documents/NewSchoolComm/SchoolRewampIOS/VsSchoolChimes/Auth/Otp/OTPVc.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "281"
-                  endingLineNumber = "281">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationReportVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="MonthLbl" destination="UnL-vc-GRE" id="7Yq-ll-8Hw"/>
+                <outlet property="NoDataLbl" destination="nPK-M6-050" id="31Y-VT-U2y"/>
                 <outlet property="SelectMonthDropdownView" destination="wTN-dE-WPS" id="7r1-fm-E1I"/>
                 <outlet property="SelectYearDropdownView" destination="ksp-rv-kdN" id="TpN-MR-KWa"/>
                 <outlet property="Tv" destination="086-G3-ee4" id="vbF-GB-OZ9"/>
@@ -102,13 +103,22 @@
                             <rect key="frame" x="0.0" y="70" width="393" height="689"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Data" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPK-M6-050">
+                            <rect key="frame" x="30" y="368" width="333" height="23"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="nPK-M6-050" firstAttribute="centerY" secondItem="4bF-6m-iAX" secondAttribute="centerY" id="32M-dd-A37"/>
                         <constraint firstAttribute="trailing" secondItem="CdA-Hs-cM9" secondAttribute="trailing" constant="30" id="3LM-qw-M66"/>
                         <constraint firstItem="CdA-Hs-cM9" firstAttribute="leading" secondItem="4bF-6m-iAX" secondAttribute="leading" constant="30" id="8lS-J7-QcB"/>
                         <constraint firstItem="CdA-Hs-cM9" firstAttribute="top" secondItem="4bF-6m-iAX" secondAttribute="top" constant="20" id="A7R-SD-bEP"/>
                         <constraint firstItem="086-G3-ee4" firstAttribute="top" secondItem="CdA-Hs-cM9" secondAttribute="bottom" constant="20" id="OMY-44-Xp9"/>
+                        <constraint firstAttribute="trailing" secondItem="nPK-M6-050" secondAttribute="trailing" constant="30" id="Q0l-q8-g9n"/>
+                        <constraint firstItem="nPK-M6-050" firstAttribute="leading" secondItem="4bF-6m-iAX" secondAttribute="leading" constant="30" id="XP0-UN-Dm2"/>
                         <constraint firstItem="086-G3-ee4" firstAttribute="leading" secondItem="4bF-6m-iAX" secondAttribute="leading" id="f7Q-ln-HSa"/>
                         <constraint firstAttribute="bottom" secondItem="086-G3-ee4" secondAttribute="bottom" id="ldw-E9-Ige"/>
                         <constraint firstAttribute="trailing" secondItem="086-G3-ee4" secondAttribute="trailing" id="zsQ-4P-Noe"/>

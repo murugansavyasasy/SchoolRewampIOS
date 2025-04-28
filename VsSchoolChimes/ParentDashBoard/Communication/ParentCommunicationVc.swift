@@ -296,9 +296,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             ViewAnimator.hideFade(FilterCV)
             ViewAnimator.hideFade(ReadUnreadStack)
         }
-        
-       
-        
     }
     
     func filterSelection(FilterType: String) {
@@ -382,9 +379,6 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                     DispatchQueue.main.async { [self] in
                         
                         TotalMessageList?.append(contentsOf: SuccessMessage.data)
-                        
-//                        FilteredMessages = TotalMessageList
-//                        SearchMessages = TotalMessageList
                             
                             if selectedIndex.row == 0{
 

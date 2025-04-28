@@ -17,6 +17,10 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     var instituteId : Int!
     var date : String!
     
+    var staffdetails = UserDefaultFileManager.get_staff_Details()
+    
+    var PunchDetails:[PunchList]? =  []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let rowNiib = UINib(nibName: CellConfingName.PunchHistTableViewCell, bundle: nil)
@@ -33,16 +37,39 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         dismiss(animated: true)
     }
     
+    
+    func Geometric_Punch_History(){
+        
+        let param = [punchHistoryStringFile.from_date : "",punchHistoryStringFile.to_date : ""]
+        
+        APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (result: Result<PunchHistoryResponse,Error>) in
+            
+            switch result{
+        
+            case .success(let successMessage):
+                
+                if successMessage.status == true {
+                    
+                    PunchDetails = successMessage.data
+                }
+                
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return PunchDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell
-        cell.timing.text = "9.00 AM"
-        cell.punchType.text = "Fingerprint"
-        cell.phoneModel.text = "Realme 11 Pro"
+        cell.timing.text = PunchDetails?[indexPath.row].timings?[0].time//"9.00 AM"
+        cell.punchType.text = PunchDetails?[indexPath.row].timings?[0].punch_type?.value//"Fingerprint"
+        cell.phoneModel.text = PunchDetails?[indexPath.row].timings?[0].device_model//"Realme 11 Pro"
         return cell
     }
     
