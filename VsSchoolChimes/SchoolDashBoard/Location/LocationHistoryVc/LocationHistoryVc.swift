@@ -36,7 +36,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var display_date : String!
     var dropDown  = DropDown()
     var years: [String] = []
-    var monthNames: [String] = []
+    var Months: [String] = []
     let currentYear = Calendar.current.component(.year, from: Date())
     let dateFormatter = DateFormatter()
     var RefId = 1
@@ -44,8 +44,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var dateAndMoth : String!
     var staffDetails: [GetStaffDetails]?
     var staffAttendanceDetails: [StaffAttendance]?
-    
-    
+    var SelectedMonthCode = ""
+    var currentMonth = Calendar.current.component(.month, from: Date())
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,24 +72,21 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         let monthName = dateFormatters.string(from: date)
         print("Current Month: \(monthName)")
         selectMthLbl.text! = monthName
-        let userDefaults = UserDefaults.standard
+       
         if  type  == 1{
         }else{
             for i in 0..<21 {
                 let year = currentYear - i
                 years.append(String(year))
             }
-            yearLbl.text! = years[0]
-            dateFormatter.locale = Locale(identifier: "en_US")
-            dateFormatter.dateFormat = "MMMM"
-            for month in 1...12 {
-                var components = DateComponents()
-                components.month = month
-                if let date = Calendar.current.date(from: components) {
-                    let monthName = dateFormatter.string(from: date)
-                    monthNames.append(monthName)
-                }
-            }
+            
+            yearLbl.text = years[0]
+            
+            Months = getMonthNames(for: years[0])
+            
+            selectMthLbl.text = Months[currentMonth-1]
+            
+            SelectedMonthCode = String(format: "%02d",currentMonth)
             
             geometric_principal_attendance_report()
             
@@ -115,6 +112,28 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         )
     }
     
+    
+    func getMonthNames(for selectedYear: String) -> [String] {
+        let monthFormatter = DateFormatter()
+        monthFormatter.locale = Locale.current
+        monthFormatter.dateFormat = "MMMM" // Use "LLL" for short month names
+
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let currentMonth = Calendar.current.component(.month, from: Date())
+
+        let selectedYearInt = Int(selectedYear) ?? 0
+        let maxMonth = (selectedYearInt == currentYear) ? currentMonth : 12
+
+        return (1...maxMonth).compactMap { month in
+            var components = DateComponents()
+            components.year = 2000 // dummy year
+            components.month = month
+            if let date = Calendar.current.date(from: components) {
+                return monthFormatter.string(from: date)
+            }
+            return nil
+        }
+    }
     @IBAction func backClick(){
         dismiss(animated: true)
     }
@@ -156,8 +175,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     
     @IBAction func selectYearsViewClick(){
-        if RefId == 1{
-        }else{
+       
             let myArray = years
             dropDown.dataSource = myArray
             dropDown.anchorView = yearsView
@@ -165,15 +183,16 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             dropDown.direction = .bottom
             DropDown.appearance().backgroundColor = UIColor.white
             dropDown.show()
-            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                print("Selected item: \(item) at index: \(index)")
-                yearLbl.text = item
-            }
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+            yearLbl.text = item
+            Months = getMonthNames(for: item)
+            geometric_principal_attendance_report()
         }
     }
     
     @IBAction func selectMonthViewClick(){
-        let myArray = monthNames
+        let myArray = Months
         dropDown.dataSource = myArray
         dropDown.anchorView = monthView
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
@@ -183,6 +202,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             selectMthLbl.text = item
+            SelectedMonthCode = String(format: "%02d", index + 1)
+            geometric_principal_attendance_report()
         }
     }
     
@@ -350,29 +371,14 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func geometric_principal_attendance_report(){
-        var YearLbl = ""
         var param: [String: Any]
-        let today = getCurrentDateString()
-        let year = yearLbl.text!
-        let monthName = selectMthLbl.text!
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM" // Full month name format
-        
-        if let date = dateFormatter.date(from: monthName) {
-            let calendar = Calendar.current
-            let monthNumber = calendar.component(.month, from: date)
-            print("The month number for \(monthName) is \(monthNumber).")
-            if  monthNumber == 1 || monthNumber == 2 || monthNumber == 3 || monthNumber == 4 || monthNumber == 5 || monthNumber == 6 || monthNumber == 7 || monthNumber == 8 || monthNumber == 9 {
-                YearLbl = year +  "-" + "0" + String(monthNumber)
-            }else{
-                YearLbl = year +  "-"  + String(monthNumber)
-                
-            }
+        let todaydate = getCurrentDateString()
+        let year_Lbl = (yearLbl.text ?? "") + "-" + SelectedMonthCode
             
             if RefId == 1{
-                param = [principalAttendenceReportStringFile.attendance_dt: today ]
+                param = [principalAttendenceReportStringFile.attendance_dt: todaydate ]
             }else{
-                param = [ principalAttendenceReportStringFile.attendance_month: YearLbl,
+                param = [ principalAttendenceReportStringFile.attendance_month: year_Lbl,
                           principalAttendenceReportStringFile.staff_id: staffId ?? ""]
             }
             
@@ -404,7 +410,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 }
             
         }
-    }
+    
 }
 class ShowPunchHistiryClick : UITapGestureRecognizer{
     var date : String!
@@ -414,390 +420,7 @@ class ShowPunchHistiryClick : UITapGestureRecognizer{
 
 
 
-/*
- //MARK: searchBarCancelButtonClicked
- 
- AttendaceHistory()
- 
- 
- //MARK: viewDidload
- dateFormatter.dateFormat = "MMM d, yyyy"
- searchbar.delegate = self
- 
- //MARK: Func
- 
- 
- //    func AttendaceHistory(){
- //
- //
- //
- //        var YearLbl = ""
- //
- //
- //        if RefId == 1 {
- //
- //            YearLbl = display_date
- //        }else if RefId == 2 {
- //            let year = yearLbl.text!
- //            let monthName = selectMthLbl.text!
- //            let dateFormatter = DateFormatter()
- //            dateFormatter.dateFormat = "MMMM" // Full month name format
- //
- //            if let date = dateFormatter.date(from: monthName) {
- //                let calendar = Calendar.current
- //                let monthNumber = calendar.component(.month, from: date)
- //                print("The month number for \(monthName) is \(monthNumber).")
- //                if  monthNumber == 1 || monthNumber == 2 || monthNumber == 3 || monthNumber == 4 || monthNumber == 5 || monthNumber == 6 || monthNumber == 7 || monthNumber == 8 || monthNumber == 9 {
- //                    YearLbl = year +  "-" + "0" + String(monthNumber)
- //                }else{
- //                    YearLbl = year +  "-"  + String(monthNumber)
- //
- //                }
- //            } else {
- //                print("Invalid month name.")
- //            }
- //
- //        }
- //
- //
- //
- //
- //
- //
- //        let param : [String : Any] =
- //        [
- //
- //            "institiuteId": instituteId!,
- //            "attendance_month" : YearLbl,
- //            "userId"    : staffId!
- //
- //
- //        ]
- //
- //
- //
- //
- //        let param1 : [String : Any] =
- //        [
- //
- //            "institiuteId": instituteId!,
- //            "attendance_dt" : YearLbl,
- //
- //
- //
- //        ]
- //
- //
- //
- //
- //        if RefId == 1{
- //
- //            print("paramparam1",param1)
- //
- //            GetAttendanceHistroyReq.call_request(param: param1){ [self]
- //                (res) in
- //
- //                print("resres",res)
- //                let getattendace : GethistoryModal = Mapper<GethistoryModal>().map(JSONString: res)!
- //
- //
- //                if getattendace.status == 1  {
- //                    tv.isHidden = false
- //
- //                    getHistorydata = getattendace.data
- //                    searchtodayHistiry = getattendace.data
- //                    noRecordLbl.isHidden = true
- //                    tv.dataSource = self
- //                    tv.delegate = self
- //                    tv.reloadData()
- //
- //
- //
- //                }else{
- //                    tv.isHidden = true
- //                    noRecordLbl.isHidden = false
- //
- //                    noRecordLbl.text = getattendace.message
- //
- //
- //                }
- //            }
- //        }
- //
- //        else if RefId == 2 {
- //            print("paramparam",param)
- //            GetAttendanceHistroyReq.call_request(param: param){ [self]
- //                (res) in
- //
- //                print("resres",res)
- //                let getattendace : GethistoryModal = Mapper<GethistoryModal>().map(JSONString: res)!
- 
- //
- //
- //                if getattendace.status == 1  {
- //                    tv.isHidden = false
- //
- //                    getHistorydata = getattendace.data
- //                    noRecordLbl.isHidden = true
- //                    tv.dataSource = self
- //                    tv.delegate = self
- //                    tv.reloadData()
- //
- //
- //
- //                }else{
- //                    tv.isHidden = true
- //                    noRecordLbl.isHidden = false
- //
- //                    noRecordLbl.text = getattendace.message
- //
- //
- //                }
- //            }
- //        }
- //
- //    }
- 
- 
- //    func staffList(){
- //
- //
- //
- //        let param : [String : Any] =
- //        [
- //
- //            "instituteId": instituteId!
- //
- //
- //
- //        ]
- //
- //        print("paramparam",param)
- //
- //        staffListRequests.call_request(param: param){ [self]
- //            (res) in
- //
- //            print("resres",res)
- //            let getattendace : staffListModal = Mapper<staffListModal>().map(JSONString: res)!
- //
- //
- //            if getattendace.status == 1  {
- //                stafflistdata = getattendace.data
- //                stafNameLbl.text = stafflistdata[0].staffName
- //                staffId = stafflistdata[0].staffId
- //
- //            }else{
- //
- //
- //            }
- //        }
- //
- //
- //    }
- 
- 
- 
- 
- //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
- //
- //
- //
- //
- //
- //
- //            filtered_list = Mapper<GetHirstorydatadetails>().mapArray(JSONString: searchtodayHistiry.toJSONString()!)!
- //
- //
- //
- //
- //
- //
- //            if !searchText.isEmpty{
- //
- //                getHistorydata = filtered_list.filter {
- //
- //
- //
- //                    $0.staffName.lowercased().contains(searchText.lowercased())
- //                    //
- //                }
- //
- //
- //
- //            }else{
- //
- //
- //                getHistorydata = filtered_list
- //
- //                print("pendingOrder")
- //
- //            }
- //
- //
- //
- //            if getHistorydata.count > 0{
- //
- //                print ("searchListPendigCount",getHistorydata.count)
- //
- //                noRecordLbl.isHidden = true
- //
- //                tv.alpha = 1
- //
- //            }else{
- //                noRecordLbl.isHidden = false
- //                noRecordLbl.text = "No record found"
- //                tv.alpha = 0
- //
- //            }
- //
- //
- //
- //            tv.reloadData()
- //
- //
- //
- //
- //
- //
- //
- //
- //
- //
- //    }
- 
- 
- //MARK: Variable
- 
- var getHistorydata  : [GetHirstorydatadetails] = []
- //    var searchtodayHistiry  : [GetHirstorydatadetails] = []
- //    var filtered_list  : [GetHirstorydatadetails] = []
- 
- 
- var stafflistdata : [ModaldataDetails] = []
- //MARK: CellFor
- 
- let data : GetHirstorydatadetails = getHistorydata[indexPath.row]
- 
- 
- 
- //        cell.namelbl.text = data.staffName
- 
- //        cell.workingHrsLbl.text = "Working Hours - \(data.working_hours ?? "0")"
- 
- //        let eventDate = data.date
- 
- if let date = dateFormatter.date(from: eventDate!) {
- //
- //            dateFormatter.dateFormat = "EEEE"
- //            let formattedDate1 = dateFormatter.string(from: date)
- //
- //            dateFormatter.dateFormat = "MMM"
- //            let formattedDate2 = dateFormatter.string(from: date)
- //
- //            dateFormatter.dateFormat = "d"
- //            let formattedDate = dateFormatter.string(from: date)
- //
- //            cell.dayLbl.text =  formattedDate1
- //            cell.datelbl.text = formattedDate
- //            cell.mnthLbl.text =  formattedDate2
- //
- //            print(formattedDate)
- //        } else {
- //            print("Invalid date format")
- //        } // date converstion End
- 
- 
- //        if data.leave_type == "Absent"{
- //
- //            cell.StatusLbl.text = data.leave_type
- //            cell.StatusLbl.backgroundColor = .red
- //
- //            cell.attendanceTypeLbl.text = data.attendance_type
- //
- //
- //        }else{
- //            cell.namelbl.text = data.staffName
- //
- //            cell.StatusLbl.backgroundColor  = UIColor(named: "presentGreen")
- //            cell.attendanceTypeLbl.text = data.attendance_type
- //            cell.StatusLbl.text = data.leave_type
- //
- //
- //        }
- 
- 
- cell.firstInLbl.text =  "First in - \(data.in_time ?? "0")"
- //        if data.in_time ?? "" == "" {
- //            cell.firstInLbl.isHidden = true
- //        }
- //
- //        cell.namelbl.text = data.staffName
- //        if data.working_hours ?? "" == "" {
- //            cell.workingHrsLbl.isHidden = true
- //        }
- //        cell.toDateLbl.text = "Last out - \(data.out_time ?? "0")"
- //        if data.out_time ?? "" == "" {
- //            cell.toDateLbl.isHidden = true
- //        }
- //        cell.attendanceTypeLbl.text = data.attendance_type
- //        cell.namelbl.text =
- //            data.staffName
- //
- //
- //        let click = ShowPunchHistiryClick(target: self, action: #selector(ShowHistory))
- //        click.date = data.date
- //        click.staffId = data.staffId
- //
- //        cell.fullView.addGestureRecognizer(click)
- 
- 
- 
- 
- //MARK: Func staffDropDownList
- stafflistdata.forEach {(arrType)  in
- ////            StaffId.append((arrType.staffId))
- //            staffName.append(arrType.staffName)
- //
- //        }
- //        let myArray = stafflistdata[1].staffName
- 
- AttendaceHistory()
- 
- 
- //MARK: selectMonthViewClick
- 
- AttendaceHistory()
- 
- 
- //MARK: allStaffVIew
- AttendaceHistory()
- 
- 
- //MARK: todayView
- dateFormatter.dateFormat = "MMM d, yyyy"
- 
- AttendaceHistory()
- 
- //MARK: selectYearsViewClick inside if condition
- 
- 
- //            RPicker.selectDate(title: "Select Date", cancelText: "Cancel", datePickerMode: .date, style: .Inline, didSelectDate: {[weak self] (today_date) in
- 
- 
- 
- //                self?.display_date = today_date.dateString("dd/MM/yyyy")
- //
- //                self?.url_date = today_date.dateString("yyyy/MM/dd")
- //
- //                self?.yearLbl.text = self!.display_date
- //
- //            })
- 
- 
- inside else{
- AttendaceHistory()
- 
- */
+
 
 struct Attendance {
     var staffName: String

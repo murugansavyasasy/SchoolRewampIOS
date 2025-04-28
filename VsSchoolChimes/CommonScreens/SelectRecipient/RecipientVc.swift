@@ -343,10 +343,16 @@ class RecipientVc: UIViewController{
     }
     
     private func SendingCommunicationFlow() {
+        var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
+        
+        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Section_Student{
+            
+            selectedTabItem = "Section"
+        }
         
         var message : String?
         if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(selectedTabItem) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
         }else{
             
             message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
@@ -799,6 +805,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
                 cell.createdOnlbl.text =  item.created_on
+                cell.createdOnlbl.textAlignment = .right
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         case recipeint_tabBarName.Standard:
@@ -818,7 +825,16 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 cell.cellLabel.text = item.name
                 cell.createdOnlbl.isHidden = false
                 cell.createdOnlbl.textAlignment = .left
-                cell.createdOnlbl.text = "\(item.designation ?? "fcg fdgrdtr vjyhdthtrd fdxgrerdxg") - \(item.emp_id ?? "234556")"
+                if ((item.designation?.isEmpty) != nil) && (
+                    (item.emp_id?.isEmpty) != nil
+                ){
+                    
+                    cell.createdOnlbl.isHidden = true
+                }else{
+                    cell.isHidden = false
+                    cell.createdOnlbl.text = "\(item.designation ?? "") - \(item.emp_id ?? "")"
+                }
+               
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         default:

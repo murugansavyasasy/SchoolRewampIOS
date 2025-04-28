@@ -88,7 +88,6 @@ class LocationReportVC: UIViewController{
             print("Selected item: \(item) at index: \(index)")
             YearLbl.text = item
             Months = getMonthNames(for: item)
-            
             Geometric_Staff_Attendance_Report()
         }
     }
@@ -107,7 +106,6 @@ class LocationReportVC: UIViewController{
             
             // Convert index to two-digit month string
             SelectedMonthCode = String(format: "%02d", index + 1)
-            
             Geometric_Staff_Attendance_Report()
         }
     }
