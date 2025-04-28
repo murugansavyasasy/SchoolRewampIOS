@@ -17,6 +17,11 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     var instituteId : Int!
     var date : String!
     
+    var staffdetails = UserDefaultFileManager.get_staff_Details()
+    
+    var PunchDetails:[puchHistoryList]? =  []
+    var selectedDate = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let rowNiib = UINib(nibName: CellConfingName.PunchHistTableViewCell, bundle: nil)
@@ -24,6 +29,9 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         noRecordLbl.isHidden = true
         let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
         backView.addGestureRecognizer(back)
+        
+        Geometric_Punch_History()
+        
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
@@ -33,16 +41,54 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         dismiss(animated: true)
     }
     
+    
+    func Geometric_Punch_History(){
+        
+        let param = [punchHistoryStringFile.from_date : selectedDate,punchHistoryStringFile.to_date : selectedDate]
+        
+        APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (result: Result<PunchHistoryResponse,Error>) in
+            
+            switch result{
+        
+            case .success(let successMessage):
+                
+                if successMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        PunchDetails = successMessage.data?.first?.timings
+                        tv.reloadData()
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                      
+                    }
+                }
+                
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return PunchDetails?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let punch = PunchDetails?[indexPath.row]
+        
         let cell  = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PunchHistTableViewCell, for: indexPath) as! PunchHistTableViewCell
-        cell.timing.text = "9.00 AM"
-        cell.punchType.text = "Fingerprint"
-        cell.phoneModel.text = "Realme 11 Pro"
+        cell.timing.text = punch?.time
+        cell.punchType.text = punch?.punch_type?.value//"Fingerprint"
+        cell.phoneModel.text = punch?.device_model//"Realme 11 Pro"
         return cell
     }
     

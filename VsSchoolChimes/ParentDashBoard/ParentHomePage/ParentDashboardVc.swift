@@ -368,6 +368,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.receiverAttendancereport(from: self)
             case 10:
                 MenuRedirect.LeaveRquest(from: self)
+            case 11:
+                MenuRedirect.receiverCommunicationNavigate(from: self)
             case 13:
                 MenuRedirect.receiverHomework(from: self)
             case 14:

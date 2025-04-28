@@ -8,7 +8,7 @@
 
 import UIKit
 import DropDown
-class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
     
     
     @IBOutlet weak var BackBtn: UIButton!
@@ -42,27 +42,20 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var RefId = 1
     var url_date : String!
     var dateAndMoth : String!
-    
-    //    let attendanceRecords: [Attendance] = [
-    //        Attendance(staffName: "Alice Johnson", dayType: "Full Day", status: "Present", firstIn: "08:45", lastOut: "17:30", workingHours: "8.75"),
-    //        Attendance(staffName: "Bob Smith", dayType: "Half Day", status: "Present", firstIn: "09:00", lastOut: "13:00", workingHours: "4.0"),
-    //        Attendance(staffName: "Charlie Brown", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
-    //        Attendance(staffName: "Diana Ross", dayType: "Full Day", status: "Present", firstIn: "09:15", lastOut: "18:00", workingHours: "8.75"),
-    //        Attendance(staffName: "Ethan Hunt", dayType: "Half Day", status: "Present", firstIn: "10:00", lastOut: "14:00", workingHours: "4.0"),
-    //        Attendance(staffName: "Fiona Green", dayType: "Full Day", status: "Present", firstIn: "08:30", lastOut: "17:45", workingHours: "9.25"),
-    //        Attendance(staffName: "George White", dayType: "Full Day", status: "Absent", firstIn: "--", lastOut: "--", workingHours: "0.0"),
-    //        Attendance(staffName: "Hannah Blue", dayType: "Full Day", status: "Present", firstIn: "09:00", lastOut: "18:30", workingHours: "9.5"),
-    //        Attendance(staffName: "Ian Black", dayType: "Half Day", status: "Present", firstIn: "12:00", lastOut: "16:00", workingHours: "4.0"),
-    //        Attendance(staffName: "Julia Red", dayType: "Full Day", status: "Present", firstIn: "09:30", lastOut: "18:15", workingHours: "8.75")
-    //    ]
     var staffDetails: [GetStaffDetails]?
     var staffAttendanceDetails: [StaffAttendance]?
+    var SearchResults: [StaffAttendance]?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         applyShadowAndCornerRadius(to:yearsView)
         applyShadowAndCornerRadius(to:staffDropView)
         applyShadowAndCornerRadius(to:monthView)
+        
+        searchbar.searchTextField.addDoneButton()
+        searchbar.delegate = self
        
         noRecordLbl.isHidden = true
         yearsView.isHidden = true
@@ -101,11 +94,13 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     monthNames.append(monthName)
                 }
             }
+            
+            geometric_principal_attendance_report()
+            
             let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
             tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
             tv.delegate = self
             tv.dataSource = self
-            
            
             let seletYrs = UITapGestureRecognizer(target: self, action: #selector(selectYearsViewClick))
             yearsView.addGestureRecognizer(seletYrs)
@@ -132,7 +127,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         if SegmentControl.selectedSegmentIndex == 0{
             
-            
             monthView.isHidden = true
             yearsView.isHidden = true
             staffDropViewHeight.constant = 0
@@ -150,7 +144,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             geometric_principal_attendance_report()
             
         }else{
-            
             
             RefId = 2
             monthView.isHidden = false
@@ -215,15 +208,17 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             stafNameLbl.text = item
             
             geometric_principal_attendance_report()
-            
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return staffAttendanceDetails?.count ?? 0
+        return SearchResults?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let attendanceData = SearchResults?[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as!
         LocationTableViewCell
         cell.selectionStyle = .none
@@ -242,39 +237,73 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
         
-        cell.namelbl.text = staffAttendanceDetails?[indexPath.row].name
-        cell.attendanceTypeLbl.text = staffAttendanceDetails?[indexPath.row].attendance_type
+        cell.namelbl.text = attendanceData?.name
+        cell.attendanceTypeLbl.text = attendanceData?.attendance_type
         cell.firstInLbl.text = "First in - " + (
-            staffAttendanceDetails?[indexPath.row].in_time ?? ""
+            attendanceData?.in_time ?? ""
         )
         cell.toDateLbl.text = "Last out - " + (
-            staffAttendanceDetails?[indexPath.row].out_time ?? ""
+            attendanceData?.out_time ?? ""
         )
         cell.workingHrsLbl.text = "Working Hours - " +  (
-            staffAttendanceDetails?[indexPath.row].working_hours ?? ""
+            attendanceData?.working_hours ?? ""
         )
-        cell.StatusLbl.text = staffAttendanceDetails?[indexPath.row].leave_type
+        cell.StatusLbl.text = attendanceData?.leave_type
+        
         if cell.StatusLbl.text == "Absent" {
             cell.StatusLbl.backgroundColor = .systemRed
+        }else{
+            cell.StatusLbl.backgroundColor = .systemGreen
         }
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let historyTap = UITapGestureRecognizer(target: self, action: #selector(GoTOHISTORY))
-        cell.historyTimImage.addGestureRecognizer(historyTap)
-        cell.historyTimImage.isUserInteractionEnabled = true
+        
+        if let components = convertDateComponents(from: attendanceData?.date ?? "") {
+           
+            cell.datelbl.text = components.day
+            cell.mnthLbl.text = components.month
+            cell.dayLbl.text = components.weekday
+        }
+        
         return cell
     }
     
-    @objc func GoTOHISTORY(){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedDate = SearchResults?[indexPath.row].date
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
+        vc.selectedDate = selectedDate ?? ""
         present(vc, animated: true)
     }
-    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
+    func convertDateComponents(from dateString: String) -> (day: String, month: String, weekday: String)? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let date = inputFormatter.date(from: dateString) else {
+            return nil
+        }
+        
+        let dayFormatter = DateFormatter()
+        dayFormatter.dateFormat = "dd"
+        
+        let monthFormatter = DateFormatter()
+        monthFormatter.dateFormat = "MMM" // Short month format: Jan, Feb, Mar...
+        
+        let weekdayFormatter = DateFormatter()
+        weekdayFormatter.dateFormat = "EEEE" // Full day name: Monday, Tuesday...
+        
+        let day = dayFormatter.string(from: date)
+        let month = monthFormatter.string(from: date)
+        let weekday = weekdayFormatter.string(from: date)
+        
+        return (day, month, weekday)
+    }
+
     
     @IBAction func ShowHistory(ges : ShowPunchHistiryClick){
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
@@ -299,6 +328,38 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         self.tv.reloadData()
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        guard let Details = staffAttendanceDetails else {
+            staffAttendanceDetails = []
+            tv.reloadData()
+            return
+        }
+
+        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            SearchResults = staffAttendanceDetails
+        } else {
+            
+           let keyword = searchText.lowercased()
+            SearchResults = staffAttendanceDetails?.filter { attendance in
+                       return
+                           (attendance.name?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.date?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.leave_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.in_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.out_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.working_hours?.localizedCaseInsensitiveContains(keyword) ?? false)
+                   }
+        }
+
+        tv.reloadData()
+    }
     
     func getStaffListAPI(){
         APIService.shared
@@ -323,10 +384,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    
                 }
             }
-        
     }
     
     func geometric_principal_attendance_report(){
@@ -367,6 +426,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                             DispatchQueue.main.async { [self] in
                                 noRecordLbl.isHidden = true
                                 staffAttendanceDetails = successMessage.data
+                                SearchResults = staffAttendanceDetails
                                 tv.isHidden = false
                                 tv.reloadData()
                             }

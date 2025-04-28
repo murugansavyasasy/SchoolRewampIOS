@@ -57,22 +57,23 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var isShowingAll = false
     var displayedCategories: [String] = []
     let newString = "Add"
+   
     deinit {
         timer?.invalidate()
     }
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var staffDetails = UserDefaultFileManager.get_staff_Details()
-  
+    let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
+    let is_parent =  UserDefaultFileManager.getUserDetails()?.user_details?.is_parent
+    let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         
        
         
-        let is_staff = UserDefaultFileManager.getUserDetails()?.user_details?.is_staff
-        let is_parent =  UserDefaultFileManager.getUserDetails()?.user_details?.is_parent
-        let staff_roll = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role
-        
+       
         
      
         
@@ -421,7 +422,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         if collectionView == bottomCv{
             
             let menuItem = filteredMenu_details?[indexPath.row].id
-            screenType.staffSelectedMenuId = menuItem ?? 0
+            Menu_id.staffSelectedMenuId = menuItem ?? 0
             switch menuItem {
             case 0:
                 
@@ -481,17 +482,24 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 20:
                 MenuRedirect.senderStudentreportNavigate(from: self)
             case 21:
-                MenuRedirect.dailyCollectionNavigate(from: self)
+                if checkMutipleSchool(){
+                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
+                }else{
+                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
+                }
             case 22:
                 MenuRedirect.senderAssignmentNavigate(from: self)
             case 23:
                 MenuRedirect.senderMgmt(from: self)
-            case 1022:
-                MenuRedirect.StaffWiseAttendance(from: self)
-                
+            case 33:
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.StaffWiseAttendance(from: self)
+                }
             case 1021:
-                MenuRedirect.senderMarkAttendanceNavigate(from: self)
-                break
+                
+                ""
                 
             default:
                 // Handle unknown menu items if needed
@@ -500,6 +508,20 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             
         }
     }
+    
+    func checkMutipleSchool() -> Bool {
+        if staffDetailsCount?.count ?? 0 > 1 {
+            switch staff_roll {
+            case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+                return true
+            default:
+                print("Unhandled staff role")
+                return false
+            }
+        }
+        return false
+    }
+
 }
 
 @available(iOS 14.0, *)

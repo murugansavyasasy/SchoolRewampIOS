@@ -8,6 +8,7 @@
 import UIKit
 import DropDown
 
+@available(iOS 14.0, *)
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     @IBOutlet weak var noRecordLbl: UILabel!
@@ -35,29 +36,41 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var selectedAcadimicYearId : Int?
     var accadmicDefaultYrName : String?
     var uploadedURLs: [String] = []
+    var come_fromLogin = false
+    let MenuRedirect = MenuRedirectHandler.shared
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyShadowAndCornerRadius(to: acidamicYrDropView)
-        target_type = TargetTypes.school
-       
-        ViewAnimator.hideFade(chooseDefaultLbl)
-        ViewAnimator.hideFade(acidamicYrDropView)
-        ViewAnimator.hideFade(sendBtnName)
-    
-        getacadmicYr()
-        for i in 0..<(school_details?.count ?? 0) {
-            school_details?[i].isSelected = true
-            if let school_id = school_details?[i].school_id{
-                array_selectedSchoolId
-                    .append(school_id)
-            }
-        }
         
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
         
-        let acidmaciyrClick = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
-        acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
-       
+        if come_fromLogin{
+            ViewAnimator.hideFade(segmentName)
+            ViewAnimator.hideFade(chooseDefaultLbl)
+            ViewAnimator.hideFade(sendBtnName)
+            ViewAnimator.hideFade(acidamicYrDropView)
+            segmentName.selectedSegmentIndex = 0
+        }else{
+            applyShadowAndCornerRadius(to: acidamicYrDropView)
+            target_type = TargetTypes.school
+            
+            ViewAnimator.hideFade(chooseDefaultLbl)
+            ViewAnimator.hideFade(acidamicYrDropView)
+            ViewAnimator.hideFade(sendBtnName)
+            
+            getacadmicYr()
+            for i in 0..<(school_details?.count ?? 0) {
+                school_details?[i].isSelected = true
+                if let school_id = school_details?[i].school_id{
+                    array_selectedSchoolId
+                        .append(school_id)
+                }
+            }
+            
+           
+            
+            let acidmaciyrClick = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
+            acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
+        }
         
     }
     override func viewDidLayoutSubviews() {
@@ -151,31 +164,47 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
-        
-        if segmentName.selectedSegmentIndex == 1{
-
-            school_details?[indexPath.row].isSelected?.toggle()
-            if let id = school_details?[indexPath.row].school_id {
-                if school_details?[indexPath.row].isSelected == true {
-                    if !array_selectedSchoolId.contains(id) {
-                        array_selectedSchoolId.append(id)
-                    }
-                } else {
-                    array_selectedSchoolId.removeAll(where: { $0 == id })
-                }
-            }
-            listTable.reloadData()
-            
-        }else{
+        if come_fromLogin{
             if let data = school_details?[indexPath.row]{
                 UserDefaultFileManager.saveStaffDetails(data: data)}
-            let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.communicatio_textDetails = communicatio_textDetails
-            vc.ScreenType = screen_type
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            
+            switch Menu_id.staffSelectedMenuId{
+                
+            case Menu_id.StaffGeoAttendaceReport:
+                MenuRedirect.StaffWiseAttendance(from: self)
+            case Menu_id.GeoMatricAttendace:
+                MenuRedirect.StaffWiseAttendance(from: self)
+                
+            default:
+                ""
+            }
+            
+        }else{
+            
+            if segmentName.selectedSegmentIndex == 1{
+                
+                school_details?[indexPath.row].isSelected?.toggle()
+                if let id = school_details?[indexPath.row].school_id {
+                    if school_details?[indexPath.row].isSelected == true {
+                        if !array_selectedSchoolId.contains(id) {
+                            array_selectedSchoolId.append(id)
+                        }
+                    } else {
+                        array_selectedSchoolId.removeAll(where: { $0 == id })
+                    }
+                }
+                listTable.reloadData()
+                
+            }else{
+                if let data = school_details?[indexPath.row]{
+                    UserDefaultFileManager.saveStaffDetails(data: data)}
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.communicatio_textDetails = communicatio_textDetails
+                vc.ScreenType = screen_type
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -200,7 +229,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 return
             }
 
-            switch screenType.staffSelectedMenuId {
+        switch Menu_id.staffSelectedMenuId {
             case Menu_id.communicationMenuId:
                 SendingCommunicationFlow()
 

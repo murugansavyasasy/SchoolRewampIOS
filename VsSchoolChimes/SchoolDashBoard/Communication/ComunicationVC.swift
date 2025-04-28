@@ -379,14 +379,19 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 if(staff_role == PriorityType.is_principal || staff_role == PriorityType
                     .is_grouphead || staff_role == PriorityType.is_admin){
                     
-                    let vc = SchoolListVC(nibName: nil, bundle: nil)
-                    if(isEmergencyVoice == 1){
-                        vc.screen_type = screenType.is_emergencyvoice
-                    }else{
-                        vc.screen_type = screenType.non_emergencyvoice
+                    if #available(iOS 14.0, *) {
+                        let vc = SchoolListVC(nibName: nil, bundle: nil)
+                        if(isEmergencyVoice == 1){
+                            vc.screen_type = screenType.is_emergencyvoice
+                        }else{
+                            vc.screen_type = screenType.non_emergencyvoice
+                        }
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true)
+                    } else {
+                        // Fallback on earlier versions
                     }
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
+                   
                 }
                 
                 else{
@@ -399,10 +404,15 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 if(staff_role == PriorityType.is_principal || staff_role == PriorityType
                     .is_grouphead || staff_role == PriorityType.is_admin){
                     
-                    let vc = SchoolListVC(nibName: nil, bundle: nil)
-                    vc.screen_type = screenType.communication_text
-                    vc.modalPresentationStyle = .fullScreen
-                    present(vc, animated: true)
+                    if #available(iOS 14.0, *) {
+                        let vc = SchoolListVC(nibName: nil, bundle: nil)
+                        vc.screen_type = screenType.communication_text
+                        vc.modalPresentationStyle = .fullScreen
+                        present(vc, animated: true)
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                   
                 }
                 
                 else{

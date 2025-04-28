@@ -62,7 +62,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="634"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1Bu-za-cdB">
-                                                    <rect key="frame" x="0.0" y="-42.333333333333371" width="393" height="718.99999999999989"/>
+                                                    <rect key="frame" x="0.0" y="-42.333333333333371" width="393" height="719"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="RIc-NL-ApQ">
                                                             <rect key="frame" x="25" y="0.0" width="343" height="349.66666666666669"/>
@@ -134,8 +134,11 @@
                                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 </view>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWZ-QJ-87i">
-                                                                    <rect key="frame" x="133.66666666666666" y="319.33333333333331" width="106" height="30"/>
+                                                                    <rect key="frame" x="121.66666666666666" y="319.33333333333331" width="130" height="30"/>
                                                                     <color key="backgroundColor" name="ButtonColor"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="130" id="JNk-hb-Omw"/>
+                                                                    </constraints>
                                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" title="Tap to Punch In"/>

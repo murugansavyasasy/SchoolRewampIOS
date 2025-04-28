@@ -21,13 +21,18 @@ struct common_redirection {
                 staff_role == PriorityType.is_principal || staff_role == PriorityType
                     .is_grouphead || staff_role == PriorityType.is_admin){
                 
-                let vc = SchoolListVC(nibName: nil, bundle: nil)
+                if #available(iOS 14.0, *) {
+                    let vc = SchoolListVC(nibName: nil, bundle: nil)
+                    vc.screen_type = screenType.is_emergencyvoice
+                    vc.requestCommonDataDetails = api_request_param
+                    vc.modalPresentationStyle = .fullScreen
+                    let currentController = getCurrentViewController()
+                    currentController?.present(vc, animated: true)
+                } else {
+                    // Fallback on earlier versions
+                }
 //                vc.isEmergency = isVoice
-                vc.screen_type = screenType.is_emergencyvoice
-                vc.requestCommonDataDetails = api_request_param
-                vc.modalPresentationStyle = .fullScreen
-                let currentController = getCurrentViewController()
-                currentController?.present(vc, animated: true)
+               
                 
             }
             else{
