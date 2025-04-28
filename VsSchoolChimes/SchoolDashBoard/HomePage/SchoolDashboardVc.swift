@@ -444,7 +444,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 6:
                 MenuRedirect.senderAbsenteesNavigate(from: self)
             case 7:
-                MenuRedirect.senderSchoolStrength(from: self)
+                MenuRedirect.senderCommunicationNavigate(from: self)
             case 8:
                 MenuRedirect.senderOnlineNavigate(from: self)
             case 9:
@@ -483,7 +483,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderStudentreportNavigate(from: self)
             case 21:
                 if checkMutipleSchool(){
-                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
+                    MenuRedirect.SchoolListVc(from: self)
                 }else{
                     MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 }

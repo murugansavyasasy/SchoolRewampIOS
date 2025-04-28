@@ -361,7 +361,7 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 6:
                 MenuRedirect.receiverExamTestNavigate(from: self)
             case 7:
-                MenuRedirect.receiverNoticeBoardNavigate(from: self)
+                MenuRedirect.receiverCommunicationNavigate(from: self)
             case 8:
                 MenuRedirect.receiverEvent(from: self)
             case 9:

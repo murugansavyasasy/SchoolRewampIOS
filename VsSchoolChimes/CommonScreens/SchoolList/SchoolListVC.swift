@@ -171,16 +171,17 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             switch Menu_id.staffSelectedMenuId{
                 
             case Menu_id.StaffGeoAttendaceReport:
-                MenuRedirect.StaffWiseAttendance(from: self)
+                MenuRedirect.senderMarkAttendanceNavigate(from: self)
             case Menu_id.GeoMatricAttendace:
                 MenuRedirect.StaffWiseAttendance(from: self)
                 
             default:
-                ""
+                print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
             
         }else{
-            
+        
+
             if segmentName.selectedSegmentIndex == 1{
                 
                 school_details?[indexPath.row].isSelected?.toggle()

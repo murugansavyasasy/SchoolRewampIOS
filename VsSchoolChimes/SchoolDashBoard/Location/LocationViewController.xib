@@ -86,8 +86,11 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axU-rJ-vfk">
-                                                                    <rect key="frame" x="117" y="259.66666666666663" width="109" height="30"/>
+                                                                    <rect key="frame" x="106.66666666666666" y="259.66666666666663" width="130" height="30"/>
                                                                     <color key="backgroundColor" name="ButtonColor"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="130" id="QPu-Mx-l68"/>
+                                                                    </constraints>
                                                                     <color key="tintColor" red="0.99215686270000003" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" title="Enable Location"/>
