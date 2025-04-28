@@ -8,7 +8,7 @@
 
 import UIKit
 import DropDown
-class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
     
     
     @IBOutlet weak var BackBtn: UIButton!
@@ -44,6 +44,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var dateAndMoth : String!
     var staffDetails: [GetStaffDetails]?
     var staffAttendanceDetails: [StaffAttendance]?
+    var SearchResults: [StaffAttendance]?
     
     
     override func viewDidLoad() {
@@ -52,6 +53,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         applyShadowAndCornerRadius(to:yearsView)
         applyShadowAndCornerRadius(to:staffDropView)
         applyShadowAndCornerRadius(to:monthView)
+        
+        searchbar.searchTextField.addDoneButton()
+        searchbar.delegate = self
        
         noRecordLbl.isHidden = true
         yearsView.isHidden = true
@@ -208,10 +212,13 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return staffAttendanceDetails?.count ?? 0
+        return SearchResults?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let attendanceData = SearchResults?[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as!
         LocationTableViewCell
         cell.selectionStyle = .none
@@ -230,18 +237,18 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
         
-        cell.namelbl.text = staffAttendanceDetails?[indexPath.row].name
-        cell.attendanceTypeLbl.text = staffAttendanceDetails?[indexPath.row].attendance_type
+        cell.namelbl.text = attendanceData?.name
+        cell.attendanceTypeLbl.text = attendanceData?.attendance_type
         cell.firstInLbl.text = "First in - " + (
-            staffAttendanceDetails?[indexPath.row].in_time ?? ""
+            attendanceData?.in_time ?? ""
         )
         cell.toDateLbl.text = "Last out - " + (
-            staffAttendanceDetails?[indexPath.row].out_time ?? ""
+            attendanceData?.out_time ?? ""
         )
         cell.workingHrsLbl.text = "Working Hours - " +  (
-            staffAttendanceDetails?[indexPath.row].working_hours ?? ""
+            attendanceData?.working_hours ?? ""
         )
-        cell.StatusLbl.text = staffAttendanceDetails?[indexPath.row].leave_type
+        cell.StatusLbl.text = attendanceData?.leave_type
         
         if cell.StatusLbl.text == "Absent" {
             cell.StatusLbl.backgroundColor = .systemRed
@@ -249,7 +256,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             cell.StatusLbl.backgroundColor = .systemGreen
         }
         
-        if let components = convertDateComponents(from: staffAttendanceDetails?[indexPath.row].date ?? "") {
+        if let components = convertDateComponents(from: attendanceData?.date ?? "") {
            
             cell.datelbl.text = components.day
             cell.mnthLbl.text = components.month
@@ -261,7 +268,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedDate = staffAttendanceDetails?[indexPath.row].date
+        let selectedDate = SearchResults?[indexPath.row].date
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
@@ -321,6 +328,38 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         self.tv.reloadData()
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+        
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        guard let Details = staffAttendanceDetails else {
+            staffAttendanceDetails = []
+            tv.reloadData()
+            return
+        }
+
+        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            SearchResults = staffAttendanceDetails
+        } else {
+            
+           let keyword = searchText.lowercased()
+            SearchResults = staffAttendanceDetails?.filter { attendance in
+                       return
+                           (attendance.name?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.date?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.leave_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.in_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.out_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+                           (attendance.working_hours?.localizedCaseInsensitiveContains(keyword) ?? false)
+                   }
+        }
+
+        tv.reloadData()
+    }
     
     func getStaffListAPI(){
         APIService.shared
@@ -387,6 +426,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                             DispatchQueue.main.async { [self] in
                                 noRecordLbl.isHidden = true
                                 staffAttendanceDetails = successMessage.data
+                                SearchResults = staffAttendanceDetails
                                 tv.isHidden = false
                                 tv.reloadData()
                             }
