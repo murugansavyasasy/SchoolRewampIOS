@@ -192,8 +192,8 @@
                                 <constraint firstAttribute="height" constant="40" id="IQq-nW-hAW"/>
                             </constraints>
                             <segments>
-                                <segment title="Punch In"/>
-                                <segment title="Reports"/>
+                                <segment title="Today's Report"/>
+                                <segment title="Staffwise Report"/>
                             </segments>
                             <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>

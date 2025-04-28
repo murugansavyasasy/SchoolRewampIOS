@@ -345,10 +345,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
-                    
                 }
             }
-        
     }
     
     func geometric_principal_attendance_report(){
