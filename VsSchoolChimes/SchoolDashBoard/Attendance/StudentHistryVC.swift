@@ -308,7 +308,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             return
         }
         
-        switch screenType.staffSelectedMenuId {
+        switch Menu_id.staffSelectedMenuId{
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
             
@@ -316,7 +316,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             handleHomeworkFlow()
             
         default:
-            print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+            print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
     }
     
