@@ -93,7 +93,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             APIService.shared.makeApi(
                 url: ServiceUrl.staff_attd_geometric_remove_geometric_location,
                 parameters: ["location_id":locationHistory?[sender.tag].id ?? 0],
-                type: ApitTypeSringFile.GET,
+                type: ApitTypeSringFile.POST,
                 token:staffDetails?.access_token ?? ""
             ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
                 DispatchQueue.main.async {
@@ -125,7 +125,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         APIService.shared.makeApi(
             url: ServiceUrl.staff_attd_geometric_update_geometric_location,
             parameters:param,
-            type: ApitTypeSringFile.GET,
+            type: ApitTypeSringFile.POST,
             token:staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             DispatchQueue.main.async {
