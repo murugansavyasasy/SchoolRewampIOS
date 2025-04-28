@@ -86,10 +86,13 @@ struct screenType{
 }
 
 struct Menu_id{
-    static var communicationMenuId = 0
-    static var homeWorkMenuId = 9
-    static let isAssaignment = 22
+    static var staffSelectedMenuId = -1
+    static var communicationMenuId = 7
+    static var homeWorkMenuId = 15
+    static let isAssaignment = 2
     static let AttachmentMenuId = 11
+    static let StaffGeoAttendaceReport = 33
+    static let GeoMatricAttendace = 21
 }
 struct TargetTypes{
     

@@ -93,9 +93,32 @@ class LocationReportVC: UIViewController{
     
     func Geometric_Punch_History() {
         
-        let param = [StaffAttendanceReportStringFile.attendance_dt:""]
         
-        APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_staff_attendance_report, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (reult: Result<StaffAttendanceResponse,Error>) in
+        var YearLblstr = ""
+        let today = getCurrentDateString()
+        let year = YearLbl.text!
+        let monthName = MonthLbl.text!
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM" // Full month name format
+        
+        if let date = dateFormatter.date(from: monthName) {
+            let calendar = Calendar.current
+            let monthNumber = calendar.component(.month, from: date)
+            print("The month number for \(monthName) is \(monthNumber).")
+            if  monthNumber == 1 || monthNumber == 2 || monthNumber == 3 || monthNumber == 4 || monthNumber == 5 || monthNumber == 6 || monthNumber == 7 || monthNumber == 8 || monthNumber == 9 {
+                YearLblstr = year +  "-" + "0" + String(monthNumber)
+            }else{
+                YearLblstr = year +  "-"  + String(monthNumber)
+                
+            }
+        }
+      
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.staff_attd_geometric_geometric_staff_attendance_report, parameters: [principalAttendenceReportStringFile.attendance_dt:YearLblstr], type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (
+                reult: Result<StaffAttendanceResponse,
+                Error>
+            ) in
             
             switch reult {
                 
@@ -156,8 +179,8 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-       // return AttendanceDetails?.count ?? 0
-        return 10
+        return AttendanceDetails?.count ?? 0
+       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

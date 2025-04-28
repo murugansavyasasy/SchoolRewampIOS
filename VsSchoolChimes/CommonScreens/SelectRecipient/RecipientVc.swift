@@ -203,7 +203,7 @@ class RecipientVc: UIViewController{
                 return
             }
         }
-        switch screenType.staffSelectedMenuId {
+        switch Menu_id.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
         case Menu_id.homeWorkMenuId:
@@ -211,7 +211,7 @@ class RecipientVc: UIViewController{
         case Menu_id.AttachmentMenuId:
             SendingAttachmentFlow()
         default:
-            print("Unhandled menu ID: \(screenType.staffSelectedMenuId)")
+            print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
     }
     
@@ -863,7 +863,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
                 sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId {
+                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
                     if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                         getSubjectListAPI(finalSectionIds)
                     }
@@ -945,7 +945,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             array_selectedId = selecting ? sectionsDetails?.compactMap { $0.id } ?? [] : []
             sectionIds = array_selectedId.joined(separator: ",")
             
-            if Menu_id.homeWorkMenuId == screenType.staffSelectedMenuId || Menu_id.isAssaignment == screenType.staffSelectedMenuId {
+            if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
                 if selecting, let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                     getSubjectListAPI(finalSectionIds)
                 }

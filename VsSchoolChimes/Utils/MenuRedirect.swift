@@ -50,7 +50,7 @@ class MenuRedirectHandler {
         MenuImage(id: 19, name: "Class Timetable"),
         MenuImage(id: 20, name: "Messages from management"),
         MenuImage(id: 21, name: "Very Important Info"),
-        MenuImage(id: 22, name: "Assignment"),
+        MenuImage(id: 22, name: "Attendance marking"),
         MenuImage(id: 23, name: "Upload Video"),
         MenuImage(id: 24, name: "Attendance marking"),
         MenuImage(id: 25, name: "School Needs"),
@@ -61,7 +61,7 @@ class MenuRedirectHandler {
         MenuImage(id: 30, name: "Lesson Plan"),
         MenuImage(id: 31, name: "Fee Pending Report"),
         MenuImage(id: 32, name: "Interaction with student"),
-        MenuImage(id: 33, name: "attendance_report"),
+        MenuImage(id: 33, name: "Staff Wise Attendance Report"),
         MenuImage(id: 34, name: "Fee Details"),
         MenuImage(id: 35, name: "receiver_assignment")
     ]
@@ -71,6 +71,19 @@ class MenuRedirectHandler {
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
     
     var receiverImageItems : [String] = ["Communication","Homework" ,"ExamTest","Exam Marks","ImagePdf","Video","Notice Board","receiver_assignment","online_meeting","attendance_report","Events","Request Leave","Fee Details","Interaction with Staff","QuizExam","LSRW","Class Timetable","Certificate Request","PTM","MySchoolBus"]
+    
+    
+    
+    
+    //MARK: COMMONPAGE FOR MULTIPLE SCHOOL LIST PAGE
+    
+    func SchoolListVc(from viewController: UIViewController) {
+        let vc = SchoolListVC(nibName: nil, bundle: nil)
+        vc.come_fromLogin = true
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
     
     //MARK: SenderSideMenuViewContoller Starts
     
@@ -204,7 +217,7 @@ class MenuRedirectHandler {
     
     
     func senderMarkAttendanceNavigate(from viewController: UIViewController) {
-        let vc = CreateLocationViewController(nibName: nil, bundle: nil)
+        let vc = LocationViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
