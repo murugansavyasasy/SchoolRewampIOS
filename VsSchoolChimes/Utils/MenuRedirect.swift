@@ -27,7 +27,9 @@ class MenuRedirectHandler {
     var getValue = 1
     var items : [String] = [ MenuStringFile.Communication,MenuStringFile.ImagePdf,MenuStringFile.VideoUpload,MenuStringFile.NoticeBoard,MenuStringFile.LeaveRequests,MenuStringFile.Assignment,MenuStringFile.OnlineMeeting,MenuStringFile.Homework,MenuStringFile.AttendanceMarking,MenuStringFile.MessagesFromManagement,MenuStringFile.InteractionWithStudent,MenuStringFile.LessonPlan,MenuStringFile.PTM,MenuStringFile.SchoolClassEvents,MenuStringFile.SchoolNeeds,MenuStringFile.VeryImportantInfo,MenuStringFile.AbsenteesReport,MenuStringFile.SchoolStrength,MenuStringFile.DailyCollection,MenuStringFile.StudentReport,MenuStringFile.FeePendingReport,MenuStringFile.MarkYourAttendance,MenuStringFile.StaffWiseAttendanceReport]
     
+    
     var Imgitems: [MenuImage] = [
+        // MenuImage(id: 0, name: "Communication"),
         MenuImage(id: 1, name: "Absentees Report"),
         MenuImage(id: 2, name: "Assigment"),
         MenuImage(id: 3, name: "Attendance marking"),
@@ -386,12 +388,17 @@ class MenuRedirectHandler {
         
     }
     func receiverchat(from viewController: UIViewController){
-//        let vc = ChatVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        vc.getValue = getValue
-//        viewController.present(vc, animated: true)
+        let vc = InteractionVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        //vc.getValue = getValue
+        vc.passvalue = 1
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
+    func receiverAttachment(from viewController: UIViewController){
+        
         let vc = AttachmentsVC(nibName: nil, bundle: nil)
-//        vc.passvalue = 1
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
