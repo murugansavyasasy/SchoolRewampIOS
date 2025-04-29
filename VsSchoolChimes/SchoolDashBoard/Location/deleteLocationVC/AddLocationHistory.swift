@@ -31,6 +31,8 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         fetchAttachments()
     }
     
+    
+    
     @IBAction func backViewss(){
         dismiss(animated: true)
     }
@@ -84,7 +86,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.present(alertController, animated: true, completion: nil)
     }
     @objc func DeletTapped(_ sender: UIButton) {
-        let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to delete this Loacation", preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: "", message: "Are you sure want to delete this Loacation", preferredStyle: UIAlertController.Style.alert)
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
             if #available(iOS 15.0, *) {
                 showLottieProgressLoader(animationName: "loader (2)")
@@ -102,8 +104,11 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                     
                     switch result {
-                    case .success(let response):
-                        self?.tv.reloadData()
+                    case .success(let result):
+                        DispatchQueue.main.async {
+                            self?.fetchAttachments()
+                            self?.tv.reloadData()
+                        }
                     case .failure(let error):
                         print("Error fetching attachments:", error.localizedDescription)
                     }
@@ -134,7 +139,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
                 
                 switch result {
-                case .success(let response):
+                case .success(let result):
                     self?.fetchAttachments()
                     self?.tv.reloadData()
                 case .failure(let error):
@@ -167,8 +172,25 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 switch result {
                 case .success(let response):
-                    self?.locationHistory = response.data
-                    self?.tv.reloadData()
+                    
+                    if response.status == true{
+                        DispatchQueue.main.async {
+                            self?.noRecLbl.isHidden = true
+                            self?.locationHistory = response.data
+                            self?.tv.reloadData()
+                        }
+                    }else{
+                        
+                        DispatchQueue.main.async {
+                            self?.noRecLbl.isHidden = false
+                            self?.noRecLbl.text = response.message
+                            self?.locationHistory = response.data
+                            self?.tv.reloadData()
+                        }
+                    }
+                   
+                    
+                    
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)
                 }

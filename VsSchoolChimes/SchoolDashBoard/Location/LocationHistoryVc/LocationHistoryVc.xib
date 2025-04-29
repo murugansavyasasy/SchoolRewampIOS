@@ -39,11 +39,11 @@
                     <rect key="frame" x="0.0" y="94" width="393" height="724"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tjY-eC-2yf">
-                            <rect key="frame" x="0.0" y="294.33333333333326" width="393" height="429.66666666666674"/>
+                            <rect key="frame" x="0.0" y="264.33333333333326" width="393" height="459.66666666666674"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
                         <searchBar contentMode="redraw" searchBarStyle="minimal" text="" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="ZvU-35-ye9">
-                            <rect key="frame" x="0.0" y="233.33333333333331" width="393" height="56"/>
+                            <rect key="frame" x="0.0" y="203.33333333333331" width="393" height="56"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="56" id="pkC-95-6WR"/>
                             </constraints>
@@ -68,7 +68,7 @@
                             </connections>
                         </segmentedControl>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="LRM-m6-h5J">
-                            <rect key="frame" x="30" y="90" width="333" height="123.33333333333331"/>
+                            <rect key="frame" x="30" y="70" width="333" height="123.33333333333331"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Qc7-Sf-qQW">
                                     <rect key="frame" x="0.0" y="0.0" width="333" height="30"/>
@@ -140,7 +140,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jzl-Y1-lOS">
-                                    <rect key="frame" x="0.0" y="85.333333333333314" width="333" height="38"/>
+                                    <rect key="frame" x="0.0" y="85.333333333333343" width="333" height="38"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Staff" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m8w-oS-PvE">
                                             <rect key="frame" x="8" y="5" width="286" height="28"/>
@@ -148,7 +148,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="P7T-n0-UNs">
-                                            <rect key="frame" x="308" y="9" width="15" height="20"/>
+                                            <rect key="frame" x="308" y="8.9999999999999716" width="15" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="15" id="9FX-S9-jfY"/>
                                             </constraints>
@@ -192,13 +192,13 @@
                         <constraint firstItem="tjY-eC-2yf" firstAttribute="top" secondItem="ZvU-35-ye9" secondAttribute="bottom" constant="5" id="PCx-IK-eb4"/>
                         <constraint firstAttribute="trailing" secondItem="LRM-m6-h5J" secondAttribute="trailing" constant="30" id="a9p-eE-3cp"/>
                         <constraint firstItem="BwB-zO-qak" firstAttribute="centerX" secondItem="Ub3-EA-61m" secondAttribute="centerX" id="gGk-Lk-UKV"/>
-                        <constraint firstItem="LRM-m6-h5J" firstAttribute="top" secondItem="1SP-AH-axz" secondAttribute="bottom" constant="30" id="inr-78-09J"/>
+                        <constraint firstItem="LRM-m6-h5J" firstAttribute="top" secondItem="1SP-AH-axz" secondAttribute="bottom" constant="10" id="inr-78-09J"/>
                         <constraint firstAttribute="bottom" secondItem="tjY-eC-2yf" secondAttribute="bottom" id="otr-pp-nDt"/>
                         <constraint firstItem="1SP-AH-axz" firstAttribute="leading" secondItem="Ub3-EA-61m" secondAttribute="leading" constant="20" id="tSi-fa-mk8"/>
                         <constraint firstItem="LRM-m6-h5J" firstAttribute="leading" secondItem="Ub3-EA-61m" secondAttribute="leading" constant="30" id="wjW-nV-fqa"/>
                         <constraint firstItem="ZvU-35-ye9" firstAttribute="leading" secondItem="Ub3-EA-61m" secondAttribute="leading" id="ws5-1I-K0R"/>
                         <constraint firstItem="BwB-zO-qak" firstAttribute="centerY" secondItem="Ub3-EA-61m" secondAttribute="centerY" id="xXh-ko-wfa"/>
-                        <constraint firstItem="ZvU-35-ye9" firstAttribute="top" secondItem="LRM-m6-h5J" secondAttribute="bottom" constant="20" id="zFt-cy-4tP"/>
+                        <constraint firstItem="ZvU-35-ye9" firstAttribute="top" secondItem="LRM-m6-h5J" secondAttribute="bottom" constant="10" id="zFt-cy-4tP"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="toI-E6-oPq">
@@ -212,7 +212,7 @@
                             <color key="tintColor" systemColor="darkTextColor"/>
                             <inset key="titleEdgeInsets" minX="12" minY="0.0" maxX="0.0" maxY="0.0"/>
                             <inset key="imageEdgeInsets" minX="10" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                            <state key="normal" title="Attendance Report" image="chevron.left" catalog="system">
+                            <state key="normal" title="Staff Wise Attendance Report" image="chevron.left" catalog="system">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                             </state>

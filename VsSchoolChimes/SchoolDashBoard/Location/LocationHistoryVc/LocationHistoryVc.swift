@@ -240,15 +240,39 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                  
                  cell.namelbl.text = attendanceData?.name
                  cell.attendanceTypeLbl.text = attendanceData?.attendance_type
-                 cell.firstInLbl.text = "First in - " + (
-                     attendanceData?.in_time ?? ""
-                 )
-                 cell.toDateLbl.text = "Last out - " + (
-                     attendanceData?.out_time ?? ""
-                 )
-                 cell.workingHrsLbl.text = "Working Hours - " +  (
-                     attendanceData?.working_hours ?? ""
-                 )
+            
+            if attendanceData?.in_time  != ""{
+                cell.firstInLbl.isHidden = false
+                cell.firstInLbl.text = "First in - " + (
+                    attendanceData?.in_time ?? ""
+                )
+            }else{
+                
+                cell.firstInLbl.isHidden = true
+            }
+            
+            if attendanceData?.out_time  != ""{
+                cell.toDateLbl.isHidden = false
+                cell.toDateLbl.text = "Last out - " + (
+                    attendanceData?.out_time ?? ""
+                )
+            }else{
+                
+                cell.toDateLbl.isHidden = true
+            }
+            
+            if attendanceData?.working_hours  != ""{
+                cell.workingHrsLbl.isHidden = false
+                cell.workingHrsLbl.text = "Working Hours - " +  (
+                    attendanceData?.working_hours ?? ""
+                )
+            }else{
+                
+                cell.workingHrsLbl.isHidden = true
+            }
+                 
+                 
+                 
                  cell.StatusLbl.text = attendanceData?.leave_type
                  
                  if cell.StatusLbl.text == "Absent" {
