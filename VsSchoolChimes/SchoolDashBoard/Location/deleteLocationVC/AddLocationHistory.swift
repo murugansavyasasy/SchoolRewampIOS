@@ -18,14 +18,17 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchAttachments()
+       
         noRecLbl.isHidden = true
+        tv.delegate = self
+        tv.dataSource = self
         let rowNib = UINib(nibName: CellConfingName.deleteTV, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: CellConfingName.deleteTV)
         let gifImage = UIImage.gifImageWithName("Map Location")
         imageView.image = gifImage
         let back  = UITapGestureRecognizer(target: self, action: #selector(backViewss))
         backView.addGestureRecognizer(back)
+        fetchAttachments()
     }
     
     @IBAction func backViewss(){
@@ -39,29 +42,34 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.deleteTV, for: indexPath) as!
         deleteTV
-        cell.lattidudeLbl.text = locationHistory?[indexPath.row].latitude
-        cell.logidudeLbl.text = locationHistory?[indexPath.row].longitude
+        cell.logidudeLbl.text = "\(locationHistory?[indexPath.row].latitude ?? "") - \(locationHistory?[indexPath.row].longitude ?? "")"
         cell.locationLbl.text = locationHistory?[indexPath.row].location
+        cell.distanceLbl.text = "\(locationHistory?[indexPath.row].distance ?? "") Meter"
+        cell.deleteBtn.addTarget(self, action: #selector(DeletTapped(_:)), for: .touchUpInside)
+        cell.editBtn.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        cell.deleteBtn.tag = indexPath.row
+        cell.editBtn.tag = indexPath.row
         cell.selectionStyle = .none
         return cell
     }
-    
-    @IBAction func Edit(ges : Deleteclick){
-        
+    @objc func buttonTapped(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Update", message: "Please enter your details", preferredStyle: .alert)
         alertController.addTextField { (textField) in
             textField.placeholder = "Enter your location name"
-            textField.text = ges.location
+            textField.text =  self.locationHistory?[sender.tag].location
         }
         alertController.addTextField { (textField) in
             textField.placeholder = "Enter your distance"
-            textField.text = ges.distance
+            textField.text = self.locationHistory?[sender.tag].distance
         }
         let confirmAction = UIAlertAction(title: "Update", style: .default) { [self] (_) in
             if let location = alertController.textFields?[0].text, let distance = alertController.textFields?[1].text {
                 print("location Name: \(location)")
                 print("distance Name: \(distance)")
                 if distance != "" && location != ""{
+                    update(param: ["id":self.locationHistory?[sender.tag].id ?? 0,
+                                   "location":location,
+                                   "distance":distance])
                 }else{
                     let refreshAlert = UIAlertController(title: "", message: "Location or distance field is empty", preferredStyle: UIAlertController.Style.alert)
                     refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
@@ -75,8 +83,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         alertController.addAction(cancelAction)
         self.present(alertController, animated: true, completion: nil)
     }
-    
-    @IBAction func deletClick(ges : Deleteclick){
+    @objc func DeletTapped(_ sender: UIButton) {
         let refreshAlert = UIAlertController(title: "", message: "Are you sure do you want to delete this Loacation", preferredStyle: UIAlertController.Style.alert)
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
             if #available(iOS 15.0, *) {
@@ -85,8 +92,8 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             APIService.shared.makeApi(
                 url: ServiceUrl.staff_attd_geometric_remove_geometric_location,
-                parameters: ["location_id":ges.deleteID ?? 0],
-                type: ApitTypeSringFile.GET,
+                parameters: ["location_id":locationHistory?[sender.tag].id ?? 0],
+                type: ApitTypeSringFile.POST,
                 token:staffDetails?.access_token ?? ""
             ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
                 DispatchQueue.main.async {
@@ -103,18 +110,39 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }
             
-            
-            
-            
-            
-            
-            
-            
         }))
         refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
             print("Handle Cancel Logic here")
         }))
         present(refreshAlert, animated: true, completion: nil)
+    }
+    func update(param:[String:Any]){
+        
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.staff_attd_geometric_update_geometric_location,
+            parameters:param,
+            type: ApitTypeSringFile.POST,
+            token:staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self?.hideLottieProgressLoader()
+                }
+                
+                switch result {
+                case .success(let response):
+                    self?.fetchAttachments()
+                    self?.tv.reloadData()
+                case .failure(let error):
+                    print("Error fetching attachments:", error.localizedDescription)
+                }
+            }
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

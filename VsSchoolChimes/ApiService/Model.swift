@@ -488,6 +488,7 @@ struct StaffGeometricLocation:Codable{
     let data:[GeometricLocation]?
 }
 struct GeometricLocation:Codable{
+    let id:Int?
     let latitude:String?
     let longitude:String?
     let location:String?
