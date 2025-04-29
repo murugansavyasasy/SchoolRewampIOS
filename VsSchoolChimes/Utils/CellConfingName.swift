@@ -109,6 +109,7 @@ class CellConfingName {
     static let  FiltersCvCell = "FiltersCvCell"
     static let  TAttacmentTVC = "TAttacmentTVC"
     static let  MarkAtendenceTV = "MarkAtendenceTV"
+    static let  StudentTVCell = "StudentTVCell"
    
     
 }

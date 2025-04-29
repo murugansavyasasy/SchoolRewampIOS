@@ -27,15 +27,16 @@ class MenuRedirectHandler {
     var getValue = 1
     var items : [String] = [ MenuStringFile.Communication,MenuStringFile.ImagePdf,MenuStringFile.VideoUpload,MenuStringFile.NoticeBoard,MenuStringFile.LeaveRequests,MenuStringFile.Assignment,MenuStringFile.OnlineMeeting,MenuStringFile.Homework,MenuStringFile.AttendanceMarking,MenuStringFile.MessagesFromManagement,MenuStringFile.InteractionWithStudent,MenuStringFile.LessonPlan,MenuStringFile.PTM,MenuStringFile.SchoolClassEvents,MenuStringFile.SchoolNeeds,MenuStringFile.VeryImportantInfo,MenuStringFile.AbsenteesReport,MenuStringFile.SchoolStrength,MenuStringFile.DailyCollection,MenuStringFile.StudentReport,MenuStringFile.FeePendingReport,MenuStringFile.MarkYourAttendance,MenuStringFile.StaffWiseAttendanceReport]
     
+    
     var Imgitems: [MenuImage] = [
-        MenuImage(id: 0, name: "Communication"),
-        MenuImage(id: 1, name: "Video"),
-        MenuImage(id: 2, name: "Certificate Request"),
+        // MenuImage(id: 0, name: "Communication"),
+        MenuImage(id: 1, name: "Absentees Report"),
+        MenuImage(id: 2, name: "Assignment"),
         MenuImage(id: 3, name: "Notice Board"),
         MenuImage(id: 4, name: "EventsHolidays"),
         MenuImage(id: 5, name: "PTM"),
         MenuImage(id: 6, name: "Absentees Report"),
-        MenuImage(id: 7, name: "School strength"),
+        MenuImage(id: 7, name: "Communication"),
         MenuImage(id: 8, name: "Daily Collection"),
         MenuImage(id: 9, name: "Homework"),
         MenuImage(id: 10, name: "ImagePdf"),
@@ -43,7 +44,7 @@ class MenuRedirectHandler {
         MenuImage(id: 12, name: "Events"),
         MenuImage(id: 13, name: "Interaction with Staff"),
         MenuImage(id: 14, name: "Staff Wise Attendance Report"),
-        MenuImage(id: 15, name: "Online Meeting"),
+        MenuImage(id: 15, name: "Homework"),
         MenuImage(id: 16, name: "MySchoolBus"),
         MenuImage(id: 17, name: "QuizExam"),
         MenuImage(id: 18, name: "Exam Marks"),
@@ -352,12 +353,17 @@ class MenuRedirectHandler {
         
     }
     func receiverchat(from viewController: UIViewController){
-//        let vc = ChatVC(nibName: nil, bundle: nil)
-//        vc.modalPresentationStyle = .fullScreen
-//        vc.getValue = getValue
-//        viewController.present(vc, animated: true)
+        let vc = InteractionVC(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        //vc.getValue = getValue
+        vc.passvalue = 1
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+    }
+    
+    func receiverAttachment(from viewController: UIViewController){
+        
         let vc = AttachmentsVC(nibName: nil, bundle: nil)
-//        vc.passvalue = 1
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }

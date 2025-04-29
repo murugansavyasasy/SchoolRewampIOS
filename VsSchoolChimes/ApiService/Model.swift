@@ -87,7 +87,7 @@ struct StaffDetails: Codable {
     let role: String?
     let is_payment_pending: String?  // Changed from String? to Bool?
     let schedule_call_type: Int?
-    let biometric_enable: Int?
+    let biometric_enable: Bool?
     let school_id: String?
     let allow_video_download: Bool?
     let access_token: String?

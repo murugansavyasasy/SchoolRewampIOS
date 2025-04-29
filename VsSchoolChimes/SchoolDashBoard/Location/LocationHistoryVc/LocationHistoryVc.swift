@@ -221,6 +221,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.LocationTableViewCell, for: indexPath) as!
         LocationTableViewCell
+        
         cell.selectionStyle = .none
         cell.fullView.layer.cornerRadius = 20
         cell.calanderView.layer.cornerRadius = 10

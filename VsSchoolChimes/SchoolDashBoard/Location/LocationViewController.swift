@@ -19,12 +19,9 @@ class LocationViewController: UIViewController {
     @IBOutlet weak var EnableLocationBtn: UIButton!
     @IBOutlet weak var AllowLocationDescribeLbl: UILabel!
     @IBOutlet weak var AllowLocationLbl: UILabel!
-    
     @IBOutlet weak var AllowLoactionThumbnail: UIImageView!
     @IBOutlet weak var addLocationBtn: UIButton!
-    
     @IBOutlet weak var ScrollView: UIScrollView!
-    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var LocationErrorStack: UIStackView!
     @IBOutlet weak var punchStack: UIStackView!
@@ -61,6 +58,8 @@ class LocationViewController: UIViewController {
     var ExstingDistance:String?
     var isPopupVisible = false
     var childVC: LocationReportVC?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationAuthorization()
@@ -91,11 +90,11 @@ class LocationViewController: UIViewController {
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
+    
     @objc func appDidBecomeActive() {
         checkLocationAuthorization()
     }
     
-   
     func getDeviceModelName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -195,7 +194,6 @@ class LocationViewController: UIViewController {
         
         dismiss(animated: true)
     }
-    
 
     @IBAction func SegmentAction(_ sender: Any) {
         
