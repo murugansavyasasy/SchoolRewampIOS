@@ -182,6 +182,11 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
+        if homework.file_path?.count ?? 0 == 0 {
+            cell.CvHeight.constant = 0
+        }else{
+            cell.CvHeight.constant = 120
+        }
         // Configure cell data
         cell.subjectName.text = homework.subject_name
         cell.topics.text = homework.title ?? ""

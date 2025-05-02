@@ -148,7 +148,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="P7T-n0-UNs">
-                                            <rect key="frame" x="308" y="8.9999999999999716" width="15" height="20"/>
+                                            <rect key="frame" x="308" y="11.999999999999972" width="15" height="14"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="15" id="9FX-S9-jfY"/>
                                             </constraints>
@@ -156,10 +156,10 @@
                                     </subviews>
                                     <color key="backgroundColor" red="0.8862745098" green="0.87450980389999999" blue="0.87450980389999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
-                                        <constraint firstItem="P7T-n0-UNs" firstAttribute="top" secondItem="Jzl-Y1-lOS" secondAttribute="top" constant="9" id="3Iv-6V-UIw"/>
+                                        <constraint firstItem="P7T-n0-UNs" firstAttribute="top" secondItem="Jzl-Y1-lOS" secondAttribute="top" constant="12" id="3Iv-6V-UIw"/>
                                         <constraint firstAttribute="height" constant="38" id="8hu-bV-iB0"/>
                                         <constraint firstItem="P7T-n0-UNs" firstAttribute="leading" secondItem="m8w-oS-PvE" secondAttribute="trailing" constant="14" id="Cpz-0K-DUy"/>
-                                        <constraint firstAttribute="bottom" secondItem="P7T-n0-UNs" secondAttribute="bottom" constant="9" id="Cwf-ys-mbm"/>
+                                        <constraint firstAttribute="bottom" secondItem="P7T-n0-UNs" secondAttribute="bottom" constant="12" id="Cwf-ys-mbm"/>
                                         <constraint firstAttribute="trailing" secondItem="P7T-n0-UNs" secondAttribute="trailing" constant="10" id="Edi-Em-zYP"/>
                                         <constraint firstAttribute="bottom" secondItem="m8w-oS-PvE" secondAttribute="bottom" constant="5" id="WQN-Hl-Ig0"/>
                                         <constraint firstItem="m8w-oS-PvE" firstAttribute="leading" secondItem="Jzl-Y1-lOS" secondAttribute="leading" constant="8" id="th3-b1-gvb"/>

@@ -480,7 +480,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderImportantInfoNavigate(from: self)
           
             case 39 :
-                ""
+                MenuRedirect.senderAttachment(from: self)
                 
             default:
                 // Handle unknown menu items if needed

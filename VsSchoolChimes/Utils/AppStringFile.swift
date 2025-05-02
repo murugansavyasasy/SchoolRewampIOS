@@ -156,6 +156,10 @@ class AlertstringFile{
     static let Fill_All_Required_Fields = "Fill All Required Fields".translated()
     static let invalidSelection = "invalidSelection".translated()
     static let selectDatesWithinMonth = "selectDatesWithinMonth".translated()
+    static let Location_Access_Needed = "Location Access Needed".translated()
+    static let Please_allow_location_access = "Please allow location access in Settings to use this feature.".translated()
+    static let Open_Settings = "Open Settings".translated()
+    static let Distance_Should = "Distance Should be  above 10 Meter(s)".translated()
     
     
 }
@@ -305,6 +309,21 @@ class CommonStringFile{
     static let path = "path"
     static let type = "type"
     static let pdf = "pdf"
+    static let Tap_on_the_punch = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
+    
+    static let locationErrorMessage = """
+        Note: You are outside the institute's boundary. You will not be able to mark your attendance.
+
+        Please try again when you are within the designated area.
+        """
+    
+    static let add_location_firstMessage = """
+        Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting.
+        """
+    
+    static let add_location_secondMessage = """
+        Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
+        """
 }
 
 

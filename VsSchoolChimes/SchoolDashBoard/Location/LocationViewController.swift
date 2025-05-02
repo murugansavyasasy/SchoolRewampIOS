@@ -33,24 +33,16 @@ class LocationViewController: UIViewController {
     var allowedDistance = CLLocationDistance() // 5 meters
     let currentYear = Calendar.current.component(.year, from: Date())
     var RefrenceAddress = ""
-    var instituteId : Int!
-    var staffId : Int!
-    var type : Int!
     var years: [String] = []
     let dropDown = DropDown()
     var selectedDictionary = NSDictionary()
     var monthNames: [String] = []
     let dateFormatter = DateFormatter()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var bioMatricEnable  : Int!
-    var staus : Bool!
     var device = UIDevice.current.name
     var punch_type = 1
     var secureId  = ""
     var currentDistanceForPuchCheck : Double!
     var apiDistanceForPuchCheck :  Int!
-    let firstParagraph = "Note : You are outside the institutes boundary. you will not be able to mark your attendanc"
-    let secondParagraph = "Please try again when you are within the designated area."
     var getlocationDataDetails:[GeometricLocation]?
     var currentLat:String?
     var currentLogi:String?
@@ -63,7 +55,6 @@ class LocationViewController: UIViewController {
     private var lastIsInsideAllowedArea: Bool?
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("add_location_enabel",UserDefaultFileManager.get_staff_Details())
         checkAuthenticationAvailability()
         ViewAnimator.hideFade(LocationErrorStack)
         ViewAnimator.hideFade(punchStack)
@@ -73,10 +64,7 @@ class LocationViewController: UIViewController {
         LocationErrorStack.backgroundColor = .systemBlue.withAlphaComponent(0.4)
         StyleAndTranslate()
     }
-    
-    
-      
-    
+ 
     func StyleAndTranslate(){
         
         AllowLocationLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -112,6 +100,7 @@ class LocationViewController: UIViewController {
     func addLocationEnabel(Show:Bool){
         
         addlocationbtnName.isHidden = !Show
+        
     }
     func getDeviceModelName() -> String {
         var systemInfo = utsname()
@@ -253,7 +242,7 @@ class LocationViewController: UIViewController {
         vc.longitude = currentLogi ?? ""
         vc.latitude = currentLat ?? ""
         vc.refrenceAddress = RefrenceAddress
-        vc.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .popover
         present(vc, animated: true)
     }
     
@@ -316,10 +305,6 @@ class LocationViewController: UIViewController {
         locationManager.startUpdatingLocation()
     }
 
-    
-   
-    
-    
     func checkAuthenticationAvailability() {
         
         let context = LAContext()
@@ -332,27 +317,22 @@ class LocationViewController: UIViewController {
         } else {
             // Neither biometric authentication nor passcode is available
             print("No biometric authentication or passcode is set.")
-            
             punch_type = 1
-//            call_locationManager()
         }
     }
     
-func authenticateUser(context: LAContext, policy: LAPolicy) {
+ func authenticateUser(context: LAContext, policy: LAPolicy) {
         context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [self] success, authenticationError in
             
             DispatchQueue.main.async { [self] in
                 if success {
                     print("Authentication successful")
                     punch_type = 3
-//                    call_locationManager()
-                    // Proceed with your functionality
                 } else {
                     // Authentication failed
                     if let error = authenticationError {
                         print("Authentication failed: \(error.localizedDescription)")
                         punch_type = 1
-//                        call_locationManager()
                     }
                 }
             }
@@ -447,21 +427,6 @@ extension LocationViewController:CLLocationManagerDelegate{
         checkLocationAuthorization()
     }
     
-    
-    
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        switch status {
-//        case .authorizedWhenInUse, .authorizedAlways:
-//            locationManager.startUpdatingLocation()
-//        case .denied, .restricted:
-//            print("Location access denied or restricted.")
-//        case .notDetermined:
-//            locationManager.requestWhenInUseAuthorization()
-//        @unknown default:
-//            break
-//        }
-//    }
-//   
     func Punch_Api(){
         
         APIService.shared
@@ -517,7 +482,7 @@ extension LocationViewController:CLLocationManagerDelegate{
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             guard let self = self else { return }
-
+            
             switch result {
             case .success(let response):
                 if response.status == true {
@@ -529,30 +494,30 @@ extension LocationViewController:CLLocationManagerDelegate{
                             print("Invalid current coordinates")
                             return
                         }
-
+                        
                         for location in response.data ?? [] {
                             guard let lat1 = Double(location.latitude ?? ""),
                                   let lon1 = Double(location.longitude ?? ""),
                                   let allowedDistance = Int(location.distance ?? "") else {
                                 continue
                             }
-
+                            
                             let calculatedDistance = self.haversineDistance(
                                 lat1: lat1,
                                 lon1: lon1,
                                 lat2: currentLat,
                                 lon2: currentLong
                             )
-
+                            
                             print("Checking location \(location.location ?? "")")
                             print("Distance to location: \(calculatedDistance) meters")
-
+                            
                             if calculatedDistance <= Double(allowedDistance) {
                                 isInsideAllowedArea = true
                                 break // Stop at first match
                             }
                         }
-
+                        
                         // ✅ Only update UI if the status has changed
                         if self.lastIsInsideAllowedArea != isInsideAllowedArea {
                             self.lastIsInsideAllowedArea = isInsideAllowedArea
@@ -568,7 +533,7 @@ extension LocationViewController:CLLocationManagerDelegate{
                         self.errorLocation(alertMessage: response.message ?? "")
                     }
                 }
-
+                
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
@@ -592,7 +557,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.showFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
         ViewAnimator.hideFade(LocationErrorStack)
-        PunchDescriptionLbl.text = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
+        PunchDescriptionLbl.text = CommonStringFile.Tap_on_the_punch
         punchStack.backgroundColor = .white
     }
 
@@ -603,11 +568,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         PunchThumbnail.image = ImageName.need_location_access
         punchStack.layer.cornerRadius = 10
         punchStack.backgroundColor = UIColor.red.withAlphaComponent(0.4)
-        PunchDescriptionLbl.text = """
-        Note: You are outside the institute's boundary. You will not be able to mark your attendance.
-
-        Please try again when you are within the designated area.
-        """
+        PunchDescriptionLbl.text = CommonStringFile.locationErrorMessage
     }
 
     
@@ -617,7 +578,6 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.hideFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
         ViewAnimator.showFade(PunchThumbnail)
-        
         PunchThumbnail.image = ImageName.need_location_access
         PunchDescriptionLbl.text = alertMessage
     }

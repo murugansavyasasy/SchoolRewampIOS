@@ -35,14 +35,9 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     var hasCenteredMap = false
     var isManualLocationSet = false
     var dropDown = DropDown()
-    let firstParagraph = """
-        Accurate location settings are crucial for ensuring that attendance is only marked when users are within the designated area of the institute. Please double-check the location before submitting.
-        """
-    let secondParagraph = """
-        Once saved, this location will be used to verify the proximity of users when they mark their attendance. Ensure that the location is correct as it will directly impact attendance functionality.
-        """
     var AlertModal = CustomAlert()
     var staffDetails = UserDefaultFileManager.get_staff_Details()
+    let Pinned_Location = "Pinned Location"
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -69,7 +64,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
 
         let placemark = MKPlacemark(coordinate: coordinate)
         let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = "Pinned Location"
+        mapItem.name = Pinned_Location
         
         // Open in Apple Maps
         mapItem.openInMaps(launchOptions: [
@@ -84,7 +79,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         locationNameTxt.layer.borderWidth = 1
         locationNameTxt.layer.borderColor = UIColor.lightGray.cgColor
         locationNameTxt.layer.cornerRadius = 4
-        instractionLbl.text = "\(firstParagraph)\n\n\(secondParagraph)"
+        instractionLbl.text = "\(CommonStringFile.add_location_firstMessage)\n\n\(CommonStringFile.add_location_firstMessage)"
     }
     
     func setupLocation() {
@@ -119,9 +114,21 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     }
     
     func showSettingsAlert() {
-        let alert = UIAlertController(title: "Location Access Needed", message: "Please allow location access in Settings to use this feature.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
+        let alert = UIAlertController(
+            title: AlertstringFile.Location_Access_Needed,
+            message: AlertstringFile.Please_allow_location_access,
+            preferredStyle: .alert
+        )
+        alert
+            .addAction(
+                UIAlertAction(title: AlertstringFile.Cancel, style: .cancel)
+            )
+        alert
+            .addAction(
+                UIAlertAction(
+                    title: AlertstringFile.Open_Settings,
+                    style: .default
+                ) { _ in
             if let url = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(url)
             }
@@ -263,12 +270,24 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         
         if  9 >= Int(distanceTxt.text!) ?? 0  {
             
-            let refreshAlert = UIAlertController(title: "", message: "Distance Should be  above 10 Meter(s)", preferredStyle: UIAlertController.Style.alert)
+            let refreshAlert = UIAlertController(
+                title: "",
+                message: AlertstringFile.Distance_Should,
+                preferredStyle: UIAlertController.Style.alert
+            )
            
-                               refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+            refreshAlert
+                .addAction(
+                    UIAlertAction(
+                        title: AlertstringFile.OK,
+                        style: .default,
+                        handler: { [self] (
+                            action: UIAlertAction!
+                        ) in
            
                                    
-                               }))
+                               })
+)
                            present(refreshAlert, animated: true, completion: nil)
             
             

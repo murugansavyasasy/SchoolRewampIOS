@@ -29,11 +29,9 @@ class LocationReportVC: UIViewController{
     var SendDate = ""
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-
-        StyleAndTranslate()
         
+        StyleAndTranslate()
         NoDataLbl.isHidden = true
         
         for i in 0..<21 {
@@ -42,13 +40,10 @@ class LocationReportVC: UIViewController{
         }
         
         YearLbl.text = years[0]
-        
         Months = getMonthNames(for: years[0])
-        
         MonthLbl.text = Months[currentMonth-1]
         
         SelectedMonthCode = String(format: "%02d",currentMonth)
-        
         Geometric_Staff_Attendance_Report()
         
         let YearTap = UITapGestureRecognizer(target: self, action: #selector(YearSelection))
@@ -61,7 +56,6 @@ class LocationReportVC: UIViewController{
 
         let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
         Tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
-        
         Tv.delegate = self
         Tv.dataSource = self
     }
@@ -116,7 +110,6 @@ class LocationReportVC: UIViewController{
         let date = (YearLbl.text ?? "") + "-" + SelectedMonthCode
         
         let param = [StaffAttendanceReportStringFile.attendance_dt: date] //"2025-04"
-        
         APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_staff_attendance_report, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (reult: Result<StaffAttendanceResponse,Error>) in
             
             switch reult {
@@ -126,18 +119,14 @@ class LocationReportVC: UIViewController{
                 if successMessage.status == true {
                     
                     DispatchQueue.main.async { [self] in
-                        
                         AttendanceDetails = successMessage.data
-                        
                         NoDataLbl.isHidden = true
-                        
                         Tv.reloadData()
                     }
                     
                 }else {
                     
                     DispatchQueue.main.async { [self] in
-                        
                         AttendanceDetails = successMessage.data
                         NoDataLbl.text = successMessage.message
                         NoDataLbl.isHidden = false
@@ -148,7 +137,6 @@ class LocationReportVC: UIViewController{
             case .failure(let error):
                 
                 DispatchQueue.main.async {
-                    
                     print(error.localizedDescription)
                 }
             }
@@ -211,21 +199,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
         cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type
-        
-        
-        
-//        cell.firstInLbl.text = "First in - " + (
-//            AttendanceDetails?[indexPath.row].in_time ?? ""
-//        )
-//        cell.toDateLbl.text = "Last out - " + (
-//            AttendanceDetails?[indexPath.row].out_time ?? ""
-//        )
-//        cell.workingHrsLbl.text = "Working Hours - " +  (
-//            AttendanceDetails?[indexPath.row].working_hours ?? ""
-//        )
-        
-        
-        
+          
         if  AttendanceDetails?[indexPath.row].in_time  != ""{
             cell.firstInLbl.isHidden = false
             cell.firstInLbl.text = "First in - " + (
@@ -310,21 +284,6 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         let weekday = weekdayFormatter.string(from: date)
         
         return (day, month, weekday)
-    }
-
-    
-    @objc func GoTOHISTORY(_ sender: UITapGestureRecognizer) {
-        guard let row = sender.view?.tag else { return }
-       
-        let selectedDate = AttendanceDetails?[row].date// Assuming you have a date property
-        
-        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        
-        // Now pass the date to vc
-        vc.selectedDate = selectedDate ?? ""
-        
-        present(vc, animated: true)
     }
 
 }
