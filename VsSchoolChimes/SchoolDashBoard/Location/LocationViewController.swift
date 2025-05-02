@@ -111,8 +111,8 @@ class LocationViewController: UIViewController {
     
     func addLocationEnabel(Show:Bool){
         
-            addlocationbtnName.isHidden = !Show
-        
+        addlocationbtnName.isHidden = !Show
+    }
     func getDeviceModelName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
