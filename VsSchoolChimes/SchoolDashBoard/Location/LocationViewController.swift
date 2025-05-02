@@ -75,7 +75,7 @@ class LocationViewController: UIViewController {
     }
     
     
-      
+    
     
     func StyleAndTranslate(){
         
@@ -98,7 +98,7 @@ class LocationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         addLocationEnabel(Show: add_location_enabel ?? false )
         NotificationCenter.default.addObserver(self, selector: #selector(checkAndFetchLocationData), name: UIApplication.didBecomeActiveNotification, object: nil)
         checkLocationAuthorization()
@@ -107,262 +107,260 @@ class LocationViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-   
+    
     
     func addLocationEnabel(Show:Bool){
         
-            addlocationbtnName.isHidden = !Show
+        addlocationbtnName.isHidden = !Show
         
-    func getDeviceModelName() -> String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let modelCode = withUnsafePointer(to: &systemInfo.machine) { ptr in
-            return String(cString: UnsafeRawPointer(ptr).assumingMemoryBound(to: CChar.self))
-        }
-        let modelMap: [String: String] = [
-            
-            "iPhone14,7": "iPhone 14",
-            "iPhone14,8": "iPhone 14 Plus",
-            "iPhone15,2": "iPhone 14 Pro",
-            "iPhone15,3": "iPhone 14 Pro Max",
-            "iPhone15,4": "iPhone 15",
-            "iPhone15,5": "iPhone 15 Plus",
-            "iPhone16,1": "iPhone 15 Pro",
-            "iPhone16,2": "iPhone 15 Pro Max",
-            "iPhone16,3": "iPhone 16",
-            "iPhone16,4": "iPhone 16 Plus",
-            "iPhone17,1": "iPhone 16 Pro",
-            "iPhone17,2": "iPhone 16 Pro Max",
-            "iPhone14,2": "iPhone 13 Pro",
-            "iPhone14,3": "iPhone 13 Pro Max",
-            "iPhone14,4": "iPhone 13 mini",
-            "iPhone14,5": "iPhone 13",
-            "iPhone13,2": "iPhone 12",
-            "iPhone13,3": "iPhone 12 Pro",
-            "iPhone13,4": "iPhone 12 Pro Max",
-            "iPhone13,1": "iPhone 12 mini",
-            "iPhone12,1": "iPhone 11",
-            "iPhone12,3": "iPhone 11 Pro",
-            "iPhone12,5": "iPhone 11 Pro Max",
-            "iPhone11,8": "iPhone XR",
-            "iPhone11,2": "iPhone XS",
-            "iPhone11,4": "iPhone XS Max",
-            "iPhone11,6": "iPhone XS Max (China)",
-            "iPhone10,3": "iPhone X",
-            "iPhone10,6": "iPhone X (GSM)",
-            "iPhone10,1": "iPhone 8",
-            "iPhone10,4": "iPhone 8 (GSM)",
-            "iPhone10,2": "iPhone 8 Plus",
-            "iPhone10,5": "iPhone 8 Plus (GSM)",
-             "iPhone9,1": "iPhone 7",
-             "iPhone9,3": "iPhone 7 (GSM)",
-            "iPhone9,2": "iPhone 7 Plus",
-            "iPhone9,4": "iPhone 7 Plus (GSM)",
-            "iPhone8,1": "iPhone 6s",
-            "iPhone8,2": "iPhone 6s Plus",
-            "iPhone8,4": "iPhone SE (1st generation)",
-            "iPhone7,2": "iPhone 6",
-            "iPhone7,1": "iPhone 6 Plus",
-            "iPhone6,1": "iPhone 5s (GSM)",
-            "iPhone6,2": "iPhone 5s (Global)",
-            "iPhone5,1": "iPhone 5 (GSM)",
-            "iPhone5,2": "iPhone 5 (Global)",
-            "iPhone5,3": "iPhone 5c (GSM)",
-            "iPhone5,4": "iPhone 5c (Global)",
-            "iPhone4,1": "iPhone 4s",
-            "iPhone3,1": "iPhone 4 (GSM)",
-            "iPhone3,2": "iPhone 4 (GSM Rev A)",
-            "iPhone3,3": "iPhone 4 (CDMA)",
-            "iPhone2,1": "iPhone 3GS",
-            "iPhone1,2": "iPhone 3G",
-            "iPhone1,1": "iPhone",
-            
-            // iPads
-            "iPad13,16": "iPad Air (5th generation, WiFi)",
-            "iPad13,17": "iPad Air (5th generation, WiFi+Cellular)",
-            "iPad13,4": "iPad Pro 11 inch (3rd generation, WiFi)",
-            "iPad13,5": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
-            "iPad13,6": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
-            "iPad13,7": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
-            "iPad13,8": "iPad Pro 12.9 inch (5th generation, WiFi)",
-            "iPad13,9": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
-            "iPad13,10": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
-            "iPad13,11": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
-            "iPad12,1": "iPad (9th generation, WiFi)",
-            "iPad12,2": "iPad (9th generation, WiFi+Cellular)",
-            "iPad11,6": "iPad (8th generation, WiFi)",
-            "iPad11,7": "iPad (8th generation, WiFi+Cellular)",
-            "iPad11,3": "iPad Air (4th generation, WiFi)",
-            "iPad11,4": "iPad Air (4th generation, WiFi+Cellular)",
-            "iPad8,1": "iPad Pro 11 inch (1st generation, WiFi)",
-            "iPad8,2": "iPad Pro 11 inch (1st generation, WiFi)",
-            "iPad8,3": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
-            "iPad8,4": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
-            "iPad8,9": "iPad Pro 11 inch (2nd generation, WiFi)",
-            "iPad8,10": "iPad Pro 11 inch (2nd generation, WiFi+Cellular)",
-            "iPad7,5": "iPad (6th generation, WiFi)",
-            "iPad7,6": "iPad (6th generation, WiFi+Cellular)",
-            
-        ]
-        
-        return modelMap[modelCode] ?? modelCode // Returns modelCode if not found in the map
-    }
-    
-    @objc private func appDidBecomeActive() {
-           // Check and then fetch
-           checkAndFetchLocationData()
-       }
-       
-    @objc func checkAndFetchLocationData() {
-           let status = CLLocationManager.authorizationStatus()
-           
-           if status == .authorizedAlways || status == .authorizedWhenInUse {
-               // ✅ Add delay for safety (system breathing time)
-               DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
-                   call_locationManager()
-               }
-           } else {
-               print("❗️ Location permission not granted yet.")
-               checkLocationAuthorization()
-           }
-       }
-    
-    
-    @IBAction func backBtn(_ sender: Any) {
-        
-        dismiss(animated: true)
-    }
-
-    @IBAction func SegmentAction(_ sender: Any) {
-        
-        if SegmentControl.selectedSegmentIndex == 1{
-            addChildViewControllerToContainer()
-        }else{
-            removeChildVC()
-            checkLocationAuthorization()
-        }
-    }
-    
-    @IBAction func PunchBtnAct(_ sender: Any) {
-        Punch_Api()
-    }
-    
-    @IBAction func AddLocationAct(_ sender: Any) {
-        
-        let vc = CreateLocationViewController(nibName: nil, bundle: nil)
-        vc.longitude = currentLogi ?? ""
-        vc.latitude = currentLat ?? ""
-        vc.refrenceAddress = RefrenceAddress
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
-    
-    func addChildViewControllerToContainer() {
-        let vc = LocationReportVC(nibName: nil, bundle: nil)
-        addChild(vc)
-        vc.view.frame = containerView.bounds
-        containerView.addSubview(vc.view)
-        vc.didMove(toParent: self)
-        self.childVC = vc // Save reference
-    }
-
-    func removeChildVC() {
-        guard let vc = childVC else { return }
-        vc.willMove(toParent: nil)
-        vc.view.removeFromSuperview()
-        vc.removeFromParent()
-        childVC = nil
-    }
-
-   
-    @IBAction func enableLocationButtonTapped(_ sender: UIButton) {
-        if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(appSettings)
-        }
-    }
-
-    @objc func checkLocationAuthorization() {
-        let status = CLLocationManager.authorizationStatus()
-        switch status {
-        case .notDetermined:
-            // Request permission
-            DispatchQueue.main.async { [self] in
-                call_locationManager()
-                locationManager.requestWhenInUseAuthorization()
+        func getDeviceModelName() -> String {
+            var systemInfo = utsname()
+            uname(&systemInfo)
+            let modelCode = withUnsafePointer(to: &systemInfo.machine) { ptr in
+                return String(cString: UnsafeRawPointer(ptr).assumingMemoryBound(to: CChar.self))
             }
-        case .restricted, .denied:
+            let modelMap: [String: String] = [
+                
+                "iPhone14,7": "iPhone 14",
+                "iPhone14,8": "iPhone 14 Plus",
+                "iPhone15,2": "iPhone 14 Pro",
+                "iPhone15,3": "iPhone 14 Pro Max",
+                "iPhone15,4": "iPhone 15",
+                "iPhone15,5": "iPhone 15 Plus",
+                "iPhone16,1": "iPhone 15 Pro",
+                "iPhone16,2": "iPhone 15 Pro Max",
+                "iPhone16,3": "iPhone 16",
+                "iPhone16,4": "iPhone 16 Plus",
+                "iPhone17,1": "iPhone 16 Pro",
+                "iPhone17,2": "iPhone 16 Pro Max",
+                "iPhone14,2": "iPhone 13 Pro",
+                "iPhone14,3": "iPhone 13 Pro Max",
+                "iPhone14,4": "iPhone 13 mini",
+                "iPhone14,5": "iPhone 13",
+                "iPhone13,2": "iPhone 12",
+                "iPhone13,3": "iPhone 12 Pro",
+                "iPhone13,4": "iPhone 12 Pro Max",
+                "iPhone13,1": "iPhone 12 mini",
+                "iPhone12,1": "iPhone 11",
+                "iPhone12,3": "iPhone 11 Pro",
+                "iPhone12,5": "iPhone 11 Pro Max",
+                "iPhone11,8": "iPhone XR",
+                "iPhone11,2": "iPhone XS",
+                "iPhone11,4": "iPhone XS Max",
+                "iPhone11,6": "iPhone XS Max (China)",
+                "iPhone10,3": "iPhone X",
+                "iPhone10,6": "iPhone X (GSM)",
+                "iPhone10,1": "iPhone 8",
+                "iPhone10,4": "iPhone 8 (GSM)",
+                "iPhone10,2": "iPhone 8 Plus",
+                "iPhone10,5": "iPhone 8 Plus (GSM)",
+                "iPhone9,1": "iPhone 7",
+                "iPhone9,3": "iPhone 7 (GSM)",
+                "iPhone9,2": "iPhone 7 Plus",
+                "iPhone9,4": "iPhone 7 Plus (GSM)",
+                "iPhone8,1": "iPhone 6s",
+                "iPhone8,2": "iPhone 6s Plus",
+                "iPhone8,4": "iPhone SE (1st generation)",
+                "iPhone7,2": "iPhone 6",
+                "iPhone7,1": "iPhone 6 Plus",
+                "iPhone6,1": "iPhone 5s (GSM)",
+                "iPhone6,2": "iPhone 5s (Global)",
+                "iPhone5,1": "iPhone 5 (GSM)",
+                "iPhone5,2": "iPhone 5 (Global)",
+                "iPhone5,3": "iPhone 5c (GSM)",
+                "iPhone5,4": "iPhone 5c (Global)",
+                "iPhone4,1": "iPhone 4s",
+                "iPhone3,1": "iPhone 4 (GSM)",
+                "iPhone3,2": "iPhone 4 (GSM Rev A)",
+                "iPhone3,3": "iPhone 4 (CDMA)",
+                "iPhone2,1": "iPhone 3GS",
+                "iPhone1,2": "iPhone 3G",
+                "iPhone1,1": "iPhone",
+                
+                // iPads
+                "iPad13,16": "iPad Air (5th generation, WiFi)",
+                "iPad13,17": "iPad Air (5th generation, WiFi+Cellular)",
+                "iPad13,4": "iPad Pro 11 inch (3rd generation, WiFi)",
+                "iPad13,5": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
+                "iPad13,6": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
+                "iPad13,7": "iPad Pro 11 inch (3rd generation, WiFi+Cellular)",
+                "iPad13,8": "iPad Pro 12.9 inch (5th generation, WiFi)",
+                "iPad13,9": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
+                "iPad13,10": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
+                "iPad13,11": "iPad Pro 12.9 inch (5th generation, WiFi+Cellular)",
+                "iPad12,1": "iPad (9th generation, WiFi)",
+                "iPad12,2": "iPad (9th generation, WiFi+Cellular)",
+                "iPad11,6": "iPad (8th generation, WiFi)",
+                "iPad11,7": "iPad (8th generation, WiFi+Cellular)",
+                "iPad11,3": "iPad Air (4th generation, WiFi)",
+                "iPad11,4": "iPad Air (4th generation, WiFi+Cellular)",
+                "iPad8,1": "iPad Pro 11 inch (1st generation, WiFi)",
+                "iPad8,2": "iPad Pro 11 inch (1st generation, WiFi)",
+                "iPad8,3": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
+                "iPad8,4": "iPad Pro 11 inch (1st generation, WiFi+Cellular)",
+                "iPad8,9": "iPad Pro 11 inch (2nd generation, WiFi)",
+                "iPad8,10": "iPad Pro 11 inch (2nd generation, WiFi+Cellular)",
+                "iPad7,5": "iPad (6th generation, WiFi)",
+                "iPad7,6": "iPad (6th generation, WiFi+Cellular)",
+                
+            ]
             
-            DispatchQueue.main.async { [self] in
-                ViewAnimator.showFade(LocationErrorStack)
-                ViewAnimator.hideFade(punchStack)
-                addLocationEnabel(Show: false)
-            }
-        case .authorizedWhenInUse, .authorizedAlways:
-            // Start location updates
-            DispatchQueue.main.async { [self] in
-                ViewAnimator.hideFade(LocationErrorStack)
-                ViewAnimator.showFade(punchStack)
-                call_locationManager()
-            }
-        @unknown default:
-            break
+            return modelMap[modelCode] ?? modelCode // Returns modelCode if not found in the map
         }
     }
-    
-
-    func call_locationManager(){
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-    }
-
-    
-   
-    
-    
-    func checkAuthenticationAvailability() {
+        @objc private func appDidBecomeActive() {
+            // Check and then fetch
+            checkAndFetchLocationData()
+        }
         
-        let context = LAContext()
-        var error: NSError?
-        let policy: LAPolicy = .deviceOwnerAuthentication
-        // Check if biometric authentication or passcode is available
-        if context.canEvaluatePolicy(policy, error: &error) {
-            // Attempt to authenticate using biometrics or passcode
-            authenticateUser(context: context, policy: policy)
-        } else {
-            // Neither biometric authentication nor passcode is available
-            print("No biometric authentication or passcode is set.")
+        @objc func checkAndFetchLocationData() {
+            let status = CLLocationManager.authorizationStatus()
             
-            punch_type = 1
-//            call_locationManager()
+            if status == .authorizedAlways || status == .authorizedWhenInUse {
+                // ✅ Add delay for safety (system breathing time)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+                    call_locationManager()
+                }
+            } else {
+                print("❗️ Location permission not granted yet.")
+                checkLocationAuthorization()
+            }
         }
-    }
-    
-func authenticateUser(context: LAContext, policy: LAPolicy) {
-        context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [self] success, authenticationError in
+        
+        
+        @IBAction func backBtn(_ sender: Any) {
             
-            DispatchQueue.main.async { [self] in
-                if success {
-                    print("Authentication successful")
-                    punch_type = 3
-//                    call_locationManager()
-                    // Proceed with your functionality
-                } else {
-                    // Authentication failed
-                    if let error = authenticationError {
-                        print("Authentication failed: \(error.localizedDescription)")
-                        punch_type = 1
-//                        call_locationManager()
+            dismiss(animated: true)
+        }
+        
+        @IBAction func SegmentAction(_ sender: Any) {
+            
+            if SegmentControl.selectedSegmentIndex == 1{
+                addChildViewControllerToContainer()
+            }else{
+                removeChildVC()
+                checkLocationAuthorization()
+            }
+        }
+        
+        @IBAction func PunchBtnAct(_ sender: Any) {
+            Punch_Api()
+        }
+        
+        @IBAction func AddLocationAct(_ sender: Any) {
+            
+            let vc = CreateLocationViewController(nibName: nil, bundle: nil)
+            vc.longitude = currentLogi ?? ""
+            vc.latitude = currentLat ?? ""
+            vc.refrenceAddress = RefrenceAddress
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
+        }
+        
+        func addChildViewControllerToContainer() {
+            let vc = LocationReportVC(nibName: nil, bundle: nil)
+            addChild(vc)
+            vc.view.frame = containerView.bounds
+            containerView.addSubview(vc.view)
+            vc.didMove(toParent: self)
+            self.childVC = vc // Save reference
+        }
+        
+        func removeChildVC() {
+            guard let vc = childVC else { return }
+            vc.willMove(toParent: nil)
+            vc.view.removeFromSuperview()
+            vc.removeFromParent()
+            childVC = nil
+        }
+        
+        
+        @IBAction func enableLocationButtonTapped(_ sender: UIButton) {
+            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSettings)
+            }
+        }
+        
+        @objc func checkLocationAuthorization() {
+            let status = CLLocationManager.authorizationStatus()
+            switch status {
+            case .notDetermined:
+                // Request permission
+                DispatchQueue.main.async { [self] in
+                    call_locationManager()
+                    locationManager.requestWhenInUseAuthorization()
+                }
+            case .restricted, .denied:
+                
+                DispatchQueue.main.async { [self] in
+                    ViewAnimator.showFade(LocationErrorStack)
+                    ViewAnimator.hideFade(punchStack)
+                    addLocationEnabel(Show: false)
+                }
+            case .authorizedWhenInUse, .authorizedAlways:
+                // Start location updates
+                DispatchQueue.main.async { [self] in
+                    ViewAnimator.hideFade(LocationErrorStack)
+                    ViewAnimator.showFade(punchStack)
+                    call_locationManager()
+                }
+            @unknown default:
+                break
+            }
+        }
+        
+        
+        func call_locationManager(){
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+        
+        
+        
+        
+        
+        func checkAuthenticationAvailability() {
+            
+            let context = LAContext()
+            var error: NSError?
+            let policy: LAPolicy = .deviceOwnerAuthentication
+            // Check if biometric authentication or passcode is available
+            if context.canEvaluatePolicy(policy, error: &error) {
+                // Attempt to authenticate using biometrics or passcode
+                authenticateUser(context: context, policy: policy)
+            } else {
+                // Neither biometric authentication nor passcode is available
+                print("No biometric authentication or passcode is set.")
+                
+                punch_type = 1
+                //            call_locationManager()
+            }
+        }
+        
+        func authenticateUser(context: LAContext, policy: LAPolicy) {
+            context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [self] success, authenticationError in
+                
+                DispatchQueue.main.async { [self] in
+                    if success {
+                        print("Authentication successful")
+                        punch_type = 3
+                        //                    call_locationManager()
+                        // Proceed with your functionality
+                    } else {
+                        // Authentication failed
+                        if let error = authenticationError {
+                            print("Authentication failed: \(error.localizedDescription)")
+                            punch_type = 1
+                            //                        call_locationManager()
+                        }
                     }
                 }
             }
         }
     }
-}
-
-
 extension LocationViewController:CLLocationManagerDelegate{
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let clError = error as? CLError {
             switch clError.code {
@@ -378,7 +376,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         }
     }
     
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let latitude = location.coordinate.latitude
@@ -449,19 +447,19 @@ extension LocationViewController:CLLocationManagerDelegate{
     
     
     
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        switch status {
-//        case .authorizedWhenInUse, .authorizedAlways:
-//            locationManager.startUpdatingLocation()
-//        case .denied, .restricted:
-//            print("Location access denied or restricted.")
-//        case .notDetermined:
-//            locationManager.requestWhenInUseAuthorization()
-//        @unknown default:
-//            break
-//        }
-//    }
-//   
+    //    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    //        switch status {
+    //        case .authorizedWhenInUse, .authorizedAlways:
+    //            locationManager.startUpdatingLocation()
+    //        case .denied, .restricted:
+    //            print("Location access denied or restricted.")
+    //        case .notDetermined:
+    //            locationManager.requestWhenInUseAuthorization()
+    //        @unknown default:
+    //            break
+    //        }
+    //    }
+    //
     func Punch_Api(){
         
         APIService.shared
@@ -517,7 +515,7 @@ extension LocationViewController:CLLocationManagerDelegate{
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [weak self] (result: Result<StaffGeometricLocation, Error>) in
             guard let self = self else { return }
-
+            
             switch result {
             case .success(let response):
                 if response.status == true {
@@ -529,30 +527,30 @@ extension LocationViewController:CLLocationManagerDelegate{
                             print("Invalid current coordinates")
                             return
                         }
-
+                        
                         for location in response.data ?? [] {
                             guard let lat1 = Double(location.latitude ?? ""),
                                   let lon1 = Double(location.longitude ?? ""),
                                   let allowedDistance = Int(location.distance ?? "") else {
                                 continue
                             }
-
+                            
                             let calculatedDistance = self.haversineDistance(
                                 lat1: lat1,
                                 lon1: lon1,
                                 lat2: currentLat,
                                 lon2: currentLong
                             )
-
+                            
                             print("Checking location \(location.location ?? "")")
                             print("Distance to location: \(calculatedDistance) meters")
-
+                            
                             if calculatedDistance <= Double(allowedDistance) {
                                 isInsideAllowedArea = true
                                 break // Stop at first match
                             }
                         }
-
+                        
                         // ✅ Only update UI if the status has changed
                         if self.lastIsInsideAllowedArea != isInsideAllowedArea {
                             self.lastIsInsideAllowedArea = isInsideAllowedArea
@@ -568,7 +566,7 @@ extension LocationViewController:CLLocationManagerDelegate{
                         self.errorLocation(alertMessage: response.message ?? "")
                     }
                 }
-
+                
             case .failure(let error):
                 DispatchQueue.main.async {
                     print("API Error: \(error.localizedDescription)")
@@ -576,18 +574,18 @@ extension LocationViewController:CLLocationManagerDelegate{
             }
         }
     }
-
+    
     
     private func updatePunchUI(isInside: Bool) {
         if isInside {
-           
+            
             showInsideBoundaryUI()
         } else {
             showOutsideBoundaryUI()
         }
     }
-
-
+    
+    
     private func showInsideBoundaryUI() {
         ViewAnimator.showFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
@@ -595,7 +593,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         PunchDescriptionLbl.text = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
         punchStack.backgroundColor = .white
     }
-
+    
     private func showOutsideBoundaryUI() {
         ViewAnimator.hideFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
@@ -605,14 +603,14 @@ extension LocationViewController:CLLocationManagerDelegate{
         punchStack.backgroundColor = UIColor.red.withAlphaComponent(0.4)
         PunchDescriptionLbl.text = """
         Note: You are outside the institute's boundary. You will not be able to mark your attendance.
-
+        
         Please try again when you are within the designated area.
         """
     }
-
+    
     
     private func errorLocation(alertMessage: String) {
-       
+        
         addLocationEnabel(Show: add_location_enabel ?? false)
         ViewAnimator.hideFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
@@ -621,7 +619,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         PunchThumbnail.image = ImageName.need_location_access
         PunchDescriptionLbl.text = alertMessage
     }
-
+    
     
     func locationCheck() {
         guard let distanceString = ExstingDistance else {
@@ -650,13 +648,13 @@ extension LocationViewController:CLLocationManagerDelegate{
         
         if distance <= Double(distanceInt) {
             print("The existing location is within \(distanceInt) meters of the current location.")
-           
+            
         } else {
             print("The existing location is more than \(distanceInt) meters away.")
-           
+            
         }
     }
-  
+    
     func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
         let earthRadiusKm: Double = 6371.0
         let dLat = degreesToRadians(lat2 - lat1)
@@ -672,7 +670,6 @@ extension LocationViewController:CLLocationManagerDelegate{
     }
     
 }
-
 
 // MARK: To save the present absent person's :
 
