@@ -49,14 +49,34 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         setupLocation()
         locationNameTxt.setPadding(left: 10, right: 10)
         distanceTxt.setPadding(left: 10)
-        
+        distanceTxt.addDoneButton()
+        locationNameTxt.addDoneButton()
         if !isManualLocationSet {
             isManualLocationSet = true
             updateMapToManualLocation(lat:Double(latitude) ?? 0.0, lon: Double(longitude) ?? 0.0)
             locationManager.stopUpdatingLocation()
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapTapped))
+          mapView.addGestureRecognizer(tapGesture)
+    
     }
     
+    
+    
+    @objc func mapTapped() {
+        let coordinate = CLLocationCoordinate2D(latitude: Double(latitude) ?? 0.0, longitude: Double(longitude) ?? 0.0) // Example coordinate (San Francisco)
+
+        let placemark = MKPlacemark(coordinate: coordinate)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = "Pinned Location"
+        
+        // Open in Apple Maps
+        mapItem.openInMaps(launchOptions: [
+            MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+        ])
+    }
+   
     func setupUI() {
         [informationOuterView, locationView, addressOuterView].forEach { $0?.layer.cornerRadius = 10 }
         [distanceOuterView, informationOuterView].forEach { $0?.layer.borderWidth = 1 }
@@ -70,7 +90,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     func setupLocation() {
         mapView.showsUserLocation = true
         mapView.delegate = self
-        mapView.isUserInteractionEnabled = false
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
@@ -158,6 +177,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         mapView.addAnnotation(annotation)
     }
     
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "pulsePin"
         var view = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -189,6 +209,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         return view
     }
     
+
+
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let circleOverlay = overlay as? MKCircle {
             let renderer = MKCircleRenderer(circle: circleOverlay)
@@ -237,37 +259,59 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         self.present(vc, animated: true)
     }
     @IBAction func saveLocation(_ sender: UIButton) {
-        if locationNameTxt.text != "" && longitude != "" && latitude != "" && distanceTxt.text != ""{
-            if #available(iOS 15.0, *) {
-                showLottieProgressLoader(animationName: "loader (2)")
-            }
+        
+        
+        if  9 >= Int(distanceTxt.text!) ?? 0  {
             
-            APIService.shared.makeApi(
-                url: ServiceUrl.staff_attd_geometric_set_geometric_location,
-                parameters: [  "location": locationNameTxt.text ?? "",
-                               "longitude":longitude,
-                               "latitude": latitude,
-                               "distance": distanceTxt.text ?? ""],
-                type: ApitTypeSringFile.POST,
-                token:staffDetails?.access_token ?? ""
-            ) { [self] (result: Result<StaffGeometricLocation, Error>) in
-                DispatchQueue.main.async {
-                    if #available(iOS 15.0, *) {
-                        self.hideLottieProgressLoader()
-                    }
-                    
-                    switch result {
-                    case .success(let response):
-                        self.AlertModal.showAlert(title: "", message: response.message ?? "", on: self)
-                    case .failure(let error):
-                        print("Error fetching attachments:", error.localizedDescription)
-                        self.AlertModal.showAlert(title: "", message: error.localizedDescription, on: self)
+            let refreshAlert = UIAlertController(title: "", message: "Distance Should be  above 10 Meter(s)", preferredStyle: UIAlertController.Style.alert)
+           
+                               refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
+           
+                                   
+                               }))
+                           present(refreshAlert, animated: true, completion: nil)
+            
+            
+            
+        }else{
+            if locationNameTxt.text != "" && longitude != "" && latitude != "" && distanceTxt.text != ""{
+                if #available(iOS 15.0, *) {
+                    showLottieProgressLoader(animationName: "loader (2)")
+                }
+                
+                APIService.shared.makeApi(
+                    url: ServiceUrl.staff_attd_geometric_set_geometric_location,
+                    parameters: [  "location": locationNameTxt.text ?? "",
+                                   "longitude":longitude,
+                                   "latitude": latitude,
+                                   "distance": distanceTxt.text ?? ""],
+                    type: ApitTypeSringFile.POST,
+                    token:staffDetails?.access_token ?? ""
+                ) { [self] (result: Result<StaffGeometricLocation, Error>) in
+                    DispatchQueue.main.async {
+                        if #available(iOS 15.0, *) {
+                            self.hideLottieProgressLoader()
+                        }
+                        
+                        switch result {
+                        case .success(let response):
+                            
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Sccuess, message: response.message ?? "",
+                                    on: self
+                                ) {
+                                    self.dismiss(animated: true)
+                                }
+                        case .failure(let error):
+                            print("Error fetching attachments:", error.localizedDescription)
+                            self.AlertModal.showAlert(title: "", message: error.localizedDescription, on: self)
+                        }
                     }
                 }
+                
             }
-            
         }
-        
     }
     
 }

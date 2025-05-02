@@ -88,7 +88,6 @@ class LocationReportVC: UIViewController{
             print("Selected item: \(item) at index: \(index)")
             YearLbl.text = item
             Months = getMonthNames(for: item)
-            
             Geometric_Staff_Attendance_Report()
         }
     }
@@ -107,7 +106,6 @@ class LocationReportVC: UIViewController{
             
             // Convert index to two-digit month string
             SelectedMonthCode = String(format: "%02d", index + 1)
-            
             Geometric_Staff_Attendance_Report()
         }
     }
@@ -213,15 +211,51 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
         cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type
-        cell.firstInLbl.text = "First in - " + (
-            AttendanceDetails?[indexPath.row].in_time ?? ""
-        )
-        cell.toDateLbl.text = "Last out - " + (
-            AttendanceDetails?[indexPath.row].out_time ?? ""
-        )
-        cell.workingHrsLbl.text = "Working Hours - " +  (
-            AttendanceDetails?[indexPath.row].working_hours ?? ""
-        )
+        
+        
+        
+//        cell.firstInLbl.text = "First in - " + (
+//            AttendanceDetails?[indexPath.row].in_time ?? ""
+//        )
+//        cell.toDateLbl.text = "Last out - " + (
+//            AttendanceDetails?[indexPath.row].out_time ?? ""
+//        )
+//        cell.workingHrsLbl.text = "Working Hours - " +  (
+//            AttendanceDetails?[indexPath.row].working_hours ?? ""
+//        )
+        
+        
+        
+        if  AttendanceDetails?[indexPath.row].in_time  != ""{
+            cell.firstInLbl.isHidden = false
+            cell.firstInLbl.text = "First in - " + (
+                AttendanceDetails?[indexPath.row].in_time ?? ""
+            )
+        }else{
+            
+            cell.firstInLbl.isHidden = true
+        }
+        
+        if AttendanceDetails?[indexPath.row].out_time   != ""{
+            cell.toDateLbl.isHidden = false
+            cell.toDateLbl.text = "Last out - " + (
+                AttendanceDetails?[indexPath.row].out_time ?? ""
+            )
+        }else{
+            
+            cell.toDateLbl.isHidden = true
+        }
+        
+        if  AttendanceDetails?[indexPath.row].working_hours  != ""{
+            cell.workingHrsLbl.isHidden = false
+            cell.workingHrsLbl.text = "Working Hours - " +  (
+                AttendanceDetails?[indexPath.row].working_hours ?? ""
+            )
+        }else{
+            
+            cell.workingHrsLbl.isHidden = true
+        }
+             
         cell.StatusLbl.text = AttendanceDetails?[indexPath.row].leave_type
         if cell.StatusLbl.text == "Absent" {
             cell.StatusLbl.backgroundColor = .systemRed

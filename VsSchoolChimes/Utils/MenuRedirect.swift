@@ -31,43 +31,70 @@ class MenuRedirectHandler {
     var Imgitems: [MenuImage] = [
         // MenuImage(id: 0, name: "Communication"),
         MenuImage(id: 1, name: "Absentees Report"),
-        MenuImage(id: 2, name: "Assignment"),
-        MenuImage(id: 3, name: "Notice Board"),
-        MenuImage(id: 4, name: "EventsHolidays"),
-        MenuImage(id: 5, name: "PTM"),
-        MenuImage(id: 6, name: "Absentees Report"),
+        MenuImage(id: 2, name: "Assigment"),
+        MenuImage(id: 3, name: "Attendance marking"),
+        MenuImage(id: 4, name: "Attendance Report"),
+        MenuImage(id: 5, name: "Certificate Request"),
+        MenuImage(id: 6, name: "Class Timetable"),
         MenuImage(id: 7, name: "Communication"),
         MenuImage(id: 8, name: "Daily Collection"),
-        MenuImage(id: 9, name: "Homework"),
-        MenuImage(id: 10, name: "ImagePdf"),
+        MenuImage(id: 9, name: "Events"),
+        MenuImage(id: 10, name: "ExamTest"),
         MenuImage(id: 11, name: "ExamTest"),
-        MenuImage(id: 12, name: "Events"),
-        MenuImage(id: 13, name: "Interaction with Staff"),
-        MenuImage(id: 14, name: "Staff Wise Attendance Report"),
+        MenuImage(id: 12, name: "Fee Details"),
+        MenuImage(id: 13, name: ""),
+        MenuImage(id: 14, name: "Fee Pending Report"),
         MenuImage(id: 15, name: "Homework"),
-        MenuImage(id: 16, name: "MySchoolBus"),
-        MenuImage(id: 17, name: "QuizExam"),
-        MenuImage(id: 18, name: "Exam Marks"),
-        MenuImage(id: 19, name: "Class Timetable"),
-        MenuImage(id: 20, name: "Messages from management"),
-        MenuImage(id: 21, name: "Very Important Info"),
-        MenuImage(id: 22, name: "Attendance marking"),
-        MenuImage(id: 23, name: "Upload Video"),
-        MenuImage(id: 24, name: "Attendance marking"),
-        MenuImage(id: 25, name: "School Needs"),
-        MenuImage(id: 26, name: "online_meeting"),
-        MenuImage(id: 27, name: "LSRW"),
-        MenuImage(id: 28, name: "Daily Collection"),
-        MenuImage(id: 29, name: "Student Report"),
-        MenuImage(id: 30, name: "Lesson Plan"),
-        MenuImage(id: 31, name: "Fee Pending Report"),
-        MenuImage(id: 32, name: "Interaction with student"),
+        MenuImage(id: 16, name: "Interaction with Staff"),
+        MenuImage(id: 17, name: "Interaction with student"),
+        MenuImage(id: 18, name: "Request Leave"),
+        MenuImage(id: 19, name: "Lesson Plan"),
+        MenuImage(id: 20, name: "LSRW"),
+        MenuImage(id: 21, name: "Mark Your Attendance"),
+        MenuImage(id: 22, name: "Messages from management"),
+        MenuImage(id: 23, name: "Notice Board"),
+        MenuImage(id: 24, name: "online_meeting"),
+        MenuImage(id: 25, name: ""),
+        MenuImage(id: 26, name: "PTM"),
+        MenuImage(id: 27, name: "QuizExam"),
+        MenuImage(id: 28, name: ""),
+        MenuImage(id: 29, name: ""),
+        MenuImage(id: 30, name: "School Needs"),
+        MenuImage(id: 31, name: "School strength"),
+        MenuImage(id: 32, name: ""),
         MenuImage(id: 33, name: "Staff Wise Attendance Report"),
-        MenuImage(id: 34, name: "Fee Details"),
-        MenuImage(id: 35, name: "receiver_assignment")
+        MenuImage(id: 34, name: ""),
+        MenuImage(id: 35, name: "Student Report"),
+        MenuImage(id: 36, name: "Very / Important Info"),
+        MenuImage(id: 37, name: "Your Profile"),
+        MenuImage(id: 38, name: "Schedule Exam / Test"),
+        MenuImage(id: 39, name: "Attachments")
     ]
 
 
+  
+
+    
+
+//    13    Fee Payment
+//    14    Fee Pending Report
+    
+   
+   
+   
+   
+    
+   
+   
+   
+ 
+  
+    
+   
+    
+
+   
+          
     
     var receiverItems : [String] = [ MenuStringFile.Communication,ReceiverMenuItems.Homework ,ReceiverMenuItems.ExamTest,ReceiverMenuItems.ExamMarks,ReceiverMenuItems.ImagePdf,ReceiverMenuItems.Video,ReceiverMenuItems.NoticeBoard,ReceiverMenuItems.Assignment,ReceiverMenuItems.OnlineMeeting,ReceiverMenuItems.AttendanceReport,ReceiverMenuItems.EventsHolidays,ReceiverMenuItems.RequestLeave,ReceiverMenuItems.FeeDetails,ReceiverMenuItems.InteractionWithStaff,ReceiverMenuItems.QuizExam,ReceiverMenuItems.LSRW,ReceiverMenuItems.ClassTimetable,ReceiverMenuItems.CertificateRequest,ReceiverMenuItems.PTM,ReceiverMenuItems.Map]
     
@@ -206,15 +233,23 @@ class MenuRedirectHandler {
         let vc = ReportStudentListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
+     
         
     }
+    func senderMarkAttendence(from viewController: UIViewController) {
+        let vc = MarkAttendenceVC (nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .fullScreen
+        viewController.present(vc, animated: true)
+        
+    }
+    
     //
-    //    func senderLeaveRequestNavigate(from viewController: UIViewController) {
-    //        let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
-    //        vc.modalPresentationStyle = .fullScreen
-    //        viewController.present(vc, animated: true)
-    //
-    //    }
+//        func senderLeaveRequestNavigate(from viewController: UIViewController) {
+//            let vc = SenderLeaveRqstVC(nibName: nil, bundle: nil)
+//            vc.modalPresentationStyle = .fullScreen
+//            viewController.present(vc, animated: true)
+//    
+//        }
     
     
     func senderMarkAttendanceNavigate(from viewController: UIViewController) {
@@ -223,7 +258,7 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     
-    func senderAbsenteesNavigate(from viewController: UIViewController) {
+    func senderAbsenteesReport(from viewController: UIViewController) {
         let vc = NewAbsenteesViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
@@ -269,7 +304,7 @@ class MenuRedirectHandler {
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
-    func dailyCollectionNavigate(from viewController: UIViewController) {
+    func senderDailyCollectionNavigate(from viewController: UIViewController) {
         let vc = NewDailyCollectionViewController(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)

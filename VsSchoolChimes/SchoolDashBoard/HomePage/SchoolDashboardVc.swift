@@ -408,11 +408,8 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             }
             
         }
-        
-        
-        
+   
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -420,89 +417,74 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             return
         }
         if collectionView == bottomCv{
-            
+        
             let menuItem = filteredMenu_details?[indexPath.row].id
             Menu_id.staffSelectedMenuId = menuItem ?? 0
             switch menuItem {
-            case 0:
-                
-                MenuRedirect.senderCommunicationNavigate(from: self)
-            case 1:
-                MenuRedirect.senderVideoNavigate(from: self)
-                
+            case 1: //
+                MenuRedirect.senderAbsenteesReport(from: self)
             case 2:
-                MenuRedirect.senderImgPDfNavigate(from: self)
-                
+                MenuRedirect.senderAssignmentNavigate(from: self)
             case 3:
-                
-                MenuRedirect.senderNoticeboardNavigate(from: self)
-            case 4:
-                MenuRedirect.senderEventNavigate(from: self)
+                MenuRedirect.senderMarkAttendence(from: self)
+//            case 4:
                 
             case 5:
                 MenuRedirect.senderPtmNavigate(from: self)
-            case 6:
-                MenuRedirect.senderAbsenteesNavigate(from: self)
             case 7:
-                MenuRedirect.senderSchoolStrength(from: self)
+                MenuRedirect.senderCommunicationNavigate(from: self)
             case 8:
-                MenuRedirect.senderOnlineNavigate(from: self)
+                MenuRedirect.senderDailyCollectionNavigate(from: self)
             case 9:
-                MenuRedirect.senderHomeWorkNavigate(from: self)
-            case 10:
-                MenuRedirect.senderLessonplanNavigate(from: self)
-                
-            case 11:
-                MenuRedirect.ScheduleExamVCNavigat(from: self)
-                
-            case 12:
-                
-                MenuRedirect.senderLocationNavigate(from: self)
-                
-                
-            case 13:
-                
-                MenuRedirect.senderMgmt(from: self)
-            case 14:
-                MenuRedirect.senderImportantInfoNavigate(from: self)
-            case 15:
-                MenuRedirect.senderSchoolNeedsNavigate(from: self)
-                
-            case 16:
                 MenuRedirect.senderEventNavigate(from: self)
-            case 17:
-                
-                MenuRedirect.StaffWiseAttendance(from: self)
-            case 18:
-                print("Mark your Attendance")
+           
+            case 14:
                 MenuRedirect.senderFeePendingNavigate(from: self)
-            case 19:
+            case 15:
+                MenuRedirect.senderHomeWorkNavigate(from: self)
+            case 17:
                 MenuRedirect.Senderchat(from: self)
-                MenuRedirect.getValue = getValue
-            case 20:
-                MenuRedirect.senderStudentreportNavigate(from: self)
+            case 18:
+                MenuRedirect.senderLeaveRequestNavigate(from: self)
+            case 19:
+                MenuRedirect.senderLessonplanNavigate(from: self)
             case 21:
                 if checkMutipleSchool(){
-                    MenuRedirect.senderMarkAttendanceNavigate(from: self)
+                    MenuRedirect.SchoolListVc(from: self)
                 }else{
                     MenuRedirect.senderMarkAttendanceNavigate(from: self)
                 }
             case 22:
-                MenuRedirect.senderAssignmentNavigate(from: self)
-            case 23:
                 MenuRedirect.senderMgmt(from: self)
+            case 23:
+                MenuRedirect.senderNoticeboardNavigate(from: self)
+            case 24:
+                MenuRedirect.senderOnlineNavigate(from: self)
+            case 26:
+                MenuRedirect.senderPtmNavigate(from: self)
+            case 28:
+                MenuRedirect.senderLeaveRequestNavigate(from: self)
+            case 30:
+                MenuRedirect.senderSchoolNeedsNavigate(from: self)
+            case 31:
+                MenuRedirect.senderSchoolStrength(from: self)
             case 33:
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)
                 }else{
                     MenuRedirect.StaffWiseAttendance(from: self)
                 }
-            case 1021:
-                
+            case 35:
+                MenuRedirect.senderStudentreportNavigate(from: self)
+            case 36:
+                MenuRedirect.senderImportantInfoNavigate(from: self)
+          
+            case 39 :
                 ""
                 
             default:
                 // Handle unknown menu items if needed
+                print("MenuId",menuItem)
                 break
             }
             
