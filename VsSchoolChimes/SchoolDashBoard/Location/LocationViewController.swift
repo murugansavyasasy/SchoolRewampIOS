@@ -348,8 +348,8 @@ extension LocationViewController:CLLocationManagerDelegate{
         let location = CLLocation(latitude: currentLatitude, longitude: currentLongitude)
         convertCoordinatesToAddress(location: location)
         get_locationDetails(
-            currentLongitude : currentLogi ?? "" ,
-            currentLatitude : currentLat ?? "",
+            curentLogittude : currentLogi ?? "" ,
+            currentLatitute : currentLat ?? "",
             distance: Int(distanceInMeters)
         )
         locationManager.stopUpdatingLocation()
@@ -516,69 +516,14 @@ extension LocationViewController:CLLocationManagerDelegate{
                     }else {
                         
                         DispatchQueue.main.async {
-//                            CustomAlert
-//                                .showAlertWithOkAction(
-//                                    title: AlertstringFile.Sccuess,
-//                                    message: succesmessage.message ?? "",
-//                                    on: self
-//                                ) {
-//                                    
-//                                }
                         }
                     }
                     
                 case.failure(let error) :
                     
                     DispatchQueue.main.async {
-                        guard let self = self else { return }
-                        
-                        self.getlocationDataDetails = successMessage.data ?? []
-                        
-                        for i in 0..<(successMessage.data?.count ?? 0) {
-                            guard let locationData = successMessage.data?[i],
-                                  let distanceInt = Int(locationData.distance ?? ""),
-                                  let lat1 = Double(locationData.latitude ?? ""),
-                                  let lon1 = Double(locationData.longitude ?? ""),
-                                  let lat2 = Double(currentLatitude),
-                                  let lon2 = Double(currentLongitude)
-                            else {
-                                continue
-                            }
-                            
-                            let calculatedDistance = self.haversineDistance(
-                                lat1: lat1,
-                                lon1: lon1,
-                                lat2: lat2,
-                                lon2: lon2
-                            )
-                            
-                            self.currentDistanceForPuchCheck = calculatedDistance
-                            self.apiDistanceForPuchCheck = distanceInt
-                            
-                            if calculatedDistance <= Double(distanceInt) {
-                                self.punchStack.isHidden = false
-                                self.LocationErrorStack.isHidden = true
-                                self.PunchDescriptionLbl.text = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."
-                                break
-                            } else {
-                                self.AllowLoactionThumbnail.image = ImageName.need_location_access
-                                self.punchStack.layer.cornerRadius = 10
-                                self.punchStack.backgroundColor = UIColor.red.withAlphaComponent(0.4)
-                                self.PunchDescriptionLbl.text = """
-                                Note: You are outside the institute's boundary. You will not be able to mark your attendance. 
 
-                                Please try again when you are within the designated area.
-                                """
-                                self.LocationErrorStack.isHidden = false
-                                self.punchStack.isHidden = true
-                                self.AllowLoactionThumbnail.isHidden = true
-                            }
-                        }
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    print(error.localizedDescription)
+                        print("error",error.localizedDescription)
                 }
             }
         }

@@ -376,7 +376,7 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.receiverchat(from: self)
                 MenuRedirect.getValue = getValue
             case 15:
-                MenuRedirect.resiverExamMark(from: self)
+                MenuRedirect.receiverHomework(from: self)
             case 18:
                 MenuRedirect.receiverAssignmentNavigate(from: self)
             case 19:
