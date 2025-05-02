@@ -352,45 +352,45 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             let menuItem = filteredMenu_details?[indexPath.row].id
             
             switch menuItem {
-            case 0:
-                MenuRedirect.receiverCommunicationNavigate(from: self)
-            case 3:
-                MenuRedirect.receiverHomework(from: self)
-            case 5:
-                MenuRedirect.resiverExamMark(from: self)
-            case 6:
-                MenuRedirect.receiverExamTestNavigate(from: self)
-            case 7:
-                MenuRedirect.receiverNoticeBoardNavigate(from: self)
-            case 8:
-                MenuRedirect.receiverEvent(from: self)
-            case 9:
+            case 2:
+                MenuRedirect.receiverAssignmentNavigate(from: self)
+            case 4:
                 MenuRedirect.receiverAttendancereport(from: self)
-            case 10:
-                MenuRedirect.LeaveRquest(from: self)
-            case 11:
+            case 5:
+                MenuRedirect.receiverCertificateRequest(from: self)
+            case 6:
+                MenuRedirect.receiverclassTimeTable(from: self)
+            case 7:
                 MenuRedirect.receiverCommunicationNavigate(from: self)
+            case 9:
+                MenuRedirect.receiverEvent(from: self)
+            case 10:
+                MenuRedirect.resiverExamMark(from: self)
+            case 12:
+                   "" // Fee Details
             case 13:
-                MenuRedirect.receiverHomework(from: self)
-            case 14:
-                MenuRedirect.receiverchat(from: self)
-                MenuRedirect.getValue = getValue
+                ""    //fee payment
             case 15:
                 MenuRedirect.receiverHomework(from: self)
-            case 18:
-                MenuRedirect.receiverAssignmentNavigate(from: self)
-            case 19:
-                MenuRedirect.receiverImgPdfNavigate(from: self)
+//            case 16:
+                MenuRedirect.receiverchat(from: self)
             case 20:
-                MenuRedirect.receiverOnlineNavigate(from: self)
-            case 21:
-                MenuRedirect.QuizExam(from: self)
-            case 22:
                 MenuRedirect.receiverLsrwNavigate(from: self)
             case 23:
-                MenuRedirect.receiverclassTimeTable(from: self)
-            case 25:
-                MenuRedirect.receiverCertificateRequest(from: self)
+                MenuRedirect.receiverNoticeBoardNavigate(from: self)
+            case 24:
+                MenuRedirect.receiverOnlineNavigate(from: self)
+            case 26:
+                MenuRedirect.receiverPtmNavigate(from: self)
+            case 27:
+                MenuRedirect.QuizExam(from: self)
+            case 28:
+                MenuRedirect.LeaveRquest(from: self)
+            case 36:
+                MenuRedirect.senderImportantInfoNavigate(from: self) //need to be changed
+            case 39:
+                MenuRedirect.receiverAttachment(from: self)
+                
             default:
                 break
             }

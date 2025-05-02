@@ -45,7 +45,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="72U-SE-NOh" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="671.33333333333337"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="661.33333333333337"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rxK-kN-s1W">
                                                     <rect key="frame" x="16" y="60" width="361" height="61.666666666666657"/>
@@ -152,14 +152,14 @@
                                                             <rect key="frame" x="111" y="5" width="236" height="36"/>
                                                             <subviews>
                                                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Drop you distance " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9Qh-pE-qWZ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="182" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="186" height="36"/>
                                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                                 </textField>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meeter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdq-kW-KuE">
-                                                                    <rect key="frame" x="182" y="0.0" width="54" height="36"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meter(s)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pdq-kW-KuE">
+                                                                    <rect key="frame" x="186" y="0.0" width="50" height="36"/>
+                                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                                     <color key="textColor" systemColor="viewFlipsideBackgroundColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -251,16 +251,16 @@
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jpx-PQ-O7g">
-                                                    <rect key="frame" x="121.66666666666669" y="611.33333333333337" width="150" height="40"/>
+                                                    <rect key="frame" x="121.66666666666669" y="611.33333333333337" width="150" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="6oj-fM-ODr"/>
-                                                        <constraint firstAttribute="height" constant="40" id="I2u-A2-1h8"/>
+                                                        <constraint firstAttribute="height" constant="30" id="I2u-A2-1h8"/>
                                                     </constraints>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Save">
+                                                    <buttonConfiguration key="configuration" style="plain" title="Submit">
                                                         <backgroundConfiguration key="background" cornerRadius="6">
-                                                            <color key="backgroundColor" name="gradient1"/>
+                                                            <color key="backgroundColor" name="ButtonColor"/>
                                                         </backgroundConfiguration>
                                                     </buttonConfiguration>
                                                     <connections>
@@ -294,7 +294,7 @@
                                                             </constraints>
                                                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" title="get current location">
+                                                            <buttonConfiguration key="configuration" style="plain" title="Tap to view location history">
                                                                 <backgroundConfiguration key="background" cornerRadius="4">
                                                                     <color key="backgroundColor" red="0.35737061129999997" green="0.6401742909" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                 </backgroundConfiguration>
@@ -401,8 +401,8 @@
     <resources>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="down-arrow" width="512" height="512"/>
-        <namedColor name="gradient1">
-            <color red="0.49803921568627452" green="0.81960784313725488" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="ButtonColor">
+            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

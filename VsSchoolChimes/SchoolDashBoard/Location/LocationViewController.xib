@@ -24,6 +24,7 @@
                 <outlet property="SegmentControl" destination="IcS-Zh-Be1" id="fZC-Up-L56"/>
                 <outlet property="TaptoPunchBtn" destination="NWZ-QJ-87i" id="o2t-Dm-mqF"/>
                 <outlet property="addLocationBtn" destination="fbr-iP-cdc" id="a5N-iX-3pO"/>
+                <outlet property="addlocationbtnName" destination="eEZ-4d-Kha" id="BTk-gE-YWA"/>
                 <outlet property="containerView" destination="aXl-wM-Qid" id="0zB-23-oLi"/>
                 <outlet property="punchStack" destination="LcP-hF-7dl" id="Jr3-MI-dUs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -86,8 +87,11 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="axU-rJ-vfk">
-                                                                    <rect key="frame" x="117" y="259.66666666666663" width="109" height="30"/>
-                                                                    <color key="backgroundColor" name="ButtonColor"/>
+                                                                    <rect key="frame" x="106.66666666666666" y="259.66666666666663" width="130" height="30"/>
+                                                                    <color key="backgroundColor" name="Red"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="130" id="QPu-Mx-l68"/>
+                                                                    </constraints>
                                                                     <color key="tintColor" red="0.99215686270000003" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" title="Enable Location"/>
@@ -135,13 +139,13 @@
                                                                 </view>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWZ-QJ-87i">
                                                                     <rect key="frame" x="121.66666666666666" y="319.33333333333331" width="130" height="30"/>
-                                                                    <color key="backgroundColor" name="ButtonColor"/>
+                                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="130" id="JNk-hb-Omw"/>
                                                                     </constraints>
                                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="Tap to Punch In"/>
+                                                                    <state key="normal" title="Punch"/>
                                                                     <connections>
                                                                         <action selector="PunchBtnAct:" destination="-1" eventType="touchUpInside" id="oWb-PH-SwS"/>
                                                                     </connections>
@@ -226,13 +230,13 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmT-ng-G65">
-                    <rect key="frame" x="10" y="69" width="188.66666666666666" height="35"/>
+                    <rect key="frame" x="10" y="69" width="193.66666666666666" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="epb-dE-9ny"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="GeoMatricAttendance" image="chevron.left" catalog="system">
+                    <state key="normal" title="GeoMetric Attendance" image="chevron.left" catalog="system">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
@@ -286,14 +290,17 @@
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="ButtonColor">
-            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="Red">
+            <color red="0.96100002527236938" green="0.3880000114440918" blue="0.3880000114440918" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -528,6 +528,8 @@
 		FA99ED392DA657AE00F6AF0E /* SeeMoreFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */; };
 		FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */; };
 		FAA8F1132D659BF200B3A457 /* LessonProgressCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */; };
+		FAD14FD82DBFAE01006BD3E1 /* StudentTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */; };
+		FAD14FD92DBFAE01006BD3E1 /* StudentTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */; };
 		FAF9F4A82DBA4952005F7272 /* LocationReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */; };
 		FAF9F4A92DBA4952005F7272 /* LocationReportVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */; };
 		FAFF9DD22D6C7B7A00498368 /* CreateSlotsByStaffModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFF9DB92D6C7B7A00498368 /* CreateSlotsByStaffModal.swift */; };
@@ -1167,6 +1169,8 @@
 		FA99ED382DA657AE00F6AF0E /* SeeMoreFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreFooterView.swift; sourceTree = "<group>"; };
 		FAA8F1102D659BF200B3A457 /* LessonProgressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonProgressCell.swift; sourceTree = "<group>"; };
 		FAA8F1112D659BF200B3A457 /* LessonProgressCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonProgressCell.xib; sourceTree = "<group>"; };
+		FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentTVCell.swift; sourceTree = "<group>"; };
+		FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentTVCell.xib; sourceTree = "<group>"; };
 		FAF9F4A62DBA4952005F7272 /* LocationReportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationReportVC.swift; sourceTree = "<group>"; };
 		FAF9F4A72DBA4952005F7272 /* LocationReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LocationReportVC.xib; sourceTree = "<group>"; };
 		FAFF9D8E2D6C7B7A00498368 /* CheckAviableTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAviableTv.swift; sourceTree = "<group>"; };
@@ -1895,6 +1899,8 @@
 				8442A8622CDB787A0006068E /* SchoolTVCell.xib */,
 				8442A8632CDB787A0006068E /* PriorityVC.swift */,
 				8442A8642CDB787A0006068E /* PriorityVC.xib */,
+				FAD14FD62DBFAE01006BD3E1 /* StudentTVCell.swift */,
+				FAD14FD72DBFAE01006BD3E1 /* StudentTVCell.xib */,
 			);
 			path = Priority;
 			sourceTree = "<group>";
@@ -3480,6 +3486,7 @@
 				849970CC2CF8752400800B07 /* ComunicationVC.xib in Resources */,
 				844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */,
 				84F986332D3A6169009FF065 /* QuizTVcell.xib in Resources */,
+				FAD14FD92DBFAE01006BD3E1 /* StudentTVCell.xib in Resources */,
 				84EFFACB2CCF90DE00C11C26 /* SettingHeaderView.xib in Resources */,
 				848F7A6E2CF8CB85004EF617 /* AnimatView.xib in Resources */,
 				847AB6F72CF09A9900952AC1 /* SheduleExamVC.xib in Resources */,
@@ -3828,6 +3835,7 @@
 				187CF4982D113B6E001422CE /* MessageFromManagementTableViewCell.swift in Sources */,
 				18D7189A2D0D477900E9EDA3 /* GetLocationResp.swift in Sources */,
 				18D7189B2D0D477900E9EDA3 /* LocationHistoryVc.swift in Sources */,
+				FAD14FD82DBFAE01006BD3E1 /* StudentTVCell.swift in Sources */,
 				84E70DD12D49F61900E916D1 /* DatePickerVC.swift in Sources */,
 				849AD03C2D1A845E002DEC07 /* MarkAttendenceVC.swift in Sources */,
 				849AD03D2D1A845E002DEC07 /* AttendenceReportTVCell.swift in Sources */,

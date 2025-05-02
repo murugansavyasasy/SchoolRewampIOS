@@ -28,7 +28,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bF-6m-iAX">
                     <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="CdA-Hs-cM9">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="CdA-Hs-cM9">
                             <rect key="frame" x="30" y="20" width="333" height="30"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksp-rv-kdN" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
@@ -65,16 +65,16 @@
                                     </userDefinedRuntimeAttributes>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wTN-dE-WPS" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
-                                    <rect key="frame" x="170" y="0.0" width="163" height="30"/>
+                                    <rect key="frame" x="193" y="0.0" width="140" height="30"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="down-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="QHI-PR-b3T">
-                                            <rect key="frame" x="138" y="5" width="15" height="20"/>
+                                            <rect key="frame" x="115" y="5" width="15" height="20"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="15" id="biL-aq-Eyh"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UnL-vc-GRE">
-                                            <rect key="frame" x="8" y="5" width="118" height="20"/>
+                                            <rect key="frame" x="8" y="5" width="95" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="highlightedColor"/>
                                         </label>
