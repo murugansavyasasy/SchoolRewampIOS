@@ -3,6 +3,7 @@ import UniformTypeIdentifiers
 
 class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var CvHeight: NSLayoutConstraint!
     @IBOutlet weak var newView: UIImageView!
     @IBOutlet weak var forwordBtn: UIButton!
     @IBOutlet weak var dateLble: ShimmerLabel!
@@ -70,7 +71,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     
     func loadImage(urls: [FilePath]) {
         ImageCollectionView.isHidden = false
-        pageViewController.isHidden = false
+        pageViewController.isHidden = true
         homeworkDocs = urls
         pageViewController.numberOfPages = homeworkDocs?.count ?? 0
         pageViewController.currentPage = 0
@@ -78,7 +79,11 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     }
     
     @IBAction func forword(_ sender: UIButton) {
-        delegate?.didTapButton(title: topics.text ?? "", content: descriptionLbl.text ?? "", items: homeworkDocs ?? [])
+        delegate?
+            .didTapButton(
+                title: topics.text ?? "",
+                content: descriptionLbl.text ?? "",
+                items: homeworkDocs ?? [])
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

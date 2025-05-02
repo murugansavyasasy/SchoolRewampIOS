@@ -883,10 +883,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                         getSubjectListAPI(finalSectionIds)
                     }
-                    selectSubject.isHidden = false
+                    
                 }
                 speficBtnName.isEnabled = selectedSections.count == 1
                 speficBtnName.isHidden = !(selectedSections.count == 1)
+                selectSubject.isHidden = !(selectedSections.count >= 1)
             }
             
         case recipeint_tabBarName.Staff:
@@ -1117,6 +1118,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
     }
     func getSubjectListAPI(_ id:String){
+        subjectList.removeAll()
+        
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_subject_list , parameters: [
             
             COMMON_PARAMETER.section_ids: id
@@ -1130,6 +1133,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         subjectDetails = successMessage.data
                         subjectDetails?.enumerated().forEach { index, student in
                             subjectList.append(student.name ?? "")
+                        }
+                        
+                        if let label = self.selectSubject.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                            label.text = subjectDetails?.first?.name
+                            subjectId =  subjectDetails?.first?.id ?? ""
                         }
                     }
                 }else{

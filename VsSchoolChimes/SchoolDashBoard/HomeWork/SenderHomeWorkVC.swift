@@ -18,6 +18,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         selectNotice?.didTapButton(title: title, content: content, items: items)
     }
     
+    @IBOutlet weak var nodataFoundLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
     @IBOutlet weak var SectionLbl: UILabel!
@@ -63,11 +64,28 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     var selectNotice : SelectNotice?
     override func viewDidLoad() {
         super.viewDidLoad()
+        applyShadowAndCornerRadius(to: dateView)
+        applyShadowAndCornerRadius(to: acodemicView)
+        applyShadowAndCornerRadius(to: standerdView)
+        applyShadowAndCornerRadius(to: sectionView)
+        searchBar.addDoneButton()
+        dateView.layer.borderColor = UIColor.lightGray.cgColor
+        dateView.layer.borderWidth = 0.5
+        
+        acodemicView.layer.borderColor = UIColor.lightGray.cgColor
+        acodemicView.layer.borderWidth = 0.5
+        
+        standerdView.layer.borderColor = UIColor.lightGray.cgColor
+        standerdView.layer.borderWidth = 0.5
+        
+        sectionView.layer.borderColor = UIColor.lightGray.cgColor
+        sectionView.layer.borderWidth = 0.5
+        
         getacadmicYr()
         getStandardsAPI()
-        acodemicView.cornerRadius()
-        standerdView.cornerRadius()
-        sectionView.cornerRadius()
+//        acodemicView.cornerRadius()
+//        standerdView.cornerRadius()
+//        sectionView.cornerRadius()
         let imgPdfTV = UINib(nibName:CellConfingName.HomeWorkTVC, bundle: nil)
         homeWorkTable.register(imgPdfTV, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
         dateSelect(nil)
@@ -207,7 +225,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         if let urls = data?.file_path {
             cell.loadImage(urls: urls)
         }
-        
+        cell.newView.isHidden = true
         cell.descriptionLbl.setupExpandable(text: data?.description ?? "")
         cell.descriptionLbl.onExpandableTap = {
             cell.descriptionLbl.isExpanded.toggle()
@@ -246,11 +264,19 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
 
                 switch result {
                 case .success(let successMessage):
-                    self.homeWorkList = successMessage.data
-                    self.FilterHomeWorkList = successMessage.data
                     
-                    self.homeWorkTable.reloadData()
-
+                    if successMessage.status == true{
+                        self.nodataFoundLbl.isHidden = true
+                        self.homeWorkList = successMessage.data
+                        self.FilterHomeWorkList = successMessage.data
+                        self.homeWorkTable.reloadData()
+                    }else{
+                        self.nodataFoundLbl.isHidden = false
+                        self.nodataFoundLbl.text = successMessage.message
+                        self.FilterHomeWorkList = successMessage.data
+                        self.homeWorkTable.reloadData()
+                    }
+                
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.tableviewHeight.constant = 0
@@ -283,7 +309,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                         StandardLbl.text = standardDetails?.first?.name
                         SectionLbl.text = standardDetails?.first?.sections?.first?.name ?? ""
                     dropDownStack.isHidden = false
-                    searchBar.isHidden = false
+                    searchBar.isHidden = true
                     }else{
                         dropDownStack.isHidden = true
                         searchBar.isHidden = true
