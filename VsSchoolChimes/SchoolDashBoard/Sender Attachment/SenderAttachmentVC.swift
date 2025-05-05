@@ -48,44 +48,26 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     @IBOutlet weak var ClickTochooseVideoLbl: UILabel!
     @IBOutlet weak var AddAtachmentStack: UIStackView!
     
-    var selectedShow = ""
     var selectedImages: [UIImage] = []
-    var getType = "Principal"
-    var imageStr : [String] = []
-    var currentImageCount = 0
-    var schoolListArr = ["Sales","Vss","SSS","SSS2020"]
-    var totalImageCount = 0
-    var originalImagesArray = [UIImage]()
-    var imageUrlArray = NSMutableArray()
-    var  getImagePdfType : String!
-    var convertedImagesUrlArray = NSMutableArray()
-    let photoPickManager = PhotoPickerManager.shared
-    let dropDown = DropDown()
     let TypeDropDown = DropDown()
     var datePicker : UIDatePicker!
     var doneButton : UIButton!
-    var pdfData: Data?
     let customdate = DateFormatter()
     let formatter = DateFormatter()
     let initialHeight: CGFloat = 60
     let maxHeight: CGFloat = 300
-    
     var player: AVPlayer?
     var playerViewController: AVPlayerViewController?
     var playerurl: URL?
-    var videoEmbdUrl : String!
-    var iframeLink : String!
-    var videoSucessId = 0
     var isImage = false
     var selectedImgUrl: [FilePath] = []
     var url : URL?
     var fileUrls = [String]()
+    var VideoPath_URL : URL?
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
-    
     var alert = CustomAlert()
-    
     let vimeoAccessToken = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     
     override func viewDidLoad() {
@@ -191,7 +173,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         AddAtachmentStack.isHidden = true
         VideoView.isHidden = true
         selectImgPdfview.isHidden = true
-    
+
         VideoView.layer.cornerRadius = 10
         AssignmentTypeview.layer.cornerRadius = 10
         selectImgPdfview.layer.cornerRadius = 10
@@ -231,11 +213,26 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
         
+        if user_inputs.selectedFileType == "" {
+            
+            alert.showAlert(title: "", message: "Please Select Attachment Type", on: self)
+        }else if user_inputs.selectedFileType == "VIDEO" && VideoPath_URL == nil {
+            
+            alert.showAlert(title: "", message: "Please Select a Video", on: self)
+        }else if user_inputs.selectedFileType == "IMAGE" && selectedImages.isEmpty {
+            
+            alert.showAlert(title: "", message: "Please Select a Image", on: self)
+        }else if user_inputs.selectedFileType == "DOCUMENT" && fileUrls.isEmpty {
+            
+            alert.showAlert(title: "", message: "Please Select a Document", on: self)
+        }
+        
         if assignTitleTxtFld.text != ""  && contentTextView.text != ""{
             user_inputs.title = assignTitleTxtFld.text ?? ""
             user_inputs.description = contentTextView.text ?? ""
             user_inputs.selectedImg = selectedImages
             user_inputs.docUrl = fileUrls
+            user_inputs.VideoPath = VideoPath_URL
             
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
@@ -257,7 +254,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                     message: AlertstringFile.enter_title_description,
                     on: self)
         }
-        
     }
     
     func isStaff() -> Bool {
@@ -285,12 +281,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         TypeDropDown.show()
         TypeDropDown.selectionAction = { [weak self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
+            
+            print("Images count",self?.selectedImages.count)
+            print("Document Count",self?.fileUrls.count)
             // Update the label inside the UIView
+            
             if item == "VIDEO"{
                 
                 self!.isImage = false
-//                self!.collectionViewHeght.constant = 0
-//                self!.addphotosheight.constant = 0
                 self!.VideoView.isHidden = false
                 self!.AddAtachmentStack.isHidden = false
                 self!.selectImgPdfview.isHidden = true
@@ -298,7 +296,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 user_inputs.selectedFileType = "VIDEO"
                 self!.fileUrls.removeAll()
                 self!.selectedImages.removeAll()
-                
             }
             else if item == "DOCUMENT"{
                 
@@ -306,21 +303,23 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 self!.VideoView.isHidden = true
                 self!.AddAtachmentStack.isHidden = false
                 self!.selectImgPdfview.isHidden = false
-//                self!.collectionViewHeght.constant = 120
-//                self!.addphotosheight.constant = 20
                 self!.AddAttachmentsLbl.text = CommonStringFile.AddPdf.translated()
                 user_inputs.selectedFileType = "DOCUMENT"
                 self!.selectedImages.removeAll()
+                self!.fileUrls.removeAll()
                 self!.selectImgPdfview.imageCollectionview.reloadData()
             }
             else{
+                
+                if user_inputs.selectedFileType != "IMAGE" {
+                    
+                    self?.selectedImages.removeAll()
+                }
                 
                 self!.isImage = true
                 self!.VideoView.isHidden = true
                 self!.AddAtachmentStack.isHidden = false
                 self!.selectImgPdfview.isHidden = false
-//                self!.collectionViewHeght.constant = 120
-//                self!.addphotosheight.constant = 20
                 self!.AddAttachmentsLbl.text = CommonStringFile.AddPhotos.translated()
                 user_inputs.selectedFileType = "IMAGE"
                 self!.fileUrls.removeAll()
@@ -373,32 +372,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         
         controller.dismiss(animated: true, completion: nil)
     }
-    
-    /*func selectImages() {
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
-            
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-    }
-    
-    func selectPdf() {
-        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
-    }
-    
-    // MARK: Handle Select Camera,Pdf,Image
-    @IBAction func openCamera() {
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-    }*/
     
     @objc func playVideo() {
         VideoPlayBtn.isHidden = true
@@ -483,10 +456,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     
-    @IBAction func SendBtnAct(_ sender: Any) {
-         
-    }
-    
     // MARK: This method is pick Video From Gallery
     @IBAction   func pickVideoFromGallery() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
@@ -503,363 +472,26 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     // MARK: This method is called when the user has picked a video
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        if let videoURL = info[.mediaURL] as? URL {
-//            if playerurl != nil{
-//                stopCurrentVideo()
-//                playerurl = nil
-//            }
-//            
-//         
-//            playerurl = videoURL
-//            print("Selected video URL: \(videoURL)")
-//            generateThumbnail(from: playerurl!)
-//        }
-//        
-//        picker.dismiss(animated: true, completion: nil)
-//    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let videoURL = info[.mediaURL] as? URL {
+            if playerurl != nil{
+                stopCurrentVideo()
+                playerurl = nil
+            }
+            
+            VideoPath_URL = videoURL
+            playerurl = videoURL
+            print("Selected video URL: \(videoURL)")
+            generateThumbnail(from: playerurl!)
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+
     
     //MARK: This method is called when the user cancels the picker
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    //MARK: Upoload to vimeo using url session
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-           picker.dismiss(animated: true)
-
-           if let videoURL = info[.mediaURL] as? URL {
-               DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                   self.uploadVideoToVimeo(videoFileURL: videoURL)
-               }
-           }
-       }
-
-       func uploadVideoToVimeo(videoFileURL: URL) {
-           getVimeoUploadLink(videoFileURL: videoFileURL) { uploadURL in
-               guard let uploadURL = uploadURL else {
-                   print("❌ Could not get upload link")
-                   return
-               }
-
-               self.checkUploadOffset(uploadURL: uploadURL) { offset in
-                   guard let offset = offset else {
-                       print("❌ Upload server not ready")
-                       return
-                   }
-
-                   self.uploadVideoUsingTUS(videoFileURL: videoFileURL, uploadURL: uploadURL, offset: offset) { success in
-                       if success {
-                           print("✅ Upload complete")
-                           self.showSuccessAlert()
-                       } else {
-                           print("❌ Upload failed")
-                       }
-                   }
-               }
-           }
-       }
-
-       func getVimeoUploadLink(videoFileURL: URL, completion: @escaping (URL?) -> Void) {
-           let fileSize = (try? FileManager.default.attributesOfItem(atPath: videoFileURL.path)[.size] as? Int) ?? 0
-
-           var request = URLRequest(url: URL(string: "https://api.vimeo.com/me/videos")!)
-           request.httpMethod = "POST"
-           request.setValue("Bearer \(vimeoAccessToken)", forHTTPHeaderField: "Authorization")
-           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-           request.setValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
-
-           let body: [String: Any] = [
-               "upload": [
-                   "approach": "tus",
-                   "size": fileSize
-               ]
-           ]
-
-           request.httpBody = try? JSONSerialization.data(withJSONObject: body)
-
-           URLSession.shared.dataTask(with: request) { data, response, error in
-               guard let data = data else {
-                   print("❌ Upload link request error: \(error?.localizedDescription ?? "Unknown")")
-                   completion(nil)
-                   return
-               }
-
-               if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let upload = json["upload"] as? [String: Any],
-                  let uploadLink = upload["upload_link"] as? String,
-                  let url = URL(string: uploadLink) {
-                   print("✅ Got upload URL: \(uploadLink)")
-                   completion(url)
-               } else {
-                   print("❌ Failed to parse upload link")
-                   completion(nil)
-               }
-           }.resume()
-       }
-
-       func checkUploadOffset(uploadURL: URL, completion: @escaping (Int?) -> Void) {
-           var request = URLRequest(url: uploadURL)
-           request.httpMethod = "HEAD"
-           request.setValue("Bearer \(vimeoAccessToken)", forHTTPHeaderField: "Authorization")
-           request.setValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
-
-           URLSession.shared.dataTask(with: request) { _, response, error in
-               if let httpResponse = response as? HTTPURLResponse {
-                   let offsetHeader = httpResponse.allHeaderFields["Upload-Offset"] as? String ?? "0"
-                   let offset = Int(offsetHeader) ?? 0
-                   print("👀 HEAD response: \(httpResponse.statusCode), offset: \(offset)")
-                   completion(offset)
-               } else {
-                   print("❌ HEAD failed: \(error?.localizedDescription ?? "No response")")
-                   completion(nil)
-               }
-           }.resume()
-       }
-
-       func uploadVideoUsingTUS(videoFileURL: URL, uploadURL: URL, offset: Int = 0, completion: @escaping (Bool) -> Void) {
-           guard let fileData = try? Data(contentsOf: videoFileURL) else {
-               print("❌ Could not read video data")
-               completion(false)
-               return
-           }
-
-           let fileSize = fileData.count
-           let uploadData = fileData.subdata(in: offset..<fileSize)
-
-           var request = URLRequest(url: uploadURL)
-           request.httpMethod = "PATCH"
-           request.setValue("application/offset+octet-stream", forHTTPHeaderField: "Content-Type")
-           request.setValue("\(offset)", forHTTPHeaderField: "Upload-Offset")
-           request.setValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
-           request.setValue("\(uploadData.count)", forHTTPHeaderField: "Content-Length")
-
-           let config = URLSessionConfiguration.default
-           config.timeoutIntervalForRequest = 300
-           config.timeoutIntervalForResource = 300
-
-           let session = URLSession(configuration: config)
-
-           print("🚀 Uploading from offset \(offset)... Data size: \(uploadData.count) bytes")
-
-           let task = session.uploadTask(with: request, from: uploadData) { [self] data, response, error in
-               if let error = error {
-                   print("❌ Upload error: \(error.localizedDescription)")
-                   completion(false)
-                   return
-               }
-
-               if let httpResponse = response as? HTTPURLResponse {
-                   print("📦 Response code: \(httpResponse.statusCode)")
-                   if httpResponse.statusCode == 204 {
-                       completion(true)
-                   } else {
-                       print("❌ Unexpected response code")
-                       completion(false)
-                   }
-               } else {
-                   print("❌ No HTTP response")
-                   completion(false)
-               }
-           }
-
-           task.resume()
-       }
-
-       func showSuccessAlert() {
-           DispatchQueue.main.async {
-               let alert = UIAlertController(title: "✅ Success", message: "Your video has been uploaded to Vimeo!", preferredStyle: .alert)
-               alert.addAction(UIAlertAction(title: "OK", style: .default))
-               self.present(alert, animated: true)
-           }
-       }
-    
-    
-    
-    //---------------------------------------------------------------------------
-    
-    //MARK: This method is Vimeo Upload
-    func getFileSize(at url: URL) -> UInt64? {
-        do {
-            let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
-            if let fileSize = attributes[FileAttributeKey.size] as? UInt64 {
-                return fileSize
-            }
-        } catch {
-            print("Error: \(error)")
-        }
-        return nil
-    }
-    
-    func createVimeoUploadURL(authToken: String, videoFilePath: URL, completion: @escaping (UploadResult) -> Void) {
-        
-        guard let fileSize = getFileSize(at: videoFilePath) else {
-            completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to get file size"])))
-            return
-        }
-        
-        let headers: HTTPHeaders = [
-            "Authorization": "Bearer \(authToken)",
-            "Content-Type": "application/json",
-            "Accept": "application/vnd.vimeo.*+json;version=3.4"
-        ]
-        
-        let parameters: [String: Any] = [
-            "upload": [
-                "approach": "tus",
-                "size": "\(fileSize)"
-            ],
-            "name": assignTitleTxtFld.text ?? "",
-            "description": contentTextView.text ?? ""
-        ]
-        
-        AF.request("https://api.vimeo.com/me/videos", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-            .responseJSON { [self] response in
-                switch response.result {
-                case .success(let value):
-                    print("Vimeo API Response: \(value)") // Print the full JSON
-                    if let json = value as? [String: Any],
-                       let upload = json["upload"] as? [String: Any],
-                       let uploadLink = upload["upload_link"] as? String {
-                        
-                        let embedUrl = json["player_embed_url"] as! String
-                        
-                        let embed = json["embed"]! as AnyObject
-                        iframeLink = embed["html"]  as! String
-                        videoEmbdUrl = embedUrl as! String
-                        
-                        videoSucessId = 1
-                        
-                        VideoStatus()
-                        completion(.success(uploadLink))
-                        
-                        
-                    } else {
-                        completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Upload link not found"])))
-                        
-                        videoSucessId = 0
-                        VideoStatus()
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                    
-                    
-                    videoSucessId = 0
-                    VideoStatus()
-                }
-            }
-    }
-    
-    func uploadVideoToVimeo(uploadLink: String, videoFilePath: URL, authToken: String, chunkSize: Int = 5 * 1024 * 1024, completion: @escaping (UploadResult) -> Void) {
-        
-        guard let fileHandle = try? FileHandle(forReadingFrom: videoFilePath) else {
-            completion(.failure(NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to read video file"])))
-            return
-        }
-        
-        var offset: Int = 0
-        let fileSize = fileHandle.seekToEndOfFile()
-        fileHandle.seek(toFileOffset: 0)
-        
-        print("fileHandleBefore",fileHandle)
-        func uploadNextChunk() {
-            let chunkData = fileHandle.readData(ofLength: chunkSize)
-            
-            if chunkData.isEmpty {
-                fileHandle.closeFile()
-                completion(.success(("")))
-                return
-            }
-            
-            var request = URLRequest(url: URL(string: uploadLink)!)
-            request.httpMethod = "PATCH"
-            request.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
-            request.setValue("application/offset+octet-stream", forHTTPHeaderField: "Content-Type")
-            request.setValue("\(offset)", forHTTPHeaderField: "Upload-Offset")
-            request.setValue("1.0.0", forHTTPHeaderField: "Tus-Resumable")
-            request.httpBody = chunkData
-            
-            let uploadTask = URLSession.shared.uploadTask(with: request, from: chunkData) { (data, response, error) in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 204 {
-                        offset += chunkSize
-                        uploadNextChunk()
-                    } else if httpResponse.statusCode == 412 {
-                        // Handle 412 error (precondition failed), retry or get correct offset from server
-                        if let rangeHeader = httpResponse.value(forHTTPHeaderField: "Upload-Offset"), let serverOffset = Int(rangeHeader) {
-                            offset = serverOffset
-                            uploadNextChunk()
-                        } else {
-                            let error = NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to upload chunk: Precondition Failed"])
-                            completion(.failure(error))
-                        }
-                    } else {
-                        let error = NSError(domain: "com.vimeo", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to upload chunk, status code: \(httpResponse.statusCode)"])
-                        completion(.failure(error))
-                    }
-                }
-            }
-            
-            uploadTask.resume()
-        }
-        
-        uploadNextChunk()
-    }
-    
-    
-    func VideoStatus(){
-        
-        if videoSucessId == 0 {
-            
-            
-        }else{
-            
-        }
-        
-    }
-    func uploadVideo(authToken: String, videoFilePath: URL) {
-        createVimeoUploadURL(authToken: authToken, videoFilePath: videoFilePath) { [self] result in
-            switch result {
-            case .success(let uploadLink):
-                uploadVideoToVimeo(uploadLink: uploadLink, videoFilePath: videoFilePath, authToken: authToken) { [self] result in
-                    switch result {
-                    case .success:
-                        print("Video uploaded successfully!")
-                        
-                        
-                    case .failure(let error):
-                        print("Failed to upload video: \(error)")
-                        
-                        let refreshAlert = UIAlertController(title: "", message: AlertstringFile.Failed_to_upload_video, preferredStyle: UIAlertController.Style.alert)
-                        
-                        refreshAlert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: { [self] (action: UIAlertAction!) in
-                            
-                        }))
-                        
-                        present(refreshAlert, animated: true, completion: nil)
-                        
-                    }
-                    
-                }
-            case .failure(let error):
-                
-                print("Failed to create upload URL: \(error)")
-                
-                let refreshAlert = UIAlertController(title: "", message: AlertstringFile.Failed_to_upload_video, preferredStyle: UIAlertController.Style.alert)
-                
-                refreshAlert.addAction(UIAlertAction(title: AlertstringFile.OK, style: .default, handler: { [self] (action: UIAlertAction!) in
-                }))
-
-                present(refreshAlert, animated: true, completion: nil)
-            }
-        }
     }
 }
 
@@ -935,6 +567,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
         
         return CGSize(width: 100, height: 100)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
             let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
