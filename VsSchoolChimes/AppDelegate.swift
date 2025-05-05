@@ -20,7 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        window?.overrideUserInterfaceStyle = .light
         NetworkMonitor.shared.startMonitoring()
         FirebaseApp.configure()
         

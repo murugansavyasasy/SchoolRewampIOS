@@ -31,7 +31,7 @@ class MenuRedirectHandler {
     var Imgitems: [MenuImage] = [
         // MenuImage(id: 0, name: "Communication"),
         MenuImage(id: 1, name: "Absentees Report"),
-        MenuImage(id: 2, name: "Assigment"),
+        MenuImage(id: 2, name: "Assignment"),
         MenuImage(id: 3, name: "Attendance marking"),
         MenuImage(id: 4, name: "Attendance Report"),
         MenuImage(id: 5, name: "Certificate Request"),
@@ -42,7 +42,7 @@ class MenuRedirectHandler {
         MenuImage(id: 10, name: "ExamTest"),
         MenuImage(id: 11, name: "ExamTest"),
         MenuImage(id: 12, name: "Fee Details"),
-        MenuImage(id: 13, name: ""),
+        MenuImage(id: 13, name: "PTM"),
         MenuImage(id: 14, name: "Fee Pending Report"),
         MenuImage(id: 15, name: "Homework"),
         MenuImage(id: 16, name: "Interaction with Staff"),
@@ -53,26 +53,25 @@ class MenuRedirectHandler {
         MenuImage(id: 21, name: "Mark Your Attendance"),
         MenuImage(id: 22, name: "Messages from management"),
         MenuImage(id: 23, name: "Notice Board"),
-        MenuImage(id: 24, name: "online_meeting"),
-        MenuImage(id: 25, name: ""),
+        MenuImage(id: 24, name: "Online Meeting"),
+        MenuImage(id: 25, name: "PTM"),
         MenuImage(id: 26, name: "PTM"),
         MenuImage(id: 27, name: "QuizExam"),
-        MenuImage(id: 28, name: ""),
-        MenuImage(id: 29, name: ""),
+        MenuImage(id: 28, name: "PTM"),
+        MenuImage(id: 29, name: "CalssEvent"),
         MenuImage(id: 30, name: "School Needs"),
         MenuImage(id: 31, name: "School strength"),
-        MenuImage(id: 32, name: ""),
+        MenuImage(id: 32, name: "PTM"),
         MenuImage(id: 33, name: "Staff Wise Attendance Report"),
-        MenuImage(id: 34, name: ""),
+        MenuImage(id: 34, name: "PTM"),
         MenuImage(id: 35, name: "Student Report"),
-        MenuImage(id: 36, name: "Very / Important Info"),
+        MenuImage(id: 36, name: "important"),
         MenuImage(id: 37, name: "Your Profile"),
-        MenuImage(id: 38, name: "Schedule Exam / Test"),
-        MenuImage(id: 39, name: "Attachments")
+        MenuImage(id: 38, name: "ExamTest" ),
+        MenuImage(id: 39, name: "Attachements"),
+        MenuImage(id: 194, name: "Finance")
     ]
 
-
-  
 
     
 

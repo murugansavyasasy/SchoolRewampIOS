@@ -81,7 +81,7 @@ class OTPVc: UIViewController {
         setupOTPTextFields()
         
         
-        let callUsGesture = UITapGestureRecognizer(target: self,action: #selector(showActionSheet))
+        let callUsGesture = UITapGestureRecognizer(target: self,action: #selector(showDialOptions))
         callUsLbl.addGestureRecognizer(callUsGesture)
         
         checkAutoFillPermission()
@@ -95,43 +95,47 @@ class OTPVc: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc func showActionSheet() {
-        let alert = UIAlertController(title: "Call a Number", message: "Select a number to call", preferredStyle: .actionSheet)
-        
-        let number1 = "1234567890"
-        let number2 = "9876543210"
-        
-        let callAction1 = UIAlertAction(title: number1, style: .default) { _ in
-            //              self.callNumber(number: number1)
-        }
-        
-        let callAction2 = UIAlertAction(title: number2, style: .default) { _ in
-            //              self.callNumber(number: number2)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(callAction1)
-        alert.addAction(callAction2)
-        alert.addAction(cancelAction)
-        
-        if let popoverController = alert.popoverPresentationController {
-            
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-        }
-        
-        present(alert, animated: true, completion: nil)
-    }
     
-    func callNumber(number: String) {
-        if let url = URL(string: "tel://\(number)"), UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else {
-            print("Calling not supported on this device.")
+    
+     @objc func showDialOptions() {
+        doneButtonAction()
+        
+        let dialNumbersString = validateMobileData.first?.dial_numbers ?? ""
+        let dialNumbers = dialNumbersString.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+        guard !dialNumbers.isEmpty else {
+            print("No numbers available")
+            return
         }
+
+        let alertController = UIAlertController(title: "Choose a Number", message: nil, preferredStyle: .actionSheet)
+
+        for number in dialNumbers {
+            let action = UIAlertAction(title: number, style: .default) { _ in
+                self.callNumber(phoneNumber: number)
+            }
+            alertController.addAction(action)
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
+
+
+     // Function to dial the selected number
+     func callNumber(phoneNumber: String) {
+     if let url = URL(string: "tel://\(phoneNumber)"),
+     UIApplication.shared.canOpenURL(url) {
+     UIApplication.shared.open(url)
+     } else {
+     print("Cannot open dial pad")
+     }
+     }
+    
+   
+    
+    
     
     
     

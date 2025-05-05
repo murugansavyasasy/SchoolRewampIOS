@@ -1,9 +1,4 @@
-//
-//  LocationHistoryVc.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 04/09/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
+
 //
 
 import UIKit
@@ -11,6 +6,7 @@ import DropDown
 class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate {
     
     
+    @IBOutlet weak var nodataRecStack: UIStackView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var seachHeight: NSLayoutConstraint!
     @IBOutlet weak var noRecordLbl: UILabel!
@@ -136,7 +132,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         @IBAction func segmentAction(_ sender: Any) {
             if SegmentControl.selectedSegmentIndex == 0 {
                 // Handle segment 0
-                
+                RefId = 1
                 ViewAnimator.hideFade(yearAndmonthStack)
                 ViewAnimator.hideFade(staffDropView)
                 ViewAnimator.hideFade(staffDefaultsLbl)
@@ -148,9 +144,22 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 ViewAnimator.showFade(yearAndmonthStack)
                 ViewAnimator.showFade(staffDropView)
                 ViewAnimator.showFade(staffDefaultsLbl)
-                tv.isHidden = false
                 dateAndMoth = ""
-                getStaffListAPI()
+               
+                getStaffListAPI { [self] result in
+                    switch result {
+                    case .success(let staffListResponse):
+                        print("staffListResponse",staffListResponse.data)
+                        let staffDetails = staffListResponse.data
+                            self.staffDetails = staffDetails
+                         staffId = Int(staffDetails?.first?.id ?? "0")
+                        let staffName = staffDetails?.first?.name
+                        self.stafNameLbl.text = staffName
+                        geometric_principal_attendance_report()
+                    case .failure(let error):
+                        print("Failed to fetch staff list:", error.localizedDescription)
+                    }
+                }
             }
         }
 
@@ -237,7 +246,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                  cell.toDateLbl.isHidden = false
                  cell.StatusLbl.layer.cornerRadius = 5
                  cell.StatusLbl.layer.masksToBounds = true
-                 
+                  noRecordLbl.isHidden = true
                  cell.namelbl.text = attendanceData?.name
                  cell.attendanceTypeLbl.text = attendanceData?.attendance_type
             
@@ -366,12 +375,18 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                             noRecordLbl.isHidden = true
                             staffAttendanceDetails = successMessage.data
                             SearchResults = staffAttendanceDetails
+                            seachHeight.constant = 56
                             tv.isHidden = false
+                            nodataRecStack.isHidden = true
                             tv.reloadData()
                         } else {
-                            noRecordLbl.isHidden = false
-                            noRecordLbl.text = successMessage.message
                             tv.isHidden = true
+                            nodataRecStack.isHidden = false
+                            noRecordLbl.isHidden = false
+                            seachHeight.constant = 0
+                            staffAttendanceDetails = successMessage.data
+                            noRecordLbl.text = successMessage.message
+                            tv.reloadData()
                         }
                     }
                 case .failure(let error):
@@ -382,37 +397,73 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
 
         func getCurrentDateString() -> String {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
+            dateFormatter.dateFormat = "yyyy-MM"
             return dateFormatter.string(from: Date())
         }
 
-        func getStaffListAPI() {
-            APIService.shared.makeApi(url: ServiceUrl.recipient_get_staff_list, parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<GetStafflistSuc, Error>) in
+    func getStaffListAPI(completion: @escaping (Result<GetStafflistSuc, Error>) -> Void) {
+        APIService.shared.makeApi(
+            url: ServiceUrl.recipient_get_staff_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { (result: Result<GetStafflistSuc, Error>) in
+            DispatchQueue.main.async {
                 switch result {
                 case .success(let successMessage):
-                    DispatchQueue.main.async { [self] in
-                        if successMessage.status == true {
-                            staffDetails = successMessage.data
-                            staffId = Int(staffDetails?.first?.id ?? "0")
-                            stafNameLbl.text = staffDetails?.first?.name
-                        }
+                    if successMessage.status == true {
+                        completion(.success(successMessage))
+                    } else {
+                        // If needed, you can create a custom error here
+                        let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid status"])
+                        completion(.failure(error))
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    completion(.failure(error))
                 }
             }
         }
+    }
 
-        func filterContentForSearchText(_ searchText: String) {
-            SearchResults = staffAttendanceDetails?.filter { staff in
-                staff.name?.lowercased().contains(searchText.lowercased()) ?? false
-            }
-            tv.reloadData()
-        }
 
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            filterContentForSearchText(searchText)
-        }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+     
+     guard let Details = staffAttendanceDetails else {
+     staffAttendanceDetails = []
+         
+     tv.reloadData()
+     return
+     }
+
+     if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+     SearchResults = staffAttendanceDetails
+         
+     } else {
+     
+     let keyword = searchText.lowercased()
+     SearchResults = staffAttendanceDetails?.filter { attendance in
+     return
+     (attendance.name?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+     (attendance.date?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+     (attendance.leave_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+     (attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+     (attendance.in_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+     (attendance.out_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+     (attendance.working_hours?.localizedCaseInsensitiveContains(keyword) ?? false)
+     }
+         
+         if SearchResults?.count ?? 0 > 0{
+             noRecordLbl.isHidden = true
+         }else{
+             noRecordLbl.isHidden = false
+             noRecordLbl.text = "No search result"
+         }
+         
+         
+     }
+
+     tv.reloadData()
+     }
     }
 
 

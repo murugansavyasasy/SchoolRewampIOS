@@ -52,9 +52,9 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
                 UTType.rtf,
                 UTType.plainText,
                 UTType.pdf,
-                UTType(filenameExtension: "docx")!,
-                UTType(filenameExtension: "xlsx")!,
-                UTType(filenameExtension: "pptx")!
+                UTType(filenameExtension: "docx") ?? UTType.pdf,
+                UTType(filenameExtension: "xlsx") ?? UTType.pdf,
+                UTType(filenameExtension: "pptx") ?? UTType.pdf
             ]
             openDocumentPicker(from: viewController, types: supportedTypes)
         }
