@@ -14,6 +14,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
     
+    @IBOutlet weak var noDataImg: UIImageView!
+    @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -94,11 +96,27 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
                 
                 switch result {
                 case .success(let successMessage):
+                    if successMessage.status == true{
+                        self.noDataLbl.isHidden = true
+                        self.noDataImg.isHidden = true
+                        self.TV.isHidden = false
+                    }else{
+                        if self.homeWorkList?.count == 0{
+                            self.noDataLbl.text = successMessage.message
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            self.TV.isHidden = true
+                        }
+                    }
                     self.homeWorkList = successMessage.data
                     self.FilterHomeWorkList = successMessage.data
                     self.TV.reloadData()
                 case .failure(let error):
                     print(error.localizedDescription)
+                    self.noDataLbl.text = error.localizedDescription
+                    self.noDataLbl.isHidden = false
+                    self.noDataImg.isHidden = false
+                    self.TV.isHidden = true
                 }
             }
         }
@@ -119,11 +137,30 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
                     
                     switch result {
                     case .success(let successMessage):
+                        if successMessage.status == true{
+                            self.noDataLbl.isHidden = true
+                            self.noDataImg.isHidden = true
+                            self.TV.isHidden = false
+                        }else{
+                            if self.homeWorkList?.count == 0{
+                                self.noDataLbl.text = successMessage.message
+                                self.noDataLbl.isHidden = false
+                                self.noDataImg.isHidden = false
+                                self.TV.isHidden = true
+                            }
+                        }
                         self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
                         self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
                         self.TV.reloadData()
                     case .failure(let error):
                         print(error.localizedDescription)
+                        if self.homeWorkList?.count == 0{
+                            self.noDataLbl.text = error.localizedDescription
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            self.TV.isHidden = true
+                        }
+                        
                     }
                 }
             }
@@ -140,7 +177,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: CellConfingName.ReciverHomeworkHeader) as! ReciverHomeworkHeader
-        cell.HeaderLbl.text = FilterHomeWorkList?[section].date
+        cell.HeaderLbl.text = FilterHomeWorkList?[section].date?.convertToTargetDateFormat() ?? "-"
         cell.HeaderLbl.setFont(style: .header, size: FontSize.HeaderSize)
         cell.HeaderView.layer.cornerRadius = 10
         cell.HeaderView.layer.borderWidth = 1
@@ -182,20 +219,19 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if homework.file_path?.count ?? 0 == 0 {
-            cell.CvHeight.constant = 0
-        }else{
-            cell.CvHeight.constant = 120
-        }
+        cell.CvHeight.constant = 0
+        cell.ImageCollectionView.isHidden = true
         // Configure cell data
         cell.subjectName.text = homework.subject_name
         cell.topics.text = homework.title ?? ""
-        cell.dateLble.text = sectionData.date
+        cell.dateLble.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
         cell.forwordBtn.isHidden = true
         cell.SelectBtnHeight.constant = 0
         
         // Load image if available
-        if let urls = homework.file_path {
+        if let urls = homework.file_path, urls.count != 0{
+            cell.ImageCollectionView.isHidden = false
+            cell.CvHeight.constant = 150
             cell.loadImage(urls: urls)
         }
         let contentText = homework.description ?? ""
@@ -298,24 +334,35 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
             expandedSections.removeAll()
         } else {
             let lowercasedSearch = searchText.lowercased()
-            
-            FilterHomeWorkList = homeWorkList?.compactMap { hwList in
+            FilterHomeWorkList = homeWorkList?.compactMap { hwList -> HomeworkList? in
                 guard let homeworkItems = hwList.homework else { return nil }
-                
+
+                let formattedDate = hwList.date?.convertToTargetDateFormat()?.lowercased() ?? ""
+                let rawDate = hwList.date?.lowercased() ?? ""
+                let dateMatches = formattedDate.contains(lowercasedSearch) || rawDate.contains(lowercasedSearch)
+
                 let filteredHomework = homeworkItems.filter { hw in
-                    hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
-                    hw.title?.lowercased().contains(lowercasedSearch) == true ||
-                    hw.description?.lowercased().contains(lowercasedSearch) == true
+                    let matchesStringFields =
+                        hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
+                        hw.title?.lowercased().contains(lowercasedSearch) == true ||
+                        hw.description?.lowercased().contains(lowercasedSearch) == true ||
+                        hw.created_by?.lowercased().contains(lowercasedSearch) == true
+                    return matchesStringFields
                 }
-                
-                return filteredHomework.isEmpty ? nil : HomeworkList(date: hwList.date, homework: filteredHomework)
+
+                if !filteredHomework.isEmpty {
+                    return HomeworkList(date: hwList.date, homework: filteredHomework)
+                } else if dateMatches {
+                    return HomeworkList(date: hwList.date, homework: homeworkItems)
+                } else {
+                    return nil
+                }
             }
-            
+
             expandedSections = Set(0..<(FilterHomeWorkList?.count ?? 0))
         }
-        
+
         TV.reloadData()
-        
     }
-    
+
 }

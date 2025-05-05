@@ -64,7 +64,7 @@ class LocationViewController: UIViewController {
         LocationErrorStack.backgroundColor = .systemBlue.withAlphaComponent(0.4)
         StyleAndTranslate()
     }
- 
+    
     func StyleAndTranslate(){
         
         AllowLocationLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -86,7 +86,7 @@ class LocationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         addLocationEnabel(Show: add_location_enabel ?? false )
         NotificationCenter.default.addObserver(self, selector: #selector(checkAndFetchLocationData), name: UIApplication.didBecomeActiveNotification, object: nil)
         checkLocationAuthorization()
@@ -95,7 +95,7 @@ class LocationViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-   
+    
     
     func addLocationEnabel(Show:Bool){
         
@@ -143,8 +143,8 @@ class LocationViewController: UIViewController {
             "iPhone10,4": "iPhone 8 (GSM)",
             "iPhone10,2": "iPhone 8 Plus",
             "iPhone10,5": "iPhone 8 Plus (GSM)",
-             "iPhone9,1": "iPhone 7",
-             "iPhone9,3": "iPhone 7 (GSM)",
+            "iPhone9,1": "iPhone 7",
+            "iPhone9,3": "iPhone 7 (GSM)",
             "iPhone9,2": "iPhone 7 Plus",
             "iPhone9,4": "iPhone 7 Plus (GSM)",
             "iPhone8,1": "iPhone 6s",
@@ -196,32 +196,31 @@ class LocationViewController: UIViewController {
         
         return modelMap[modelCode] ?? modelCode // Returns modelCode if not found in the map
     }
-    
     @objc private func appDidBecomeActive() {
-           // Check and then fetch
-           checkAndFetchLocationData()
-       }
-       
+        // Check and then fetch
+        checkAndFetchLocationData()
+    }
+    
     @objc func checkAndFetchLocationData() {
-           let status = CLLocationManager.authorizationStatus()
-           
-           if status == .authorizedAlways || status == .authorizedWhenInUse {
-               // ✅ Add delay for safety (system breathing time)
-               DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
-                   call_locationManager()
-               }
-           } else {
-               print("❗️ Location permission not granted yet.")
-               checkLocationAuthorization()
-           }
-       }
+        let status = CLLocationManager.authorizationStatus()
+        
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            // ✅ Add delay for safety (system breathing time)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+                call_locationManager()
+            }
+        } else {
+            print("❗️ Location permission not granted yet.")
+            checkLocationAuthorization()
+        }
+    }
     
     
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
     }
-
+    
     @IBAction func SegmentAction(_ sender: Any) {
         
         if SegmentControl.selectedSegmentIndex == 1{
@@ -254,7 +253,7 @@ class LocationViewController: UIViewController {
         vc.didMove(toParent: self)
         self.childVC = vc // Save reference
     }
-
+    
     func removeChildVC() {
         guard let vc = childVC else { return }
         vc.willMove(toParent: nil)
@@ -262,14 +261,14 @@ class LocationViewController: UIViewController {
         vc.removeFromParent()
         childVC = nil
     }
-
-   
+    
+    
     @IBAction func enableLocationButtonTapped(_ sender: UIButton) {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings)
         }
     }
-
+    
     @objc func checkLocationAuthorization() {
         let status = CLLocationManager.authorizationStatus()
         switch status {
@@ -298,13 +297,13 @@ class LocationViewController: UIViewController {
         }
     }
     
-
+    
     func call_locationManager(){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
-
+    
     func checkAuthenticationAvailability() {
         
         let context = LAContext()
@@ -321,7 +320,7 @@ class LocationViewController: UIViewController {
         }
     }
     
- func authenticateUser(context: LAContext, policy: LAPolicy) {
+    func authenticateUser(context: LAContext, policy: LAPolicy) {
         context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [self] success, authenticationError in
             
             DispatchQueue.main.async { [self] in
@@ -339,10 +338,8 @@ class LocationViewController: UIViewController {
         }
     }
 }
-
-
 extension LocationViewController:CLLocationManagerDelegate{
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         if let clError = error as? CLError {
             switch clError.code {
@@ -358,7 +355,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         }
     }
     
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
             let latitude = location.coordinate.latitude
@@ -427,6 +424,19 @@ extension LocationViewController:CLLocationManagerDelegate{
         checkLocationAuthorization()
     }
     
+    //    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    //        switch status {
+    //        case .authorizedWhenInUse, .authorizedAlways:
+    //            locationManager.startUpdatingLocation()
+    //        case .denied, .restricted:
+    //            print("Location access denied or restricted.")
+    //        case .notDetermined:
+    //            locationManager.requestWhenInUseAuthorization()
+    //        @unknown default:
+    //            break
+    //        }
+    //    }
+    //
     func Punch_Api(){
         
         APIService.shared
@@ -541,18 +551,18 @@ extension LocationViewController:CLLocationManagerDelegate{
             }
         }
     }
-
+    
     
     private func updatePunchUI(isInside: Bool) {
         if isInside {
-           
+            
             showInsideBoundaryUI()
         } else {
             showOutsideBoundaryUI()
         }
     }
-
-
+    
+    
     private func showInsideBoundaryUI() {
         ViewAnimator.showFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
@@ -560,7 +570,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         PunchDescriptionLbl.text = CommonStringFile.Tap_on_the_punch
         punchStack.backgroundColor = .white
     }
-
+    
     private func showOutsideBoundaryUI() {
         ViewAnimator.hideFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
@@ -570,10 +580,10 @@ extension LocationViewController:CLLocationManagerDelegate{
         punchStack.backgroundColor = UIColor.red.withAlphaComponent(0.4)
         PunchDescriptionLbl.text = CommonStringFile.locationErrorMessage
     }
-
+    
     
     private func errorLocation(alertMessage: String) {
-       
+        
         addLocationEnabel(Show: add_location_enabel ?? false)
         ViewAnimator.hideFade(TaptoPunchBtn)
         ViewAnimator.showFade(punchStack)
@@ -581,7 +591,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         PunchThumbnail.image = ImageName.need_location_access
         PunchDescriptionLbl.text = alertMessage
     }
-
+    
     
     func locationCheck() {
         guard let distanceString = ExstingDistance else {
@@ -610,13 +620,13 @@ extension LocationViewController:CLLocationManagerDelegate{
         
         if distance <= Double(distanceInt) {
             print("The existing location is within \(distanceInt) meters of the current location.")
-           
+            
         } else {
             print("The existing location is more than \(distanceInt) meters away.")
-           
+            
         }
     }
-  
+    
     func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
         let earthRadiusKm: Double = 6371.0
         let dLat = degreesToRadians(lat2 - lat1)
@@ -632,7 +642,6 @@ extension LocationViewController:CLLocationManagerDelegate{
     }
     
 }
-
 
 // MARK: To save the present absent person's :
 

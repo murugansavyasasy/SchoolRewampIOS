@@ -84,6 +84,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         let imageItems = imageUrls.map {
             AttachmentItem(image: nil, imageURL: $0.path, fileType:$0.type ?? "")
         }
+        let size = DetailsTxtview.sizeThatFits(CGSize(width: DetailsTxtview.frame.width, height: CGFloat.greatestFiniteMagnitude))
+        let newHeight = min(max(size.height, initialHeight), maxHeight)
+        TextViewheight.constant = newHeight
         attachments.removeAll()
         attachments.append(contentsOf: imageItems)
         wordsCountLbl.text = "\(content.count) of 500"
@@ -101,8 +104,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.text = CommonStringFile.Description
         DetailsTxtview.textColor = .lightGray
         customdate.dateFormat = "EEE d"
-        let customdatestring = customdate.string(from: Date())
-
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Label Font Style
@@ -117,41 +118,34 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-//            let fileURL = URL(fileURLWithPath: attachments.first?.imageURL ?? "")
-//            let iconName = getFileIconName(for: fileURL)
-//            if "image" == iconName{
-//                attachments.removeAll()
-//            }
-            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-
-//            let fileURL = URL(fileURLWithPath: attachments.first?.imageURL ?? "")
-//            let iconName = getFileIconName(for: fileURL)
-//            if "image" == iconName{
-//                attachments.removeAll()
-//            }
-            
             user_inputs.selectedFileType = CommonStringFile.IMAGE
-//            selectedImages.append(contentsOf: images)
-
+        
             let imageItems = images.map {
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
             attachments.append(contentsOf: imageItems)
+            if imageItems.count != 0{
+                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            }
             
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
-
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -226,8 +220,9 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     
     // MARK: File Attachments Actions
     func selectImages() {
-        if attachments.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - attachments.count), from: self)
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if img.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
             
         }else{
             let alert = CustomAlert()
@@ -237,8 +232,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
     }
     func openCamera(){
-        let count = attachments.count
-        if count != 5{
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if img.count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
@@ -247,9 +242,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
     func selectPDF() {
-        if attachments.count != 5{
+        let pdf = attachments.filter { $0.fileType == CommonStringFile.pdf }
+        if pdf.count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
-            PhotoPickerManager.shared.limiSelection = 5 - attachments.count
+            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
         }else{
             
             let alert = CustomAlert()

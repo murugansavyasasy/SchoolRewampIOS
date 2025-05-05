@@ -21,7 +21,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     var issenderEvent = false
     var homeworkDocs: [FilePath]?
     var countShimmer = 0
-    
+    var FilterHomeWorkList:Homework?
     private var docController: UIDocumentInteractionController?
     
     override func awakeFromNib() {
@@ -71,7 +71,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     
     func loadImage(urls: [FilePath]) {
         ImageCollectionView.isHidden = false
-        pageViewController.isHidden = true
+        pageViewController.isHidden = false
         homeworkDocs = urls
         pageViewController.numberOfPages = homeworkDocs?.count ?? 0
         pageViewController.currentPage = 0
@@ -81,8 +81,8 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     @IBAction func forword(_ sender: UIButton) {
         delegate?
             .didTapButton(
-                title: topics.text ?? "",
-                content: descriptionLbl.text ?? "",
+                title: FilterHomeWorkList?.title ?? "",
+                content: FilterHomeWorkList?.description ?? "",
                 items: homeworkDocs ?? [])
     }
     
@@ -93,9 +93,23 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = homeworkDocs?[indexPath.row] {
-            cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
             let fileURL = URL(fileURLWithPath: img.path ?? "")
             let iconName = getFileIconName(for: fileURL)
+            if iconName != "image"{
+                if let pdfURL = URL(string: img.path ?? "") {
+                      let request = URLRequest(url: pdfURL)
+                    cell.webView.load(request)
+                    cell.webView.isHidden = false
+                    cell.imageView.isHidden = true
+                  } else {
+                      cell.webView.isHidden = true
+                      cell.imageView.isHidden = false
+                  }
+            }else{
+                cell.webView.isHidden = true
+                cell.imageView.isHidden = false
+                cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+            }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage
         }
