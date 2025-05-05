@@ -115,30 +115,21 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     func imageSelection(){
         
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            if url != nil{
-                selectedImages.removeAll()
-                fileUrls.removeAll()
-                url = nil
-            }
+          
             selectedImages.append(image)
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-                fileUrls.removeAll()
-            }
+            
             selectedImages.append(contentsOf: images)
             selectImgPdfview.imageCollectionview.reloadData()
         }
 
         PhotoPickerManager.shared.onFilePicked = { [self] data in
-            url = data.absoluteURL
             
-            if let ulr = url?.absoluteString{
-                fileUrls.append(ulr)
+            if let url = url?.absoluteString{
+                fileUrls.append(url)
             }
             
             selectedImages.append(ImageName.pdf!)
@@ -272,62 +263,62 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     @IBAction  func typeDropdown (){
-        TypeDropDown.dataSource = ["IMAGE", "DOCUMENT","VIDEO"]
+        TypeDropDown.dataSource = [AttachmentTypeString.IMAGE, AttachmentTypeString.DOCUMENT,AttachmentTypeString.VIDEO]
         self.view.layoutIfNeeded()
         TypeDropDown.width = AssignmentTypeview.bounds.width
         TypeDropDown.bottomOffset = CGPoint(x: 0, y: AssignmentTypeview.bounds.height - 220)
         
         TypeDropDown.direction = .bottom
         TypeDropDown.show()
-        TypeDropDown.selectionAction = { [weak self] (index: Int, item: String) in
+        TypeDropDown.selectionAction = { [self] (index: Int, item: String) in
             print("Selected item: \(item) at index: \(index)")
             
-            print("Images count",self?.selectedImages.count)
-            print("Document Count",self?.fileUrls.count)
+            print("Images count",self.selectedImages.count)
+            print("Document Count",self.fileUrls.count)
             // Update the label inside the UIView
             
-            if item == "VIDEO"{
+            if item == AttachmentTypeString.VIDEO{
                 
-                self!.isImage = false
-                self!.VideoView.isHidden = false
-                self!.AddAtachmentStack.isHidden = false
-                self!.selectImgPdfview.isHidden = true
-                self!.AddAttachmentsLbl.text = "Add Video".translated()
-                user_inputs.selectedFileType = "VIDEO"
-                self!.fileUrls.removeAll()
-                self!.selectedImages.removeAll()
+                self.isImage = false
+                self.VideoView.isHidden = false
+                self.AddAtachmentStack.isHidden = false
+                self.selectImgPdfview.isHidden = true
+                self.AddAttachmentsLbl.text = CommonStringFile.AddVideo.translated()
+                user_inputs.selectedFileType = AttachmentTypeString.VIDEO
+                self.fileUrls.removeAll()
+                self.selectedImages.removeAll()
             }
-            else if item == "DOCUMENT"{
+            else if item == AttachmentTypeString.DOCUMENT{
                 
-                self!.isImage = false
-                self!.VideoView.isHidden = true
-                self!.AddAtachmentStack.isHidden = false
-                self!.selectImgPdfview.isHidden = false
-                self!.AddAttachmentsLbl.text = CommonStringFile.AddPdf.translated()
-                user_inputs.selectedFileType = "DOCUMENT"
-                self!.selectedImages.removeAll()
-                self!.fileUrls.removeAll()
-                self!.selectImgPdfview.imageCollectionview.reloadData()
+                self.isImage = false
+                self.VideoView.isHidden = true
+                self.AddAtachmentStack.isHidden = false
+                self.selectImgPdfview.isHidden = false
+                self.AddAttachmentsLbl.text = CommonStringFile.AddPdf.translated()
+                user_inputs.selectedFileType = AttachmentTypeString.DOCUMENT
+                self.selectedImages.removeAll()
+                self.fileUrls.removeAll()
+                self.selectImgPdfview.imageCollectionview.reloadData()
             }
             else{
                 
-                if user_inputs.selectedFileType != "IMAGE" {
+                if user_inputs.selectedFileType != AttachmentTypeString.IMAGE {
                     
-                    self?.selectedImages.removeAll()
+                    self.selectedImages.removeAll()
                 }
                 
-                self!.isImage = true
-                self!.VideoView.isHidden = true
-                self!.AddAtachmentStack.isHidden = false
-                self!.selectImgPdfview.isHidden = false
-                self!.AddAttachmentsLbl.text = CommonStringFile.AddPhotos.translated()
-                user_inputs.selectedFileType = "IMAGE"
-                self!.fileUrls.removeAll()
-                self!.selectImgPdfview.imageCollectionview.reloadData()
+                self.isImage = true
+                self.VideoView.isHidden = true
+                self.AddAtachmentStack.isHidden = false
+                self.selectImgPdfview.isHidden = false
+                self.AddAttachmentsLbl.text = CommonStringFile.AddPhotos.translated()
+                user_inputs.selectedFileType = AttachmentTypeString.IMAGE
+                self.fileUrls.removeAll()
+                self.selectImgPdfview.imageCollectionview.reloadData()
             }
             
-            if let label = self?.AssignmentTypeview.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                self!.AssignmenttypeLbl.text = item
+            if let label = self.AssignmentTypeview.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                self.AssignmenttypeLbl.text = item
             }
         }
     }
