@@ -103,20 +103,6 @@
                                         <constraint firstAttribute="height" constant="400" id="2Lz-Lm-oKl"/>
                                     </constraints>
                                 </tableView>
-                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
-                                    <rect key="frame" x="96.666666666666686" y="783" width="200" height="35"/>
-                                    <color key="backgroundColor" systemColor="systemBlueColor"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="200" id="tL0-H6-lBn"/>
-                                        <constraint firstAttribute="height" constant="35" id="ucc-ta-K5J"/>
-                                    </constraints>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" title=" Proceed"/>
-                                    <connections>
-                                        <action selector="NextAction:" destination="-1" eventType="touchUpInside" id="y9u-oZ-LfX"/>
-                                    </connections>
-                                </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click proceed to continue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86y-aT-C5X">
                                     <rect key="frame" x="30" y="357.33333333333331" width="333" height="20.333333333333314"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -167,7 +153,6 @@
                                 <constraint firstItem="3Fd-Jo-Dka" firstAttribute="top" secondItem="u3w-cO-gNT" secondAttribute="bottom" constant="31" id="ZRK-dz-ggl"/>
                                 <constraint firstAttribute="trailing" secondItem="3Fd-Jo-Dka" secondAttribute="trailing" constant="43" id="cNw-Mn-41D"/>
                                 <constraint firstItem="u3w-cO-gNT" firstAttribute="top" secondItem="bJI-52-t63" secondAttribute="bottom" constant="8" id="gEL-3N-HZp"/>
-                                <constraint firstItem="GGr-hG-jio" firstAttribute="centerX" secondItem="m8F-aZ-FCz" secondAttribute="centerX" id="gxR-tz-fEj"/>
                                 <constraint firstItem="484-M4-0Y6" firstAttribute="leading" secondItem="m8F-aZ-FCz" secondAttribute="leading" constant="8" id="hVR-jq-qA7"/>
                                 <constraint firstItem="zXr-w5-LBu" firstAttribute="top" secondItem="aFQ-J7-xat" secondAttribute="bottom" id="jhF-yl-O85"/>
                                 <constraint firstAttribute="trailing" secondItem="zXr-w5-LBu" secondAttribute="trailing" constant="10" id="p1P-og-AeH"/>
@@ -177,6 +162,20 @@
                                 <constraint firstItem="vDi-Yd-4hE" firstAttribute="top" secondItem="86y-aT-C5X" secondAttribute="bottom" constant="5" id="tc1-q7-lcM"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GGr-hG-jio">
+                            <rect key="frame" x="96.666666666666686" y="777" width="200" height="35"/>
+                            <color key="backgroundColor" systemColor="systemBlueColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="tL0-H6-lBn"/>
+                                <constraint firstAttribute="height" constant="35" id="ucc-ta-K5J"/>
+                            </constraints>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title=" Proceed"/>
+                            <connections>
+                                <action selector="NextAction:" destination="-1" eventType="touchUpInside" id="y9u-oZ-LfX"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="m8F-aZ-FCz" firstAttribute="leading" secondItem="3K3-Dc-cua" secondAttribute="leading" id="19C-rr-dcZ"/>
@@ -191,7 +190,8 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Ijd-xa-h8g"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="GGr-hG-jio" secondAttribute="bottom" constant="10" id="KSj-0P-uc2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="GGr-hG-jio" secondAttribute="bottom" constant="16" id="Qg3-Au-fdT"/>
+                <constraint firstItem="GGr-hG-jio" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="We3-1y-403"/>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="seJ-aq-QNW"/>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="ydT-HV-YYf"/>
                 <constraint firstItem="3K3-Dc-cua" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ynn-XP-Jdk"/>
