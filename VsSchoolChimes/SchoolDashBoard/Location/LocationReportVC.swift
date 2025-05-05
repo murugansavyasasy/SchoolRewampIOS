@@ -1,8 +1,4 @@
-//
-//  LocationReportVC.swift
-//  SchoolChimes
-//
-//  Created by Lakshmanan on 24/04/25.
+
 //
 
 import UIKit
@@ -10,6 +6,7 @@ import DropDown
 
 class LocationReportVC: UIViewController{
 
+    @IBOutlet weak var noRecdStackView: UIStackView!
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var SelectYearDropdownView: UIViewX!
     @IBOutlet weak var SelectMonthDropdownView: UIViewX!
@@ -33,7 +30,7 @@ class LocationReportVC: UIViewController{
         
         StyleAndTranslate()
         NoDataLbl.isHidden = true
-        
+        noRecdStackView.isHidden = true
         for i in 0..<21 {
             let year = currentYear - i
             years.append(String(year))
@@ -120,6 +117,7 @@ class LocationReportVC: UIViewController{
                     
                     DispatchQueue.main.async { [self] in
                         AttendanceDetails = successMessage.data
+                        noRecdStackView.isHidden = true
                         NoDataLbl.isHidden = true
                         Tv.reloadData()
                     }
@@ -129,6 +127,7 @@ class LocationReportVC: UIViewController{
                     DispatchQueue.main.async { [self] in
                         AttendanceDetails = successMessage.data
                         NoDataLbl.text = successMessage.message
+                        noRecdStackView.isHidden = false
                         NoDataLbl.isHidden = false
                         Tv.reloadData()
                     }

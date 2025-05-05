@@ -1,9 +1,4 @@
-//
-//  PunchHistoryListVC.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 24/09/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
+
 //
 
 import UIKit
@@ -49,21 +44,25 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
         APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (result: Result<PunchHistoryResponse,Error>) in
             
             switch result{
-        
+                
             case .success(let successMessage):
                 
                 if successMessage.status == true {
                     
                     DispatchQueue.main.async { [self] in
-                        
+                        noRecordLbl.isHidden = true
+                        tv.isHidden = false
                         PunchDetails = successMessage.data?.first?.timings
                         tv.reloadData()
                     }
                 }else {
                     
                     DispatchQueue.main.async { [self] in
-                        
-                      
+                        noRecordLbl.isHidden = false
+                        tv.isHidden = true
+                        noRecordLbl.text = successMessage.message
+                        PunchDetails = successMessage.data?.first?.timings
+                        tv.reloadData()
                     }
                 }
                 

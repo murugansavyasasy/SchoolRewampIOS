@@ -1,10 +1,5 @@
-//
-//  deleteVc.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 02/09/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
-//
+
+
 
 import UIKit
 class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -55,7 +50,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         return cell
     }
     @objc func buttonTapped(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Update", message: "Please enter your details", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Update", message: "Please update your details", preferredStyle: .alert)
         alertController.addTextField { (textField) in
             textField.placeholder = "Enter your location name"
             textField.text =  self.locationHistory?[sender.tag].location
@@ -86,7 +81,7 @@ class AddLocationHistory: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.present(alertController, animated: true, completion: nil)
     }
     @objc func DeletTapped(_ sender: UIButton) {
-        let refreshAlert = UIAlertController(title: "", message: "Are you sure want to delete this Loacation", preferredStyle: UIAlertController.Style.alert)
+        let refreshAlert = UIAlertController(title: "", message: "Are you sure want to delete this loacation ?", preferredStyle: UIAlertController.Style.alert)
         refreshAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [self] (action: UIAlertAction!) in
             if #available(iOS 15.0, *) {
                 showLottieProgressLoader(animationName: "loader (2)")

@@ -167,6 +167,9 @@ class AlertstringFile{
     static let Please_Select_a_Video = "Please Select a Video"
     static let Please_Select_a_Image = "Please Select a Image"
     static let Please_Select_a_Document = "Please Select a Document"
+    static let Enter_location_name = "Enter your location name".translated()
+    
+    
 }
 
 struct classTimeTableStrings {
