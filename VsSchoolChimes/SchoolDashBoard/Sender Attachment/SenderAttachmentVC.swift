@@ -215,16 +215,16 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         
         if user_inputs.selectedFileType == "" {
             
-            alert.showAlert(title: "", message: "Please Select Attachment Type", on: self)
-        }else if user_inputs.selectedFileType == "VIDEO" && VideoPath_URL == nil {
+            alert.showAlert(title: "", message: AlertstringFile.Please_Select_Attachment_Type, on: self)
+        }else if user_inputs.selectedFileType == AttachmentTypeString.VIDEO && VideoPath_URL == nil {
             
-            alert.showAlert(title: "", message: "Please Select a Video", on: self)
-        }else if user_inputs.selectedFileType == "IMAGE" && selectedImages.isEmpty {
+            alert.showAlert(title: "", message: AlertstringFile.Please_Select_a_Video, on: self)
+        }else if user_inputs.selectedFileType == AttachmentTypeString.IMAGE && selectedImages.isEmpty {
             
-            alert.showAlert(title: "", message: "Please Select a Image", on: self)
-        }else if user_inputs.selectedFileType == "DOCUMENT" && fileUrls.isEmpty {
+            alert.showAlert(title: "", message: AlertstringFile.Please_Select_a_Image, on: self)
+        }else if user_inputs.selectedFileType == AttachmentTypeString.DOCUMENT && fileUrls.isEmpty {
             
-            alert.showAlert(title: "", message: "Please Select a Document", on: self)
+            alert.showAlert(title: "", message: AlertstringFile.Please_Select_a_Document, on: self)
         }
         
         if assignTitleTxtFld.text != ""  && contentTextView.text != ""{
