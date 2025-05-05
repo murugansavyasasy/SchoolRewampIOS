@@ -437,7 +437,7 @@ class AwsCredentials {
 
 }
 
-struct AttachmentType {
+struct AttachmentTypeString {
     
     static var VIDEO = "VIDEO"
     static var IMAGE = "IMAGE"
