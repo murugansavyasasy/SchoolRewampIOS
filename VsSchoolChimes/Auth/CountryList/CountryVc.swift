@@ -45,6 +45,8 @@ class CountryVc: UIViewController {
     var dropDownList = [String]()
     var CountryListRespons : [CountryData]?
     var country_data : CountryData?
+    var alert = CustomAlert()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         CountryList.isUserInteractionEnabled = false
@@ -136,13 +138,12 @@ class CountryVc: UIViewController {
             dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             country_data = CountryListRespons?[index]
            
-            
         }
         dropDown.cancelAction = { [weak self] in
             self?.dropDownBtn.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }
-        
     }
+    
     func get_CountryListApi() {
         
         APIService.shared.makeApi(url: ServiceUrl.country_list, parameters: [:], type: ApitTypeSringFile.GET, token: "") { [self] (result: Result<CountryListSuccess, Error>) in
@@ -191,22 +192,27 @@ class CountryVc: UIViewController {
     }
     
     @IBAction  func GotToNextVc(){
+        
         if checkBoxBtn.isSelected{
            
-            UserDefaultFileManager
-                .saveCountryDetails(
-                    data: (country_data)!)
-            
-            ServiceUrl.baseurl = country_data?.base_url ?? ""
-            ServiceUrl.report_url = country_data?.reporting_url ?? ""
-            let vc = MobileNumberVc(nibName: nil, bundle: nil)
-            vc.country_data = country_data
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            if let CountryDetails = country_data {
+                
+                UserDefaultFileManager
+                    .saveCountryDetails(
+                        data: (CountryDetails))
+                
+                ServiceUrl.baseurl = country_data?.base_url ?? ""
+                ServiceUrl.report_url = country_data?.reporting_url ?? ""
+                let vc = MobileNumberVc(nibName: nil, bundle: nil)
+                vc.country_data = country_data
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+                
+            }else {
+                
+                alert.showAlert(title: "", message: AlertstringFile.Please_Select_Your_Country, on: self)
+                
+            }
         }
     }
-    
-    
-   
-    
 }

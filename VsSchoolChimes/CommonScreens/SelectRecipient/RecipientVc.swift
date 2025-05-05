@@ -27,6 +27,8 @@ class RecipientVc: UIViewController{
     @IBOutlet weak var nodataFound: UIImageView!
     @IBOutlet weak var tableHeight: NSLayoutConstraint!
     @IBOutlet weak var tv: UITableView!
+    @IBOutlet weak var spaceView: UIView!
+    @IBOutlet weak var getSubject: UIButton!
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var acidamicYrDropView: UIView!
     
@@ -65,6 +67,10 @@ class RecipientVc: UIViewController{
     var accadimYrIDs :[Int] = []
     var accadmicDefaultYrName : String?
     var accedmicYrEligible = false
+    let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
+    var vimeoUploader: VimeoUploader?
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -87,10 +93,14 @@ class RecipientVc: UIViewController{
         
         sendbtnName.layer.cornerRadius = 10
         speficBtnName.layer.cornerRadius = 10
+        getSubject.layer.cornerRadius = 10
         applyShadowAndCornerRadius(to: selectStandardDropDown)
         applyShadowAndCornerRadius(to: selectSubject)
+        applyShadowAndCornerRadius(to: getSubject)
         applyShadowAndCornerRadius(to: acidamicYrDropView)
         selectSubject.isHidden = true
+        spaceView.isHidden = false
+        getSubject.isHidden = true
         let tap2 = UITapGestureRecognizer(target: self, action: #selector(selectStd))
         let tap3 = UITapGestureRecognizer(target: self, action: #selector(selectedSubject))
         let acidmaciyrClick = UITapGestureRecognizer(target: self, action:
@@ -207,68 +217,134 @@ class RecipientVc: UIViewController{
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
         case Menu_id.homeWorkMenuId:
-            handleHomeworkFlow()
+            if subjectId != nil && subjectId != "" && array_selectedId.count != 0 {
+                handleHomeworkFlow()
+            } else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_section,
+                    on: self
+                )
+            }
         case Menu_id.AttachmentMenuId:
             SendingAttachmentFlow()
         default:
             print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
     }
-    
-    
+
+    //MARK: Sender Attachment
     private func SendingAttachmentFlow() {
-        let file : Any = user_inputs.selectedFileType == "IMAGE" ? user_inputs.selectedImg:user_inputs.docUrl
-        uploadAndSendVoiceMessage(file: file) { [self] in
-            CircularProgressLoader.shared.hide()
-            let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                return [
-                    "path": url
-                ]
+        let selectedType = user_inputs.selectedFileType
+        var uploadedFiles: [[String: String]] = []
+        var iframeValue = ""
+
+        if selectedType == "VIDEO" {
+            guard let videoURL = user_inputs.VideoPath else {
+                print("❌ Video path is missing")
+                return
             }
-            print(uploadedFiles)
-            let parameters: [String: Any] = [SendAttachmentStringFile.title: user_inputs.title,
-                                             SendAttachmentStringFile.file_type: user_inputs.selectedFileType,
-                                             SendAttachmentStringFile.file_path: uploadedFiles,
-                                             SendAttachmentStringFile.target_type: target_type ?? "",
-                                             SendAttachmentStringFile.target_code: array_selectedId,
-                                             SendAttachmentStringFile.description: user_inputs.description,
-                                             SendAttachmentStringFile.iframe: "",
-                                             SendAttachmentStringFile.file_size: "",
-                                             SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""]
+
+            // You can dynamically build title/description here based on user input or context
+            let videoTitle = user_inputs.title
+            let videoDescription = user_inputs.description
+
+            startUpload(videoURL: videoURL,
+                        title: videoTitle,
+                        description: videoDescription) { videoURLString, iframeURL in
+                if let videoURLString = videoURLString {
+                    uploadedFiles = [["path": videoURLString]]
+                    iframeValue = iframeURL ?? ""
+                    sendAttachment(with: uploadedFiles, iframe: iframeValue)
+                } else {
+                    print("❌ Video upload failed")
+                    // Show alert or retry UI
+                }
+            }
             
-            APIService.shared.makeApi(url: ServiceUrl.comm_attachment_send_attachment, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self](result: Result<Send_AttachmentResponse,Error>) in
-                switch result{
+        }else {
+            
+            let file: Any = selectedType == "IMAGE" ? user_inputs.selectedImg : user_inputs.docUrl
+            CircularProgressLoader.shared.show()
+            uploadAndSendVoiceMessage(file: file) { [self] in
+                CircularProgressLoader.shared.hide()
+                uploadedFiles = uploadedURLs.compactMap { url in ["path": url] }
+                iframeValue = "" // for IMAGE or DOCUMENT
+                sendAttachment(with: uploadedFiles, iframe: iframeValue)
+            }
+        }
+
+        func sendAttachment(with uploadedFiles: [[String: String]], iframe: String) {
+            
+            let parameters: [String: Any] = [
+                SendAttachmentStringFile.title: user_inputs.title,
+                SendAttachmentStringFile.file_type: selectedType,
+                SendAttachmentStringFile.file_path: uploadedFiles,
+                SendAttachmentStringFile.target_type: target_type ?? "",
+                SendAttachmentStringFile.target_code: array_selectedId,
+                SendAttachmentStringFile.description: user_inputs.description,
+                SendAttachmentStringFile.iframe: iframe,
+                SendAttachmentStringFile.file_size: "",
+                SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""
+            ]
+
+            print("📤 Sending parameters: \(parameters)")
+
+            APIService.shared.makeApi(
+                url: ServiceUrl.comm_attachment_send_attachment,
+                parameters: parameters,
+                type: ApitTypeSringFile.POST,
+                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+            ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
+                switch result {
                 case .success(let successMessage):
-                    if successMessage.status{
-                        DispatchQueue.main.async { [self] in
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Sccuess,
-                                    message: successMessage.message,
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
-                        }
-                        
-                    }else {
-                        DispatchQueue.main.async { [self] in
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Alert_title,
-                                    message: successMessage.message,
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()}
+                    DispatchQueue.main.async {
+                        CustomAlert.showAlertWithOkAction(
+                            title: successMessage.status ? AlertstringFile.Sccuess : AlertstringFile.Alert_title,
+                            message: successMessage.message,
+                            on: self
+                        ) {
+                            self.gotoDashboard()
                         }
                     }
                 case .failure(let error):
-                    
-                    print(error.localizedDescription)
+                    print("❌ API error: \(error.localizedDescription)")
+                    // Optional: Add alert for failure
                 }
             }
         }
-        
+    }
+
+    //Function for video upload
+    func startUpload(videoURL: URL,
+                     title: String,
+                     description: String,
+                     completion: @escaping (_ videoURLString: String?, _ iframeURL: String?) -> Void) {
+        print("📂 Selected video URL: \(videoURL)")
+
+        CircularProgressLoader.shared.show()
+
+        vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: self)
+
+        vimeoUploader?.upload(videoFileURL: videoURL,
+                              title: title,
+                              description: description,
+                              progress: { progress in
+            print("📊 Upload progress: \(progress * 100)%")
+        }, completion: { videoURL, iframeURL in
+            CircularProgressLoader.shared.hide()
+
+            if let videoURL = videoURL {
+                print("✅ Video uploaded! Watch it at: \(videoURL)")
+                if let iframeURL = iframeURL {
+                    print("💻 Embed HTML: \(iframeURL)")
+                }
+                completion(videoURL, iframeURL)
+            } else {
+                print("❌ Upload failed!")
+                completion(nil, nil)
+            }
+        })
     }
     
     
@@ -278,68 +354,93 @@ class RecipientVc: UIViewController{
     
     private func handleHomeworkFlow() {
         uploadedURLs.removeAll()
-        let file: Any = user_inputs.SelectedUrls
-        uploadAndSendVoiceMessage(file: file) { [self] in
-            CircularProgressLoader.shared.hide()
-            let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                if let url = URL(string: url) {
-                    let type = url.pathExtension.lowercased()
-                    user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
-                }
-                return [
-                    CommonStringFile.path: url,
-                    CommonStringFile.type: user_inputs.selectedFileType
-                ]
-            }
-            let parameters: [String: Any] = [
-                UploadMessageKeys.academic_year_id:selectedAcadimicYearId ?? 0,
-                UploadMessageKeys.title: user_inputs.title,
-                UploadMessageKeys.description: user_inputs.description,
-                UploadMessageKeys.sectionCode: array_selectedId,
-                UploadMessageKeys.subjectId: subjectId ?? "",
-                UploadMessageKeys.filePath:uploadedFiles
-            ]
-            APIService.shared
-                .makeApi(url: ServiceUrl.comm_homework_sendhomework, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                    result : Result<CommonApiSuc,
-                    Error>
-                ) in
-                    switch result {
-                    case.success(let succesmessage) :
-                        if succesmessage.status == true {
-                            DispatchQueue.main.async { [self] in
-                                CustomAlert
-                                    .showAlertWithOkAction(
-                                        title: AlertstringFile.Sccuess,
-                                        message: succesmessage.message ?? "",
-                                        on: self
-                                    ) {
-                                        self.gotoDashboard()
-                                    }
-                            }
-                        }else {
-                            
-                            DispatchQueue.main.async {
-                                CustomAlert
-                                    .showAlertWithOkAction(
-                                        title: AlertstringFile.Alert_title,
-                                        message: succesmessage.message ?? "",
-                                        on: self
-                                    ) {
-                                        self.gotoDashboard()
-                                    }
-                            }
+        let title = AlertstringFile.Confirm_title
+        alert.showAlertCancel(
+            title: title,
+            message: AlertstringFile.are_yousure_youWant_to_sendHomeWork,
+            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [self] in
+                let file: Any = user_inputs.SelectedUrls
+                uploadAndSendVoiceMessage(file: file) { [self] in
+                    CircularProgressLoader.shared.hide()
+                    let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+                        if let url = URL(string: url) {
+                            let type = url.pathExtension.lowercased()
+                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
                         }
-                        
-                    case.failure(let error) :
-                        DispatchQueue.main.async {
-                            print(error.localizedDescription)
-                        }
+                        return [
+                            CommonStringFile.path: url,
+                            CommonStringFile.type: user_inputs.selectedFileType
+                        ]
                     }
-                    
+                    let parameters: [String: Any] = [
+                        UploadMessageKeys.academic_year_id:selectedAcadimicYearId ?? 0,
+                        UploadMessageKeys.title: user_inputs.title,
+                        UploadMessageKeys.description: user_inputs.description,
+                        UploadMessageKeys.sectionCode: array_selectedId,
+                        UploadMessageKeys.subjectId: subjectId ?? "",
+                        UploadMessageKeys.filePath:uploadedFiles
+                    ]
+                    APIService.shared
+                        .makeApi(url: ServiceUrl.comm_homework_sendhomework, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                            result : Result<CommonApiSuc,
+                            Error>
+                        ) in
+                            switch result {
+                            case.success(let succesmessage) :
+                                if succesmessage.status == true {
+                                    DispatchQueue.main.async { [self] in
+                                        CustomAlert
+                                            .showAlertWithOkAction(
+                                                title: AlertstringFile.Sccuess,
+                                                message: succesmessage.message ?? "",
+                                                on: self
+                                            ) {
+                                                self.gotoDashboard()
+                                            }
+                                    }
+                                }else {
+                                    
+                                    DispatchQueue.main.async {
+                                        CustomAlert
+                                            .showAlertWithOkAction(
+                                                title: AlertstringFile.Alert_title,
+                                                message: succesmessage.message ?? "",
+                                                on: self
+                                            ) {
+                                                self.gotoDashboard()
+                                            }
+                                    }
+                                }
+                                
+                            case.failure(let error) :
+                                DispatchQueue.main.async {
+                                    print(error.localizedDescription)
+                                }
+                            }
+                            
+                        }
                 }
+            },
+            onNo: {
+                print("User canceled.")
+            }
+        )
+    }
+    @IBAction func getSubject(_ sender: UIButton) {
+        let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+            if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
+                getSubjectListAPI(finalSectionIds)
+            }
+            
         }
-        
+        selectSubject.isHidden = !(selectedSections.count >= 1)
+        getSubject.isHidden = true
+        selectSubject.isHidden = false
+        spaceView.isHidden = true
     }
     
     private func SendingCommunicationFlow() {
@@ -834,7 +935,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     cell.isHidden = false
                     cell.createdOnlbl.text = "\(item.designation ?? "") - \(item.emp_id ?? "")"
                 }
-               
+                
                 cell.checkboxImg.image = (item.isSelect ?? false) ? ImageName.checkedSquares : ImageName.uncheckedSquares
             }
         default:
@@ -879,15 +980,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
                 sectionIds = selectedIds.joined(separator: ",")
-                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
-                    if let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
-                        getSubjectListAPI(finalSectionIds)
-                    }
-                    
+//                speficBtnName.isEnabled = selectedSections.count == 1
+//                speficBtnName.isHidden = !(selectedSections.count == 1)
+               
+                getSubject.isHidden = !(selectedSections.count >= 1)
+                if (selectedSections.count >= 1){
+                    selectSubject.isHidden =  !getSubject.isHidden
+                }else{
+                    selectSubject.isHidden = true
                 }
-                speficBtnName.isEnabled = selectedSections.count == 1
-                speficBtnName.isHidden = !(selectedSections.count == 1)
-                selectSubject.isHidden = !(selectedSections.count >= 1)
+               
+                spaceView.isHidden = !selectSubject.isHidden
             }
             
         case recipeint_tabBarName.Staff:
@@ -966,9 +1069,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if selecting, let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                     getSubjectListAPI(finalSectionIds)
                 }
-                selectSubject.isHidden = !selecting
-                speficBtnName.isEnabled = selecting && array_selectedId.count == 1
-                speficBtnName.isHidden = !(selecting && array_selectedId.count == 1)
+                
+                let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
+                let selectedIds = selectedSections.compactMap { $0.id }
+                sectionIds = selectedIds.joined(separator: ",")
+                getSubject.isHidden = !(selectedSections.count >= 1)
             }
             
         case recipeint_tabBarName.Staff:
@@ -999,6 +1104,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     if successmessage.status == true{
                         DispatchQueue.main.async {[self] in
                             selectSubject.isHidden = true
+                            spaceView.isHidden = false
                             groupDetails = successmessage.data
                             nodata(true, message: "")
                             if var students = groupDetails {
@@ -1032,6 +1138,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
+                        spaceView.isHidden = false
                         tv.isHidden = false
                         noRecordLbl.isHidden = true
                         nodata(true, message: "")
@@ -1104,6 +1211,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }else{
                         DispatchQueue.main.async { [self] in
                             selectSubject.isHidden = true
+                            spaceView.isHidden = false
                             sendbtnName.isHidden = true
                             tv.isHidden = true
                             
@@ -1143,6 +1251,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 }else{
                     DispatchQueue.main.async { [self] in
                         selectSubject.isHidden = true
+                        spaceView.isHidden = false
                     }
                 }
             case .failure(let error):

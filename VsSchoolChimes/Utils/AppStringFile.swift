@@ -101,6 +101,7 @@ class AlertstringFile{
     static let voice_or_title_is_required = "Voice and title is required".translated()
     static let enter_title_description = "Enter title and description".translated()
     static let Choose_any_target = "Choose any target to send message".translated()
+    static let Choose_any_section = "Choose any section and subject".translated()
     static let Audio_exceeds_3_minutes = "Audio exceeds 3 minutes. Please select a shorter audio.".translated()
     static let Alert_title = "Alert".translated()
     static let Audio_file_should80 = "Audio file should be less than 30 seconds".translated()
@@ -116,6 +117,7 @@ class AlertstringFile{
     static let Selected_target = "Selected target : ".translated()
     static let AreYouSureYouWantToProceed = "Are you sure you want to send this message?".translated()
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
+    static let are_yousure_youWant_to_sendHomeWork = "Are you sure you want to send this Home Work?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
     static let ConfirmLogout = "Are you sure you want to Logout".translated()
@@ -160,6 +162,11 @@ class AlertstringFile{
     static let Please_allow_location_access = "Please allow location access in Settings to use this feature.".translated()
     static let Open_Settings = "Open Settings".translated()
     static let Distance_Should = "Distance Should be  above 10 Meter(s)".translated()
+    static let Please_Select_Your_Country = "Please Select Your Country".translated()
+    static let Please_Select_Attachment_Type = "Please Select Attachment Type"
+    static let Please_Select_a_Video = "Please Select a Video"
+    static let Please_Select_a_Image = "Please Select a Image"
+    static let Please_Select_a_Document = "Please Select a Document"
     static let Enter_location_name = "Enter your location name".translated()
     
     
@@ -433,4 +440,11 @@ class AwsCredentials {
  static var uploadprofileBrowes = "schoolchimes-docs"
  static var CognitoPoolID = "ap-south-1:a8650d2e-79d6-4668-85db-110e9917583f"
 
+}
+
+struct AttachmentType {
+    
+    static var VIDEO = "VIDEO"
+    static var IMAGE = "IMAGE"
+    static var DOCUMENT = "DOCUMENT"
 }

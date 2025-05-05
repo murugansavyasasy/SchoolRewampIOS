@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "55C3F11C-5B9D-406C-B5FB-A2D6F1227F2F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/SchoolSide/AttachmentsReuseView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
-            landmarkName = "uploadAWS(image:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "61755358-7A70-4917-861A-C1B4D3134C70"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -169,32 +153,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E8E57E06-61F5-41D5-9C40-097F963272E6"
-            shouldBeEnabled = "No"
+            uuid = "9F4AD569-941B-48DC-97D8-74149E0CDF4F"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/ReuseViews/SettingsVc/ReportBugVc/ReportBugVcViewController.swift"
+            filePath = "VsSchoolChimes/Utils/Extentions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "uploadImage()"
+            startingLineNumber = "596"
+            endingLineNumber = "596"
+            landmarkName = "downloadFile(from:folderName:fileName:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D74212BB-7732-48EB-B97A-744F43F11C82"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/AWS/AWSS3Manager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "229"
+            endingLineNumber = "229"
+            landmarkName = "deleteFileFromS3(withURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1F3F6269-0910-41E6-B9D8-00C4F7F6181B"
+            uuid = "7B218820-B444-4D04-9033-57948FFD39A2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Communication/ParentCommunicationVc.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/ReciverHomework/ReciverHomeworkVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
-            landmarkName = "GetArchiveCommunicationList()"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "GetHomeWorkReport()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

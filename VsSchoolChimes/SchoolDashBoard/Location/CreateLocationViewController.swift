@@ -206,7 +206,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
             colorPulse.repeatCount = .infinity
             view?.layer.add(colorPulse, forKey: "colorPulse")
         }
-        
         view?.annotation = annotation
         return view
     }
@@ -243,17 +242,17 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     
     @IBAction func dropDown(_ sender: UIButton) {
         let myArray = [ "20","30","40","50","60","70","80","90","100"]
-                dropDown.dataSource = myArray//4
-                dropDown.anchorView = distanceDropDownView //5
-                dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-                dropDown.direction = .bottom
-                DropDown.appearance().backgroundColor = UIColor.white
-                dropDown.show() //7
-                dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                    print("Selected item: \(item) at index: \(index)")
-                    distanceLbl.text = item
-                    distanceTxt.text = item
-                }
+        dropDown.dataSource = myArray//4
+        dropDown.anchorView = distanceDropDownView //5
+        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
+        dropDown.direction = .bottom
+        DropDown.appearance().backgroundColor = UIColor.white
+        dropDown.show() //7
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            print("Selected item: \(item) at index: \(index)")
+            distanceLbl.text = item
+            distanceTxt.text = item
+        }
     }
     @IBAction func history(_ sender: UIButton) {
         let vc = AddLocationHistory(nibName: nil, bundle: nil)
@@ -327,7 +326,6 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
             }
         }
     }
-    
 }
 
 // MARK: - Extensions

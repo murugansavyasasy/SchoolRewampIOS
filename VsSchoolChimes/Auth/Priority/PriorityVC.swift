@@ -36,7 +36,7 @@ class PriorityVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        
+        self.containerViewHeightConstraint.constant = 300
         
         Language = UserDefaults.standard.string(forKey: DefaultsKeys.Language)
         UserDefaults.standard.set(login_astype, forKey: "passvalue")
@@ -273,40 +273,13 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
             }
             
             cell.arrowImage.isHidden = PriorityType.is_staff == staff_role ? false : true
-            
+            DispatchQueue.main.async {
+                self.containerViewHeightConstraint.constant = self.tableview.contentSize.height
+                self.view.layoutIfNeeded()
+            }
             return cell
             
         } else {
-            
-//            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ParentTVCell, for: indexPath) as! ParentTVCell
-//            
-//            cell.SchoolInfoView.backgroundColor = colour1
-//            cell.imgview.image = image
-//            //cell.imgview.image = UIImage(named: childDetails?[indexPath.row].school_logo_url ?? "")
-//            cell.namelabel.text = childDetails?[indexPath.row].name
-//            cell.REgisterNoLbl.text = CommonStringFile.RollNo + " : " + (childDetails?[indexPath.row].roll_number ?? "")
-//            cell.namelabel.text = childDetails?[indexPath.row].name
-//            cell.StdSecLbl.text = (childDetails?[indexPath.row].standard_name ?? "") + " - " + (childDetails?[indexPath.row].section_name ?? "")
-//            cell.SchoolnameLbl.text = childDetails?[indexPath.row].school_name
-//            
-//            if ((childDetails?[indexPath.row].school_name_regional?.isEmpty) != nil){
-//                cell.SchoolnameRegeion.isHidden = true
-//            }else {
-//                cell.SchoolnameRegeion.text = childDetails?[indexPath.row].school_name_regional
-//                cell.SchoolnameRegeion.isHidden = false
-//            }
-//           
-//            cell.AddressLbl.text = childDetails?[indexPath.row].school_city
-//            
-//            if indexPath.row == 8{
-//                cell.imgview.image = ImageName.person_circle
-//            }
-//            
-//            if let color1 = colour1, let color2 = colour2 {
-//                cell.setGradientColors([color2.cgColor, color1.cgColor])
-//            }
-//            cell.arrowImg.applyRTLFlip(Language == "ar")
-//            return cell
         
             let cell = tableview.dequeueReusableCell(withIdentifier: CellConfingName.StudentTVCell, for: indexPath) as! StudentTVCell
             
@@ -335,7 +308,10 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
                        if let color1 = colour1, let color2 = colour2 {
                            cell.setGradientColors([color2.cgColor, color1.cgColor])
                        }
-            
+            DispatchQueue.main.async {
+                self.containerViewHeightConstraint.constant = self.tableview.contentSize.height
+                self.view.layoutIfNeeded()
+            }
             return cell
         }
     }
