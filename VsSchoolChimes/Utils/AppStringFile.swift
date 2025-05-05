@@ -160,6 +160,7 @@ class AlertstringFile{
     static let Please_allow_location_access = "Please allow location access in Settings to use this feature.".translated()
     static let Open_Settings = "Open Settings".translated()
     static let Distance_Should = "Distance Should be  above 10 Meter(s)".translated()
+    static let Enter_location_name = "Enter your location name".translated()
     
     
 }

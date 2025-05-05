@@ -1,9 +1,4 @@
-//
-//  CreateLocationViewController.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 29/08/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
+
 //
 
 import UIKit
@@ -268,11 +263,11 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     @IBAction func saveLocation(_ sender: UIButton) {
         
         
-        if  9 >= Int(distanceTxt.text!) ?? 0  {
+        if  9 >= Int(distanceTxt.text!) ?? 0  && locationNameTxt.text?.isEmpty ?? true {
             
             let refreshAlert = UIAlertController(
                 title: "",
-                message: AlertstringFile.Distance_Should,
+                message: AlertstringFile.Enter_location_name + AlertstringFile.Distance_Should ,
                 preferredStyle: UIAlertController.Style.alert
             )
            

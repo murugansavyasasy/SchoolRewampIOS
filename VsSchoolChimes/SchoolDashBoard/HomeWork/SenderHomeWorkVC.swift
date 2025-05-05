@@ -83,9 +83,9 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         
         getacadmicYr()
         getStandardsAPI()
-//        acodemicView.cornerRadius()
-//        standerdView.cornerRadius()
-//        sectionView.cornerRadius()
+        //        acodemicView.cornerRadius()
+        //        standerdView.cornerRadius()
+        //        sectionView.cornerRadius()
         let imgPdfTV = UINib(nibName:CellConfingName.HomeWorkTVC, bundle: nil)
         homeWorkTable.register(imgPdfTV, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
         dateSelect(nil)
@@ -94,7 +94,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         dateLbl.setFont(style: .title, size: FontSize.TitleSize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         SectionLbl.setFont(style: .body, size: FontSize.BodySize)
-
+        
     }
     func dateSelect(_ date: String?) {
         let outputFormatter = DateFormatter()
@@ -102,22 +102,19 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         outputFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         var selectedDate = Date()
-        
         if let dateStr = date, !dateStr.isEmpty {
             let inputFormatter = DateFormatter()
             inputFormatter.dateFormat = "dd MMM yy"
             inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-            
             if let parsedDate = inputFormatter.date(from: dateStr) {
                 selectedDate = parsedDate
             }
         }
-        
         let formattedDate = outputFormatter.string(from: selectedDate)
         dateLbl.text = formattedDate
     }
     
-
+    
     func getacadmicYr(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
@@ -128,7 +125,6 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                 case .success(let successMessage):
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
-                            //                        listTable.isHidden = true
                             AcadimicYearDatas = successMessage.data ?? []
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
@@ -242,12 +238,12 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-
+    
     func GetHomeWorkReport(_ sectionId: String?, _ dates: String?) {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
-
+        
         let date = ConvertDateStringSmart(dates)
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_report,
@@ -256,12 +252,12 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<HomeworkResponse, Error>) in
             guard let self = self else { return }
-
+            
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
                     self.hideLottieProgressLoader()
                 }
-
+                
                 switch result {
                 case .success(let successMessage):
                     
@@ -276,7 +272,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                         self.FilterHomeWorkList = successMessage.data
                         self.homeWorkTable.reloadData()
                     }
-                
+                    
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.tableviewHeight.constant = 0
@@ -284,7 +280,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             }
         }
     }
-
+    
     
     
     func getStandardsAPI(){
@@ -293,7 +289,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             case .success(let successMessage):
                 print("successsuccess",successMessage.data)
                 DispatchQueue.main.async { [self] in
-                if successMessage.status == true{
+                    if successMessage.status == true{
                         
                         standardDetails = successMessage.data
                         standardDetails?.enumerated().forEach { index, student in
@@ -308,8 +304,8 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                         GetHomeWorkReport(standardDetails?.first?.sections?.first?.id, dateLbl.text ?? "")
                         StandardLbl.text = standardDetails?.first?.name
                         SectionLbl.text = standardDetails?.first?.sections?.first?.name ?? ""
-                    dropDownStack.isHidden = false
-                    searchBar.isHidden = true
+                        dropDownStack.isHidden = false
+                        searchBar.isHidden = true
                     }else{
                         dropDownStack.isHidden = true
                         searchBar.isHidden = true
@@ -338,7 +334,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         }
         homeWorkTable.reloadData()
     }
-
+    
 }
 extension UIView{
     func cornerRadius(_ radius: CGFloat = 8) {

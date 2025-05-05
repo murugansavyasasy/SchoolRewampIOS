@@ -1,9 +1,4 @@
-//
-//  LocationViewController.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 29/08/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
+
 //
 
 import UIKit
@@ -55,7 +50,6 @@ class LocationViewController: UIViewController {
     private var lastIsInsideAllowedArea: Bool?
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkAuthenticationAvailability()
         ViewAnimator.hideFade(LocationErrorStack)
         ViewAnimator.hideFade(punchStack)
         EnableLocationBtn.layer.cornerRadius = 10
@@ -69,7 +63,7 @@ class LocationViewController: UIViewController {
         
         AllowLocationLbl.setFont(style: .body, size: FontSize.BodySize)
         AllowLocationDescribeLbl.setFont(style: .body, size: FontSize.BodySize)
-        PunchDescriptionLbl.setFont(style: .body, size: FontSize.BodySize)
+        PunchDescriptionLbl.setFont(style: .header, size: FontSize.HeaderSize)
         EnableLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TaptoPunchBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         addLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -233,7 +227,8 @@ class LocationViewController: UIViewController {
     }
     
     @IBAction func PunchBtnAct(_ sender: Any) {
-        Punch_Api()
+        checkAuthenticationAvailability()
+//        Punch_Api()
     }
     
     @IBAction func AddLocationAct(_ sender: Any) {
@@ -318,6 +313,7 @@ class LocationViewController: UIViewController {
             // Neither biometric authentication nor passcode is available
             print("No biometric authentication or passcode is set.")
             punch_type = 1
+            Punch_Api()
         }
     }
     
@@ -328,11 +324,13 @@ class LocationViewController: UIViewController {
                 if success {
                     print("Authentication successful")
                     punch_type = 3
+                    Punch_Api()
                 } else {
                     // Authentication failed
                     if let error = authenticationError {
                         print("Authentication failed: \(error.localizedDescription)")
                         punch_type = 1
+                        Punch_Api()
                     }
                 }
             }
@@ -558,7 +556,9 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.showFade(punchStack)
         ViewAnimator.hideFade(LocationErrorStack)
         PunchDescriptionLbl.text = CommonStringFile.Tap_on_the_punch
+        punchStack.backgroundColor = UIColor(named: "biomatricSucess")
         punchStack.backgroundColor = .white
+        PunchDescriptionLbl.textColor = .black
     }
 
     private func showOutsideBoundaryUI() {
@@ -567,7 +567,8 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.showFade(PunchThumbnail)
         PunchThumbnail.image = ImageName.need_location_access
         punchStack.layer.cornerRadius = 10
-        punchStack.backgroundColor = UIColor.red.withAlphaComponent(0.4)
+       
+        PunchDescriptionLbl.textColor = .white
         PunchDescriptionLbl.text = CommonStringFile.locationErrorMessage
     }
 

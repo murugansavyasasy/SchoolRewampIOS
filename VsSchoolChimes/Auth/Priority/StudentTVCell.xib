@@ -75,16 +75,16 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zCg-Rw-F2t">
-                                <rect key="frame" x="104" y="104" width="268" height="71"/>
+                                <rect key="frame" x="94" y="104" width="278" height="71"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name : Lakshmanan" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uaP-Bz-2BI">
-                                        <rect key="frame" x="0.0" y="0.0" width="268" height="20.333333333333332"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="278" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roll No : 781205" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyB-9j-MMn">
-                                        <rect key="frame" x="0.0" y="25.333333333333343" width="268" height="20.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="25.333333333333343" width="278" height="20.333333333333329"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20.333333333333329" id="6dK-TF-4zE"/>
                                         </constraints>
@@ -93,7 +93,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Class : XI - B" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Suy-3V-dcy">
-                                        <rect key="frame" x="0.0" y="50.666666666666657" width="268" height="20.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="50.666666666666657" width="278" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -104,7 +104,7 @@
                                 </constraints>
                             </stackView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Default_profile" translatesAutoresizingMaskIntoConstraints="NO" id="ojf-Ll-3Uh">
-                                <rect key="frame" x="20" y="114.66666666666669" width="50" height="50"/>
+                                <rect key="frame" x="10" y="114.66666666666669" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="DWU-Jk-6V2"/>
                                     <constraint firstAttribute="width" constant="50" id="dD8-z2-vI7"/>
@@ -130,7 +130,7 @@
                             <constraint firstItem="1rL-va-cfh" firstAttribute="leading" secondItem="NNJ-KF-VWs" secondAttribute="leading" id="4MX-R2-5vP"/>
                             <constraint firstItem="DQ9-c2-3cS" firstAttribute="leading" secondItem="zCg-Rw-F2t" secondAttribute="trailing" constant="20" id="9hv-Uh-Ek8"/>
                             <constraint firstItem="ojf-Ll-3Uh" firstAttribute="centerY" secondItem="zCg-Rw-F2t" secondAttribute="centerY" id="BVU-Rf-bPu"/>
-                            <constraint firstItem="ojf-Ll-3Uh" firstAttribute="leading" secondItem="NNJ-KF-VWs" secondAttribute="leading" constant="20" id="DkG-q1-ZxW"/>
+                            <constraint firstItem="ojf-Ll-3Uh" firstAttribute="leading" secondItem="NNJ-KF-VWs" secondAttribute="leading" constant="10" id="DkG-q1-ZxW"/>
                             <constraint firstAttribute="bottom" secondItem="1rL-va-cfh" secondAttribute="bottom" id="Ebm-eD-wJT"/>
                             <constraint firstItem="zCg-Rw-F2t" firstAttribute="leading" secondItem="ojf-Ll-3Uh" secondAttribute="trailing" constant="34" id="H1E-lX-RIg"/>
                             <constraint firstAttribute="trailing" secondItem="CtF-jn-WcF" secondAttribute="trailing" id="Jze-CI-5zX"/>
