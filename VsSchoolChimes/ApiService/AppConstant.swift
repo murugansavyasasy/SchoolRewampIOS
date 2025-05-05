@@ -91,7 +91,7 @@ struct Menu_id{
     static var communicationMenuId = 7
     static var homeWorkMenuId = 15
     static let isAssaignment = 2
-    static let AttachmentMenuId = 11
+    static let AttachmentMenuId = 39
     static let StaffGeoAttendaceReport = 33
     static let GeoMatricAttendace = 21
 }
@@ -139,6 +139,7 @@ struct user_inputs{
     static var file_name = ""
     static var circular_type = ""
     static var selectedFileType = ""
+    static var VideoPath: URL?
     
 }
 struct circular_type{

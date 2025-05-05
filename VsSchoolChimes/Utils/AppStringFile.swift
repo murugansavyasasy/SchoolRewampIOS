@@ -162,8 +162,11 @@ class AlertstringFile{
     static let Please_allow_location_access = "Please allow location access in Settings to use this feature.".translated()
     static let Open_Settings = "Open Settings".translated()
     static let Distance_Should = "Distance Should be  above 10 Meter(s)".translated()
-    
-    
+    static let Please_Select_Your_Country = "Please Select Your Country".translated()
+    static let Please_Select_Attachment_Type = "Please Select Attachment Type"
+    static let Please_Select_a_Video = "Please Select a Video"
+    static let Please_Select_a_Image = "Please Select a Image"
+    static let Please_Select_a_Document = "Please Select a Document"
 }
 
 struct classTimeTableStrings {
@@ -434,4 +437,11 @@ class AwsCredentials {
  static var uploadprofileBrowes = "schoolchimes-docs"
  static var CognitoPoolID = "ap-south-1:a8650d2e-79d6-4668-85db-110e9917583f"
 
+}
+
+struct AttachmentType {
+    
+    static var VIDEO = "VIDEO"
+    static var IMAGE = "IMAGE"
+    static var DOCUMENT = "DOCUMENT"
 }
