@@ -617,6 +617,7 @@ extension DateFormatter {
         }
         return nil
     }
+    
 }
 
 extension UILabel {
@@ -649,5 +650,42 @@ func getFileIconName(for fileURL: URL) -> String {
         return "ppt"                // 📽 PowerPoint icon
     default:
         return "txt-file"  // 🔄 Fallback icon
+    }
+}
+extension String {
+    func convertToTargetDateFormat(inputFormat: String? = nil) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let possibleFormats = [
+            "yyyy-MM-dd",
+            "dd/MM/yyyy",
+            "MM/dd/yyyy",
+            "yyyy/MM/dd",
+            "d MMM yyyy",
+            "dd MMM yyyy",
+            "yyyy-MM-dd HH:mm:ss",
+            "MMM d, yyyy",
+            "EEE, d MMM yyyy"
+        ]
+        
+        if let inputFormat = inputFormat {
+            dateFormatter.dateFormat = inputFormat
+            if let date = dateFormatter.date(from: self) {
+                dateFormatter.dateFormat = "E d MMM yyyy"
+                return dateFormatter.string(from: date)
+            } else {
+                return nil
+            }
+        } else {
+            for format in possibleFormats {
+                dateFormatter.dateFormat = format
+                if let date = dateFormatter.date(from: self) {
+                    dateFormatter.dateFormat = "E d MMM yyyy"
+                    return dateFormatter.string(from: date)
+                }
+            }
+            return nil
+        }
     }
 }

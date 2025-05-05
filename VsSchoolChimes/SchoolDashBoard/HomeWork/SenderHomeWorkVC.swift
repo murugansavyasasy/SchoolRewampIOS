@@ -12,12 +12,15 @@ import DropDown
 class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSource, SelectNotice, Datepicker, UISearchBarDelegate {
     func date(date: String) {
         dateSelect(date)
+        GetHomeWorkReport(sectionId, dateLbl.text ?? "")
     }
     
     func didTapButton(title: String, content: String, items: [FilePath]) {
+        
         selectNotice?.didTapButton(title: title, content: content, items: items)
     }
     
+    @IBOutlet weak var noDataFound: UIImageView!
     @IBOutlet weak var nodataFoundLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
@@ -61,6 +64,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
     var acodemicId:Int?
+    var sectionId:String?
     var selectNotice : SelectNotice?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,9 +87,6 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         
         getacadmicYr()
         getStandardsAPI()
-//        acodemicView.cornerRadius()
-//        standerdView.cornerRadius()
-//        sectionView.cornerRadius()
         let imgPdfTV = UINib(nibName:CellConfingName.HomeWorkTVC, bundle: nil)
         homeWorkTable.register(imgPdfTV, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
         dateSelect(nil)
@@ -113,9 +114,24 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             }
         }
         
+        // ✅ Compare selected date with today
+        let today = Date()
+        let comparison = Calendar.current.compare(selectedDate, to: today, toGranularity: .day)
+        
+        switch comparison {
+        case .orderedSame:
+            todayLbl.text = "Today"
+        case .orderedAscending:
+            todayLbl.text = "Past Date"
+        case .orderedDescending:
+            todayLbl.text = "Future Date"
+        default:
+            todayLbl.text = "Selected Date"
+        }
         let formattedDate = outputFormatter.string(from: selectedDate)
         dateLbl.text = formattedDate
     }
+
     
 
     func getacadmicYr(){
@@ -158,6 +174,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
             acodomicYearLbl.text = item
             acodemicId = AcadimicYearDatas[index].id
+            getStandardsAPI()
         }
     }
     
@@ -170,6 +187,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         SectionDropdown.selectionAction = { [self] (index: Int, item: String) in
             
             if index < sectionsDetails?.count ?? 0{
+                sectionId = sectionsDetails?[index].id
                 GetHomeWorkReport(sectionsDetails?[index].id, dateLbl.text ?? "")
             }
             if let label = sectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
@@ -183,6 +201,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
+        vc.date = dateLbl.text
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
@@ -215,22 +234,32 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = homeWorkTable.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
-        cell.ishomework = true
+//        cell.ishomework = true
+        cell.CvHeight.constant = 0
+        cell.ImageCollectionView.isHidden = true
         cell.delegate = self
         let data = FilterHomeWorkList?[indexPath.row]
         cell.subjectName.text = data?.subject_name
         cell.topics.text = data?.title ?? ""
         cell.dateLble.text = dateLbl.text ?? ""
         cell.ImageCollectionView.isHidden = (data?.file_path?.isEmpty ?? true)
-        if let urls = data?.file_path {
+        if let urls = data?.file_path, urls.count != 0{
+            cell.ImageCollectionView.isHidden = false
+            cell.CvHeight.constant = 150
             cell.loadImage(urls: urls)
         }
+        
+        cell.FilterHomeWorkList = data
         cell.newView.isHidden = true
         cell.descriptionLbl.setupExpandable(text: data?.description ?? "")
         cell.descriptionLbl.onExpandableTap = {
             cell.descriptionLbl.isExpanded.toggle()
             tableView.beginUpdates()
             tableView.endUpdates()
+            DispatchQueue.main.async {
+                   let contentHeight = tableView.contentSize.height
+                   self.tableviewHeight.constant = contentHeight
+               }
         }
         cell.cellview.layoutIfNeeded()
         DispatchQueue.main.async {
@@ -242,6 +271,15 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    func apiCall() {
+        guard let labelText = dateLbl?.text, !labelText.isEmpty,
+              let sectionId = sectionId, !sectionId.isEmpty else {
+            print("Missing sectionId or dateLbl")
+            return
+        }
+        GetHomeWorkReport(sectionId, labelText)
+    }
+
 
     func GetHomeWorkReport(_ sectionId: String?, _ dates: String?) {
         if #available(iOS 15.0, *) {
@@ -266,20 +304,25 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                 case .success(let successMessage):
                     
                     if successMessage.status == true{
+                        self.tableviewHeight.constant = 100
                         self.nodataFoundLbl.isHidden = true
                         self.homeWorkList = successMessage.data
                         self.FilterHomeWorkList = successMessage.data
                         self.homeWorkTable.reloadData()
+                        self.noDataFound.isHidden = true
                     }else{
                         self.nodataFoundLbl.isHidden = false
+                        self.noDataFound.isHidden = false
                         self.nodataFoundLbl.text = successMessage.message
                         self.FilterHomeWorkList = successMessage.data
                         self.homeWorkTable.reloadData()
+                        self.tableviewHeight.constant = 0
                     }
                 
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.tableviewHeight.constant = 0
+                    self.noDataFound.isHidden = false
                 }
             }
         }
@@ -305,6 +348,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                                 sectionList.append(sectionsDetails?[j].name ?? "")
                             }
                         }
+                    sectionId = standardDetails?.first?.sections?.first?.id
                         GetHomeWorkReport(standardDetails?.first?.sections?.first?.id, dateLbl.text ?? "")
                         StandardLbl.text = standardDetails?.first?.name
                         SectionLbl.text = standardDetails?.first?.sections?.first?.name ?? ""

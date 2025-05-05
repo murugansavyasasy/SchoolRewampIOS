@@ -64,7 +64,7 @@ class LocationViewController: UIViewController {
         LocationErrorStack.backgroundColor = .systemBlue.withAlphaComponent(0.4)
         StyleAndTranslate()
     }
- 
+    
     func StyleAndTranslate(){
         
         AllowLocationLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -143,8 +143,8 @@ class LocationViewController: UIViewController {
             "iPhone10,4": "iPhone 8 (GSM)",
             "iPhone10,2": "iPhone 8 Plus",
             "iPhone10,5": "iPhone 8 Plus (GSM)",
-             "iPhone9,1": "iPhone 7",
-             "iPhone9,3": "iPhone 7 (GSM)",
+            "iPhone9,1": "iPhone 7",
+            "iPhone9,3": "iPhone 7 (GSM)",
             "iPhone9,2": "iPhone 7 Plus",
             "iPhone9,4": "iPhone 7 Plus (GSM)",
             "iPhone8,1": "iPhone 6s",
@@ -196,32 +196,31 @@ class LocationViewController: UIViewController {
         
         return modelMap[modelCode] ?? modelCode // Returns modelCode if not found in the map
     }
-    
     @objc private func appDidBecomeActive() {
-           // Check and then fetch
-           checkAndFetchLocationData()
-       }
-       
+        // Check and then fetch
+        checkAndFetchLocationData()
+    }
+    
     @objc func checkAndFetchLocationData() {
-           let status = CLLocationManager.authorizationStatus()
-           
-           if status == .authorizedAlways || status == .authorizedWhenInUse {
-               // ✅ Add delay for safety (system breathing time)
-               DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
-                   call_locationManager()
-               }
-           } else {
-               print("❗️ Location permission not granted yet.")
-               checkLocationAuthorization()
-           }
-       }
+        let status = CLLocationManager.authorizationStatus()
+        
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
+            // ✅ Add delay for safety (system breathing time)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+                call_locationManager()
+            }
+        } else {
+            print("❗️ Location permission not granted yet.")
+            checkLocationAuthorization()
+        }
+    }
     
     
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
     }
-
+    
     @IBAction func SegmentAction(_ sender: Any) {
         
         if SegmentControl.selectedSegmentIndex == 1{
@@ -254,7 +253,7 @@ class LocationViewController: UIViewController {
         vc.didMove(toParent: self)
         self.childVC = vc // Save reference
     }
-
+    
     func removeChildVC() {
         guard let vc = childVC else { return }
         vc.willMove(toParent: nil)
@@ -262,14 +261,14 @@ class LocationViewController: UIViewController {
         vc.removeFromParent()
         childVC = nil
     }
-
-   
+    
+    
     @IBAction func enableLocationButtonTapped(_ sender: UIButton) {
         if let appSettings = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings)
         }
     }
-
+    
     @objc func checkLocationAuthorization() {
         let status = CLLocationManager.authorizationStatus()
         switch status {
@@ -298,13 +297,13 @@ class LocationViewController: UIViewController {
         }
     }
     
-
+    
     func call_locationManager(){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
     }
-
+    
     func checkAuthenticationAvailability() {
         
         let context = LAContext()
@@ -321,7 +320,7 @@ class LocationViewController: UIViewController {
         }
     }
     
- func authenticateUser(context: LAContext, policy: LAPolicy) {
+    func authenticateUser(context: LAContext, policy: LAPolicy) {
         context.evaluatePolicy(policy, localizedReason: "Please authenticate to proceed") { [self] success, authenticationError in
             
             DispatchQueue.main.async { [self] in
@@ -338,6 +337,7 @@ class LocationViewController: UIViewController {
             }
         }
     }
+}
 extension LocationViewController:CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

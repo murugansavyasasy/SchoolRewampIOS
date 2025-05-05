@@ -13,7 +13,7 @@ protocol Datepicker{
 
 @available(iOS 14.0, *)
 class DatePickerVC: UIViewController {
-
+    
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var datepicker: UIDatePicker!
@@ -22,32 +22,73 @@ class DatePickerVC: UIViewController {
     var dateSelection = 1
     override func viewDidLoad() {
         super.viewDidLoad()
-        datepicker.locale = .current
-        datepicker.date = Date()
+        
         bgView.layer.cornerRadius = 10
         outerView.layer.cornerRadius = 10
-        if dateSelection == 2{
+        datepicker.locale = .current
+        
+        // Set picker mode and style
+        if dateSelection == 2 {
             datepicker.datePickerMode = .date
             datepicker.preferredDatePickerStyle = .inline
-        }else{
+        } else {
             datepicker.datePickerMode = .time
             datepicker.preferredDatePickerStyle = .wheels
         }
-        dateformate()
-        datepicker.addTarget(self, action: #selector(dateselect), for: .valueChanged)
+        
+        // Set initial selected date if provided
+        if let inputDate = dateConvert(date ?? "") {
+            datepicker.date = inputDate
+        } else {
+            datepicker.date = Date()
+        }
+        
+        // Format selected date/time
+        updateFormattedDate()
+        
+        // Listen to changes
+        datepicker.addTarget(self, action: #selector(dateChanged), for: .valueChanged)
     }
-    @objc func dateselect(){
-        dateformate()
+    // Try multiple formats to parse string to Date
+    func dateConvert(_ dateString: String) -> Date? {
+        let formats = [
+            "EEE d MMM yyyy",
+            "EEEE d MMMM yyyy",
+            "d/M/yyyy",
+            "yyyy-MM-dd",
+            "MMM d, yyyy",
+            "dd MMM yy",
+            "hh:mm a"
+        ]
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        for format in formats {
+            formatter.dateFormat = format
+            if let date = formatter.date(from: dateString) {
+                return date
+            }
+        }
+        return nil
     }
-    func dateformate() {
-         let dateFormatter = DateFormatter()
-         if dateSelection == 2 {
-             dateFormatter.dateFormat = "dd MMM yy" //"dd-MM-yyyy"// Date format
-         } else {
-             dateFormatter.dateFormat =  "hh:mm a" // Time format
-         }
-         date = dateFormatter.string(from: datepicker.date)
-     }
+    
+    @objc func dateChanged() {
+        updateFormattedDate()
+    }
+    
+    func updateFormattedDate() {
+        let formatter = DateFormatter()
+        formatter.locale = .current
+        
+        if dateSelection == 2 {
+            formatter.dateFormat = "dd MMM yy"
+        } else {
+            formatter.dateFormat = "hh:mm a"
+        }
+        
+        date = formatter.string(from: datepicker.date)
+    }
     @IBAction func done(_ sender: UIButton) {
         delegate?.date(date: self.date ?? "")
         dismiss(animated: false)
