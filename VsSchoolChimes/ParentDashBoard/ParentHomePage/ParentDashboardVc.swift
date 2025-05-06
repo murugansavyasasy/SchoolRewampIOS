@@ -455,7 +455,14 @@ extension ParentDashboardVc: UISearchBarDelegate{
             filteredItems = menu_details
             filteredMenu_details = menu_details.map { Array($0.prefix(9)) }
         } else {
-            filteredItems = menu_details?.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
+            print(menu_details?.count)
+            print(searchText.lowercased())
+            filteredItems = menu_details?.filter {
+                $0.name?.lowercased().contains(searchText.lowercased()) ?? false
+            }
+            filteredMenu_details = menu_details?.filter {
+                $0.name?.lowercased().contains(searchText.lowercased()) ?? false
+            }
         }
         
         bottomCv.reloadData()

@@ -81,7 +81,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         else{
             if staffDetailsCount?.count ?? 0 > 1{
                 SchoolNameLabel.text = staffDetails?.role
-                
             }
             else{
                 SchoolNameLabel.text = staffDetails?.school_name
@@ -539,6 +538,9 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             filteredMenu_details = menu_details.map { Array($0.prefix(9)) }
         } else {
             filteredItems = menu_details?.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
+            filteredMenu_details = menu_details?.filter {
+                $0.name?.lowercased().contains(searchText.lowercased()) ?? false
+            }
         }
         
         bottomCv.reloadData()
