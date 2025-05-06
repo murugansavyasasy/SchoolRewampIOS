@@ -174,6 +174,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.StaffWiseAttendance(from: self)
             case Menu_id.GeoMatricAttendace:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
+            case Menu_id.homeWorkMenuId:
+                MenuRedirect.senderHomeWorkNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
