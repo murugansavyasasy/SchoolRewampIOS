@@ -36,7 +36,7 @@ class ParentDashboardVc: UIViewController {
     var searchItem = 0
     var currentIndex = 0
     var autoScrollTimer: Timer?
-    
+    var profileSwith : ProfileSwitchDelegate?
     private lazy var secondVC = SettingsViewController()
     private lazy var thirdVC = SettingsViewController()
     private lazy var fourthVC = SettingsViewController()
@@ -207,11 +207,7 @@ class ParentDashboardVc: UIViewController {
         
     }
     @IBAction func gotoProfile() {
-        let vc = ProfileViewController(nibName: nil, bundle: nil)
-        vc.passvalue = 2
-        vc.HideBackButton = false
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        profileSwith?.switchProfile()
     }
     
     func setupVideoBackground() {
