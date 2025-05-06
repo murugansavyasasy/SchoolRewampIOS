@@ -433,6 +433,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderPtmNavigate(from: self)
             case 7:
                 MenuRedirect.senderCommunicationNavigate(from: self)
+                
             case 8:
                 MenuRedirect.senderDailyCollectionNavigate(from: self)
             case 9:
@@ -441,7 +442,11 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 14:
                 MenuRedirect.senderFeePendingNavigate(from: self)
             case 15:
-                MenuRedirect.senderHomeWorkNavigate(from: self)
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.senderHomeWorkNavigate(from: self)
+                }
             case 17:
                 MenuRedirect.Senderchat(from: self)
             case 18:

@@ -353,6 +353,13 @@
 		849F4C772D24010300C9F4BF /* addCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F4C732D24010300C9F4BF /* addCvCell.swift */; };
 		849F4C782D24010300C9F4BF /* seeMore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F4C712D24010300C9F4BF /* seeMore.swift */; };
 		849F4C7C2D24012E00C9F4BF /* Mathematics.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 849F4C7B2D24012E00C9F4BF /* Mathematics.mp4 */; };
+		84A0D1102DC8C9E30037E1BF /* Splach.gif in Resources */ = {isa = PBXBuildFile; fileRef = 84A0D10F2DC8C9E30037E1BF /* Splach.gif */; };
+		84A0D1132DC8E2440037E1BF /* AttachmentVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0D1112DC8E2440037E1BF /* AttachmentVCViewController.swift */; };
+		84A0D1142DC8E2440037E1BF /* AttachmentVCViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A0D1122DC8E2440037E1BF /* AttachmentVCViewController.xib */; };
+		84A0D1162DC8E3F60037E1BF /* PinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0D1152DC8E3F60037E1BF /* PinterestLayout.swift */; };
+		84A0D1182DC8E40C0037E1BF /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0D1172DC8E40C0037E1BF /* BannerView.swift */; };
+		84A0D11B2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0D1192DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift */; };
+		84A0D11C2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A0D11A2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib */; };
 		84A2717C2CEDAB9F0033EB02 /* ImagePdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271782CEDAB9F0033EB02 /* ImagePdfVC.swift */; };
 		84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271752CEDAB9F0033EB02 /* ImagePdfTv.swift */; };
 		84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271702CEDAB9F0033EB02 /* ImagePdfCvCell.swift */; };
@@ -985,6 +992,13 @@
 		849F4C732D24010300C9F4BF /* addCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addCvCell.swift; sourceTree = "<group>"; };
 		849F4C742D24010300C9F4BF /* addCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = addCvCell.xib; sourceTree = "<group>"; };
 		849F4C7B2D24012E00C9F4BF /* Mathematics.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Mathematics.mp4; sourceTree = "<group>"; };
+		84A0D10F2DC8C9E30037E1BF /* Splach.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Splach.gif; sourceTree = "<group>"; };
+		84A0D1112DC8E2440037E1BF /* AttachmentVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentVCViewController.swift; sourceTree = "<group>"; };
+		84A0D1122DC8E2440037E1BF /* AttachmentVCViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentVCViewController.xib; sourceTree = "<group>"; };
+		84A0D1152DC8E3F60037E1BF /* PinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLayout.swift; sourceTree = "<group>"; };
+		84A0D1172DC8E40C0037E1BF /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
+		84A0D1192DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCvCollectionViewCell.swift; sourceTree = "<group>"; };
+		84A0D11A2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentCvCollectionViewCell.xib; sourceTree = "<group>"; };
 		84A271702CEDAB9F0033EB02 /* ImagePdfCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePdfCvCell.swift; sourceTree = "<group>"; };
 		84A271712CEDAB9F0033EB02 /* ImagePdfCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfCvCell.xib; sourceTree = "<group>"; };
 		84A271722CEDAB9F0033EB02 /* New.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = New.gif; sourceTree = "<group>"; };
@@ -1829,6 +1843,10 @@
 				84EAE7822DB20B250083AD9E /* ReciverAttachmentrVC.xib */,
 				846BDD732DB60387001DB91A /* TAttacmentTVC.swift */,
 				846BDD742DB60387001DB91A /* TAttacmentTVC.xib */,
+				84A0D1112DC8E2440037E1BF /* AttachmentVCViewController.swift */,
+				84A0D1122DC8E2440037E1BF /* AttachmentVCViewController.xib */,
+				84A0D1192DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift */,
+				84A0D11A2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -2466,6 +2484,7 @@
 		84A5BE782C19732C00E32496 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
+				84A0D10F2DC8C9E30037E1BF /* Splach.gif */,
 				84A5BEBE2C198DE200E32496 /* SplashViewController.swift */,
 				84A5BEC02C198DF600E32496 /* SplashStoryboard.storyboard */,
 			);
@@ -2516,6 +2535,8 @@
 				8476882C2D892D7D00EAB9DB /* DeviceUUIDManager.swift */,
 				8476882E2D892DBB00EAB9DB /* SecureidFile.swift */,
 				84F911862DB0C13F001A6408 /* bubbleview.swift */,
+				84A0D1152DC8E3F60037E1BF /* PinterestLayout.swift */,
+				84A0D1172DC8E40C0037E1BF /* BannerView.swift */,
 				FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */,
 			);
 			path = Utils;
@@ -3363,6 +3384,7 @@
 				84395FEF2D1002A900FC3242 /* ChatTVCell.xib in Resources */,
 				84EFF9D82CCC862F00C11C26 /* TopCVCell.xib in Resources */,
 				84EFFADF2CCF9EEA00C11C26 /* NotificationTableViewCell.xib in Resources */,
+				84A0D1142DC8E2440037E1BF /* AttachmentVCViewController.xib in Resources */,
 				84EFFAE02CCF9EEA00C11C26 /* NotificationViewController.xib in Resources */,
 				84EFF9F22CCCAFF800C11C26 /* HelpVc.xib in Resources */,
 				84EFFA382CCCB44300C11C26 /* ContactUsVc.xib in Resources */,
@@ -3381,6 +3403,7 @@
 				848CC17F2D8A999A00CD0255 /* CreatePasswordVc.xib in Resources */,
 				844188832CC91179006483C3 /* LoginVc.xib in Resources */,
 				8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */,
+				84A0D11C2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
 				84A271802CEDAB9F0033EB02 /* New.gif in Resources */,
@@ -3476,6 +3499,7 @@
 				8420316D2D390CED003C4076 /* TimetableVC.xib in Resources */,
 				FA3230972D95292B0070BA51 /* ExamDetailsVC.xib in Resources */,
 				84079FF82D15A7B000D6DF04 /* LeveHistoryVC.xib in Resources */,
+				84A0D1102DC8C9E30037E1BF /* Splach.gif in Resources */,
 				84079FF92D15A7B000D6DF04 /* LeveHistoryTV.xib in Resources */,
 				84079FFA2D15A7B000D6DF04 /* LeveCreateVC.xib in Resources */,
 				842FBABB2D0BEDBF007C0B51 /* ReportStudentTVC.xib in Resources */,
@@ -3744,6 +3768,7 @@
 				84E795DD2D2FF3DF000B36BC /* ChatCvcell.swift in Sources */,
 				846BDD752DB60387001DB91A /* TAttacmentTVC.swift in Sources */,
 				187CF4D72D119C82001422CE /* ClassTimeTableViewController.swift in Sources */,
+				84A0D1162DC8E3F60037E1BF /* PinterestLayout.swift in Sources */,
 				18926C502D02DE81002BBB97 /* RestrictionTableViewCell.swift in Sources */,
 				FA3230BE2D9556160070BA51 /* ExameMarVC.swift in Sources */,
 				18926C512D02DE81002BBB97 /* LSRWTakingSkillViewController.swift in Sources */,
@@ -3806,6 +3831,7 @@
 				18926C562D02DE81002BBB97 /* RestrictionRequest.swift in Sources */,
 				18926C572D02DE81002BBB97 /* RestrictionModal.swift in Sources */,
 				84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */,
+				84A0D1132DC8E2440037E1BF /* AttachmentVCViewController.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
 				FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */,
 				84D85D782D51D7B5006842E9 /* CustomShimmerView.swift in Sources */,
@@ -3817,6 +3843,7 @@
 				84FC4DCA2DBCAE6700BBEDD7 /* FiltersCvCell.swift in Sources */,
 				84FC4DCB2DBCAE6700BBEDD7 /* ParentCommunicationVc.swift in Sources */,
 				18926C5C2D02DE81002BBB97 /* SubmitLsrwViewController.swift in Sources */,
+				84A0D1182DC8E40C0037E1BF /* BannerView.swift in Sources */,
 				FAFF9E0C2D6C806700498368 /* NewLSRWTVcell.swift in Sources */,
 				848CC16B2D899E4000CD0255 /* OTPVc.swift in Sources */,
 				84EFF9DF2CCC89CF00C11C26 /* CellConfingName.swift in Sources */,
@@ -4042,6 +4069,7 @@
 				849978452CEF1FE5007D45BA /* StudentHistryTVC.swift in Sources */,
 				8406583A2CFD8D4E00080CF6 /* EventsVC.swift in Sources */,
 				849978462CEF1FE5007D45BA /* StudentHistryVC.swift in Sources */,
+				84A0D11B2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift in Sources */,
 				840658052CFD6B2200080CF6 /* AttendenceTVC.swift in Sources */,
 				8442A8F82CDC83860006068E /* RatingTypeTableViewCell.swift in Sources */,
 				8442A8F92CDC83860006068E /* SubmitRatingViewController.swift in Sources */,

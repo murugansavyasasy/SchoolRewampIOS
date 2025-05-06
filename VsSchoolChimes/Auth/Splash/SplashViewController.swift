@@ -8,7 +8,9 @@
 import UIKit
 import Darwin
 import LocalAuthentication
-
+import AVFoundation
+import AudioToolbox
+import ImageIO
 
 @available(iOS 14.0, *)
 class SplashViewController: UIViewController, UIPopoverPresentationControllerDelegate, ReminderCalback {
@@ -16,6 +18,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         AppFlowChecking()
     }
     @IBOutlet weak var okBtn: UIButton!
+    @IBOutlet weak var imgview: UIImageView!
     @IBOutlet weak var bottumSheet: UIView!
     @IBOutlet weak var developerDescript: UILabel!
     var overlayView: UIView?
@@ -36,7 +39,33 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         //            self.present(vc, animated: true)
         //            self.showCustomPopup()
         //        }
+        
+        
+        if let animatedImage = loadGif(name: "Splach") {
+            imgview.image = animatedImage
+
+                   // Vibrate when GIF starts
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+                vibrateDevice()
+            }
+                  
+               }
     }
+    
+    
+    func vibrateDevice() {
+            // Basic vibration
+        AudioServicesPlaySystemSound(1004)
+
+        // Play vibration only (works on real device only)
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+//            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            
+            // Or haptic feedback (for newer devices)
+//        let generator = UIImpactFeedbackGenerator(style: .soft)
+//        generator.prepare()
+        }
     func checkBiometricStatus() {
         if BiometricAuthentication.shared.isBiometricEnabledInApp(){
             if BiometricAuthentication.shared.isBiometricAvailable() {
@@ -188,6 +217,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
                     if response.status == true {
                         DispatchQueue.main.async { [self] in
                             if #available(iOS 15.0, *) {
+                                
                                 hideLottieProgressLoader()
                             }
                             guard let Data = response.data?.first else {
@@ -371,7 +401,7 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
             countryId = countryDetails.id
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [self] in
             if self.countryId != nil {
                 checkBiometricStatus()
             } else {
@@ -458,6 +488,36 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
         return false
     }
     
+    
+    func loadGif(name: String) -> UIImage? {
+            guard let path = Bundle.main.path(forResource: name, ofType: "gif"),
+                  let data = NSData(contentsOfFile: path),
+                  let source = CGImageSourceCreateWithData(data, nil) else {
+                return nil
+            }
+
+            var images: [UIImage] = []
+            var duration: Double = 0
+
+            let count = CGImageSourceGetCount(source)
+
+            for i in 0..<count {
+                if let cgImage = CGImageSourceCreateImageAtIndex(source, i, nil) {
+                    images.append(UIImage(cgImage: cgImage))
+
+                    // Get frame duration
+                    let properties = CGImageSourceCopyPropertiesAtIndex(source, i, nil) as Dictionary?
+                    let gifInfo = properties?[kCGImagePropertyGIFDictionary as String as NSObject] as? [String: Any]
+                    let frameDuration = gifInfo?[kCGImagePropertyGIFDelayTime as String] as? Double ?? 0.1
+                    duration += frameDuration
+                }
+            }
+
+            return UIImage.animatedImage(with: images, duration: duration)
+        }
+
+       
+    
 }
 
 class DeveloperModeDetector {
@@ -515,4 +575,7 @@ class DeveloperModeDetector {
             }
         }
     }
+    
+    
+    
 }

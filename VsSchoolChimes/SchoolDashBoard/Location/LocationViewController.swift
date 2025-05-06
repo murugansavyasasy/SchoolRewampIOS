@@ -566,7 +566,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.showFade(punchStack)
         ViewAnimator.hideFade(LocationErrorStack)
         PunchDescriptionLbl.text = CommonStringFile.Tap_on_the_punch
-        punchStack.backgroundColor = UIColor(named: "biomatricSucess")
+        PunchThumbnail.image = UIImage(named: "biomatricSucess")
         punchStack.backgroundColor = .white
         PunchDescriptionLbl.textColor = .black
     }
@@ -577,7 +577,7 @@ extension LocationViewController:CLLocationManagerDelegate{
         ViewAnimator.showFade(PunchThumbnail)
         PunchThumbnail.image = ImageName.need_location_access
         punchStack.layer.cornerRadius = 10
-       
+        punchStack.backgroundColor = UIColor(named: "errorColor")
         PunchDescriptionLbl.textColor = .white
         PunchDescriptionLbl.text = CommonStringFile.locationErrorMessage
     }
