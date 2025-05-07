@@ -258,10 +258,10 @@ class ParentDashboardVc: UIViewController {
         
         let redirectGesture =  UITapGestureRecognizer(target: self, action: #selector(redirectAct))
         changeRollLbl.addGestureRecognizer(redirectGesture)
-        
+        Profileimage.isUserInteractionEnabled = true
         let profiletap = UITapGestureRecognizer(target: self, action: #selector(gotoProfile))
         Profileimage.addGestureRecognizer(profiletap)
-        Profileimage.isUserInteractionEnabled = true
+       
     }
     
     

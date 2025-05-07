@@ -20,10 +20,8 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome, ProfileSwitchDeleg
         setupTabBar()
         setupContainerView()
         if login_astype == 1{
-            
             firstVC.getValue = login_astype
             selectViewController(firstVC)
-            
         }else if login_astype == 2{
             Parent.getValue = login_astype
             selectViewController(Parent)
@@ -43,7 +41,8 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome, ProfileSwitchDeleg
     var profile:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        firstVC.profileSwith = self
+        Parent.profileSwith = self
         if !BiometricAuthentication.shared.isBiometricEnabledInApp() && !BiometricAuthentication.shared.isBiometricDeclineInApp() {
             BiometricAuthentication.shared.showEnableBiometricPopup(from: self, message: "Would you like to enable Face ID / Touch ID for this app?")
         }
