@@ -70,7 +70,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome, ProfileSwitchDeleg
         let fontAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
         UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes(fontAttributes, for: .selected)
-        
         // Layout the tab bar
         tabBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
