@@ -8,10 +8,20 @@
 import UIKit
 
 class AttachmentCvCollectionViewCell: UICollectionViewCell {
-
+    enum Constants {
+        static let padding: CGFloat = 8
+        static let font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+    }
+   
+    @IBOutlet weak var discreptionLbl: UILabel!
+    @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var lblcon: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+//        lblcon.constant = Constants.padding
     }
-
 }
