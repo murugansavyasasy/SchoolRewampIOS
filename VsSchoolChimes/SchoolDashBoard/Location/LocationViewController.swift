@@ -456,7 +456,7 @@ extension LocationViewController:CLLocationManagerDelegate{
                             
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Sccuess,
+                                    title: AlertstringFile.Success,
                                     message:succesmessage.message ?? "" ,
                                     on: self
                                 )

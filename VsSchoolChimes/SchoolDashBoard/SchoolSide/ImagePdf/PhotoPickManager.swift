@@ -183,11 +183,37 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         } else {
             // If within limit, proceed immediately
             for fileURL in supportedFiles {
-                onFilePicked?(fileURL)
+                let url = persistFileIfNeeded(at: fileURL)
+                onFilePicked?(url)
             }
         }
     }
+    
+    func persistFileIfNeeded(at url: URL) -> URL {
+        let fileManager = FileManager.default
+        let tempDir = NSTemporaryDirectory()
 
+        if url.path.contains(tempDir) || url.path.contains("-Inbox/") {
+            let fileName = url.lastPathComponent
+            let destinationURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent(fileName)
+
+            do {
+                if fileManager.fileExists(atPath: destinationURL.path) {
+                    try fileManager.removeItem(at: destinationURL)
+                }
+                try fileManager.copyItem(at: url, to: destinationURL)
+                print("📁 File copied to persistent path: \(destinationURL.path)")
+                return destinationURL
+            } catch {
+                print("❌ Failed to copy file: \(error)")
+                return url
+            }
+        }
+        return url
+    }
+
+
+    
     // MARK: - Utility
     private func showAlert(title: String, message: String, on vc: UIViewController) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

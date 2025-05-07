@@ -532,7 +532,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Sccuess,
+                                    title: AlertstringFile.Success,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in
@@ -595,7 +595,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Sccuess,
+                                    title: AlertstringFile.Success,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {

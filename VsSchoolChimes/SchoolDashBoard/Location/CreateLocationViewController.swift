@@ -311,7 +311,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                             
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Sccuess, message: response.message ?? "",
+                                    title: AlertstringFile.Success, message: response.message ?? "",
                                     on: self
                                 ) {
                                     self.dismiss(animated: true)
