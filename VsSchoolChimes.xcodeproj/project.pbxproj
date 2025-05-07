@@ -360,6 +360,7 @@
 		84A0D1182DC8E40C0037E1BF /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0D1172DC8E40C0037E1BF /* BannerView.swift */; };
 		84A0D11B2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0D1192DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift */; };
 		84A0D11C2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84A0D11A2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib */; };
+		84A0D16E2DCA0E510037E1BF /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A0D16D2DCA0E510037E1BF /* ImageCell.swift */; };
 		84A2717C2CEDAB9F0033EB02 /* ImagePdfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271782CEDAB9F0033EB02 /* ImagePdfVC.swift */; };
 		84A2717D2CEDAB9F0033EB02 /* ImagePdfTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271752CEDAB9F0033EB02 /* ImagePdfTv.swift */; };
 		84A2717E2CEDAB9F0033EB02 /* ImagePdfCvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A271702CEDAB9F0033EB02 /* ImagePdfCvCell.swift */; };
@@ -999,6 +1000,7 @@
 		84A0D1172DC8E40C0037E1BF /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		84A0D1192DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCvCollectionViewCell.swift; sourceTree = "<group>"; };
 		84A0D11A2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentCvCollectionViewCell.xib; sourceTree = "<group>"; };
+		84A0D16D2DCA0E510037E1BF /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		84A271702CEDAB9F0033EB02 /* ImagePdfCvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePdfCvCell.swift; sourceTree = "<group>"; };
 		84A271712CEDAB9F0033EB02 /* ImagePdfCvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImagePdfCvCell.xib; sourceTree = "<group>"; };
 		84A271722CEDAB9F0033EB02 /* New.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = New.gif; sourceTree = "<group>"; };
@@ -2538,6 +2540,7 @@
 				84A0D1152DC8E3F60037E1BF /* PinterestLayout.swift */,
 				84A0D1172DC8E40C0037E1BF /* BannerView.swift */,
 				FA0C88B22DC4CD470042DD24 /* VimeoUpload.swift */,
+				84A0D16D2DCA0E510037E1BF /* ImageCell.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -4006,6 +4009,7 @@
 				84EFFACE2CCF90DE00C11C26 /* SettingHeaderView.swift in Sources */,
 				84EFFACF2CCF90DE00C11C26 /* SettingsTableViewCell.swift in Sources */,
 				8474CB9E2D9A6D0400DA0951 /* RecipientVc.swift in Sources */,
+				84A0D16E2DCA0E510037E1BF /* ImageCell.swift in Sources */,
 				84EFFAD02CCF90DE00C11C26 /* SettingsViewController.swift in Sources */,
 				8494B6652CD1EC8D004B0746 /* TapBarVC.swift in Sources */,
 				84EFF9D42CCC7CD000C11C26 /* SchoolDashboardVc.swift in Sources */,

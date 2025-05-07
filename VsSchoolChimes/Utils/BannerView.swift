@@ -1,12 +1,12 @@
-
-
 import UIKit
 
 class BannerView: UICollectionReusableView {
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill  // Use AspectFill for better banner presentation
+        imageView.clipsToBounds = true            // Prevent overflow
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -20,17 +20,14 @@ class BannerView: UICollectionReusableView {
         setup()
     }
     
-    private func setup() {        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+    private func setup() {
         addSubview(imageView)
         
-        let constraints =  [
-            imageView.leftAnchor.constraint(equalTo: leftAnchor),
-            imageView.rightAnchor.constraint(equalTo: rightAnchor),
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
-        ]
-        
-        NSLayoutConstraint.activate(constraints)
+        ])
     }
 }
