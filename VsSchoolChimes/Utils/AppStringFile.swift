@@ -106,7 +106,7 @@ class AlertstringFile{
     static let Alert_title = "Alert".translated()
     static let Audio_file_should80 = "Audio file should be less than 30 seconds".translated()
     static let Audio_file_should180 = "Audio file should be less than 180 seconds".translated()
-    static let Sccuess = "Success".translated()
+    static let Success = "Success".translated()
     static let Confirm_title = "Confirmation".translated()
     static let select_date = "Select sheduled date".translated()
     static let Warning = "Warning".translated()
@@ -118,6 +118,7 @@ class AlertstringFile{
     static let AreYouSureYouWantToProceed = "Are you sure you want to send this message?".translated()
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
     static let are_yousure_youWant_to_sendHomeWork = "Are you sure you want to send this Home Work?".translated()
+    static let are_yousure_youWant_to_sendAttachment = "Are you sure you want to send this Attachment?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
     static let ConfirmLogout = "Are you sure you want to Logout".translated()
@@ -150,6 +151,7 @@ class AlertstringFile{
     static let Camera = "Camera".translated()
     static let Gallery = "Gallery".translated()
     static let PDF = "PDF".translated()
+    static let Document = "Document".translated()
     static let Cancel = "Cancel".translated()
     static let  LeaveRequest = " Leave Request".translated()
     static let Mark_All_as_Present = "Mark All as Present?"
@@ -309,6 +311,8 @@ class CommonStringFile{
     static let Title = "Title".translated()
     static let AddPdfoptional = "Add Pdf (Optional?)".translated()
     static let AddPdf = "Add Pdf".translated()
+    static let AddDocuments = "Add Documents".translated()
+    static let AddVideo = "Add Video".translated()
     static let Tap_SEND_to_share_this = "Tap SEND to share this message with everyone in the school.".translated()
     static let Your_academic_year_configuration = "The academic year configuration for your school are incorrect. Please contact  School Chimes at support@savyasasy.com".translated()
     static let support_savyasasy_com = "support@savyasasy.com"

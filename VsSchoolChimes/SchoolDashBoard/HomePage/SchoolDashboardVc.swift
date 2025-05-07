@@ -55,9 +55,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var timer: Timer?
     let alert = CustomAlert()
     var isShowingAll = false
+    var profileSwith : ProfileSwitchDelegate?
     var displayedCategories: [String] = []
     let newString = "Add"
-   
+    
     deinit {
         timer?.invalidate()
     }
@@ -69,40 +70,30 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
-       
-        
-       
-        
-     
-        
-        
         
         if(staff_roll == PriorityType.is_staff){
             SchoolNameLabel.text = staffDetails?.school_name
             AddressLabel.text = staffDetails?.school_address
             schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
-       
             
-         }
+            
+        }
         else{
             if staffDetailsCount?.count ?? 0 > 1{
                 SchoolNameLabel.text = staffDetails?.role
-              
-           }
+            }
             else{
                 SchoolNameLabel.text = staffDetails?.school_name
                 AddressLabel.text = staffDetails?.school_address
                 schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
-           
-           }
-
-}
+                
+            }
+            
+        }
         
         
         if is_staff == true && is_parent == true{
-          
+            
             changeRollLbl.isHidden = false
             
         }else if is_staff == true{
@@ -114,13 +105,13 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
                     changeRollLbl.isHidden = true
                 }
             }else{
-                    changeRollLbl.isHidden = true
+                changeRollLbl.isHidden = true
             }
             
         }
         
         
-       
+        
         schoolLogoImg.layer.cornerRadius = schoolLogoImg.frame.width/2
         schoolLogoImg.layer.borderWidth = 1
         schoolLogoImg.layer.borderColor = UIColor.black.cgColor
@@ -194,10 +185,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     func configureView(_ view: UIView,
-        gradientColors: [UIColor],
-        cornerRadius: CGFloat = 10,
-        opacity: CGFloat = 0.5,
-        lightenFactor: CGFloat = 0.3) {
+                       gradientColors: [UIColor],
+                       cornerRadius: CGFloat = 10,
+                       opacity: CGFloat = 0.5,
+                       lightenFactor: CGFloat = 0.3) {
         // Set corner radius
         view.layer.cornerRadius = cornerRadius
         view.layer.masksToBounds = true
@@ -271,11 +262,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         
     }
     @IBAction func OpenProfile() {
-        
-        let vc = ProfileViewController(nibName: nil, bundle: nil)
-        vc.HideBackButton = false
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        profileSwith?.switchProfile()
     }
     
     func cellRegistration(){
@@ -408,7 +395,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             }
             
         }
-   
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -417,7 +404,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             return
         }
         if collectionView == bottomCv{
-        
+            
             let menuItem = filteredMenu_details?[indexPath.row].id
             Menu_id.staffSelectedMenuId = menuItem ?? 0
             switch menuItem {
@@ -427,7 +414,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderAssignmentNavigate(from: self)
             case 3:
                 MenuRedirect.senderMarkAttendence(from: self)
-//            case 4:
+                //            case 4:
                 
             case 5:
                 MenuRedirect.senderPtmNavigate(from: self)
@@ -438,7 +425,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderDailyCollectionNavigate(from: self)
             case 9:
                 MenuRedirect.senderEventNavigate(from: self)
-           
+                
             case 14:
                 MenuRedirect.senderFeePendingNavigate(from: self)
             case 15:
@@ -483,7 +470,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderStudentreportNavigate(from: self)
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
-          
+                
             case 39 :
                 MenuRedirect.senderAttachment(from: self)
                 
@@ -508,7 +495,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
         }
         return false
     }
-
+    
 }
 
 @available(iOS 14.0, *)
@@ -551,6 +538,9 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             filteredMenu_details = menu_details.map { Array($0.prefix(9)) }
         } else {
             filteredItems = menu_details?.filter { $0.name?.lowercased().contains(searchText.lowercased()) ?? false }
+            filteredMenu_details = menu_details?.filter {
+                $0.name?.lowercased().contains(searchText.lowercased()) ?? false
+            }
         }
         
         bottomCv.reloadData()
@@ -623,7 +613,7 @@ extension SchoolDashboardVc: UISearchBarDelegate{
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<DashboardResponse, Error>) in
             guard let self = self else { return }
-
+            
             switch result {
             case .success(let response):
                 print("Dashboard Response:", response)
@@ -647,9 +637,9 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                         // Calculate and apply dynamic height
                         let contentViewHeight = self.bottomCv.collectionViewLayout.collectionViewContentSize.height
                         let maxHeight = self.containerView.frame.height
-                            - 140
-                            - self.SchoolNameLabel.frame.height
-                            - self.AddressLabel.frame.height
+                        - 140
+                        - self.SchoolNameLabel.frame.height
+                        - self.AddressLabel.frame.height
                         
                         self.collectionHeight.constant = max(contentViewHeight, maxHeight)
                         
@@ -671,8 +661,5 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                 }
             }
         }
-    }
-
-    
-   
+    } 
 }

@@ -14,43 +14,42 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
     private weak var presentingViewController: UIViewController?
 
     private var progressHandler: ((_ progress: Double) -> Void)?
-    private var completionHandler: ((_ videoURL: String?, _ iframeURL: String?) -> Void)?
+    private var completionHandler: ((_ videoURL: String?, _ iframeHTML: String?, _ fileSize: Int?) -> Void)?
     private var uploadTask: URLSessionUploadTask?
     private var uploadURL: URL?
     private var offset: Int = 0
     private var videoFileData: Data?
     private var videoURI: String?
+    private var embedHTML: String?
+    private var currentFileSize: Int?
 
     init(accessToken: String, presentingViewController: UIViewController? = nil) {
         self.accessToken = accessToken
         self.presentingViewController = presentingViewController
     }
 
-    func upload(videoFileURL: URL,
-                title: String,
-                description: String,
-                progress: @escaping (_ progress: Double) -> Void,
-                completion: @escaping (_ videoURL: String?, _ iframeURL: String?) -> Void) {
+    func upload(videoFileURL: URL, title: String, description: String, progress: @escaping (_ progress: Double) -> Void, completion: @escaping (_ videoURL: String?, _ iframeHTML: String?, _ fileSize: Int?) -> Void) {
         self.progressHandler = progress
         self.completionHandler = completion
 
-        getVimeoUploadLink(videoFileURL: videoFileURL, videoTitle: title, videoDescription: description) { [weak self] uploadURL, videoURI in
+        getVimeoUploadLink(videoFileURL: videoFileURL, videoTitle: title, videoDescription: description) { [weak self] uploadURL, videoURI, iframeHTML in
             guard let self = self, let uploadURL = uploadURL, let videoURI = videoURI else {
                 print("❌ Could not get upload link or video URI")
                 DispatchQueue.main.async {
-                    completion(nil, nil)
+                    completion(nil, nil, nil)
                 }
                 return
             }
 
             self.uploadURL = uploadURL
             self.videoURI = videoURI
+            self.embedHTML = iframeHTML
 
             self.getUploadOffset(for: uploadURL) { offset in
                 guard let offset = offset else {
                     print("❌ Upload server not ready")
                     DispatchQueue.main.async {
-                        completion(nil, nil)
+                        completion(nil, nil, nil)
                     }
                     return
                 }
@@ -65,12 +64,14 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
         guard let uploadURL = uploadURL else { return }
         guard let fileData = try? Data(contentsOf: videoFileURL) else {
             print("❌ Could not read video data")
-            completionHandler?(nil, nil)
+            completionHandler?(nil, nil, nil)
             return
         }
 
         self.videoFileData = fileData
         let fileSize = fileData.count
+        self.currentFileSize = fileSize
+
         let uploadData = fileData.subdata(in: offset..<fileSize)
 
         var request = URLRequest(url: uploadURL)
@@ -106,13 +107,13 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let error = error {
             print("❌ Upload error: \(error.localizedDescription)")
-            completionHandler?(nil, nil)
+            completionHandler?(nil, nil, currentFileSize)
             return
         }
 
         guard let response = task.response as? HTTPURLResponse else {
             print("❌ No HTTP response")
-            completionHandler?(nil, nil)
+            completionHandler?(nil, nil, currentFileSize)
             return
         }
 
@@ -121,27 +122,21 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
         if response.statusCode == 204, let videoURI = self.videoURI {
             let videoID = videoURI.components(separatedBy: "/").last ?? ""
             let videoURL = "https://vimeo.com/\(videoID)"
-            let iframeHTML = """
-            <iframe src="https://player.vimeo.com/video/\(videoID)" width="640" height="360" frameborder="0" allowfullscreen></iframe>
-            """
-            self.completionHandler?(videoURL, iframeHTML)
+            self.completionHandler?(videoURL, embedHTML, currentFileSize)
             print("✅ Upload complete: \(videoURL)")
-            self.showSuccessAlert(videoURL: videoURL)
+           // self.showSuccessAlert(videoURL: videoURL)
         } else {
             print("❌ Unexpected response code: \(response.statusCode)")
-            completionHandler?(nil, nil)
+            completionHandler?(nil, nil, currentFileSize)
         }
     }
 
     // MARK: - Vimeo API Helpers
 
-    private func getVimeoUploadLink(videoFileURL: URL,
-                                    videoTitle: String,
-                                    videoDescription: String,
-                                    completion: @escaping (URL?, String?) -> Void) {
+    private func getVimeoUploadLink(videoFileURL: URL, videoTitle: String, videoDescription: String, completion: @escaping (URL?, String?, String?) -> Void) {
         guard let fileSize = try? FileManager.default.attributesOfItem(atPath: videoFileURL.path)[.size] as? Int else {
             print("❌ Could not get file size")
-            completion(nil, nil)
+            completion(nil, nil, nil)
             return
         }
 
@@ -165,7 +160,7 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 print("❌ Upload link request error: \(error?.localizedDescription ?? "Unknown error")")
-                completion(nil, nil)
+                completion(nil, nil, nil)
                 return
             }
 
@@ -174,14 +169,18 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
                let uploadLink = upload["upload_link"] as? String,
                let uri = json["uri"] as? String,
                let url = URL(string: uploadLink) {
-                print("✅ Got upload URL: \(uploadLink)")
-                print("✅ Got video URI: \(uri)")
-                completion(url, uri)
-                return
-            }
 
-            print("❌ Failed to parse upload link: \(String(data: data, encoding: .utf8) ?? "No data")")
-            completion(nil, nil)
+                let embedHTML = (json["embed"] as? [String: Any])?["html"] as? String
+
+                print("✅ Got upload URL: \(uploadLink)")
+                print("✅ Got embed HTML: \(embedHTML ?? "N/A")")
+                print("✅ Got video URI: \(uri)")
+
+                completion(url, uri, embedHTML)
+            } else {
+                print("❌ Failed to parse upload link: \(String(data: data, encoding: .utf8) ?? "No data")")
+                completion(nil, nil, nil)
+            }
         }.resume()
     }
 
@@ -204,15 +203,16 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
         }.resume()
     }
 
-    private func showSuccessAlert(videoURL: String) {
-        guard let viewController = presentingViewController else { return }
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: "✅ Success", message: "Video uploaded!\n\n\(videoURL)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Copy Link", style: .default) { _ in
-                UIPasteboard.general.string = videoURL
-            })
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-            viewController.present(alert, animated: true)
-        }
-    }
+//    private func showSuccessAlert(videoURL: String) {
+//        guard let viewController = presentingViewController else { return }
+//        DispatchQueue.main.async {
+//            let alert = UIAlertController(title: "✅ Success", message: "Video uploaded!\n\n\(videoURL)", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "Copy Link", style: .default) { _ in
+//                UIPasteboard.general.string = videoURL
+//            })
+//            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+//            viewController.present(alert, animated: true)
+//        }
+//    }
 }
+

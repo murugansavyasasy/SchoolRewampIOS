@@ -10,7 +10,7 @@ import WebKit
 import Kingfisher
 
 class PreviewImageVC: UIViewController,WKNavigationDelegate {
-
+    
     @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imgView: UIImageView!
@@ -20,61 +20,62 @@ class PreviewImageVC: UIViewController,WKNavigationDelegate {
     var img :UIImage?
     var selectedFileURL : URL?
     var type:String?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         pdfView.navigationDelegate = self
         deleteBtn.layer.cornerRadius = deleteBtn.frame.width/2
         deleteBtn.layer.borderColor = UIColor.black.cgColor
         deleteBtn.layer.borderWidth = 1
-       
-        if type?.uppercased() != "IMAGE" {
-            imgView.isHidden = true
-            pdfView.isHidden = false
+        
+        if type?.uppercased() == AttachmentTypeString.IMAGE {
             
-        }else{
+            ActivityIndicator.stopAnimating()
+            imgView.isHidden = false
+            pdfView.isHidden = true
+            
             if img != nil{
                 imgView.image = img
             }else{
                 imgView.kf.setImage(with: selectedFileURL)
             }
+        }else{
             
-            ActivityIndicator.stopAnimating()
-            imgView.isHidden = false
-            pdfView.isHidden = true
+            if let url = selectedFileURL {
+                loadPDF(from: url.absoluteString)
+            }
         }
-        if let url = selectedFileURL {
-            loadPDF(from: url.absoluteString)
+    }
+    
+    
+    private func loadPDF(from urlString: String) {
+        guard let url = URL(string: urlString) else {
+            print("❌ Invalid URL string.")
+            return
         }
         
-    }
-    private func loadPDF(from urlString: String) {
-        if urlString.starts(with: "file://") {
+        if url.isFileURL {
             // Local PDF
-            guard let localURL = URL(string: urlString),
-                  FileManager.default.fileExists(atPath: localURL.path) else {
-                print("❌ Local file does not exist or invalid path.")
-                return
+            if FileManager.default.fileExists(atPath: url.path) {
+                pdfView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+                print("📄 Loaded local PDF: \(url.path)")
+            } else {
+                print("❌ Local file does not exist: \(url.path)")
             }
-
-            pdfView.loadFileURL(localURL, allowingReadAccessTo: localURL.deletingLastPathComponent())
-            print("📄 Loaded local PDF: \(localURL.path)")
-
-        } else if urlString.starts(with: "http") {
+            
+        } else if url.scheme == "http" || url.scheme == "https" {
             // Remote PDF
-            guard let remoteURL = URL(string: urlString) else {
-                print("❌ Invalid remote URL.")
-                return
-            }
-
-            let request = URLRequest(url: remoteURL)
+            let request = URLRequest(url: url)
             pdfView.load(request)
-            print("🌐 Loaded remote PDF: \(remoteURL)")
+            print("🌐 Loaded remote PDF: \(url)")
             
         } else {
-            print("⚠️ Unknown file type or unsupported URL.")
+            print("⚠️ Unsupported URL scheme: \(url.scheme ?? "nil")")
         }
     }
-
+    
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }

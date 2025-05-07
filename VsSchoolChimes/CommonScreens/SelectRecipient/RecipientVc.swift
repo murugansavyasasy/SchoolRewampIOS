@@ -238,113 +238,168 @@ class RecipientVc: UIViewController{
         let selectedType = user_inputs.selectedFileType
         var uploadedFiles: [[String: String]] = []
         var iframeValue = ""
+        var fileSizeValue = ""
+        
+        let title = AlertstringFile.Confirm_title
+        alert.showAlertCancel(
+            title: title,
+            message: AlertstringFile.are_yousure_youWant_to_sendAttachment,
+            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [self] in
+                
+                if selectedType == AttachmentTypeString.VIDEO {
+                        guard let videoURL = user_inputs.VideoPath else {
+                            print("❌ Video path is missing")
+                            return
+                        }
 
-        if selectedType == "VIDEO" {
-            guard let videoURL = user_inputs.VideoPath else {
-                print("❌ Video path is missing")
-                return
-            }
+                    let videoTitle = user_inputs.title
+                    let videoDescription = user_inputs.description
 
-            // You can dynamically build title/description here based on user input or context
-            let videoTitle = user_inputs.title
-            let videoDescription = user_inputs.description
+                        startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
+                            if let videoURLString = videoURLString {
+                                uploadedFiles = [["path": videoURLString]]
 
-            startUpload(videoURL: videoURL,
-                        title: videoTitle,
-                        description: videoDescription) { videoURLString, iframeURL in
-                if let videoURLString = videoURLString {
-                    uploadedFiles = [["path": videoURLString]]
-                    iframeValue = iframeURL ?? ""
-                    sendAttachment(with: uploadedFiles, iframe: iframeValue)
-                } else {
-                    print("❌ Video upload failed")
-                    // Show alert or retry UI
+                                if let iframeHTML = iframeHTML {
+                                    iframeValue = iframeHTML
+                                }
+
+                                if let size = fileSize {
+                                    fileSizeValue = self.convertSize(size)//String(size)
+                                }
+
+                                sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
+                            } else {
+                                print("❌ Video upload failed")
+                                // Optionally show alert or retry UI
+                            }
+                        }
+                    }else {
+                    
+                    let file: Any = selectedType == AttachmentTypeString.IMAGE ? user_inputs.selectedImg : user_inputs.docUrl
+                    CircularProgressLoader.shared.show()
+                    uploadAndSendVoiceMessage(file: file) { [self] in
+                        CircularProgressLoader.shared.hide()
+                        uploadedFiles = uploadedURLs.compactMap { url in ["path": url] }
+                        iframeValue = "" // for IMAGE or DOCUMENT
+                        fileSizeValue = ""
+                        sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
+                    }
                 }
-            }
-            
-        }else {
-            
-            let file: Any = selectedType == "IMAGE" ? user_inputs.selectedImg : user_inputs.docUrl
-            CircularProgressLoader.shared.show()
-            uploadAndSendVoiceMessage(file: file) { [self] in
-                CircularProgressLoader.shared.hide()
-                uploadedFiles = uploadedURLs.compactMap { url in ["path": url] }
-                iframeValue = "" // for IMAGE or DOCUMENT
-                sendAttachment(with: uploadedFiles, iframe: iframeValue)
-            }
-        }
-
-        func sendAttachment(with uploadedFiles: [[String: String]], iframe: String) {
-            
-            let parameters: [String: Any] = [
-                SendAttachmentStringFile.title: user_inputs.title,
-                SendAttachmentStringFile.file_type: selectedType,
-                SendAttachmentStringFile.file_path: uploadedFiles,
-                SendAttachmentStringFile.target_type: target_type ?? "",
-                SendAttachmentStringFile.target_code: array_selectedId,
-                SendAttachmentStringFile.description: user_inputs.description,
-                SendAttachmentStringFile.iframe: iframe,
-                SendAttachmentStringFile.file_size: "",
-                SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""
-            ]
-
-            print("📤 Sending parameters: \(parameters)")
-
-            APIService.shared.makeApi(
-                url: ServiceUrl.comm_attachment_send_attachment,
-                parameters: parameters,
-                type: ApitTypeSringFile.POST,
-                token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-            ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
-                switch result {
-                case .success(let successMessage):
-                    DispatchQueue.main.async {
-                        CustomAlert.showAlertWithOkAction(
-                            title: successMessage.status ? AlertstringFile.Sccuess : AlertstringFile.Alert_title,
-                            message: successMessage.message,
-                            on: self
-                        ) {
-                            self.gotoDashboard()
+                
+                func sendAttachment(with uploadedFiles: [[String: String]], iframe: String,filesize: String) {
+                    
+                    let parameters: [String: Any] = [
+                        SendAttachmentStringFile.title: user_inputs.title,
+                        SendAttachmentStringFile.file_type: selectedType,
+                        SendAttachmentStringFile.file_path: uploadedFiles,
+                        SendAttachmentStringFile.target_type: target_type ?? "",
+                        SendAttachmentStringFile.target_code: array_selectedId,
+                        SendAttachmentStringFile.description: user_inputs.description,
+                        SendAttachmentStringFile.iframe: iframe,
+                        SendAttachmentStringFile.file_size: filesize,
+                        SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""
+                    ]
+                    
+                    print("📤 Sending parameters: \(parameters)")
+                    
+                    APIService.shared.makeApi(
+                        url: ServiceUrl.comm_attachment_send_attachment,
+                        parameters: parameters,
+                        type: ApitTypeSringFile.POST,
+                        token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
+                        switch result {
+                        case .success(let successMessage):
+                            
+                            if successMessage.status == true {
+                                DispatchQueue.main.async {
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                                        message: successMessage.message,
+                                        on: self
+                                    ) {
+                                        self.gotoDashboard()
+                                    }
+                                }
+                            }else {
+                                
+                                DispatchQueue.main.async {
+                                    CustomAlert
+                                        .showAlertWithOkAction(
+                                            title: AlertstringFile.Alert_title,
+                                            message: successMessage.message,
+                                            on: self
+                                        ) {
+                                            self.gotoDashboard()
+                                        }
+                                }
+                            }
+                            
+                            
+                        case .failure(let error):
+                            print("❌ API error: \(error.localizedDescription)")
+                            // Optional: Add alert for failure
                         }
                     }
-                case .failure(let error):
-                    print("❌ API error: \(error.localizedDescription)")
-                    // Optional: Add alert for failure
+                    
                 }
+            },
+            
+            onNo: {
+                print("User canceled.")
             }
-        }
+        )
     }
 
     //Function for video upload
-    func startUpload(videoURL: URL,
-                     title: String,
-                     description: String,
-                     completion: @escaping (_ videoURLString: String?, _ iframeURL: String?) -> Void) {
+    func startUpload(videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?) -> Void) {
         print("📂 Selected video URL: \(videoURL)")
 
         CircularProgressLoader.shared.show()
 
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: self)
 
-        vimeoUploader?.upload(videoFileURL: videoURL,
-                              title: title,
-                              description: description,
-                              progress: { progress in
+        vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
-        }, completion: { videoURL, iframeURL in
+            CircularProgressLoader.shared.updateProgress(to: progress)
+        }, completion: { videoURL, iframeHTML, fileSize in
             CircularProgressLoader.shared.hide()
 
             if let videoURL = videoURL {
                 print("✅ Video uploaded! Watch it at: \(videoURL)")
-                if let iframeURL = iframeURL {
-                    print("💻 Embed HTML: \(iframeURL)")
+                if let iframeHTML = iframeHTML {
+                    print("💻 Embed HTML: \(iframeHTML)")
                 }
-                completion(videoURL, iframeURL)
+                if let size = fileSize {
+                    print("📦 File size: \(size) bytes")
+                }
+                completion(videoURL, iframeHTML, fileSize)
             } else {
                 print("❌ Upload failed!")
-                completion(nil, nil)
+                completion(nil, nil, nil)
             }
         })
+    }
+
+    func convertSize(_ sizeInBytes: Int) -> String {
+        let kb = 1024.0
+        let mb = kb * 1024
+        let gb = mb * 1024
+        let size = Double(sizeInBytes)
+
+        switch size {
+        case 0..<kb:
+            return String(format: "%.0f B", size)
+        case kb..<mb:
+            return String(format: "%.2f KB", size / kb)
+        case mb..<gb:
+            return String(format: "%.2f MB", size / mb)
+        default:
+            return String(format: "%.2f GB", size / gb)
+        }
     }
     
     
@@ -354,6 +409,14 @@ class RecipientVc: UIViewController{
     
     private func handleHomeworkFlow() {
         uploadedURLs.removeAll()
+//        var message : String?
+//        if accadmicDefaultYrName == acidmicYrLbl.text{
+//            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "Sections" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+//        }else{
+//            
+//            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+//                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+//        }
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
@@ -394,7 +457,7 @@ class RecipientVc: UIViewController{
                                     DispatchQueue.main.async { [self] in
                                         CustomAlert
                                             .showAlertWithOkAction(
-                                                title: AlertstringFile.Sccuess,
+                                                title: AlertstringFile.Success,
                                                 message: succesmessage.message ?? "",
                                                 on: self
                                             ) {
@@ -979,15 +1042,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 updateSelectionArray(id: item.id, isSelected: item.isSelect)
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
+                array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-//                speficBtnName.isEnabled = selectedSections.count == 1
-//                speficBtnName.isHidden = !(selectedSections.count == 1)
+                
+                getSubject.isHidden = !(selectedSections.count >= 1)
                
                 getSubject.isHidden = !(selectedSections.count >= 1)
                 if (selectedSections.count >= 1){
                     selectSubject.isHidden =  !getSubject.isHidden
                 }else{
                     selectSubject.isHidden = true
+                    subjectId = ""
                 }
                
                 spaceView.isHidden = !selectSubject.isHidden
@@ -1063,15 +1128,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? sectionsDetails?.compactMap { $0.id } ?? [] : []
+            
             sectionIds = array_selectedId.joined(separator: ",")
             
             if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
                 if selecting, let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                     getSubjectListAPI(finalSectionIds)
                 }
-                
+                sectionIds = ""
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
+                array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
                 getSubject.isHidden = !(selectedSections.count >= 1)
             }
@@ -1152,6 +1219,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 }
                             }
                         }
+                        getSubject.isHidden = true
                         drpodonLbl.text = standardDetails?.first?.name
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
                         tv.reloadData()
@@ -1415,7 +1483,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Sccuess,
+                                    title: AlertstringFile.Success,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
@@ -1486,7 +1554,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                             
                             CustomAlert
                                 .showAlertWithOkAction(
-                                    title: AlertstringFile.Sccuess,
+                                    title: AlertstringFile.Success,
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) { [self] in

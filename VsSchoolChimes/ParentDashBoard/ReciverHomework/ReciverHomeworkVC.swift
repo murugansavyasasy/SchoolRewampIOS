@@ -14,6 +14,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
     }
     
+    @IBOutlet weak var searchHeight: NSLayoutConstraint!
     @IBOutlet weak var noDataImg: UIImageView!
     @IBOutlet weak var noDataLbl: UILabel!
     @IBOutlet weak var backBtn: UIButton!
@@ -96,27 +97,29 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
                 
                 switch result {
                 case .success(let successMessage):
-                    if successMessage.status == true{
-                        self.noDataLbl.isHidden = true
-                        self.noDataImg.isHidden = true
-                        self.TV.isHidden = false
-                    }else{
-                        if self.homeWorkList?.count == 0{
-                            self.noDataLbl.text = successMessage.message
-                            self.noDataLbl.isHidden = false
-                            self.noDataImg.isHidden = false
-                            self.TV.isHidden = true
-                        }
-                    }
                     self.homeWorkList = successMessage.data
                     self.FilterHomeWorkList = successMessage.data
                     self.TV.reloadData()
+                    if self.homeWorkList?.count == 0{
+                        self.noDataLbl.text = successMessage.message
+                        self.noDataLbl.isHidden = false
+                        self.noDataImg.isHidden = false
+//                        self.TV.isHidden = true
+                        self.searchBar.isHidden = true
+                        self.searchHeight.constant = 0
+                    }else{
+                        self.noDataLbl.isHidden = true
+                        self.noDataImg.isHidden = true
+                        self.TV.isHidden = false
+                        self.searchHeight.constant = 56
+                    }
                 case .failure(let error):
                     print(error.localizedDescription)
                     self.noDataLbl.text = error.localizedDescription
                     self.noDataLbl.isHidden = false
                     self.noDataImg.isHidden = false
                     self.TV.isHidden = true
+                    self.searchBar.isHidden = true
                 }
             }
         }
@@ -137,21 +140,23 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
                     
                     switch result {
                     case .success(let successMessage):
-                        if successMessage.status == true{
-                            self.noDataLbl.isHidden = true
-                            self.noDataImg.isHidden = true
-                            self.TV.isHidden = false
-                        }else{
-                            if self.homeWorkList?.count == 0{
-                                self.noDataLbl.text = successMessage.message
-                                self.noDataLbl.isHidden = false
-                                self.noDataImg.isHidden = false
-                                self.TV.isHidden = true
-                            }
-                        }
                         self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
                         self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
                         self.TV.reloadData()
+                        if self.homeWorkList?.count == 0{
+                            self.noDataLbl.text = successMessage.message
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            self.TV.isHidden = true
+                            self.searchBar.isHidden = true
+                            self.searchHeight.constant = 0
+                        }else{
+                            self.noDataLbl.isHidden = true
+                            self.noDataImg.isHidden = true
+                            self.searchHeight.constant = 56
+                            self.TV.isHidden = false
+                        }
+                        
                     case .failure(let error):
                         print(error.localizedDescription)
                         if self.homeWorkList?.count == 0{
@@ -159,6 +164,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
                             self.noDataLbl.isHidden = false
                             self.noDataImg.isHidden = false
                             self.TV.isHidden = true
+                            self.searchBar.isHidden = true
                         }
                         
                     }
@@ -202,8 +208,11 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
-    
+//    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 50
     }
     
@@ -227,7 +236,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         cell.dateLble.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
         cell.forwordBtn.isHidden = true
         cell.SelectBtnHeight.constant = 0
-        
+        cell.newView.isHidden = true
         // Load image if available
         if let urls = homework.file_path, urls.count != 0{
             cell.ImageCollectionView.isHidden = false
@@ -236,10 +245,10 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         }
         let contentText = homework.description ?? ""
         cell.descriptionLbl.setupExpandable(text: contentText)
-        cell.newView.isHidden = contentText.count <= 100
+//        cell.newView.isHidden = contentText.count <= 100
         cell.descriptionLbl.onExpandableTap = { [weak tableView] in
             cell.descriptionLbl.isExpanded.toggle()
-            cell.newView.isHidden = true
+//            cell.newView.isHidden = true
             tableView?.beginUpdates()
             tableView?.endUpdates()
         }
@@ -271,12 +280,21 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         TV.reloadSections(sectionsToReload, with: .automatic)
     }
     
-    
-    // Method to load the footer from nib and set it as tableFooterView
     func setupTableFooter() {
         if shouldShowFooter {
             if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
                 footer.frame = CGRect(x: 0, y: 0, width: TV.frame.width, height: 60)
+                let buttonTitle = "See More"
+                let attributedString = NSMutableAttributedString(string: buttonTitle)
+                
+                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
+                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
+                
+                // Apply underline style
+                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
+                
+                // Set attributed title to UIButton
+                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
                 let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
                 footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
                 footer.SeeMoreBtn.isUserInteractionEnabled = true
@@ -336,20 +354,20 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
             let lowercasedSearch = searchText.lowercased()
             FilterHomeWorkList = homeWorkList?.compactMap { hwList -> HomeworkList? in
                 guard let homeworkItems = hwList.homework else { return nil }
-
+                
                 let formattedDate = hwList.date?.convertToTargetDateFormat()?.lowercased() ?? ""
                 let rawDate = hwList.date?.lowercased() ?? ""
                 let dateMatches = formattedDate.contains(lowercasedSearch) || rawDate.contains(lowercasedSearch)
-
+                
                 let filteredHomework = homeworkItems.filter { hw in
                     let matchesStringFields =
-                        hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
-                        hw.title?.lowercased().contains(lowercasedSearch) == true ||
-                        hw.description?.lowercased().contains(lowercasedSearch) == true ||
-                        hw.created_by?.lowercased().contains(lowercasedSearch) == true
+                    hw.subject_name?.lowercased().contains(lowercasedSearch) == true ||
+                    hw.title?.lowercased().contains(lowercasedSearch) == true ||
+                    hw.description?.lowercased().contains(lowercasedSearch) == true ||
+                    hw.created_by?.lowercased().contains(lowercasedSearch) == true
                     return matchesStringFields
                 }
-
+                
                 if !filteredHomework.isEmpty {
                     return HomeworkList(date: hwList.date, homework: filteredHomework)
                 } else if dateMatches {
@@ -358,11 +376,11 @@ extension ReciverHomeworkVC: UISearchBarDelegate{
                     return nil
                 }
             }
-
+            
             expandedSections = Set(0..<(FilterHomeWorkList?.count ?? 0))
         }
-
+        
         TV.reloadData()
     }
-
+    
 }

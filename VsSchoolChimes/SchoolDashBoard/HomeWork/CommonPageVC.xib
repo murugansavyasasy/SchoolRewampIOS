@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommonPageVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommonPageVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="Mlr-gA-MpT" id="BH1-84-XTN"/>
                 <outlet property="presentView" destination="f1e-fL-cpx" id="7BF-bL-FbQ"/>
@@ -24,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mlr-gA-MpT">
-                    <rect key="frame" x="10" y="69" width="108" height="35"/>
+                    <rect key="frame" x="10.000000000000007" y="69" width="108.66666666666669" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="BTx-kv-HJJ"/>
                     </constraints>
@@ -32,6 +32,7 @@
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     <state key="normal" title="Home Work" image="chevron.left" catalog="system">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="bold"/>
                     </state>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="cUh-3Q-E94"/>
@@ -83,7 +84,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="GUT-5D-Lug" secondAttribute="trailing" id="ceQ-kG-48Q"/>
                 <constraint firstItem="Mlr-gA-MpT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="cgj-fy-QLM"/>
             </constraints>
-            <point key="canvasLocation" x="-288" y="33"/>
+            <point key="canvasLocation" x="-289.3129770992366" y="32.394366197183103"/>
         </view>
     </objects>
     <resources>
