@@ -249,7 +249,7 @@ class RecipientVc: UIViewController{
             on: self,
             onOk: { [self] in
                 
-                if selectedType == "VIDEO" {
+                if selectedType == AttachmentTypeString.VIDEO {
                         guard let videoURL = user_inputs.VideoPath else {
                             print("❌ Video path is missing")
                             return
@@ -267,11 +267,9 @@ class RecipientVc: UIViewController{
                                 }
 
                                 if let size = fileSize {
-                                    fileSizeValue = "\(size)"
-                                    fileSizeValue = String(size)
+                                    fileSizeValue = self.convertSize(size)//String(size)
                                 }
 
-                                print("📦 Final file size: \(fileSizeValue) bytes")
                                 sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
                             } else {
                                 print("❌ Video upload failed")
@@ -364,7 +362,7 @@ class RecipientVc: UIViewController{
 
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: self)
 
-        vimeoUploader?.upload(videoFileURL: videoURL, videoTitle: title, videoDescription: description, progress: { progress in
+        vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
             CircularProgressLoader.shared.updateProgress(to: progress)
         }, completion: { videoURL, iframeHTML, fileSize in
@@ -386,6 +384,23 @@ class RecipientVc: UIViewController{
         })
     }
 
+    func convertSize(_ sizeInBytes: Int) -> String {
+        let kb = 1024.0
+        let mb = kb * 1024
+        let gb = mb * 1024
+        let size = Double(sizeInBytes)
+
+        switch size {
+        case 0..<kb:
+            return String(format: "%.0f B", size)
+        case kb..<mb:
+            return String(format: "%.2f KB", size / kb)
+        case mb..<gb:
+            return String(format: "%.2f MB", size / mb)
+        default:
+            return String(format: "%.2f GB", size / gb)
+        }
+    }
     
     
     func getExtension(from filePath: String) -> String? {
