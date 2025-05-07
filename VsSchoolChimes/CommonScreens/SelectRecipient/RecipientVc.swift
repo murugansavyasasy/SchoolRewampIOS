@@ -394,6 +394,14 @@ class RecipientVc: UIViewController{
     
     private func handleHomeworkFlow() {
         uploadedURLs.removeAll()
+//        var message : String?
+//        if accadmicDefaultYrName == acidmicYrLbl.text{
+//            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "Sections" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+//        }else{
+//            
+//            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+//                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+//        }
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
@@ -1019,15 +1027,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 updateSelectionArray(id: item.id, isSelected: item.isSelect)
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
+                array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-//                speficBtnName.isEnabled = selectedSections.count == 1
-//                speficBtnName.isHidden = !(selectedSections.count == 1)
+                
+                getSubject.isHidden = !(selectedSections.count >= 1)
                
                 getSubject.isHidden = !(selectedSections.count >= 1)
                 if (selectedSections.count >= 1){
                     selectSubject.isHidden =  !getSubject.isHidden
                 }else{
                     selectSubject.isHidden = true
+                    subjectId = ""
                 }
                
                 spaceView.isHidden = !selectSubject.isHidden
@@ -1103,15 +1113,17 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 return item
             }
             array_selectedId = selecting ? sectionsDetails?.compactMap { $0.id } ?? [] : []
+            
             sectionIds = array_selectedId.joined(separator: ",")
             
             if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
                 if selecting, let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
                     getSubjectListAPI(finalSectionIds)
                 }
-                
+                sectionIds = ""
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
+                array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
                 getSubject.isHidden = !(selectedSections.count >= 1)
             }
@@ -1192,6 +1204,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 }
                             }
                         }
+                        getSubject.isHidden = true
                         drpodonLbl.text = standardDetails?.first?.name
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
                         tv.reloadData()

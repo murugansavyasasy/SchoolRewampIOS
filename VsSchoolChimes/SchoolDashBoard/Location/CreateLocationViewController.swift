@@ -48,15 +48,15 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(mapTapped))
-          mapView.addGestureRecognizer(tapGesture)
-    
+        mapView.addGestureRecognizer(tapGesture)
+        
     }
     
     
     
     @objc func mapTapped() {
         let coordinate = CLLocationCoordinate2D(latitude: Double(latitude) ?? 0.0, longitude: Double(longitude) ?? 0.0) // Example coordinate (San Francisco)
-
+        
         let placemark = MKPlacemark(coordinate: coordinate)
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = Pinned_Location
@@ -66,7 +66,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
             MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
         ])
     }
-   
+    
     func setupUI() {
         [informationOuterView, locationView, addressOuterView].forEach { $0?.layer.cornerRadius = 10 }
         [distanceOuterView, informationOuterView].forEach { $0?.layer.borderWidth = 1 }
@@ -124,10 +124,10 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                     title: AlertstringFile.Open_Settings,
                     style: .default
                 ) { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url)
-            }
-        })
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                })
         present(alert, animated: true)
     }
     
@@ -210,8 +210,8 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
         return view
     }
     
-
-
+    
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let circleOverlay = overlay as? MKCircle {
             let renderer = MKCircleRenderer(circle: circleOverlay)
@@ -242,14 +242,13 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
     
     @IBAction func dropDown(_ sender: UIButton) {
         let myArray = [ "20","30","40","50","60","70","80","90","100"]
-        dropDown.dataSource = myArray//4
-        dropDown.anchorView = distanceDropDownView //5
+        dropDown.dataSource = myArray
+        dropDown.anchorView = distanceDropDownView
         dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
         dropDown.direction = .bottom
         DropDown.appearance().backgroundColor = UIColor.white
-        dropDown.show() //7
+        dropDown.show()
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
             distanceLbl.text = item
             distanceTxt.text = item
         }
@@ -269,7 +268,7 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                 message: AlertstringFile.Enter_location_name + AlertstringFile.Distance_Should ,
                 preferredStyle: UIAlertController.Style.alert
             )
-           
+            
             refreshAlert
                 .addAction(
                     UIAlertAction(
@@ -278,11 +277,11 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                         handler: { [self] (
                             action: UIAlertAction!
                         ) in
-           
-                                   
-                               })
-)
-                           present(refreshAlert, animated: true, completion: nil)
+                            
+                            
+                        })
+                )
+            present(refreshAlert, animated: true, completion: nil)
             
             
             
@@ -294,10 +293,10 @@ class CreateLocationViewController: UIViewController, UITextFieldDelegate,CLLoca
                 
                 APIService.shared.makeApi(
                     url: ServiceUrl.staff_attd_geometric_set_geometric_location,
-                    parameters: [  "location": locationNameTxt.text ?? "",
-                                   "longitude":longitude,
-                                   "latitude": latitude,
-                                   "distance": distanceTxt.text ?? ""],
+                    parameters: [  punchDetaiShapeStringFile.location: locationNameTxt.text ?? "",
+                                   punchDetaiShapeStringFile.longitude:longitude,
+                                   punchDetaiShapeStringFile.latitude: latitude,
+                                   punchDetaiShapeStringFile.distance: distanceTxt.text ?? ""],
                     type: ApitTypeSringFile.POST,
                     token:staffDetails?.access_token ?? ""
                 ) { [self] (result: Result<StaffGeometricLocation, Error>) in

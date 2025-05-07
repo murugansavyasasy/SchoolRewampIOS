@@ -6,9 +6,16 @@
 //
 
 import UIKit
-
+protocol ProfileSwitchDelegate{
+    func switchProfile()
+}
 @available(iOS 14.0, *)
-class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
+class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome, ProfileSwitchDelegate {
+    func switchProfile() {
+        selectViewController(fourthVC)
+        tabBar.selectedItem = tabBar.items?[3]
+    }
+    
     func backtohome() {
         setupTabBar()
         setupContainerView()
@@ -22,8 +29,6 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
             selectViewController(Parent)
         }
     }
-    
-    
     
     private let tabBar = UITabBar()
     private var containerView = UIView()
@@ -39,7 +44,7 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !BiometricAuthentication.shared.isBiometricEnabledInApp() {
+        if !BiometricAuthentication.shared.isBiometricEnabledInApp() && !BiometricAuthentication.shared.isBiometricDeclineInApp() {
             BiometricAuthentication.shared.showEnableBiometricPopup(from: self, message: "Would you like to enable Face ID / Touch ID for this app?")
         }
         setupTabBar()
@@ -132,8 +137,10 @@ class TapBarVC: UIViewController,UITabBarDelegate, BaktoHome {
         }else if let HelpVc = viewController as? HelpVc, login_astype == 2 {
             HelpVc.passVale = login_astype ?? 0
             
+        }else if let Vc = viewController as? SchoolDashboardVc{
+            Vc.profileSwith = self
         }
-
+        
         // Add the new child view controller
         addChild(viewController)
         viewController.view.frame = containerView.bounds
@@ -203,3 +210,4 @@ extension UIColor {
         self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }
+

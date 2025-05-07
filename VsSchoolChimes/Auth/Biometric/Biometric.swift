@@ -12,6 +12,7 @@ class BiometricAuthentication {
     
     static let shared = BiometricAuthentication()
     private let biometricEnabledKey = "BiometricEnabled"
+    private let biometricDecline = "BiometricDecline"
     
     // MARK: - Authenticate User (Face ID, Touch ID & Passcode)
     func authenticateUser(from viewController: UIViewController, completion: @escaping (Bool) -> Void) {
@@ -52,11 +53,16 @@ class BiometricAuthentication {
     func enableBiometric(_ enable: Bool) {
         UserDefaults.standard.set(enable, forKey: biometricEnabledKey)
     }
-    
+    func DeclineBiometric(_ enable: Bool) {
+        UserDefaults.standard.set(enable, forKey: biometricDecline)
+    }
     func isBiometricEnabledInApp() -> Bool {
         return UserDefaults.standard.bool(forKey: biometricEnabledKey)
     }
-    
+    func isBiometricDeclineInApp() -> Bool {
+        return UserDefaults.standard.bool(forKey: biometricDecline)
+    }
+
     // MARK: - Check Biometric Status
     func isBiometricAvailable() -> Bool {
         let context = LAContext()
@@ -95,6 +101,7 @@ class BiometricAuthentication {
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
             self.enableBiometric(false)
+            self.DeclineBiometric(true)
         })
         
         DispatchQueue.main.async {

@@ -357,6 +357,10 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                     }else{
                         dropDownStack.isHidden = true
                         searchBar.isHidden = true
+                        self.nodataFoundLbl.isHidden = false
+                        self.noDataFound.isHidden = false
+                        self.nodataFoundLbl.text = successMessage.message
+                        self.tableviewHeight.constant = 0
                     }
                 }
             case .failure(let error):
@@ -364,6 +368,10 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                     print(error.localizedDescription)
                     dropDownStack.isHidden = true
                     searchBar.isHidden = true
+                    self.nodataFoundLbl.isHidden = false
+                    self.noDataFound.isHidden = false
+                    self.nodataFoundLbl.text = error.localizedDescription
+                    self.tableviewHeight.constant = 0
                 }
             }
         }
