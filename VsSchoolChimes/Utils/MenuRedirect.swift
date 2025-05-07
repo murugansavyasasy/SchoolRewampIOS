@@ -304,7 +304,7 @@ class MenuRedirectHandler {
         viewController.present(vc, animated: true)
     }
     func senderAttachment(from viewController: UIViewController) {
-        let vc = AttachmentVCViewController(nibName: nil, bundle: nil)
+        let vc = SenderAttachmentVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         viewController.present(vc, animated: true)
     }
