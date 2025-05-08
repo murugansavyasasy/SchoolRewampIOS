@@ -70,7 +70,7 @@ class RecipientVc: UIViewController{
     let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var vimeoUploader: VimeoUploader?
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -174,6 +174,7 @@ class RecipientVc: UIViewController{
                 if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
                     segmentName.isHidden = true
                     target_type = TargetTypes.section
+                    
                     circular_types =  circular_type.section
                     getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
                     speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
@@ -232,7 +233,7 @@ class RecipientVc: UIViewController{
             print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
     }
-
+    
     //MARK: Sender Attachment
     private func SendingAttachmentFlow() {
         let selectedType = user_inputs.selectedFileType
@@ -250,33 +251,33 @@ class RecipientVc: UIViewController{
             onOk: { [self] in
                 
                 if selectedType == AttachmentTypeString.VIDEO {
-                        guard let videoURL = user_inputs.VideoPath else {
-                            print("❌ Video path is missing")
-                            return
-                        }
-
+                    guard let videoURL = user_inputs.VideoPath else {
+                        print("❌ Video path is missing")
+                        return
+                    }
+                    
                     let videoTitle = user_inputs.title
                     let videoDescription = user_inputs.description
-
-                        startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
-                            if let videoURLString = videoURLString {
-                                uploadedFiles = [["path": videoURLString]]
-
-                                if let iframeHTML = iframeHTML {
-                                    iframeValue = iframeHTML
-                                }
-
-                                if let size = fileSize {
-                                    fileSizeValue = self.convertSize(size)//String(size)
-                                }
-
-                                sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
-                            } else {
-                                print("❌ Video upload failed")
-                                // Optionally show alert or retry UI
+                    
+                    startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
+                        if let videoURLString = videoURLString {
+                            uploadedFiles = [["path": videoURLString]]
+                            
+                            if let iframeHTML = iframeHTML {
+                                iframeValue = iframeHTML
                             }
+                            
+                            if let size = fileSize {
+                                fileSizeValue = self.convertSize(size)//String(size)
+                            }
+                            
+                            sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
+                        } else {
+                            print("❌ Video upload failed")
+                            // Optionally show alert or retry UI
                         }
-                    }else {
+                    }
+                }else {
                     
                     let file: Any = selectedType == AttachmentTypeString.IMAGE ? user_inputs.selectedImg : user_inputs.docUrl
                     CircularProgressLoader.shared.show()
@@ -353,21 +354,21 @@ class RecipientVc: UIViewController{
             }
         )
     }
-
+    
     //Function for video upload
     func startUpload(videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?) -> Void) {
         print("📂 Selected video URL: \(videoURL)")
-
+        
         CircularProgressLoader.shared.show()
-
+        
         vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: self)
-
+        
         vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
             print("📊 Upload progress: \(progress * 100)%")
             CircularProgressLoader.shared.updateProgress(to: progress)
         }, completion: { videoURL, iframeHTML, fileSize in
             CircularProgressLoader.shared.hide()
-
+            
             if let videoURL = videoURL {
                 print("✅ Video uploaded! Watch it at: \(videoURL)")
                 if let iframeHTML = iframeHTML {
@@ -383,13 +384,13 @@ class RecipientVc: UIViewController{
             }
         })
     }
-
+    
     func convertSize(_ sizeInBytes: Int) -> String {
         let kb = 1024.0
         let mb = kb * 1024
         let gb = mb * 1024
         let size = Double(sizeInBytes)
-
+        
         switch size {
         case 0..<kb:
             return String(format: "%.0f B", size)
@@ -409,14 +410,14 @@ class RecipientVc: UIViewController{
     
     private func handleHomeworkFlow() {
         uploadedURLs.removeAll()
-//        var message : String?
-//        if accadmicDefaultYrName == acidmicYrLbl.text{
-//            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "Sections" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
-//        }else{
-//            
-//            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-//                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
-//        }
+        //        var message : String?
+        //        if accadmicDefaultYrName == acidmicYrLbl.text{
+        //            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "Sections" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        //        }else{
+        //
+        //            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+        //                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        //        }
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
@@ -840,6 +841,9 @@ class RecipientVc: UIViewController{
         StdDropdown.show()
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
+            array_selectedId.removeAll()
+            selectSubject.isHidden = true
+            subjectId = ""
             self.sectionsDetails = self.standardDetails?.first(where: { $0.name == item })?.sections
             if let label = self.selectStandardDropDown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
@@ -888,6 +892,7 @@ class RecipientVc: UIViewController{
         acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             selectedAcadimicYearId =  AcadimicYearDatas[index].id
+            array_selectedId.removeAll()
             acidmicYrLbl.text = item
             if cv_itemsarry[segmentName.selectedSegmentIndex] ==   recipeint_tabBarName.Standard {
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
@@ -934,7 +939,9 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
-    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let baseCount: Int
         switch cv_itemsarry[segment_selected_index ?? 0] {
@@ -1044,17 +1051,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                
-                getSubject.isHidden = !(selectedSections.count >= 1)
-               
-                getSubject.isHidden = !(selectedSections.count >= 1)
-                if (selectedSections.count >= 1){
-                    selectSubject.isHidden =  !getSubject.isHidden
-                }else{
-                    selectSubject.isHidden = true
-                    subjectId = ""
+                if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+                    getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
+                    if (selectedSections.count >= 1){
+                        selectSubject.isHidden =  !getSubject.isHidden
+                    }else{
+                        selectSubject.isHidden = true
+                        subjectId = ""
+                    }
                 }
-               
                 spaceView.isHidden = !selectSubject.isHidden
             }
             
@@ -1132,15 +1137,15 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             sectionIds = array_selectedId.joined(separator: ",")
             
             if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
-                if selecting, let finalSectionIds = sectionIds, !finalSectionIds.isEmpty {
-                    getSubjectListAPI(finalSectionIds)
-                }
                 sectionIds = ""
                 let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
                 let selectedIds = selectedSections.compactMap { $0.id }
                 array_selectedId = selectedIds
                 sectionIds = selectedIds.joined(separator: ",")
-                getSubject.isHidden = !(selectedSections.count >= 1)
+                spaceView.isHidden = !selectSubject.isHidden
+                subjectId = selectedSections.count == 0 ? "" : subjectId
+                selectSubject.isHidden = subjectId == "" || subjectId == nil
+                getSubject.isHidden = (selectedSections.count == 0) || !selectSubject.isHidden
             }
             
         case recipeint_tabBarName.Staff:
@@ -1219,6 +1224,8 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                                 }
                             }
                         }
+                        selectStandardDropDown.isHidden = cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Standard
+                        
                         getSubject.isHidden = true
                         drpodonLbl.text = standardDetails?.first?.name
                         sectionsDetails = standardDetails?.first?.sections // Assign sections directly
@@ -1251,6 +1258,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         tv.isHidden = !ishide
         noRecordLbl.isHidden = ishide
         noRecordLbl.text = message
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+            getSubject.isHidden = !ishide
+        }
+        
     }
     func getStaffListAPI(){
         APIService.shared

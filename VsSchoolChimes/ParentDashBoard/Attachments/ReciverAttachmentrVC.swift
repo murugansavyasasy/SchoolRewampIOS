@@ -127,7 +127,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
         }
         
         APIService.shared.makeApi(
-            url: ServiceUrl.comm_communication_attachment_list,
+            url: ServiceUrl.comm_communication_attachment_list_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token:studentDetails?.access_token ?? ""
