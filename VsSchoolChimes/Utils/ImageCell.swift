@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-import UIKit
+import WebKit
 
 class ImageCell: UICollectionViewCell {
     
@@ -16,19 +15,34 @@ class ImageCell: UICollectionViewCell {
         static let padding: CGFloat = 8
         static let font = UIFont.systemFont(ofSize: 12, weight: .semibold)
     }
+
+    // MARK: - UI Components
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 8
         imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    lazy var webView: WKWebView = {
+        let config = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: config)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.isHidden = true
+        webView.layer.cornerRadius = 8
+        webView.clipsToBounds = true
+        webView.scrollView.isScrollEnabled = true
+        return webView
     }()
     
     lazy var titleLbl: UILabel = {
         let label = UILabel()
         label.font = Constants.font
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -36,6 +50,7 @@ class ImageCell: UICollectionViewCell {
         let label = UILabel()
         label.font = Constants.font
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -43,6 +58,7 @@ class ImageCell: UICollectionViewCell {
         let label = UILabel()
         label.font = Constants.font
         label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -50,6 +66,7 @@ class ImageCell: UICollectionViewCell {
         let label = UILabel()
         label.font = Constants.font
         label.textColor = .darkGray
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -57,8 +74,11 @@ class ImageCell: UICollectionViewCell {
         let label = UILabel()
         label.font = Constants.font
         label.textColor = .blue
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -70,9 +90,10 @@ class ImageCell: UICollectionViewCell {
         setup()
     }
     
+    // MARK: - Setup Layout
+    
     private func setup() {
-        [imageView, titleLbl, descriptionLbl, dateLbl, timeLbl, senderInfoLbl].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
+        [imageView, webView, titleLbl, descriptionLbl, dateLbl, timeLbl, senderInfoLbl].forEach {
             contentView.addSubview($0)
         }
 
@@ -80,6 +101,12 @@ class ImageCell: UICollectionViewCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 180),
+            
+            webView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            webView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            webView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            webView.heightAnchor.constraint(equalToConstant: 180),
             
             titleLbl.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Constants.padding),
             titleLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor),
@@ -102,5 +129,33 @@ class ImageCell: UICollectionViewCell {
             senderInfoLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor),
             senderInfoLbl.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)
         ])
+    }
+    
+    // MARK: - Configure
+    
+    func configure(with type: String, urlString: String) {
+        // Reset both views
+        imageView.isHidden = true
+        webView.isHidden = true
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        if type.lowercased() == "image" {
+            imageView.isHidden = false
+            loadImage(from: url)
+        } else if type.lowercased() == "DOCUMENT" {
+            webView.isHidden = false
+            webView.load(URLRequest(url: url))
+        }
+    }
+    
+    private func loadImage(from url: URL) {
+        // A basic example using URLSession (you can use SDWebImage or Kingfisher instead)
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async {
+                self.imageView.image = UIImage(data: data)
+            }
+        }.resume()
     }
 }

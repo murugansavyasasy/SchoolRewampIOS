@@ -63,7 +63,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             applyShadowAndCornerRadius(to: yearsView)
             applyShadowAndCornerRadius(to: staffDropView)
             applyShadowAndCornerRadius(to: monthView)
-            noRecordLbl.isHidden = true
             yearAndmonthStack.isHidden = true
             staffDropView.isHidden = true
             staffDefaultsLbl.isHidden = true
@@ -246,7 +245,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                  cell.toDateLbl.isHidden = false
                  cell.StatusLbl.layer.cornerRadius = 5
                  cell.StatusLbl.layer.masksToBounds = true
-                  noRecordLbl.isHidden = true
+//                  noRecordLbl.isHidden = true
                  cell.namelbl.text = attendanceData?.name
                  cell.attendanceTypeLbl.text = attendanceData?.attendance_type
             
@@ -358,6 +357,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             let todaydate = getCurrentDateString()
             let year_Lbl = (yearLbl.text ?? "") + "-" + SelectedMonthCode
             
+            print("todaydatetodaydate",todaydate)
             if RefId == 1 {
                 param = [principalAttendenceReportStringFile.attendance_dt: todaydate]
             } else {
@@ -372,17 +372,19 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 case .success(let successMessage):
                     DispatchQueue.main.async { [self] in
                         if successMessage.status == true {
-                            noRecordLbl.isHidden = true
                             staffAttendanceDetails = successMessage.data
                             SearchResults = staffAttendanceDetails
-                            seachHeight.constant = 56
+                            seachHeight.constant = 0
+                            if SearchResults?.count ?? 0 > 1 {
+                                seachHeight.constant = 56
+                            }
+                           
                             tv.isHidden = false
                             nodataRecStack.isHidden = true
                             tv.reloadData()
                         } else {
                             tv.isHidden = true
                             nodataRecStack.isHidden = false
-                            noRecordLbl.isHidden = false
                             seachHeight.constant = 0
                             staffAttendanceDetails = successMessage.data
                             noRecordLbl.text = successMessage.message
@@ -397,7 +399,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
 
         func getCurrentDateString() -> String {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM"
+            dateFormatter.dateFormat = "yyyy-MM-dd"
             return dateFormatter.string(from: Date())
         }
 

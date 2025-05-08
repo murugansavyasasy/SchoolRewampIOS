@@ -141,24 +141,23 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
         }
         
         switch data.type?.uppercased() {
-        case "VIDEO":
-//            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-//            cell.descriptionLbl.text = data.description
-//            cell.datelbl.text = data.date
-//            cell.videoName.text = data.title
-            
-           ""
 
         case "DOCUMENT":
-           ""
+           
+            cell
+                .configure(
+                    with: "DOCUMENT",
+                    urlString: data.file_path?.first?.path ?? ""
+                )
 
         default:
-            cell.imageView
-                .sd_setImage(
-                    with: URL(string: data.file_path?.first?.path ?? ""),
-                    placeholderImage: ImageName.placeholder
-                )
+//            cell.imageView
+//                .sd_setImage(
+//                    with: URL(string: data.file_path?.first?.path ?? ""),
+//                    placeholderImage: ImageName.placeholder
+//                )
            
+            cell.configure(with: "image", urlString: data.file_path?.first?.path ?? "")
             cell.titleLbl.text = data.title
             cell.descriptionLbl.text = data.description
             cell.dateLbl.text = data.date
@@ -205,20 +204,31 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
         switch kind {
         case PinterestLayout.elementKindBanner:
             let dequeuedBanner = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.bannerID, for: indexPath) as? BannerView
+           
+            
+            guard let data = filteredAttachments?[indexPath.row] else {
+                return UICollectionViewCell() // Safely return a default cell if data is nil
+            }
+            var urlString: String?
+            if data.type?.lowercased() == "VIDEO" {
+                urlString = data.file_path?.first?.path
+            }
             let cell = dequeuedBanner ?? BannerView()
-            cell.imageView.image = UIImage(named: "sale-banner-templates")
+            cell.loadURL(urlString ?? "")
+            
+            
             return cell
         default:
             fatalError()
         }
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top
-        
-        let dy = offsetY > 0 ? -offsetY : 0
-//        titleLabel.transform = CGAffineTransform(translationX: 0, y: dy)
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top
+//        
+//        let dy = offsetY > 0 ? -offsetY : 0
+////        titleLabel.transform = CGAffineTransform(translationX: 0, y: dy)
+//    }
     
 }
 

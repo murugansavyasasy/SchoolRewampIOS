@@ -1,13 +1,15 @@
 import UIKit
+import WebKit
 
 class BannerView: UICollectionReusableView {
     
-    lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill  // Use AspectFill for better banner presentation
-        imageView.clipsToBounds = true            // Prevent overflow
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    lazy var webView: WKWebView = {
+        let config = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: config)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.scrollView.isScrollEnabled = false  // Optional: disable scroll
+        webView.clipsToBounds = true
+        return webView
     }()
     
     override init(frame: CGRect) {
@@ -21,13 +23,18 @@ class BannerView: UICollectionReusableView {
     }
     
     private func setup() {
-        addSubview(imageView)
+        addSubview(webView)
         
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+            webView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            webView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            webView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
+    }
+    
+    func loadURL(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        webView.load(URLRequest(url: url))
     }
 }

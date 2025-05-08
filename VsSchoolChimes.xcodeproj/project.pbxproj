@@ -192,11 +192,11 @@
 		843ED8C22D3F7FB700EC59C3 /* CertificateRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843ED8BF2D3F7FB700EC59C3 /* CertificateRequestVC.swift */; };
 		843F9A2C2DAF71FF00215973 /* SenderHomeWorkVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 843F9A2B2DAF71FF00215973 /* SenderHomeWorkVC.xib */; };
 		843F9A2D2DAF71FF00215973 /* SenderHomeWorkVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */; };
+		84409EFE2DCB64C700EF63FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 84409EFD2DCB64C700EF63FE /* GoogleService-Info.plist */; };
 		844188792CC9019B006483C3 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 844188782CC9019B006483C3 /* Poppins-Medium.ttf */; };
 		8441887C2CC90E98006483C3 /* Colornames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441887B2CC90E98006483C3 /* Colornames.swift */; };
 		844188832CC91179006483C3 /* LoginVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 844188822CC91179006483C3 /* LoginVc.xib */; };
 		844188842CC91179006483C3 /* LoginVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844188812CC91179006483C3 /* LoginVc.swift */; };
-		8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8442A85D2CDB726A0006068E /* GoogleService-Info.plist */; };
 		8442A8682CDB787A0006068E /* SchoolTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8612CDB787A0006068E /* SchoolTVCell.swift */; };
 		8442A8692CDB787A0006068E /* PriorityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A8632CDB787A0006068E /* PriorityVC.swift */; };
 		8442A86A2CDB787A0006068E /* ParentTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A85F2CDB787A0006068E /* ParentTVCell.swift */; };
@@ -823,12 +823,12 @@
 		843ED8C02D3F7FB700EC59C3 /* CertificateRequestVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CertificateRequestVC.xib; sourceTree = "<group>"; };
 		843F9A2A2DAF71FF00215973 /* SenderHomeWorkVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderHomeWorkVC.swift; sourceTree = "<group>"; };
 		843F9A2B2DAF71FF00215973 /* SenderHomeWorkVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderHomeWorkVC.xib; sourceTree = "<group>"; };
+		84409EFD2DCB64C700EF63FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8441886E2CC8E18B006483C3 /* Models.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Models.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		844188782CC9019B006483C3 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		8441887B2CC90E98006483C3 /* Colornames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colornames.swift; sourceTree = "<group>"; };
 		844188812CC91179006483C3 /* LoginVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVc.swift; sourceTree = "<group>"; };
 		844188822CC91179006483C3 /* LoginVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVc.xib; sourceTree = "<group>"; };
-		8442A85D2CDB726A0006068E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8442A85F2CDB787A0006068E /* ParentTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentTVCell.swift; sourceTree = "<group>"; };
 		8442A8602CDB787A0006068E /* ParentTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ParentTVCell.xib; sourceTree = "<group>"; };
 		8442A8612CDB787A0006068E /* SchoolTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolTVCell.swift; sourceTree = "<group>"; };
@@ -2509,10 +2509,10 @@
 		84A5BE7E2C1973F400E32496 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				84409EFD2DCB64C700EF63FE /* GoogleService-Info.plist */,
 				84C829F92D086A490024A46A /* Fireworks */,
 				84C829C02D0807CD0024A46A /* Confetti */,
 				84D2D5742CE4B8CD00606CE8 /* GIFASSETS */,
-				8442A85D2CDB726A0006068E /* GoogleService-Info.plist */,
 				8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */,
 				84385F672CF842F60020E94D /* Fonts.swift */,
 				84A5BE8D2C197C3000E32496 /* Toast.swift */,
@@ -3471,6 +3471,7 @@
 				FAFF9DFB2D6C7B7A00498368 /* StaffPtmViewController.xib in Resources */,
 				FAFF9DFC2D6C7B7A00498368 /* CheckAviableTvHeader.xib in Resources */,
 				FAFF9DFD2D6C7B7A00498368 /* parentPTMcell.xib in Resources */,
+				84409EFE2DCB64C700EF63FE /* GoogleService-Info.plist in Resources */,
 				84FC4DCC2DBCAE6700BBEDD7 /* ParentCommunicationVc.xib in Resources */,
 				84FC4DCD2DBCAE6700BBEDD7 /* FiltersCvCell.xib in Resources */,
 				FAFF9DFE2D6C7B7A00498368 /* CalenderCVcell.xib in Resources */,
@@ -3592,7 +3593,6 @@
 				840F677A2D94128F00AC2F5A /* cell1Tv.xib in Resources */,
 				187CF5E52D1539CD001422CE /* CertificateTableViewCell.xib in Resources */,
 				8442A9002CDC83860006068E /* SuggestionsCollectionViewCell.xib in Resources */,
-				8442A85E2CDB726A0006068E /* GoogleService-Info.plist in Resources */,
 				84EFF9DC2CCC864800C11C26 /* BottomCVCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
