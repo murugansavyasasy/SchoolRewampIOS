@@ -210,6 +210,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     @IBAction func selectStanderd(_ sender: UIButton) {
         // Setup dropdown anchor and data source
+        
         standardDropdown.anchorView = standerdView
         standardDropdown.dataSource = standerdList
         standardDropdown.bottomOffset = CGPoint(x: 0, y: standerdView.bounds.height)
@@ -221,6 +222,8 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
             guard let selectedSections = standardDetails?[index].sections else { return }
             sectionsDetails = selectedSections
             sectionList.removeAll()
+            sectionId = selectedSections.first?.id
+            apiCall()
             sectionList.append(contentsOf: selectedSections.compactMap { $0.name })
             SectionLbl.text = selectedSections.first?.name ?? ""
             if let label = self.standerdView.subviews.compactMap({ $0 as? UILabel }).first {

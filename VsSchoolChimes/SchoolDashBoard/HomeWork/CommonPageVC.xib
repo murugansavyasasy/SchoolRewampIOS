@@ -24,13 +24,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mlr-gA-MpT">
-                    <rect key="frame" x="10.000000000000007" y="69" width="108.66666666666669" height="35"/>
+                    <rect key="frame" x="10" y="69" width="100.66666666666667" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="BTx-kv-HJJ"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                    <state key="normal" title="Home Work" image="chevron.left" catalog="system">
+                    <state key="normal" title="Homework" image="chevron.left" catalog="system">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="bold"/>
                     </state>
@@ -48,7 +48,7 @@
                                 <constraint firstAttribute="height" constant="40" id="ZH9-gZ-iae"/>
                             </constraints>
                             <segments>
-                                <segment title="Home Work"/>
+                                <segment title="Homework"/>
                                 <segment title="Reports"/>
                             </segments>
                             <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
