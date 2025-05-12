@@ -20,12 +20,20 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var clsBtn: UIButton!
     var sectionDropdown = DropDown()
     var classDropdown = DropDown()
+    var AcodemicDropdown = DropDown()
+    var sectionsDetails: [sectionsDetail]?
+    var standardDetails: [StandardDetail]?
+    var AcadimicYearDatas : [AcadimicYearData] = []
+    var accadimYr :[String] = []
     @IBOutlet weak var sectionSelection: UIStackView!
     @IBOutlet weak var classSelection: UIStackView!
     
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
+    var standerdArray = [String]()
+    var sectionArray = [String]()
     var selectStudentType = ""
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     var studentList = [
         StudentList(name: "chandhru", AdmissionId: "sd123", PhoneNumber: "9597286160", EmailId: "chandhru@gmail.com", DOB: "15/06/2000", fatherName: "Veramalai", teacherName: "janu", gender: "Male",sectionName: "'A'",classname: "8th", img: "shiyam"),
         StudentList(name: "kothai", AdmissionId: "sd124", PhoneNumber: "9597234555", EmailId: "kothai@gmail.com", DOB: "02/08/2000", fatherName: "Mariyappan", teacherName: "janu", gender: "Female",sectionName: "'A'",classname: "8th", img: "StudImg"),
@@ -47,14 +55,15 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         filterStudent = studentList
         sortedStudent = studentList
         uiConfic()
+        getacadmicYr()
         if #available(iOS 14.0, *) {
             searchBar.addDoneButton()
             searchBar.delegate = self
         }
-        classSelection.alpha = 0
-        classSelection.transform = CGAffineTransform(translationX: 0, y: -classSelection.bounds.height)
-        sectionSelection.alpha = 0
-        sectionSelection.transform = CGAffineTransform(translationX: 0, y: -sectionSelection.bounds.height)
+//        classSelection.alpha = 0
+//        classSelection.transform = CGAffineTransform(translationX: 0, y: -classSelection.bounds.height)
+//        sectionSelection.alpha = 0
+//        sectionSelection.transform = CGAffineTransform(translationX: 0, y: -sectionSelection.bounds.height)
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -106,7 +115,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             self.sectionSelection.alpha = 0
         }) { [self] _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Delay of 0.2 seconds
-                self.hideStackView()
+//                self.hideStackView()
                 self.sectionSelection.isHidden = true
                 self.sectionSelection.transform = .identity
             }
@@ -141,8 +150,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         
         classView.layer.shadowOpacity = 0.5
         classView.layer.shadowRadius = 4
-        sectionSelection.isHidden = true
-        classSelection.isHidden = true
         
         //MARK: Label Font
      
@@ -194,16 +201,32 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     @IBAction func selectCatagory(_ sender: UIButton) {
         
-        if classSelection.isHidden {
-            showStackView()
-        } else {
-            //            hideStackView()
-            hideSectionView()
+//        if classSelection.isHidden {
+//            showStackView()
+//        } else {
+//            //            hideStackView()
+//            hideSectionView()
+//        }
+    
+        AcodemicDropdown.dataSource = accadimYr
+        
+        AcodemicDropdown.anchorView = selectedType
+        AcodemicDropdown.bottomOffset = CGPoint(x: 0, y: selectedType.bounds.height)
+        AcodemicDropdown.direction = .bottom
+        AcodemicDropdown.width = selectedType.bounds.width
+        AcodemicDropdown.show()
+        AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
+            getStandardsAPI(academic_year_id: AcadimicYearDatas[index].id ?? 0)
+            selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
+            self.sectionBtn.setTitle(item, for: .normal)
+            if let label = self.selectedType.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                self.selectedType.setTitle(item.translated(), for: .normal)
+            }
         }
     }
     
     @IBAction func section(_ sender: UIButton) {
-        sectionDropdown.dataSource = ["'A'","'B'","'C'","'D'"]
+        sectionDropdown.dataSource = sectionArray
         
         sectionDropdown.anchorView = sectionView
         sectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
@@ -218,7 +241,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             reportTable.reloadData()
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
             self.sectionBtn.setTitle(item, for: .normal)
-            hideSectionView()
+//            hideSectionView()
             if let label = self.sectionDropdown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.sectionBtn.setTitle(item.translated(), for: .normal)
             }
@@ -226,17 +249,13 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     @IBAction func classSelection(_ sender: UIButton) {
         // Configuring the dropdown
-        sectionDropdown.dataSource = ["8th","9th","10th", "11th", "12th"]
-        
-        // Set the position for dropdown relative to sectionView
+        sectionDropdown.dataSource = standerdArray
         sectionDropdown.anchorView = sectionView
         sectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height - 70)
         sectionDropdown.direction = .bottom
         sectionDropdown.width = sectionView.bounds.width
         // Show the dropdown
         sectionDropdown.show()
-        
-        // Handling the selection action
         sectionDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             let filteredStudents = studentList.filter { $0.classname == item }
@@ -249,17 +268,69 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             
             // Update the button title
             self.clsBtn.setTitle(item, for: .normal)
-            
-            // Optionally, set a localized or transformed title
             self.clsBtn.setTitle(item.translated(), for: .normal)
-            
-            
-            // Update the label inside the UIView
             if let label = self.sectionDropdown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.clsBtn.setTitle(item.translated(), for: .normal)
             }
         }
         
+    }
+    func getStandardsAPI(academic_year_id:Int){
+        standerdArray.removeAll()
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+            switch result {
+            case .success(let successMessage):
+                print("successsuccess",successMessage.data)
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                        standardDetails?.enumerated().forEach { index, student in
+                            standardDetails?[index].isSelect = false
+                            standerdArray.append(student.name ?? "")
+
+                        }
+                        sectionsDetails = standardDetails?.first?.sections
+                        for i in 0..<(sectionsDetails?.count ?? 0){
+                            sectionArray.append(sectionsDetails?.first?.name ?? "")
+                        }
+                    }
+                }else{
+                    DispatchQueue.main.async { [self] in
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+
+                }
+                
+            }
+        }
+        
+    }
+    func getacadmicYr(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            AcadimicYearDatas = successMessage.data ?? []
+                            for i in 0..<(AcadimicYearDatas.count){
+                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                    selectedType.setTitle("\(AcadimicYearDatas[i].year ?? "")", for: .normal)
+                                    getStandardsAPI(academic_year_id: AcadimicYearDatas[i].id ?? 0)
+                                }
+                                accadimYr.append(AcadimicYearDatas[i].year ?? "")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

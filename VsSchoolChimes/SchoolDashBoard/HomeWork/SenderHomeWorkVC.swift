@@ -179,22 +179,24 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     }
     
     @IBAction func selectSection(_ sender: UIButton) {
-        SectionDropdown.anchorView = sectionView
-        SectionDropdown.dataSource = sectionList
-        SectionDropdown.show()
-        SectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
-        standardDropdown.direction = .bottom
-        SectionDropdown.selectionAction = { [self] (index: Int, item: String) in
-            
-            if index < sectionsDetails?.count ?? 0{
-                sectionId = sectionsDetails?[index].id
-                GetHomeWorkReport(sectionsDetails?[index].id, dateLbl.text ?? "")
+        if !dropDownStack.isHidden{
+            SectionDropdown.anchorView = sectionView
+            SectionDropdown.dataSource = sectionList
+            SectionDropdown.show()
+            SectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
+            standardDropdown.direction = .bottom
+            SectionDropdown.selectionAction = { [self] (index: Int, item: String) in
+                
+                if index < sectionsDetails?.count ?? 0{
+                    sectionId = sectionsDetails?[index].id
+                    GetHomeWorkReport(sectionsDetails?[index].id, dateLbl.text ?? "")
+                }
+                if let label = sectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+                    label.text = item
+                }
+                homeWorkTable.isHidden = false
+                homeWorkTable.reloadData()
             }
-            if let label = sectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = item
-            }
-            homeWorkTable.isHidden = false
-            homeWorkTable.reloadData()
         }
     }
     @IBAction func selectDate(_ sender: UIButton) {
@@ -210,24 +212,25 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     
     @IBAction func selectStanderd(_ sender: UIButton) {
         // Setup dropdown anchor and data source
-        
-        standardDropdown.anchorView = standerdView
-        standardDropdown.dataSource = standerdList
-        standardDropdown.bottomOffset = CGPoint(x: 0, y: standerdView.bounds.height)
-        standardDropdown.direction = .bottom
-        standardDropdown.show()
-        
-        standardDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-            guard let self = self else { return }
-            guard let selectedSections = standardDetails?[index].sections else { return }
-            sectionsDetails = selectedSections
-            sectionList.removeAll()
-            sectionId = selectedSections.first?.id
-            apiCall()
-            sectionList.append(contentsOf: selectedSections.compactMap { $0.name })
-            SectionLbl.text = selectedSections.first?.name ?? ""
-            if let label = self.standerdView.subviews.compactMap({ $0 as? UILabel }).first {
-                label.text = item
+        if !dropDownStack.isHidden{
+            standardDropdown.anchorView = standerdView
+            standardDropdown.dataSource = standerdList
+            standardDropdown.bottomOffset = CGPoint(x: 0, y: standerdView.bounds.height)
+            standardDropdown.direction = .bottom
+            standardDropdown.show()
+            
+            standardDropdown.selectionAction = { [weak self] (index: Int, item: String) in
+                guard let self = self else { return }
+                guard let selectedSections = standardDetails?[index].sections else { return }
+                sectionsDetails = selectedSections
+                sectionList.removeAll()
+                sectionId = selectedSections.first?.id
+                apiCall()
+                sectionList.append(contentsOf: selectedSections.compactMap { $0.name })
+                SectionLbl.text = selectedSections.first?.name ?? ""
+                if let label = self.standerdView.subviews.compactMap({ $0 as? UILabel }).first {
+                    label.text = item
+                }
             }
         }
     }
@@ -359,6 +362,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                         searchBar.isHidden = true
                     }else{
                         dropDownStack.isHidden = true
+                        sectionId = ""
                         searchBar.isHidden = true
                         self.nodataFoundLbl.isHidden = false
                         self.noDataFound.isHidden = false
@@ -375,6 +379,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                     self.noDataFound.isHidden = false
                     self.nodataFoundLbl.text = error.localizedDescription
                     self.tableviewHeight.constant = 0
+                    sectionId = ""
                 }
             }
         }

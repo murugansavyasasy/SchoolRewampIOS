@@ -586,6 +586,83 @@ class RecipientVc: UIViewController{
             }
         )
     }
+    private func handleEvent() {
+        uploadedURLs.removeAll()
+        let title = AlertstringFile.Confirm_title
+        alert.showAlertCancel(
+            title: title,
+            message: AlertstringFile.are_yousure_youWant_to_sendHomeWork,
+            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [self] in
+                let file: Any = user_inputs.SelectedUrls
+                uploadAndSendVoiceMessage(file: file) { [self] in
+                    CircularProgressLoader.shared.hide()
+                    let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+                        if let url = URL(string: url) {
+                            let type = url.pathExtension.lowercased()
+                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
+                        }
+                        return [
+                            CommonStringFile.path: url,
+                            CommonStringFile.type: user_inputs.selectedFileType
+                        ]
+                    }
+                    let parameters: [String: Any] = [
+                        UploadEvent.title: user_inputs.title,
+                        UploadEvent.content: user_inputs.description,
+                        UploadEvent.venue: user_inputs.venue,
+                        send_voicemeassageStringFile.target_type : target_type ?? 0,
+                        send_voicemeassageStringFile.target_code : array_selectedId,
+                        UploadMessageKeys.filePath:uploadedFiles
+                    ]
+                    APIService.shared
+                        .makeApi(url: ServiceUrl.api_school_event_send_event, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                            result : Result<CommonApiSuc,
+                            Error>
+                        ) in
+                            switch result {
+                            case.success(let succesmessage) :
+                                if succesmessage.status == true {
+                                    DispatchQueue.main.async { [self] in
+                                        CustomAlert
+                                            .showAlertWithOkAction(
+                                                title: AlertstringFile.Success,
+                                                message: succesmessage.message ?? "",
+                                                on: self
+                                            ) {
+                                                self.gotoDashboard()
+                                            }
+                                    }
+                                }else {
+                                    
+                                    DispatchQueue.main.async {
+                                        CustomAlert
+                                            .showAlertWithOkAction(
+                                                title: AlertstringFile.Alert_title,
+                                                message: succesmessage.message ?? "",
+                                                on: self
+                                            ) {
+                                                self.gotoDashboard()
+                                            }
+                                    }
+                                }
+                                
+                            case.failure(let error) :
+                                DispatchQueue.main.async {
+                                    print(error.localizedDescription)
+                                }
+                            }
+                            
+                        }
+                }
+            },
+            onNo: {
+                print("User canceled.")
+            }
+        )
+    }
     @IBAction func getSubject(_ sender: UIButton) {
         let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {

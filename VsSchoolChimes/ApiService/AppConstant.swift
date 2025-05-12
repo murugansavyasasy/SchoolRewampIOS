@@ -58,6 +58,9 @@ struct ServiceUrl{
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/geometric/update-geometric-location"
     static let api_notice_board_send_notice = "/api/notice-board/send-notice"
     static let api_notice_board_get_notice = "/api/notice-board/get-notice"
+    static let api_school_event_send_event = "api/school-event/send-event"
+    
+    
     
 }
 
@@ -95,6 +98,7 @@ struct Menu_id{
     static let StaffGeoAttendaceReport = 33
     static let GeoMatricAttendace = 21
     static let NoticeboardMenuId = 23
+    static let Event = 29
 }
 struct TargetTypes{
     
@@ -143,6 +147,7 @@ struct user_inputs{
     static var VideoPath: URL?
     static var FromDate = ""
     static var ToDate = ""
+    static var venue = ""
     
 }
 struct circular_type{

@@ -185,16 +185,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A19F7791-C113-45B7-A7B8-1A7C03186C65"
+            uuid = "EABCF6BB-BE85-409D-BD6A-EA26099BB7A3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/ReciverHomework/ReciverHomeworkVC.swift"
+            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
-            landmarkName = "GetHomeWorkReport()"
+            startingLineNumber = "527"
+            endingLineNumber = "527"
+            landmarkName = "handleEvent()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
