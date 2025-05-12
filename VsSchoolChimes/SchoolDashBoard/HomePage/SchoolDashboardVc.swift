@@ -456,6 +456,12 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderPtmNavigate(from: self)
             case 28:
                 MenuRedirect.senderLeaveRequestNavigate(from: self)
+            case 29:
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.senderEventNavigate(from: self)
+                }
             case 30:
                 MenuRedirect.senderSchoolNeedsNavigate(from: self)
             case 31:
@@ -623,8 +629,10 @@ extension SchoolDashboardVc: UISearchBarDelegate{
                         self.menu_details = details
                         
                         // Extract names from menu_details
-                        self.displayedCategories = details.prefix(9).map { $0.name ?? "" }
-                        self.filteredMenu_details = Array(details.prefix(9))
+//                        self.displayedCategories = details.prefix(9).map { $0.name ?? "" }
+                        self.displayedCategories = details.map { $0.name ?? "" }
+//                        self.filteredMenu_details = Array(details.prefix(9))
+                        self.filteredMenu_details = details
                         
                         // Insert "Add" item if count > 5
                         if self.filteredMenu_details?.count ?? 0 > 5 {

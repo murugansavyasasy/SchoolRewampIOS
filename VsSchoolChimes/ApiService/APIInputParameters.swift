@@ -103,6 +103,17 @@ enum UploadMessageKeys {
     static let filePath = "file_path"
     static let academic_year_id = "academic_year_id"
 }
+enum UploadEvent {
+    static let title = "title"
+    static let content = "content"
+    static let venue = "venue"
+    static let target_code = "target_code"
+    static let event_date = "event_date"
+    static let event_time = "event_time"
+    static let target_type = "target_type"
+    static let filePath = "file_path"
+}
+
 
 class SendAttachmentStringFile {
     
@@ -158,5 +169,13 @@ class Daily_collectionStringFile {
     static var type = "type"
     static var from_date = "from_date"
     static var to_date = "to_date"
+class SendNoticeStringFile {
+    static var title = "title"
+    static var content = "content"
+    static var target_code = "target_code"
+    static var intended_for = "intended_for"
+    static var visible_from = "visible_from"
+    static var visible_to = "visible_to"
+    static var file_path = "file_path"
 }
 

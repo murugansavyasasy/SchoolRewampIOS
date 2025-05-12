@@ -40,7 +40,6 @@ class HistoryTC: UITableViewCell {
     var playIndex: Int? = nil
     weak var FinishPlayingdelegate: HistoryFinishPalyingDelegate?
     
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         

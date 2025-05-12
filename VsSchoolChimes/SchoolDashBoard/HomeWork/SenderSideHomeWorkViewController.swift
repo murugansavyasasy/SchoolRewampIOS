@@ -159,19 +159,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             user_inputs.title = TitleTxtfield.text ?? ""
             user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.SelectedUrls = attachments
-
-//            
-//            if isStaff(){
-//                let vc = SchoolListVC(nibName: nil, bundle: nil)
-//                vc.modalPresentationStyle = .fullScreen
-//                vc.screen_type = Menu_id.homeWorkMenuId
-//                present(vc, animated: true)
-//            }else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.ScreenType = Menu_id.homeWorkMenuId
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
-//            }
         }else{
             alert
                 .showAlert(
@@ -242,7 +233,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         }
     }
     func selectPDF() {
-        let pdf = attachments.filter { $0.fileType == CommonStringFile.pdf }
+        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
         if pdf.count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
             PhotoPickerManager.shared.limiSelection = 5 - pdf.count

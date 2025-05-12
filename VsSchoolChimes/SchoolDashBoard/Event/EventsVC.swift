@@ -8,12 +8,13 @@
 import UIKit
 import AWSCore
 import AWSS3
+import AVFoundation
 
 protocol DeleteImge{
     func deleteImage(index:Int)
 }
 @available(iOS 14.0, *)
-class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker{
+class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
     
     func date(date: String) {
         
@@ -36,18 +37,16 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     
     func deleteImage(index: Int) {
-        
-        selectedImages.remove(at: index)
+        attachments.remove(at: index)
         costomView.imageCollectionview.reloadData()
     }
     var effect:UIVisualEffect!
     
     @IBOutlet weak var scrollView: UIScrollView!
-    
+    @IBOutlet weak var tittleCountLbl: UILabel!
     @IBOutlet weak var eventTxt: UITextField!
     @IBOutlet weak var EventTtleLbl: UILabel!
     @IBOutlet weak var placeTxt: UITextField!
-    @IBOutlet weak var subTitleLbl: UILabel!
     @IBOutlet weak var placeLbl: UILabel!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var costomView: ImageSelection!
@@ -78,24 +77,21 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var dateSelection = false
     var url : URL?
     let photoPickManager = PhotoPickerManager.shared
-    var selectedImages: [UIImage] = []
-    var convertedImagesUrlArray = NSMutableArray()
-    var imageUrlArray = NSMutableArray()
-    var pdfData : Data? = nil
     let AlertMessage = AlertstringFile()
     var isKeyboardVisible = false
     let dateFormatter = DateFormatter()
     let timeFormatter = DateFormatter()
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
+    var attachments: [AttachmentItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        eventTxt.delegate = self
+        contentTxtView.delegate = self
         eventTxt.applyRightTxt()
         EventTtleLbl.applyRightTxt()
         placeTxt.applyRightTxt()
-        subTitleLbl.applyRightTxt()
         placeLbl.applyRightTxt()
         contentTxtView.applyRightTxt()
         pickerDateLbl.applyRightTxt()
@@ -135,31 +131,40 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         // Remove observers
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            // handle camera image
-            selectedImages.append(image)
+            
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
             costomView.imageCollectionview.reloadData()
         }
-
+        
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            selectedImages.append(contentsOf: images)
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
+            attachments.append(contentsOf: imageItems)
+            if imageItems.count != 0{
+                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            }
+            
             costomView.imageCollectionview.reloadData()
         }
-
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+        
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
-            selectedImages.removeAll()
-            url = data.absoluteURL
-            selectedImages.append(ImageName.pdf!)
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
+            
             costomView.imageCollectionview.reloadData()
         }
-
+        
     }
     
     //MARK: BUTTON TITLE CURRANT TIME
@@ -189,8 +194,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         Totime.setTitle(formattedTime, for: .normal)
         todate.setTitle(formattedDate, for: .normal)
         dateBtn.setTitle(formattedDate, for: .normal)
-        dateBtn.applyBackButton()
-        todate.applyBackButton()
+        dateBtn.applyRightButton()
+        todate.applyRightButton()
         Totime.applyRightButton()
         timeBtn.applyRightButton()
         contentCount.applyRightTxt()
@@ -220,7 +225,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
         ToLbl.setFont(style:.body, size: FontSize.BodySize)
         fromLbl.setFont(style:.body, size: FontSize.BodySize)
-        subTitleLbl.setFont(style:.body, size: FontSize.BodySize)
         eventDeatail.setFont(style:.body, size: FontSize.BodySize)
         addPhotoLbl.setFont(style:.body, size: FontSize.BodySize)
         Totime.setTitleFont(style: .body, size: 12)
@@ -228,12 +232,10 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         dateBtn.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
         placeLbl.setFont(style:.body, size: FontSize.BodySize)
-        
-        subTitleLbl.text = CommonStringFile.CreateEvent.translated()
         placeLbl.text = CommonStringFile.Venue.translated()
         addPhotoLbl.text = CommonStringFile.UploadImagepdfoptional.translated()
-        eventDeatail.text = CommonStringFile.EventDetails.translated()
-        EventTtleLbl.text = CommonStringFile.EventTitle.translated()
+        eventDeatail.text = CommonStringFile.Description.translated()
+        EventTtleLbl.text = CommonStringFile.Title.translated()
         placeTxt.placeholder = CommonStringFile.egChennai.translated()
         
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString: CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
@@ -242,11 +244,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     func registerCell(){
         costomView.imageCollectionview.delegate = self
         costomView.imageCollectionview.dataSource = self
-        contentTxtView.delegate = self
-        
     }
     
-   
+    
     
     func setFormattedDate(_ date: String, label: UILabel) {
         let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
@@ -362,33 +362,33 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         activeButton = nil
     }
     
-
+    
     func showTimePicker(for button: UIButton, date: Bool) {
         activeButton = button // Track which button is being updated
         
         // Position the time picker or date picker below the button
         let buttonFrame = button.convert(button.bounds, to: self.view)
-            // Show the time picker
-            timePicker.isHidden = false
-            doneButton2.isHidden = false
-
-            let pickerYPosition = buttonFrame.minY - 210
-            timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
-            
-            // Set appearance for timePicker
-            timePicker.backgroundColor = .white
-            timePicker.layer.shadowColor = UIColor.black.cgColor
-            timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-            timePicker.layer.shadowRadius = 5
-            timePicker.layer.shadowOpacity = 0.3
-            timePicker.layer.cornerRadius = 20
-            
-            // Position the Done button at the bottom-right of the picker
-            doneButton2.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + timePicker.frame.height - 40, width: 70, height: 30)
-            
-            // Add timePicker to the view (ensure it’s in the view hierarchy)
-            self.view.addSubview(timePicker)
-            self.view.addSubview(doneButton2)
+        // Show the time picker
+        timePicker.isHidden = false
+        doneButton2.isHidden = false
+        
+        let pickerYPosition = buttonFrame.minY - 210
+        timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: pickerYPosition, width: 250, height: 200)
+        
+        // Set appearance for timePicker
+        timePicker.backgroundColor = .white
+        timePicker.layer.shadowColor = UIColor.black.cgColor
+        timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
+        timePicker.layer.shadowRadius = 5
+        timePicker.layer.shadowOpacity = 0.3
+        timePicker.layer.cornerRadius = 20
+        
+        // Position the Done button at the bottom-right of the picker
+        doneButton2.frame = CGRect(x: timePicker.frame.maxX - 80, y: pickerYPosition + timePicker.frame.height - 40, width: 70, height: 30)
+        
+        // Add timePicker to the view (ensure it’s in the view hierarchy)
+        self.view.addSubview(timePicker)
+        self.view.addSubview(doneButton2)
     }
     
     @IBAction func datepicker(_ sender: UIButton) {
@@ -419,13 +419,19 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     @IBAction func chooseSchool(_ sender: UIButton) {
         if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{
-//            let vc = SelectRecipientVC(nibName: nil, bundle: nil)
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: true, completion: nil)
+            user_inputs.title = eventTxt.text ?? ""
+            user_inputs.venue = placeTxt.text ?? ""
+            user_inputs.description = contentTxtView.text ?? ""
+            user_inputs.SelectedUrls = attachments
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.ScreenType = Menu_id.Event
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "Alert", message: AlertstringFile.Fill_All_Required_Fields, on: self)
         }
+        
     }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
@@ -441,34 +447,51 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 1 + selectedImages.count
-        
+        return 1 + attachments.count /*selectedImages.count + selectedImgUrl.count*/
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0{
-            
-            
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
+        
+        // First cell is the "Add Attachment" button cell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.AttachmentCVCell,
+                for: indexPath
+            ) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
-        }else{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+        } else {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.ImageCvCell,
+                for: indexPath
+            ) as! ImageCvCell
+            
+            let adjustedIndex = indexPath.item - 1
+            let item = attachments[adjustedIndex]
             cell.delegate = self
-            cell.deleteBtn.tag = indexPath.item - 1
-            if selectedImages.count > indexPath.item - 1 {
-                cell.imageViews.image = selectedImages[indexPath.item - 1]
+            cell.deleteBtn.tag = adjustedIndex
+            
+            if let image = item.image {
+                cell.imageViews.image = image
+            } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                if item.fileType.uppercased() != CommonStringFile.IMAGE {
+                    let iconName = getFileIconName(for: url)
+                    cell.imageViews.image = UIImage(named: iconName)
+                } else {
+                    cell.imageViews.kf.setImage(with: url)
+                }
             } else {
                 cell.imageViews.image = nil
             }
-            if selectedImages.count <= 2{
-                collectionViewHeght.constant = 120
-            }else{
-                collectionViewHeght.constant = 220
-            }
+            
+            // Set collection view height dynamically
+            let totalItems = attachments.count
+            collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
+            
             return cell
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -477,62 +500,81 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         return CGSize(width: width, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if indexPath.row == 0{
-            let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
-            
+            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+            //
             // Camera option
-            let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
+            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                //
                 openCamera()
             }
             alertController.addAction(cameraAction)
             
             // Gallery option
-            let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
-                
+            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
                 selectImages()
+                //
             }
             alertController.addAction(galleryAction)
             
             //             PDF option
-            let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
-                
+            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
                 selectPDF()
             }
             alertController.addAction(pdfAction)
+            //             PDF option
+            let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
+                pickVideoFromGallery()
+            }
+            alertController.addAction(Video)
             
             // Cancel action
-            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
-            // Present the alert
             self.present(alertController, animated: true, completion: nil)
         }else{
-            if selectedImages.count > indexPath.item - 1 {
-                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-                vc.modalPresentationStyle = .fullScreen
-                vc.selectedFileURL = url
-                // Safe unwrapping of imgView before assigning
-                vc.img = selectedImages[indexPath.item - 1]
-                //
-                present(vc, animated: true)
+            if attachments.count > indexPath.item - 1 {
+                if attachments[indexPath.item - 1].fileType != "video"{
+                    let vc = PreviewImageVC(nibName: nil, bundle: nil)
+                    vc.modalPresentationStyle = .fullScreen
+                    if attachments[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
+                        if let url = attachments[indexPath.item - 1].imageURL{
+                            vc.selectedFileURL = URL(string: url)
+                        }
+                    } else{
+                        if let img = attachments[indexPath.item - 1].image {
+                            vc.img = attachments[indexPath.item - 1].image
+                        }else{
+                            vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
+                        }
+                        
+                    }
+                    vc.type = attachments[indexPath.item - 1].fileType
+                    present(vc, animated: true)
+                }else{
+                    
+                }
             }
         }
     }
     
+    // MARK: File Attachments Actions
     func selectImages() {
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if img.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
             
         }else{
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
             
         }
-
+        
     }
     func openCamera(){
-        if selectedImages.count != 5{
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if img.count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
@@ -541,21 +583,71 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         }
     }
     func selectPDF() {
-        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
+        let pdf = attachments.filter { $0.fileType != CommonStringFile.IMAGE }
+        if pdf.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
+            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
+        }else{
+            
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
         
     }
     
+    func pickVideoFromGallery() {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.sourceType = .photoLibrary
+            imagePickerController.mediaTypes = ["public.movie"] // Only show videos
+            imagePickerController.allowsEditing = true // Optional: allows users to edit video
+            
+            present(imagePickerController, animated: true, completion: nil)
+        } else {
+            print("Photo library not available.")
+        }
+    }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)
         
     }
     
-}
+    // MARK: This method is called when the user has picked a video
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let videoURL = info[.mediaURL] as? URL {
+            print("Selected video URL: \(videoURL)")
+            generateThumbnail(from: videoURL)
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: This method is called when the user cancels the picker
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    //MARK: Function to generate thumbnail from the video URL
+    func generateThumbnail(from videoURL: URL){
+        let asset = AVAsset(url: videoURL)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
+        do {
+            let cgImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+            let thumbnail = UIImage(cgImage: cgImage)
+            attachments.append(AttachmentItem(image: thumbnail, imageURL: "\(videoURL)", fileType: "video"))
+        } catch {
+            print("Error generating thumbnail: \(error)")
+        }
+    }
 
+    
+}
 //MARK: Text view delegate Functions
 @available(iOS 14.0, *)
-extension EventsVC : UITextViewDelegate {
+extension EventsVC : UITextViewDelegate,UITextFieldDelegate{
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         // Calculate the new length of the text
@@ -572,7 +664,22 @@ extension EventsVC : UITextViewDelegate {
             return false // Reject the change
         }
     }
-    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = textField.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+
+        if updatedText.count <= 50 {
+            tittleCountLbl.text = "\(updatedText.count) of 50"
+            return true
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: "You have reached the 50 character limit for the event name.", on: self)
+            return false
+        }
+    }
+
+
     func textViewDidChange(_ textView: UITextView) {
         placeholderLabel.isHidden = !textView.text.isEmpty // Toggle visibility
         
