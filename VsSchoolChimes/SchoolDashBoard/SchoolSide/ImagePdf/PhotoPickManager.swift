@@ -64,17 +64,84 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     }
 
     // MARK: - Camera
+//    private func openCamera(from viewController: UIViewController) {
+//        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+//            showAlert(title: "Camera Not Available", message: "This device has no camera.", on: viewController)
+//            return
+//        }
+//        
+//        if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+//            UIApplication.shared.open(settingsURL)
+//        }
+//
+//        let picker = UIImagePickerController()
+//        picker.delegate = self
+//        picker.sourceType = .camera
+//        picker.allowsEditing = true
+//        viewController.present(picker, animated: true)
+//    }
+    
     private func openCamera(from viewController: UIViewController) {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
             showAlert(title: "Camera Not Available", message: "This device has no camera.", on: viewController)
             return
         }
+
+        let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
+
+        switch authStatus {
+        case .authorized:
+            // Permission granted
+            presentCameraPicker(from: viewController)
+
+        case .notDetermined:
+            // Ask for permission
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                DispatchQueue.main.async {
+                    if granted {
+                        self.presentCameraPicker(from: viewController)
+                    } else {
+                        self.showPermissionAlert(on: viewController)
+                    }
+                }
+            }
+
+        case .denied, .restricted:
+            // Permission denied
+            showPermissionAlert(on: viewController)
+
+        @unknown default:
+            break
+        }
+    }
+    
+    private func presentCameraPicker(from viewController: UIViewController) {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .camera
         picker.allowsEditing = true
+        picker.mediaTypes = ["public.image"] // Restrict to photo only
         viewController.present(picker, animated: true)
     }
+
+    private func showPermissionAlert(on viewController: UIViewController) {
+        let alert = UIAlertController(
+            title: "Camera Access Required",
+            message: "To take a photo, please enable camera access in Settings.",
+            preferredStyle: .alert
+        )
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { _ in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString),
+               UIApplication.shared.canOpenURL(settingsURL) {
+                UIApplication.shared.open(settingsURL)
+            }
+        })
+
+        viewController.present(alert, animated: true)
+    }
+
 
     // MARK: - Gallery
     private func openPhotoLibrary(from viewController: UIViewController, selectionLimit: Int) {
