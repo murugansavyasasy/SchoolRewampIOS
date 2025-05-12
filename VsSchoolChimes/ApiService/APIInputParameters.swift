@@ -164,3 +164,13 @@ class StaffAttendanceReportStringFile {
     
     static var attendance_dt = "attendance_dt"
 }
+
+class SendNoticeStringFile {
+    static var title = "title"
+    static var content = "content"
+    static var target_code = "target_code"
+    static var intended_for = "intended_for"
+    static var visible_from = "visible_from"
+    static var visible_to = "visible_to"
+    static var file_path = "file_path"
+}

@@ -229,9 +229,102 @@ class RecipientVc: UIViewController{
             }
         case Menu_id.AttachmentMenuId:
             SendingAttachmentFlow()
+        case Menu_id.NoticeboardMenuId:
+            SendingNoticeboardFlow()
         default:
             print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
+    }
+    
+    
+    //MARK: Sender Noticeboard
+    private func SendingNoticeboardFlow() {
+        
+        let title = AlertstringFile.Confirm_title
+        
+        alert.showAlertCancel(
+            title: title,
+            message: AlertstringFile.are_yousure_youWant_to_send_Notice,
+            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            
+            onOk: {[self] in
+                
+                let file: Any = user_inputs.SelectedUrls
+                uploadAndSendVoiceMessage(file: file) { [self] in
+                    
+                    CircularProgressLoader.shared.hide()
+                    let uploadedFiles: [[String:String]] = uploadedURLs.compactMap{ url in
+                        
+                        if let url = URL(string: url) {
+                            let type = url.pathExtension.lowercased()
+                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
+                        }
+                        return [
+                            CommonStringFile.path: url,
+                            CommonStringFile.type: user_inputs.selectedFileType
+                        ]
+                    }
+                    
+                    let parameters : [String: Any] = [
+                        
+                        SendNoticeStringFile.title : user_inputs.title,
+                        SendNoticeStringFile.content : user_inputs.description,
+                        SendNoticeStringFile.target_code : array_selectedId,
+                        SendNoticeStringFile.intended_for : "student",
+                        SendNoticeStringFile.visible_from : user_inputs.FromDate,
+                        SendNoticeStringFile.visible_to : user_inputs.ToDate,
+                        SendNoticeStringFile.file_path : uploadedFiles,
+                    ]
+                    
+                    APIService.shared.makeApi(url: ServiceUrl.api_notice_board_send_notice, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<NoticeResponse,Error>) in
+                        
+                        switch result {
+                            
+                        case .success(let SuccessMessage):
+                            
+                            if SuccessMessage.status == true {
+                                
+                                DispatchQueue.main.async { [self] in
+                                    
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: AlertstringFile.Success,
+                                        message: SuccessMessage.message ?? "",
+                                        on: self) {
+                                            
+                                            self.gotoDashboard()
+                                        }
+                                }
+                            }else {
+                                
+                                DispatchQueue.main.async { [self] in
+                                    
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: AlertstringFile.Alert_title,
+                                        message: SuccessMessage.message ?? "",
+                                        on: self) {
+                                            
+                                            self.gotoDashboard()
+                                        }
+                                }
+                            }
+                            
+                            
+                        case .failure(let error):
+                            
+                            print("Error : \(error.localizedDescription)")
+                        }
+                        
+                    }
+                }
+            },
+            
+            onNo: {
+                print("User Canceled")
+            }
+            
+        )
     }
     
     //MARK: Sender Attachment

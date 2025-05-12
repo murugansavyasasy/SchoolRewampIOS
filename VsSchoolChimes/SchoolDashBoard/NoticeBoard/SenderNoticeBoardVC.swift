@@ -10,6 +10,7 @@ import AWSCore
 import AWSS3
 import SDWebImage
 import SwiftUI
+import QuickLook
 
 @available(iOS 14.0, *)
 class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker {
@@ -34,44 +35,40 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var ActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var HeadingLabel: UILabel!
     @IBOutlet weak var textview: UITextView!
-    @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var setTitle: UILabel!
-    @IBOutlet weak var enterDetails: UILabel!
-    @IBOutlet weak var outerTxt: UIView!
-    @IBOutlet weak var contentCount: UILabel!
+    @IBOutlet weak var TittleDefLbl: UILabel!
+    @IBOutlet weak var DescriptionDefLbl: UILabel!
+    @IBOutlet weak var DescriptionLettersCount: UILabel!
     @IBOutlet weak var calanderBtn: HalfColorButton!
     @IBOutlet weak var calanderBtn2: HalfColorButton!
     @IBOutlet weak var fromdateBtn: UIButton!
     @IBOutlet weak var todateBtn: UIButton!
     @IBOutlet weak var fromDateLbl: UILabel!
     @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var costomView: ImageSelection!
+    @IBOutlet weak var Attachmentview: ImageSelection!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var addPhotoLbl: UILabel!
-    @IBOutlet weak var createDateLbl: UILabel!
-    @IBOutlet weak var toDate: UILabel!
-    @IBOutlet weak var fromDate: UILabel!
-    @IBOutlet weak var eventTxt: UITextField!
+    @IBOutlet weak var ToTittleDefLbl: UILabel!
+    @IBOutlet weak var fromTitleDefLbl: UILabel!
+    @IBOutlet weak var TitleTextfield: UITextField!
+    @IBOutlet weak var TextfieldCharCountLbl: UILabel!
+    @IBOutlet weak var NextBtn: UIButton!
+    @IBOutlet weak var PopupView: UIView!
+    
     
     let photoPickManager = PhotoPickerManager.shared
-    var selectedImages: [UIImage] = []
-    var convertedImagesUrlArray = NSMutableArray()
     var dateSelection = false
-    var imageUrlArray = NSMutableArray()
-    var pdfData : Data? = nil
     var placeholderLabel: UILabel!
-    var doneButton: UIButton!
-    var datePicker: UIDatePicker!
-    var activeButton: UIButton?
-    var Title = ""
-    var desript = ""
-    var url : URL?
+//    var Title = ""
+//    var desript = ""
+   // var url : URL?
     let dateFormatter = DateFormatter()
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
+    var attachments: [AttachmentItem] = []
+    var alert = CustomAlert()
+    var DocumentpreviewURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,17 +76,17 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         StyleAndTranslater()
         setInitialDate()
         setupPlaceholder()
-        eventTxt.addDoneButton()
+        TitleTextfield.addDoneButton()
         textview.addDoneButton()
         imageSelection()
-        costomView.imageCollectionview.delegate = self
-        costomView.imageCollectionview.dataSource = self
+        Attachmentview.imageCollectionview.delegate = self
+        Attachmentview.imageCollectionview.dataSource = self
         
         textview.delegate = self
-        eventTxt.delegate = self
+        TitleTextfield.delegate = self
         
         let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
-        costomView.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
+        Attachmentview.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
         
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
@@ -119,41 +116,50 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         )
     }
     override func viewWillAppear(_ animated: Bool) {
-        if desript != ""{
-            textview.text = desript
-            placeholderLabel.isHidden = !Title.isEmpty
-            contentCount.text = "\(textview.text.count) of 500"
-        }
-        if Title != ""{
-            eventTxt.text =  Title
-            
-        }
+//        if desript != ""{
+//            textview.text = desript
+//            placeholderLabel.isHidden = !Title.isEmpty
+//            contentCount.text = "\(textview.text.count) of 500"
+//        }
+//        if Title != ""{
+//            eventTxt.text =  Title
+//            
+//        }
     }
+    
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            // handle camera image
-            selectedImages.append(image)
-            costomView.imageCollectionview.reloadData()
-        }
+            
+            attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
 
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            Attachmentview.imageCollectionview.reloadData()
+        }
+        
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            selectedImages.append(contentsOf: images)
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+        
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
-            costomView.imageCollectionview.reloadData()
-            // handle gallery images
+            attachments.append(contentsOf: imageItems)
+            if imageItems.count != 0{
+                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            }
+            
+            Attachmentview.imageCollectionview.reloadData()
         }
-
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+        
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
-            selectedImages.removeAll()
-            url = data.absoluteURL
-            selectedImages.append(ImageName.pdf!)
-            costomView.imageCollectionview.reloadData()
-        }
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
 
+            Attachmentview.imageCollectionview.reloadData()
+        }
+        
     }
     
     //MARK: Setting Current Date as initial Date
@@ -182,8 +188,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         placeholderLabel.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
         textview.applyRightTxt()
         textview.applyRightTxt(with: placeholderLabel)
-        contentCount.applyRightTxt()
-        eventTxt.applyRightTxt()
+        DescriptionLettersCount.applyRightTxt()
+        TitleTextfield.applyRightTxt()
         textview.addSubview(placeholderLabel)
         placeholderLabel.isHidden = !textview.text.isEmpty // Hide if text exists
     }
@@ -191,38 +197,37 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     func StyleAndTranslater(){
         
         //MARK: UI Changes
-        outerTxt.layer.cornerRadius = 10
-        outerTxt.layer.borderWidth = 0.5
-        outerTxt.layer.borderColor = UIColor.black.cgColor
-        
-        outerView.layer.cornerRadius = 10
-        outerView.layer.shadowColor = UIColor.black.cgColor
-        outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        outerView.layer.shadowRadius = 5
-        outerView.layer.shadowOpacity = 0.3
+        PopupView.layer.cornerRadius = 10
+        PopupView.layer.shadowColor = UIColor.black.cgColor
+        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        PopupView.layer.shadowRadius = 5
+        PopupView.layer.shadowOpacity = 0.3
         
         calanderBtn.layer.borderWidth = 1 // Border width
         calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
         calanderBtn2.layer.borderWidth = 1 // Border width
         calanderBtn2.layer.borderColor = UIColor.gray.cgColor // Border color
         
+        textview.layer.cornerRadius = 10
+        textview.layer.borderWidth = 1
+        textview.layer.borderColor = UIColor.gray.cgColor
+        
         //MARK: Label Font
-        HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
-        toDate.setFont(style: .body, size: FontSize.BodySize)
-        toDate.setFont(style: .body, size: FontSize.BodySize)
-        createDateLbl.setFont(style: .body, size: FontSize.BodySize)
+        ToTittleDefLbl.setFont(style: .body, size: FontSize.BodySize)
+        fromTitleDefLbl.setFont(style: .body, size: FontSize.BodySize)
         addPhotoLbl.setFont(style: .body, size: FontSize.BodySize)
-        enterDetails.setFont(style: .body, size: FontSize.BodySize)
-        setTitle.setFont(style: .body, size: FontSize.BodySize)
+        DescriptionDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        TittleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         todateBtn.setTitleFont(style: .body, size: 12)
         fromdateBtn.setTitleFont(style: .body, size: 12)
+        DescriptionLettersCount.setFont(style: .body, size: FontSize.BodySize)
+        TextfieldCharCountLbl.setFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Translate
-        HeadingLabel.text =  MenuTapbar.ComposeNotifications.translated()
         addPhotoLbl.text = CommonStringFile.UploadImagepdf.translated()
-        setTitle.text = CommonStringFile.EventTitle.translated()
-        eventTxt.placeholder = CommonStringFile.Title.translated()
-        enterDetails.text = CommonStringFile.EventDetails.translated()
+        TittleDefLbl.text = CommonStringFile.Title.translated()
+        TitleTextfield.placeholder = CommonStringFile.Title.translated()
+        DescriptionDefLbl.text = CommonStringFile.Description.translated()
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
     
@@ -245,11 +250,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         // Set the attributed string to the label
         label.attributedText = attributedString
-    }
-    
-    
-    @IBAction func SubmitAction(_ sender: Any) {
-        
     }
     
     @IBAction func fromDate(_ sender: UIButton) {
@@ -313,106 +313,130 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
        }
     
     
-    @IBAction func BackClick(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
     @IBAction func next(_ sender: UIButton) {
         let school_count = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
         
-        if school_count?.count ?? 0 > 1{
-            let vc = SchoolListVC(nibName: nil, bundle: nil)
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
-        }else{
+        if TitleTextfield.text != "" && textview.text != "" && textview.text != CommonStringFile.Description {
             
-            ServiceUrl.token = school_count?.first?.access_token ?? ""
-            let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = screenType.is_noticeboard
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true)
+            user_inputs.title = TitleTextfield.text ?? ""
+            user_inputs.description = textview.text
+            user_inputs.FromDate = ConvertDateStringSmart(fromdateBtn.titleLabel?.text ?? "")
+            user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
+            user_inputs.SelectedUrls = attachments
+            
+            if school_count?.count ?? 0 > 1{
+                let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }else{
+                
+                ServiceUrl.token = school_count?.first?.access_token ?? ""
+                let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.ScreenType = screenType.is_noticeboard
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true)
+            }
+        }else {
+            
+            alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
         }
-       
-        
     }
-    
     
     // MARK: File Attachments Actions
-
     func selectImages() {
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if img.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - img.count), from: self)
             
         }else{
-            let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
         }
-    }
-    func openCamera(){
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
-        }else{
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
-        }
-        
-    }
-    func selectPDF() {
-        PhotoPickerManager.shared.presentPicker(ofType: .pdf, from: self)
     }
     
+    func openCamera(){
+        let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
+        if img.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
+        }else{
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            
+        }
+    }
+    
+    func selectPDF() {
+        let pdf = attachments.filter { $0.fileType == CommonStringFile.pdf }
+        if pdf.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .file, from: self)
+            PhotoPickerManager.shared.limiSelection = 5 - pdf.count
+        }else{
+            
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+        }
+    }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         controller.dismiss(animated: true, completion: nil)
     }
     func deleteImage(index: Int) {
-        selectedImages.remove(at: index)
-        costomView.imageCollectionview.reloadData()
+        attachments.remove(at: index)
+        Attachmentview.imageCollectionview.reloadData()
     }
     
 }
 
 //MARK: Collectionview Delegate Functions
 @available(iOS 14.0, *)
-extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-    
+extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,QLPreviewControllerDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 + selectedImages.count
+        return 1 + attachments.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         if indexPath.item == 0{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
+            
+            let cell = Attachmentview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
+            
             cell.layer.cornerRadius = 20
             return cell
         }else{
-            let cell = costomView.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
-            cell.delegate = self
-            cell.deleteBtn.tag = indexPath.item - 1
-            if selectedImages.count > indexPath.item - 1 {
-                // Assign the image starting from the second image in the selectedImages array
-                cell.imageViews.image = selectedImages[indexPath.item - 1]
-            } else {
-                cell.imageViews.image = nil
-            }
-            if selectedImages.count <= 2{
-                collectionViewHeght.constant = 120
-            }else{
-                collectionViewHeght.constant = 220
-            }
+            
+            let cell = Attachmentview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageCvCell, for: indexPath) as! ImageCvCell
+            
+            let adjustedIndex = indexPath.item - 1
+            let item = attachments[adjustedIndex]
+            
+               cell.delegate = self
+               cell.deleteBtn.tag = adjustedIndex
+
+               if let image = item.image {
+                   cell.imageViews.image = image
+               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                   
+                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
+                       let iconName = getFileIconName(for: url)
+                       cell.imageViews.image = UIImage(named: iconName)
+                   } else {
+                       cell.imageViews.kf.setImage(with: url)
+                   }
+                   
+               } else {
+                   cell.imageViews.image = nil
+               }
+            
+            collectionViewHeght.constant = attachments.count <= 2 ? 120 : 220
+            
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let width = (costomView.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
+        let width = (Attachmentview.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
         
         return CGSize(width: width, height: 100)
     }
@@ -436,24 +460,41 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
             alertController.addAction(cancelAction)
             self.present(alertController, animated: true, completion: nil)
         }else{
-            if selectedImages.count > indexPath.item - 1 {
+        
+            if  attachments[indexPath.item - 1].fileType != AttachmentTypeString.IMAGE {
+                
+                DocumentpreviewURL = URL(string: attachments[indexPath.item-1].imageURL ?? "")
+                let previewController = QLPreviewController()
+                previewController.dataSource = self
+                present(previewController, animated: true, completion: nil)
+            }else {
+                
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                vc.selectedFileURL = url
-                vc.img = selectedImages[indexPath.item - 1]
+                if let img = attachments[indexPath.item - 1].image {
+                    vc.img = attachments[indexPath.item - 1].image
+                }else{
+                    vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
+                }
+                vc.type = user_inputs.selectedFileType
                 present(vc, animated: true)
             }
+        }
+    }
+    
+    func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+       
+        attachments.count == 0 ? 0:1
+    }
+
+    func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+        if let Url = DocumentpreviewURL {
             
+            return Url as QLPreviewItem
         }
         
-        
-        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-            
-            controller.dismiss(animated: true, completion: nil)
-            
-        }
-        
-        
+        return NSURL(fileURLWithPath: "")
     }
     
 }
@@ -465,6 +506,25 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder() // Dismiss the keyboard
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let currentText = textField.text ?? ""
+        
+        // Compute the new text after the proposed change
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        // If the new text count is within the limit, update the character count label and allow the change
+        if updatedText.count <= 50 {
+            TextfieldCharCountLbl.text = "\(updatedText.count) of 50"
+            return true
+        } else {
+            // If the limit is exceeded, show an alert and reject the change
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return false
+        }
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -486,7 +546,7 @@ extension SenderNoticeBoardVC : UITextFieldDelegate,UITextViewDelegate {
         guard let stringRange = Range(range, in: currentText) else { return false }
         let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
         if updatedText.count <= 500 {
-            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
+            DescriptionLettersCount.text = "\(updatedText.count) of 500" // Update the character count label
             return true // Allow the change
         } else {
             let alert = CustomAlert()

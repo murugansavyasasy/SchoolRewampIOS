@@ -167,19 +167,23 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         return currentIndex
     }
     func select(Title:String,Description:String,Images:[UIImage],pdf:String) {
-        if let page1 = pages[0] as? SenderNoticeBoardVC {
-//            page1.selectedImages = Img
-            page1.Title = Title
-            page1.desript = Description
-            print(Description)
-            guard 1 >= 0 else {
-                print("Index out of bounds")
-                return
-            }
-            let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-            let direction: UIPageViewController.NavigationDirection = 1 > currentIndex ? .forward : .reverse
-
-            pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
-         }
+//        if let page1 = pages[0] as? SenderNoticeBoardVC {
+////            page1.selectedImages = Img
+//            page1.Title = Title
+//            page1.desript = Description
+//            print(Description)
+//            guard 1 >= 0 else {
+//                print("Index out of bounds")
+//                return
+//            }
+//            gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+//            createEvent.setTitleColor(.white, for:.normal)
+//            gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+//            historyBtn.setTitleColor(.black, for:.normal)
+//            let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+//            let direction: UIPageViewController.NavigationDirection = 1 > currentIndex ? .forward : .reverse
+//
+//            pageViewController.setViewControllers([pages[0]], direction: direction, animated: true, completion: nil)
+//         }
     }
 }
