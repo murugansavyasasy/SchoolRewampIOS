@@ -1,3 +1,4 @@
+
 //
 //  PhotoPickManager.swift
 //  VsSchoolChimes
@@ -28,15 +29,17 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
     var onImagesPicked: (([UIImage]) -> Void)?
     var onCameraImagePicked: ((UIImage) -> Void)?
     var onVideoPicked: ((URL) -> Void)?
-//    var onPdfPicked: ((Data) -> Void)?
     var onPdfPicked: ((URL) -> Void)?
     var onFilePicked: ((URL) -> Void)?
     var limiSelection = 0
+
+    private weak var presentingViewController: UIViewController?
     private override init() {}
 
     // MARK: - Public API
-
     func presentPicker(ofType type: PickerType, from viewController: UIViewController) {
+        self.presentingViewController = viewController
+
         switch type {
         case .camera:
             openCamera(from: viewController)
@@ -126,7 +129,6 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
 
     // MARK: - UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
         if let mediaType = info[.mediaType] as? String {
             if mediaType == "public.image" {
                 if let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
@@ -136,33 +138,14 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
                 onVideoPicked?(mediaURL)
             }
         }
-
         picker.dismiss(animated: true)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
-//    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-//        let supportedExtensions = ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf", "pdf"]
-//        let supportedFiles = urls.filter {
-//            supportedExtensions.contains($0.pathExtension.lowercased())
-//        }
-//        
-//        // Enforce limit
-//        if supportedFiles.count > limiSelection {
-//            // Show alert and exit
-//            let alert = UIAlertController(title: "Limit Exceeded", message: "You can only select up to 5 files.", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .default))
-//            controller.present(alert, animated: true)
-//            return
-//        }
-//
-//        // If within limit, proceed
-//        for fileURL in supportedFiles {
-//            onFilePicked?(fileURL)
-//        }
-//    }
+
+    // MARK: - UIDocumentPickerDelegate
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         let supportedExtensions = ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "rtf", "pdf"]
         let supportedFiles = urls.filter { supportedExtensions.contains($0.pathExtension.lowercased()) }
@@ -170,25 +153,28 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         if supportedFiles.count > limiSelection {
             let filesToProcess = supportedFiles.prefix(limiSelection)
             let alert = UIAlertController(title: "Limit Exceeded",
-                                         message: "You can only select up to \(limiSelection) files. Only the first \(limiSelection) will be processed.",
-                                         preferredStyle: .alert)
-            
+                                          message: "You can only select up to \(limiSelection) files. Only the first \(limiSelection) will be processed.",
+                                          preferredStyle: .alert)
+
             alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                 for fileURL in filesToProcess {
-                    self.onFilePicked?(fileURL)
+                    let persistedURL = self.persistFileIfNeeded(at: fileURL)
+                    self.onFilePicked?(persistedURL)
                 }
             })
-            
-            controller.present(alert, animated: true)
+
+            controller.dismiss(animated: true) {
+                self.presentingViewController?.present(alert, animated: true)
+            }
         } else {
-            // If within limit, proceed immediately
             for fileURL in supportedFiles {
                 let url = persistFileIfNeeded(at: fileURL)
                 onFilePicked?(url)
             }
         }
     }
-    
+
+    // MARK: - File Persistence
     func persistFileIfNeeded(at url: URL) -> URL {
         let fileManager = FileManager.default
         let tempDir = NSTemporaryDirectory()
@@ -212,8 +198,6 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
         return url
     }
 
-
-    
     // MARK: - Utility
     private func showAlert(title: String, message: String, on vc: UIViewController) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

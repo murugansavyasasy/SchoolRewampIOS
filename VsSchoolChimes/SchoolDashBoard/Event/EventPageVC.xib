@@ -10,13 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventPageVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventPageVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="ygH-X9-gex" id="sEz-oX-nVy"/>
-                <outlet property="createEvent" destination="njW-Lw-5Wv" id="fpE-mC-5y3"/>
-                <outlet property="historyBtn" destination="1af-1a-6C4" id="4j4-49-p35"/>
-                <outlet property="outerView" destination="1dg-g2-rGC" id="8Ov-KD-9HB"/>
                 <outlet property="presentView" destination="eAv-wd-i7x" id="R05-oM-wmF"/>
+                <outlet property="segmentController" destination="mT6-rs-G4I" id="G0f-ot-HXk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -28,32 +26,21 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpr-Lv-zOq">
                     <rect key="frame" x="0.0" y="109" width="430" height="789"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-20" translatesAutoresizingMaskIntoConstraints="NO" id="1dg-g2-rGC">
-                            <rect key="frame" x="50" y="10" width="330" height="40"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njW-Lw-5Wv">
-                                    <rect key="frame" x="0.0" y="0.0" width="175" height="40"/>
-                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" title="Create"/>
-                                    <connections>
-                                        <action selector="SelectionController:" destination="-1" eventType="touchUpInside" id="seB-bB-RhD"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1af-1a-6C4">
-                                    <rect key="frame" x="155" y="0.0" width="175" height="40"/>
-                                    <color key="tintColor" name="topBackgroundCLr 1"/>
-                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" title="History"/>
-                                    <connections>
-                                        <action selector="SelectionController:" destination="-1" eventType="touchUpInside" id="pzf-yy-ree"/>
-                                    </connections>
-                                </button>
-                            </subviews>
-                            <color key="backgroundColor" name="gradient1"/>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-rs-G4I">
+                            <rect key="frame" x="20" y="10" width="390" height="41"/>
+                            <color key="backgroundColor" name="AttendenceColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="JVP-uF-EuF"/>
+                                <constraint firstAttribute="height" constant="40" id="h6s-gZ-0Xq"/>
                             </constraints>
-                        </stackView>
+                            <segments>
+                                <segment title="Homework"/>
+                                <segment title="Reports"/>
+                            </segments>
+                            <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="switchController:" destination="-1" eventType="valueChanged" id="JkF-qN-X3l"/>
+                            </connections>
+                        </segmentedControl>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAv-wd-i7x">
                             <rect key="frame" x="0.0" y="58" width="430" height="731"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -61,13 +48,13 @@
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstItem="eAv-wd-i7x" firstAttribute="top" secondItem="1dg-g2-rGC" secondAttribute="bottom" constant="8" symbolic="YES" id="1D6-x3-bnp"/>
-                        <constraint firstAttribute="trailing" secondItem="1dg-g2-rGC" secondAttribute="trailing" constant="50" id="63Q-KA-sQr"/>
                         <constraint firstAttribute="bottom" secondItem="eAv-wd-i7x" secondAttribute="bottom" id="Eaq-K0-Fmj"/>
+                        <constraint firstItem="mT6-rs-G4I" firstAttribute="leading" secondItem="xpr-Lv-zOq" secondAttribute="leading" constant="20" id="P1u-uW-3Mi"/>
                         <constraint firstAttribute="trailing" secondItem="eAv-wd-i7x" secondAttribute="trailing" id="TaX-Bo-21m"/>
-                        <constraint firstItem="1dg-g2-rGC" firstAttribute="top" secondItem="xpr-Lv-zOq" secondAttribute="top" constant="10" id="Z3W-yR-Tt3"/>
+                        <constraint firstItem="eAv-wd-i7x" firstAttribute="top" secondItem="mT6-rs-G4I" secondAttribute="bottom" constant="8" symbolic="YES" id="Vat-Ad-rmi"/>
+                        <constraint firstItem="mT6-rs-G4I" firstAttribute="top" secondItem="xpr-Lv-zOq" secondAttribute="top" constant="10" id="aC5-fP-lZc"/>
                         <constraint firstItem="eAv-wd-i7x" firstAttribute="leading" secondItem="xpr-Lv-zOq" secondAttribute="leading" id="bOH-T4-XAy"/>
-                        <constraint firstItem="1dg-g2-rGC" firstAttribute="leading" secondItem="xpr-Lv-zOq" secondAttribute="leading" constant="50" id="zKQ-Ik-sjW"/>
+                        <constraint firstAttribute="trailing" secondItem="mT6-rs-G4I" secondAttribute="trailing" constant="20" id="dBS-9F-AUc"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ygH-X9-gex">
@@ -103,14 +90,11 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <namedColor name="gradient1">
-            <color red="0.49803921568627452" green="0.81960784313725488" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="AttendenceColor">
+            <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <namedColor name="topBackgroundCLr 1">
-            <color red="0.4779999852180481" green="0.77600002288818359" blue="0.86299997568130493" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

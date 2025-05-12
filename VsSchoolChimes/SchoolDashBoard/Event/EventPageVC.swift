@@ -12,11 +12,8 @@ protocol HistorySelectDelegate{
 class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, HistorySelectDelegate{
 
     @IBOutlet weak var BackBtn: UIButton!
-    @IBOutlet weak var outerView: UIStackView!
-    @IBOutlet weak var historyBtn: UIButton!
-    @IBOutlet weak var createEvent: UIButton!
-    @IBOutlet weak var presentView: UIView! // Container view to embed the page view controller
-    
+    @IBOutlet weak var presentView: UIView!
+    @IBOutlet weak var segmentController: UISegmentedControl!
     var pageViewController: UIPageViewController!
     var pages: [UIViewController] = []
     var page1 = UIViewController()
@@ -32,13 +29,8 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
      BackBtn.imageView?.applyRTLFlip(Language == "ar")
         uiConficration()
         setupPageViewController()
-//        pages = [page1, page2]
         loadPages([page1, page2])
         disableSwipeGesture()
-        gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        createEvent.setTitleColor(.white, for:.normal)
-        gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        historyBtn.setTitleColor(.black, for:.normal)
         // Set the initial page
         if let firstPage = pages.first {
             pageViewController.setViewControllers([firstPage], direction: .forward, animated: true, completion: nil)
@@ -55,16 +47,15 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         )
     }
     func uiConficration(){
-      
-        outerView.layer.cornerRadius = 20
-        historyBtn.layer.cornerRadius = 20
-        createEvent.layer.cornerRadius = 20
         BackBtn.setTitle(titleLbl, for: .normal)
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
-        createEvent.setTitleFont(style: .body, size: FontSize.BodySize)
-        historyBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        historyBtn.setTitle(button2, for: .normal)
-        createEvent.setTitle(button1, for: .normal)
+        let segmentItems = [button1, button2]
+        segmentController.removeAllSegments()
+        for (index, item) in segmentItems.enumerated() {
+            segmentController.insertSegment(withTitle: item, at: index, animated: false)
+            }
+
+        segmentController.selectedSegmentIndex = 0
     }
     private func setupPageViewController() {
         // Initialize the page view controller
@@ -88,51 +79,40 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         
         pageViewController.didMove(toParent: self)
     }
-    func gradientcolours(button : UIButton,colours : [CGColor]){
-        
-        
-        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-               
-               // Create and configure the gradient layer
-               let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colours
-               gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-               gradientLayer.frame = button.bounds
-               gradientLayer.cornerRadius = button.layer.cornerRadius
-               
-               // Insert the gradient layer into the button's layer
-               button.layer.insertSublayer(gradientLayer, at: 0)
-        
-    }
+//    func gradientcolours(button : UIButton,colours : [CGColor]){
+//        
+//        
+//        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
+//               
+//               // Create and configure the gradient layer
+//               let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = colours
+//               gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+//        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
+//               gradientLayer.frame = button.bounds
+//               gradientLayer.cornerRadius = button.layer.cornerRadius
+//               
+//               // Insert the gradient layer into the button's layer
+//               button.layer.insertSublayer(gradientLayer, at: 0)
+//        
+//    }
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    @IBAction func SelectionController(_ sender: UIButton) {
-        
-        if sender.tag == 0{
-            gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-            createEvent.setTitleColor(.white, for:.normal)
-            gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            historyBtn.setTitleColor(.black, for:.normal)
-        }else{
-            gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            createEvent.setTitleColor(.black, for:.normal)
-            gradientcolours(button: historyBtn,colours:[UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-            historyBtn.setTitleColor(.white, for:.normal)
-        }
-        
-        guard sender.tag >= 0 && sender.tag < pages.count else {
-            print("Index out of bounds")
-            return
-        }
-        
-        let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
-        let direction: UIPageViewController.NavigationDirection = sender.tag > currentIndex ? .forward : .reverse
-
-        pageViewController.setViewControllers([pages[sender.tag]], direction: direction, animated: true, completion: nil)
-    }
     
+    @IBAction func switchController(_ sender: UISegmentedControl) {
+        let selectedIndex = sender.selectedSegmentIndex
+
+            guard selectedIndex >= 0 && selectedIndex < pages.count else {
+                print("Index out of bounds")
+                return
+            }
+
+            let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
+            let direction: UIPageViewController.NavigationDirection = selectedIndex > currentIndex ? .forward : .reverse
+
+            pageViewController.setViewControllers([pages[selectedIndex]], direction: direction, animated: true, completion: nil)
+    }
     
     func loadPages(_ CV:[UIViewController]) {
         // Initialize view controllers for pages
@@ -196,10 +176,6 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
                 print("Index out of bounds")
                 return
             }
-            gradientcolours(button: createEvent,colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-            createEvent.setTitleColor(.white, for:.normal)
-            gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            historyBtn.setTitleColor(.black, for:.normal)
             let currentIndex = pageViewController.viewControllers?.first.flatMap { pages.firstIndex(of: $0) } ?? 0
             let direction: UIPageViewController.NavigationDirection = 1 > currentIndex ? .forward : .reverse
 
