@@ -494,3 +494,27 @@ struct GeometricLocation:Codable{
     let location:String?
     let distance:String?
 }
+
+//MARK: Get noticeboard
+struct NoticeResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [Notice]?
+}
+
+struct Notice: Codable {
+    let title: String?
+    let content: String?
+    let created_on: String?
+    let day: String?
+    let visible_from: String?
+    let visible_to: String?
+    let intended_for: String?
+    let is_management: Bool?
+    let file_path: [File_Path]?
+}
+
+struct File_Path: Codable {
+    let url: String?
+    let type: String?
+}

@@ -119,6 +119,7 @@ class AlertstringFile{
     static let are_yousure_youWant_to_send_voiceMessage = "Are you sure you want to send this voice message?".translated()
     static let are_yousure_youWant_to_sendHomeWork = "Are you sure you want to send this Home Work?".translated()
     static let are_yousure_youWant_to_sendAttachment = "Are you sure you want to send this Attachment?".translated()
+    static let are_yousure_youWant_to_send_Notice = "Are you sure you want to send this Notice?".translated()
     static let are_yousure_youWant_to_send_emergency_voiceMessage = "Are you sure you want to send this Emergency voice message? note: this will send to all your contacts".translated()
     static let ConfirmLeave = "Are you sure want to ".translated()
     static let ConfirmLogout = "Are you sure you want to Logout".translated()

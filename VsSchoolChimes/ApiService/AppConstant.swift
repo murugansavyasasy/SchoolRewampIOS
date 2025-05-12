@@ -56,8 +56,8 @@ struct ServiceUrl{
 
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/geometric/get-staff-geometric-location"
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/geometric/update-geometric-location"
-    
-    
+    static let api_notice_board_send_notice = "/api/notice-board/send-notice"
+    static let api_notice_board_get_notice = "/api/notice-board/get-notice"
     
 }
 
@@ -94,6 +94,7 @@ struct Menu_id{
     static let AttachmentMenuId = 39
     static let StaffGeoAttendaceReport = 33
     static let GeoMatricAttendace = 21
+    static let NoticeboardMenuId = 23
 }
 struct TargetTypes{
     
@@ -140,6 +141,8 @@ struct user_inputs{
     static var circular_type = ""
     static var selectedFileType = ""
     static var VideoPath: URL?
+    static var FromDate = ""
+    static var ToDate = ""
     
 }
 struct circular_type{

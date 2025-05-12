@@ -340,7 +340,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                         FilteredMessages = TotalMessageList
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
-                        SearchbarStack.isHidden = false
+                        SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
                         tv.reloadData()
                     }
                     
@@ -348,6 +348,8 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                     
                     DispatchQueue.main.async { [self] in
                         TotalMessageList = []
+                        SearchMessages = TotalMessageList
+                        FilteredMessages = TotalMessageList
                         SearchbarStack.isHidden = true
                         NodataLbl.text = SuccessMessage.message  //"Something went wrong! Try again Later"
                         NodataLbl.isHidden = false
@@ -417,7 +419,7 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
                           
                         SearchMessages = FilteredMessages
                         
-                        SearchbarStack.isHidden = false
+                        SearchbarStack.isHidden = !(TotalMessageList?.count ?? 0 > 1)//false
                         NodataLbl.isHidden = true
                         NodataImage.isHidden = true
                         tv.isHidden = false
@@ -526,8 +528,12 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
-          return SearchMessages?.count ?? 0
+        
+        NodataLbl.isHidden = !(SearchMessages?.count == 0)
+        NodataImage.isHidden = !(SearchMessages?.count == 0)
+        //NodataLbl.text = "No Data Found"
+        
+        return SearchMessages?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

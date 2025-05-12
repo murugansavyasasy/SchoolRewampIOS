@@ -46,6 +46,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     @IBOutlet weak var AddAtachmentStack: UIStackView!
     @IBOutlet weak var VideoDeleteBtn: UIImageView!
     @IBOutlet weak var AttachmentIcon: UIImageView!
+    @IBOutlet weak var TitleLettersCount: UILabel!
+    @IBOutlet weak var AttachmentDropdownHeight: NSLayoutConstraint!
     
     var selectedImages: [UIImage] = []
     let TypeDropDown = DropDown()
@@ -86,8 +88,9 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         
         assignTitleTxtFld.addDoneButton()
         contentTextView.addDoneButton()
-        contentTextView.delegate = self
         contentTextView.applyRightTxt()
+        contentTextView.delegate = self
+        assignTitleTxtFld.delegate = self
        
         AssignmenttypeLbl.applyRightTxt()
         DescriptionLbl.applyRightTxt()
@@ -127,12 +130,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     
     func  StyleAndTranslater(){
         
+        AttachmentDropdownHeight.constant = 0
+        AssignmentTypeview.isHidden = true
         TextviewHeight.constant = initialHeight
         
         //MARK: UI Update
-        AddAtachmentStack.isHidden = true
+        //AddAtachmentStack.isHidden = true
         VideoView.isHidden = true
-        selectImgPdfview.isHidden = true
+        //selectImgPdfview.isHidden = true
         VideoDeleteBtn.isHidden = true
 
         VideoView.layer.cornerRadius = 10
@@ -156,6 +161,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         //MARK: Label Font Style
         AddAttachmentsLbl.setFont(style: .title, size: FontSize.TitleSize)
         letterscountLbl.setFont(style: .body, size: FontSize.BodySize)
+        TitleLettersCount.setFont(style: .body, size: FontSize.BodySize)
         DescriptionLbl.setFont(style: .title, size: FontSize.TitleSize)
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -165,25 +171,35 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     func imageSelection(){
         
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-          
+            fileUrls.removeAll()
+            VideoPath_URL = nil
             selectedImages.append(image)
+            user_inputs.selectedFileType = AttachmentTypeString.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            
+            fileUrls.removeAll()
+            VideoPath_URL = nil
             selectedImages.append(contentsOf: images)
+            user_inputs.selectedFileType = AttachmentTypeString.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
         }
 
         PhotoPickerManager.shared.onFilePicked = { [self] data in
             
+            if user_inputs.selectedFileType == AttachmentTypeString.IMAGE {
+                selectedImages.removeAll()
+            }
+            
             if let fileUrl = URL(string:data.absoluteString){
+                VideoPath_URL = nil
                 fileUrls.append(data.absoluteString)
                 let iconName = getFileIconName(for: fileUrl)
                 if let img = UIImage(named: iconName){
                     selectedImages.append(img)
                 }
+                user_inputs.selectedFileType = AttachmentTypeString.DOCUMENT
             }
             selectImgPdfview.imageCollectionview.reloadData()
         }
@@ -248,7 +264,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             alert.showAlert(title: "", message: AlertstringFile.Please_Select_a_Document, on: self)
         }
         
-        if assignTitleTxtFld.text != ""  && contentTextView.text != ""{
+        if assignTitleTxtFld.text != ""  && contentTextView.text != "" && contentTextView.text != CommonStringFile.Description {
             user_inputs.title = assignTitleTxtFld.text ?? ""
             user_inputs.description = contentTextView.text ?? ""
             user_inputs.selectedImg = selectedImages
@@ -406,6 +422,13 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 playerurl = nil
             }
             
+            selectImgPdfview.isHidden = true
+            VideoView.isHidden = false
+            
+            selectedImages.removeAll()
+            fileUrls.removeAll()
+            user_inputs.selectedFileType = AttachmentTypeString.VIDEO
+            
             VideoPath_URL = videoURL
             playerurl = videoURL
             print("Selected video URL: \(videoURL)")
@@ -477,8 +500,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             NSLayoutConstraint.activate([
                 closeImageView.topAnchor.constraint(equalTo: VideoView.topAnchor, constant: -14),
                 closeImageView.trailingAnchor.constraint(equalTo: VideoView.trailingAnchor, constant: 8),
-                closeImageView.widthAnchor.constraint(equalToConstant: 40),
-                closeImageView.heightAnchor.constraint(equalToConstant: 40)
+                closeImageView.widthAnchor.constraint(equalToConstant: 30),
+                closeImageView.heightAnchor.constraint(equalToConstant: 30)
             ])
         }
     }
@@ -498,6 +521,11 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         
         playerurl = nil
         VideoPath_URL = nil
+        
+        VideoView.isHidden = true
+        selectImgPdfview.isHidden = false
+        
+        selectImgPdfview.imageCollectionview.reloadData()
     }
 }
 
@@ -568,7 +596,6 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             
             let alertController = UIAlertController(title: AlertstringFile.Select, message:AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
             
-            if isImage{
                 // Camera option
                 let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
                     
@@ -583,14 +610,17 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
                 }
                 alertController.addAction(galleryAction)
                 
-            } else {
+                let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                    
+                    pickVideoFromGallery()
+                }
+                alertController.addAction(VideoAction)
                 
                 let DocumentAction = UIAlertAction(title: AlertstringFile.Document, style: .default) { [self] _ in
                     
                     selectDocuments()
                 }
                 alertController.addAction(DocumentAction)
-            }
            
             
             // Cancel action
@@ -636,7 +666,27 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
 }
 
 @available(iOS 14.0, *)
-extension SenderAttachmentVC : UITextViewDelegate{
+extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let currentText = textField.text ?? ""
+        
+        // Compute the new text after the proposed change
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: string)
+        
+        // If the new text count is within the limit, update the character count label and allow the change
+        if updatedText.count <= 50 {
+            TitleLettersCount.text = "\(updatedText.count) of 50"
+            return true
+        } else {
+            // If the limit is exceeded, show an alert and reject the change
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            return false
+        }
+    }
+
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if contentTextView.text == CommonStringFile.Description.translated() {
