@@ -12,13 +12,16 @@ class EventResiverVC: UIViewController, SelectNotice{
     
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var tableview: UITableView!
-    @IBOutlet weak var outerView: UIStackView!
-    @IBOutlet weak var historyBtn: UIButton!
-    @IBOutlet weak var createEvent: UIButton!
+    @IBOutlet weak var segment: UISegmentedControl!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var TitleHederLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
+    @IBOutlet weak var noDataLbl: UILabel!
+    @IBOutlet weak var searchHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var noDataImg: UIImageView!
+    
     @IBOutlet weak var StandardLbl: UILabel!
  
     var titleLbl = "Event"
@@ -29,7 +32,10 @@ class EventResiverVC: UIViewController, SelectNotice{
     let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
     var section = 0
     var shouldShowFooter = true
-    
+    var homeWorkList:[HomeworkList]?
+    var FilterHomeWorkList:[HomeworkList]?
+    var playIndex : Int = 0
+    var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,19 +50,6 @@ class EventResiverVC: UIViewController, SelectNotice{
         searchbar.addDoneButton()
         uiConficration()
         tabelViewRegister()
-        configureButton(
-            createEvent,
-            title: button1,
-            imageName: nil,
-            gradientColors:[UIColor.green,UIColor.blue],
-            opacity: 0.8, // 70% opacity
-            lightenFactor: 0.6// 40% lighter
-        )
-        
-        createEvent.setTitleColor(.black, for:.normal)
-        gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        historyBtn.setTitleColor(.gray, for:.normal)
-        // Set the initial page
         setupTableFooter()
         tableview.reloadData()
     }
@@ -86,13 +79,6 @@ class EventResiverVC: UIViewController, SelectNotice{
     
     func uiConficration(){
         TitleHederLbl.setFont(style: .header, size: FontSize.HeaderSize)
-        outerView.layer.cornerRadius = 20
-        historyBtn.layer.cornerRadius = 20
-        createEvent.layer.cornerRadius = 20
-        createEvent.setTitleFont(style: .body, size: FontSize.BodySize)
-        historyBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        historyBtn.setTitle(button2, for: .normal)
-        createEvent.setTitle(button1, for: .normal)
     }
    
     func gradientcolours(button : UIButton,colours : [CGColor]){
@@ -115,105 +101,104 @@ class EventResiverVC: UIViewController, SelectNotice{
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
-    @IBAction func SelectionController(_ sender: UIButton) {
-        section = sender.tag
-        if sender.tag == 0{
-            configureButton(
-                createEvent,
-                title: button1,
-                imageName: nil,
-                gradientColors:[UIColor.green,UIColor.blue],
-                opacity: 0.8, // 70% opacity
-                lightenFactor: 0.6// 40% lighter
-            )
-            createEvent.setTitleColor(.black, for:.normal)
-            gradientcolours(button: historyBtn,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            historyBtn.setTitleColor(.gray, for:.normal)
-        }else{
-            gradientcolours(button: createEvent,colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            createEvent.setTitleColor(.gray, for:.normal)
-            configureButton(
-                historyBtn,
-                title: button2,
-                imageName: nil,
-                gradientColors:[UIColor.green,UIColor.blue],
-                opacity: 0.8, // 70% opacity
-                lightenFactor: 0.6// 40% lighter
-            )
-            historyBtn.setTitleColor(.black, for:.normal)
-        }
+    @IBAction func selectionController(_ sender: UISegmentedControl) {
         
+        section = sender.selectedSegmentIndex
         tableview.reloadData()
     }
-    // Helper function to configure the button
-    func configureButton(
-        _ button: UIButton,
-        title: String,
-        imageName: UIImage?,
-        gradientColors: [UIColor],
-        cornerRadius: CGFloat = 20,
-        imageSize: CGSize = CGSize(width: 40, height: 40),
-        spacing: CGFloat = 8.0,
-        opacity: CGFloat = 0.5, // Opacity for the gradient
-        lightenFactor: CGFloat = 0.3 // Factor to lighten colors (0 = no change, 1 = full white)
-    ) {
-        // Set corner radius
-        button.layer.cornerRadius = cornerRadius
-        button.layer.masksToBounds = true
-        
-        // Adjust colors for lightening and opacity
-        let adjustedColors = gradientColors.map { color in
-            color.blendedWithWhite(factor: lightenFactor).withAlphaComponent(opacity)
+    func GetHomeWorkReport() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
         }
-        
-        // Apply gradient
-        button.applyGradient(
-            colors: adjustedColors,
-            startPoint: CGPoint(x: 1, y: 0.5),
-            endPoint: CGPoint(x: 0, y: 0.5)
-        )
-        button.setTitleFont(style: .body, size: FontSize.BodySize)
-        
-        // Set title and image
-        button.setTitle(title, for: .normal)
-        if let image = imageName {
-            let resizedImage = UIGraphicsImageRenderer(size: imageSize).image { _ in
-                image.draw(in: CGRect(origin: .zero, size: imageSize))
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_homework_get_homework_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: studentDetails?.access_token ?? ""
+        ) { [self] (result: Result<HomeworListkResponse, Error>) in
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
+                }
+                
+                switch result {
+                case .success(let successMessage):
+                    self.homeWorkList = successMessage.data
+                    self.FilterHomeWorkList = successMessage.data
+                    self.tableview.reloadData()
+                    if self.homeWorkList?.count == 0{
+                        
+                        self.noDataLbl.text = successMessage.message
+                        self.noDataLbl.isHidden = false
+                        self.noDataImg.isHidden = false
+                       self.tableview.isHidden = true
+                        self.searchbar.isHidden = true
+                        self.searchHeight.constant = 0
+                    }else{
+                        self.noDataLbl.isHidden = true
+                        self.noDataImg.isHidden = true
+                        self.tableview.isHidden = false
+                        self.searchHeight.constant = 56
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.noDataLbl.text = error.localizedDescription
+                    self.noDataLbl.isHidden = false
+                    self.noDataImg.isHidden = false
+                    self.tableview.isHidden = true
+                    self.searchbar.isHidden = true
+                }
             }
-            button.setImage(resizedImage, for: .normal)
-        }
-        
-        // Align image and title
-        button.contentHorizontalAlignment = .center  // Ensure horizontal alignment
-        if let imageSize = button.imageView?.frame.size,
-           let titleSize = button.titleLabel?.intrinsicContentSize {
-            let totalHeight = imageSize.height + titleSize.height + spacing
-            
-            button.imageEdgeInsets = UIEdgeInsets(
-                top: -(totalHeight - imageSize.height),  // Move image to the top
-                left: 0,
-                bottom: 0,
-                right: -titleSize.width // Center align horizontally
-            )
-            
-            button.titleEdgeInsets = UIEdgeInsets(
-                top: 0,  // No padding at the top
-                left: -imageSize.width,  // Center align horizontally
-                bottom: -(totalHeight - titleSize.height),  // Move title below the image
-                right: 0
-            )
-            
-            button.contentEdgeInsets = UIEdgeInsets(
-                top: 0,
-                left: 0,
-                bottom: spacing,
-                right: 0
-            )
         }
     }
-
-    
- 
+    func GetHomeWorkArchive() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_homework_get_homework_list_archive,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token:studentDetails?.access_token ?? "") { [self] (result: Result<HomeworListkResponse, Error>) in
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
+                    }
+                    
+                    switch result {
+                    case .success(let successMessage):
+//                        self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
+                        self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
+                        self.tableview.reloadData()
+                        if self.homeWorkList?.count == 0{
+                            self.noDataLbl.text = successMessage.message
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            
+                            self.tableview.isHidden = true
+                            self.searchbar.isHidden = true
+                            self.searchHeight.constant = 0
+                        }else{
+                            self.noDataLbl.isHidden = true
+                            self.noDataImg.isHidden = true
+                            self.searchHeight.constant = 56
+                            self.tableview.isHidden = false
+                        }
+                        
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        if self.homeWorkList?.count == 0{
+                            self.noDataLbl.text = error.localizedDescription
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            self.tableview.isHidden = true
+                            self.searchbar.isHidden = true
+                        }
+                        
+                    }
+                }
+            }
+    }
 }
 
 //MARK: Tableview Functions
