@@ -246,6 +246,7 @@ class CommonStringFile{
     static let Present = "Present".translated()
     static let Absent = "Absent".translated()
     static let getAllStudent = "get All Student".translated()
+    static let getStanderd = "Standerd & Section".translated()
     static let Logout = "Logout".translated()
     static let Select_from_history = "Select from history".translated()
     static let RollNo = "Roll No".translated()

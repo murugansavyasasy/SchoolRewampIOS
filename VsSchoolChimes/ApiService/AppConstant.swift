@@ -100,6 +100,7 @@ struct Menu_id{
     static let GeoMatricAttendace = 21
     static let NoticeboardMenuId = 23
     static let Event = 29
+    static let StudentReport = 35
 }
 struct TargetTypes{
     
