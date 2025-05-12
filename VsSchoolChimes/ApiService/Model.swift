@@ -497,8 +497,6 @@ struct GeometricLocation:Codable{
 }
 
 struct DailyCollectionResponse: Codable {
-//MARK: Get noticeboard
-struct NoticeResponse: Codable {
     let status: Bool?
     let message: String?
     let data: [DailyCollectionData]?
@@ -514,7 +512,13 @@ struct DailyCollectionData: Codable {
 struct FeeData: Codable {
     let type_name: String?
     let amount: String?
-    let data: [Notice]?
+}
+
+//MARK: Get noticeboard
+struct NoticeResponse: Codable {
+ let status: Bool?
+ let message: String?
+ let data: [Notice]?
 }
 
 struct Notice: Codable {

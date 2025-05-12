@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class AttachmentCvCollectionViewCell: UICollectionViewCell {
     enum Constants {
@@ -13,11 +14,14 @@ class AttachmentCvCollectionViewCell: UICollectionViewCell {
         static let font = UIFont.systemFont(ofSize: 12, weight: .semibold)
     }
    
+    @IBOutlet weak var webview: WKWebView!
+
+    @IBOutlet weak var sentBy: UILabel!
+    @IBOutlet weak var timeAndDate: UILabel!
     @IBOutlet weak var discreptionLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-    
-    @IBOutlet weak var lblcon: NSLayoutConstraint!
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,4 +31,23 @@ class AttachmentCvCollectionViewCell: UICollectionViewCell {
         
 //        lblcon.constant = Constants.padding
     }
+    
+    
+    
+    
+    func loadVimeoVideo(iframe: String) {
+        let htmlString = """
+        <html>
+        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>body, html { margin: 0; padding: 0; }</style>
+        </head>
+        <body>
+        \(iframe)
+        </body>
+        </html>
+        """
+        webview.loadHTMLString(htmlString, baseURL: nil)
+    }
+
 }

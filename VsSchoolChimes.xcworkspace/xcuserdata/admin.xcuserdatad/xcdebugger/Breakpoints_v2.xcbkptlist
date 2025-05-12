@@ -169,32 +169,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D74212BB-7732-48EB-B97A-744F43F11C82"
+            uuid = "A19F7791-C113-45B7-A7B8-1A7C03186C65"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/AWS/AWSS3Manager.swift"
+            filePath = "VsSchoolChimes/ParentDashBoard/ReciverHomework/ReciverHomeworkVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
-            landmarkName = "deleteFileFromS3(withURL:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EABCF6BB-BE85-409D-BD6A-EA26099BB7A3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "527"
-            endingLineNumber = "527"
-            landmarkName = "handleEvent()"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "GetHomeWorkReport()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -61,7 +61,6 @@ class AttachmentVCViewController: UIViewController {
 extension AttachmentVCViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         guard let attachment = filteredAttachments?[indexPath.item] else { return 0 }
-
         let width = (collectionView.bounds.width / 2) - 16
 
         let titleFont = UIFont.boldSystemFont(ofSize: 14)
@@ -69,60 +68,44 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
 
         let titleHeight = attachment.title?.heights(withConstrainedWidth: width, font: titleFont) ?? 0
         let descHeight = attachment.description?.heights(withConstrainedWidth: width, font: descFont) ?? 0
-
-        var imageHeight: CGFloat = 180
         let spacing: CGFloat = 8 + 8 + 8
 
-        
-        guard let attachment = filteredAttachments?[indexPath.item],
-         let urlString = attachment.file_path?.first?.path,
-         let url = URL(string: urlString),
-         let data = try? Data(contentsOf: url),
-         let image = UIImage(data: data) else {
-         return 200 // Default/fallback height
-         }
-         
-         let widths = image.size.width
-         let heights = image.size.height
-         guard width > 0 else { return 200 }
-        imageHeight = (heights * width) / widths
-        return titleHeight + descHeight + imageHeight + spacing
+        switch attachment.type {
+        case "IMAGE":
+            if let urlString = attachment.file_path?.first?.path,
+               let url = URL(string: urlString),
+               let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
+                let ratio = (image.size.height * width) / image.size.width
+                return titleHeight + descHeight + ratio + spacing
+            } else {
+                return titleHeight + descHeight + 200 + spacing
+            }
+
+        case "VIDEO":
+            return titleHeight + descHeight + 300 + spacing
+        case "DOCUMENT":
+            return titleHeight + descHeight + 100 + spacing
+        default:
+            return titleHeight + descHeight + 80 + spacing
+        }
     }
 
+
+    func extractDimensions(from iframe: String) -> (width: String, height: String)? {
+        guard let widthMatch = iframe.range(of: #"width=\"(\d+)\""#, options: .regularExpression),
+              let heightMatch = iframe.range(of: #"height=\"(\d+)\""#, options: .regularExpression) else {
+            return nil
+        }
+
+        let width = String(iframe[widthMatch]).replacingOccurrences(of: #"width=""#, with: "").replacingOccurrences(of: "\"", with: "")
+        let height = String(iframe[heightMatch]).replacingOccurrences(of: #"height=""#, with: "").replacingOccurrences(of: "\"", with: "")
+
+        print(width,width)
+        return (width, height)
+    }
     
-//    func collectionView(_ collectionView: UICollectionView, layout: PinterestLayout, heightForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
-//     guard let attachment = filteredAttachments?[indexPath.item],
-//     let urlString = attachment.file_path?.first?.path,
-//     let url = URL(string: urlString),
-//     let data = try? Data(contentsOf: url),
-//     let image = UIImage(data: data) else {
-//     return 200 // Default/fallback height
-//     }
-//     
-//     let width = image.size.width
-//     let height = image.size.height
-//     guard width > 0 else { return 200 }
-//     
-//     let scaledImageHeight = (height * layout.cellWidth) / width
-//     let padding = ImageCell.Constants.padding
-//     
-//     let titleText = attachment.title ?? ""
-//     let descriptionText = attachment.description ?? ""
-//     let dateText = attachment.date ?? ""
-//     let timeText = attachment.time ?? ""
-//     let senderText = attachment.sender_info ?? ""
-//     
-//     let titleHeight = titleText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-//     let descriptionHeight = descriptionText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-//     let dateHeight = dateText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-//     let timeHeight = timeText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-//     let senderInfoHeight = senderText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-//     
-//     let totalTextHeight = titleHeight + descriptionHeight + dateHeight + timeHeight + senderInfoHeight
-//     let totalPadding = padding * 5
-//     
-//     return scaledImageHeight + totalTextHeight + totalPadding
-//     }
+
 }
 
 extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -132,22 +115,44 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imageCellID, for: indexPath) as! AttachmentCvCollectionViewCell
-       
         guard let data = filteredAttachments?[indexPath.row] else {
-         return UICollectionViewCell() // Safely return a default cell if data is nil
-         }
-        
-        cell.imageView
-            .sd_setImage(
-                with: URL(string: data.file_path?.first?.path ?? ""),
-                placeholderImage: ImageName.placeholder
-            )
+            return UICollectionViewCell()
+        }
+
         cell.TitleLbl.text = data.title
+        cell.timeAndDate.text = (data.date ?? "") + " - " + (data.time ?? "")
+        cell.sentBy.text = data.sender_info
         cell.discreptionLbl.text = data.description
+
+        switch data.type {
+        case "IMAGE":
+            cell.imageView.isHidden = false
+            cell.webview.isHidden = true
+            cell.imageView.sd_setImage(with: URL(string: data.file_path?.first?.path ?? ""), placeholderImage: ImageName.placeholder)
+
+        case "VIDEO":
+            cell.imageView.isHidden = true
+            cell.webview.isHidden = false
+            if let iframe = data.iframe {
+                cell.loadVimeoVideo(iframe: iframe)
+            }
+
+        case "DOCUMENT":
+            cell.imageView.isHidden = true
+            cell.webview.isHidden = false
+            if let docUrl = data.file_path?.first?.path, let url = URL(string: docUrl) {
+                cell.webview.load(URLRequest(url: url))
+            }
+
+        default:
+            cell.imageView.isHidden = true
+            cell.webview.isHidden = true
+        }
+
         return cell
     }
+
     
 
     private func fetchAttachments() {

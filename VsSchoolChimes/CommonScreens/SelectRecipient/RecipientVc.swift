@@ -252,7 +252,7 @@ class RecipientVc: UIViewController{
             onOk: {[self] in
                 
                 let file: Any = user_inputs.SelectedUrls
-                uploadAndSendVoiceMessage(file: file) { [self] in
+                uploadAWSMedia(file: file) { [self] in
                     
                     CircularProgressLoader.shared.hide()
                     let uploadedFiles: [[String:String]] = uploadedURLs.compactMap{ url in
@@ -374,7 +374,7 @@ class RecipientVc: UIViewController{
                     
                     let file: Any = selectedType == AttachmentTypeString.IMAGE ? user_inputs.selectedImg : user_inputs.docUrl
                     CircularProgressLoader.shared.show()
-                    uploadAndSendVoiceMessage(file: file) { [self] in
+                    uploadAWSMedia(file: file) { [self] in
                         CircularProgressLoader.shared.hide()
                         uploadedFiles = uploadedURLs.compactMap { url in ["path": url] }
                         iframeValue = "" // for IMAGE or DOCUMENT
@@ -520,7 +520,7 @@ class RecipientVc: UIViewController{
             on: self,
             onOk: { [self] in
                 let file: Any = user_inputs.SelectedUrls
-                uploadAndSendVoiceMessage(file: file) { [self] in
+                uploadAWSMedia(file: file) { [self] in
                     CircularProgressLoader.shared.hide()
                     let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
                         if let url = URL(string: url) {
@@ -597,7 +597,7 @@ class RecipientVc: UIViewController{
             on: self,
             onOk: { [self] in
                 let file: Any = user_inputs.SelectedUrls
-                uploadAndSendVoiceMessage(file: file) { [self] in
+                uploadAWSMedia(file: file) { [self] in
                     CircularProgressLoader.shared.hide()
                     let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
                         if let url = URL(string: url) {
@@ -710,7 +710,7 @@ class RecipientVc: UIViewController{
                     if user_inputs.voice_link.contains("https:") { // MARK: FORWARD VOICE
                         sendVoiceMessage_communication()
                     } else {
-                        uploadAndSendVoiceMessage(file: user_inputs.voice_link) {
+                        uploadAWSMedia(file: user_inputs.voice_link) {
                             self.sendVoiceMessage_communication()
                         }
                     }
@@ -724,7 +724,7 @@ class RecipientVc: UIViewController{
             }
         )
     }
-    private func uploadAndSendVoiceMessage(file: Any, completion: @escaping () -> Void) {
+    private func uploadAWSMedia(file: Any, completion: @escaping () -> Void) {
         var completed = 0
         func updateAndCheckCompletion(total: Int) {
             let progress = (Double(completed) / Double(total)) * 100
@@ -846,7 +846,7 @@ class RecipientVc: UIViewController{
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
                         CircularProgressLoader.shared.updateProgress(to: progress)
-                        
+    
                         if completed == total {
                             CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
@@ -1699,7 +1699,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     
     
     func sendVoiceMessage_communication() {
-        
         
         APIService.shared
             .makeApi(url: ServiceUrl.comm_voice_send_voice, parameters:[
