@@ -153,3 +153,10 @@ class StaffAttendanceReportStringFile {
     
     static var attendance_dt = "attendance_dt"
 }
+
+class Daily_collectionStringFile {
+    static var type = "type"
+    static var from_date = "from_date"
+    static var to_date = "to_date"
+}
+

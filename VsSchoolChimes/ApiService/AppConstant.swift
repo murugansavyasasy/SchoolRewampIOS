@@ -56,7 +56,7 @@ struct ServiceUrl{
 
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/geometric/get-staff-geometric-location"
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/geometric/update-geometric-location"
-    
+    static let api_fee_report_daily_collection = "api/fee-report/daily-collection"
     
     
 }

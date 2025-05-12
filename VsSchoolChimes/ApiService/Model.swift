@@ -440,6 +440,7 @@ struct Attachment: Codable {
     let is_unread: Bool?
     let is_archive: Bool?
     let file_path: [FilePath]?
+    let iframe: String?
 }
 
 struct AttachmentFilePath: Codable {
@@ -493,4 +494,22 @@ struct GeometricLocation:Codable{
     let longitude:String?
     let location:String?
     let distance:String?
+}
+
+struct DailyCollectionResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [DailyCollectionData]?
+}
+
+struct DailyCollectionData: Codable {
+    let category: String?
+    let total: String?
+    let fee_data: [FeeData]?
+    let total_collection: String?
+}
+
+struct FeeData: Codable {
+    let type_name: String?
+    let amount: String?
 }

@@ -24,24 +24,17 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     
     @IBOutlet weak var Backbtn: UIButton!
-    @IBOutlet weak var datePicker: UIDatePicker!
-    @IBOutlet weak var caleView: UIView!
+   
     @IBOutlet weak var dateViewHeight: NSLayoutConstraint!
     @IBOutlet weak var todateLbl: UILabel!
-    @IBOutlet weak var dropDownLbl: UILabel!
-    @IBOutlet weak var AcadamidropDown: UIViewX!
     @IBOutlet weak var TodateView: UIViewX!
-    @IBOutlet weak var categoryWiseView: UIView!
+   
     @IBOutlet weak var norecordLbl: UILabel!
-    @IBOutlet weak var classWiseView: UIView!
+   
     @IBOutlet weak var calendarView: UIViewX!
-    @IBOutlet weak var modeView: UIView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var fromLbl: UILabel!
-    @IBOutlet weak var CategoryLbl: UILabel!
-    @IBOutlet weak var ClassLbl: UILabel!
-    @IBOutlet weak var ModeLbl: UILabel!
-    
+   
     
     var url_time : String!
     var url_hours : String!
@@ -76,23 +69,16 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         FeeMode(paymentMode: "Check", amount: "1200")
     ]
 
-    
+    var DailyCollectionData: [DailyCollectionData]?
     override func viewDidLoad() {
         super.viewDidLoad()
         Backbtn.applyBackButton()
   
-        categoryWiseView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        CategoryLbl.textColor = .white
-        ClassLbl.textColor = .gray
-        ModeLbl.textColor = .gray
-        
-        categoryWiseView.layer.cornerRadius = 10
-        classWiseView.layer.cornerRadius = 10
-        modeView.layer.cornerRadius = 10
+//        categoryWiseView.applyGradient(
+//            colors: [UIColor.blue,UIColor.systemTeal],
+//            startPoint: CGPoint(x: 0, y: 0.5),
+//            endPoint: CGPoint(x: 0.8, y: 0.5)
+//        )
         
         norecordLbl.isHidden = true
         let dateFormatter = DateFormatter()
@@ -101,38 +87,19 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         currentdate = formattedDateTime
         fromLbl.text = formattedDateTime
         todateLbl.text = formattedDateTime
-       // tv.isHidden = true
-        dropDownLbl.textColor = .lightGray
+      
         tv.dataSource = self
         tv.delegate = self
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.PaymentListTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PaymentListTableViewCell)
         tv.register(UINib(nibName:CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
-        
-        caleView.isHidden = true
-        
-        let classWiseGuesture = UITapGestureRecognizer(target: self, action: #selector(classAction))
-        classWiseView.addGestureRecognizer(classWiseGuesture)
-        
-        AcadamidropDown.isHidden = true
-        
-        let dropdown = UITapGestureRecognizer(target: self, action: #selector( DropDownVc))
-        AcadamidropDown.addGestureRecognizer(dropdown)
-        
-        let modeGuesture = UITapGestureRecognizer(target: self, action: #selector(modeAction))
-        modeView.addGestureRecognizer(modeGuesture)
-        
-        let categoryGuesture = UITapGestureRecognizer(target: self, action: #selector(categoryAction))
-        categoryWiseView.addGestureRecognizer(categoryGuesture)
-        
+
         let fromdateTap = UITapGestureRecognizer(target: self, action: #selector(SelectFromDate))
         calendarView.addGestureRecognizer(fromdateTap)
         
         let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
         TodateView.addGestureRecognizer(todateTap)
-        
-        dashBoardList()
-        
+    
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -141,191 +108,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
-    @IBAction func DropDownVc(){
-        let acadamicYear = DropDownStr
-        dropDown.dataSource = acadamicYear //4
-        dropDown.anchorView = AcadamidropDown //5
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        dropDown.direction = .bottom
-        DropDown.appearance().backgroundColor = UIColor.white
-        dropDown.show() //7
-        dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            self.dropDownLbl.text = item
-            dropDownLbl.textColor = .black
-            
-        }
-    }
     
-    func dashBoardList() {
-        
-        var todate : String!
-        var fromdate : String!
-        let inputDateFormatter = DateFormatter()
-        inputDateFormatter.dateFormat = "MMM dd,yyyy"
-        let outputDateFormatter = DateFormatter()
-        outputDateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateString = fromLbl.text
-        if let date = inputDateFormatter.date(from: dateString!) {
-            let outputDateString = outputDateFormatter.string(from: date)
-            fromdate = outputDateString
-            print(outputDateString)
-        } else {
-            print("Invalid date format")
-        }
-        let inputDateFormatter1 = DateFormatter()
-        inputDateFormatter1.dateFormat = "MMM dd,yyyy"
-        let outputDateFormatter1 = DateFormatter()
-        outputDateFormatter1.dateFormat = "yyyy-MM-dd"
-        let dateString1 = todateLbl.text
-        if let date1 = inputDateFormatter.date(from: dateString1!) {
-            let outputDateString1 = outputDateFormatter1.string(from: date1)
-            print(outputDateString1)
-            todate = outputDateString1
-        } else {
-            print("Invalid date format")
-        }
-        
-    }
     
-    func SectionWise () {
-        
-        var todate : String!
-        var fromdate : String!
-        let inputDateFormatter = DateFormatter()
-        inputDateFormatter.dateFormat = "MMM dd,yyyy"
-        
-        let outputDateFormatter = DateFormatter()
-        outputDateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let dateString = fromLbl.text
-        
-        if let date = inputDateFormatter.date(from: dateString!) {
-            let outputDateString = outputDateFormatter.string(from: date)
-            fromdate = outputDateString
-            print(outputDateString)
-        } else {
-            print("Invalid date format")
-        }
-        
-        let inputDateFormatter1 = DateFormatter()
-        inputDateFormatter1.dateFormat = "MMM dd,yyyy"
-        
-        let outputDateFormatter1 = DateFormatter()
-        outputDateFormatter1.dateFormat = "yyyy-MM-dd"
-        
-        let dateString1 = todateLbl.text
-        
-        if let date1 = inputDateFormatter.date(from: dateString1!) {
-            let outputDateString1 = outputDateFormatter1.string(from: date1)
-            print(outputDateString1)
-            todate = outputDateString1
-        } else {
-            print("Invalid date format")
-        }
-    }
-    
-    @IBAction func categoryAction() {
-        ClickId = "1"
-        dateViewHeight.constant = 70
-        calendarView.isHidden = false
-        TodateView.isHidden = false
-        classWiseView.backgroundColor = .systemGray6
-        modeView.backgroundColor = .systemGray6
-        
-        categoryWiseView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        classWiseView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.0),
-            endPoint: CGPoint(x: 0.0, y: 0.0)
-        )
-        modeView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        classWiseView.backgroundColor = .systemGray6
-        CategoryLbl.textColor = .white
-        ClassLbl.textColor = .gray
-        ModeLbl.textColor = .gray
-        //categoryWiseView.backgroundColor = .systemOrange
-        ClickId = "1"
-        dashBoardList()
-        
-        tv.dataSource = self
-        tv.delegate = self
-        tv.reloadData()
-    }
-    
-    @IBAction func classAction() {
-        ClickId = "2"
-        dateViewHeight.constant = 70
-        calendarView.isHidden = false
-        TodateView.isHidden = false
-        categoryWiseView.backgroundColor = .systemGray6
-        modeView.backgroundColor = .systemGray6
-        
-        classWiseView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        categoryWiseView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.0),
-            endPoint: CGPoint(x: 0.0, y: 0.0)
-        )
-        modeView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        ClassLbl.textColor = .white
-        CategoryLbl.textColor = .gray
-        ModeLbl.textColor = .gray
-        
-        tv.dataSource = self
-        tv.delegate = self
-        tv.reloadData()
-    }
-    
-    @IBAction func modeAction() {
-        dateViewHeight.constant = 70
-        calendarView.isHidden = false
-        TodateView.isHidden = false
-        ClickId = "0"
-        PaymentMode()
-        categoryWiseView.backgroundColor = .systemGray6
-        //modeView.backgroundColor = .systemOrange
-        classWiseView.backgroundColor = .systemGray6
-        
-        modeView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        categoryWiseView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.0),
-            endPoint: CGPoint(x: 0.0, y: 0.0)
-        )
-        classWiseView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        ModeLbl.textColor = .white
-        CategoryLbl.textColor = .gray
-        ClassLbl.textColor = .gray
-        
-        tv.dataSource = self
-        tv.delegate = self
-        tv.reloadData()
-    }
+   
     
     //MARK: Date Picker
     
@@ -406,84 +191,33 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         return UITableView.automaticDimension
     }
     
-    @IBAction func toDateAction(){
-        caleView.isHidden = false
-        let dateFormater: DateFormatter = DateFormatter()
-        dateFormater.dateFormat = "MMM dd,yyyy"
-        let currentDate = fromLbl.text
-        let date = dateFormater.date(from:currentDate!)!
-        var dt : Date!
-        dt = date
-        datePicker.maximumDate = Date()
-        datePicker.minimumDate = dt
-        let selectedDate = dateFormater.string(from: datePicker.date)
-        print("selectedDate",selectedDate)
-        todateLbl.text = selectedDate
-    }
     
-    @IBAction func dateAct(_ sender: UIDatePicker) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd,yyyy"
-        let somedateString = dateFormatter.string(from: sender.date)
-        datePicker.maximumDate = Date()
-        todateLbl.text = somedateString
-        print(somedateString)
-    }
-    
-    func PaymentMode () {
-        print("homePagedashBoardList")
-        var todate : String!
-        var fromdate : String!
-        let inputDateFormatter = DateFormatter()
-        inputDateFormatter.dateFormat = "MMM dd,yyyy"
-        let outputDateFormatter = DateFormatter()
-        outputDateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateString = fromLbl.text
-        if let date = inputDateFormatter.date(from: dateString!) {
-            let outputDateString = outputDateFormatter.string(from: date)
-            fromdate = outputDateString
-            print(outputDateString)
-        } else {
-            print("Invalid date format")
-        }
-        let inputDateFormatter1 = DateFormatter()
-        inputDateFormatter1.dateFormat = "MMM dd,yyyy"
-        let outputDateFormatter1 = DateFormatter()
-        outputDateFormatter1.dateFormat = "yyyy-MM-dd"
-        let dateString1 = todateLbl.text
-        if let date1 = inputDateFormatter.date(from: dateString1!) {
-            let outputDateString1 = outputDateFormatter1.string(from: date1)
-            print(outputDateString1)
-            todate = outputDateString1
-        } else {
-            print("Invalid date format")
-        }
-    }
-    
-    @IBAction func doneAction(_ sender: UIButton) {
-        if  ClickId == "1"{
-            dashBoardList()
-        }
-        else if ClickId == "2"{
-            SectionWise()
-        }
-        else if ClickId == "0"{
-            PaymentMode()
-        }
-    }
-    
-    @IBAction func doneActionCale(_ sender: Any) {
-        caleView.isHidden = true
-        if  ClickId == "1"{
-            dashBoardList()
-        }
-        else if ClickId == "2"{
-            SectionWise()
-        }
-        else if ClickId == "0"{
-            PaymentMode()
-        }
-        
+    func daily_collectionApi(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.api_fee_report_daily_collection , parameters: [
+                
+                Daily_collectionStringFile.from_date : "2021-07-01",
+                Daily_collectionStringFile.to_date : "2021-07-01",
+                Daily_collectionStringFile.type : "1"
+                
+            ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <DailyCollectionResponse,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                           
+                            DailyCollectionData = successMessage.data ?? []
+                        }
+                    }else{
+                        
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
     }
     
 }

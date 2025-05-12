@@ -18,7 +18,7 @@ class ImageCell: UICollectionViewCell {
 
     // MARK: - UI Components
     
-    lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 8
@@ -27,7 +27,7 @@ class ImageCell: UICollectionViewCell {
         return imageView
     }()
     
-    lazy var webView: WKWebView = {
+    private lazy var webView: WKWebView = {
         let config = WKWebViewConfiguration()
         let webView = WKWebView(frame: .zero, configuration: config)
         webView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +38,7 @@ class ImageCell: UICollectionViewCell {
         return webView
     }()
     
-    lazy var titleLbl: UILabel = {
+    private lazy var titleLbl: UILabel = {
         let label = UILabel()
         label.font = Constants.font
         label.numberOfLines = 0
@@ -46,7 +46,7 @@ class ImageCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var descriptionLbl: UILabel = {
+    private lazy var descriptionLbl: UILabel = {
         let label = UILabel()
         label.font = Constants.font
         label.numberOfLines = 0
@@ -54,7 +54,7 @@ class ImageCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var dateLbl: UILabel = {
+    private lazy var dateLbl: UILabel = {
         let label = UILabel()
         label.font = Constants.font
         label.textColor = .darkGray
@@ -62,7 +62,7 @@ class ImageCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var timeLbl: UILabel = {
+    private lazy var timeLbl: UILabel = {
         let label = UILabel()
         label.font = Constants.font
         label.textColor = .darkGray
@@ -70,13 +70,16 @@ class ImageCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var senderInfoLbl: UILabel = {
+    private lazy var senderInfoLbl: UILabel = {
         let label = UILabel()
         label.font = Constants.font
         label.textColor = .blue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    // MARK: - Constraints
+    private var mediaHeightConstraint: NSLayoutConstraint?
     
     // MARK: - Init
     
@@ -93,68 +96,95 @@ class ImageCell: UICollectionViewCell {
     // MARK: - Setup Layout
     
     private func setup() {
-        [imageView, webView, titleLbl, descriptionLbl, dateLbl, timeLbl, senderInfoLbl].forEach {
-            contentView.addSubview($0)
-        }
-
+        
+        contentView.addSubview(imageView)
+        contentView.addSubview(webView)
+        contentView.addSubview(titleLbl)
+        contentView.addSubview(descriptionLbl)
+        contentView.addSubview(dateLbl)
+        contentView.addSubview(timeLbl)
+        contentView.addSubview(senderInfoLbl)
+        
+        // Media (Image/WebView) Constraints
+        mediaHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: 180)
+        mediaHeightConstraint?.isActive = true
+        
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 180),
             
             webView.topAnchor.constraint(equalTo: contentView.topAnchor),
             webView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             webView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            webView.heightAnchor.constraint(equalToConstant: 180),
+            webView.heightAnchor.constraint(equalTo: imageView.heightAnchor),
             
             titleLbl.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: Constants.padding),
-            titleLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            titleLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            titleLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Constants.padding),
+            titleLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.padding),
             
             descriptionLbl.topAnchor.constraint(equalTo: titleLbl.bottomAnchor, constant: Constants.padding),
-            descriptionLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            descriptionLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            descriptionLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Constants.padding),
+            descriptionLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.padding),
             
             dateLbl.topAnchor.constraint(equalTo: descriptionLbl.bottomAnchor, constant: Constants.padding),
-            dateLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            dateLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            dateLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Constants.padding),
+            dateLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.padding),
             
             timeLbl.topAnchor.constraint(equalTo: dateLbl.bottomAnchor, constant: Constants.padding),
-            timeLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            timeLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            timeLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Constants.padding),
+            timeLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.padding),
             
             senderInfoLbl.topAnchor.constraint(equalTo: timeLbl.bottomAnchor, constant: Constants.padding),
-            senderInfoLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            senderInfoLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor),
-            senderInfoLbl.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)
+            senderInfoLbl.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Constants.padding),
+            senderInfoLbl.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.padding),
+            senderInfoLbl.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -Constants.padding)
         ])
     }
     
     // MARK: - Configure
     
-    func configure(with type: String, urlString: String) {
-        // Reset both views
+    func configure(with attachment: Attachment) {
+        // Reset views
         imageView.isHidden = true
         webView.isHidden = true
+        imageView.image = nil
+        webView.load(URLRequest(url: URL(string: "about:blank")!))
         
-        guard let url = URL(string: urlString) else { return }
+        // Set text labels
+        titleLbl.text = attachment.title
+        descriptionLbl.text = attachment.description
+        dateLbl.text = attachment.date
+        timeLbl.text = attachment.time
+        senderInfoLbl.text = attachment.sender_info
         
-        if type.lowercased() == "image" {
-            imageView.isHidden = false
-            loadImage(from: url)
-        } else if type.lowercased() == "DOCUMENT" {
+        guard let urlString = attachment.file_path?.first?.path,
+              let url = URL(string: urlString) else {
+            return
+        }
+        
+        switch attachment.type?.uppercased() {
+        case "DOCUMENT":
             webView.isHidden = false
             webView.load(URLRequest(url: url))
+        default:
+            imageView.isHidden = false
+            loadImage(from: url)
         }
     }
     
     private func loadImage(from url: URL) {
         // A basic example using URLSession (you can use SDWebImage or Kingfisher instead)
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data, error == nil else { return }
+        URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
+            guard let self = self, let data = data, error == nil else { return }
             DispatchQueue.main.async {
                 self.imageView.image = UIImage(data: data)
+                // Update media height constraint based on image aspect ratio
+                if let image = self.imageView.image {
+                    let aspectRatio = image.size.height / image.size.width
+                    let width = self.contentView.frame.width
+                    self.mediaHeightConstraint?.constant = width * aspectRatio
+                }
             }
         }.resume()
     }

@@ -10,7 +10,7 @@ import UIKit
 class AttachmentVCViewController: UIViewController {
 
     private enum Constants {
-        static let imageCellID = "ImageCell"
+        static let imageCellID = "AttachmentCvCollectionViewCell"
         static let bannerID = "BannerView"
         static let mockLabels = [
             "This is a nice house, but it must be expensive",
@@ -22,7 +22,7 @@ class AttachmentVCViewController: UIViewController {
         ]
     }
     
-    var numberOfCells = 100
+  
 
     @IBOutlet weak var collectionView: UICollectionView!
  
@@ -38,139 +38,118 @@ class AttachmentVCViewController: UIViewController {
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        
+        setupCollectionView()
         fetchAttachments()
     }
     
-//    private func loadData() {
-//        houseImages = (0..<numberOfCells).map { return UIImage(named: "house\($0 % 10)") }
-//        houseLabels = (0..<numberOfCells).map {
-//            return Constants.mockLabels[$0 % Constants.mockLabels.count]
-//        }
-//    }
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true)
     }
     
-    private func setupViews() {
-        collectionView.contentInsetAdjustmentBehavior = .never
-        collectionView.contentInset = UIEdgeInsets(top: 115, left: 6, bottom: 0, right: 6)
+    func setupCollectionView() {
+            if let layout = collectionView.collectionViewLayout as? PinterestLayout {
+                layout.delegate = self
+            }
+
+            collectionView.dataSource = self
         
-        
-        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: Constants.imageCellID)
-        
-        
-        collectionView.register(BannerView.self, forSupplementaryViewOfKind: PinterestLayout.elementKindBanner, withReuseIdentifier: Constants.bannerID)
-        
-        pinterestLayout.delegate = self
-        pinterestLayout.numberOfColumns = 2
-        pinterestLayout.cellPadding = 6
-        
-    }
+        collectionView.register(UINib(nibName: "AttachmentCvCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:"AttachmentCvCollectionViewCell")
+        }
 }
 
 
 extension AttachmentVCViewController: PinterestLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, layout: PinterestLayout, heightForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        guard let attachment = filteredAttachments?[indexPath.item] else { return 0 }
+
+        let width = (collectionView.bounds.width / 2) - 16
+
+        let titleFont = UIFont.boldSystemFont(ofSize: 14)
+        let descFont = UIFont.systemFont(ofSize: 12)
+
+        let titleHeight = attachment.title?.heights(withConstrainedWidth: width, font: titleFont) ?? 0
+        let descHeight = attachment.description?.heights(withConstrainedWidth: width, font: descFont) ?? 0
+
+        var imageHeight: CGFloat = 180
+        let spacing: CGFloat = 8 + 8 + 8
+
+        
         guard let attachment = filteredAttachments?[indexPath.item],
-              let urlString = attachment.file_path?.first?.path,
-              let url = URL(string: urlString),
-              let data = try? Data(contentsOf: url),
-              let image = UIImage(data: data) else {
-            return 200 // Default/fallback height
-        }
-
-        let width = image.size.width
-        let height = image.size.height
-        guard width > 0 else { return 200 }
-
-        let scaledImageHeight = (height * layout.cellWidth) / width
-        let padding = ImageCell.Constants.padding
-
-        let titleText = attachment.title ?? ""
-        let descriptionText = attachment.description ?? ""
-        let dateText = attachment.date ?? ""
-        let timeText = attachment.time ?? ""
-        let senderText = attachment.sender_info ?? ""
-
-        let titleHeight = titleText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-        let descriptionHeight = descriptionText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-        let dateHeight = dateText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-        let timeHeight = timeText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-        let senderInfoHeight = senderText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
-
-        let totalTextHeight = titleHeight + descriptionHeight + dateHeight + timeHeight + senderInfoHeight
-        let totalPadding = padding * 5
-
-        return scaledImageHeight + totalTextHeight + totalPadding
+         let urlString = attachment.file_path?.first?.path,
+         let url = URL(string: urlString),
+         let data = try? Data(contentsOf: url),
+         let image = UIImage(data: data) else {
+         return 200 // Default/fallback height
+         }
+         
+         let widths = image.size.width
+         let heights = image.size.height
+         guard width > 0 else { return 200 }
+        imageHeight = (heights * width) / widths
+        return titleHeight + descHeight + imageHeight + spacing
     }
 
-
-
-    func collectionView(_ collectionView: UICollectionView, layout: PinterestLayout, heightForBannerAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 300
-    }
     
-    func numberOfItemsBeforeAds(in collectionView: UICollectionView) -> Int {
-        return 10
-    }
-    
-
+//    func collectionView(_ collectionView: UICollectionView, layout: PinterestLayout, heightForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
+//     guard let attachment = filteredAttachments?[indexPath.item],
+//     let urlString = attachment.file_path?.first?.path,
+//     let url = URL(string: urlString),
+//     let data = try? Data(contentsOf: url),
+//     let image = UIImage(data: data) else {
+//     return 200 // Default/fallback height
+//     }
+//     
+//     let width = image.size.width
+//     let height = image.size.height
+//     guard width > 0 else { return 200 }
+//     
+//     let scaledImageHeight = (height * layout.cellWidth) / width
+//     let padding = ImageCell.Constants.padding
+//     
+//     let titleText = attachment.title ?? ""
+//     let descriptionText = attachment.description ?? ""
+//     let dateText = attachment.date ?? ""
+//     let timeText = attachment.time ?? ""
+//     let senderText = attachment.sender_info ?? ""
+//     
+//     let titleHeight = titleText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
+//     let descriptionHeight = descriptionText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
+//     let dateHeight = dateText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
+//     let timeHeight = timeText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
+//     let senderInfoHeight = senderText.heightFitting(width: layout.cellWidth, font: ImageCell.Constants.font)
+//     
+//     let totalTextHeight = titleHeight + descriptionHeight + dateHeight + timeHeight + senderInfoHeight
+//     let totalPadding = padding * 5
+//     
+//     return scaledImageHeight + totalTextHeight + totalPadding
+//     }
 }
 
 extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("numberOfCellsnumberOfCells",numberOfCells)
         return filteredAttachments?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let dequeuedCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imageCellID, for: indexPath)
-        let cell = dequeuedCell as? ImageCell ?? ImageCell()
-//        cell.imageView.image = houseImages[indexPath.item]
-//        cell.titleLbl.text = houseLabels[indexPath.item]
-//        cell.descriptionLbl.text = "saran"
-//        cell.dateLbl.text = "13/10/2000"
-//        cell.timeLbl.text = "10:30 Am"
-//        cell.senderInfoLbl.text = "saran"
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imageCellID, for: indexPath) as! AttachmentCvCollectionViewCell
+       
         guard let data = filteredAttachments?[indexPath.row] else {
-            return UICollectionViewCell() // Safely return a default cell if data is nil
-        }
+         return UICollectionViewCell() // Safely return a default cell if data is nil
+         }
         
-        switch data.type?.uppercased() {
-
-        case "DOCUMENT":
-           
-            cell
-                .configure(
-                    with: "DOCUMENT",
-                    urlString: data.file_path?.first?.path ?? ""
-                )
-
-        default:
-//            cell.imageView
-//                .sd_setImage(
-//                    with: URL(string: data.file_path?.first?.path ?? ""),
-//                    placeholderImage: ImageName.placeholder
-//                )
-           
-            cell.configure(with: "image", urlString: data.file_path?.first?.path ?? "")
-            cell.titleLbl.text = data.title
-            cell.descriptionLbl.text = data.description
-            cell.dateLbl.text = data.date
-            cell.timeLbl.text = data.time
-            cell.senderInfoLbl.text = data.sender_info
-           
-        }
-        
-        
-        
+        cell.imageView
+            .sd_setImage(
+                with: URL(string: data.file_path?.first?.path ?? ""),
+                placeholderImage: ImageName.placeholder
+            )
+        cell.TitleLbl.text = data.title
+        cell.discreptionLbl.text = data.description
         return cell
     }
     
+
     private func fetchAttachments() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
@@ -194,34 +173,16 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
                     self?.collectionView.delegate = self
                     self?.collectionView.dataSource = self
                     self?.collectionView.reloadData()
+                   
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)
                 }
             }
         }
     }
-     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        switch kind {
-        case PinterestLayout.elementKindBanner:
-            let dequeuedBanner = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.bannerID, for: indexPath) as? BannerView
-           
-            
-            guard let data = filteredAttachments?[indexPath.row] else {
-                return UICollectionViewCell() // Safely return a default cell if data is nil
-            }
-            var urlString: String?
-            if data.type?.lowercased() == "VIDEO" {
-                urlString = data.file_path?.first?.path
-            }
-            let cell = dequeuedBanner ?? BannerView()
-            cell.loadURL(urlString ?? "")
-            
-            
-            return cell
-        default:
-            fatalError()
-        }
-    }
+     
+   
+
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top
@@ -230,12 +191,19 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
 ////        titleLabel.transform = CGAffineTransform(translationX: 0, y: dy)
 //    }
     
+    
+    
 }
 
+
+
 extension String {
-    func heightFitting(width: CGFloat, font: UIFont) -> CGFloat {
+    func heights(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [.font: font], context: nil)
-        return boundingBox.height
+        let boundingBox = self.boundingRect(with: constraintRect,
+                                            options: .usesLineFragmentOrigin,
+                                            attributes: [.font: font],
+                                            context: nil)
+        return ceil(boundingBox.height)
     }
 }

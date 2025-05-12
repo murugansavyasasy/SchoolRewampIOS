@@ -21,6 +21,9 @@ class AttachmentCvCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
         
 //        lblcon.constant = Constants.padding
     }
