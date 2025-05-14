@@ -24,15 +24,12 @@ class MarkAttendenceVC: UIViewController, Datepicker {
 
         }
     
+    @IBOutlet weak var SegmentController: UISegmentedControl!
     @IBOutlet weak var SearchbarHeight: NSLayoutConstraint!
     @IBOutlet weak var SearchBar: UISearchBar!
     @IBOutlet weak var BackBtn: UIButton!
-    @IBOutlet weak var attendtypeStackToAttendmarkStackBottom: NSLayoutConstraint!
-    @IBOutlet weak var AttendStackToStandardTop: NSLayoutConstraint!
-    @IBOutlet weak var SessionviewHeight: NSLayoutConstraint!
-    @IBOutlet weak var AttendTypeHeight: NSLayoutConstraint!
-    @IBOutlet weak var AttendancetypeView: UIView!
-    @IBOutlet weak var SessionView: UIView!
+    @IBOutlet weak var AttendancetypeStack: UIStackView!
+    @IBOutlet weak var SessionStack: UIStackView!
     @IBOutlet weak var secondHalfCheckImg: UIImageView!
     @IBOutlet weak var FirsthalfCheckImg: UIImageView!
     @IBOutlet weak var SecondHalfView: UIView!
@@ -96,7 +93,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         gradientcolours(button: AttendRecordBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
         AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
         
-        SessionView.isHidden = true
+        SessionStack.isHidden = true
         SearchBar.isHidden = true
         
         let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
@@ -135,30 +132,21 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     }
     
     func UIupdate() {
+        
+        applyDesign(element: standardView)
+        applyDesign(element: SectionView)
+        applyDesign(element: FulldayView)
+        applyDesign(element: HalfdayView)
+        applyDesign(element: FirstHalfView)
+        applyDesign(element: SecondHalfView)
+        
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
         ButtonStackview.layer.cornerRadius = 20
         AttendRecordBtn.layer.cornerRadius = 20
         MarkAttendBtn.layer.cornerRadius = 20
         MarkAbsentiesBtn.layer.cornerRadius = 10
-        standardView.layer.cornerRadius = 10
-        SectionView.layer.cornerRadius = 10
-        standardView.layer.borderWidth = 1
-        standardView.layer.borderColor = UIColor.lightGray.cgColor
-        SectionView.layer.borderWidth = 1
-        SectionView.layer.borderColor = UIColor.lightGray.cgColor
-        FulldayView.layer.borderWidth = 1
-        FulldayView.layer.borderColor = UIColor.lightGray.cgColor
-        FulldayView.layer.cornerRadius = 10
-        HalfdayView.layer.borderWidth = 1
-        HalfdayView.layer.borderColor = UIColor.lightGray.cgColor
-        HalfdayView.layer.cornerRadius = 10
-        FirstHalfView.layer.borderWidth = 1
-        FirstHalfView.layer.borderColor = UIColor.lightGray.cgColor
-        FirstHalfView.layer.cornerRadius = 10
-        SecondHalfView.layer.borderWidth = 1
-        SecondHalfView.layer.borderColor = UIColor.lightGray.cgColor
-        SecondHalfView.layer.cornerRadius = 10
+        
         CustumDateBtn.layer.borderWidth = 1 // Border width
         CustumDateBtn.layer.borderColor = UIColor.gray.cgColor
         markAllPresentBtn.layer.cornerRadius = 10
@@ -178,11 +166,56 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         sectionLbl.setFont(style: .title, size: FontSize.TitleSize)
     }
     
+    func applyDesign(element: UIView,radius:Int = 10){
+        
+        element.layer.cornerRadius = 10
+        element.layer.borderWidth = 1 // Border width
+        element.layer.borderColor = UIColor.lightGray.cgColor
+    }
+    
+    @IBAction func SegmentControllerAction(_ sender: Any) {
+        
+        if SegmentController.selectedSegmentIndex == 0 {
+            
+            TV.isHidden = true
+            SearchBar.isHidden = true
+            
+            MarkAbsentiesBtn.isHidden = false
+            markAllPresentBtn.isHidden = false
+            stackview.isHidden = false
+            AttendancetypeStack.isHidden = false
+            AttendTypeStackView.isHidden = false
+            if HalfdayImgview.image == UIImage(named:"RadioCheck"){
+                SessionStack.isHidden = false
+            }
+        }else {
+
+            SearchBar.isHidden = false
+            TV.isHidden = false
+            TV.delegate = self
+            TV.dataSource = self
+            TV.reloadData()
+            
+            gradientcolours(button: AttendRecordBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
+            AttendRecordBtn.setTitleColor(UIColor.white, for: .normal)
+            
+            gradientcolours(button: MarkAttendBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
+            MarkAttendBtn.setTitleColor(UIColor.black, for: .normal)
+            MarkAbsentiesBtn.isHidden = true
+            markAllPresentBtn.isHidden = true
+            stackview.isHidden = true
+            SessionStack.isHidden = true
+            AttendancetypeStack.isHidden = true
+            AttendTypeStackView.isHidden = true
+            
+        }
+    }
+    
     @objc func fulldayAction(){
         //FulldayImgview.image = UIImage(named: "checked_Tick")
         FulldayImgview.image = UIImage(named: "RadioCheck")
         HalfdayImgview.image = UIImage(named: "CheckCircle")
-        SessionView.isHidden = true
+        SessionStack.isHidden = true
         markAllPresentBtn.backgroundColor = .systemGreen
         MarkAbsentiesBtn.backgroundColor = .systemRed
     }
@@ -190,7 +223,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         //HalfdayImgview.image = UIImage(named: "checked_Tick")
         HalfdayImgview.image = UIImage(named: "RadioCheck")
         FulldayImgview.image = UIImage(named: "CheckCircle")
-        SessionView.isHidden = false
+        SessionStack.isHidden = false
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
         FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
@@ -352,12 +385,10 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         MarkAbsentiesBtn.isHidden = false
         markAllPresentBtn.isHidden = false
         stackview.isHidden = false
-        AttendancetypeView.isHidden = false
+        AttendancetypeStack.isHidden = false
         AttendTypeStackView.isHidden = false
-        AttendStackToStandardTop.constant = 20
-        attendtypeStackToAttendmarkStackBottom.constant = 15
         if HalfdayImgview.image == UIImage(named:"RadioCheck"){
-            SessionView.isHidden = false
+            SessionStack.isHidden = false
         }
     }
     
@@ -380,11 +411,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         MarkAbsentiesBtn.isHidden = true
         markAllPresentBtn.isHidden = true
         stackview.isHidden = true
-        SessionView.isHidden = true
-        AttendancetypeView.isHidden = true
+        SessionStack.isHidden = true
+        AttendancetypeStack.isHidden = true
         AttendTypeStackView.isHidden = true
-        AttendStackToStandardTop.constant = 0
-        attendtypeStackToAttendmarkStackBottom.constant = 0
     }
     
     

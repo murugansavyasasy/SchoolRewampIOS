@@ -566,5 +566,5 @@ struct EventList: Codable {
     let date: String
     let time: String
     let venue: String
-    let file_path: [File_Path]
+    let file_path: [FilePath]
 }
