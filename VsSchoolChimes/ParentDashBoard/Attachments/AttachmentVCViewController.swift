@@ -39,7 +39,65 @@ class AttachmentVCViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
-        fetchAttachments()
+//        fetchAttachments()
+        
+       
+
+        // Sample Data Array
+        let attachments: [Attachment] = [
+            Attachment(
+                id: "101",
+                type: "DOCUMENT",
+                title: "Monthly Report",
+                description: "Detailed report for April",
+                date: "2025-04-30",
+                time: "09:00 AM",
+                sender_info: "Accounts Dept",
+                is_unread: true,
+                is_archive: false,
+                file_path: [
+                    FilePath(path: "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf", type: "DOCUMENT")
+                ],
+                iframe: "<iframe src='https://example.com/viewer?file=april_report.pdf'></iframe>"
+            ),
+            
+            Attachment(
+                id: "102",
+                type: "IMAGE",
+                title: "Event Poster",
+                description: "Poster for upcoming science fair",
+                date: "2025-05-01",
+                time: "03:45 PM",
+                sender_info: "School Admin",
+                is_unread: false,
+                is_archive: false,
+                file_path: [
+                    FilePath(path: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg", type: "IMAGE")
+                ],
+                iframe: nil
+            ),
+            
+            Attachment(
+                id: "103",
+                type: "VIDEO",
+                title: "Assembly Highlights",
+                description: "Highlights from the morning assembly",
+                date: "2025-05-02",
+                time: "08:30 AM",
+                sender_info: "Media Team",
+                is_unread: true,
+                is_archive: true,
+                file_path: [
+                    FilePath(path: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", type: "VIDEO")
+                ],
+                iframe: ""
+            )
+        ]
+        filteredAttachments = attachments
+    
+       collectionView.delegate = self
+       collectionView.dataSource = self
+       collectionView.reloadData()
     }
     
     @IBAction func backBtn(_ sender: Any) {
@@ -115,6 +173,7 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
 extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return filteredAttachments?.count ?? 0
         return filteredAttachments?.count ?? 0
     }
     
@@ -146,18 +205,18 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
             cell.webOuterView.clipsToBounds = true
             cell.webOuterView.layer.cornerRadius = 10
             
-//            if let url = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") {
-//                  cell.configureVideo(with: url)
-//              }
+            if let url = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") {
+                  cell.configureVideo(with: url)
+              }
             
-            fetchMP4VideoURL(videoURI: "https://vimeo.com/1083863418", accessToken: "8d74d8bf6b5742d39971cc7d3ffbb51a") { mp4URL in
-             if let mp4URL = mp4URL {
-             print("🎥 MP4 video URL: \(mp4URL)")
-             // Now you can play it using AVPlayer or show in your view
-             } else {
-             print("❌ Failed to get MP4 URL.")
-             }
-            }
+//            fetchMP4VideoURL(videoURI: "https://vimeo.com/1083863418", accessToken: "8d74d8bf6b5742d39971cc7d3ffbb51a") { mp4URL in
+//             if let mp4URL = mp4URL {
+//             print("🎥 MP4 video URL: \(mp4URL)")
+//             // Now you can play it using AVPlayer or show in your view
+//             } else {
+//             print("❌ Failed to get MP4 URL.")
+//             }
+//            }
         case "DOCUMENT":
             cell.imageView.isHidden = true
             cell.webOuterView.isHidden = false
@@ -176,7 +235,17 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
     }
 
     
-    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        
+        
+        let vc = AttachmentViewer(nibName: nil, bundle: nil)
+        vc.modalPresentationStyle = .formSheet
+        present(vc, animated: true)
+        
+    }
     
     
     func fetchMP4VideoURL(videoURI: String, accessToken: String, completion: @escaping (String?) -> Void) {
@@ -238,11 +307,21 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
                 
                 switch result {
                 case .success(let response):
-                    self?.attachmentData = response.data
-                    self?.filteredAttachments = response.data
-                    self?.collectionView.delegate = self
-                    self?.collectionView.dataSource = self
-                    self?.collectionView.reloadData()
+                    if response.status == true {
+                        self?.attachmentData = response.data
+                        self?.filteredAttachments = response.data
+                        self?.collectionView.delegate = self
+                        self?.collectionView.dataSource = self
+                        self?.collectionView.reloadData()
+                    }else{
+                        
+                        self?.attachmentData = response.data
+                        self?.filteredAttachments = response.data
+                        self?.collectionView.delegate = self
+                        self?.collectionView.dataSource = self
+                        self?.collectionView.reloadData()
+                    }
+                   
                    
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)
