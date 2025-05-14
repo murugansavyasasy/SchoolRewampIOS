@@ -285,6 +285,7 @@ class CommonStringFile{
     static let Enterbugs = "Enter bugs".translated()
     static let Profile = "Profile".translated()
     static let AboutStudent = "About Student".translated()
+    static let AboutStaff = "About Staff".translated()
     static let Contactdetails = "Contact details".translated()
     static let Registernumber = "Register number".translated()
     static let FamilyDetails = "Family Details".translated()

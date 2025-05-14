@@ -77,21 +77,17 @@ class ProfileViewController: UIViewController {
         if passvalue == 1{
             familyDetailsView.isHidden = true
             standardView.isHidden = true
-            imgview.kf.setImage(with:URL(string: staffDetails?.school_logo ?? ""),placeholder: UIImage(named: "Default_profile"))
+            imgview.kf.setImage(with:URL(string: staffDetails?.staff_profile ?? ""),placeholder: UIImage(named: "Default_profile"))
             schoolNameLbl.text = childDetails?.school_name
-            userNameLbl.text = staffDetails?.staff_name ?? ""
-            RegisterNo.text = "Employee ID : \(childDetails?.roll_number ?? "")"
-//            mobileNoLbl.text = staffDetails?.
-//            emailLbl.text = staffDetails?.e
-//            blodLbl.text = childDetails?.blood_group
-//            addressLbl.text = childDetails?.student_address
-//            LiveinLbl.text = childDetails?.school_city
-//            RegisterNo.text = "Employee Id : \(staffDetails.school_naame ?? "")"
-//            section.text = "Section : \(childDetails?.section_name ?? "")"
-//            standard.text = "Standard : \(childDetails?.standard_name ?? "")"
+            userNameLbl.text = staffDetails?.name ?? ""
+            RegisterNo.text = "Employee ID : \(staffDetails?.emp_id ?? "")"
+            mobileNoLbl.text = staffDetails?.mobile_no
+            emailLbl.text = staffDetails?.email
+            blodLbl.text = staffDetails?.blood_group
+            addressLbl.text = staffDetails?.address
         }else{
             familyDetailsView.isHidden = false
-            imgview.kf.setImage(with:URL(string: childDetails?.school_logo_url ?? ""),placeholder: UIImage(named: "Default_profile"))
+            imgview.kf.setImage(with:URL(string: childDetails?.profile ?? ""),placeholder: UIImage(named: "Default_profile"))
             schoolNameLbl.text = childDetails?.school_name
             userNameLbl.text = childDetails?.name
             mobileNoLbl.text = childDetails?.whatsapp_number
@@ -150,7 +146,8 @@ class ProfileViewController: UIViewController {
         
         //MARK: Tranlater
         Profile.text = CommonStringFile.Profile.translated()
-        aboutstudent.text = CommonStringFile.AboutStudent.translated()
+        aboutstudent.text = passvalue == 1 ? CommonStringFile.AboutStaff.translated():CommonStringFile.AboutStudent.translated()
+        
         contactdetails.text = CommonStringFile.Contactdetails.translated()
         section.text = CommonStringFile.Section.translated() + ": A"
         standard.text = CommonStringFile.Standard .translated() + ": XI"

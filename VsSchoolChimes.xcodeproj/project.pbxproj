@@ -179,6 +179,10 @@
 		842FBAC02D0BEDBF007C0B51 /* StudentReportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAB82D0BEDBF007C0B51 /* StudentReportVC.swift */; };
 		842FBAC22D0BEDDC007C0B51 /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */; };
 		842FDC202D854AD800DCE4FF /* HOTCODE_COMMON_API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */; };
+		84313B492DD354E800651BEA /* AttachmentViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84313B472DD354E800651BEA /* AttachmentViewer.swift */; };
+		84313B4A2DD354E800651BEA /* AttachmentViewer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84313B482DD354E800651BEA /* AttachmentViewer.xib */; };
+		84313B4D2DD3688C00651BEA /* AttachmentViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84313B4B2DD3688C00651BEA /* AttachmentViewCell.swift */; };
+		84313B4E2DD3688C00651BEA /* AttachmentViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84313B4C2DD3688C00651BEA /* AttachmentViewCell.xib */; };
 		84385F682CF842F60020E94D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84385F672CF842F60020E94D /* Fonts.swift */; };
 		84385F6A2CF8516E0020E94D /* Poppins-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84385F692CF8516E0020E94D /* Poppins-Bold.otf */; };
 		84395FE92D10026100FC3242 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84395FE72D10026100FC3242 /* ChatVC.swift */; };
@@ -811,6 +815,10 @@
 		842FBAB92D0BEDBF007C0B51 /* StudentReportVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudentReportVC.xib; sourceTree = "<group>"; };
 		842FBAC12D0BEDDC007C0B51 /* TranslationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
 		842FDC1F2D854AD800DCE4FF /* HOTCODE_COMMON_API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOTCODE_COMMON_API.swift; sourceTree = "<group>"; };
+		84313B472DD354E800651BEA /* AttachmentViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewer.swift; sourceTree = "<group>"; };
+		84313B482DD354E800651BEA /* AttachmentViewer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentViewer.xib; sourceTree = "<group>"; };
+		84313B4B2DD3688C00651BEA /* AttachmentViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentViewCell.swift; sourceTree = "<group>"; };
+		84313B4C2DD3688C00651BEA /* AttachmentViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachmentViewCell.xib; sourceTree = "<group>"; };
 		84385F672CF842F60020E94D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		84385F692CF8516E0020E94D /* Poppins-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.otf"; sourceTree = "<group>"; };
 		84395FE72D10026100FC3242 /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
@@ -1849,6 +1857,10 @@
 				84A0D1122DC8E2440037E1BF /* AttachmentVCViewController.xib */,
 				84A0D1192DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.swift */,
 				84A0D11A2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib */,
+				84313B472DD354E800651BEA /* AttachmentViewer.swift */,
+				84313B482DD354E800651BEA /* AttachmentViewer.xib */,
+				84313B4B2DD3688C00651BEA /* AttachmentViewCell.swift */,
+				84313B4C2DD3688C00651BEA /* AttachmentViewCell.xib */,
 			);
 			path = Attachments;
 			sourceTree = "<group>";
@@ -3361,6 +3373,7 @@
 				FA2A3FBB2DB0CABB0000AF55 /* SenderAttachmentVC.xib in Resources */,
 				18D718B62D0D477900E9EDA3 /* LocationTableViewCell.xib in Resources */,
 				18D718B72D0D477900E9EDA3 /* Map Location.gif in Resources */,
+				84313B4E2DD3688C00651BEA /* AttachmentViewCell.xib in Resources */,
 				84B57EBA2D1437EC00E0EA29 /* EventResiverVC.xib in Resources */,
 				18D718B82D0D477900E9EDA3 /* deleteTV.xib in Resources */,
 				849AD0212D1A8402002DEC07 /* LessonPlanVC.xib in Resources */,
@@ -3409,6 +3422,7 @@
 				84A0D11C2DC8E50B0037E1BF /* AttachmentCvCollectionViewCell.xib in Resources */,
 				84EFF9E22CCCA2C600C11C26 /* AppBottomView.xib in Resources */,
 				84A2717F2CEDAB9F0033EB02 /* ImagePdfVC.xib in Resources */,
+				84313B4A2DD354E800651BEA /* AttachmentViewer.xib in Resources */,
 				84A271802CEDAB9F0033EB02 /* New.gif in Resources */,
 				18926C5D2D02DE81002BBB97 /* FileAttachmentTableViewCell.xib in Resources */,
 				187CF4922D11355D001422CE /* MessageFromManagementViewController.xib in Resources */,
@@ -3832,10 +3846,12 @@
 				18926C552D02DE81002BBB97 /* FileAttachmentTableViewCell.swift in Sources */,
 				84CAE5BB2D5DEF7C0091C671 /* ColourManager.swift in Sources */,
 				18926C562D02DE81002BBB97 /* RestrictionRequest.swift in Sources */,
+				84313B492DD354E800651BEA /* AttachmentViewer.swift in Sources */,
 				18926C572D02DE81002BBB97 /* RestrictionModal.swift in Sources */,
 				84BB5EA82D11330E00AD0C87 /* ScheduleExamVC.swift in Sources */,
 				84A0D1132DC8E2440037E1BF /* AttachmentVCViewController.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
+				84313B4D2DD3688C00651BEA /* AttachmentViewCell.swift in Sources */,
 				FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */,
 				84D85D782D51D7B5006842E9 /* CustomShimmerView.swift in Sources */,
 				84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */,
