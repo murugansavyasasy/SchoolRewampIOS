@@ -61,6 +61,10 @@ struct ServiceUrl{
     static let api_school_event_send_event = "api/school-event/send-event"
     
     static let api_fee_report_daily_collection = "api/fee-report/daily-collection"
+    static let api_fee_report_detailed_pending_report = "api/fee-report/detailed-pending-report"
+    static let api_fee_report_detailed_class_wise_pending_report = "api/fee-report/detailed-class-wise-pending-report"
+    static let  api_get_student_report = " api/get-student-report"
+    static let  api_school_event_get_event = "api/school-event/get-event"
     
     
 }

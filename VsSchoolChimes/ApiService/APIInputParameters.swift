@@ -180,4 +180,7 @@ class SendNoticeStringFile {
     static var visible_to = "visible_to"
     static var file_path = "file_path"
 }
-
+enum GetStudentReport {
+    static var class_id = "class_id"
+    static var section_id = "section_id"
+}

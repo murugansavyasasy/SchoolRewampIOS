@@ -12,6 +12,7 @@ import DropDown
 
 class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
+    @IBOutlet weak var switchReport: UISegmentedControl!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var noRecordsView: UIView!
@@ -27,6 +28,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     var url_date : String!
     var indexList : Int!
     var ClickId  = "1"
+    var academicId:Int?
     var SchoolId  = String()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var DropDownStr : [String] = []
@@ -34,6 +36,8 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     let acidamicdrops = DropDown()
     var AcadimicYearDatas : [AcadimicYearData] = []
     var accadimYr :[String] = []
+    var PendingReports :[PendingReportData]?
+    var classWiseReport :[PendingReportData]?
     // Example data for Feescategory
     let feesCategories = [
         Feescategory(category: "Tuition", amount: "5000"),
@@ -68,10 +72,8 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 //        tv.isHidden = true
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
-
         tv.delegate = self
         tv.dataSource = self
-        tv.reloadData()
 
     }
     func getacadmicYr(){
@@ -88,9 +90,56 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
                                     acodomicYearLbl.text = AcadimicYearDatas[i].year
+                                    academicId = AcadimicYearDatas[i].id
+                                    
+                                    getPendingReportAPI(academicId ?? 0)
                                 }
                             }
                         }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    func getPendingReportAPI(_ academic_year_id:Int){
+        APIService.shared
+            .makeApi(url: ServiceUrl.api_fee_report_detailed_pending_report , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <PendingReportsResponse,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            PendingReports = successMessage.data
+                            tv.reloadData()
+                        }
+                    }else{
+                        PendingReports = []
+                        tv.reloadData()
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
+    func classPendingReportAPI(_ academic_year_id:Int){
+        APIService.shared
+            .makeApi(url: ServiceUrl.api_fee_report_detailed_class_wise_pending_report , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <PendingReportsResponse,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            PendingReports = successMessage.data
+                            tv.reloadData()
+                        }
+                    }else{
+                        PendingReports = []
+                        tv.reloadData()
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -118,11 +167,21 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         
         acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
             acodomicYearLbl.text = item
+            academicId = AcadimicYearDatas[index].id
+            if switchReport.selectedSegmentIndex == 0{
+                getPendingReportAPI(academicId ?? 0)
+            }else{
+                classPendingReportAPI(academicId ?? 0)
+            }
         }
     }
     
     @IBAction func switchTab(_ sender: UISegmentedControl) {
-        
+        if sender.selectedSegmentIndex == 0{
+            getPendingReportAPI(academicId ?? 0)
+        }else{
+            classPendingReportAPI(academicId ?? 0)
+        }
     }
 
     @IBAction func backAct() {

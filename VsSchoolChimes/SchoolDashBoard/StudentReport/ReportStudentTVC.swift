@@ -90,17 +90,8 @@ class ReportStudentTVC: UITableViewCell {
         }
         
     }
-    func confic(student:StudentList){
-        emailBtn.setTitle(student.EmailId, for: .normal)
-        mobleNo.setTitle(student.PhoneNumber, for: .normal)
-        tcherLbl.text = student.teacherName
-        admissionLbl.text = student.AdmissionId
-        dobLbl.text = student.DOB
-        studentNmae.text = student.name
-        genderLbl.text = student.gender
-        fatherName.text = student.fatherName
-        imgView.image = UIImage(named: student.img)
-        imgView.contentMode = .scaleAspectFill
+    func confic(student:StudentData){
+
         //MARK: Label Font
         
         tcherLbl.setFont(style: .body, size: FontSize.BodySize)

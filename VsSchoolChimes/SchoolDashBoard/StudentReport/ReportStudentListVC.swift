@@ -38,19 +38,10 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var sectionArray = [String]()
     var selectStudentType = ""
     var studentDetails = UserDefaultFileManager.get_child_Details()
-    var studentList = [
-        StudentList(name: "chandhru", AdmissionId: "sd123", PhoneNumber: "9597286160", EmailId: "chandhru@gmail.com", DOB: "15/06/2000", fatherName: "Veramalai", teacherName: "janu", gender: "Male",sectionName: "'A'",classname: "8th", img: "shiyam"),
-        StudentList(name: "kothai", AdmissionId: "sd124", PhoneNumber: "9597234555", EmailId: "kothai@gmail.com", DOB: "02/08/2000", fatherName: "Mariyappan", teacherName: "janu", gender: "Female",sectionName: "'A'",classname: "8th", img: "StudImg"),
-        StudentList(name: "Navin", AdmissionId: "sd125", PhoneNumber: "9597286160", EmailId: "navin@gmail.com", DOB: "14/12/2000", fatherName: "dhdbehr", teacherName: "janu", gender: "Male",sectionName: "'B'",classname: "9th", img:"stuentimg 1"),
-        StudentList(name: "Shiyam", AdmissionId: "sd126", PhoneNumber: "9597286160", EmailId: "shiyam@gmail.com", DOB: "15/06/2000", fatherName: "Shiyamksjedhfn", teacherName: "janu", gender: "Male",sectionName: "'A'",classname: "8th", img: "shiyam"),
-        StudentList(name: "Nicolash", AdmissionId: "sd127", PhoneNumber: "9597286160", EmailId: "nicolash@gmail.com", DOB: "15/06/2000", fatherName: "Nicolash", teacherName: "janu", gender: "Male",sectionName: "'C'",classname: "9th", img: "shiyam"),
-        StudentList(name: "SpRaj", AdmissionId: "sd128", PhoneNumber: "9597286160", EmailId: "spraj@gmail.com", DOB: "15/06/2000", fatherName: "Sivakumar", teacherName: "janu", gender: "Male",sectionName: "'A'",classname: "8th", img: "stuentimg 1"),
-        StudentList(name: "Sharmila", AdmissionId: "sd129", PhoneNumber: "9597286160", EmailId: "sharmila@gmail.com", DOB: "15/06/2000", fatherName: "Veramalai", teacherName: "janu", gender: "Female",sectionName: "'C'",classname: "8th", img: "StudImg"),
-        StudentList(name: "Kailash", AdmissionId: "sd1210", PhoneNumber: "9597286160", EmailId: "kailash@gmail.com", DOB: "15/06/2000", fatherName: "KailashaNathan", teacherName: "janu", gender: "Male",sectionName: "'A'",classname: "8th", img: "shiyam"),
-    ]
+    var studentList : [StudentData]?
     var imgs = ["shiyam","StudImg","stuentimg 1"]
-    var filterStudent : [StudentList]?
-    var sortedStudent : [StudentList]?
+    var filterStudent : [StudentData]?
+    var sortedStudent : [StudentData]?
     let menuName = MenuStringFile()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,11 +119,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             
             switch item.translated(){
             case CommonStringFile.RollNoASC.translated():
-                let sortedByRollNumber = sortedStudent!.sorted { $0.AdmissionId < $1.AdmissionId }
+                let sortedByRollNumber = sortedStudent!.sorted { $0.admission_no < $1.admission_no }
                 getStanderd.isHidden = true
                 filterStudent = sortedByRollNumber
             case CommonStringFile.RollNoDESC.translated():
-                let sortedByName = sortedStudent?.sorted { $0.AdmissionId > $1.AdmissionId }
+                let sortedByName = sortedStudent?.sorted { $0.admission_no > $1.admission_no }
                 getStanderd.isHidden = true
                 filterStudent = sortedByName
             case CommonStringFile.NameASC.translated():
@@ -183,7 +174,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionDropdown.width = sectionView.bounds.width
         sectionDropdown.show()
         sectionDropdown.selectionAction = { [self] (index: Int, item: String) in
-            let filteredStudents = studentList.filter { $0.classname == selectStudentType && $0.sectionName == item }
+            let filteredStudents = studentList?.filter { $0.class_name == selectStudentType && $0.section_name == item }
             filterStudent = filteredStudents
             sortedStudent = filteredStudents
             reportTable.isHidden = true
@@ -205,7 +196,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         classDropdown.show()
         classDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
-            let filteredStudents = studentList.filter { $0.classname == item }
+            let filteredStudents = studentList?.filter { $0.class_name == item }
             filterStudent = filteredStudents
             sortedStudent = filteredStudents
             reportTable.reloadData()
@@ -235,6 +226,35 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         clsBtn.setTitle(standardDetails?.first?.name, for: .normal)
                         sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
 
+                    }
+                }else{
+                    DispatchQueue.main.async { [self] in
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+
+                }
+                
+            }
+        }
+        
+    }
+    func getStudentAPI(_ class_id:Int?,_ section_id:Int?){
+        var param:[String:Any]
+        if class_id != nil && section_id != nil{
+            param = [GetStudentReport.class_id : class_id ?? 0,GetStudentReport.section_id:section_id ?? 0]
+        }else{
+            param = [:]
+        }
+        standerdArray.removeAll()
+        APIService.shared.makeApi(url: ServiceUrl.api_get_student_report, parameters:param, type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <StudentReportResponse,Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true{
+                    DispatchQueue.main.async { [self] in
+                       
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
@@ -287,8 +307,19 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         cell.emailBtn.tag = indexPath.row
         
         if let studentDetail = filterStudent?[indexPath.row]{
-            cell.smsNumber = studentDetail.PhoneNumber
+            cell.smsNumber = studentDetail.primary_mobile
             cell.confic(student: studentDetail)
+            cell.emailBtn.setTitle(studentDetail.email, for: .normal)
+            cell.mobleNo.setTitle(studentDetail.primary_mobile, for: .normal)
+            cell.tcherLbl.text = studentDetail.class_teacher
+            cell.admissionLbl.text = studentDetail.admission_no
+            cell.dobLbl.text = studentDetail.dob
+            cell.studentNmae.text = studentDetail.name
+            cell.genderLbl.text = studentDetail.gender
+            cell.fatherName.text = studentDetail.father_name
+//            if let img = URL(string: studentDetail)
+//            cell.imgView.kf.setImage(with:)
+            cell.imgView.contentMode = .scaleAspectFill
         }
         return cell
     }
@@ -345,7 +376,7 @@ extension ReportStudentListVC: UISearchBarDelegate{
             filterStudent = studentList
         } else {
             // Filter data based on the search text
-            filterStudent = studentList.filter { student in
+            filterStudent = studentList?.filter { student in
                 student.name.lowercased().contains(searchText.lowercased())
             }
         }
