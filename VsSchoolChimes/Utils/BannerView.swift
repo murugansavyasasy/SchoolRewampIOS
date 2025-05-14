@@ -1,13 +1,16 @@
 import UIKit
+import WebKit
 
 class BannerView: UICollectionReusableView {
     
-    lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill  // Use AspectFill for better banner presentation
-        imageView.clipsToBounds = true            // Prevent overflow
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    private lazy var webView: WKWebView = {
+        let config = WKWebViewConfiguration()
+        let webView = WKWebView(frame: .zero, configuration: config)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.scrollView.isScrollEnabled = false
+        webView.clipsToBounds = true
+        webView.layer.cornerRadius = 10
+        return webView
     }()
     
     override init(frame: CGRect) {
@@ -21,13 +24,23 @@ class BannerView: UICollectionReusableView {
     }
     
     private func setup() {
-        addSubview(imageView)
+        backgroundColor = .clear
+        addSubview(webView)
         
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            imageView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
-            imageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
+            webView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            webView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            webView.topAnchor.constraint(equalTo: topAnchor, constant: 10),
+            webView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
+    }
+    
+    func loadURL(_ urlString: String?) {
+        guard let urlString = urlString,
+              let url = URL(string: urlString) else {
+            webView.loadHTMLString("<html><body><p>No content</p></body></html>", baseURL: nil)
+            return
+        }
+        webView.load(URLRequest(url: url))
     }
 }

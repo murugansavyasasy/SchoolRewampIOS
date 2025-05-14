@@ -79,26 +79,27 @@ struct UserDetails: Codable {
 }
 
 struct StaffDetails: Codable {
-    let staff_name: String?
-    var isSelected: Bool?
+    let name: String?
+    let emp_id: String?
+    let mobile_no: String?
+    let address: String?
+    let email: String?
+    let blood_group: String?
+    let staff_profile: String?
+    let school_id: String?
     let school_name: String?
     let school_name_regional: String?
+    let school_city: String?
     let school_logo: String?
     let role: String?
-    let is_payment_pending: String?  // Changed from String? to Bool?
+    let priority_level: String?
+    let is_payment_pending: String?
     let schedule_call_type: Int?
     let biometric_enable: Bool?
-    let school_id: String?
     let allow_video_download: Bool?
+    let school_address: String?
     let access_token: String?
-    let school_address : String?
-    let emp_id : String?
-    let mobile_no : String?
-    let address : String?
-    let email : String?
-    let blood_group : String?
-    let staff_profile : String?
-    let school_city : String?
+    var isSelected: Bool?
 }
 
 struct ChildDetails: Codable {
@@ -357,6 +358,7 @@ struct HomeworkList: Codable {
 struct FilePath: Codable {
     let path: String?
     let type: String?
+    
 }
 
 struct AwsResps: Codable {
@@ -440,6 +442,7 @@ struct Attachment: Codable {
     let is_unread: Bool?
     let is_archive: Bool?
     let file_path: [FilePath]?
+    let iframe: String?
 }
 
 struct AttachmentFilePath: Codable {
@@ -495,11 +498,29 @@ struct GeometricLocation:Codable{
     let distance:String?
 }
 
-//MARK: Get noticeboard
-struct NoticeResponse: Codable {
+struct DailyCollectionResponse: Codable {
     let status: Bool?
     let message: String?
-    let data: [Notice]?
+    let data: [DailyCollectionData]?
+}
+
+struct DailyCollectionData: Codable {
+    let category: String?
+    let total: String?
+    let fee_data: [FeeData]?
+    let total_collection: String?
+}
+
+struct FeeData: Codable {
+    let type_name: String?
+    let amount: String?
+}
+
+//MARK: Get noticeboard
+struct NoticeResponse: Codable {
+ let status: Bool?
+ let message: String?
+ let data: [Notice]?
 }
 
 struct Notice: Codable {
@@ -530,4 +551,20 @@ struct AttenenceReportData: Codable{
     let admission_no: String?
     let att_status: String?
     let absent_on: String?
+}
+// MARK: - Root Response
+struct EventResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [Event]
+}
+
+// MARK: - Event
+struct EventList: Codable {
+    let title: String
+    let content: String
+    let date: String
+    let time: String
+    let venue: String
+    let file_path: [File_Path]
 }

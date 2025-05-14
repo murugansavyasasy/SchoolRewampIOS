@@ -10,6 +10,8 @@ import DropDown
 
 class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var nodataLbl: UILabel!
+    @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var sectionView: UIView!
     @IBOutlet weak var classView: UIView!
@@ -20,6 +22,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var clsBtn: UIButton!
     var sectionDropdown = DropDown()
     var classDropdown = DropDown()
+    var fillterDropdown = DropDown()
     var AcodemicDropdown = DropDown()
     var sectionsDetails: [sectionsDetail]?
     var standardDetails: [StandardDetail]?
@@ -27,6 +30,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var accadimYr :[String] = []
     @IBOutlet weak var sectionSelection: UIStackView!
     @IBOutlet weak var classSelection: UIStackView!
+    @IBOutlet weak var getStanderd: UIStackView!
     
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -54,16 +58,13 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         searchBar.applyRightTxt()
         filterStudent = studentList
         sortedStudent = studentList
-        uiConfic()
         getacadmicYr()
+        uiConfic()
+        
         if #available(iOS 14.0, *) {
             searchBar.addDoneButton()
             searchBar.delegate = self
         }
-//        classSelection.alpha = 0
-//        classSelection.transform = CGAffineTransform(translationX: 0, y: -classSelection.bounds.height)
-//        sectionSelection.alpha = 0
-//        sectionSelection.transform = CGAffineTransform(translationX: 0, y: -sectionSelection.bounds.height)
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -73,55 +74,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         )
     }
     
-    private func showStackView() {
-        classSelection.isHidden = false
-        sectionSelection.isHidden = false
-        classSelection.alpha = 0
-        classSelection.transform = CGAffineTransform(translationX: 0, y: -classSelection.bounds.height)
-        sectionSelection.alpha = 0
-        sectionSelection.transform = CGAffineTransform(translationX: 0, y: -sectionSelection.bounds.height)
-        // Prepare table for animation
-        let originalContentOffset = reportTable.contentOffset // Save current offset
-        reportTable.contentOffset = CGPoint(x: 0, y: sectionSelection.bounds.height) // Adjust for the animation start position
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.classSelection.transform = .identity // Reset transform
-            self.classSelection.alpha = 1 // Fully visible
-            self.sectionSelection.transform = .identity // Reset transform
-            self.sectionSelection.alpha = 1 // Fully visible
-            self.reportTable.transform = .identity
-            self.reportTable.contentOffset = .zero
-        })
-        
-    }
-    
-    private func hideStackView() {
-        UIView.animate(withDuration: 0.5, animations: {
-            // Slide down off the screen and fade out
-            self.classSelection.transform = CGAffineTransform(translationX: 0, y: -self.classSelection.bounds.height)
-            self.classSelection.alpha = 0
-            
-        }) { _ in
-            // Set isHidden AFTER the animation completes
-            self.classSelection.isHidden = true
-            self.classSelection.transform = .identity
-            self.reportTable.isHidden = false
-        }
-    }
-    
-    func hideSectionView() {
-        UIView.animate(withDuration: 0.5, animations: {
-            self.sectionSelection.transform = CGAffineTransform(translationX: 0, y: -self.sectionSelection.bounds.height)
-            self.sectionSelection.alpha = 0
-        }) { [self] _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Delay of 0.2 seconds
-//                self.hideStackView()
-                self.sectionSelection.isHidden = true
-                self.sectionSelection.transform = .identity
-            }
-            
-        }
-    }
+  
     func uiConfic(){
         reportTable.register(UINib(nibName: CellConfingName.ReportStudentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.ReportStudentTVC)
         sectionView.layer.cornerRadius = 10
@@ -138,8 +91,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         filterBtn.layer.shadowOpacity = 0.5
         filterBtn.layer.shadowRadius = 4
         filterBtn.backgroundColor = .white
-        
-        
+        getStanderd.isHidden = true
         selectedType.layer.cornerRadius = 10
         selectedType.layer.shadowColor = UIColor.black.cgColor
         selectedType.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -164,31 +116,37 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
-        classDropdown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(), CommonStringFile.getAllStudent.translated()]
-        classDropdown.anchorView = filterView
-        classDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
+        fillterDropdown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(),CommonStringFile.getStanderd.translated(),CommonStringFile.getAllStudent.translated()]
+        fillterDropdown.anchorView = filterView
+        fillterDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
         
-        classDropdown.direction = .bottom
+        fillterDropdown.direction = .bottom
         
-        classDropdown.show()
-        classDropdown.selectionAction = { [self] (index: Int, item: String) in
+        fillterDropdown.show()
+        fillterDropdown.selectionAction = { [self] (index: Int, item: String) in
             self.filterBtn.setTitle(item.translated(), for: .normal)
             
             switch item.translated(){
             case CommonStringFile.RollNoASC.translated():
                 let sortedByRollNumber = sortedStudent!.sorted { $0.AdmissionId < $1.AdmissionId }
+                getStanderd.isHidden = true
                 filterStudent = sortedByRollNumber
             case CommonStringFile.RollNoDESC.translated():
                 let sortedByName = sortedStudent?.sorted { $0.AdmissionId > $1.AdmissionId }
+                getStanderd.isHidden = true
                 filterStudent = sortedByName
             case CommonStringFile.NameASC.translated():
                 let sortedByName = sortedStudent!.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
                 filterStudent = sortedByName
+                getStanderd.isHidden = true
+            case CommonStringFile.getStanderd.translated():
+                getStanderd.isHidden = false
             case CommonStringFile.NameDESC.translated():
                 let sortedByName = sortedStudent!.sorted { $0.name > $1.name }
                 filterStudent = sortedByName
-                
+                getStanderd.isHidden = true
             default:
+                getStanderd.isHidden = true
                 filterStudent = sortedStudent
                 
             }
@@ -200,14 +158,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     @IBAction func selectCatagory(_ sender: UIButton) {
-        
-//        if classSelection.isHidden {
-//            showStackView()
-//        } else {
-//            //            hideStackView()
-//            hideSectionView()
-//        }
-    
         AcodemicDropdown.dataSource = accadimYr
         
         AcodemicDropdown.anchorView = selectedType
@@ -218,7 +168,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
             getStandardsAPI(academic_year_id: AcadimicYearDatas[index].id ?? 0)
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
-            self.sectionBtn.setTitle(item, for: .normal)
             if let label = self.selectedType.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.selectedType.setTitle(item.translated(), for: .normal)
             }
@@ -239,9 +188,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             sortedStudent = filteredStudents
             reportTable.isHidden = true
             reportTable.reloadData()
-            selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
             self.sectionBtn.setTitle(item, for: .normal)
-//            hideSectionView()
             if let label = self.sectionDropdown.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.sectionBtn.setTitle(item.translated(), for: .normal)
             }
@@ -249,27 +196,24 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     @IBAction func classSelection(_ sender: UIButton) {
         // Configuring the dropdown
-        sectionDropdown.dataSource = standerdArray
-        sectionDropdown.anchorView = sectionView
-        sectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height - 70)
-        sectionDropdown.direction = .bottom
-        sectionDropdown.width = sectionView.bounds.width
+        classDropdown.dataSource = standerdArray
+        classDropdown.anchorView = classView
+        classDropdown.bottomOffset = CGPoint(x: 0, y: classView.bounds.height)
+        classDropdown.direction = .bottom
+        classDropdown.width = classView.bounds.width
         // Show the dropdown
-        sectionDropdown.show()
-        sectionDropdown.selectionAction = { [weak self] (index: Int, item: String) in
+        classDropdown.show()
+        classDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             let filteredStudents = studentList.filter { $0.classname == item }
             filterStudent = filteredStudents
             sortedStudent = filteredStudents
             reportTable.reloadData()
-            //            selectStudentType += item
-            selectStudentType = item
-            selectedType.setTitle(item, for: .normal)
-            
-            // Update the button title
+            sectionsDetails = standardDetails?[index].sections
+            sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
             self.clsBtn.setTitle(item, for: .normal)
             self.clsBtn.setTitle(item.translated(), for: .normal)
-            if let label = self.sectionDropdown.subviews.first(where: { $0 is UILabel }) as? UILabel {
+            if let label = self.classView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 self.clsBtn.setTitle(item.translated(), for: .normal)
             }
         }
@@ -280,18 +224,17 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : academic_year_id], type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
             switch result {
             case .success(let successMessage):
-                print("successsuccess",successMessage.data)
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
-                        standardDetails?.enumerated().forEach { index, student in
-                            standardDetails?[index].isSelect = false
-                            standerdArray.append(student.name ?? "")
-
-                        }
+                        sectionArray.removeAll()
+                        standerdArray.removeAll()
+                        standardDetails = successMessage.data
                         sectionsDetails = standardDetails?.first?.sections
-                        for i in 0..<(sectionsDetails?.count ?? 0){
-                            sectionArray.append(sectionsDetails?.first?.name ?? "")
-                        }
+                        standerdArray = standardDetails?.compactMap { $0.name } ?? []
+                        sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
+                        clsBtn.setTitle(standardDetails?.first?.name, for: .normal)
+                        sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
+
                     }
                 }else{
                     DispatchQueue.main.async { [self] in

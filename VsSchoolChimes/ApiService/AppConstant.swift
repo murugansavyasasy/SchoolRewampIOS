@@ -14,16 +14,17 @@ struct ServiceUrl{
     static var token = ""
     static var awsBucketName = ""
     
-    static let country_list              = "app/setup/countries"
-    static let version_check             = "app/setup/version-check"
-    static let validate_validate_user    = "app/auth/validate-user"
-    static let validate_validate_otp     = "app/auth/validate-otp"
+  
+    static let country_list              = "app/api/setup/countries"
+    static let version_check             = "app/api/setup/version-check"
+    static let validate_validate_user    = "app/api/auth/validate-user"
+    static let validate_validate_otp     = "app/api/auth/validate-otp"
     static let cred_change_password      = "app/cred/change-password"
     static let cred_forgot_password      = "app/cred/forgot-password"
     static let cred_reset_password       = "app/cred/reset-password"
     static let  cred_create_new_password = "app/cred/create-new-password"
     static let global_global_variables   = "app/global/global-variables"
-    static let  auth_device_token        = "app/auth/device-token"
+    static let  auth_device_token        = "app/api/auth/device-token"
     static let  get_dashboard_details    = "dashboard/dashboard/get-dashboard-details"
     static let recipient_get_group_list  = "comm/recipient/get-group-list"
     static let recipient_get_standards   = "comm/recipient/get-standards"
@@ -60,6 +61,9 @@ struct ServiceUrl{
     static let api_notice_board_get_notice = "/api/notice-board/get-notice"
     static let api_school_event_send_event = "api/school-event/send-event"
     static let attendance_student_attendance_report = "attendance/student-attendance-report"
+    
+    static let api_fee_report_daily_collection = "api/fee-report/daily-collection"
+    
     
 }
 
@@ -98,6 +102,7 @@ struct Menu_id{
     static let GeoMatricAttendace = 21
     static let NoticeboardMenuId = 23
     static let Event = 29
+    static let StudentReport = 35
 }
 struct TargetTypes{
     

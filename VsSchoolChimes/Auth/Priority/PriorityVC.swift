@@ -257,7 +257,7 @@ extension PriorityVC: UITableViewDelegate, UITableViewDataSource {
            
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SchoolTVCell, for: indexPath) as! SchoolTVCell
             
-            cell.NameLbl.text = staffDetails?[indexPath.row].staff_name
+            cell.NameLbl.text = staffDetails?[indexPath.row].name
             cell.RoleLbl.text = staffDetails?[indexPath.row].role
             cell.SchoolNamelbl.text = staffDetails?[indexPath.row].school_name
             

@@ -1097,6 +1097,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 let durationString =  voiceTiming.text ?? ""
                 let totalSeconds = convertTimeStringToSeconds(durationString)
                 voiceRecordedDuration = totalSeconds
+               
             }
             
             

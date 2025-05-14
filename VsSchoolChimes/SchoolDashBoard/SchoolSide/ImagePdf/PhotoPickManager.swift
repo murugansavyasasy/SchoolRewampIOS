@@ -181,18 +181,25 @@ class PhotoPickerManager: NSObject, PHPickerViewControllerDelegate, UIDocumentPi
 
         for result in results {
             group.enter()
-            result.itemProvider.loadObject(ofClass: UIImage.self) { (object, _) in
+            result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+                defer { group.leave() }
+
                 if let image = object as? UIImage {
+                    let width = image.size.width
+                    let height = image.size.height
+                    print("Picked image - Width: \(width), Height: \(height)")
+                    print(image)
                     images.append(image)
                 }
-                group.leave()
             }
         }
 
         group.notify(queue: .main) {
             self.onImagesPicked?(images)
+           
         }
     }
+
 
     // MARK: - UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
