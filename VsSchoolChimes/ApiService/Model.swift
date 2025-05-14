@@ -357,6 +357,7 @@ struct HomeworkList: Codable {
 struct FilePath: Codable {
     let path: String?
     let type: String?
+    
 }
 
 struct AwsResps: Codable {

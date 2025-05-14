@@ -354,7 +354,7 @@ class RecipientVc: UIViewController{
                     
                     startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
                         if let videoURLString = videoURLString {
-                            uploadedFiles = [["path": videoURLString]]
+                            uploadedFiles = [["path": videoURLString,"type": selectedType]]
                             
                             if let iframeHTML = iframeHTML {
                                 iframeValue = iframeHTML
@@ -376,7 +376,10 @@ class RecipientVc: UIViewController{
                     CircularProgressLoader.shared.show()
                     uploadAWSMedia(file: file) { [self] in
                         CircularProgressLoader.shared.hide()
-                        uploadedFiles = uploadedURLs.compactMap { url in ["path": url] }
+                        uploadedFiles = uploadedURLs
+                            .compactMap {
+                                url in ["path": url , "type": selectedType]
+                            }
                         iframeValue = "" // for IMAGE or DOCUMENT
                         fileSizeValue = ""
                         sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
@@ -387,7 +390,7 @@ class RecipientVc: UIViewController{
                     
                     let parameters: [String: Any] = [
                         SendAttachmentStringFile.title: user_inputs.title,
-                        SendAttachmentStringFile.file_type: selectedType,
+//                        SendAttachmentStringFile.file_type: selectedType,
                         SendAttachmentStringFile.file_path: uploadedFiles,
                         SendAttachmentStringFile.target_type: target_type ?? "",
                         SendAttachmentStringFile.target_code: array_selectedId,
@@ -478,6 +481,46 @@ class RecipientVc: UIViewController{
         })
     }
     
+    func fetchMP4VideoURL(videoURI: String, accessToken: String, completion: @escaping (String?) -> Void) {
+     let url = URL(string: "https://api.vimeo.com\(videoURI)")! // e.g. /videos/12345678
+     var request = URLRequest(url: url)
+     request.httpMethod = "GET"
+     request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+     request.setValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
+     
+     URLSession.shared.dataTask(with: request) { data, response, error in
+     guard let data = data else {
+     print("❌ Error fetching video info: \(error?.localizedDescription ?? "Unknown error")")
+     completion(nil)
+     return
+     }
+     
+     do {
+     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+     let files = (json["download"] as? [[String: Any]]) ?? (json["files"] as? [[String: Any]]) {
+     
+     for file in files {
+     if let quality = file["quality"] as? String,
+     let link = file["link"] as? String,
+     quality == "source" || quality == "hd" || link.hasSuffix(".mp4") {
+     print("✅ Found MP4 URL: \(link)")
+     completion(link)
+     return
+     }
+     }
+     
+     print("❌ No .mp4 file found in files array.")
+     completion(nil)
+     } else {
+     print("❌ Unexpected JSON structure: \(String(data: data, encoding: .utf8) ?? "")")
+     completion(nil)
+     }
+     } catch {
+     print("❌ JSON parsing error: \(error.localizedDescription)")
+     completion(nil)
+     }
+     }.resume()
+    }
     func convertSize(_ sizeInBytes: Int) -> String {
         let kb = 1024.0
         let mb = kb * 1024
@@ -1227,8 +1270,11 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                         selectSubject.isHidden = true
                         subjectId = ""
                     }
+                }else{
+                    speficBtnName.isHidden = !(selectedSections.count == 1)
                 }
                 spaceView.isHidden = !selectSubject.isHidden
+               
             }
             
         case recipeint_tabBarName.Staff:

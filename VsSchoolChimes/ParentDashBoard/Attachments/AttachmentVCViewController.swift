@@ -68,24 +68,28 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
 
         let titleHeight = attachment.title?.heights(withConstrainedWidth: width, font: titleFont) ?? 0
         let descHeight = attachment.description?.heights(withConstrainedWidth: width, font: descFont) ?? 0
+        let dateAndtime = attachment.date?.heights(
+            withConstrainedWidth: width,
+            font: descFont
+        ) ?? 0
         let spacing: CGFloat = 8 + 8 + 8
 
-        switch attachment.type {
+        switch attachment.file_path?.first?.type {
         case "IMAGE":
             if let urlString = attachment.file_path?.first?.path,
                let url = URL(string: urlString),
                let data = try? Data(contentsOf: url),
                let image = UIImage(data: data) {
                 let ratio = (image.size.height * width) / image.size.width
-                return titleHeight + descHeight + ratio + spacing
+                return dateAndtime + titleHeight + descHeight + 270 + spacing
             } else {
                 return titleHeight + descHeight + 200 + spacing
             }
 
         case "VIDEO":
-            return titleHeight + descHeight + 300 + spacing
+            return  titleHeight + descHeight + 270 + spacing
         case "DOCUMENT":
-            return titleHeight + descHeight + 100 + spacing
+            return   300 + spacing
         default:
             return titleHeight + descHeight + 80 + spacing
         }
@@ -125,35 +129,96 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
         cell.sentBy.text = data.sender_info
         cell.discreptionLbl.text = data.description
 
-        switch data.type {
+        switch data.file_path?.first?.type {
         case "IMAGE":
             cell.imageView.isHidden = false
+            cell.webOuterView.isHidden = true
             cell.webview.isHidden = true
             cell.imageView.sd_setImage(with: URL(string: data.file_path?.first?.path ?? ""), placeholderImage: ImageName.placeholder)
 
         case "VIDEO":
             cell.imageView.isHidden = true
-            cell.webview.isHidden = false
-            if let iframe = data.iframe {
-                cell.loadVimeoVideo(iframe: iframe)
+            cell.webOuterView.isHidden = false
+            cell.webview.isHidden = true
+            cell.sentBy.isHidden = true
+    
+//            cell.webOuterView.contentMode = .scaleAspectFill
+            cell.webOuterView.clipsToBounds = true
+            cell.webOuterView.layer.cornerRadius = 10
+            
+//            if let url = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") {
+//                  cell.configureVideo(with: url)
+//              }
+            
+            fetchMP4VideoURL(videoURI: "https://vimeo.com/1083863418", accessToken: "8d74d8bf6b5742d39971cc7d3ffbb51a") { mp4URL in
+             if let mp4URL = mp4URL {
+             print("🎥 MP4 video URL: \(mp4URL)")
+             // Now you can play it using AVPlayer or show in your view
+             } else {
+             print("❌ Failed to get MP4 URL.")
+             }
             }
-
         case "DOCUMENT":
             cell.imageView.isHidden = true
+            cell.webOuterView.isHidden = false
             cell.webview.isHidden = false
             if let docUrl = data.file_path?.first?.path, let url = URL(string: docUrl) {
                 cell.webview.load(URLRequest(url: url))
             }
+            cell.sentBy.isHidden = true
 
         default:
             cell.imageView.isHidden = true
-            cell.webview.isHidden = true
+            cell.webOuterView.isHidden = true
         }
 
         return cell
     }
 
     
+    
+    
+    
+    func fetchMP4VideoURL(videoURI: String, accessToken: String, completion: @escaping (String?) -> Void) {
+     let url = URL(string: "https://api.vimeo.com\(videoURI)")! // e.g. /videos/12345678
+     var request = URLRequest(url: url)
+     request.httpMethod = "GET"
+     request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+     request.setValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
+     
+     URLSession.shared.dataTask(with: request) { data, response, error in
+     guard let data = data else {
+     print("❌ Error fetching video info: \(error?.localizedDescription ?? "Unknown error")")
+     completion(nil)
+     return
+     }
+     
+     do {
+     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+     let files = (json["download"] as? [[String: Any]]) ?? (json["files"] as? [[String: Any]]) {
+     
+     for file in files {
+     if let quality = file["quality"] as? String,
+     let link = file["link"] as? String,
+     quality == "source" || quality == "hd" || link.hasSuffix(".mp4") {
+     print("✅ Found MP4 URL: \(link)")
+     completion(link)
+     return
+     }
+     }
+     
+     print("❌ No .mp4 file found in files array.")
+     completion(nil)
+     } else {
+     print("❌ Unexpected JSON structure: \(String(data: data, encoding: .utf8) ?? "")")
+     completion(nil)
+     }
+     } catch {
+     print("❌ JSON parsing error: \(error.localizedDescription)")
+     completion(nil)
+     }
+     }.resume()
+    }
 
     private func fetchAttachments() {
         if #available(iOS 15.0, *) {
