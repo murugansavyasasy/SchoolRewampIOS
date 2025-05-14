@@ -79,26 +79,27 @@ struct UserDetails: Codable {
 }
 
 struct StaffDetails: Codable {
-    let staff_name: String?
-    var isSelected: Bool?
+    let name: String?
+    let emp_id: String?
+    let mobile_no: String?
+    let address: String?
+    let email: String?
+    let blood_group: String?
+    let staff_profile: String?
+    let school_id: String?
     let school_name: String?
     let school_name_regional: String?
+    let school_city: String?
     let school_logo: String?
     let role: String?
-    let is_payment_pending: String?  // Changed from String? to Bool?
+    let priority_level: String?
+    let is_payment_pending: String?
     let schedule_call_type: Int?
     let biometric_enable: Bool?
-    let school_id: String?
     let allow_video_download: Bool?
+    let school_address: String?
     let access_token: String?
-    let school_address : String?
-    let emp_id : String?
-    let mobile_no : String?
-    let address : String?
-    let email : String?
-    let blood_group : String?
-    let staff_profile : String?
-    let school_city : String?
+    var isSelected: Bool?
 }
 
 struct ChildDetails: Codable {
@@ -536,4 +537,20 @@ struct Notice: Codable {
 struct File_Path: Codable {
     let url: String?
     let type: String?
+}
+// MARK: - Root Response
+struct EventResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [Event]
+}
+
+// MARK: - Event
+struct EventList: Codable {
+    let title: String
+    let content: String
+    let date: String
+    let time: String
+    let venue: String
+    let file_path: [File_Path]
 }

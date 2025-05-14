@@ -12,21 +12,13 @@ import DropDown
 
 class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
-    @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var nodataLbl: UILabel!
-    @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var noRecordsView: UIView!
     @IBOutlet weak var tv: UITableView!
-    @IBOutlet weak var AcadamidropDown: UIViewX!
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var dropDownTextLbl: UILabel!
-    @IBOutlet weak var classWiseView: UIView!
-    @IBOutlet weak var categoryWiseView: UIView!
-    
-    @IBOutlet weak var CategoryLbl: UILabel!
-    
-    @IBOutlet weak var ClassLbl: UILabel!
+    @IBOutlet weak var acodemicView: UIView!
+    @IBOutlet weak var acodemicdropView: UIView!
+    @IBOutlet weak var acodomicYearLbl: UILabel!
     let dropDown = DropDown()
     var url_time : String!
     var url_hours : String!
@@ -39,7 +31,9 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var DropDownStr : [String] = []
     var type : Int!
-    
+    let acidamicdrops = DropDown()
+    var AcadimicYearDatas : [AcadimicYearData] = []
+    var accadimYr :[String] = []
     // Example data for Feescategory
     let feesCategories = [
         Feescategory(category: "Tuition", amount: "5000"),
@@ -61,16 +55,9 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
+        getacadmicYr()
         DropDownStr = ["2012 - 2013","2014 - 2015","2016 - 2017","2018 - 2019"]
-        
-        categoryWiseView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        CategoryLbl.textColor = .white
-        ClassLbl.textColor = .gray
-        
+        applyShadowAndCornerRadius(to: acodemicView)
         let userDefaults = UserDefaults.standard
         
         nodataLbl.isHidden = true
@@ -81,17 +68,34 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 //        tv.isHidden = true
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
-        let dropDown = UITapGestureRecognizer(target: self, action: #selector(DropDownVc))
-        AcadamidropDown.addGestureRecognizer(dropDown)
-        let classWiseGuesture = UITapGestureRecognizer(target: self, action: #selector(classAction))
-        classWiseView.addGestureRecognizer(classWiseGuesture)
-        let categoryGuesture = UITapGestureRecognizer(target: self, action: #selector(categoryAction))
-        categoryWiseView.addGestureRecognizer(categoryGuesture)
-        
+
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()
 
+    }
+    func getacadmicYr(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            AcadimicYearDatas = successMessage.data ?? []
+                            for i in 0..<(AcadimicYearDatas.count){
+                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                    acodomicYearLbl.text = AcadimicYearDatas[i].year
+                                }
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -101,64 +105,26 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         )
     }
     
-    @IBAction func DropDownVc(){
-        let acadamicYear = DropDownStr
-        dropDown.dataSource = acadamicYear
-        dropDown.anchorView = AcadamidropDown
-        dropDown.bottomOffset = CGPoint(x: 0, y:(dropDown.anchorView?.plainView.bounds.height)!)
-        dropDown.direction = .bottom
-        DropDown.appearance().backgroundColor = UIColor.white
-        dropDown.show()
-        dropDown.selectionAction = { [unowned self] (index:Int, item: String) in
-            print("Selected item: \(item) at index: \(index)")
-            self.dropDownTextLbl.text = item
-            dropDownTextLbl.textColor = .black
+    
+    @IBAction func selectAcodemic(_ sender: UIButton) {
+        accadimYr.removeAll()
+        for i in 0..<(AcadimicYearDatas.count) {
+            accadimYr.append(AcadimicYearDatas[i].year ?? "")
+        }
+        acidamicdrops.anchorView = acodemicdropView
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: acodemicdropView.bounds.height)
+        acidamicdrops.show()
+        
+        acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
+            acodomicYearLbl.text = item
         }
     }
     
-    
-    @IBAction func categoryAction() {
-       
-        ClickId = "1"
-//        classWiseView.backgroundColor = .lightGray
-//        categoryWiseView.backgroundColor = .systemOrange
-        categoryWiseView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        classWiseView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        CategoryLbl.textColor = .white
-        ClassLbl.textColor = .gray
+    @IBAction func switchTab(_ sender: UISegmentedControl) {
         
-        tv.reloadData()
     }
-    
-    @IBAction func classAction() {
-        ClickId = "2"
-       
-//        categoryWiseView.backgroundColor = .lightGray
-//        classWiseView.backgroundColor = .systemOrange
-        classWiseView.applyGradient(
-            colors: [UIColor.blue,UIColor.systemTeal],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        categoryWiseView.applyGradient(
-            colors: [UIColor.systemGray6,UIColor.systemGray6],
-            startPoint: CGPoint(x: 0, y: 0.5),
-            endPoint: CGPoint(x: 0.8, y: 0.5)
-        )
-        ClassLbl.textColor = .white
-        CategoryLbl.textColor = .gray
-        
-        tv.reloadData()
-    }
-    
+
     @IBAction func backAct() {
         dismiss(animated: true)
     }
@@ -218,357 +184,3 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     
 
 }
-
-
-
-
-/*
- 
- 
- //MARK: Var 
- var acdmicYearRef : [AcdmicYrDataDetails] = []
- var pendingdata : [PendiRespdatadetails] = []
-//    var subpendingdata  : [pendingDataDetails] = []
- 
- //MARK: DropDown
- 
- for i in acdmicYearRef {
-//
-//                if dropDownTextLbl.text == i.yearName{
-//
-//
-//                    if  ClickId == "1"{
-//
-////                        dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
-//                    }
-//                    else if ClickId == "2"{
-//
-////                        SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
-//
-//
-//                    }
-//
-//                }
-//
-//
-//            }
- 
- //MARK: categoryAction
- 
- 
- 
-//        for i in acdmicYearRef {
-//
-//
-//            if i.currentAcademicYear == 1{
-//
-//                dropDownTextLbl.text = i.yearName
-//
-//                dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
-//            }
-//
-//
-//        }
- 
- //MARK: classAction
- 
- 
-//        for i in acdmicYearRef {
-//
-//
-//            if i.currentAcademicYear == 1{
-//
-//                dropDownTextLbl.text = i.yearName
-//
-//                SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
-//            }
-//
-//
-//        }
- //MARK: viewForHeaderInSection
- 
- 
- //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
- //        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
- //
- //
- ////        let datas : PendiRespdatadetails = pendingdata[section]
- ////
- ////
- ////        headerView.classLbl.text = datas.Category
- ////
- ////
- ////
- ////        if datas.total == nil{
- ////            headerView.amountLbl.text = "0.0"
- ////
- ////        }else{
- ////            headerView.amountLbl.text = "₹" + datas.total
- ////        }
- ////
- //
- //
- //        return headerView
- //    }
-     
- //MARK: cellForRowAt
- 
- cell.numberLbl.text = String(indexPath.row+1)
-//        if pendingdata[indexPath.section].data[indexPath.row].amount == nil{
-//            cell.amountLbl.text = "0.0"
-//
-//        }else{
-//            cell.amountLbl.text = "₹" + pendingdata[indexPath.section].data[indexPath.row].amount
-//        }
-//
-//        cell.classLbl.text = pendingdata[indexPath.section].data[indexPath.row].TypeName
-//
-//
-//
- 
- //MARK: Func
- 
- 
-//    func dashBoardList(AcadmiYerId : Int!, instuteId : String!) {
-//
-//        print("homePagedashBoardList")
-//
-//
-//        let pending = pendingModal()
-//        pending.instituteId = instuteId
-//        pending.acadamicYearId = String(AcadmiYerId)
-//
-//
-//        let pendingStr = pending.toJSONString()
-//
-//        print("dashBoarddashBoard",pending.toJSON())
-//
-//        NewPendingReqs.call_request(param: pendingStr!) {
-//            [self]
-//            (res) in
-//
-//
-//            print("PendingReqsts",PendingReqsts.self)
-//
-//
-//            let pendingResponse : pendingResp = Mapper<pendingResp>().map(JSONString: res)!
-//
-//
-//
-//            if pendingResponse.Status == 1 {
-//
-//                pendingdata = pendingResponse.data
-//
-//
-//
-//                if pendingdata.count == 0 {
-//                    nodataLbl.isHidden = false
-//                    noRecordsView.isHidden = false
-//                    print("ttgtgtgtgdef")
-//                    nodataLbl.text = "No Records"
-//                }else{
-//                    nodataLbl.isHidden = true
-//                    noRecordsView.isHidden = true
-//                }
-//
-//                tv.isHidden = false
-//                tv.dataSource = self
-//                tv.delegate = self
-//                tv.reloadData()
-//            }else{
-//                print("nodataLbl")
-//                tv.isHidden = true
-//
-//                nodataLbl.isHidden = false
-//
-//                noRecordsView.isHidden = false
-//                nodataLbl.text = "No Records"
-//
-//
-//            }
-//
-//
-//
-//
-//        }
-//
-//
-//
-//    }
- 
- 
-//    func SectionWise(AcadmiYerId : Int!, instuteId : String!) {
-//
-//        print("homePagedashBoardList")
-//
-//
-//        let pending = pendingModal()
-//        pending.instituteId = instuteId
-//        pending.acadamicYearId = String(AcadmiYerId)
-//
-//
-//        let pendingStr = pending.toJSONString()
-//
-//        print("dashBoarddashBoard",pending.toJSON())
-//
-//        classNewPendingReqs.call_request(param: pendingStr!) {
-//            [self]
-//            (res) in
-//
-//
-//            print("PendingReqsts",PendingReqsts.self)
-//
-//
-//            let pendingResponse : pendingResp = Mapper<pendingResp>().map(JSONString: res)!
-//
-//
-//
-//            if pendingResponse.Status == 1 {
-//
-//                pendingdata = pendingResponse.data
-//
-//
-//                if pendingdata.count == 0 {
-//                    nodataLbl.isHidden = false
-//                    noRecordsView.isHidden = false
-//                    print("ttgtgtgt45678g")
-//                    nodataLbl.text = "No Records"
-//                }else{
-//                    noRecordsView.isHidden = true
-//                    nodataLbl.isHidden = true
-//                }
-//                tv.isHidden = false
-//                tv.dataSource = self
-//                tv.delegate = self
-//                tv.reloadData()
-//            }else{
-//                print("ttgtgtgtg")
-//                tv.isHidden = true
-//                nodataLbl.isHidden = false
-//
-//                noRecordsView.isHidden = false
-//                nodataLbl.text = "No Records"
-//
-//
-//
-//            }
-//
-//
-//
-//
-//        }
-//
-//
-//
-//    }
- 
- 
-//    func  AcdimyYear(){
-//
-//
-//        let param : [String : Any] =
-//
-//
-//
-//        [
-//
-//            "institute_id" : SchoolId
-//
-//
-//
-//        ]
-//
-//
-//
-//
-//
-//
-//
-//        print("param",param)
-//
-//
-//
-//        AcdmicYearRequest.call_request(param: param)  {
-//
-//
-//
-//            [self] (res) in
-//
-//
-//
-//            let acdmy : acidmicYrResponce = Mapper<acidmicYrResponce>().map(JSONString: res)!
-//
-//
-//
-//
-//            if acdmy.Status == 1{
-//
-//                for i in acdmy.data{
-//
-//
-//                    if i.currentAcademicYear == 1{
-//
-//                        dropDownTextLbl.text = i.yearName
-//
-//
-//                        if  ClickId == "1"{
-//
-//                            dashBoardList(AcadmiYerId : i.id, instuteId : SchoolId )
-//                        }
-//                        else if ClickId == "2"{
-//
-//                            SectionWise(AcadmiYerId : i.id, instuteId : SchoolId)
-//
-//
-//                        }
-//
-//
-//
-//
-//                        if let index = acdmy.data.firstIndex(where: { $0.currentAcademicYear == 1 }) {
-//                            // Remove the item from its current position
-//                            let item = acdmy.data.remove(at: index)
-//                            // Insert the item at the first position
-//                            acdmy.data.insert(item, at: 0)
-//
-//                            acdmicYearRef = acdmy.data
-//                        }
-//
-//
-//
-//
-//
-//                    }
-//
-//
-//
-//
-//                }
-//
-//
-//                for i in acdmicYearRef{
-//
-//                    DropDownStr.append(i.yearName)
-//                }
-//
-//
-//            }
-//
-//            else {
-//
-//
-//
-//
-//            }
-//
-//        }
-//
-//
-//    }
- 
- 
- 
- 
- 
- */
-
