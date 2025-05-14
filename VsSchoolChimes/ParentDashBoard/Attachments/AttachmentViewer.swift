@@ -18,6 +18,8 @@ class AttachmentViewer: UIViewController, UICollectionViewDataSource, UICollecti
 
     @IBOutlet weak var imageCollectionView: UICollectionView!
     var imges = ["https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg","https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg","https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg"]
+    
+    var  file_paths: [FilePath]?
     override func viewDidLoad() {
         super.viewDidLoad()
         imageCollectionView.delegate = self
@@ -25,7 +27,7 @@ class AttachmentViewer: UIViewController, UICollectionViewDataSource, UICollecti
         imageCollectionView.register(UINib(nibName: "AttachmentViewCell", bundle: nil), forCellWithReuseIdentifier: "AttachmentViewCell")
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imges.count
+        return file_paths?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

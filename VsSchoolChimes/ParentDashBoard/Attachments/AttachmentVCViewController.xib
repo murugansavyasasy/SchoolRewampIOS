@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="collectionView" destination="Ll2-FK-w80" id="Kkq-eE-FCf"/>
                 <outlet property="pinterestLayout" destination="RGs-N2-EZG" id="NLI-OB-VaV"/>
+                <outlet property="searchBar" destination="Raq-S9-3N0" id="Hma-A3-rNz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
