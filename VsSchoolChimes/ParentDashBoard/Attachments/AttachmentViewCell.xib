@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,7 +39,6 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemCyanColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="2Mh-cr-4LP" secondAttribute="bottom" id="4T5-cR-ixq"/>
                             <constraint firstItem="2Mh-cr-4LP" firstAttribute="top" secondItem="eZ5-bK-jIr" secondAttribute="top" id="S5b-FB-eC6"/>
@@ -59,15 +57,11 @@
             </constraints>
             <size key="customSize" width="239" height="168"/>
             <connections>
+                <outlet property="imageHeight" destination="6kQ-gc-0Hj" id="dH6-jo-lV4"/>
                 <outlet property="imageView" destination="dLL-Jo-w8U" id="daW-T4-wp7"/>
                 <outlet property="scrollView" destination="2Mh-cr-4LP" id="h7q-Gn-xSM"/>
             </connections>
             <point key="canvasLocation" x="170.22900763358777" y="61.267605633802823"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemCyanColor">
-            <color red="0.19607843137254902" green="0.67843137254901964" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>

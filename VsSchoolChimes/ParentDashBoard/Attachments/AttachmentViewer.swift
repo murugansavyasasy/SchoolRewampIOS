@@ -34,6 +34,7 @@ class AttachmentViewer: UIViewController, UICollectionViewDataSource, UICollecti
                 if let url = URL(string: image) {
                     cell.imageView.kf.setImage(with: url)
                 }
+        cell.imageHeight.constant = imageCollectionView.frame.height
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
