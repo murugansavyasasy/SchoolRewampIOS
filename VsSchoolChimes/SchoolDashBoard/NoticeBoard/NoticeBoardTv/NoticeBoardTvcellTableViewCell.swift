@@ -39,6 +39,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     var issenderEvent = false
     var homeworkDocs:[FilePath]?
     var countShimmer = 0
+    private var docController: UIDocumentInteractionController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -215,44 +216,142 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         
     }
     
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
+//        if let img = homeworkDocs?[indexPath.row]{
+//            cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+//        }
+//        return cell
+//    }
+//    
+//    func getCurrentViewController() -> UIViewController? {
+//        
+//        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
+//            var currentController: UIViewController! = rootController
+//            while( currentController.presentedViewController != nil ) {
+//                currentController = currentController.presentedViewController
+//            }
+//            return currentController
+//        }
+//        return nil
+//        
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        
+//        let vc = getCurrentViewController()
+//        let vcc = ImageShowVc(nibName: nil, bundle: nil)
+//        vcc.imageURL = homeworkDocs ?? []
+//        vcc.subjectName = HomeworkSubjectLbl.text
+//        vcc.type = 2
+//        vcc.modalPresentationStyle = .fullScreen
+//        vc?.present(vcc, animated: true)
+//        
+//    }
+//    
+//    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 250, height: 135)
+//    }
+//    
+//    
+//}
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return homeworkDocs?.count ?? 0
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-        if let img = homeworkDocs?[indexPath.row]{
-            cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+        if let img = homeworkDocs?[indexPath.row] {
+            let fileURL = URL(fileURLWithPath: img.path ?? "")
+            let iconName = getFileIconName(for: fileURL)
+            if iconName != "image"{
+                if let pdfURL = URL(string: img.path ?? "") {
+                      let request = URLRequest(url: pdfURL)
+                    cell.webView.load(request)
+                    cell.webView.isHidden = false
+                    cell.imageView.isHidden = true
+                  } else {
+                      cell.webView.isHidden = true
+                      cell.imageView.isHidden = false
+                  }
+            }else{
+                cell.webView.isHidden = true
+                cell.imageView.isHidden = false
+                cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+            }
+            let iconImage = UIImage(named: iconName)
+            cell.IndicaterImageView.image = iconImage
         }
         return cell
     }
     
-    func getCurrentViewController() -> UIViewController? {
-        
-        if let rootController = UIApplication.shared.keyWindow?.rootViewController {
-            var currentController: UIViewController! = rootController
-            while( currentController.presentedViewController != nil ) {
-                currentController = currentController.presentedViewController
-            }
-            return currentController
-        }
-        return nil
-        
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 150, height: 135)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
+        let fileExtension = url.pathExtension.lowercased()
         
+        //        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
         let vc = getCurrentViewController()
         let vcc = ImageShowVc(nibName: nil, bundle: nil)
-        vcc.imageURL = homeworkDocs ?? []
-        vcc.subjectName = HomeworkSubjectLbl.text
-        vcc.type = 2
+        vcc.imageURL = homeworkDocs?.filter({ img in
+            img.type?.uppercased() == CommonStringFile.IMAGE
+        }) ?? []
+        vcc.pdfUrl = homeworkDocs?[indexPath.row].path
+        vcc.scrollIndex = indexPath
+        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
+    }
+    
+    func isWebViewPreviewable(_ ext: String) -> Bool {
+        return ["pdf", "txt"].contains(ext.lowercased())
+    }
+    
+    func openWithDocumentInteraction(url: URL) {
+        docController = UIDocumentInteractionController(url: url)
+        docController?.delegate = getCurrentViewController() as? UIDocumentInteractionControllerDelegate
         
+        if !(docController?.presentPreview(animated: true) ?? false) {
+            let fileExtension = url.pathExtension.lowercased()
+            let appSuggestion = getAppSuggestion(for: fileExtension)
+            
+            let alert = UIAlertController(
+                title: "App Required",
+                message: "To open this '\(fileExtension)' file, please install a suitable app. For example: \(appSuggestion).",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            getCurrentViewController()?.present(alert, animated: true)
+        }
+    }
+    
+    func getAppSuggestion(for ext: String) -> String {
+        switch ext {
+        case "pdf":
+            return "Adobe Acrobat Reader"
+        case "doc", "docx":
+            return "Microsoft Word or WPS Office"
+        case "ppt", "pptx":
+            return "Microsoft PowerPoint"
+        case "xls", "xlsx":
+            return "Microsoft Excel"
+        case "txt", "rtf":
+            return "Notepad++ or Apple Notes"
+        default:
+            return "a compatible document viewer"
+        }
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 135)
+    func getCurrentViewController() -> UIViewController? {
+        return UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
+            .first?.rootViewController?.topMostViewController()
     }
-    
-    
 }

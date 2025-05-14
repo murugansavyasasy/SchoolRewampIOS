@@ -25,9 +25,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         }
     
     @IBOutlet weak var SearchbarHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var SearchBar: UISearchBar!
-    
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var attendtypeStackToAttendmarkStackBottom: NSLayoutConstraint!
     @IBOutlet weak var AttendStackToStandardTop: NSLayoutConstraint!
@@ -74,6 +72,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     let SectionDropdown = DropDown()
     let TypeDropdown = DropDown()
     let SessionDropdown = DropDown()
+    let StaffDetails = UserDefaultFileManager.get_staff_Details()
+    var attendenceReport : [AttenenceReportData]?
     
     var id = 0
     
@@ -88,8 +88,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         formatter.dateFormat = "EEE d MMM yyyy"
         let dateBtntitle = formatter.string(from: Date())
         DateBtn.setTitle(dateBtntitle, for: .normal)
-        
-        
         
        // setInitialButtonTitles()
         gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
@@ -404,6 +402,43 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         present(vc, animated: true)
     }
     
+    //MARK: Attendance report API Call
+    func student_attendance_report(){
+        
+        let Param = [
+            AttendanceReportStringFile.from_date : "",
+            AttendanceReportStringFile.to_date : "",
+            AttendanceReportStringFile.standard_id : standardDropdown.selectedItem,
+            AttendanceReportStringFile.section_id : SectionDropdown.selectedItem,
+        ]
+        
+        APIService.shared.makeApi(url: ServiceUrl.attendance_student_attendance_report, parameters: Param, type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result<AttendanceReportResponse,Error>) in
+            
+            switch result {
+                
+            case .success(let successMessage):
+                
+                if successMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        attendenceReport = successMessage.data
+                        TV.reloadData()
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        attendenceReport = successMessage.data
+                        TV.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
+
 }
 
 @available(iOS 14.0, *)

@@ -22,6 +22,10 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     var previousOffset: CGFloat = 0.0
     var delegate : HistorySelectDelegate?
     var shouldShowFooter = true
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    
+    var NoticeboardData: [Notice]?
+    var SearchData: [Notice]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +37,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         searchbar.delegate = self
         searchbar.addDoneButton()
         CellRegister()
-        setupTableFooter()
+       // setupTableFooter()
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
@@ -71,26 +75,64 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         
         dismiss(animated: true)
     }
+    
+    //MARK: API Call
+    
+    func Get_Notice() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.api_notice_board_get_notice, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[self] (result: Result<NoticeResponse,Error>) in
+            
+            switch result {
+                
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        NoticeboardData = SuccessMessage.data
+                        SearchData = NoticeboardData
+                        tableview.reloadData()
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        NoticeboardData = SuccessMessage.data
+                        SearchData = NoticeboardData
+                        tableview.reloadData()
+                    }
+                }
+                
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 //MARK: Tableview Functions
 @available(iOS 14.0, *)
 extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return SearchData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+        
         cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
         cell.isreciver = true
-        cell.dicriptContent.attributedText = descript(for: "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances.", expanded: false)
+        cell.dicriptContent.attributedText = descript(for: SearchData?.description ?? "", expanded: false)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
         cell.delegate = self
         cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
         cell.dicriptContent.isUserInteractionEnabled = true
         cell.dicriptContent.addGestureRecognizer(tapGesture)
-        
+        cell.TitleLbl.text = SearchData?[indexPath.row].title
+        cell.datelbl.text = SearchData?[indexPath.row].created_on
+        cell.homeworkDocs = SearchData?[indexPath.row].file_path
         return cell
     }
     
@@ -99,19 +141,19 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     }
     
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        
-        // Check for scroll direction
-        if contentOffsetY > previousOffset && contentOffsetY > 0 {
-        }
-        previousOffset = contentOffsetY
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let contentOffsetY = scrollView.contentOffset.y
+//        
+//        // Check for scroll direction
+//        if contentOffsetY > previousOffset && contentOffsetY > 0 {
+//        }
+//        previousOffset = contentOffsetY
+//    }
     
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
         let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = "Annual Day is a special occasion celebrated by schools, colleges, and organizations to mark the completion of another successful year. It is a time for showcasing the talents and achievements of students or members through cultural performances."
+        let fullDescription = label.text ?? ""
         
         // Toggle the label between expanded and collapsed states
         let isExpanded = label.numberOfLines == 0
@@ -210,4 +252,20 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
         
         searchbar.resignFirstResponder()
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty {
+            SearchData = NoticeboardData
+        } else {
+            SearchData = NoticeboardData?.filter { notice in
+                (notice.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                (notice.content?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                (notice.created_on?.lowercased().contains(searchText.lowercased()) ?? false)
+            }
+        }
+
+        tableview.reloadData()
+    }
+
 }
