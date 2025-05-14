@@ -30,7 +30,7 @@ class AttachmentVCViewController: UIViewController {
    
 
     @IBOutlet weak var titleLabel: UILabel!
-    
+    @IBOutlet weak var searchBar: UISearchBar!
     var houseImages: [UIImage?] = []
     var houseLabels: [String] = []
     var attachmentData:[Attachment]?
@@ -45,7 +45,8 @@ class AttachmentVCViewController: UIViewController {
         setupCollectionView()
 //        fetchAttachments()
         
-       
+        searchBar.delegate = self
+        searchBar.placeholder = CommonStringFile.Search.translated()
 
         // Sample Data Array
         let attachments: [Attachment] = [
@@ -114,6 +115,7 @@ class AttachmentVCViewController: UIViewController {
             )
             
         ]
+        attachmentData = attachments
         filteredAttachments = attachments
     
        collectionView.delegate = self
@@ -177,7 +179,7 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
 
 }
 
-extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionViewDataSource,UISearchBarDelegate {
     
     
 //    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -265,8 +267,10 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
         didSelectItemAt indexPath: IndexPath
     ) {
         
+       let data = filteredAttachments?[indexPath.row]
         
         let vc = AttachmentViewer(nibName: nil, bundle: nil)
+        vc.file_paths = data?.file_path 
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
         
@@ -328,6 +332,26 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
 //    }
     
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else {
+            filteredAttachments = attachmentData
+            collectionView.reloadData()
+            return
+        }
+        
+        filteredAttachments = attachmentData?.filter {
+            ($0.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
+            ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||  ($0.date?.lowercased().contains(searchText.lowercased()) ?? false)
+        }
+        collectionView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        filteredAttachments = attachmentData
+        collectionView.reloadData()
+    }
     
 }
 
