@@ -9,6 +9,7 @@ import UIKit
 
 class AttachmentViewCell: UICollectionViewCell, UIScrollViewDelegate {
     
+    @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     
