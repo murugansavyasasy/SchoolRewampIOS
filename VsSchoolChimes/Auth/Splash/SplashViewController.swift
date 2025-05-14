@@ -23,7 +23,6 @@ class SplashViewController: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var developerDescript: UILabel!
     var overlayView: UIView?
     var countryId : Int?
-    var loginId : String!
     var version_Data : VersionData? = nil
     var AlertModal = CustomAlert()
     // MARK: - Lifecycle Methods

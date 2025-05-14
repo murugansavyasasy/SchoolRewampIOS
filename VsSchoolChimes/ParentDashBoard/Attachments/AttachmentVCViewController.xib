@@ -88,7 +88,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="71G-lq-29M">
                             <rect key="frame" x="0.0" y="50" width="393" height="616"/>
                             <subviews>
-                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search NoticeBoard" translatesAutoresizingMaskIntoConstraints="NO" id="Raq-S9-3N0">
+                                <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search attchements" translatesAutoresizingMaskIntoConstraints="NO" id="Raq-S9-3N0">
                                     <rect key="frame" x="0.0" y="10" width="393" height="56"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="56" id="ndS-yA-M5W"/>

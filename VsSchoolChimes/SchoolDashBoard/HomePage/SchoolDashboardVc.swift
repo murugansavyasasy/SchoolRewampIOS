@@ -578,14 +578,32 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         }
         
         APIService.shared
-            .makeApi(url: ServiceUrl.auth_device_token, parameters:[
+            .makeApi(
+url: ServiceUrl.auth_device_token,
+ parameters:[
                 
                 COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
                 DeviceTokenStringFile.device_token : deviceToken ?? "",
                 COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
-                DeviceTokenStringFile.secure_id : secureID
+                DeviceTokenStringFile.secure_id : secureID,
+                DeviceTokenStringFile.device_info : [
+                    
+                    DeviceTokenStringFile.manufacturer : "iphone" ,
+                    DeviceTokenStringFile.model : "iphone12",
+                    DeviceTokenStringFile.device : "iphone",
+                    DeviceTokenStringFile.brand : "iphone",
+                    DeviceTokenStringFile.hardware : "",
+                    DeviceTokenStringFile.product : "",
+                    DeviceTokenStringFile.os_version : 8.1,
+                    DeviceTokenStringFile.sdk_int : 33,
+                    DeviceTokenStringFile.app_version : 1
+                ]
                 
-            ] , type: ApitTypeSringFile.POST, token: ServiceUrl.token){ [self] (
+                
+            ] ,
+ type: ApitTypeSringFile.POST,
+ token: ServiceUrl.token
+){ [self] (
                 result : Result<DeviceTokenResponseSuc,
                 Error>
             ) in
