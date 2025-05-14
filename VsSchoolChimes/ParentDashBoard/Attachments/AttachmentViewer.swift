@@ -17,7 +17,7 @@ class AttachmentViewer: UIViewController, UICollectionViewDataSource, UICollecti
     @IBOutlet weak var titleLbl: UILabel!
 
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    var imges = ["https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg","https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg","https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg"]
+    var imges : Attachment?
     override func viewDidLoad() {
         super.viewDidLoad()
         imageCollectionView.delegate = self
@@ -25,18 +25,53 @@ class AttachmentViewer: UIViewController, UICollectionViewDataSource, UICollecti
         imageCollectionView.register(UINib(nibName: "AttachmentViewCell", bundle: nil), forCellWithReuseIdentifier: "AttachmentViewCell")
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imges.count
+        return imges?.file_path?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentViewCell", for: indexPath) as! AttachmentViewCell
-        let image = imges[indexPath.item]
-                if let url = URL(string: image) {
-                    cell.imageView.kf.setImage(with: url)
+
+        guard let imageItem = imges?.file_path?[indexPath.item],
+              let urlString = imageItem.path,
+              let url = URL(string: urlString) else {
+            return cell
+        }
+
+        switch imageItem.type {
+        case "DOCUMENT":
+            let request = URLRequest(url: url)
+            cell.configureAttachment(type: .web(request))
+
+        case "IMAGE":
+            // Download image using Kingfisher then pass to configureAttachment
+            cell.imageView.kf.setImage(with: url, completionHandler: { result in
+                switch result {
+                case .success(let value):
+                    cell.configureAttachment(type: .image(value.image))
+                case .failure:
+                    break // Handle failure if needed
                 }
+            })
+
+        case "VIDEO":
+            cell.configureAttachment(type: .video(url))
+
+        default:
+            // Fallback to image if type is unknown
+            cell.imageView.kf.setImage(with: url, completionHandler: { result in
+                switch result {
+                case .success(let value):
+                    cell.configureAttachment(type: .image(value.image))
+                case .failure:
+                    break
+                }
+            })
+        }
+
         cell.imageHeight.constant = imageCollectionView.frame.height
         return cell
     }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: imageCollectionView.frame.width, height: imageCollectionView.frame.height)
     }
