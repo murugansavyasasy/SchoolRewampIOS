@@ -23,12 +23,22 @@ class AttachmentCvCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var discreptionLbl: UILabel!
     @IBOutlet weak var TitleLbl: UILabel!
     @IBOutlet weak var imageView: UIImageView!
-
-    private var isMuted = true
-      private let muteButton = UIButton(type: .system)
+    private var currentlyPlayingIndexPath: IndexPath?
+  
 
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
+    private var videoURL: URL?
+    
+
+    private var isMuted = true
+       private var isPlaying = false
+
+    private let playButton: UIButton = UIButton(type: .system)
+       private let muteButton = UIButton()
+
+       
+       var onPlayPressed: ((AttachmentCvCollectionViewCell) -> Void)?
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView.contentMode = .scaleAspectFill
@@ -45,40 +55,31 @@ class AttachmentCvCollectionViewCell: UICollectionViewCell {
     
     
     
-    override func prepareForReuse() {
+   
+
+       override func prepareForReuse() {
            super.prepareForReuse()
            player?.pause()
            playerLayer?.removeFromSuperlayer()
            player = nil
            playerLayer = nil
-       }
-
-       func configureVideo(with url: URL) {
-           setupMuteButton()
-           guard player == nil else { return }
-
-           player = AVPlayer(url: url)
-           player?.isMuted = true
+           isPlaying = false
            isMuted = true
-           updateMuteButtonIcon()
-
-           playerLayer = AVPlayerLayer(player: player)
-           playerLayer?.frame = webOuterView.bounds
-           playerLayer?.videoGravity = .resizeAspectFill
-
-           if let layer = playerLayer {
-               webOuterView.layer.insertSublayer(layer, at: 0)
-           }
-
-           player?.play()
+           playButton.isHidden = false
+           updatePlayButtonIcon()
        }
 
+    
+
+      
        override func layoutSubviews() {
            super.layoutSubviews()
            playerLayer?.frame = webOuterView.bounds
        }
 
-       // MARK: - Mute Button Setup
+   
+   
+
 
        private func setupMuteButton() {
            muteButton.translatesAutoresizingMaskIntoConstraints = false
@@ -92,7 +93,7 @@ class AttachmentCvCollectionViewCell: UICollectionViewCell {
 
            NSLayoutConstraint.activate([
                muteButton.bottomAnchor.constraint(equalTo: webOuterView.bottomAnchor, constant: -10),
-               muteButton.centerXAnchor.constraint(equalTo: webOuterView.centerXAnchor),
+               muteButton.trailingAnchor.constraint(equalTo: webOuterView.trailingAnchor, constant: -10),
                muteButton.widthAnchor.constraint(equalToConstant: 36),
                muteButton.heightAnchor.constraint(equalToConstant: 36)
            ])
@@ -113,6 +114,89 @@ class AttachmentCvCollectionViewCell: UICollectionViewCell {
            let image = UIImage(systemName: imageName, withConfiguration: config)
            muteButton.setImage(image, for: .normal)
        }
+
+
+        func configureVideo(with url: URL) {
+            setupPlayButton()
+            setupMuteButton()
+            if player == nil {
+                player = AVPlayer(url: url)
+                player?.actionAtItemEnd = .pause
+
+                playerLayer = AVPlayerLayer(player: player)
+                playerLayer?.frame = webOuterView.bounds
+                playerLayer?.videoGravity = .resizeAspectFill
+
+                if let playerLayer = playerLayer {
+                    webOuterView.layer.insertSublayer(playerLayer, at: 0)
+                }
+
+                // Observer for video end
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(videoDidEnd),
+                                                       name: .AVPlayerItemDidPlayToEndTime,
+                                                       object: player?.currentItem)
+            }
+
+            updatePlayButtonIcon()
+        }
+
+        @objc private func playButtonTapped() {
+            guard let player = player else { return }
+
+            if isPlaying {
+                player.pause()
+                isPlaying = false
+            } else {
+                onPlayPressed?(self) // Pause other videos
+                player.play()
+                isPlaying = true
+            }
+
+            updatePlayButtonIcon()
+        }
+
+        @objc private func videoDidEnd() {
+            player?.seek(to: .zero)
+            player?.pause()
+            isPlaying = false
+            updatePlayButtonIcon()
+        }
+
+        private func setupPlayButton() {
+            if playButton.superview == nil {
+                playButton.translatesAutoresizingMaskIntoConstraints = false
+                playButton.tintColor = .white
+                playButton.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+                playButton.layer.cornerRadius = 25
+                playButton.clipsToBounds = true
+                playButton.addTarget(self, action: #selector(playButtonTapped), for: .touchUpInside)
+
+                webOuterView.addSubview(playButton)
+
+                NSLayoutConstraint.activate([
+                    playButton.centerXAnchor.constraint(equalTo: webOuterView.centerXAnchor),
+                    playButton.centerYAnchor.constraint(equalTo: webOuterView.centerYAnchor),
+                    playButton.widthAnchor.constraint(equalToConstant: 50),
+                    playButton.heightAnchor.constraint(equalToConstant: 50)
+                ])
+            }
+        }
+
+        private func updatePlayButtonIcon() {
+            let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold)
+            let imageName = isPlaying ? "pause.circle.fill" : "play.circle.fill"
+            let image = UIImage(systemName: imageName, withConfiguration: config)
+            playButton.setImage(image, for: .normal)
+        }
+
+        func pauseIfNeeded() {
+            if isPlaying {
+                player?.pause()
+                isPlaying = false
+                updatePlayButtonIcon()
+            }
+        }
     
     
     func loadVimeoVideo(iframe: String) {
