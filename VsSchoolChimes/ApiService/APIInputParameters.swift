@@ -55,7 +55,20 @@ class  DeviceTokenStringFile {
     
     static var device_token = "device_token"
     static var secure_id = "secure_id"
+    static var device_info = "device_info"
+    static var manufacturer = "manufacturer"
+    static var model = "model"
+    static var device = "device"
+    static var brand = "brand"
+    static var hardware = "hardware"
+    static var product = "product"
+    static var os_version = "os_version"
+    static var sdk_int = "sdk_int"
+    static var app_version = "app_version"
 }
+
+
+
 class  send_textmessageStringFile {
     static var target_code = "target_code"
     static var target_type = "target_type"

@@ -133,6 +133,8 @@ class AttachmentVCViewController: UIViewController {
             collectionView.dataSource = self
         
         collectionView.register(UINib(nibName: "AttachmentCvCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:"AttachmentCvCollectionViewCell")
+        
+        collectionView.register(UINib(nibName:CellConfingName.seeMore, bundle: nil), forCellWithReuseIdentifier: CellConfingName.seeMore)
         }
 }
 
@@ -196,13 +198,6 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         
-        if indexPath.row == (filteredAttachments?.count ?? 0) {
-               // SEE ALL cell
-               let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "seeMore", for: indexPath) as! seeMore
-               cell.seeAllButton.setTitle("See All", for: .normal)
-               cell.seeAllButton.addTarget(self, action: #selector(seeAllTapped), for: .touchUpInside)
-               return cell
-           }
         
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.imageCellID, for: indexPath) as! AttachmentCvCollectionViewCell

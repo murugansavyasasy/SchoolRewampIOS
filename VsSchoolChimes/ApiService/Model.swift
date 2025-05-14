@@ -24,7 +24,7 @@ struct CountryData : Codable{
     let base_url : String?
     let reporting_url : String?
     let flag_url : String?
-    
+
 }
 
 //MARK: Version Check API
@@ -44,7 +44,11 @@ struct VersionData: Codable {
     let play_store_market_id: String?
     let play_store_link: String?
     let app_store_link: String?
+    let description: String?
 }
+
+
+
 
 // MARK: Validate User
 struct UserValidationResponseSuc: Codable {
@@ -62,6 +66,8 @@ struct UserData: Codable {
     let dial_numbers: String?
     let user_details: UserDetails?
 }
+
+
 
 struct UserDetails: Codable {
     let is_staff: Bool?
