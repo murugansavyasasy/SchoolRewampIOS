@@ -1626,6 +1626,37 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    
+                    
+                    segmentName.isUserInteractionEnabled = false
+                    nodata(false, message: "")
+                    
+                    nodataFound.isHidden = false
+                    nodataFound.image = ImageName.customer_support
+                    acidamicYrDropView.isUserInteractionEnabled = false
+                    heightSegment.constant = 0
+                    chooseDefaultLbl.isHidden = true
+                    segmentName.isHidden = true
+                    acidamicYrDropView.isHidden = true
+                    selectStandardDropDown.isHidden = true
+                    let fullText = CommonStringFile.Your_academic_year_configuration
+                    let attributedString = NSMutableAttributedString(string: fullText)
+                    
+                    let email = CommonStringFile.support_savyasasy_com
+                    if let range = fullText.range(of: email) {
+                        let nsRange = NSRange(range, in: fullText)
+                        
+                        // Color and underline
+                        attributedString.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: nsRange)
+                        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: nsRange)
+                    }
+                    
+                    noRecordLbl.attributedText = attributedString
+                    noRecordLbl.isUserInteractionEnabled = true
+                    
+                    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEmailTap(_:)))
+                    noRecordLbl.addGestureRecognizer(tapGesture)
+                    
                 }
             }
         

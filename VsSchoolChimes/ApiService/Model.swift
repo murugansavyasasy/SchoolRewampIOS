@@ -601,3 +601,17 @@ struct StudentData: Codable {
     let class_teacher: String
     let email:String
 }
+// MARK:  Event Holiday
+
+struct EventHolidayResponse: Codable{
+    var status : Bool?
+    var message : String?
+    var data : [EventHolidayData]?
+    
+}
+
+struct EventHolidayData: Codable{
+    var name : String?
+    var year : String?
+    var date : String?
+}
