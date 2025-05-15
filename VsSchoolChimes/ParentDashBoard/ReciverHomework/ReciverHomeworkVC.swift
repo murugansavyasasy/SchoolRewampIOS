@@ -233,6 +233,8 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
         // Configure cell data
         cell.subjectName.text = homework.subject_name
         cell.topics.text = homework.title ?? ""
+        
+        
         cell.dateLble.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
         cell.forwordBtn.isHidden = true
         cell.SelectBtnHeight.constant = 0

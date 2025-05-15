@@ -32,8 +32,8 @@ class EventResiverVC: UIViewController, SelectNotice{
     let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
     var section = 0
     var shouldShowFooter = true
-    var homeWorkList:[HomeworkList]?
-    var FilterHomeWorkList:[HomeworkList]?
+    var event:[EventList]?
+    var eventHolidayData : [EventHolidayData]?
     var playIndex : Int = 0
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
@@ -49,9 +49,9 @@ class EventResiverVC: UIViewController, SelectNotice{
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         searchbar.addDoneButton()
         uiConficration()
+        GetEvent()
         tabelViewRegister()
         setupTableFooter()
-        tableview.reloadData()
     }
     
     @IBAction func backbtn(_ sender: Any) {
@@ -106,60 +106,16 @@ class EventResiverVC: UIViewController, SelectNotice{
         section = sender.selectedSegmentIndex
         tableview.reloadData()
     }
-    func GetHomeWorkReport() {
+  
+    func GetEvent() {
         if #available(iOS 15.0, *) {
             showLottieProgressLoader(animationName: "loader (2)")
         }
         APIService.shared.makeApi(
-            url: ServiceUrl.comm_homework_get_homework_list,
+            url: ServiceUrl.api_school_event_get_event,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: studentDetails?.access_token ?? ""
-        ) { [self] (result: Result<HomeworListkResponse, Error>) in
-            DispatchQueue.main.async {
-                if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
-                }
-                
-                switch result {
-                case .success(let successMessage):
-                    self.homeWorkList = successMessage.data
-                    self.FilterHomeWorkList = successMessage.data
-                    self.tableview.reloadData()
-                    if self.homeWorkList?.count == 0{
-                        
-                        self.noDataLbl.text = successMessage.message
-                        self.noDataLbl.isHidden = false
-                        self.noDataImg.isHidden = false
-                       self.tableview.isHidden = true
-                        self.searchbar.isHidden = true
-                        self.searchHeight.constant = 0
-                    }else{
-                        self.noDataLbl.isHidden = true
-                        self.noDataImg.isHidden = true
-                        self.tableview.isHidden = false
-                        self.searchHeight.constant = 56
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    self.noDataLbl.text = error.localizedDescription
-                    self.noDataLbl.isHidden = false
-                    self.noDataImg.isHidden = false
-                    self.tableview.isHidden = true
-                    self.searchbar.isHidden = true
-                }
-            }
-        }
-    }
-    func GetHomeWorkArchive() {
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
-        APIService.shared.makeApi(
-            url: ServiceUrl.comm_homework_get_homework_list_archive,
-            parameters: [:],
-            type: ApitTypeSringFile.GET,
-            token:studentDetails?.access_token ?? "") { [self] (result: Result<HomeworListkResponse, Error>) in
+            token:studentDetails?.access_token ?? "") { [self] (result: Result<EventResponse, Error>) in
                 DispatchQueue.main.async {
                     if #available(iOS 15.0, *) {
                         self.hideLottieProgressLoader()
@@ -167,10 +123,9 @@ class EventResiverVC: UIViewController, SelectNotice{
                     
                     switch result {
                     case .success(let successMessage):
-//                        self.homeWorkList?.append(contentsOf:successMessage.data ?? [])
-                        self.FilterHomeWorkList?.append(contentsOf:successMessage.data ?? [])
+                        self.event = successMessage.data
                         self.tableview.reloadData()
-                        if self.homeWorkList?.count == 0{
+                        if self.event?.count == 0{
                             self.noDataLbl.text = successMessage.message
                             self.noDataLbl.isHidden = false
                             self.noDataImg.isHidden = false
@@ -184,10 +139,9 @@ class EventResiverVC: UIViewController, SelectNotice{
                             self.searchHeight.constant = 56
                             self.tableview.isHidden = false
                         }
-                        
                     case .failure(let error):
                         print(error.localizedDescription)
-                        if self.homeWorkList?.count == 0{
+                        if self.event?.count == 0{
                             self.noDataLbl.text = error.localizedDescription
                             self.noDataLbl.isHidden = false
                             self.noDataImg.isHidden = false
@@ -199,6 +153,58 @@ class EventResiverVC: UIViewController, SelectNotice{
                 }
             }
     }
+    
+    
+    func event_holiday() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.school_event_view_holidays,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token:studentDetails?.access_token ?? "") { [self] (
+                result: Result<EventHolidayResponse,
+                Error>
+            ) in
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
+                    }
+                    
+                    switch result {
+                    case .success(let successMessage):
+                        self.eventHolidayData = successMessage.data
+                        self.tableview.reloadData()
+                        if self.event?.count == 0{
+                            self.noDataLbl.text = successMessage.message
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            
+                            self.tableview.isHidden = true
+                            self.searchbar.isHidden = true
+                            self.searchHeight.constant = 0
+                        }else{
+                            self.noDataLbl.isHidden = true
+                            self.noDataImg.isHidden = true
+                            self.searchHeight.constant = 56
+                            self.tableview.isHidden = false
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        if self.event?.count == 0{
+                            self.noDataLbl.text = error.localizedDescription
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            self.tableview.isHidden = true
+                            self.searchbar.isHidden = true
+                        }
+                        
+                    }
+                }
+            }
+    }
+
 }
 
 //MARK: Tableview Functions
@@ -223,7 +229,9 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
-            cell.TakenLbl.text = "Tamilar Thirunaal"
+            
+           
+            cell.TakenLbl.text = eventHolidayData?[indexPath.row].name
             cell.MonthView.backgroundColor =  UIColor(named: "Red")
             cell.DateView.backgroundColor =  .white
             cell.DateView.layer.borderWidth = 0.5

@@ -26,27 +26,27 @@ struct ServiceUrl{
     static let global_global_variables   = "app/global/global-variables"
     static let  auth_device_token        = "app/api/auth/device-token"
     static let  get_dashboard_details    = "dashboard/dashboard/get-dashboard-details"
-    static let recipient_get_group_list  = "comm/recipient/get-group-list"
-    static let recipient_get_standards   = "comm/recipient/get-standards"
-    static let recipient_get_student_list  = "comm/recipient/get-student-list"
-    static let recipient_get_subject_list  = "comm/recipient/get-subject-list"
-    static let recipient_get_staff_list  = "comm/recipient/get-staff-list"
-    static let comm_text_message_send_text  = "comm/text-message/send-text"
-    static let comm_voice_send_voice  = "comm/voice/send-voice"
-    static let comm_voice_get_voice_history  = "comm/voice/get-voice-history"
-    static let comm_text_message_get_text_history  = "comm/text-message/get-text-history"
-    static let comm_homework_get_homework_report  = "comm/homework/get-homework-report"
-    static let comm_homework_get_homework_list_archive  = "comm/homework/get-homework-list-archive"
-    static let comm_homework_get_homework_list  = "comm/homework/get-homework-list"
-    static let comm_homework_sendhomework  = "comm/homework/send-homework"
-    static let comm_recipient_get_academic_year_list  = "comm/recipient/get-academic-year-list"
-    static let comm_communication_list  = "comm/communication/list"
-    static let comm_communication_list_archive  = "comm/communication/list-archive"
-    static let comm_communication_read_status_update  = "comm/communication/read-status-update"
-    static let  comm_communication_read_status_update_archive  = "comm/communication/read-status-update-archive"
-    static let  comm_attachment_send_attachment  = "comm/attachment/send-attachment"
-    static let  comm_communication_attachment_list  = "comm/communication/attachment-list"
-    static let  comm_communication_attachment_list_archive  = "comm/communication/attachment-list-archive"
+    static let recipient_get_group_list  = "comm/api/recipient/get-group-list"
+    static let recipient_get_standards   = "comm/api/recipient/get-standards"
+    static let recipient_get_student_list  = "comm/api/recipient/get-student-list"
+    static let recipient_get_subject_list  = "comm/api/recipient/get-subject-list"
+    static let recipient_get_staff_list  = "comm/api/recipient/get-staff-list"
+    static let comm_text_message_send_text  = "comm/api/text-message/send-text"
+    static let comm_voice_send_voice  = "comm/api/voice/send-voice"
+    static let comm_voice_get_voice_history  = "comm/api/voice/get-voice-history"
+    static let comm_text_message_get_text_history  = "comm/api/text-message/get-text-history"
+    static let comm_homework_get_homework_report  = "comm/api/homework/get-homework-report"
+    static let comm_homework_get_homework_list_archive  = "comm/api/homework/get-homework-list-archive"
+    static let comm_homework_get_homework_list  = "comm/api/homework/get-homework-list"
+    static let comm_homework_sendhomework  = "comm/api/homework/send-homework"
+    static let comm_recipient_get_academic_year_list  = "comm/api/recipient/get-academic-year-list"
+    static let comm_communication_list  = "comm/api/communication/list"
+    static let comm_communication_list_archive  = "comm/api/communication/list-archive"
+    static let comm_communication_read_status_update  = "comm/api/communication/read-status-update"
+    static let  comm_communication_read_status_update_archive  = "comm/api/communication/read-status-update-archive"
+    static let  comm_attachment_send_attachment  = "comm/api/attachment/send-attachment"
+    static let  comm_communication_attachment_list  = "comm/api/communication/attachment-list"
+    static let  comm_communication_attachment_list_archive  = "comm/api/communication/attachment-list-archive"
     static let  staff_attd_geometric_entry_using_app  = "staff-attd/geometric/entry-using-app"
     static let  staff_attd_geometric_set_geometric_location  = "staff-attd/geometric/set-geometric-location" 
     static let  staff_attd_geometric_get_geometric_location_history  = "staff-attd/geometric/get-geometric-location-history"
@@ -63,6 +63,11 @@ struct ServiceUrl{
     static let attendance_student_attendance_report = "attendance/student-attendance-report"
     
     static let api_fee_report_daily_collection = "api/fee-report/daily-collection"
+    static let api_fee_report_detailed_pending_report = "api/fee-report/detailed-pending-report"
+    static let api_fee_report_detailed_class_wise_pending_report = "api/fee-report/detailed-class-wise-pending-report"
+    static let  api_get_student_report = " api/get-student-report"
+    static let  api_school_event_get_event = "api/school-event/get-event"
+    static let  school_event_view_holidays = "school-event/view-holidays"
     
     
 }
@@ -103,6 +108,7 @@ struct Menu_id{
     static let NoticeboardMenuId = 23
     static let Event = 29
     static let StudentReport = 35
+    static let attendance = 3
 }
 struct TargetTypes{
     

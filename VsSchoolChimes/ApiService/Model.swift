@@ -562,7 +562,7 @@ struct AttenenceReportData: Codable{
 struct EventResponse: Codable {
     let status: Bool
     let message: String
-    let data: [Event]
+    let data: [EventList]
 }
 
 // MARK: - Event
@@ -573,4 +573,58 @@ struct EventList: Codable {
     let time: String
     let venue: String
     let file_path: [FilePath]
+}
+
+struct PendingReportsResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [PendingReportData]
+}
+
+struct PendingReportData: Codable {
+    let category: String?
+    let total: String?
+    let pending_data: [PendingFeeData]?
+    let total_pending: String?
+}
+
+struct PendingFeeData: Codable {
+    let type_name: String
+    let amount: String
+}
+struct StudentReportResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [StudentData]
+}
+
+struct StudentData: Codable {
+    let id: String
+    let name: String
+    let primary_mobile: String
+    let admission_no: String
+    let roll_no: String
+    let gender: String
+    let dob: String
+    let class_id: String
+    let class_name: String
+    let section_id: String
+    let section_name: String
+    let father_name: String
+    let class_teacher: String
+    let email:String
+}
+// MARK:  Event Holiday
+
+struct EventHolidayResponse: Codable{
+    var status : Bool?
+    var message : String?
+    var data : [EventHolidayData]?
+    
+}
+
+struct EventHolidayData: Codable{
+    var name : String?
+    var year : String?
+    var date : String?
 }
