@@ -43,7 +43,7 @@ class AttachmentVCViewController: UIViewController {
         super.viewDidLoad()
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         setupCollectionView()
-//        fetchAttachments()
+        fetchAttachments()
         
         searchBar.delegate = self
         searchBar.placeholder = CommonStringFile.Search.translated()
@@ -113,14 +113,13 @@ class AttachmentVCViewController: UIViewController {
                 ],
                 iframe: ""
             )
-            
         ]
-        attachmentData = attachments
-        filteredAttachments = attachments
-    
-       collectionView.delegate = self
-       collectionView.dataSource = self
-       collectionView.reloadData()
+//        attachmentData = attachments
+//        filteredAttachments = attachments
+//    
+//       collectionView.delegate = self
+//       collectionView.dataSource = self
+//       collectionView.reloadData()
     }
     
     @IBAction func backBtn(_ sender: Any) {

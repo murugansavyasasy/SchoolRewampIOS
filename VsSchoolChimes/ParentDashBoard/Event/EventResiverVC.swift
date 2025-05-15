@@ -33,6 +33,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     var section = 0
     var shouldShowFooter = true
     var event:[EventList]?
+    var eventHolidayData : [EventHolidayData]?
     var playIndex : Int = 0
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
@@ -152,6 +153,58 @@ class EventResiverVC: UIViewController, SelectNotice{
                 }
             }
     }
+    
+    
+    func event_holiday() {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.school_event_view_holidays,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token:studentDetails?.access_token ?? "") { [self] (
+                result: Result<EventHolidayResponse,
+                Error>
+            ) in
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
+                    }
+                    
+                    switch result {
+                    case .success(let successMessage):
+                        self.eventHolidayData = successMessage.data
+                        self.tableview.reloadData()
+                        if self.event?.count == 0{
+                            self.noDataLbl.text = successMessage.message
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            
+                            self.tableview.isHidden = true
+                            self.searchbar.isHidden = true
+                            self.searchHeight.constant = 0
+                        }else{
+                            self.noDataLbl.isHidden = true
+                            self.noDataImg.isHidden = true
+                            self.searchHeight.constant = 56
+                            self.tableview.isHidden = false
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        if self.event?.count == 0{
+                            self.noDataLbl.text = error.localizedDescription
+                            self.noDataLbl.isHidden = false
+                            self.noDataImg.isHidden = false
+                            self.tableview.isHidden = true
+                            self.searchbar.isHidden = true
+                        }
+                        
+                    }
+                }
+            }
+    }
+
 }
 
 //MARK: Tableview Functions
@@ -176,7 +229,9 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
-            cell.TakenLbl.text = "Tamilar Thirunaal"
+            
+           
+            cell.TakenLbl.text = eventHolidayData?[indexPath.row].name
             cell.MonthView.backgroundColor =  UIColor(named: "Red")
             cell.DateView.backgroundColor =  .white
             cell.DateView.layer.borderWidth = 0.5
