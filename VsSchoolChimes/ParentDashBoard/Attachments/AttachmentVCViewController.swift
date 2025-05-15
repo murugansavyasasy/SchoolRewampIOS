@@ -8,7 +8,7 @@
 import UIKit
 
 class AttachmentVCViewController: UIViewController {
-
+    
     private enum Constants {
         static let imageCellID = "AttachmentCvCollectionViewCell"
         static let bannerID = "BannerView"
@@ -22,13 +22,13 @@ class AttachmentVCViewController: UIViewController {
         ]
     }
     
-  
-
+    
+    
     @IBOutlet weak var collectionView: UICollectionView!
- 
+    
     @IBOutlet weak var pinterestLayout: PinterestLayout!
-   
-
+    
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
     var houseImages: [UIImage?] = []
@@ -38,16 +38,16 @@ class AttachmentVCViewController: UIViewController {
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var currentlyPlayingCell: AttachmentCvCollectionViewCell?
     private var currentlyPlayingIndexPath: IndexPath?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
         setupCollectionView()
-//        fetchAttachments()
+        //        fetchAttachments()
         
         searchBar.delegate = self
         searchBar.placeholder = CommonStringFile.Search.translated()
-
+        
         // Sample Data Array
         let attachments: [Attachment] = [
             Attachment(
@@ -117,10 +117,10 @@ class AttachmentVCViewController: UIViewController {
         ]
         attachmentData = attachments
         filteredAttachments = attachments
-    
-       collectionView.delegate = self
-       collectionView.dataSource = self
-       collectionView.reloadData()
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.reloadData()
     }
     
     @IBAction func backBtn(_ sender: Any) {
@@ -128,16 +128,16 @@ class AttachmentVCViewController: UIViewController {
     }
     
     func setupCollectionView() {
-            if let layout = collectionView.collectionViewLayout as? PinterestLayout {
-                layout.delegate = self
-            }
-
-            collectionView.dataSource = self
+        if let layout = collectionView.collectionViewLayout as? PinterestLayout {
+            layout.delegate = self
+        }
+        
+        collectionView.dataSource = self
         
         collectionView.register(UINib(nibName: "AttachmentCvCollectionViewCell", bundle: nil), forCellWithReuseIdentifier:"AttachmentCvCollectionViewCell")
         
         collectionView.register(UINib(nibName:CellConfingName.seeMore, bundle: nil), forCellWithReuseIdentifier: CellConfingName.seeMore)
-        }
+    }
 }
 
 
@@ -145,10 +145,10 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         guard let attachment = filteredAttachments?[indexPath.item] else { return 0 }
         let width = (collectionView.bounds.width / 2) - 16
-
+        
         let titleFont = UIFont.boldSystemFont(ofSize: 14)
         let descFont = UIFont.systemFont(ofSize: 12)
-
+        
         let titleHeight = attachment.title?.heights(withConstrainedWidth: width, font: titleFont) ?? 0
         let descHeight = attachment.description?.heights(withConstrainedWidth: width, font: descFont) ?? 0
         let dateAndtime = attachment.date?.heights(
@@ -158,16 +158,16 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
         
         
         let spacing: CGFloat = 8 + 8 + 8
-
+        
         switch attachment.file_path?.first?.type {
         case "IMAGE":
             if let urlString = attachment.file_path?.first?.path{
-              
+                
                 return dateAndtime + 20 + titleHeight + descHeight + 270 + spacing
             } else {
                 return titleHeight + descHeight + 200 + spacing
             }
-
+            
         case "VIDEO":
             return  dateAndtime + 20 + titleHeight + descHeight + 270 + spacing
         case "DOCUMENT":
@@ -176,24 +176,24 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
             return titleHeight + descHeight + 80 + spacing
         }
     }
-
+    
 }
 
 extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionViewDataSource,UISearchBarDelegate {
     
     
-//    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        
-//        if let videoCell = cell as? AttachmentCvCollectionViewCell {
-//            videoCell.player?.pause()
-//            videoCell.playerLayer?.removeFromSuperlayer()
-//            if currentlyPlayingIndexPath == indexPath {
-//                currentlyPlayingIndexPath = nil
-//            }
-//        }
-//    }
+    //    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    //
+    //        if let videoCell = cell as? AttachmentCvCollectionViewCell {
+    //            videoCell.player?.pause()
+    //            videoCell.playerLayer?.removeFromSuperlayer()
+    //            if currentlyPlayingIndexPath == indexPath {
+    //                currentlyPlayingIndexPath = nil
+    //            }
+    //        }
+    //    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return filteredAttachments?.count ?? 0
+        //        return filteredAttachments?.count ?? 0
         return filteredAttachments?.count ?? 0
     }
     
@@ -206,32 +206,32 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
         guard let data = filteredAttachments?[indexPath.row] else {
             return UICollectionViewCell()
         }
-
+        
         cell.TitleLbl.text = data.title
         cell.timeAndDate.text = (data.date ?? "") + " - " + (data.time ?? "")
         cell.sentBy.text = data.sender_info
         cell.discreptionLbl.text = data.description
-
+        
         switch data.file_path?.first?.type {
         case "IMAGE":
             cell.imageView.isHidden = false
             cell.webOuterView.isHidden = true
             cell.webview.isHidden = true
             cell.imageView.sd_setImage(with: URL(string: data.file_path?.first?.path ?? ""), placeholderImage: ImageName.placeholder)
-
+            
         case "VIDEO":
             cell.imageView.isHidden = true
             cell.webOuterView.isHidden = false
             cell.webview.isHidden = true
             cell.sentBy.isHidden = true
-    
-//            cell.webOuterView.contentMode = .scaleAspectFill
+            
+            //            cell.webOuterView.contentMode = .scaleAspectFill
             cell.webOuterView.clipsToBounds = true
             cell.webOuterView.layer.cornerRadius = 10
             
             if let url = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") {
-                  cell.configureVideo(with: url)
-              }
+                cell.configureVideo(with: url)
+            }
             
             
             cell.onPlayPressed = { [weak self] tappedCell in
@@ -239,7 +239,7 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
                 if let current = self?.currentlyPlayingCell, current != tappedCell {
                     current.pauseIfNeeded()
                 }
-
+                
                 // Set current playing cell
                 self?.currentlyPlayingCell = tappedCell
             }
@@ -252,25 +252,24 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
                 cell.webview.load(URLRequest(url: url))
             }
             cell.sentBy.isHidden = true
-
+            
         default:
             cell.imageView.isHidden = true
             cell.webOuterView.isHidden = true
         }
-
+        
         return cell
     }
-
+    
     
     func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
         
-       let data = filteredAttachments?[indexPath.row]
-        
+        let data = filteredAttachments?[indexPath.row]
         let vc = AttachmentViewer(nibName: nil, bundle: nil)
-        vc.file_paths = data?.file_path 
+        vc.imges = data
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true)
         
@@ -312,25 +311,15 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
                         self?.collectionView.dataSource = self
                         self?.collectionView.reloadData()
                     }
-                   
-                   
+                    
+                    
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)
                 }
             }
         }
     }
-     
-   
 
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let offsetY = scrollView.contentOffset.y + scrollView.contentInset.top
-//        
-//        let dy = offsetY > 0 ? -offsetY : 0
-////        titleLabel.transform = CGAffineTransform(translationX: 0, y: dy)
-//    }
-    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard !searchText.isEmpty else {
