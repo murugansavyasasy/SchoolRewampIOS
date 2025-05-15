@@ -23,7 +23,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
            setFormattedDate(outputDateString, label: CustomDateLbl)
 
         }
-    
+    @IBOutlet weak var ChooseAcademicYearLbl: UILabel!
+    @IBOutlet weak var AcademicYearLbl: UILabel!
+    @IBOutlet weak var AcademicYearView: UIView!
     @IBOutlet weak var SegmentController: UISegmentedControl!
     @IBOutlet weak var SearchbarHeight: NSLayoutConstraint!
     @IBOutlet weak var SearchBar: UISearchBar!
@@ -52,32 +54,32 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     @IBOutlet weak var MarkAbsentiesBtn: UIButton!
     @IBOutlet weak var SectionView: UIView!
     @IBOutlet weak var standardView: UIView!
-    @IBOutlet weak var AttendRecordBtn: UIButton!
-    @IBOutlet weak var MarkAttendBtn: UIButton!
-    @IBOutlet weak var ButtonStackview: UIStackView!
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var DateBtn: UIButton!
     @IBOutlet weak var AttendTypeStackView: UIStackView!
     
-    var activeButton: UIButton?
-    var datePicker: UIDatePicker!
-    var doneButton: UIButton!
     let formatter = DateFormatter()
     let customdate = DateFormatter()
-    let status = [true,true,false,true,false,false]
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
-    let TypeDropdown = DropDown()
-    let SessionDropdown = DropDown()
+    let AcademicDropdown = DropDown()
     let StaffDetails = UserDefaultFileManager.get_staff_Details()
     var attendenceReport : [AttenenceReportData]?
-    
-    var id = 0
+    var FilteredReport : [AttenenceReportData]?
+    var academicYearData : [AcadimicYearData]?
+    var StandardData : [StandardDetail]?
+    var SectionData : [sectionsDetail]?
+    var StandardList : [String] = []
+    var SectionList : [String] = []
+    var AcademicList : [String] = []
+    var AcademicYearId: Int?
+    var sectionId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UIupdate()
+        SearchBar.searchTextField.addDoneButton()
         BackBtn.applyBackButton()
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
@@ -86,15 +88,11 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         let dateBtntitle = formatter.string(from: Date())
         DateBtn.setTitle(dateBtntitle, for: .normal)
         
-       // setInitialButtonTitles()
-        gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        MarkAttendBtn.setTitleColor(UIColor.white, for: .normal)
-        
-        gradientcolours(button: AttendRecordBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
-        
         SessionStack.isHidden = true
         SearchBar.isHidden = true
+        
+        let AcademicTap = UITapGestureRecognizer(target: self, action: #selector(Select_Academic_Year))
+        AcademicYearView.addGestureRecognizer(AcademicTap)
         
         let standardTap = UITapGestureRecognizer(target: self, action: #selector(SelectStandard))
         standardView.addGestureRecognizer(standardTap)
@@ -118,6 +116,11 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         let nib = UINib(nibName: CellConfingName.AttendenceReportTVCell, bundle: nil)
         TV.register(nib, forCellReuseIdentifier: CellConfingName.AttendenceReportTVCell)
         
+        get_Academic_year()
+        
+        TV.delegate = self
+        TV.dataSource = self
+        SearchBar.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -142,9 +145,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
-        ButtonStackview.layer.cornerRadius = 20
-        AttendRecordBtn.layer.cornerRadius = 20
-        MarkAttendBtn.layer.cornerRadius = 20
         MarkAbsentiesBtn.layer.cornerRadius = 10
         
         CustumDateBtn.layer.borderWidth = 1 // Border width
@@ -153,8 +153,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         markAllPresentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         MarkAbsentiesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        MarkAttendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        AttendRecordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         
         orLabel.setFont(style: .body, size: FontSize.BodySize)
@@ -169,7 +167,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     func applyDesign(element: UIView,radius:Int = 10){
         
         element.layer.cornerRadius = 10
-        element.layer.borderWidth = 1 // Border width
+        element.layer.borderWidth = 1
         element.layer.borderColor = UIColor.lightGray.cgColor
     }
     
@@ -196,11 +194,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             TV.dataSource = self
             TV.reloadData()
             
-            gradientcolours(button: AttendRecordBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-            AttendRecordBtn.setTitleColor(UIColor.white, for: .normal)
-            
-            gradientcolours(button: MarkAttendBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-            MarkAttendBtn.setTitleColor(UIColor.black, for: .normal)
             MarkAbsentiesBtn.isHidden = true
             markAllPresentBtn.isHidden = true
             stackview.isHidden = true
@@ -262,17 +255,23 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             if let label = self.standardView.subviews.compactMap({ $0 as? UILabel }).first {
                 label.text = item
             }
+        }
+    }
+    
+    @IBAction func Select_Academic_Year() {
+        
+        AcademicDropdown.anchorView = AcademicYearView
+        AcademicDropdown.dataSource = AcademicList
+        AcademicDropdown.show()
+        AcademicDropdown.bottomOffset = CGPoint(x: 0, y: AcademicYearView.bounds.height)
+        
+        AcademicDropdown.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+            print("Selected item: \(item) at index: \(index)")
             
-            // Perform additional actions when ID == 1
-            if self.id == 1 {
-//                self.calenderview.isHidden = true
-//                self.calenderHeight.constant = 0
-                SearchBar.isHidden = false
-                self.TV.isHidden = false
-                self.TV.delegate = self
-                self.TV.dataSource = self
-                self.TV.reloadData()
-            }
+            // Update the label inside the UIView
+            AcademicYearLbl.text = item
+            AcademicYearId = academicYearData?[index].id
         }
     }
 
@@ -289,15 +288,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             // Update the label inside the UIView
             if let label = self.SectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
                 label.text = item
-            }
-            
-            if self.id == 1 { // Explicit use of 'self' here
-//                calenderview.isHidden = true
-//                calenderHeight.constant = 0
-                self.TV.isHidden = false
-                self.TV.delegate = self
-                self.TV.dataSource = self
-                self.TV.reloadData()
             }
         }
     }
@@ -349,73 +339,11 @@ class MarkAttendenceVC: UIViewController, Datepicker {
            label.numberOfLines = 0
        }
     
-    func gradientcolours(button : UIButton,colours : [CGColor]){
-        
-        button.layer.sublayers?.removeAll { $0 is CAGradientLayer }
-        
-        // Create and configure the gradient layer
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = colours
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 0.8, y: 0.5)
-        gradientLayer.frame = button.bounds
-        gradientLayer.cornerRadius = button.layer.cornerRadius
-        
-        // Insert the gradient layer into the button's layer
-        button.layer.insertSublayer(gradientLayer, at: 0)
-        
-    }
     
     @IBAction func BackBtnAct(_ sender: Any) {
         
         dismiss(animated: true)
     }
-    @IBAction func MarkBtnAct(_ sender: Any) {
-        
-        id = 0
-        TV.isHidden = true
-        SearchBar.isHidden = true
-        
-        gradientcolours(button: MarkAttendBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        MarkAttendBtn.setTitleColor(UIColor.white, for: .normal)
-        
-        gradientcolours(button: AttendRecordBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        AttendRecordBtn.setTitleColor(UIColor.black, for: .normal)
-        
-        MarkAbsentiesBtn.isHidden = false
-        markAllPresentBtn.isHidden = false
-        stackview.isHidden = false
-        AttendancetypeStack.isHidden = false
-        AttendTypeStackView.isHidden = false
-        if HalfdayImgview.image == UIImage(named:"RadioCheck"){
-            SessionStack.isHidden = false
-        }
-    }
-    
-    @IBAction func ReportBtnAct(_ sender: Any) {
-        id = 1
-        formatter.dateFormat = "EEE d MMM yyyy"
-        let datelabel = formatter.string(from: Date())
-
-        SearchBar.isHidden = false
-        TV.isHidden = false
-        TV.delegate = self
-        TV.dataSource = self
-        TV.reloadData()
-        
-        gradientcolours(button: AttendRecordBtn, colours: [UIColor.blue.cgColor,UIColor.systemTeal.cgColor])
-        AttendRecordBtn.setTitleColor(UIColor.white, for: .normal)
-        
-        gradientcolours(button: MarkAttendBtn, colours: [UIColor.clear.cgColor,UIColor.clear.cgColor])
-        MarkAttendBtn.setTitleColor(UIColor.black, for: .normal)
-        MarkAbsentiesBtn.isHidden = true
-        markAllPresentBtn.isHidden = true
-        stackview.isHidden = true
-        SessionStack.isHidden = true
-        AttendancetypeStack.isHidden = true
-        AttendTypeStackView.isHidden = true
-    }
-    
     
     @IBAction func AllPresentAct(_ sender: Any) {
         
@@ -429,6 +357,77 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         vc.id = 2
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
+    }
+    
+    func Get_Standards() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : AcademicYearId], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+            
+            switch result {
+            case .success(let successMessage):
+                DispatchQueue.main.async { [self] in
+                    if successMessage.status == true{
+                        
+                        StandardData = successMessage.data
+                        StandardData?.enumerated().forEach { index, standard in
+                            StandardList.append(standard.name ?? "")
+                        }
+                        
+                        if let sections = StandardData?.first?.sections{
+                            SectionData = sections
+                            for j in 0..<sections.count {
+                                SectionList.append(SectionData?[j].name ?? "")
+                            }
+                        }
+                        sectionId = StandardData?.first?.sections?.first?.id ?? ""
+                        standardLbl.text = StandardData?.first?.name
+                        sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
+                        
+                    }else{
+                        sectionId = ""
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+                    sectionId = ""
+                }
+            }
+        }
+    }
+    
+    func get_Academic_year() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") {[self] (result: Result<get_academic_yearSuc,Error>) in
+            
+            switch result{
+                
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        academicYearData = SuccessMessage.data
+                        
+                        for i in 0..<(academicYearData?.count ?? 0){
+                            
+                            if let year = academicYearData?[i].year{
+                                AcademicList.append(year)
+                            }
+                            if academicYearData?[i].current_academic_year == true {
+                                AcademicYearLbl.text = academicYearData?[i].year
+                                AcademicYearId = academicYearData?[i].id ?? 0
+                            }
+                        }
+                    }
+                }
+                
+            case .failure(let error):
+                
+                print("Error: \(error.localizedDescription)")
+            }
+        }
     }
     
     //MARK: Attendance report API Call
@@ -452,6 +451,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                     DispatchQueue.main.async { [self] in
                         
                         attendenceReport = successMessage.data
+                        FilteredReport = attendenceReport
                         TV.reloadData()
                     }
                 }else {
@@ -459,6 +459,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                     DispatchQueue.main.async { [self] in
                         
                         attendenceReport = successMessage.data
+                        FilteredReport = attendenceReport
                         TV.reloadData()
                     }
                 }
@@ -474,33 +475,52 @@ class MarkAttendenceVC: UIViewController, Datepicker {
 extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 6
+        return FilteredReport?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceReportTVCell, for: indexPath) as! AttendenceReportTVCell
         
-        if status[indexPath.row] == true{
+        let report = FilteredReport?[indexPath.row]
+        
+        if report?.att_status == "P"{
             
            // cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
             cell.statusView.backgroundColor = .systemGreen
             cell.statusLbl.text = "Present"
-           
         }
         else{
-            
-            
            // cell.cellView.layer.borderColor = UIColor.systemRed.cgColor
             cell.statusView.backgroundColor = .systemRed
             cell.statusLbl.text = "Absent"
-           
         }
-        
         return cell
-        
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+
+@available(iOS 14.0, *)
+extension MarkAttendenceVC: UISearchBarDelegate {
     
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if searchText.isEmpty {
+            FilteredReport = attendenceReport
+        }else {
+            
+            let text = searchText.lowercased()
+            
+            FilteredReport = attendenceReport?.filter { AttenenceReportData in
+                
+                (AttenenceReportData.student_name?.lowercased().contains(text) ?? false) ||
+                (AttenenceReportData.admission_no?.lowercased().contains(text) ?? false)
+            }
+        }
+        
+        TV.reloadData()
+    }
 }
