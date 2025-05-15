@@ -354,7 +354,7 @@ class RecipientVc: UIViewController{
                     
                     startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
                         if let videoURLString = videoURLString {
-                            uploadedFiles = [["path": videoURLString,"type": selectedType]]
+                            uploadedFiles = [["url": videoURLString,"type": selectedType]]
                             
                             if let iframeHTML = iframeHTML {
                                 iframeValue = iframeHTML
@@ -378,7 +378,7 @@ class RecipientVc: UIViewController{
                         CircularProgressLoader.shared.hide()
                         uploadedFiles = uploadedURLs
                             .compactMap {
-                                url in ["path": url , "type": selectedType]
+                                url in ["url": url , "type": selectedType]
                             }
                         iframeValue = "" // for IMAGE or DOCUMENT
                         fileSizeValue = ""

@@ -49,71 +49,71 @@ class AttachmentVCViewController: UIViewController {
         searchBar.placeholder = CommonStringFile.Search.translated()
 
         // Sample Data Array
-        let attachments: [Attachment] = [
-            Attachment(
-                id: "101",
-                type: "DOCUMENT",
-                title: "Monthly Report",
-                description: "Detailed report for April",
-                date: "2025-04-30",
-                time: "09:00 AM",
-                sender_info: "Accounts Dept",
-                is_unread: true,
-                is_archive: false,
-                file_path: [
-                    FilePath(path: "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf", type: "DOCUMENT")
-                ],
-                iframe: "<iframe src='https://example.com/viewer?file=april_report.pdf'></iframe>"
-            ),
-            
-            Attachment(
-                id: "102",
-                type: "IMAGE",
-                title: "Event Poster",
-                description: "Poster for upcoming science fair",
-                date: "2025-05-01",
-                time: "03:45 PM",
-                sender_info: "School Admin",
-                is_unread: false,
-                is_archive: false,
-                file_path: [
-                    FilePath(path: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg", type: "IMAGE")
-                ],
-                iframe: nil
-            ),
-            
-            Attachment(
-                id: "103",
-                type: "VIDEO",
-                title: "Assembly Highlights",
-                description: "Highlights from the morning assembly",
-                date: "2025-05-02",
-                time: "08:30 AM",
-                sender_info: "Media Team",
-                is_unread: true,
-                is_archive: true,
-                file_path: [
-                    FilePath(path: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", type: "VIDEO")
-                ],
-                iframe: ""
-            ),
-            
-            Attachment(
-                id: "103",
-                type: "VIDEO",
-                title: "Assembly Highlightsssssss",
-                description: "Highlights from the morning assemblyssssssss",
-                date: "2025-05-02",
-                time: "08:30 AM",
-                sender_info: "Media Team",
-                is_unread: true,
-                is_archive: true,
-                file_path: [
-                    FilePath(path: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", type: "VIDEO")
-                ],
-                iframe: ""
-            )
-        ]
+//        let attachments: [Attachment] = [
+//            Attachment(
+//                id: "101",
+//                type: "DOCUMENT",
+//                title: "Monthly Report",
+//                description: "Detailed report for April",
+//                date: "2025-04-30",
+//                time: "09:00 AM",
+//                sender_info: "Accounts Dept",
+//                is_unread: true,
+//                is_archive: false,
+//                file_path: [
+//                    FilePath(path: "https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf", type: "DOCUMENT")
+//                ],
+//                iframe: "<iframe src='https://example.com/viewer?file=april_report.pdf'></iframe>"
+//            ),
+//            
+//            Attachment(
+//                id: "102",
+//                type: "IMAGE",
+//                title: "Event Poster",
+//                description: "Poster for upcoming science fair",
+//                date: "2025-05-01",
+//                time: "03:45 PM",
+//                sender_info: "School Admin",
+//                is_unread: false,
+//                is_archive: false,
+//                file_path: [
+//                    FilePath(path: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/images//2A451347-56EB-49B1-84E7-DBD25BBDF39B.jpg", type: "IMAGE")
+//                ],
+//                iframe: nil
+//            ),
+//            
+//            Attachment(
+//                id: "103",
+//                type: "VIDEO",
+//                title: "Assembly Highlights",
+//                description: "Highlights from the morning assembly",
+//                date: "2025-05-02",
+//                time: "08:30 AM",
+//                sender_info: "Media Team",
+//                is_unread: true,
+//                is_archive: true,
+//                file_path: [
+//                    FilePath(path: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", type: "VIDEO")
+//                ],
+//                iframe: ""
+//            ),
+//            
+//            Attachment(
+//                id: "103",
+//                type: "VIDEO",
+//                title: "Assembly Highlightsssssss",
+//                description: "Highlights from the morning assemblyssssssss",
+//                date: "2025-05-02",
+//                time: "08:30 AM",
+//                sender_info: "Media Team",
+//                is_unread: true,
+//                is_archive: true,
+//                file_path: [
+//                    FilePath(path: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", type: "VIDEO")
+//                ],
+//                iframe: ""
+//            )
+//        ]
 //        attachmentData = attachments
 //        filteredAttachments = attachments
 //    
@@ -160,7 +160,7 @@ extension AttachmentVCViewController: PinterestLayoutDelegate {
 
         switch attachment.file_path?.first?.type {
         case "IMAGE":
-            if let urlString = attachment.file_path?.first?.path{
+            if let urlString = attachment.file_path?.first?.url{
               
                 return dateAndtime + 20 + titleHeight + descHeight + 270 + spacing
             } else {
@@ -216,7 +216,11 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
             cell.imageView.isHidden = false
             cell.webOuterView.isHidden = true
             cell.webview.isHidden = true
-            cell.imageView.sd_setImage(with: URL(string: data.file_path?.first?.path ?? ""), placeholderImage: ImageName.placeholder)
+            cell.imageView
+                .sd_setImage(
+                    with: URL(string: data.file_path?.first?.url ?? ""),
+                    placeholderImage: ImageName.placeholder
+                )
 
         case "VIDEO":
             cell.imageView.isHidden = true
@@ -247,7 +251,9 @@ extension AttachmentVCViewController: UICollectionViewDelegate, UICollectionView
             cell.imageView.isHidden = true
             cell.webOuterView.isHidden = false
             cell.webview.isHidden = false
-            if let docUrl = data.file_path?.first?.path, let url = URL(string: docUrl) {
+            if let docUrl = data.file_path?.first?.url, let url = URL(
+                string: docUrl
+            ) {
                 cell.webview.load(URLRequest(url: url))
             }
             cell.sentBy.isHidden = true

@@ -82,7 +82,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
         TitleTxtfield.text = title
         let imageItems = imageUrls.map {
-            AttachmentItem(image: nil, imageURL: $0.path, fileType:$0.type ?? "")
+            AttachmentItem(image: nil, imageURL: $0.url, fileType:$0.type ?? "")
         }
         let size = DetailsTxtview.sizeThatFits(CGSize(width: DetailsTxtview.frame.width, height: CGFloat.greatestFiniteMagnitude))
         let newHeight = min(max(size.height, initialHeight), maxHeight)

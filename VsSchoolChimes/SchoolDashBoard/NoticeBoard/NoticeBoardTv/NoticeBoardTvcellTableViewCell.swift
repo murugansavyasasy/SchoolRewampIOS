@@ -219,7 +219,11 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = homeworkDocs?[indexPath.row]{
-            cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+            cell.imageView
+                .sd_setImage(
+                    with: URL(string: img.url ?? ""),
+                    placeholderImage: ImageName.placeholder
+                )
         }
         return cell
     }

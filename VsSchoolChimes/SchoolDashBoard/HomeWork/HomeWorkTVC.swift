@@ -94,10 +94,10 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = homeworkDocs?[indexPath.row] {
-            let fileURL = URL(fileURLWithPath: img.path ?? "")
+            let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image"{
-                if let pdfURL = URL(string: img.path ?? "") {
+                if let pdfURL = URL(string: img.url ?? "") {
                       let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
                     cell.webView.isHidden = false
@@ -109,7 +109,8 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             }else{
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
-                cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+                cell.imageView.sd_setImage(with: URL(string: img.url
+                                                     ?? ""), placeholderImage: ImageName.placeholder)
             }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage
@@ -127,7 +128,9 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
+        guard let file = homeworkDocs?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else {
+            return
+        }
         let fileExtension = url.pathExtension.lowercased()
         
         //        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
@@ -137,7 +140,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             img.type?.uppercased() == CommonStringFile.IMAGE
         }) ?? []
         vcc.subjectName = subjectName.text
-        vcc.pdfUrl = homeworkDocs?[indexPath.row].path
+        vcc.pdfUrl = homeworkDocs?[indexPath.row].url
         vcc.scrollIndex = indexPath
         vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen

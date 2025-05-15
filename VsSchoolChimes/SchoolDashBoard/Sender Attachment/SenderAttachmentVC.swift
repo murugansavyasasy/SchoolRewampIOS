@@ -566,7 +566,7 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
             } else {
                 let urlIndex = adjustedIndex - selectedImages.count
                 if urlIndex < selectedImgUrl.count {
-                    let urlString = selectedImgUrl[urlIndex].path ?? ""
+                    let urlString = selectedImgUrl[urlIndex].url ?? ""
                     if let url = URL(string: urlString) {
                         cell.imageViews.kf.setImage(with: url)
                     } else {
