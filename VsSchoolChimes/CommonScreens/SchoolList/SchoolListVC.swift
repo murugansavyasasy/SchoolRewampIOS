@@ -178,11 +178,12 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.senderHomeWorkNavigate(from: self)
             case Menu_id.StudentReport:
                 MenuRedirect.senderStudentreportNavigate(from: self)
-                
             case Menu_id.Event:
                 MenuRedirect.senderEventNavigate(from: self)
             case Menu_id.attendance:
                  MenuRedirect.senderMarkAttendence(from: self)
+            case Menu_id.feependingreport:
+                MenuRedirect.senderFeePendingNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }

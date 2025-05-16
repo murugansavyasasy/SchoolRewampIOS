@@ -88,9 +88,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
                 schoolLogoImg.kf.setImage(with: URL(string:staffDetails?.school_logo ?? ""))
                 
             }
-            
         }
-        
         
         if is_staff == true && is_parent == true{
             
@@ -429,7 +427,11 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.senderEventNavigate(from: self)
                 
             case 14:
-                MenuRedirect.senderFeePendingNavigate(from: self)
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.senderFeePendingNavigate(from: self)
+                }
             case 15:
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)
@@ -475,7 +477,6 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     MenuRedirect.StaffWiseAttendance(from: self)
                 }
             case 35:
-                
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)
                 }else{
@@ -483,7 +484,6 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 }
             case 36:
                 MenuRedirect.senderImportantInfoNavigate(from: self)
-                
             case 39 :
                 MenuRedirect.senderAttachment(from: self)
                 

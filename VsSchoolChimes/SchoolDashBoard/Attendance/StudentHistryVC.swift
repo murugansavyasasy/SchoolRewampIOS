@@ -11,10 +11,10 @@ import DropDown
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     func statusUpdate(status: Bool,index:Int) {
-        studentData[index].isAbsent = status
+        StudentDetails[index].isAbsent = status
         filterData?[index].isAbsent = status
         // Calculate the total count of present students
-        totalcount = studentData.filter { $0.isAbsent == true }.count
+        totalcount = StudentDetails.filter { $0.isAbsent == true }.count
         if totalcount == 0 {
             // All students are absent
             selectAllBtn.setImage(UIImage(systemName: "checkmark.square.portrait.fill"), for: .normal)
@@ -46,22 +46,22 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
     
-    var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
-                                 Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
-                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
-                                 Student(name: "shiyam", isAbsent: false, rollnumber: "76979873", phoneNo: "98762356335"),
-                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979874", phoneNo: "7456792347"),
-                                 Student(name: "Nicolash", isAbsent: false, rollnumber: "76979875", phoneNo: "9835546472"),
-                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979876", phoneNo: "89873456543"),
-                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979877", phoneNo: "89873456543"),
-                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979878", phoneNo: "7456792347"),
-                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979879", phoneNo: "9360183031"),
-                                 Student(name: "kothai", isAbsent: false, rollnumber: "769798710", phoneNo: "9360183031")]
-    
+//    var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
+//                                 Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
+//                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
+//                                 Student(name: "shiyam", isAbsent: false, rollnumber: "76979873", phoneNo: "98762356335"),
+//                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979874", phoneNo: "7456792347"),
+//                                 Student(name: "Nicolash", isAbsent: false, rollnumber: "76979875", phoneNo: "9835546472"),
+//                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979876", phoneNo: "89873456543"),
+//                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979877", phoneNo: "89873456543"),
+//                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979878", phoneNo: "7456792347"),
+//                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979879", phoneNo: "9360183031"),
+//                                 Student(name: "kothai", isAbsent: false, rollnumber: "769798710", phoneNo: "9360183031")]
+//    
     
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
-    var filterData : [Student]?
+    var filterData : [StudentDetails]?
     var studentsDetails: [StudentDetails]?
     var selected_sectionID : String?
     var selected_student : [String] = []
@@ -95,12 +95,10 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }
         
         registerCell()
-        filterData = studentData
         recipient_get_student_list(
             selected_sectionId: selected_sectionID ?? "",
             academic_year_id: selectedAcadimicYearId ?? 0
         )
-        
         search.delegate = self
         headerView.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
@@ -265,6 +263,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             historyTable.isHidden = false
                             studentsDetails = successMessage.data
+                            filterData = studentsDetails
                             if var students = studentsDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false

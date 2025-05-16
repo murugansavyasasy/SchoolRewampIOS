@@ -109,6 +109,7 @@ struct Menu_id{
     static let Event = 29
     static let StudentReport = 35
     static let attendance = 3
+    static let feependingreport = 14
 }
 struct TargetTypes{
     

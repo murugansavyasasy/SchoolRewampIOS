@@ -244,6 +244,7 @@ struct StudentDetails:Codable{
     let admission_no : String?
     let roll_no : String?
     var isSelect:Bool?
+    var isAbsent:Bool?
 }
 
 //MARK: GetSubjectlist API
