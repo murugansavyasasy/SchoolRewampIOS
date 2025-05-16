@@ -464,6 +464,7 @@ struct StaffAttendanceResponse: Codable {
 
 struct StaffAttendance: Codable {
     let name: String?
+    let staff_id: String?
     let date: String?
     let leave_type: String?
     let attendance_type: String?

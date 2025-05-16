@@ -168,6 +168,7 @@ class punchHistoryStringFile {
     
     static var from_date = "from_date"
     static var to_date = "to_date"
+    static var staff_id = "staff_id"
 }
 
 class StaffAttendanceReportStringFile {

@@ -295,6 +295,8 @@ class OTPVc: UIViewController {
                                 present(vc, animated: true)
                             }
                             else {
+                                
+                                
                                 UserDefaultFileManager
                                     .saveLoginCredentials(
                                         mobile_number:mobile_number ?? "", pwd: ""
@@ -317,10 +319,7 @@ class OTPVc: UIViewController {
                                     
                                     if(UserDefaultFileManager
                                         .getUserDetails()?.user_details?.staff_role == PriorityType.is_staff){
-                                        if(
-                                            UserDefaultFileManager
-                                                .getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1
-                                        )
+                                        if(UserDefaultFileManager.getUserDetails()?.user_details?.staff_details?.count ?? 0 > 1)
                                         {
                                             let vc = PriorityVC(
                                                 nibName: nil,

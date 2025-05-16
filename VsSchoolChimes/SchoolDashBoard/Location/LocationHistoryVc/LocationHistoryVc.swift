@@ -211,14 +211,14 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         }
     }
     
-    @IBAction func ShowHistory(ges: ShowPunchHistiryClick) {
-        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
-        vc.date = ges.date
-        vc.instituteId = instituteId
-        vc.staffId = ges.staffId
-        vc.modalPresentationStyle = .formSheet
-        present(vc, animated: true)
-    }
+//    @IBAction func ShowHistory(ges: ShowPunchHistiryClick) {
+//        let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
+//        vc.date = ges.date
+//        vc.instituteId = instituteId
+//        vc.staffId = ges.staffId
+//        vc.modalPresentationStyle = .formSheet
+//        present(vc, animated: true)
+//    }
     
     // MARK: - TableView Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -303,6 +303,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
+        vc.selected_staff_id = SearchResults?[indexPath.row].staff_id ?? ""
         present(vc, animated: true)
     }
     
