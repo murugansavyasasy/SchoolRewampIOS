@@ -122,6 +122,7 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
         
+        cell.SelectBtn.isHidden = true
        
         //cell.dicriptContent.attributedText = descript(for: SearchData?.description ?? "", expanded: false)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
@@ -129,12 +130,17 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         cell.dicriptContent.text = SearchData?[indexPath.row].content
         cell.TitleLbl.text = SearchData?[indexPath.row].title
         cell.datelbl.text = SearchData?[indexPath.row].created_on
-        cell.homeworkDocs = SearchData?[indexPath.row].file_path
         
-        if SearchData?[indexPath.row].file_path?.count == 0 {
+        if let urls = SearchData?[indexPath.row].file_path, urls.count != 0{
+            cell.collectionview.isHidden = false
+            cell.CollectionViewHeight.constant = 120
+            cell.loadImage(urls: urls)
+        }else {
             cell.CollectionViewHeight.constant = 0
-            print("Indexpath", indexPath.row)
+            cell.collectionview.isHidden = true
+            cell.pagecontroller.isHidden = true
         }
+        
         return cell
     }
     

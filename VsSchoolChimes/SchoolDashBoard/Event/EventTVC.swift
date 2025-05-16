@@ -67,7 +67,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
         subjectName.removeShimmer()
     }
     
-    func loadImage(urls: [File_Path]) {
+    func loadImage(urls: [FilePath]) {
         ImageCollectionView.isHidden = false
         pageViewController.isHidden = false
         pageViewController.numberOfPages = urls.count

@@ -66,7 +66,14 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         collectionview.dataSource = self
         
         pagecontroller.numberOfPages = homeworkDocs?.count ?? 0
-        
+    }
+    
+    func loadImage(urls: [FilePath]) {
+        collectionview.isHidden = false
+        pagecontroller.isHidden = false
+        homeworkDocs = urls
+        pagecontroller.numberOfPages = homeworkDocs?.count ?? 0
+        pagecontroller.currentPage = 0
         collectionview.reloadData()
     }
     
@@ -94,10 +101,10 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         
         if let img = homeworkDocs?[indexPath.row] {
-            let fileURL = URL(fileURLWithPath: img.path ?? "")
+            let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image"{
-                if let pdfURL = URL(string: img.path ?? "") {
+                if let pdfURL = URL(string: img.url ?? "") {
                       let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
                     cell.webView.isHidden = false
@@ -109,7 +116,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
             }else{
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
-                cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
+                cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
             }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage
@@ -118,11 +125,11 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 135)
+        return CGSize(width: 150, height: 110)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
+        guard let file = homeworkDocs?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
         let fileExtension = url.pathExtension.lowercased()
         
         //        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
@@ -131,7 +138,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         vcc.imageURL = homeworkDocs?.filter({ img in
             img.type?.uppercased() == CommonStringFile.IMAGE
         }) ?? []
-        vcc.pdfUrl = homeworkDocs?[indexPath.row].path
+        vcc.pdfUrl = homeworkDocs?[indexPath.row].url
         vcc.scrollIndex = indexPath
         vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
