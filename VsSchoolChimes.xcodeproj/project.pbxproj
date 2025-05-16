@@ -536,6 +536,8 @@
 		FA3230BF2D9556160070BA51 /* ExameMarVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3230BD2D9556160070BA51 /* ExameMarVC.xib */; };
 		FA6B89262D633B2F00CB099D /* LSRWTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */; };
 		FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */; };
+		FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */; };
+		FA6B90842DD483BA001D9EBD /* AttendanceReportVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA6B90822DD483BA001D9EBD /* AttendanceReportVc.xib */; };
 		FA7A64122D64995900D43031 /* LessonDashboardTv.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7A64102D64995900D43031 /* LessonDashboardTv.swift */; };
 		FA7A64132D64995900D43031 /* LessonDashboardTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA7A64112D64995900D43031 /* LessonDashboardTv.xib */; };
 		FA8535492D9BC91400E0379C /* NewShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8535482D9BC91400E0379C /* NewShimmerView.swift */; };
@@ -1191,6 +1193,8 @@
 		FA3230BD2D9556160070BA51 /* ExameMarVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExameMarVC.xib; sourceTree = "<group>"; };
 		FA6B89242D633B2F00CB099D /* LSRWTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LSRWTvCell.swift; sourceTree = "<group>"; };
 		FA6B89252D633B2F00CB099D /* LSRWTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LSRWTvCell.xib; sourceTree = "<group>"; };
+		FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceReportVc.swift; sourceTree = "<group>"; };
+		FA6B90822DD483BA001D9EBD /* AttendanceReportVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceReportVc.xib; sourceTree = "<group>"; };
 		FA7A64102D64995900D43031 /* LessonDashboardTv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDashboardTv.swift; sourceTree = "<group>"; };
 		FA7A64112D64995900D43031 /* LessonDashboardTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonDashboardTv.xib; sourceTree = "<group>"; };
 		FA8535482D9BC91400E0379C /* NewShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewShimmerView.swift; sourceTree = "<group>"; };
@@ -2284,6 +2288,8 @@
 				849AD0382D1A845E002DEC07 /* AttendenceReportTVCell.xib */,
 				849AD0392D1A845E002DEC07 /* MarkAttendenceVC.swift */,
 				849AD03A2D1A845E002DEC07 /* MarkAttendenceVC.xib */,
+				FA6B90812DD483BA001D9EBD /* AttendanceReportVc.swift */,
+				FA6B90822DD483BA001D9EBD /* AttendanceReportVc.xib */,
 			);
 			path = "Mark Attendence";
 			sourceTree = "<group>";
@@ -3393,6 +3399,7 @@
 				18D718BC2D0D477900E9EDA3 /* LocationViewController.xib in Resources */,
 				18D718BD2D0D477900E9EDA3 /* LocationHistoryVc.xib in Resources */,
 				8442A86D2CDB787A0006068E /* PriorityVC.xib in Resources */,
+				FA6B90842DD483BA001D9EBD /* AttendanceReportVc.xib in Resources */,
 				847D1CA62DBB68B200A274D2 /* locationAnimation.json in Resources */,
 				840658032CFD6B2200080CF6 /* AttendenceTVC.xib in Resources */,
 				84FB97CF2D3E13BD00EBF9F4 /* Successful.gif in Resources */,
@@ -4043,6 +4050,7 @@
 				849970CF2CF8752400800B07 /* WaveView .swift in Sources */,
 				84C829FA2D086A490024A46A /* ClassicSparkTrajectoryFactory.swift in Sources */,
 				84C829FB2D086A490024A46A /* FountainFirework.swift in Sources */,
+				FA6B90832DD483BA001D9EBD /* AttendanceReportVc.swift in Sources */,
 				84C829FC2D086A490024A46A /* ClassicFireworkAnimator.swift in Sources */,
 				FA0C88B32DC4CD470042DD24 /* VimeoUpload.swift in Sources */,
 				84EAE7842DB20B250083AD9E /* ReciverAttachmentrVC.swift in Sources */,

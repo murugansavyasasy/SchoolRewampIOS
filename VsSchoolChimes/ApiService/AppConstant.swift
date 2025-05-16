@@ -58,7 +58,8 @@ struct ServiceUrl{
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/api/geometric/get-staff-geometric-location"
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/api/geometric/update-geometric-location"
     static let api_notice_board_send_notice = "/api/notice-board/send-notice"
-    static let api_notice_board_get_notice = "/api/notice-board/get-notice"
+    static let api_notice_board_get_notice = "admin/api/notice-board/get-notice"
+    static let attendance_student_attendance_report = "stud-attd/api/attendance/student-attendance-report"
     static let api_school_event_send_event = "admin/api/school-event/send-event"
     
     static let api_fee_report_daily_collection = "api/fee-report/daily-collection"

@@ -348,6 +348,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
                         standardDetails?.enumerated().forEach { index, student in
                             standerdList.append(student.name ?? "")
                         }
+                        
                         if let sections = standardDetails?.first?.sections{
                             sectionsDetails = sections
                             for j in 0..<sections.count {

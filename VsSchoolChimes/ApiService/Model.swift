@@ -541,12 +541,25 @@ struct Notice: Codable {
     let visible_to: String?
     let intended_for: String?
     let is_management: Bool?
-    let file_path: [File_Path]?
+    let file_path: [FilePath]?
 }
 
-struct File_Path: Codable {
-    let url: String?
-    let type: String?
+
+//MARK: Attendence
+
+struct AttendanceReportResponse: Codable {
+   
+    let status: Bool?
+    let message: String?
+    let data: [AttenenceReportData]?
+}
+
+struct AttenenceReportData: Codable{
+    
+    let student_name: String?
+    let admission_no: String?
+    let att_status: String?
+    let absent_on: String?
 }
 // MARK: - Root Response
 struct EventResponse: Codable {
@@ -562,7 +575,7 @@ struct EventList: Codable {
     let date: String
     let time: String
     let venue: String
-    let file_path: [File_Path]
+    let file_path: [FilePath]
 }
 
 struct PendingReportsResponse: Codable {
