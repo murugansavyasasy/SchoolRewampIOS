@@ -79,15 +79,13 @@ class RecipientVc: UIViewController{
         backbtnMName
             .setTitle(
                 UserDefaultFileManager.get_staff_Details()?.school_name,
-                for: .normal
-            )
+                for: .normal)
         backbtnMName.setTitleFont(style: .secondary, size: 18.0)
         
         getacadmicYr()
         
         let nib = UINib(nibName: CellConfingName.RecipientTvCell, bundle: nil)
         tv.register(nib, forCellReuseIdentifier:CellConfingName.RecipientTvCell)
-        
         tv.register(UINib(nibName:CellConfingName.Std_Grp_header, bundle: nil),forHeaderFooterViewReuseIdentifier: CellConfingName.Std_Grp_header)
         
         
@@ -135,8 +133,9 @@ class RecipientVc: UIViewController{
             ]
             target_type = TargetTypes.standard
             circular_types =  circular_type.standard
-            getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+            }
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
             if Menu_id.Event == Menu_id.staffSelectedMenuId {
                 cv_itemsarry = [
