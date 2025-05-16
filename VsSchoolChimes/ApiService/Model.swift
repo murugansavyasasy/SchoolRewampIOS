@@ -602,7 +602,6 @@ struct StudentData: Codable {
     let section_name: String
     let father_name: String
     let class_teacher: String
-    let email:String
 }
 // MARK:  Event Holiday
 

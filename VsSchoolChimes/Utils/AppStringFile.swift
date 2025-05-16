@@ -246,7 +246,8 @@ class CommonStringFile{
     static let Present = "Present".translated()
     static let Absent = "Absent".translated()
     static let getAllStudent = "get All Student".translated()
-    static let getStanderd = "Standerd & Section".translated()
+    static let getStanderd_Section = "Standerd & Section".translated()
+    static let getStanderd = "Standerd".translated()
     static let Logout = "Logout".translated()
     static let Select_from_history = "Select from history".translated()
     static let RollNo = "Roll No".translated()
@@ -322,6 +323,7 @@ class CommonStringFile{
     static let jpg = "jpg"
     static let IMAGE = "IMAGE"
     static let path = "path"
+    static let url = "url"
     static let type = "type"
     static let pdf = "pdf"
     static let Tap_on_the_punch = "Tap on the Punch button to record your attendance for the day. A confirmation message will appear once your attendance is successfully marked."

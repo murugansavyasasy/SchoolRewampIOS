@@ -59,14 +59,14 @@ struct ServiceUrl{
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/api/geometric/update-geometric-location"
     static let api_notice_board_send_notice = "/api/notice-board/send-notice"
     static let api_notice_board_get_notice = "/api/notice-board/get-notice"
-    static let api_school_event_send_event = "api/school-event/send-event"
+    static let api_school_event_send_event = "admin/api/school-event/send-event"
     
     static let api_fee_report_daily_collection = "api/fee-report/daily-collection"
-    static let api_fee_report_detailed_pending_report = "api/fee-report/detailed-pending-report"
-    static let api_fee_report_detailed_class_wise_pending_report = "api/fee-report/detailed-class-wise-pending-report"
-    static let  api_get_student_report = " api/get-student-report"
-    static let  api_school_event_get_event = "api/school-event/get-event"
-    static let  school_event_view_holidays = "school-event/view-holidays"
+    static let api_fee_report_detailed_pending_report = "admin/api/fee-report/detailed-pending-report"
+    static let api_fee_report_detailed_class_wise_pending_report = "admin/api/fee-report/detailed-class-wise-pending-report"
+    static let  api_get_student_report = "admin/api/get-student-report"
+    static let  api_school_event_get_event = "admin/api/school-event/get-event"
+    static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     
     
 }
