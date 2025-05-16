@@ -362,7 +362,7 @@ struct HomeworkList: Codable {
 }
 
 struct FilePath: Codable {
-    let path: String?
+    let url: String?
     let type: String?
     
 }
@@ -471,6 +471,9 @@ struct StaffAttendance: Codable {
     let out_time: String?
     let working_hours: String?
 }
+
+
+
 
 struct PunchHistoryResponse:Codable{
     let status:Bool?
@@ -612,7 +615,6 @@ struct StudentData: Codable {
     let section_name: String
     let father_name: String
     let class_teacher: String
-    let email:String
 }
 // MARK:  Event Holiday
 

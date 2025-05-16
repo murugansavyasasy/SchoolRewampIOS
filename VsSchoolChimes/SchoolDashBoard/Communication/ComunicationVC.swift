@@ -148,7 +148,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     var VoiceHistory:[VoiceData]?
     var TextHistory:[TextDetail]?
-    var isEmergencyVoice : Int?
+    var isEmergencyVoice : Bool?
     var voiceRecordedDuration : Int?
     var ScheduleSelectedDate : [String] = []
     var AcadimicYearDatas : [AcadimicYearData] = []
@@ -188,11 +188,11 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         
         
         if emengencyCall.isOn{
-            isEmergencyVoice = 1
+            isEmergencyVoice = true
             //            enableDisable()
         }
         else{
-            isEmergencyVoice = 0
+            isEmergencyVoice = true
             //            enableDisable()
         }
         
@@ -285,13 +285,13 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBAction func switchAction(_ sender: Any) {
         
         if emengencyCall.isOn{
-            isEmergencyVoice = 1
+            isEmergencyVoice = true
             Timinglbl.text = "00:00/00:30"
             Enabel_buble()
             //            enableDisable()
         }
         else{
-            isEmergencyVoice = 2
+            isEmergencyVoice = false
             Timinglbl.text = "00:00/03:00"
             //            enableDisable()
         }
@@ -315,7 +315,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             user_inputs.description = voiceTitleeTxt.text!
             user_inputs.duration = voiceRecordedDuration ?? 0
             user_inputs.is_schedule = isScheduleSelected
-            user_inputs.is_emergency = isEmergencyVoice ?? 0
+            user_inputs.is_emergency = isEmergencyVoice ?? false
             user_inputs.file_name = "sss-" + today_date + ".mp3"
             if emengencyCall.isOn || !isScheduleSelected {
                 user_inputs.schedule_date = [today_date]
@@ -381,7 +381,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     
                     if #available(iOS 14.0, *) {
                         let vc = SchoolListVC(nibName: nil, bundle: nil)
-                        if(isEmergencyVoice == 1){
+                        if(isEmergencyVoice == true){
                             vc.screen_type = screenType.is_emergencyvoice
                         }else{
                             vc.screen_type = screenType.non_emergencyvoice
@@ -396,7 +396,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 
                 else{
                     let vc = RecipientVc(nibName: nil, bundle: nil)
-                    if(isEmergencyVoice == 1){
+                    if(isEmergencyVoice == true){
                         vc.ScreenType = screenType.is_emergencyvoice
                     }else{
                         vc.ScreenType = screenType.non_emergencyvoice
@@ -434,7 +434,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             if(isVoice == true){
                 
                 let vc = RecipientVc(nibName: nil, bundle: nil)
-                if(isEmergencyVoice == 1){
+                if(isEmergencyVoice == true){
                     vc.ScreenType = screenType.is_emergencyvoice
                 }else{
                     vc.ScreenType = screenType.non_emergencyvoice

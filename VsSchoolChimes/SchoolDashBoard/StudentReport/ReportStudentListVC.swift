@@ -10,6 +10,7 @@ import DropDown
 
 class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var searchHeight: NSLayoutConstraint!
     @IBOutlet weak var nodataLbl: UILabel!
     @IBOutlet weak var nodataImg: UIImageView!
     @IBOutlet weak var BackBtn: UIButton!
@@ -43,12 +44,13 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var filterStudent : [StudentData]?
     var sortedStudent : [StudentData]?
     let menuName = MenuStringFile()
+    var classId:String?
+    var sectionId:String?
+    var selection:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
         searchBar.applyRightTxt()
-        filterStudent = studentList
-        sortedStudent = studentList
         getacadmicYr()
         uiConfic()
         
@@ -65,7 +67,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         )
     }
     
-  
+    
     func uiConfic(){
         reportTable.register(UINib(nibName: CellConfingName.ReportStudentTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.ReportStudentTVC)
         sectionView.layer.cornerRadius = 10
@@ -89,13 +91,10 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         selectedType.layer.shadowOpacity = 0.5
         selectedType.layer.shadowRadius = 4
         selectedType.backgroundColor = .white
-        
-        
         classView.layer.shadowOpacity = 0.5
         classView.layer.shadowRadius = 4
         
         //MARK: Label Font
-     
         sectionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         selectedType.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -104,10 +103,16 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBAction func back(_ sender: UIButton) {
         dismiss(animated: true)
     }
+    @IBAction func Search(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        searchHeight.constant = sender.isSelected ? 60 : 0
+        let img = sender.isSelected ? UIImage(systemName: "magnifyingglass.circle.fill"):UIImage(systemName: "magnifyingglass")
+        sender.setImage(img, for: .normal)
+    }
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
-        fillterDropdown.dataSource = [CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(),CommonStringFile.getStanderd.translated(),CommonStringFile.getAllStudent.translated()]
+        fillterDropdown.dataSource = [CommonStringFile.getAllStudent.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(),CommonStringFile.getStanderd.translated(),CommonStringFile.getStanderd_Section.translated()]
         fillterDropdown.anchorView = filterView
         fillterDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
         
@@ -130,22 +135,27 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 let sortedByName = sortedStudent!.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
                 filterStudent = sortedByName
                 getStanderd.isHidden = true
+            case CommonStringFile.getStanderd_Section.translated():
+                getStanderd.isHidden = false
+                sectionSelection.isHidden = false
+                selection = CommonStringFile.getStanderd_Section.translated()
+                getStudentAPI(class_id:classId,section_id:sectionId)
             case CommonStringFile.getStanderd.translated():
                 getStanderd.isHidden = false
+                sectionSelection.isHidden = true
+                selection = CommonStringFile.getStanderd.translated()
+                getStudentAPI(class_id:classId)
             case CommonStringFile.NameDESC.translated():
                 let sortedByName = sortedStudent!.sorted { $0.name > $1.name }
                 filterStudent = sortedByName
                 getStanderd.isHidden = true
             default:
                 getStanderd.isHidden = true
-                filterStudent = sortedStudent
+                getStudentAPI()
                 
             }
             reportTable.reloadData()
-            // Update the label inside the UIView
-            if let label = self.filterView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                self.filterBtn.setTitle(item.translated(), for: .normal)
-            }
+            self.filterBtn.setTitle(item.translated(), for: .normal)
         }
     }
     @IBAction func selectCatagory(_ sender: UIButton) {
@@ -159,9 +169,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
             getStandardsAPI(academic_year_id: AcadimicYearDatas[index].id ?? 0)
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
-            if let label = self.selectedType.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                self.selectedType.setTitle(item.translated(), for: .normal)
-            }
         }
     }
     
@@ -174,15 +181,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         sectionDropdown.width = sectionView.bounds.width
         sectionDropdown.show()
         sectionDropdown.selectionAction = { [self] (index: Int, item: String) in
-            let filteredStudents = studentList?.filter { $0.class_name == selectStudentType && $0.section_name == item }
-            filterStudent = filteredStudents
-            sortedStudent = filteredStudents
-            reportTable.isHidden = true
-            reportTable.reloadData()
+            sectionId = sectionsDetails?[index].id ?? ""
+            getStudentAPI(class_id:classId,section_id:sectionId)
             self.sectionBtn.setTitle(item, for: .normal)
-            if let label = self.sectionDropdown.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                self.sectionBtn.setTitle(item.translated(), for: .normal)
-            }
         }
     }
     @IBAction func classSelection(_ sender: UIButton) {
@@ -197,15 +198,15 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         classDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
             let filteredStudents = studentList?.filter { $0.class_name == item }
-            filterStudent = filteredStudents
-            sortedStudent = filteredStudents
-            reportTable.reloadData()
             sectionsDetails = standardDetails?[index].sections
             sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
             self.clsBtn.setTitle(item, for: .normal)
             self.clsBtn.setTitle(item.translated(), for: .normal)
-            if let label = self.classView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                self.clsBtn.setTitle(item.translated(), for: .normal)
+            classId = standardDetails?[index].id ?? ""
+            if selection == CommonStringFile.getStanderd_Section.translated(){
+                getStudentAPI(class_id:classId,section_id:sectionId)
+            }else{
+                getStudentAPI(class_id:standardDetails?[index].id ?? "")
             }
         }
         
@@ -225,7 +226,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
                         clsBtn.setTitle(standardDetails?.first?.name, for: .normal)
                         sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
-
+                        classId = standardDetails?.first?.id
+                        sectionId = sectionsDetails?.first?.id
+                        getStudentAPI()
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
@@ -234,36 +237,49 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                     print(error.localizedDescription)
-
+                    
                 }
                 
             }
         }
         
     }
-    func getStudentAPI(_ class_id:Int?,_ section_id:Int?){
-        var param:[String:Any]
-        if class_id != nil && section_id != nil{
-            param = [GetStudentReport.class_id : class_id ?? 0,GetStudentReport.section_id:section_id ?? 0]
-        }else{
-            param = [:]
+    func getStudentAPI(class_id:String? = nil,section_id:String? = nil){
+        var param: [String: Any] = [:]
+        
+        if let classID = class_id {
+            param[GetStudentReport.class_id] = classID
         }
-        standerdArray.removeAll()
-        APIService.shared.makeApi(url: ServiceUrl.api_get_student_report, parameters:param, type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <StudentReportResponse,Error>) in
+        if let sectionID = section_id {
+            param[GetStudentReport.section_id] = sectionID
+        }
+        APIService.shared.makeApi(url: ServiceUrl.api_get_student_report, parameters:param, type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result<StudentReportResponse,Error>) in
             switch result {
             case .success(let successMessage):
                 if successMessage.status == true{
                     DispatchQueue.main.async { [self] in
-                       
+                        studentList = successMessage.data
+                        nodataLbl.isHidden = true
+                        nodataImg.isHidden = true
+                        filterStudent = studentList
+                        sortedStudent = studentList
+                        reportTable.reloadData()
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
+                        studentList = successMessage.data
+                        nodataLbl.text = successMessage.message
+                        nodataImg.isHidden = false
+                        filterStudent = studentList
+                        sortedStudent = studentList
+                        reportTable.reloadData()
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                     print(error.localizedDescription)
-
+                    nodataLbl.text = error.localizedDescription
+                    nodataImg.isHidden = false
                 }
                 
             }
@@ -309,16 +325,18 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         if let studentDetail = filterStudent?[indexPath.row]{
             cell.smsNumber = studentDetail.primary_mobile
             cell.confic(student: studentDetail)
-            cell.emailBtn.setTitle(studentDetail.email, for: .normal)
+            //            cell.emailBtn.setTitle(studentDetail.email, for: .normal)
             cell.mobleNo.setTitle(studentDetail.primary_mobile, for: .normal)
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.admissionLbl.text = studentDetail.admission_no
             cell.dobLbl.text = studentDetail.dob
             cell.studentNmae.text = studentDetail.name
+            cell.standerdLbl.text = studentDetail.class_name
+            cell.sectionLbl.text = studentDetail.section_name
             cell.genderLbl.text = studentDetail.gender
             cell.fatherName.text = studentDetail.father_name
-//            if let img = URL(string: studentDetail)
-//            cell.imgView.kf.setImage(with:)
+            //            if let img = URL(string: studentDetail)
+            //            cell.imgView.kf.setImage(with:)
             cell.imgView.contentMode = .scaleAspectFill
         }
         return cell

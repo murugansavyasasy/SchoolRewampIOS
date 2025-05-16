@@ -1,7 +1,13 @@
-import UIKit
-import UniformTypeIdentifiers
+//
+//  EventTVC.swift
+//  School Chimes
+//
+//  Created by Chandhru on 15/05/25.
+//
 
-class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+import UIKit
+
+class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var CvHeight: NSLayoutConstraint!
     @IBOutlet weak var newView: UIImageView!
@@ -14,16 +20,9 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     @IBOutlet weak var subjectName: ShimmerLabel!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var SelectBtnHeight: NSLayoutConstraint!
-    
-    var delegate: SelectNotice?
-    var ishomework = false
-    var isreciver = false
-    var issenderEvent = false
-    var homeworkDocs: [FilePath]?
     var countShimmer = 0
-    var FilterHomeWorkList:Homework?
     private var docController: UIDocumentInteractionController?
-    
+    var event:EventList?
     override func awakeFromNib() {
         super.awakeFromNib()
         ImageCollectionView.isHidden = true
@@ -47,8 +46,6 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         ImageCollectionView.delegate = self
         ImageCollectionView.dataSource = self
         
-        pageViewController.numberOfPages = homeworkDocs?.count ?? 0
-        
         if let flowLayout = ImageCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
             flowLayout.minimumLineSpacing = 10
@@ -70,30 +67,26 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         subjectName.removeShimmer()
     }
     
-    func loadImage(urls: [FilePath]) {
+    func loadImage(urls: [File_Path]) {
         ImageCollectionView.isHidden = false
         pageViewController.isHidden = false
-        homeworkDocs = urls
-        pageViewController.numberOfPages = homeworkDocs?.count ?? 0
+        pageViewController.numberOfPages = urls.count
         pageViewController.currentPage = 0
         ImageCollectionView.reloadData()
     }
     
     @IBAction func forword(_ sender: UIButton) {
-        delegate?
-            .didTapButton(
-                title: FilterHomeWorkList?.title ?? "",
-                content: FilterHomeWorkList?.description ?? "",
-                items: homeworkDocs ?? [])
+
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return homeworkDocs?.count ?? 0
+        return event?.file_path.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-        if let img = homeworkDocs?[indexPath.row] {
+        let docs = event?.file_path
+        if let img = docs?[indexPath.row] {
             let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image"{
@@ -109,8 +102,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             }else{
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
-                cell.imageView.sd_setImage(with: URL(string: img.url
-                                                     ?? ""), placeholderImage: ImageName.placeholder)
+                cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
             }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage
@@ -128,31 +120,29 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let file = homeworkDocs?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else {
-            return
-        }
-        let fileExtension = url.pathExtension.lowercased()
-        
-        //        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
-        let vc = getCurrentViewController()
-        let vcc = ImageShowVc(nibName: nil, bundle: nil)
-        vcc.imageURL = homeworkDocs?.filter({ img in
-            img.type?.uppercased() == CommonStringFile.IMAGE
-        }) ?? []
-        vcc.subjectName = subjectName.text
-        vcc.pdfUrl = homeworkDocs?[indexPath.row].url
-        vcc.scrollIndex = indexPath
-        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
-        vcc.modalPresentationStyle = .fullScreen
-        vc?.present(vcc, animated: true)
-        //        } else {
-        //                openWithDocumentInteraction(url: url)
-        //        }
+//        guard let event = event,
+//              indexPath.row < event.file_path.count,
+//              let file = event.file_path[indexPath.row],
+//              let urlString = file.url,
+//              let url = URL(string: urlString) else {
+//            return
+//        }
+//
+//        let fileExtension = url.pathExtension.lowercased()
+//        let isImage = file.type?.uppercased() == CommonStringFile.IMAGE
+//
+//        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+//        imageVC.imageURL = event.file_path.filter { $0.type?.uppercased() == CommonStringFile.IMAGE }
+//        imageVC.subjectName = subjectName.text
+//        imageVC.pdfUrl = file.url
+//        imageVC.scrollIndex = indexPath
+//        imageVC.type = isImage ? 2 : 0
+//        imageVC.modalPresentationStyle = .fullScreen
+//
+//        getCurrentViewController()?.present(imageVC, animated: true)
     }
-    
-    //    func isWebViewPreviewable(_ ext: String) -> Bool {
-    //        return ["pdf", "txt", "docx", "pptx", "xlsx"].contains(ext)
-    //    }
+
+
     func isWebViewPreviewable(_ ext: String) -> Bool {
         return ["pdf", "txt"].contains(ext.lowercased())
     }
@@ -201,18 +191,3 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     }
 }
 
-// MARK: - TopMost VC helper
-extension UIViewController {
-    func topMostViewController() -> UIViewController {
-        if let presented = self.presentedViewController {
-            return presented.topMostViewController()
-        }
-        if let nav = self as? UINavigationController {
-            return nav.visibleViewController?.topMostViewController() ?? nav
-        }
-        if let tab = self as? UITabBarController {
-            return tab.selectedViewController?.topMostViewController() ?? tab
-        }
-        return self
-    }
-}

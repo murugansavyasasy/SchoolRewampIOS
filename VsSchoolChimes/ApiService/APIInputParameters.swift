@@ -66,9 +66,6 @@ class  DeviceTokenStringFile {
     static var sdk_int = "sdk_int"
     static var app_version = "app_version"
 }
-
-
-
 class  send_textmessageStringFile {
     static var target_code = "target_code"
     static var target_type = "target_type"

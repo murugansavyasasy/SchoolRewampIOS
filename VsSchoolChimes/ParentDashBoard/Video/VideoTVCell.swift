@@ -55,11 +55,20 @@ class VideoTVCell: UITableViewCell {
         Unreadview.isHidden = hide
         datelbl.isHidden = hide
         videoName.isHidden = hide
-        thumimg.isHidden = hide
+        thumimg.isHidden = !hide
         videoloadview.isHidden = hide
 //        playbtl.isHidden = hide
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white
         OuterView.backgroundColor = color
+    }
+    
+    func playvideo(url:String){
+        
+        if let mediaURL:URL = URL(string: url) {
+            let request:URLRequest = URLRequest(url: mediaURL)
+            videoloadview.load(request)
+        }
+
     }
     func animationview(){
         OuterView.animateView(enable:true)

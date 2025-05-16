@@ -19,10 +19,10 @@ struct ServiceUrl{
     static let version_check             = "app/api/setup/version-check"
     static let validate_validate_user    = "app/api/auth/validate-user"
     static let validate_validate_otp     = "app/api/auth/validate-otp"
-    static let cred_change_password      = "app/cred/change-password"
-    static let cred_forgot_password      = "app/cred/forgot-password"
-    static let cred_reset_password       = "app/cred/reset-password"
-    static let  cred_create_new_password = "app/cred/create-new-password"
+    static let cred_change_password      = "app/api/cred/change-password"
+    static let cred_forgot_password      = "app/api/cred/forgot-password"
+    static let cred_reset_password       = "app/api/cred/reset-password"
+    static let  cred_create_new_password = "app/api/cred/create-new-password"
     static let global_global_variables   = "app/global/global-variables"
     static let  auth_device_token        = "app/api/auth/device-token"
     static let  get_dashboard_details    = "dashboard/dashboard/get-dashboard-details"
@@ -45,29 +45,31 @@ struct ServiceUrl{
     static let comm_communication_read_status_update  = "comm/api/communication/read-status-update"
     static let  comm_communication_read_status_update_archive  = "comm/api/communication/read-status-update-archive"
     static let  comm_attachment_send_attachment  = "comm/api/attachment/send-attachment"
-    static let  comm_communication_attachment_list  = "comm/api/communication/attachment-list"
-    static let  comm_communication_attachment_list_archive  = "comm/api/communication/attachment-list-archive"
-    static let  staff_attd_geometric_entry_using_app  = "staff-attd/geometric/entry-using-app"
-    static let  staff_attd_geometric_set_geometric_location  = "staff-attd/geometric/set-geometric-location" 
-    static let  staff_attd_geometric_get_geometric_location_history  = "staff-attd/geometric/get-geometric-location-history"
-    static let  geometric_principal_attendance_report  = "staff-attd/geometric/geometric-principal-attendance-report"
-    static let  staff_attd_geometric_geometric_punch_history  = "staff-attd/geometric/geometric-punch-history"
-    static let  staff_attd_geometric_geometric_staff_attendance_report  = "staff-attd/geometric/geometric-staff-attendance-report"
-    static let  staff_attd_geometric_remove_geometric_location  = "staff-attd/geometric/remove-geometric-location"
+    static let  comm_communication_attachment_list  = "comm/api/attachment/list"
+    static let  comm_communication_attachment_list_archive  = "comm/api/attachment/list-archive"
+    static let  staff_attd_geometric_entry_using_app  = "staff-attd/api/geometric/entry-using-app"
+    static let  staff_attd_geometric_set_geometric_location  = "staff-attd/api/geometric/set-geometric-location"
+    static let  staff_attd_geometric_get_geometric_location_history  = "staff-attd/api/geometric/get-geometric-location-history"
+    static let  geometric_principal_attendance_report  = "staff-attd/api/geometric/geometric-principal-attendance-report"
+    static let  staff_attd_geometric_geometric_punch_history  = "staff-attd/api/geometric/geometric-punch-history"
+    static let  staff_attd_geometric_geometric_staff_attendance_report  = "staff-attd/api/geometric/geometric-staff-attendance-report"
+    static let  staff_attd_geometric_remove_geometric_location  = "staff-attd/api/geometric/remove-geometric-location"
 
-    static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/geometric/get-staff-geometric-location"
-    static let  staff_attd_geometric_update_geometric_location  = "staff-attd/geometric/update-geometric-location"
+    static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/api/geometric/get-staff-geometric-location"
+    static let  staff_attd_geometric_update_geometric_location  = "staff-attd/api/geometric/update-geometric-location"
     static let api_notice_board_send_notice = "/api/notice-board/send-notice"
     static let api_notice_board_get_notice = "admin/api/notice-board/get-notice"
     static let api_school_event_send_event = "api/school-event/send-event"
     static let attendance_student_attendance_report = "stud-attd/api/attendance/student-attendance-report"
+    static let api_notice_board_get_notice = "/api/notice-board/get-notice"
+    static let api_school_event_send_event = "admin/api/school-event/send-event"
     
     static let api_fee_report_daily_collection = "api/fee-report/daily-collection"
-    static let api_fee_report_detailed_pending_report = "api/fee-report/detailed-pending-report"
-    static let api_fee_report_detailed_class_wise_pending_report = "api/fee-report/detailed-class-wise-pending-report"
-    static let  api_get_student_report = " api/get-student-report"
-    static let  api_school_event_get_event = "api/school-event/get-event"
-    static let  school_event_view_holidays = "school-event/view-holidays"
+    static let api_fee_report_detailed_pending_report = "admin/api/fee-report/detailed-pending-report"
+    static let api_fee_report_detailed_class_wise_pending_report = "admin/api/fee-report/detailed-class-wise-pending-report"
+    static let  api_get_student_report = "admin/api/get-student-report"
+    static let  api_school_event_get_event = "admin/api/school-event/get-event"
+    static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     
     
 }
@@ -142,7 +144,7 @@ struct user_inputs{
     static var is_schedule : Bool = false
     static var title = ""
     static var description = ""
-    static var is_emergency : Int = 0
+    static var is_emergency : Bool = false
     static var schedule_date : [String] = []
     static var selectedImg : [UIImage] = []
     static var selectedImgUrls : [FilePath] = []

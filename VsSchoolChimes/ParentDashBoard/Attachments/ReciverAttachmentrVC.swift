@@ -7,8 +7,53 @@
 
 import UIKit
 import DropDown
+import AVKit
 
-class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate {
+class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewDataSource, UISearchBarDelegate, shareDelegate {
+    func share(url: String) {
+        // Convert the string to a URL
+        if let videoURL = URL(string: url) {
+            // Initialize the activity view controller with the video URL
+            let activityVC = UIActivityViewController(activityItems: [videoURL], applicationActivities: nil)
+            print(videoURL)
+            // For iPad: Popover presentation configuration
+            if let popoverController = activityVC.popoverPresentationController {
+                popoverController.sourceView = self.view // Set a source view for iPad compatibility
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0) // Center the popover
+                popoverController.permittedArrowDirections = []
+            }
+            UIPasteboard.general.string = url
+            // Present the activity view controller
+            self.present(activityVC, animated: true, completion: nil)
+        } else {
+            print("Invalid video URL.")
+        }
+    }
+    func playvideo(index: Int) {
+        guard let videoURL = filteredAttachments?[index].file_path?.first?.url, !videoURL.isEmpty,
+              let url = URL(string: videoURL) else {
+            print("Invalid URL")
+            return
+        }
+
+        let player = AVPlayer(url: url)
+        playerViewController = AVPlayerViewController()
+        playerViewController?.player = player
+
+        // Observe UI visibility changes
+        playerViewController?.addObserver(self, forKeyPath: "showsPlaybackControls", options: [.new, .initial], context: nil)
+
+        // Present AVPlayerViewController
+        if let playerVC = playerViewController {
+            present(playerVC, animated: true) {
+                player.play()
+            }
+        }
+
+        // Add the download button
+      
+    }
+
     @IBOutlet weak var fiterView: UIView!
     @IBOutlet weak var standerd: UILabel!
     @IBOutlet weak var studentName: UILabel!
@@ -19,6 +64,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
     var filterDropDown = DropDown()
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var shouldShowFooter = true
+    var playerViewController: AVPlayerViewController?
     override func viewDidLoad() {
         super.viewDidLoad()
         studentName.text = studentDetails?.name
@@ -103,7 +149,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
             url: ServiceUrl.comm_communication_attachment_list_archive,
             parameters: [:],
             type: ApitTypeSringFile.GET,
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaGlsZF9pZCI6IjkzNjM1MTkiLCJzY2hvb2xfaWQiOiI1NTEyIiwiY2xhc3NfaWQiOjIyMzEsInNlY3Rpb25faWQiOjg5NDUsImlhdCI6MTc0NDI2MzQ0MH0.4eXMhZIWU0ymmOPCTs3iBANhRwhJqft3Rp89ITh79Ts"
+            token: studentDetails?.access_token ?? ""
         ) { [weak self] (result: Result<AttachmentsResponse, Error>) in
             DispatchQueue.main.async {
                 if #available(iOS 15.0, *) {
@@ -127,7 +173,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
         }
         
         APIService.shared.makeApi(
-            url: ServiceUrl.comm_communication_attachment_list_archive,
+            url: ServiceUrl.comm_communication_attachment_list,
             parameters: [:],
             type: ApitTypeSringFile.GET,
             token:studentDetails?.access_token ?? ""
@@ -169,12 +215,14 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
             return UITableViewCell() // Safely return a default cell if data is nil
         }
 
-        switch data.type?.uppercased() {
+        switch data.file_path?.first?.type?.uppercased() {
         case "VIDEO":
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
             cell.descriptContent.text = data.description
             cell.datelbl.text = data.date
             cell.videoName.text = data.title
+            cell.playvideo(url: "https://player.vimeo.com/video/1084600934?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=177030\" width=\"400\" height=\"300\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media\" title=\"The only way I could do that")
+            
             return cell
 
         case "DOCUMENT":

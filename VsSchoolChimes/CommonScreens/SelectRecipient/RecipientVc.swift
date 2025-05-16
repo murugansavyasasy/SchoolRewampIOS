@@ -138,13 +138,21 @@ class RecipientVc: UIViewController{
             getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-            cv_itemsarry = [
-                recipeint_tabBarName.Entier_School,
-                recipeint_tabBarName.Standard,
-                recipeint_tabBarName.Section_Student,
-                recipeint_tabBarName.Group,
-                recipeint_tabBarName.Staff
-            ]
+            if Menu_id.Event == Menu_id.staffSelectedMenuId {
+                cv_itemsarry = [
+                    recipeint_tabBarName.Entier_School,
+                    recipeint_tabBarName.Standard,
+                    recipeint_tabBarName.Group
+                ]
+            }else{
+                cv_itemsarry = [
+                    recipeint_tabBarName.Entier_School,
+                    recipeint_tabBarName.Standard,
+                    recipeint_tabBarName.Section_Student,
+                    recipeint_tabBarName.Group,
+                    recipeint_tabBarName.Staff
+                ]
+            }
             circular_types = circular_type.school
             target_type = TargetTypes.school
             noRecordLbl.text = CommonStringFile.Tap_SEND_to_share_this
@@ -168,32 +176,68 @@ class RecipientVc: UIViewController{
         
         
     }
-    func homeWorkShowProps(){
-        if accedmicYrEligible{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-                if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
-                    segmentName.isHidden = true
-                    target_type = TargetTypes.section
-                    
-                    circular_types =  circular_type.section
-                    getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-                    speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-                    speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-                    tv.isHidden = false
-                    selectStandardDropDown.isHidden = false
-                    heightSegment.constant = 0
-                    cv_itemsarry = [
-                        recipeint_tabBarName.Section_Student
-                    ]
-                }else{
-                    speficBtnName.isEnabled = true
-                    selectStandardDropDown.isHidden = true
-                }
+//    func homeWorkShowProps(){
+//        if accedmicYrEligible{
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+//                if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
+//                    segmentName.isHidden = true
+//                    target_type = TargetTypes.section
+//                    
+//                    circular_types =  circular_type.section
+//                    getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+//                    speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+//                    speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
+//                    tv.isHidden = false
+//                    selectStandardDropDown.isHidden = false
+//                    heightSegment.constant = 0
+//                    cv_itemsarry = [
+//                        recipeint_tabBarName.Section_Student
+//                    ]
+//                }else{
+//                    speficBtnName.isEnabled = true
+//                    selectStandardDropDown.isHidden = true
+//                }
+//            }
+//            if Menu_id.Event == Menu_id.staffSelectedMenuId{
+//                cv_itemsarry.removeAll()
+//                cv_itemsarry = [
+//                    recipeint_tabBarName.Entier_School,
+//                    recipeint_tabBarName.Standard,
+//                    recipeint_tabBarName.Section_Student,
+//                    recipeint_tabBarName.Group,
+//                    recipeint_tabBarName.Staff
+//                ]
+//            }
+//        }
+//    }
+//    
+    func homeWorkShowProps() {
+        guard accedmicYrEligible else { return }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
+            let isAssignmentOrHomework = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
+
+            if isAssignmentOrHomework {
+                segmentName.isHidden = true
+                target_type = TargetTypes.section
+                circular_types = circular_type.section
+                getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
+
+                speficBtnName.isHidden = true
+                speficBtnName.isEnabled = false
+
+                tv.isHidden = false
+                selectStandardDropDown.isHidden = false
+                heightSegment.constant = 0
+
+                cv_itemsarry = [recipeint_tabBarName.Section_Student]
+            } else {
+                speficBtnName.isEnabled = true
+                selectStandardDropDown.isHidden = true
             }
         }
     }
-    
-    
+
     
     
     @IBAction func backbtn(_ sender: Any) {
@@ -229,6 +273,8 @@ class RecipientVc: UIViewController{
             }
         case Menu_id.AttachmentMenuId:
             SendingAttachmentFlow()
+        case Menu_id.Event:
+            handleEvent()
         case Menu_id.NoticeboardMenuId:
             SendingNoticeboardFlow()
         default:
@@ -354,7 +400,7 @@ class RecipientVc: UIViewController{
                     
                     startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
                         if let videoURLString = videoURLString {
-                            uploadedFiles = [["path": videoURLString,"type": selectedType]]
+                            uploadedFiles = [["url": videoURLString,"type": selectedType]]
                             
                             if let iframeHTML = iframeHTML {
                                 iframeValue = iframeHTML
@@ -378,7 +424,7 @@ class RecipientVc: UIViewController{
                         CircularProgressLoader.shared.hide()
                         uploadedFiles = uploadedURLs
                             .compactMap {
-                                url in ["path": url , "type": selectedType]
+                                url in ["url": url , "type": selectedType]
                             }
                         iframeValue = "" // for IMAGE or DOCUMENT
                         fileSizeValue = ""
@@ -643,7 +689,7 @@ class RecipientVc: UIViewController{
                             user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
                         }
                         return [
-                            CommonStringFile.path: url,
+                            CommonStringFile.url: url,
                             CommonStringFile.type: user_inputs.selectedFileType
                         ]
                     }
@@ -656,53 +702,57 @@ class RecipientVc: UIViewController{
         )
     }
     func sendEvent(_ uploadedFiles:[[String:String]]){
-        let parameters: [String: Any] = [
-            UploadEvent.title: user_inputs.title,
-            UploadEvent.content: user_inputs.description,
-            UploadEvent.venue: user_inputs.venue,
-            send_voicemeassageStringFile.target_type : target_type ?? 0,
-            send_voicemeassageStringFile.target_code : array_selectedId,
-            UploadMessageKeys.filePath:uploadedFiles
-        ]
-        APIService.shared
-            .makeApi(url: ServiceUrl.api_school_event_send_event, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                result : Result<CommonApiSuc,
-                Error>
-            ) in
-                switch result {
-                case.success(let succesmessage) :
-                    if succesmessage.status == true {
-                        DispatchQueue.main.async { [self] in
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
+        if let date = convertDate(user_inputs.FromDate){
+            let parameters: [String: Any] = [
+                UploadEvent.title: user_inputs.title,
+                UploadEvent.content: user_inputs.description,
+                UploadEvent.venue: user_inputs.venue,
+                UploadEvent.event_date: date,
+                UploadEvent.event_time: user_inputs.start_time,
+                send_voicemeassageStringFile.target_type : target_type ?? 0,
+                send_voicemeassageStringFile.target_code : array_selectedId,
+                UploadMessageKeys.filePath:uploadedFiles
+            ]
+            APIService.shared
+                .makeApi(url: ServiceUrl.api_school_event_send_event, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                    result : Result<CommonApiSuc,
+                    Error>
+                ) in
+                    switch result {
+                    case.success(let succesmessage) :
+                        if succesmessage.status == true {
+                            DispatchQueue.main.async { [self] in
+                                CustomAlert
+                                    .showAlertWithOkAction(
+                                        title: AlertstringFile.Success,
+                                        message: succesmessage.message ?? "",
+                                        on: self
+                                    ) {
+                                        self.gotoDashboard()
+                                    }
+                            }
+                        }else {
+                            
+                            DispatchQueue.main.async {
+                                CustomAlert
+                                    .showAlertWithOkAction(
+                                        title: AlertstringFile.Alert_title,
+                                        message: succesmessage.message ?? "",
+                                        on: self
+                                    ) {
+                                        self.gotoDashboard()
+                                    }
+                            }
                         }
-                    }else {
                         
+                    case.failure(let error) :
                         DispatchQueue.main.async {
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Alert_title,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
+                            print(error.localizedDescription)
                         }
                     }
                     
-                case.failure(let error) :
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
-                    }
                 }
-                
-            }
+        }
     }
     @IBAction func getSubject(_ sender: UIButton) {
         let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []

@@ -32,6 +32,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     @IBOutlet weak var CollectionBaseview: UIView!
     
     var delegate : SelectNotice?
+    
     var homeworkDocs:[FilePath]?
     private var docController: UIDocumentInteractionController?
     
@@ -71,6 +72,8 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     
     @IBAction func Select(_ sender: UIButton) {
                 delegate?.didTapButton(title: TitleLbl.text!, content: dicriptContent.text!, items: homeworkDocs ?? [])
+        
+        
     }
   
     

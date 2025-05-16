@@ -689,3 +689,31 @@ extension String {
         }
     }
 }
+
+func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> String? {
+    let possibleFormats = [
+        "yyyy-MM-dd",
+        "dd/MM/yyyy",
+        "MM/dd/yyyy",
+        "yyyy/MM/dd",
+        "d MMM yyyy",
+        "dd MMM yyyy",
+        "yyyy-MM-dd HH:mm:ss",
+        "MMM d, yyyy",
+        "EEE, d MMM yyyy"
+    ]
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Safe for parsing known formats
+
+    for format in possibleFormats {
+        dateFormatter.dateFormat = format
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = toFormat
+            return dateFormatter.string(from: date)
+        }
+    }
+
+    return nil // No matching format found
+}
+

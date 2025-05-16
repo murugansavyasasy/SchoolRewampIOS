@@ -30,9 +30,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             todate.setTitle(date, for: .normal)
             setFormattedDate(outputDateString, label: toDateLbl)
             
-        }else{
-            dateBtn.setTitle(date, for: .normal)
-            setFormattedDate(outputDateString, label: pickerDateLbl)
         }
     }
     
@@ -51,19 +48,14 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var costomView: ImageSelection!
     @IBOutlet weak var contentTxtView: UITextView!
-    @IBOutlet weak var pickerDateLbl: UILabel!
     @IBOutlet weak var calander2Btn: HalfColorButton!
-    @IBOutlet weak var ToLbl: UILabel!
     @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var TxtOuterview: UIView!
     @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var eventDeatail: UILabel!
     @IBOutlet weak var addPhotoLbl: UILabel!
-    @IBOutlet weak var timeBtn: UIButton!
-    @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var todate: UIButton!
     @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var calanderBtn: HalfColorButton!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var Totime: UIButton!
@@ -94,8 +86,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         placeTxt.applyRightTxt()
         placeLbl.applyRightTxt()
         contentTxtView.applyRightTxt()
-        pickerDateLbl.applyRightTxt()
-        ToLbl.applyRightTxt()
         contentCount.applyRightTxt()
         eventDeatail.applyRightTxt()
         addPhotoLbl.applyRightTxt()
@@ -185,19 +175,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
         dateFormatter.dateFormat = "EEE d"
         let customDate = dateFormatter.string(from: currentDate)
-        
-        setFormattedDate(customDate, label: pickerDateLbl)
         setFormattedDate(customDate, label: toDateLbl)
-        
-        // Set the formatted time to the time button
-        timeBtn.setTitle(formattedTime, for: .normal)
         Totime.setTitle(formattedTime, for: .normal)
         todate.setTitle(formattedDate, for: .normal)
-        dateBtn.setTitle(formattedDate, for: .normal)
-        dateBtn.applyRightButton()
         todate.applyRightButton()
         Totime.applyRightButton()
-        timeBtn.applyRightButton()
         contentCount.applyRightTxt()
         contentCount.applyRightTxt()
         contentCount.applyRightTxt()
@@ -215,21 +197,16 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         outerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         outerView.layer.shadowRadius = 5
         outerView.layer.shadowOpacity = 0.3
-        calanderBtn.layer.borderWidth = 1 // Border width
-        calanderBtn.layer.borderColor = UIColor.gray.cgColor // Border color
+       
         calander2Btn.layer.borderWidth = 1 // Border width
         calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
         calander2Btn.layer.cornerRadius = 10
-        calanderBtn.layer.cornerRadius = 10 // Add corner radius if needed
-        
+       
         EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
-        ToLbl.setFont(style:.body, size: FontSize.BodySize)
         fromLbl.setFont(style:.body, size: FontSize.BodySize)
         eventDeatail.setFont(style:.body, size: FontSize.BodySize)
         addPhotoLbl.setFont(style:.body, size: FontSize.BodySize)
         Totime.setTitleFont(style: .body, size: 12)
-        timeBtn.setTitleFont(style: .body, size: 12)
-        dateBtn.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
         placeLbl.setFont(style:.body, size: FontSize.BodySize)
         placeLbl.text = CommonStringFile.Venue.translated()
@@ -353,8 +330,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         
         if dateSelection == true{
             Totime.setTitle(formattedTime, for: .normal)
-        }else{
-            timeBtn.setTitle(formattedTime, for: .normal)
         }
         // Hide the picker and Done button after selection
         timePicker.isHidden = true
@@ -423,9 +398,11 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             user_inputs.venue = placeTxt.text ?? ""
             user_inputs.description = contentTxtView.text ?? ""
             user_inputs.SelectedUrls = attachments
-                let vc = RecipientVc(nibName: nil, bundle: nil)
+            user_inputs.start_time = Totime.titleLabel?.text ?? ""
+            user_inputs.FromDate = todate.titleLabel?.text ?? ""
+            let vc = RecipientVc(nibName: nil, bundle: nil)
             vc.ScreenType = Menu_id.Event
-                vc.modalPresentationStyle = .fullScreen
+            vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
         }else{
             let alert = CustomAlert()
