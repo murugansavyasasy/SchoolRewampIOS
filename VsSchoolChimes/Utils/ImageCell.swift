@@ -158,7 +158,7 @@ class ImageCell: UICollectionViewCell {
         timeLbl.text = attachment.time
         senderInfoLbl.text = attachment.sender_info
         
-        guard let urlString = attachment.file_path?.first?.path,
+        guard let urlString = attachment.file_path?.first?.url,
               let url = URL(string: urlString) else {
             return
         }

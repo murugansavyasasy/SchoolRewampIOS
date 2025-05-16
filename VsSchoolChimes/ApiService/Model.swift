@@ -362,7 +362,7 @@ struct HomeworkList: Codable {
 }
 
 struct FilePath: Codable {
-    let path: String?
+    let url: String?
     let type: String?
     
 }
@@ -471,6 +471,9 @@ struct StaffAttendance: Codable {
     let out_time: String?
     let working_hours: String?
 }
+
+
+
 
 struct PunchHistoryResponse:Codable{
     let status:Bool?

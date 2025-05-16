@@ -37,8 +37,8 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
         if let img = homeworkDocs?[indexPath.row] {
-            cell.imageView.sd_setImage(with: URL(string: img.path ?? ""), placeholderImage: ImageName.placeholder)
-            let fileURL = URL(fileURLWithPath: img.path ?? "")
+            cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
+            let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage
@@ -49,7 +49,7 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         return CGSize(width:100, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let file = homeworkDocs?[indexPath.row], let urlString = file.path, let url = URL(string: urlString) else { return }
+        guard let file = homeworkDocs?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
         let fileExtension = url.pathExtension.lowercased()
         
             let vc = getCurrentViewController()

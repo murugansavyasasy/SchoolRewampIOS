@@ -55,7 +55,7 @@ class VideoTVCell: UITableViewCell {
         Unreadview.isHidden = hide
         datelbl.isHidden = hide
         videoName.isHidden = hide
-        thumimg.isHidden = hide
+        thumimg.isHidden = !hide
         videoloadview.isHidden = hide
 //        playbtl.isHidden = hide
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white

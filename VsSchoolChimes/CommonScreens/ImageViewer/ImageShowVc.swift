@@ -37,7 +37,7 @@ class ImageShowVc: UIViewController{
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DispatchQueue.main.async { [self] in
             for i in 0..<imageURL.count{
-                if imageURL[i].path == pdfUrl{
+                if imageURL[i].url == pdfUrl{
                     self.cv.scrollToItem(at: IndexPath(item: i, section: 0), at: .centeredHorizontally, animated: true)
                 }
             }
@@ -109,7 +109,11 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
         
-        cell.imageView.sd_setImage(with: URL(string: imageURL[indexPath.row].path ?? ""), placeholderImage: ImageName.placeholder)
+        cell.imageView
+            .sd_setImage(
+                with: URL(string: imageURL[indexPath.row].url ?? ""),
+                placeholderImage: ImageName.placeholder
+            )
         //        cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
         
         return cell
