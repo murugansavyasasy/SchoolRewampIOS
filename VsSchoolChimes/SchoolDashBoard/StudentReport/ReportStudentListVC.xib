@@ -207,11 +207,14 @@
                                 <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dtk-qT-JbI">
                                     <rect key="frame" x="0.0" y="133.66666666666666" width="361.33333333333331" height="32"/>
                                     <segments>
+                                        <segment title="NameASC "/>
                                         <segment title="NameDSC"/>
-                                        <segment title="NameASC"/>
                                         <segment title="No ASC"/>
                                         <segment title="No DSC"/>
                                     </segments>
+                                    <connections>
+                                        <action selector="sortArray:" destination="-1" eventType="valueChanged" id="y29-df-yQK"/>
+                                    </connections>
                                 </segmentedControl>
                             </subviews>
                         </stackView>

@@ -15,7 +15,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     @IBOutlet weak var switchReport: UISegmentedControl!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var nodataLbl: UILabel!
-    @IBOutlet weak var noRecordsView: UIView!
+    @IBOutlet weak var noRecordsView: UIImageView!
     @IBOutlet weak var tv: UITableView!
     @IBOutlet weak var acodemicView: UIView!
     @IBOutlet weak var acodemicdropView: UIView!
@@ -87,6 +87,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             AcadimicYearDatas = successMessage.data ?? []
+                            nodata(true)
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
                                     acodomicYearLbl.text = AcadimicYearDatas[i].year
@@ -96,15 +97,21 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
                                 }
                             }
                         }
+                    }else{
+                        nodata(false)
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
     }
+    func nodata(_ hide:Bool){
+        nodataLbl.isHidden = hide
+        noRecordsView.isHidden = hide
+    }
     func getPendingReportAPI(_ academic_year_id:Int){
         APIService.shared
-            .makeApi(url: ServiceUrl.api_fee_report_detailed_pending_report , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.api_fee_report_detailed_pending_report , parameters: ["academic_year_id":academic_year_id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <PendingReportsResponse,
                 Error>
             ) in
@@ -114,19 +121,26 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
                         DispatchQueue.main.async { [self] in
                             PendingReports = successMessage.data
                             tv.reloadData()
+                            nodata(true)
                         }
                     }else{
-                        PendingReports = []
-                        tv.reloadData()
+                        DispatchQueue.main.async { [self] in
+                            PendingReports = []
+                            tv.reloadData()
+                            nodata(false)
+                        }
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    DispatchQueue.main.async { [self] in
+                        print(error.localizedDescription)
+                    }
+                    
                 }
             }
     }
     func classPendingReportAPI(_ academic_year_id:Int){
         APIService.shared
-            .makeApi(url: ServiceUrl.api_fee_report_detailed_class_wise_pending_report , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+            .makeApi(url: ServiceUrl.api_fee_report_detailed_class_wise_pending_report , parameters: ["academic_year_id":academic_year_id], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <PendingReportsResponse,
                 Error>
             ) in
@@ -136,13 +150,20 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
                         DispatchQueue.main.async { [self] in
                             PendingReports = successMessage.data
                             tv.reloadData()
+                            nodata(true)
                         }
                     }else{
-                        PendingReports = []
-                        tv.reloadData()
+                        DispatchQueue.main.async { [self] in
+                            PendingReports = []
+                            tv.reloadData()
+                            nodata(false)
+                        }
                     }
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    DispatchQueue.main.async { [self] in
+                        print(error.localizedDescription)
+                        nodata(false)
+                    }
                 }
             }
     }
@@ -189,47 +210,26 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if ClickId == "1"{
-            return 5
-        }
-        else{
-            return 3
-        }
+        return PendingReports?[section].pending_data?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if ClickId == "1"{
             let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
-            cell.classLbl.text = feesCategories[indexPath.row].category
-            cell.amountLbl.text = feesCategories[indexPath.row].amount
+        let data = PendingReports?[indexPath.section].pending_data
+        cell.classLbl.text = data?[indexPath.row].type_name
+        cell.amountLbl.text = data?[indexPath.row].amount
             return cell
-        }else{
-            let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
-            cell.classLbl.text = feeModes[indexPath.row].paymentMode
-            cell.amountLbl.text = feeModes[indexPath.row].amount
-            return cell
-        }
         
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if ClickId == "1"{
-            return 4
-        }
-        else{
-            return 1
-        }
+        return PendingReports?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
-        if ClickId == "1"{
-            headerView.classLbl.text = "Total"
-            headerView.amountLbl.text = "37,515"
-        }else{
-            headerView.classLbl.text = "Total"
-            headerView.amountLbl.text = "37,515"
-        }
+            headerView.classLbl.text = PendingReports?[section].category
+            headerView.amountLbl.text = PendingReports?[section].total
         return headerView
     }
     

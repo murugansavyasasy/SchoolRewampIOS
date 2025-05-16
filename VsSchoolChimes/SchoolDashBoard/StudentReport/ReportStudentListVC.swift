@@ -109,13 +109,40 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         let img = sender.isSelected ? UIImage(systemName: "magnifyingglass.circle.fill"):UIImage(systemName: "magnifyingglass")
         sender.setImage(img, for: .normal)
     }
+    @IBAction func sortArray(_ sender: UISegmentedControl) {
+        guard let sortedStudent = sortedStudent else { return }
+
+        switch sender.selectedSegmentIndex {
+        case 0:
+            // Sort by name ascending (A-Z)
+            filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+            
+        case 1:
+            // Sort by name descending (Z-A)
+            filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedDescending }
+
+        case 2:
+            // Sort by admission_no ascending
+            filterStudent = sortedStudent.sorted { $0.admission_no < $1.admission_no }
+
+        case 3:
+            // Sort by admission_no descending
+            filterStudent = sortedStudent.sorted { $0.admission_no > $1.admission_no }
+
+        default:
+            // Default fallback: sort by name descending
+            filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedDescending }
+        }
+
+        reportTable.reloadData()
+    }
+
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
-        fillterDropdown.dataSource = [CommonStringFile.getAllStudent.translated(),CommonStringFile.RollNoDESC.translated(),CommonStringFile.RollNoASC.translated(),CommonStringFile.NameASC.translated(),CommonStringFile.NameDESC.translated(),CommonStringFile.getStanderd.translated(),CommonStringFile.getStanderd_Section.translated()]
+        fillterDropdown.dataSource = [CommonStringFile.getAllStudent.translated(),CommonStringFile.getStanderd.translated(),CommonStringFile.getStanderd_Section.translated()]
         fillterDropdown.anchorView = filterView
         fillterDropdown.bottomOffset = CGPoint(x:0, y: (filterBtn.bounds.height))
-        
         fillterDropdown.direction = .bottom
         
         fillterDropdown.show()
@@ -123,18 +150,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             self.filterBtn.setTitle(item.translated(), for: .normal)
             
             switch item.translated(){
-            case CommonStringFile.RollNoASC.translated():
-                let sortedByRollNumber = sortedStudent!.sorted { $0.admission_no < $1.admission_no }
-                getStanderd.isHidden = true
-                filterStudent = sortedByRollNumber
-            case CommonStringFile.RollNoDESC.translated():
-                let sortedByName = sortedStudent?.sorted { $0.admission_no > $1.admission_no }
-                getStanderd.isHidden = true
-                filterStudent = sortedByName
-            case CommonStringFile.NameASC.translated():
-                let sortedByName = sortedStudent!.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
-                filterStudent = sortedByName
-                getStanderd.isHidden = true
             case CommonStringFile.getStanderd_Section.translated():
                 getStanderd.isHidden = false
                 sectionSelection.isHidden = false
@@ -145,10 +160,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 sectionSelection.isHidden = true
                 selection = CommonStringFile.getStanderd.translated()
                 getStudentAPI(class_id:classId)
-            case CommonStringFile.NameDESC.translated():
-                let sortedByName = sortedStudent!.sorted { $0.name > $1.name }
-                filterStudent = sortedByName
-                getStanderd.isHidden = true
             default:
                 getStanderd.isHidden = true
                 getStudentAPI()
@@ -335,8 +346,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.sectionLbl.text = studentDetail.section_name
             cell.genderLbl.text = studentDetail.gender
             cell.fatherName.text = studentDetail.father_name
-            //            if let img = URL(string: studentDetail)
-            //            cell.imgView.kf.setImage(with:)
             cell.imgView.contentMode = .scaleAspectFill
         }
         return cell

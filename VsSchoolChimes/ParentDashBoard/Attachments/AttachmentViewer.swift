@@ -32,7 +32,7 @@ class AttachmentViewer: UIViewController, UICollectionViewDataSource, UICollecti
         let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentViewCell", for: indexPath) as! AttachmentViewCell
 
         guard let imageItem = imges?.file_path?[indexPath.item],
-              let urlString = imageItem.path,
+              let urlString = imageItem.url,
               let url = URL(string: urlString) else {
             return cell
         }
