@@ -74,6 +74,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     var AcademicList : [String] = []
     var AcademicYearId: Int?
     var sectionId = ""
+    var StandardId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -187,6 +188,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                 SessionStack.isHidden = false
             }
         }else {
+            
+            student_attendance_report()
 
             SearchBar.isHidden = false
             TV.isHidden = false
@@ -239,7 +242,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     @IBAction func SelectStandard() {
         // Setup dropdown anchor and data source
         standardDropdown.anchorView = standardView
-        standardDropdown.dataSource = ["8th", "9th", "10th", "11th"]
+        standardDropdown.dataSource = StandardList
         standardDropdown.bottomOffset = CGPoint(x: 0, y: standardView.bounds.height)
         
         // Show the dropdown
@@ -252,9 +255,19 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             print("Selected item: \(item) at index: \(index)")
             
             // Update the label inside the standardView
-            if let label = self.standardView.subviews.compactMap({ $0 as? UILabel }).first {
-                label.text = item
+            standardLbl.text = item
+            StandardId = StandardData?[index].id ?? ""
+            SectionList.removeAll()
+            for i in 0..<(StandardData?[index].sections?.count ?? 0) {
+                
+                SectionList.append(StandardData?[index].sections?[i].name ?? "")
             }
+        
+            sectionLbl.text = "Section"
+            sectionId = ""
+            SectionData = StandardData?[index].sections
+            
+            student_attendance_report()
         }
     }
     
@@ -272,12 +285,20 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             // Update the label inside the UIView
             AcademicYearLbl.text = item
             AcademicYearId = academicYearData?[index].id
+            
+            StandardList.removeAll()
+            SectionList.removeAll()
+            if let year = AcademicYearId {
+                Get_Standards(yearid: year)
+            }
+            
+            TV.reloadData()
         }
     }
 
     @IBAction func SelectSection() {
         SectionDropdown.anchorView = SectionView
-        SectionDropdown.dataSource = ["A", "B", "C", "D"]
+        SectionDropdown.dataSource = SectionList
         SectionDropdown.show()
         SectionDropdown.bottomOffset = CGPoint(x: 0, y: SectionView.bounds.height)
         
@@ -286,9 +307,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             print("Selected item: \(item) at index: \(index)")
             
             // Update the label inside the UIView
-            if let label = self.SectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                label.text = item
-            }
+            sectionLbl.text = item
+            sectionId = SectionData?[index].id ?? ""
+            student_attendance_report()
         }
     }
     
@@ -359,9 +380,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         present(vc, animated: true)
     }
     
-    func Get_Standards() {
+    func Get_Standards(yearid: Int) {
         
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : AcademicYearId], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: [COMMON_PARAMETER.academic_year_id : yearid], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
             
             switch result {
             case .success(let successMessage):
@@ -373,6 +394,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                             StandardList.append(standard.name ?? "")
                         }
                         
+                        StandardId = StandardData?.first?.id ?? ""
+                        
                         if let sections = StandardData?.first?.sections{
                             SectionData = sections
                             for j in 0..<sections.count {
@@ -383,14 +406,18 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                         standardLbl.text = StandardData?.first?.name
                         sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
                         
+                        student_attendance_report()
+                        
                     }else{
                         sectionId = ""
+                        StandardId = ""
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async { [self] in
                     print(error.localizedDescription)
                     sectionId = ""
+                    StandardId = ""
                 }
             }
         }
@@ -420,6 +447,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                                 AcademicYearId = academicYearData?[i].id ?? 0
                             }
                         }
+                        if let yearId = AcademicYearId {
+                            Get_Standards(yearid: yearId)
+                        }
                     }
                 }
                 
@@ -433,11 +463,13 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     //MARK: Attendance report API Call
     func student_attendance_report(){
         
+        let date = ConvertDateStringSmart(DateBtn.titleLabel?.text)
+        
         let Param = [
-            AttendanceReportStringFile.from_date : "",
-            AttendanceReportStringFile.to_date : "",
-            AttendanceReportStringFile.standard_id : standardDropdown.selectedItem,
-            AttendanceReportStringFile.section_id : SectionDropdown.selectedItem,
+            AttendanceReportStringFile.from_date : date,
+            AttendanceReportStringFile.to_date : date,
+            AttendanceReportStringFile.standard_id : StandardId,
+            AttendanceReportStringFile.section_id : sectionId,
         ]
         
         APIService.shared.makeApi(url: ServiceUrl.attendance_student_attendance_report, parameters: Param, type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (result:Result<AttendanceReportResponse,Error>) in
@@ -484,11 +516,16 @@ extension MarkAttendenceVC : UITableViewDelegate,UITableViewDataSource {
         
         let report = FilteredReport?[indexPath.row]
         
+        cell.NameLbl.text = report?.student_name
+        cell.AdmisionNOLbl.text = "Admission No: \(report?.admission_no ?? "")"
+        
         if report?.att_status == "P"{
             
            // cell.cellView.layer.borderColor = UIColor.systemGreen.cgColor
             cell.statusView.backgroundColor = .systemGreen
             cell.statusLbl.text = "Present"
+        }else if report?.att_status == "Not taken"{
+            cell.statusLbl.text = "Not taken"
         }
         else{
            // cell.cellView.layer.borderColor = UIColor.systemRed.cgColor

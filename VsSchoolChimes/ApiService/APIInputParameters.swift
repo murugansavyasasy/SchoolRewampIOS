@@ -199,6 +199,8 @@ class AttendanceReportStringFile {
     static var from_date = "from_date"
     static var to_date = "to_date"
     static var standard_id = "standard_id"
+    static var section_id = "section_id"
+}
 enum GetStudentReport {
     static var class_id = "class_id"
     static var section_id = "section_id"

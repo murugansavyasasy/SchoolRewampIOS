@@ -37,7 +37,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         searchbar.delegate = self
         searchbar.addDoneButton()
         CellRegister()
-       // setupTableFooter()
+        Get_Notice()
         tableview.delegate = self
         tableview.dataSource = self
         tableview.reloadData()
@@ -122,33 +122,27 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
         
-        cell.cellview.changeHeightAndAnimate(40, 110, 31, 80, top: 5)
-        cell.isreciver = true
-        cell.dicriptContent.attributedText = descript(for: SearchData?.description ?? "", expanded: false)
+       
+        //cell.dicriptContent.attributedText = descript(for: SearchData?.description ?? "", expanded: false)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-        cell.delegate = self
-        cell.dicriptContent.tag = indexPath.row // Tag the label with the row index
-        cell.dicriptContent.isUserInteractionEnabled = true
-        cell.dicriptContent.addGestureRecognizer(tapGesture)
+       
+        cell.dicriptContent.text = SearchData?[indexPath.row].content
         cell.TitleLbl.text = SearchData?[indexPath.row].title
         cell.datelbl.text = SearchData?[indexPath.row].created_on
         cell.homeworkDocs = SearchData?[indexPath.row].file_path
+        
+        if SearchData?[indexPath.row].file_path?.count == 0 {
+            cell.CollectionViewHeight.constant = 0
+            print("Indexpath", indexPath.row)
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         return UITableView.automaticDimension
     }
     
-    
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let contentOffsetY = scrollView.contentOffset.y
-//        
-//        // Check for scroll direction
-//        if contentOffsetY > previousOffset && contentOffsetY > 0 {
-//        }
-//        previousOffset = contentOffsetY
-//    }
     
     @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { return }
@@ -200,46 +194,6 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
-    }
-    
-    // Method to load the footer from nib and set it as tableFooterView
-    func setupTableFooter() {
-        if shouldShowFooter {
-            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-                // Adjust the frame based on your needs.
-                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
-                
-                // Add a tap gesture recognizer to the button to trigger the hide action.
-                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-                footer.SeeMoreBtn.isUserInteractionEnabled = true
-                
-                // Set the footer view.
-                tableview.tableFooterView = footer
-            }
-        } else {
-            tableview.tableFooterView = nil
-        }
-    }
-    
-    @objc func seeMoreAction() {
-        print("Footer button tapped. Hiding the footer.")
-        
-        // Animate the footer fade-out if desired.
-        if let footer = tableview.tableFooterView {
-            UIView.animate(withDuration: 0.3, animations: {
-                footer.alpha = 0
-            }, completion: {[self] _ in
-                // Hide the footer after animation completes.
-                tableview.tableFooterView = nil
-                shouldShowFooter = false
-                
-                tableview.reloadData()
-            })
-        } else {
-            // In case footer is already nil.
-            shouldShowFooter = false
-        }
     }
 }
 

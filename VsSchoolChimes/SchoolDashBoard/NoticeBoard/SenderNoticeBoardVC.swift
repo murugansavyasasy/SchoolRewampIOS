@@ -359,7 +359,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            
         }
     }
     
