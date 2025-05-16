@@ -61,6 +61,15 @@ class VideoTVCell: UITableViewCell {
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white
         OuterView.backgroundColor = color
     }
+    
+    func playvideo(url:String){
+        
+        if let mediaURL:URL = URL(string: url) {
+            let request:URLRequest = URLRequest(url: mediaURL)
+            videoloadview.load(request)
+        }
+
+    }
     func animationview(){
         OuterView.animateView(enable:true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in

@@ -177,7 +177,11 @@ class LoginVc: UIViewController {
                             if(data.is_number_exists == true){
                                 
                                 if(data.otp_sent == true){
-                                    
+                                    UserDefaultFileManager
+                                        .saveLoginCredentials(
+                                            mobile_number:MobilTextFld.text ?? "",
+                                            pwd:passTextFld.text ?? ""
+                                        )
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }
                                 else {
