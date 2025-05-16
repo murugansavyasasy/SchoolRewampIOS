@@ -22,6 +22,7 @@
                 <outlet property="getStanderd" destination="xAR-WR-MDu" id="4cr-zx-nUR"/>
                 <outlet property="nodataImg" destination="6P3-cM-b2l" id="dUx-J3-bRO"/>
                 <outlet property="nodataLbl" destination="ZiC-0f-Dzp" id="EJi-7y-gyQ"/>
+                <outlet property="reportSegment" destination="dtk-qT-JbI" id="COd-Xq-hkE"/>
                 <outlet property="reportTable" destination="m6e-1o-K5O" id="U6e-k4-m6J"/>
                 <outlet property="searchBar" destination="hOr-xV-ijW" id="yO3-eY-nt8"/>
                 <outlet property="searchHeight" destination="ZOY-3F-2k7" id="KPP-Ga-Kxa"/>
