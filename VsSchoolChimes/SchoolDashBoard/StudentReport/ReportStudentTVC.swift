@@ -9,6 +9,8 @@ import UIKit
 
 class ReportStudentTVC: UITableViewCell {
     
+    @IBOutlet weak var standerdLbl: UILabel!
+    @IBOutlet weak var sectionLbl: UILabel!
     @IBOutlet weak var idCardImg: UIImageView!
     @IBOutlet weak var emailBtn: UIButton!
     @IBOutlet weak var smsBtn: UIButton!

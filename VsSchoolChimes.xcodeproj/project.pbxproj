@@ -232,6 +232,8 @@
 		8442A96F2CDE8B2C0006068E /* LangTvCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */; };
 		8442A9702CDE8B2C0006068E /* LangTvCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442A96D2CDE8B2C0006068E /* LangTvCellTableViewCell.swift */; };
 		8444FE442D1A6D4400FC936C /* CardsCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */; };
+		845988412DD61382007CDB23 /* EventTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845988402DD61382007CDB23 /* EventTVC.xib */; };
+		845988422DD61382007CDB23 /* EventTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8459883F2DD61382007CDB23 /* EventTVC.swift */; };
 		845FED3F2D129A0D0090296B /* ExamCreatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845FED3D2D129A0D0090296B /* ExamCreatVC.swift */; };
 		845FED402D129A0D0090296B /* ExamCreatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845FED3E2D129A0D0090296B /* ExamCreatVC.xib */; };
 		8463D0EB2D6EF5CD00361F55 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8463D0EA2D6EF5CD00361F55 /* Extentions.swift */; };
@@ -875,6 +877,8 @@
 		8442A96E2CDE8B2C0006068E /* LangTvCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LangTvCellTableViewCell.xib; sourceTree = "<group>"; };
 		8442AA732CDF6B220006068E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		8444FE432D1A6D4400FC936C /* CardsCollectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		8459883F2DD61382007CDB23 /* EventTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTVC.swift; sourceTree = "<group>"; };
+		845988402DD61382007CDB23 /* EventTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTVC.xib; sourceTree = "<group>"; };
 		845FED3D2D129A0D0090296B /* ExamCreatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamCreatVC.swift; sourceTree = "<group>"; };
 		845FED3E2D129A0D0090296B /* ExamCreatVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamCreatVC.xib; sourceTree = "<group>"; };
 		8463D0E72D6EE0FB00361F55 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Main.strings; sourceTree = "<group>"; };
@@ -1776,6 +1780,8 @@
 				849F313A2D00613B00BACEC7 /* EventPageVC.xib */,
 				849F313D2D00631600BACEC7 /* EventHistoryVC.swift */,
 				849F313E2D00631600BACEC7 /* EventHistoryVC.xib */,
+				8459883F2DD61382007CDB23 /* EventTVC.swift */,
+				845988402DD61382007CDB23 /* EventTVC.xib */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -3368,6 +3374,7 @@
 				84D1FF1D2D4CE00A003ACC04 /* ParentDashboardVc.xib in Resources */,
 				84EFFAEA2CCFA4A100C11C26 /* ReportBugVcViewController.xib in Resources */,
 				8442A86C2CDB787A0006068E /* ParentTVCell.xib in Resources */,
+				845988412DD61382007CDB23 /* EventTVC.xib in Resources */,
 				18D718B42D0D477900E9EDA3 /* PreviousCvcell.xib in Resources */,
 				18D718B52D0D477900E9EDA3 /* CreateLocationViewController.xib in Resources */,
 				FA2A3FBB2DB0CABB0000AF55 /* SenderAttachmentVC.xib in Resources */,
@@ -3910,6 +3917,7 @@
 				18D718A52D0D477900E9EDA3 /* fechLocationResq.swift in Sources */,
 				18D718A62D0D477900E9EDA3 /* LocationTableViewCell.swift in Sources */,
 				18D718A72D0D477900E9EDA3 /* AddLocationHistory.swift in Sources */,
+				845988422DD61382007CDB23 /* EventTVC.swift in Sources */,
 				840F67752D9406EE00AC2F5A /* AttachmentsVC.swift in Sources */,
 				848CC17E2D8A999A00CD0255 /* CreatePasswordVc.swift in Sources */,
 				840F67792D94128F00AC2F5A /* cell1Tv.swift in Sources */,
