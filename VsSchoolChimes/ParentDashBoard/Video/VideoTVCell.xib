@@ -41,7 +41,7 @@
                                     <action selector="sharebtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Lf6-JP-FmX"/>
                                 </connections>
                             </button>
-                            <webView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ye-XE-hLK">
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ye-XE-hLK">
                                 <rect key="frame" x="16" y="170" width="456" height="128"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>

@@ -221,6 +221,7 @@ class ReciverAttachmentrVC: UIViewController,UITableViewDelegate,UITableViewData
             cell.descriptContent.text = data.description
             cell.datelbl.text = data.date
             cell.videoName.text = data.title
+            cell.playvideo(url: "https://player.vimeo.com/video/1084600934?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=177030\" width=\"400\" height=\"300\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media\" title=\"The only way I could do that")
             
             return cell
 

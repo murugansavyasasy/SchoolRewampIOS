@@ -66,9 +66,6 @@ class  DeviceTokenStringFile {
     static var sdk_int = "sdk_int"
     static var app_version = "app_version"
 }
-
-
-
 class  send_textmessageStringFile {
     static var target_code = "target_code"
     static var target_type = "target_type"
@@ -192,6 +189,14 @@ class SendNoticeStringFile {
     static var visible_from = "visible_from"
     static var visible_to = "visible_to"
     static var file_path = "file_path"
+}
+
+class AttendanceReportStringFile {
+    
+    static var from_date = "from_date"
+    static var to_date = "to_date"
+    static var standard_id = "standard_id"
+    static var section_id = "section_id"
 }
 enum GetStudentReport {
     static var class_id = "class_id"
