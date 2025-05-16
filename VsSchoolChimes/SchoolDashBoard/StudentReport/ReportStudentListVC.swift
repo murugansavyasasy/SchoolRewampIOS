@@ -33,6 +33,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var classSelection: UIStackView!
     @IBOutlet weak var getStanderd: UIStackView!
     
+    @IBOutlet weak var reportSegment: UISegmentedControl!
     @IBOutlet weak var filterView: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
     var standerdArray = [String]()
@@ -210,10 +211,12 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             guard let self = self else { return }
             let filteredStudents = studentList?.filter { $0.class_name == item }
             sectionsDetails = standardDetails?[index].sections
+            
             sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
             self.clsBtn.setTitle(item, for: .normal)
             self.clsBtn.setTitle(item.translated(), for: .normal)
             classId = standardDetails?[index].id ?? ""
+            sectionId = standardDetails?[index].sections?.first?.id ?? ""
             if selection == CommonStringFile.getStanderd_Section.translated(){
                 getStudentAPI(class_id:classId,section_id:sectionId)
             }else{
@@ -272,6 +275,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         studentList = successMessage.data
                         nodataLbl.isHidden = true
                         nodataImg.isHidden = true
+                        reportSegment.isHidden = false
                         filterStudent = studentList
                         sortedStudent = studentList
                         reportTable.reloadData()
@@ -281,6 +285,8 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         studentList = successMessage.data
                         nodataLbl.text = successMessage.message
                         nodataImg.isHidden = false
+                        nodataLbl.isHidden = false
+                        reportSegment.isHidden = true
                         filterStudent = studentList
                         sortedStudent = studentList
                         reportTable.reloadData()
