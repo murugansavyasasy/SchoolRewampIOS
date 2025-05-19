@@ -137,12 +137,17 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     
     func UIupdate() {
         
+        TV.isHidden = true
+        
         applyDesign(element: standardView)
         applyDesign(element: SectionView)
         applyDesign(element: FulldayView)
         applyDesign(element: HalfdayView)
         applyDesign(element: FirstHalfView)
         applyDesign(element: SecondHalfView)
+        
+        DateBtn.semanticContentAttribute = .forceRightToLeft
+        DateBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: -8)
         
         markAllPresentBtn.backgroundColor = .systemGray3
         MarkAbsentiesBtn.backgroundColor = .lightGray
