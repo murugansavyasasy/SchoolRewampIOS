@@ -20,6 +20,10 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var FilterCV: UICollectionView!
     @IBOutlet weak var FilterImageview: UIImageView!
+    @IBOutlet weak var NodataImage: UIImageView!
+    @IBOutlet weak var NoDataLbl: UILabel!
+    @IBOutlet weak var EmptyView: UIView!
+    
     
     var images : [UIImage] = []
     var previousOffset: CGFloat = 0.0
@@ -67,10 +71,14 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     func StyleAndTranslate(){
         
         FilterCV.isHidden = true
+        NodataImage.isHidden = true
+        NoDataLbl.isHidden = true
+        EmptyView.isHidden = true
         
         NameLbl.text = childDetails?.name
         StandardLbl.text = (childDetails?.standard_name ?? "") + "-" + (childDetails?.section_name ?? "")
         
+        NoDataLbl.setFont(style: .title, size: FontSize.HeaderSize)
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -142,6 +150,11 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
 extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+            NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
+            NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
+            EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
+        
         return SearchData?.count ?? 0
     }
     
