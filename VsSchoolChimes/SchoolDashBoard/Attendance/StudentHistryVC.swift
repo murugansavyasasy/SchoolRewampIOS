@@ -11,10 +11,11 @@ import DropDown
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     func statusUpdate(status: Bool,index:Int) {
-        StudentDetails[index].isAbsent = status
+        studentsDetails?[index].isAbsent = status
         filterData?[index].isAbsent = status
         // Calculate the total count of present students
-        totalcount = StudentDetails.filter { $0.isAbsent == true }.count
+        totalcount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
+        
         if totalcount == 0 {
             // All students are absent
             selectAllBtn.setImage(UIImage(systemName: "checkmark.square.portrait.fill"), for: .normal)
@@ -42,22 +43,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var dropDown = DropDown()
     
     var isSelectAllEnabled = false
-    var id = 1
+    var isAttandanceMarkingScreen = false
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
     
-//    var studentData:[Student] = [Student(name: "viswahSGDFHWEEAHGSVVDVFWYDSfcwgsadcdg2cwqgascdg", isAbsent: false, rollnumber: "76979871", phoneNo: "9087654321"),
-//                                 Student(name: "chandhru", isAbsent: false, rollnumber: "76979871", phoneNo: "9597296160"),
-//                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979872", phoneNo: "9360183031"),
-//                                 Student(name: "shiyam", isAbsent: false, rollnumber: "76979873", phoneNo: "98762356335"),
-//                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979874", phoneNo: "7456792347"),
-//                                 Student(name: "Nicolash", isAbsent: false, rollnumber: "76979875", phoneNo: "9835546472"),
-//                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979876", phoneNo: "89873456543"),
-//                                 Student(name: "sharmila", isAbsent: false, rollnumber: "76979877", phoneNo: "89873456543"),
-//                                 Student(name: "Navin", isAbsent: false, rollnumber: "76979878", phoneNo: "7456792347"),
-//                                 Student(name: "kothai", isAbsent: false, rollnumber: "76979879", phoneNo: "9360183031"),
-//                                 Student(name: "kothai", isAbsent: false, rollnumber: "769798710", phoneNo: "9360183031")]
-//    
+
     
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
@@ -89,9 +79,13 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         
         
-        if id == 1{
+        if isAttandanceMarkingScreen == false{
             HeaderviewHeight.constant = 0
             headerView.isHidden = true
+        }else{
+            
+            filterBtn.isHidden = false
+            filterBtn.isUserInteractionEnabled = true
         }
         
         registerCell()
@@ -154,28 +148,38 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             
             switch item{
             case CommonStringFile.RollNoASC:
-                let sortedByRollNumber = studentData.sorted { $0.rollnumber < $1.rollnumber }
+                let sortedByRollNumber = studentsDetails?.sorted {
+                    $0.roll_no ?? "" < $1.roll_no ?? ""
+                }
                 filterData = sortedByRollNumber
             case CommonStringFile.RollNoDESC:
-                let sortedByName = studentData.sorted { $0.rollnumber > $1.rollnumber }
+                let sortedByName = studentsDetails?.sorted {
+                    $0.roll_no ?? "" > $1.roll_no ?? ""
+                }
                 filterData = sortedByName
             case CommonStringFile.NameASC:
-                let sortedByName = studentData.sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+                let sortedByName = studentsDetails?.sorted {
+                    $0.name?.localizedCompare($1.name ?? "") == .orderedAscending
+                }
                 filterData = sortedByName
             case CommonStringFile.NameDESC:
-                let sortedByName = studentData.sorted { $0.name > $1.name }
+                let sortedByName = studentsDetails?.sorted {
+                    $0.name ?? "" > $1.name ?? ""
+                }
                 filterData = sortedByName
             case CommonStringFile.Absent:
                 
-                filterData = studentData.sorted {
-                    !$0.isAbsent && $1.isAbsent
+                filterData = studentsDetails?.sorted {
+                    !($0.isAbsent ?? false) && ($1.isAbsent != nil)
                 }
             case CommonStringFile.Present:
-                filterData = studentData.sorted {
-                    $0.isAbsent && !$1.isAbsent // Absent students first
+                filterData = studentsDetails?.sorted {
+                    $0.isAbsent ?? false && !(
+                        $1.isAbsent ?? false
+                    ) // Absent students first
                 }
             default:
-                filterData = studentData
+                filterData = studentsDetails
                 
             }
             historyTable.reloadData()
@@ -192,9 +196,9 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         
         // Update data model to mark all students as present/absent
         let isSelectingAll = sender.isSelected
-        if id == 2{
-            for i in 0..<studentData.count {
-                studentData[i].isAbsent = !isSelectingAll // If selecting all, students are not absent
+        if isAttandanceMarkingScreen == true{
+            for i in 0..<(studentsDetails?.count ?? 0) {
+                studentsDetails?[i].isAbsent = !isSelectingAll // If selecting all, students are not absent
                 filterData?[i].isAbsent = !isSelectingAll
                 
                 // Properly access the cell using indexPath, not historyTable.cell
@@ -228,7 +232,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         // Update select all button image and total count
         if isSelectingAll {
             selectAllBtn.setImage(ImageName.checkmark, for: .normal)
-            totalcount = studentData.count
+            totalcount = studentsDetails?.count ?? 0
         } else {
             selectAllBtn.setImage(ImageName.square, for: .normal)
             totalcount = 0
@@ -263,7 +267,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             historyTable.isHidden = false
                             studentsDetails = successMessage.data
-                            filterData = studentsDetails
+                           
                             if var students = studentsDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
@@ -278,6 +282,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                 repeating: true,
                                 count: studentsDetails?.count ?? 0
                             )
+                            filterData = studentsDetails
                             historyTable.reloadData()
                         }
                     }else{
@@ -628,15 +633,12 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if id == 2{
+       
             return studentsDetails?.count ?? 0
-        }else{
-            return studentsDetails?.count ?? 0
-        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if id == 1{
+        if  isAttandanceMarkingScreen == false{
             let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
             let backgroundColor = colorForName(
                 studentsDetails?[indexPath.row].name ?? ""
@@ -668,57 +670,42 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             return cell
         }
         else{
-            if switchCell == 0{
-                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.StudentHistryTVC, for: indexPath) as! StudentHistryTVC
-                cell.nameLbl.text = filterData?[indexPath.row].name
-                cell.AdmisNomber.text = filterData?[indexPath.row].phoneNo
-                cell.rollNomber.text = filterData?[indexPath.row].rollnumber
-                let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
-                cell.statusBtn.setImage(img, for: .normal)
-                cell.outerView.layer.borderColor = filterData?[indexPath.row].isAbsent ?? false ? UIColor.red.cgColor : Colornames.AprovedClr?.cgColor
-                cell.outerView.layer.borderWidth = 1
-                
-                return cell
-            }else if switchCell == 1{
-                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
-                cell.nameLbl.text = filterData?[indexPath.row].name
-                cell.rollNo.setTitle(filterData?[indexPath.row].rollnumber, for: .normal)
-                cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
-                cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
-                cell.phnBtn.tag = indexPath.row
-                cell.phnBtn.setTitle(filterData?[indexPath.row].phoneNo, for: .normal)
-                cell.custSwitch.index = indexPath.row
-                cell.delegate = self
-                return cell
-            }else{
-                
-                let cell = tableView.dequeueReusableCell(
-                    withIdentifier: CellConfingName.MarkAtendenceTV,
-                    for: indexPath
-                ) as! MarkAtendenceTV
-                cell.nameLbl.text = filterData?[indexPath.row].name
-                cell.addmisionLbl.text = filterData?[indexPath.row].phoneNo
-                cell.rollNoLbl.text = filterData?[indexPath.row].rollnumber
-                let img = filterData?[indexPath.row].isAbsent  ?? false ? ImageName.apsent : ImageName.present
-                cell.btnView.backgroundColor = filterData?[indexPath.row].isAbsent  ?? false ? UIColor.red : Colornames.AprovedClr
-                let name = filterData?[indexPath.row].isAbsent  ?? false ? "Absent" : "Present"
-                cell.btnView.layer.cornerRadius = 20
-                
-                cell.stsBtn.setTitle(name, for: .normal)
-                return cell
+    
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
+            cell.nameLbl.text = filterData?[indexPath.row].name
+            cell.rollNo.isHidden = true
+            cell.admissionlbl.text = "ADMIS No: " +  (
+                filterData?[indexPath.row].admission_no ?? ""
+            )
+            if filterData?[indexPath.row].roll_no != ""{
+                cell.rollNo.isHidden = false
+                cell.rollNo
+                    .setTitle(filterData?[indexPath.row].roll_no, for: .normal)
             }
-        }
-        
+           
+            cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
+            cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
+            cell.phnBtn.tag = indexPath.row
+            cell.phnBtn.isHidden = true
+//            cell.phnBtn
+//                .setTitle(
+//                    filterData?[indexPath.row].admission_no,
+//                    for: .normal
+//                )
+            cell.custSwitch.index = indexPath.row
+            cell.delegate = self
+            return cell
+            }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if id == 2{
+        if isAttandanceMarkingScreen == true{
             let cell = tableView.cellForRow(at: indexPath) as? StudentHistryTVC
             guard let cell = cell else { return }
-            if studentData[indexPath.row].isAbsent == true{
+            if studentsDetails?[indexPath.row].isAbsent == true{
                 // Create the flip animation
                 UIView.transition(with: cell.outerView,
                                   duration: 0.3,
@@ -727,7 +714,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                     // Change background color to red
                     cell.outerView.layer.borderColor = Colornames.AprovedClr?.cgColor
                     cell.outerView.layer.borderWidth = 1
-                    self.studentData[indexPath.row].isAbsent = false
+                    self.studentsDetails?[indexPath.row].isAbsent = false
                     cell.statusBtn.setImage(ImageName.present, for: .normal)
                 },
                                   completion: nil)
@@ -740,7 +727,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                     // Change background color to red
                     cell.outerView.layer.borderColor = UIColor.red.cgColor
                     cell.statusBtn.setImage(ImageName.apsent, for: .normal)
-                    self.studentData[indexPath.row].isAbsent = true
+                    self.studentsDetails?[indexPath.row].isAbsent = true
                 },
                                   completion: nil)
                 totalcount -= 1
@@ -791,12 +778,12 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             // Reset to full data when the search text is cleared
-            filterData = studentData
+            filterData = studentsDetails
         } else {
             // Filter data based on the search text
-            filterData = studentData.filter { student in
-                student.name.lowercased().contains(searchText.lowercased())
-            }
+//            filterData = studentsDetails?.filter { student in
+//                student.name?.lowercased().contains(searchText.lowercased()) ?? ""
+//            }
         }
         historyTable.reloadData()
     }
