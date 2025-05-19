@@ -605,7 +605,7 @@ class RecipientVc: UIViewController{
                     let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
                         if let url = URL(string: url) {
                             let type = url.pathExtension.lowercased()
-                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
+                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
                         }
                         return [
                             CommonStringFile.url: url,
@@ -1850,10 +1850,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     
                 case.success(let succesmessage) :
                     
-                    if succesmessage.status == true {
-                        
-                        
-                        DispatchQueue.main.async { [self] in
+                    if succesmessage.status == true {                        DispatchQueue.main.async { [self] in
                             CircularProgressLoader.shared.hide()
                             
                             CustomAlert

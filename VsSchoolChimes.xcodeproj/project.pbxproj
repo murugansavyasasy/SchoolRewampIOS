@@ -152,6 +152,7 @@
 		840A7CED2D24FDAA0061EAEA /* MarkTvCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A7CE12D24FDAA0061EAEA /* MarkTvCell.swift */; };
 		840A7CEE2D24FDAA0061EAEA /* ExammarkFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A7CDD2D24FDAA0061EAEA /* ExammarkFooterView.swift */; };
 		840A7CF02D24FDAA0061EAEA /* ExamMarkCV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A7CDB2D24FDAA0061EAEA /* ExamMarkCV.swift */; };
+		840D6CE72DDB0E0100FD7620 /* FileDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D6CE62DDB0E0100FD7620 /* FileDownloader.swift */; };
 		840E44A52D1A85B000D561E8 /* SenderLeaveRqstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E44A32D1A85B000D561E8 /* SenderLeaveRqstVC.swift */; };
 		840E44A62D1A85B000D561E8 /* SenderLeaveRqstVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */; };
 		840E44A92D1A85EC00D561E8 /* SenderLeaveTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840E44A72D1A85EC00D561E8 /* SenderLeaveTV.swift */; };
@@ -794,6 +795,7 @@
 		840A7CE02D24FDAA0061EAEA /* ExamMarkTV.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExamMarkTV.xib; sourceTree = "<group>"; };
 		840A7CE12D24FDAA0061EAEA /* MarkTvCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkTvCell.swift; sourceTree = "<group>"; };
 		840A7CE22D24FDAA0061EAEA /* MarkTvCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MarkTvCell.xib; sourceTree = "<group>"; };
+		840D6CE62DDB0E0100FD7620 /* FileDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDownloader.swift; sourceTree = "<group>"; };
 		840E44A32D1A85B000D561E8 /* SenderLeaveRqstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderLeaveRqstVC.swift; sourceTree = "<group>"; };
 		840E44A42D1A85B000D561E8 /* SenderLeaveRqstVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SenderLeaveRqstVC.xib; sourceTree = "<group>"; };
 		840E44A72D1A85EC00D561E8 /* SenderLeaveTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenderLeaveTV.swift; sourceTree = "<group>"; };
@@ -2503,6 +2505,7 @@
 			isa = PBXGroup;
 			children = (
 				84A5BE872C197B4A00E32496 /* AWSS3Manager.swift */,
+				840D6CE62DDB0E0100FD7620 /* FileDownloader.swift */,
 			);
 			path = AWS;
 			sourceTree = "<group>";
@@ -3796,6 +3799,7 @@
 				18D7185F2D0D471A00E9EDA3 /* DaliyCollectionFeeViewController.swift in Sources */,
 				18D718602D0D471A00E9EDA3 /* PayModeRequest.swift in Sources */,
 				18D718612D0D471A00E9EDA3 /* DailyCollReq.swift in Sources */,
+				840D6CE72DDB0E0100FD7620 /* FileDownloader.swift in Sources */,
 				84E795DD2D2FF3DF000B36BC /* ChatCvcell.swift in Sources */,
 				846BDD752DB60387001DB91A /* TAttacmentTVC.swift in Sources */,
 				187CF4D72D119C82001422CE /* ClassTimeTableViewController.swift in Sources */,

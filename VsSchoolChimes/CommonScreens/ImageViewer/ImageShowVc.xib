@@ -4,12 +4,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageShowVc" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageShowVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="ActivityIndicator" destination="mlM-Cy-xFT" id="85w-UP-BAH"/>
                 <outlet property="TitleLbl" destination="4LN-Xu-FRb" id="pDQ-Hv-bJP"/>
@@ -43,7 +44,7 @@
                                 <wkPreferences key="preferences"/>
                             </wkWebViewConfiguration>
                         </wkWebView>
-                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2nI-Xu-ypg">
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2nI-Xu-ypg">
                             <rect key="frame" x="0.0" y="50" width="393" height="709"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Twp-p8-VjQ">
@@ -70,7 +71,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LN-Xu-FRb">
-                            <rect key="frame" x="91" y="12" width="209" height="21"/>
+                            <rect key="frame" x="91" y="12" width="232" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -82,6 +83,25 @@
                                 <constraint firstAttribute="width" constant="40" id="tdr-H2-dB8"/>
                             </constraints>
                         </activityIndicatorView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c9r-k1-fJN">
+                            <rect key="frame" x="333" y="-3" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="0Pa-Xh-ZLC"/>
+                                <constraint firstAttribute="width" constant="50" id="Hvc-Na-YAP"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal">
+                                <imageReference key="image" image="arrow.down.app" catalog="system" symbolScale="large"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                            </state>
+                            <buttonConfiguration key="configuration" style="tinted">
+                                <imageReference key="image" image="arrow.down.app" catalog="system" symbolScale="large"/>
+                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="saveToFolder:" destination="-1" eventType="touchUpInside" id="tgO-E7-9mw"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -90,17 +110,19 @@
                         <constraint firstItem="kPN-2u-D3K" firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" constant="-16" id="CKE-5S-zFj"/>
                         <constraint firstItem="kPN-2u-D3K" firstAttribute="top" secondItem="2nI-Xu-ypg" secondAttribute="top" id="CoF-eE-dUv"/>
                         <constraint firstItem="kPN-2u-D3K" firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="DKw-Tk-ZNM"/>
-                        <constraint firstAttribute="trailing" secondItem="4LN-Xu-FRb" secondAttribute="trailing" constant="93" id="ESK-Zk-AHH"/>
                         <constraint firstItem="Mij-9M-Z3u" firstAttribute="leading" secondItem="2nI-Xu-ypg" secondAttribute="leading" id="GCp-36-QSQ"/>
                         <constraint firstItem="2nI-Xu-ypg" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" id="HOm-IM-im4"/>
                         <constraint firstItem="kPN-2u-D3K" firstAttribute="top" secondItem="4LN-Xu-FRb" secondAttribute="bottom" constant="17" id="JuO-5T-Mac"/>
                         <constraint firstItem="mlM-Cy-xFT" firstAttribute="centerX" secondItem="b3Y-cI-Ree" secondAttribute="centerX" id="MI6-8z-stJ"/>
                         <constraint firstItem="Mij-9M-Z3u" firstAttribute="top" secondItem="2nI-Xu-ypg" secondAttribute="top" id="S6l-mc-3Y9"/>
+                        <constraint firstItem="c9r-k1-fJN" firstAttribute="leading" secondItem="4LN-Xu-FRb" secondAttribute="trailing" constant="10" id="UaL-3d-iRm"/>
                         <constraint firstItem="mlM-Cy-xFT" firstAttribute="centerY" secondItem="b3Y-cI-Ree" secondAttribute="centerY" id="Vba-yY-MDD"/>
                         <constraint firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="WzM-Ex-QG6"/>
+                        <constraint firstItem="2nI-Xu-ypg" firstAttribute="top" secondItem="c9r-k1-fJN" secondAttribute="bottom" constant="3" id="X9G-8W-end"/>
                         <constraint firstItem="2nI-Xu-ypg" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="50" id="a4Y-Am-9yz"/>
                         <constraint firstItem="4LN-Xu-FRb" firstAttribute="leading" secondItem="TE9-Ng-rGr" secondAttribute="trailing" constant="8" id="cBz-CH-0AR"/>
                         <constraint firstItem="TE9-Ng-rGr" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="5" id="e3h-za-H20"/>
+                        <constraint firstAttribute="trailing" secondItem="c9r-k1-fJN" secondAttribute="trailing" constant="10" id="kOc-dX-jHj"/>
                         <constraint firstItem="Mij-9M-Z3u" firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" id="lnF-R8-J9q"/>
                         <constraint firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" id="rZ1-9N-zlh"/>
                         <constraint firstItem="TE9-Ng-rGr" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" constant="8" id="s1x-E1-ZZ1"/>
@@ -120,6 +142,7 @@
         </view>
     </objects>
     <resources>
+        <image name="arrow.down.app" catalog="system" width="128" height="114"/>
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

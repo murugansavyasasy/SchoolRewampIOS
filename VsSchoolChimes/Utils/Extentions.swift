@@ -557,51 +557,55 @@ extension UILabel {
         return layoutManager.characterIndex(for: point, in: textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
     }
 }
-func downloadFile(from urlString: String, folderName: String, fileName: String) {
-    guard let url = URL(string: urlString) else {
-        print("Invalid URL")
+func downloadFile(from urlString: String, folderName: String, fileName: String, completion: ((Result<URL, Error>) -> Void)? = nil) {
+    guard let fileURL = URL(string: urlString) else {
+        print("❌ Invalid URL string.")
+        completion?(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
         return
     }
     
     let fileManager = FileManager.default
-    
-    // 1. Create folder in Documents directory
     let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
-    let folderURL = documentsURL.appendingPathComponent(folderName)
-
+    let folderURL = documentsURL.appendingPathComponent(folderName, isDirectory: true)
+    let destinationURL = folderURL.appendingPathComponent(fileName)
+    
+    // Ensure folder exists
     do {
         if !fileManager.fileExists(atPath: folderURL.path) {
-            try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true, attributes: nil)
-            print("📁 Folder created at: \(folderURL.path)")
+            try fileManager.createDirectory(at: folderURL, withIntermediateDirectories: true)
+            print("📁 Created folder at: \(folderURL.path)")
         }
     } catch {
-        print("❌ Failed to create folder: \(error.localizedDescription)")
+        print("❌ Could not create folder: \(error.localizedDescription)")
+        completion?(.failure(error))
         return
     }
     
-    // 2. Destination file URL
-    let destinationURL = folderURL.appendingPathComponent(fileName)
-    
-    // 3. Start downloading
-    let task = URLSession.shared.downloadTask(with: url) { tempLocalURL, response, error in
+    // Download task
+    let task = URLSession.shared.downloadTask(with: fileURL) { tempLocalURL, response, error in
         if let error = error {
-            print("❌ Download error: \(error.localizedDescription)")
+            print("❌ Download failed: \(error.localizedDescription)")
+            completion?(.failure(error))
             return
         }
-
+        
         guard let tempLocalURL = tempLocalURL else {
+            let noFileError = NSError(domain: "", code: -2, userInfo: [NSLocalizedDescriptionKey: "Temp file not found"])
             print("❌ No temp file URL")
+            completion?(.failure(noFileError))
             return
         }
-
+        
         do {
             if fileManager.fileExists(atPath: destinationURL.path) {
                 try fileManager.removeItem(at: destinationURL)
             }
             try fileManager.moveItem(at: tempLocalURL, to: destinationURL)
-            print("✅ File downloaded to: \(destinationURL.path)")
+            print("✅ File saved to: \(destinationURL.path)")
+            completion?(.success(destinationURL))
         } catch {
-            print("❌ File saving error: \(error.localizedDescription)")
+            print("❌ File saving failed: \(error.localizedDescription)")
+            completion?(.failure(error))
         }
     }
     
