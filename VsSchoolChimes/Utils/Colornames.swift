@@ -56,6 +56,7 @@ class ImageName{
     static let PlayIcon = UIImage(named: "PlayIcon")
     static let PauseIcon = UIImage(named: "PauseIcon")
     static let ImageIcon = UIImage(named: "ImageIcon")
+    static let Default_profile = UIImage(named: "Default_profile")
     static let p23 = UIImage(named: "p23")
     static let VocieRecord = UIImage(named: "VocieRecord")
     static let VoiceRecordSelect = UIImage(named: "VoiceRecordSelect")

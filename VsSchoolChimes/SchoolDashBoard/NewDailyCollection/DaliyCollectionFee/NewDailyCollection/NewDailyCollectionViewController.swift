@@ -99,6 +99,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         
         let todateTap = UITapGestureRecognizer(target: self, action: #selector(SelectToDate))
         TodateView.addGestureRecognizer(todateTap)
+        
+        daily_collectionApi()
     
     }
     override func viewDidLayoutSubviews() {
@@ -140,18 +142,20 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if ClickId == "1" || ClickId == "2"{
-            return 5
+            return DailyCollectionData?[section].fee_data?.count ?? 0
         }
         else{
-            return 3
+            return DailyCollectionData?[section].fee_data?.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if ClickId == "1" || ClickId == "2"{
             let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
-            cell.classLbl.text = feesCategories[indexPath.row].category
-            cell.amountLbl.text = feesCategories[indexPath.row].amount
+            cell.classLbl.text = DailyCollectionData?[indexPath.section]
+                .fee_data?[indexPath.row].type_name
+            cell.amountLbl.text = DailyCollectionData?[indexPath.section]
+                .fee_data?[indexPath.row].amount
             return cell
         }else{
             let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
@@ -164,21 +168,22 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     func numberOfSections(in tableView: UITableView) -> Int {
         if ClickId == "1" || ClickId == "2"{
-            return 4
+            return DailyCollectionData?.count ?? 0
         }
         else{
-            return 1
+            return DailyCollectionData?.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
+        
         if ClickId == "0"{
-            headerView.classLbl.text = "Total"
-            headerView.amountLbl.text = "37,515"
+            headerView.classLbl.text = DailyCollectionData?[section].category
+            headerView.amountLbl.text = DailyCollectionData?[section].total
         }else{
-            headerView.classLbl.text = "Total"
-            headerView.amountLbl.text = "37,515"
+            headerView.classLbl.text = DailyCollectionData?[section].category
+            headerView.amountLbl.text = DailyCollectionData?[section].total
         }
         return headerView
     }
@@ -196,9 +201,9 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         APIService.shared
             .makeApi(url: ServiceUrl.api_fee_report_daily_collection , parameters: [
                 
-                Daily_collectionStringFile.from_date : "2021-07-01",
-                Daily_collectionStringFile.to_date : "2021-07-01",
-                Daily_collectionStringFile.type : "1"
+                Daily_collectionStringFile.from_date : fromLbl.text ?? "",
+                Daily_collectionStringFile.to_date : todateLbl.text ?? "",
+                Daily_collectionStringFile.type : ClickId
                 
             ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
                 result:Result <DailyCollectionResponse,

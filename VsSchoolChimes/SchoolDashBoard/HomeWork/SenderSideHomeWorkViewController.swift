@@ -77,6 +77,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
     func setSelectedHomeWork(title:String,content:String,imageUrls:[FilePath]){
         DetailsTxtview.text = content
         DetailsTxtview.textColor = content != "" ? .black:.lightGray
@@ -92,11 +93,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         wordsCountLbl.text = "\(content.count) of 500"
         uploadAttachmentView.imageCollectionview.reloadData()
     }
+    
     func StyleAndTranslater(){
         
         //MARK: UI Update
         TextViewheight.constant = initialHeight
-       
         DetailsTxtview.layer.cornerRadius = 10
         DetailsTxtview.layer.borderWidth = 1
         DetailsTxtview.layer.borderColor = UIColor.lightGray.cgColor
@@ -105,7 +106,6 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsTxtview.textColor = .lightGray
         customdate.dateFormat = "EEE d"
         RecipientBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-        
         //MARK: Label Font Style
         titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         DetailsLbl.setFont(style: .title, size: FontSize.TitleSize)

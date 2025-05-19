@@ -295,7 +295,7 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         let date = ConvertDateStringSmart(dates)
         APIService.shared.makeApi(
             url: ServiceUrl.comm_homework_get_homework_report,
-            parameters: ["section_id": sectionId ?? "", "date": date],
+            parameters: ["section_id": sectionId ?? "", "date": date,"academic_year_id":acodemicId ?? 0],
             type: ApitTypeSringFile.GET,
             token: staffDetails?.access_token ?? ""
         ) { [weak self] (result: Result<HomeworkResponse, Error>) in
