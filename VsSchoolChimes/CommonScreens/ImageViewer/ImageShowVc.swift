@@ -26,6 +26,7 @@ class ImageShowVc: UIViewController{
     var type:Int?
     var subjectName:String?
     var scrollIndex:IndexPath?
+    var dowloadUrl:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         pdfView.navigationDelegate = self
@@ -39,10 +40,48 @@ class ImageShowVc: UIViewController{
             for i in 0..<imageURL.count{
                 if imageURL[i].url == pdfUrl{
                     self.cv.scrollToItem(at: IndexPath(item: i, section: 0), at: .centeredHorizontally, animated: true)
+                    dowloadUrl = pdfUrl
                 }
             }
         }
     }
+    @IBAction func saveToFolder(_ sender: UIButton) {
+        sender.isEnabled = false
+        guard let fileURL = dowloadUrl, let filename = getFileName(from: fileURL) else {
+            print("❌ Invalid file URL or file name")
+            sender.isEnabled = true
+            return
+        }
+        
+        let downloader = FileDownloader()
+        downloader.downloadFile(
+            from: fileURL,
+            folderName: "SchoolChimesDownloads",
+            fileName: filename
+        ) { result in
+            DispatchQueue.main.async { [self] in
+                sender.isEnabled = true
+                switch result {
+                case .success(let filePath):
+                    CustomAlert.showAlertWithOkAction(
+                            title:"",
+                            message: "\(filename) Downloaded successfully ✅",
+                            on: self)
+                    
+                case .failure(let error):
+                    CustomAlert.showAlertWithOkAction(
+                            title:"",
+                            message: "\(filename) Download Failed ❌",
+                            on: self)
+                }
+            }
+        }
+    }
+    func getFileName(from urlString: String) -> String? {
+        guard let url = URL(string: urlString) else { return nil }
+        return url.lastPathComponent
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         uiUpdate(type: type ?? 0)
     }
@@ -51,12 +90,13 @@ class ImageShowVc: UIViewController{
             switch type{
             case 0:
                 if let pdfURL = URL(string: pdfUrl ?? "") {
-                      let request = URLRequest(url: pdfURL)
+                    let request = URLRequest(url: pdfURL)
+                    dowloadUrl = pdfUrl
                     pdfView.load(request)
                     
-                  } else {
-                      print("Invalid URL")
-                  }
+                } else {
+                    print("Invalid URL")
+                }
                 cv.isHidden = true
                 textView.isHidden = true
             case 1:
@@ -70,20 +110,17 @@ class ImageShowVc: UIViewController{
                 textView.isHidden = true
             default:
                 if let pdfURL = URL(string: pdfUrl ?? "" ?? "") {
-                      let request = URLRequest(url: pdfURL)
+                    let request = URLRequest(url: pdfURL)
                     pdfView.load(request)
-                    
-                  } else {
-                      print("Invalid URL")
-                  }
+                    dowloadUrl = pdfUrl
+                } else {
+                    print("Invalid URL")
+                }
                 cv.isHidden = true
                 textView.isHidden = true
                 pdfView.isHidden = false
             }
-
         }
-       
-        
     }
     
     
@@ -114,8 +151,6 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
                 with: URL(string: imageURL[indexPath.row].url ?? ""),
                 placeholderImage: ImageName.placeholder
             )
-        //        cell.imageView.image = UIImage(named: imageIterms[indexPath.row])
-        
         return cell
         
         
@@ -124,11 +159,26 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         
-        return CGSize(width: 350, height: 600)
+        return CGSize(width:cv.frame.width, height: cv.frame.height - 40)
         
     }
-    
-    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let centerPoint = CGPoint(
+            x: cv.bounds.midX,
+            y: cv.bounds.midY
+        )
+
+        guard let indexPath = cv.indexPathForItem(at: centerPoint) else {
+            print("❌ Could not detect center cell")
+            return
+        }
+
+        scrollIndex = indexPath
+        let fileItem = imageURL[indexPath.item]
+        dowloadUrl = fileItem.url
+        print("✅ Final paged index: \(indexPath.item)")
+    }
+
 }
 
 extension ImageShowVc : WKNavigationDelegate {
