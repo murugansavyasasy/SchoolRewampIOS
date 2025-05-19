@@ -23,6 +23,9 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
         historyTable.delegate = self
         historyTable.dataSource = self
         searchBar.delegate = self
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         GetEvent()
     }
     func GetEvent() {
@@ -38,7 +41,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
                     if #available(iOS 15.0, *) {
                         self.hideLottieProgressLoader()
                     }
-                    
                     switch result {
                     case .success(let successMessage):
                         self.event = successMessage.data
@@ -75,7 +77,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
-//        cell.ishomework = true
         cell.CvHeight.constant = 0
         cell.ImageCollectionView.isHidden = true
         let data = event?[indexPath.row]
@@ -88,8 +89,6 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             cell.CvHeight.constant = 150
             cell.loadImage(urls: urls)
         }
-        
-//        cell.FilterHomeWorkList = data
         cell.newView.isHidden = true
         cell.descriptionLbl.setupExpandable(text: data?.content ?? "")
         cell.descriptionLbl.onExpandableTap = {

@@ -89,6 +89,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
         if let img = docs?[indexPath.row] {
             let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
+            cell.IndicaterImageView.image = UIImage(named: iconName)
             if iconName != "image"{
                 if let pdfURL = URL(string: img.url ?? "") {
                       let request = URLRequest(url: pdfURL)
@@ -104,8 +105,8 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
             }
-            let iconImage = UIImage(named: iconName)
-            cell.IndicaterImageView.image = iconImage
+            
+            
         }
         return cell
     }

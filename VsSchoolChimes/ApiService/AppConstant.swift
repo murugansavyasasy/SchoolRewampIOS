@@ -35,9 +35,9 @@ struct ServiceUrl{
     static let comm_voice_send_voice  = "comm/api/voice/send-voice"
     static let comm_voice_get_voice_history  = "comm/api/voice/get-voice-history"
     static let comm_text_message_get_text_history  = "comm/api/text-message/get-text-history"
-    static let comm_homework_get_homework_report  = "comm/api/homework/get-homework-report"
-    static let comm_homework_get_homework_list_archive  = "comm/api/homework/get-homework-list-archive"
-    static let comm_homework_get_homework_list  = "comm/api/homework/get-homework-list"
+    static let comm_homework_get_homework_report  = "comm/api/homework/report"
+    static let comm_homework_get_homework_list_archive  = "comm/api/homework/list-archive"
+    static let comm_homework_get_homework_list  = "comm/api/homework/list"
     static let comm_homework_sendhomework  = "comm/api/homework/send-homework"
     static let comm_recipient_get_academic_year_list  = "comm/api/recipient/get-academic-year-list"
     static let comm_communication_list  = "comm/api/communication/list"
@@ -57,7 +57,7 @@ struct ServiceUrl{
 
     static let  staff_attd_geometric_get_staff_geometric_location  = "staff-attd/api/geometric/get-staff-geometric-location"
     static let  staff_attd_geometric_update_geometric_location  = "staff-attd/api/geometric/update-geometric-location"
-    static let api_notice_board_send_notice = "/api/notice-board/send-notice"
+    static let api_notice_board_send_notice = "admin/api/notice-board/send-notice"
     static let api_notice_board_get_notice = "admin/api/notice-board/get-notice"
     static let attendance_student_attendance_report = "stud-attd/api/attendance/student-attendance-report"
     static let api_school_event_send_event = "admin/api/school-event/send-event"
@@ -68,6 +68,7 @@ struct ServiceUrl{
     static let  api_get_student_report = "admin/api/get-student-report"
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
+    static let  admin_api_get_school_strength = "admin/api/get-school-strength"
     
     
 }

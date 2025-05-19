@@ -18,14 +18,19 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     @IBOutlet weak var tableview: UITableView!
     @IBOutlet weak var searchbar: UISearchBar!
     @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var FilterCV: UICollectionView!
+    @IBOutlet weak var FilterImageview: UIImageView!
+    
     var images : [UIImage] = []
     var previousOffset: CGFloat = 0.0
     var delegate : HistorySelectDelegate?
     var shouldShowFooter = true
     var childDetails = UserDefaultFileManager.get_child_Details()
-    
     var NoticeboardData: [Notice]?
     var SearchData: [Notice]?
+    var FilteredData: [Notice]?
+    var Filters = ["All","Text","Image","Document"]
+    var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,9 +43,16 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         searchbar.addDoneButton()
         CellRegister()
         Get_Notice()
+        
+        let FilterTap = UITapGestureRecognizer(target: self, action: #selector(ToggleFilterCV))
+        FilterImageview.addGestureRecognizer(FilterTap)
+        FilterImageview.isUserInteractionEnabled = true
+        
+        FilterCV.delegate = self
+        FilterCV.dataSource = self
+        
         tableview.delegate = self
         tableview.dataSource = self
-        tableview.reloadData()
     }
     
     
@@ -53,6 +65,11 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     
     //MARK: UI Changes
     func StyleAndTranslate(){
+        
+        FilterCV.isHidden = true
+        
+        NameLbl.text = childDetails?.name
+        StandardLbl.text = (childDetails?.standard_name ?? "") + "-" + (childDetails?.section_name ?? "")
         
         HeadingLabel.setFont(style: .header, size: FontSize.HeaderSize)
         NameLbl.setFont(style: .body, size: FontSize.BodySize)
@@ -68,12 +85,20 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     func CellRegister() {
         let nib = UINib(nibName:CellConfingName.NoticeBoardTvcellTableViewCell, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell)
+        
+        let cvnib = UINib(nibName:CellConfingName.FiltersCvCell , bundle: nil)
+        FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
     }
     
     
     @IBAction func backBtn(_ sender: Any) {
         
         dismiss(animated: true)
+    }
+    
+    @IBAction func ToggleFilterCV(){
+        
+        FilterCV.isHidden.toggle()
     }
     
     //MARK: API Call
@@ -91,6 +116,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
                     DispatchQueue.main.async { [self] in
                         
                         NoticeboardData = SuccessMessage.data
+                        FilteredData = NoticeboardData
                         SearchData = NoticeboardData
                         tableview.reloadData()
                     }
@@ -122,18 +148,25 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
         
-        cell.SelectBtn.isHidden = true
-       
-        //cell.dicriptContent.attributedText = descript(for: SearchData?.description ?? "", expanded: false)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSeeMoreTap(_:)))
-       
-        cell.dicriptContent.text = SearchData?[indexPath.row].content
-        cell.TitleLbl.text = SearchData?[indexPath.row].title
-        cell.datelbl.text = SearchData?[indexPath.row].created_on
+        let notice =  SearchData?[indexPath.row]
         
-        if let urls = SearchData?[indexPath.row].file_path, urls.count != 0{
+        cell.SelectBtn.isHidden = true
+    
+        cell.TitleLbl.text =  notice?.title
+        cell.dicriptContent.setupExpandable(text: notice?.content ?? "")
+        cell.dicriptContent.onExpandableTap =
+        {
+            [weak tableview] in
+            
+            cell.dicriptContent.isExpanded.toggle()
+            tableview?.beginUpdates()
+            tableview?.endUpdates()
+        }
+        cell.datelbl.text =  notice?.created_on
+        
+        if let urls =  notice?.file_path, urls.count != 0{
             cell.collectionview.isHidden = false
-            cell.CollectionViewHeight.constant = 120
+            cell.CollectionViewHeight.constant = 130
             cell.loadImage(urls: urls)
         }else {
             cell.CollectionViewHeight.constant = 0
@@ -203,6 +236,72 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     }
 }
 
+@available(iOS 14.0, *)
+extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return Filters.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
+        
+        cell.FilterLbl.text = Filters[indexPath.item]
+        
+        cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        selectedIndex = indexPath
+        
+        let type = Filters[selectedIndex.item]
+        
+        switch type {
+            
+        case "Image":
+            
+            FilteredData = NoticeboardData?.filter { NoticeboardData in
+                NoticeboardData.file_path?.first?.type == "IMAGE"
+            }
+        case "Document":
+            
+            FilteredData = NoticeboardData?.filter { NoticeboardData in
+                NoticeboardData.file_path?.first?.type == "DOCUMENT"
+            }
+            
+        case "Text":
+            
+            FilteredData = NoticeboardData?.filter { NoticeboardData in
+                NoticeboardData.file_path?.count == 0
+            }
+        default:
+            FilteredData = NoticeboardData
+        }
+
+        SearchData = FilteredData
+        
+        FilterCV.reloadData()
+        
+        tableview.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let text = Filters[indexPath.item] // Assuming your label text is from a data source
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
+        label.text = text
+        label.sizeToFit()
+
+        let width = label.frame.width + 60  // Add padding
+        return CGSize(width: width, height: 40) // Adjust height accordingly
+    }
+    
+}
 
 //MARK: Searchbar Delegate
 @available(iOS 14.0, *)
@@ -216,9 +315,9 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText.isEmpty {
-            SearchData = NoticeboardData
+            SearchData = FilteredData
         } else {
-            SearchData = NoticeboardData?.filter { notice in
+            SearchData = FilteredData?.filter { notice in
                 (notice.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
                 (notice.content?.lowercased().contains(searchText.lowercased()) ?? false) ||
                 (notice.created_on?.lowercased().contains(searchText.lowercased()) ?? false)

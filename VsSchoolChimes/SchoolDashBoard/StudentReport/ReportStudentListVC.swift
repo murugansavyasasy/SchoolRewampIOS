@@ -56,7 +56,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         uiConfic()
         
         if #available(iOS 14.0, *) {
-            searchBar.addDoneButton()
+            searchBar.searchTextField.addDoneButton()
             searchBar.delegate = self
         }
     }
@@ -209,12 +209,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         classDropdown.show()
         classDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
-            let filteredStudents = studentList?.filter { $0.class_name == item }
             sectionsDetails = standardDetails?[index].sections
             
             sectionArray = sectionsDetails?.compactMap { $0.name } ?? []
-            self.clsBtn.setTitle(item, for: .normal)
             self.clsBtn.setTitle(item.translated(), for: .normal)
+            self.sectionBtn.setTitle(standardDetails?[index].sections?.first?.name, for: .normal)
             classId = standardDetails?[index].id ?? ""
             sectionId = standardDetails?[index].sections?.first?.id ?? ""
             if selection == CommonStringFile.getStanderd_Section.translated(){
@@ -242,6 +241,10 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         sectionBtn.setTitle(sectionsDetails?.first?.name, for: .normal)
                         classId = standardDetails?.first?.id
                         sectionId = sectionsDetails?.first?.id
+                        classId = ""
+                        sectionId = ""
+                        getStanderd.isHidden = true
+                        self.filterBtn.setTitle(CommonStringFile.getAllStudent.translated(), for: .normal)
                         getStudentAPI()
                     }
                 }else{
@@ -342,7 +345,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         if let studentDetail = filterStudent?[indexPath.row]{
             cell.smsNumber = studentDetail.primary_mobile
             cell.confic(student: studentDetail)
-            //            cell.emailBtn.setTitle(studentDetail.email, for: .normal)
+            cell.emailBtn.setTitle(studentDetail.email, for: .normal)
             cell.mobleNo.setTitle(studentDetail.primary_mobile, for: .normal)
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.admissionLbl.text = studentDetail.admission_no
@@ -353,6 +356,12 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.genderLbl.text = studentDetail.gender
             cell.fatherName.text = studentDetail.father_name
             cell.imgView.contentMode = .scaleAspectFill
+            if let img = URL(string: studentDetail.profile){
+                cell.imgView.kf.setImage(with:img)
+            }else{
+                cell.imgView.image = ImageName.Default_profile
+            }
+            
         }
         return cell
     }
@@ -404,17 +413,42 @@ class GradientView: UIView {
 @available(iOS 14.0, *)
 extension ReportStudentListVC: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let studentList = studentList else {
+            filterStudent = []
+            nodataImg.isHidden = false
+            nodataLbl.isHidden = false
+            reportTable.reloadData()
+            return
+        }
+
+        let lowercasedSearch = searchText.lowercased()
+
         if searchText.isEmpty {
-            // Reset to full data when the search text is cleared
             filterStudent = studentList
         } else {
-            // Filter data based on the search text
-            filterStudent = studentList?.filter { student in
-                student.name.lowercased().contains(searchText.lowercased())
+            filterStudent = studentList.filter { student in
+                return student.id.lowercased().contains(lowercasedSearch) ||
+                       student.name.lowercased().contains(lowercasedSearch) ||
+                       student.primary_mobile.lowercased().contains(lowercasedSearch) ||
+                       student.admission_no.lowercased().contains(lowercasedSearch) ||
+                       student.roll_no.lowercased().contains(lowercasedSearch) ||
+                       student.dob.lowercased().contains(lowercasedSearch) ||
+                       student.class_id.lowercased().contains(lowercasedSearch) ||
+                       student.class_name.lowercased().contains(lowercasedSearch) ||
+                       student.section_id.lowercased().contains(lowercasedSearch) ||
+                       student.section_name.lowercased().contains(lowercasedSearch) ||
+                       student.father_name.lowercased().contains(lowercasedSearch) ||
+                       student.class_teacher.lowercased().contains(lowercasedSearch)
             }
         }
+
+        let isEmpty = filterStudent?.isEmpty ?? true
+        nodataImg.isHidden = !isEmpty
+        nodataLbl.isHidden = !isEmpty
+
         reportTable.reloadData()
     }
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }

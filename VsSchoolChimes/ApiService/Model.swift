@@ -608,6 +608,8 @@ struct StudentData: Codable {
     let name: String
     let primary_mobile: String
     let admission_no: String
+    let email: String
+    let profile: String
     let roll_no: String
     let gender: String
     let dob: String
@@ -632,3 +634,39 @@ struct EventHolidayData: Codable{
     var year : String?
     var date : String?
 }
+
+
+//MARK: School Strength
+struct SchoolStrengthResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [SchoolStrength]?
+}
+
+struct SchoolStrength: Codable {
+    let total_student_strength: String?
+    let total_staff_strength: String?
+    let standards: [Standard]?
+}
+
+struct Standard: Codable {
+    let id: String?
+    let name: String?
+    let level: Int?
+    let boys_count: Int?
+    let girls_count: Int?
+    let other_count: Int?
+    let total_students: String?
+    let sections: [SectionList]?
+}
+
+struct SectionList: Codable {
+    let name: String?
+    let level: Int?
+    let id: String?
+    let boys_count: Int?
+    let girls_count: Int?
+    let other_count: Int?
+    let total_students: String?
+}
+
