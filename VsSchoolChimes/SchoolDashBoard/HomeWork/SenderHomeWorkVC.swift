@@ -132,7 +132,10 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         let formattedDate = outputFormatter.string(from: selectedDate)
         dateLbl.text = formattedDate
     }
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        homeWorkTable.reloadData()
+    }
     
     
     func getacadmicYr(){
