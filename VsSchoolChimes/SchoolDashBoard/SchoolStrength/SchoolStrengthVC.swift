@@ -20,19 +20,23 @@ class SchoolStrengthVC: UIViewController {
     
     var isBarChartVisible: [Bool] = [false, false, false,false] // Replace with dynamic count if needed
     var classes = ["9th Standard","10th Standard","12th Standard","11th Standard"]
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
+    
+    var SchoolStrength : [SchoolStrength]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
         UIupdate()
         setupPieChart()
-        setChartData()
         BackBtn.applyBackButton()
+        
+        Get_School_Strength()
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
         Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
         
         Tv.delegate = self
         Tv.dataSource = self
-        Tv.reloadData()
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -69,6 +73,42 @@ class SchoolStrengthVC: UIViewController {
         dismiss(animated: true)
     }
     
+    func Get_School_Strength() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_get_school_strength, parameters: [COMMON_PARAMETER.academic_year_id : 6], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<SchoolStrengthResponse,Error>) in
+            
+            switch result {
+                
+                
+            case .success(let successMessage):
+                
+                if successMessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                        
+                        SchoolStrength = successMessage.data
+                        let total = (Int(SchoolStrength?.first?.total_student_strength ?? "0") ?? 0) + (Int(SchoolStrength?.first?.total_staff_strength ?? "0") ?? 0)
+                        studentCountLbl.text = "Students - \(SchoolStrength?.first?.total_student_strength ?? "")"
+                        staffCountLbl.text = "Staffs - \(SchoolStrength?.first?.total_staff_strength ?? "")"
+                        totalCountLbl.text = "Total - \(total)"
+                        setChartData()
+                        Tv.reloadData()
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        SchoolStrength = successMessage.data
+                    }
+                }
+                
+            case .failure(let error):
+                
+                print("Error: \(error.localizedDescription)")
+            }
+            
+        }
+    }
+    
     private func setupPieChart() {
         // Configure the general look of the pie chart
         pieChartView.usePercentValuesEnabled = true
@@ -81,10 +121,14 @@ class SchoolStrengthVC: UIViewController {
     }
     
     private func setChartData() {
+        
+        let studentcount = Double(SchoolStrength?.first?.total_student_strength ?? "0") ?? 0
+        let staffcount = Double(SchoolStrength?.first?.total_staff_strength ?? "0") ?? 0
+        
         // Define the data entries
         let entries = [
-            PieChartDataEntry(value: 543, label: "Students"),
-            PieChartDataEntry(value: 63, label: "Staff")
+            PieChartDataEntry(value: studentcount, label: "Students"),
+            PieChartDataEntry(value: staffcount, label: "Staff")
         ]
         
         let dataSet = PieChartDataSet(entries: entries, label: "")
@@ -118,12 +162,23 @@ class SchoolStrengthVC: UIViewController {
 
 extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isBarChartVisible.count
+        return SchoolStrength?.first?.standards?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Tv.dequeueReusableCell(withIdentifier: CellConfingName.StrengthTvCell, for: indexPath) as! StrengthTvCell
-        cell.standardLbl.text = classes[indexPath.row]
+        
+        let standard = SchoolStrength?.first?.standards?[indexPath.row]
+        
+        cell.standardLbl.text = standard?.name
+        cell.countLbl.text = standard?.total_students
+        
+        let name = standard?.sections?.compactMap{$0.name} ?? []
+        let strength = standard?.sections?.compactMap {
+            Int($0.total_students ?? "")
+        } ?? []
+        
+        cell.setBarChartData(withLabels: name, sectionCounts: strength)
         
 //        if isBarChartVisible[indexPath.row] {
 //            cell.barchartHeight.constant = 150

@@ -40,7 +40,7 @@ class StrengthTvCell: UITableViewCell {
         
         let shortLabels = ["Mahatma Gandhi", "Jawaharlal Nehru", "APJ Abdul Kalam", "Bhimrao Ramji Ambedkar", "Kumaraswami Kamaraj","Lal Bahadur Srivastava Shastri"]
         let shortSectionCounts = [32, 47, 30, 62, 54,39]
-        setBarChartData(withLabels: shortLabels, sectionCounts: shortSectionCounts)
+        //setBarChartData(withLabels: shortLabels, sectionCounts: shortSectionCounts)
 //        let longLabels = ["Abdulkalamqwertyudrftg", "Mahatma Gandhi", "Nikola Tesla", "Albert Einstein"]
 //        let longSectionCounts = [25, 35, 45, 55]
 //        setBarChartData(withLabels: longLabels, sectionCounts: longSectionCounts)
@@ -175,7 +175,7 @@ class StrengthTvCell: UITableViewCell {
         barChartView.legend.enabled = false
     }
 
-    private func setBarChartData(withLabels labels: [String], sectionCounts: [Int]) {
+   func setBarChartData(withLabels labels: [String], sectionCounts: [Int]) {
         // Create data entries for each section
         var entries: [BarChartDataEntry] = []
         for (index, count) in sectionCounts.enumerated() {
@@ -183,16 +183,28 @@ class StrengthTvCell: UITableViewCell {
         }
         
         // Data set
-        let dataSet = BarChartDataSet(entries: entries, label: "Student Count")
-        if #available(iOS 15.0, *) {
-            dataSet.colors = [UIColor.systemMint]
-        }
-        dataSet.valueFont = UIFont(name: "Poppins-Medium", size:11)!//.systemFont(ofSize: 12)
-        dataSet.valueTextColor = .black
-        
-        // Add data set to BarChartData
-        let data = BarChartData(dataSet: dataSet)
-        data.setValueFormatter(DefaultValueFormatter(decimals: 0)) // No decimal places
+//        let dataSet = BarChartDataSet(entries: entries, label: "Student Count")
+//        if #available(iOS 15.0, *) {
+//            dataSet.colors = [UIColor.systemMint]
+//        }
+//        dataSet.valueFont = UIFont(name: "Poppins-Medium", size:11)!//.systemFont(ofSize: 12)
+//        dataSet.valueTextColor = .black
+//        
+//        // Add data set to BarChartData
+//        let data = BarChartData(dataSet: dataSet)
+//        data.setValueFormatter(DefaultValueFormatter(decimals: 0)) // No decimal places
+       
+       let dataSet = BarChartDataSet(entries: entries, label: "Student Count")
+       if #available(iOS 15.0, *) {
+           dataSet.colors = [UIColor.systemMint]
+       }
+       dataSet.valueFont = UIFont(name: "Poppins-Medium", size: 11)!
+       dataSet.valueTextColor = .black
+      // dataSet.valueFormatter = DefaultValueFormatter(decimals: 0) // ✅ This ensures integer values
+       dataSet.valueFormatter = IntegerValueFormatter() // ✅ This ensures integer values
+
+       let data = BarChartData(dataSet: dataSet)
+
         
         // Dynamically adjust bar width
         let averageLabelLength = labels.map { $0.count }.reduce(0, +) / labels.count
@@ -212,7 +224,6 @@ class StrengthTvCell: UITableViewCell {
         // Animate chart
         barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
     }
-
 }
 
 // Custom Formatter for X-Axis Labels
@@ -229,4 +240,13 @@ class XAxisLabelFormatter: IndexAxisValueFormatter {
         guard index >= 0 && index < labels.count else { return "" }
         return labels[index]
     }
+}
+
+class IntegerValueFormatter: ValueFormatter {
+    
+    func stringForValue(_ value: Double, entry: Charts.ChartDataEntry, dataSetIndex: Int, viewPortHandler: Charts.ViewPortHandler?) -> String {
+        
+        return "\(Int(value))"
+    }
+    
 }
