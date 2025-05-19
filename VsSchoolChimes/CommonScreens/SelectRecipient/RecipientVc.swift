@@ -608,7 +608,7 @@ class RecipientVc: UIViewController{
                             user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
                         }
                         return [
-                            CommonStringFile.path: url,
+                            CommonStringFile.url: url,
                             CommonStringFile.type: user_inputs.selectedFileType
                         ]
                     }

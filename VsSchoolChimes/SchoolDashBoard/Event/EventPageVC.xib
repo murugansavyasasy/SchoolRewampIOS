@@ -26,11 +26,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xpr-Lv-zOq">
                     <rect key="frame" x="0.0" y="109" width="430" height="789"/>
                     <subviews>
-                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-rs-G4I">
-                            <rect key="frame" x="20" y="10" width="390" height="41"/>
+                        <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mT6-rs-G4I">
+                            <rect key="frame" x="20" y="10" width="390" height="1"/>
                             <color key="backgroundColor" name="AttendenceColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="h6s-gZ-0Xq"/>
+                                <constraint firstAttribute="height" id="h6s-gZ-0Xq"/>
                             </constraints>
                             <segments>
                                 <segment title="Homework"/>
@@ -42,7 +42,7 @@
                             </connections>
                         </segmentedControl>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eAv-wd-i7x">
-                            <rect key="frame" x="0.0" y="58" width="430" height="731"/>
+                            <rect key="frame" x="0.0" y="18" width="430" height="771"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
                     </subviews>
