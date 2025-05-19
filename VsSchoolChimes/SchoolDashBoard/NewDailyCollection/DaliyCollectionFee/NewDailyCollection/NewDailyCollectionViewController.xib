@@ -13,11 +13,12 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewDailyCollectionViewController" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="Backbtn" destination="qKV-32-mQC" id="xnF-UM-4X1"/>
-                <outlet property="TodateView" destination="dLj-7Q-oNe" id="tTB-ns-NGj"/>
-                <outlet property="calendarView" destination="V0y-aK-beX" id="V3y-8l-zKm"/>
+                <outlet property="TodateView" destination="dLj-7Q-oNe" id="fX8-ah-eUu"/>
+                <outlet property="calendarView" destination="V0y-aK-beX" id="r4X-H4-SQP"/>
                 <outlet property="dateViewHeight" destination="ywI-Pa-1zE" id="vYE-sT-wlY"/>
                 <outlet property="fromLbl" destination="zxg-eO-hbB" id="R5Z-IZ-1qZ"/>
                 <outlet property="norecordLbl" destination="OHj-Q1-eNO" id="RcZ-6K-jFR"/>
+                <outlet property="segmentName" destination="lMa-1r-up3" id="WhO-NU-p2C"/>
                 <outlet property="todateLbl" destination="ivg-1d-QRx" id="cVs-c2-H6U"/>
                 <outlet property="tv" destination="MtD-R9-d7q" id="pKn-Yy-d1p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -37,7 +38,7 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X0d-zp-SKZ">
                                     <rect key="frame" x="0.0" y="5" width="393" height="70"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0y-aK-beX" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0y-aK-beX">
                                             <rect key="frame" x="50" y="28" width="130" height="30"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calender" translatesAutoresizingMaskIntoConstraints="NO" id="7Ug-BE-i9Q">
@@ -71,7 +72,7 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLj-7Q-oNe" customClass="UIViewX" customModule="School_Chimes" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dLj-7Q-oNe">
                                             <rect key="frame" x="220" y="28" width="130" height="30"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18-0-2024" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ivg-1d-QRx">
@@ -143,8 +144,8 @@
                                     <rect key="frame" x="0.0" y="130" width="393" height="491"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHj-Q1-eNO">
-                                    <rect key="frame" x="175.66666666666666" y="300" width="42" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHj-Q1-eNO">
+                                    <rect key="frame" x="10" y="300" width="373" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -159,6 +160,9 @@
                                         <segment title="CLASS"/>
                                         <segment title="MODE"/>
                                     </segments>
+                                    <connections>
+                                        <action selector="segmentActBtn:" destination="-1" eventType="valueChanged" id="VgZ-7D-gAe"/>
+                                    </connections>
                                 </segmentedControl>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -170,9 +174,11 @@
                                 <constraint firstItem="OHj-Q1-eNO" firstAttribute="centerY" secondItem="Z4w-8S-C6F" secondAttribute="centerY" id="c09-pN-eB9"/>
                                 <constraint firstItem="X0d-zp-SKZ" firstAttribute="top" secondItem="Z4w-8S-C6F" secondAttribute="top" constant="5" id="iK2-Dg-DlS"/>
                                 <constraint firstItem="MtD-R9-d7q" firstAttribute="top" secondItem="lMa-1r-up3" secondAttribute="bottom" constant="5" id="jjV-Zz-UAT"/>
+                                <constraint firstItem="OHj-Q1-eNO" firstAttribute="leading" secondItem="Z4w-8S-C6F" secondAttribute="leading" constant="10" id="lY8-0o-fwT"/>
                                 <constraint firstAttribute="trailing" secondItem="MtD-R9-d7q" secondAttribute="trailing" id="mxG-Cw-ajZ"/>
                                 <constraint firstItem="OHj-Q1-eNO" firstAttribute="centerX" secondItem="Z4w-8S-C6F" secondAttribute="centerX" id="nAW-K8-034"/>
                                 <constraint firstAttribute="trailing" secondItem="X0d-zp-SKZ" secondAttribute="trailing" id="oQS-6O-dRi"/>
+                                <constraint firstAttribute="trailing" secondItem="OHj-Q1-eNO" secondAttribute="trailing" constant="10" id="pk8-K2-Hbp"/>
                                 <constraint firstItem="MtD-R9-d7q" firstAttribute="leading" secondItem="Z4w-8S-C6F" secondAttribute="leading" id="sxE-he-PgQ"/>
                                 <constraint firstItem="lMa-1r-up3" firstAttribute="leading" secondItem="Z4w-8S-C6F" secondAttribute="leading" constant="10" id="xuc-AZ-QI6"/>
                             </constraints>

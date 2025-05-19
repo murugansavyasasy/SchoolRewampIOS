@@ -82,7 +82,7 @@ class DatePickerVC: UIViewController {
         formatter.locale = .current
         
         if dateSelection == 2 {
-            formatter.dateFormat = "dd MMM yy"
+            formatter.dateFormat = "dd MMM yyy"
         } else {
             formatter.dateFormat = "hh:mm a"
         }

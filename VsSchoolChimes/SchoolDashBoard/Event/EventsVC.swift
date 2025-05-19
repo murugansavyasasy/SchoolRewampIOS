@@ -401,7 +401,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             user_inputs.start_time = Totime.titleLabel?.text ?? ""
             user_inputs.FromDate = todate.titleLabel?.text ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = Menu_id.Event
+            vc.ScreenType = Menu_id.event
             vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
         }else{
