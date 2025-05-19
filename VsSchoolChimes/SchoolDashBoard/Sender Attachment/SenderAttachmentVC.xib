@@ -21,6 +21,7 @@
                 <outlet property="BackBtn" destination="1nM-3A-Z1A" id="lwj-ck-Z09"/>
                 <outlet property="ClickTochooseVideoLbl" destination="r7r-jX-hNu" id="fKz-RM-U4a"/>
                 <outlet property="DescriptionLbl" destination="Qfh-fD-yRr" id="6tV-tu-972"/>
+                <outlet property="PopupView" destination="4mj-sk-0QW" id="YgO-zw-ABI"/>
                 <outlet property="TextviewHeight" destination="daq-Jc-qdj" id="L2T-a3-Vgx"/>
                 <outlet property="TitleLettersCount" destination="s5s-Nr-DmM" id="WFp-aE-zeA"/>
                 <outlet property="VideoDeleteBtn" destination="fDn-jd-shQ" id="AfK-fd-Z29"/>
@@ -325,13 +326,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

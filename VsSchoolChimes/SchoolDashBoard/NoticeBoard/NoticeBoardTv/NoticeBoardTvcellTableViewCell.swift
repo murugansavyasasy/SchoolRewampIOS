@@ -39,6 +39,13 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        CollectionBaseview.layer.cornerRadius = 10
+        CollectionBaseview.layer.shadowColor = UIColor.black.cgColor
+        CollectionBaseview.layer.shadowOffset = CGSize(width: 0, height: 2)
+        CollectionBaseview.layer.shadowRadius = 5
+        CollectionBaseview.layer.shadowOpacity = 0.3
+        
         newView.isHidden = true
         pinImage.layer.masksToBounds = true
         datelbl.setFont(style: .body, size: FontSize.BodySize)
