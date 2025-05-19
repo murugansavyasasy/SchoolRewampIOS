@@ -154,6 +154,11 @@ class PasswordVc: UIViewController,UITextFieldDelegate {
                                     data: (data))
                             
                             if(data.is_number_exists == true){
+                                UserDefaultFileManager
+                                    .saveLoginCredentials(
+                                        mobile_number:mobile_number ?? "",
+                                        pwd:passwordTxtFld.text ?? ""
+                                    )
                                 if(data.otp_sent == true){
                                     otp_Vc(valdiateResponse: response.data ?? [])
                                 }

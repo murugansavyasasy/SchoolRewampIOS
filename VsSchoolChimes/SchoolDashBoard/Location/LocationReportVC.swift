@@ -252,6 +252,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
+        vc.selected_staff_id = AttendanceDetails?[indexPath.row].staff_id ?? ""
         present(vc, animated: true)
     }
     

@@ -244,6 +244,7 @@ struct StudentDetails:Codable{
     let admission_no : String?
     let roll_no : String?
     var isSelect:Bool?
+    var isAbsent:Bool?
 }
 
 //MARK: GetSubjectlist API
@@ -464,6 +465,7 @@ struct StaffAttendanceResponse: Codable {
 
 struct StaffAttendance: Codable {
     let name: String?
+    let staff_id: String?
     let date: String?
     let leave_type: String?
     let attendance_type: String?

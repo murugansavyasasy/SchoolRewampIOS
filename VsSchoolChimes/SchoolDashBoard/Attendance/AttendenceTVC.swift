@@ -11,6 +11,7 @@ class AttendenceTVC: UITableViewCell, Attendence {
         hideLbl(isAbsent: status)
     }
     
+    @IBOutlet weak var admissionlbl: UILabel!
     @IBOutlet weak var phnBtn: UIButton!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var customSwitchContainer: UIView!

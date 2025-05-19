@@ -8,14 +8,7 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     
-    var staffId : Int!
-    var instituteId : Int!
-    var date : String!
-    
-    var staffdetails = UserDefaultFileManager.get_staff_Details()
-    
-    var PunchDetails:[puchHistoryList]? =  []
-    var selectedDate = ""
+    var selected_staff_id : String? ,staffdetails = UserDefaultFileManager.get_staff_Details(),PunchDetails:[puchHistoryList]? =  [],selectedDate = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +32,11 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func Geometric_Punch_History(){
         
-        let param = [punchHistoryStringFile.from_date : selectedDate,punchHistoryStringFile.to_date : selectedDate]
+        let param = [
+            punchHistoryStringFile.from_date : selectedDate,
+            punchHistoryStringFile.to_date : selectedDate,
+            punchHistoryStringFile.staff_id : selected_staff_id
+        ]
         
         APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (result: Result<PunchHistoryResponse,Error>) in
             

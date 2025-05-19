@@ -380,7 +380,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     @IBAction func MarkAbsentAct(_ sender: Any) {
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
-        vc.id = 2
+        vc.isAttandanceMarkingScreen = true
+        vc.selected_sectionID = sectionId
+        vc.selectedAcadimicYearId = AcademicYearId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

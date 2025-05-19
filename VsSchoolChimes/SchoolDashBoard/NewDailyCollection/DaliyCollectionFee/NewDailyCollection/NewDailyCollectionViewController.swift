@@ -198,11 +198,14 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
     
     func daily_collectionApi(){
+        
+        let fromdate = ConvertDateStringSmart(fromLbl.text)
+        let todate = ConvertDateStringSmart(todateLbl.text)
         APIService.shared
             .makeApi(url: ServiceUrl.api_fee_report_daily_collection , parameters: [
                 
-                Daily_collectionStringFile.from_date : fromLbl.text ?? "",
-                Daily_collectionStringFile.to_date : todateLbl.text ?? "",
+                Daily_collectionStringFile.from_date :fromdate,
+                Daily_collectionStringFile.to_date : todate,
                 Daily_collectionStringFile.type : ClickId
                 
             ], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
