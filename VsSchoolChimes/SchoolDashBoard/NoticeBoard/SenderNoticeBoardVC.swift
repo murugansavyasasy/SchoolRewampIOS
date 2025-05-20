@@ -256,6 +256,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         //showTimePicker(for: sender, date: true)
         dateSelection = true
         let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.minimumDate = Date()
         vc.dateSelection = 2
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
@@ -267,6 +268,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
        // showTimePicker(for: sender, date: false)
         dateSelection = false
         let vc = DatePickerVC(nibName: nil, bundle: nil)
+        vc.minimumDate = Date()
         vc.dateSelection = 2
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext

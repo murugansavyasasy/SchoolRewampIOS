@@ -23,6 +23,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    @IBOutlet weak var PopupView: UIView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
@@ -129,6 +130,12 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     }
     
     func  StyleAndTranslater(){
+        
+        PopupView.layer.cornerRadius = 10
+        PopupView.layer.shadowColor = UIColor.black.cgColor
+        PopupView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        PopupView.layer.shadowRadius = 5
+        PopupView.layer.shadowOpacity = 0.3
         
         AttachmentDropdownHeight.constant = 0
         AssignmentTypeview.isHidden = true
