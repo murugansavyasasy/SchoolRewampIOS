@@ -596,8 +596,8 @@ extension ParentDashboardVc: UISearchBarDelegate{
                         
                         // Display first 9 categories
                         self.displayedCategories = details.prefix(9).map { $0.name ?? "" }
-                        self.filteredMenu_details = Array(details.prefix(9))
-                        
+//                        self.filteredMenu_details = Array(details.prefix(9))
+                        self.filteredMenu_details = details
                         // Add "Add" button if more than 5 items
                         if self.filteredMenu_details?.count ?? 0 > 5 {
                             self.filteredMenu_details?.insert(MenuDetail(id: 66, name: "Add", unread_count: 0), at: 6)

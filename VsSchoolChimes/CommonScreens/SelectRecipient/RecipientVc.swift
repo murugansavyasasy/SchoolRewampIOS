@@ -239,14 +239,30 @@ class RecipientVc: UIViewController{
             SendingAttachmentFlow()
         case Menu_id.event:
             handleEvent()
-        case Menu_id.noticeboardMenuId:
-//            SendingNoticeboardFlow()
-            "" 
         default:
             print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
     }
     
+    
+    func acidmicYearOrNotAlertMessage() -> String{
+        var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
+        
+        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Section_Student{
+            
+            selectedTabItem = "Section"
+        }
+        var message : String?
+        if accadmicDefaultYrName == acidmicYrLbl.text{
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(selectedTabItem) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        }else{
+            
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        }
+        
+        return message ?? ""
+    }
     
 //    //MARK: Sender Noticeboard
 //    private func SendingNoticeboardFlow() {
@@ -348,7 +364,7 @@ class RecipientVc: UIViewController{
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: AlertstringFile.are_yousure_youWant_to_sendAttachment,
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -560,7 +576,7 @@ class RecipientVc: UIViewController{
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: AlertstringFile.are_yousure_youWant_to_sendHomeWork,
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -640,7 +656,7 @@ class RecipientVc: UIViewController{
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: AlertstringFile.are_yousure_youWant_to_sendHomeWork,
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -734,26 +750,11 @@ class RecipientVc: UIViewController{
     }
     
     private func SendingCommunicationFlow() {
-        var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
-        
-        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Section_Student{
-            
-            selectedTabItem = "Section"
-        }
-        
-        var message : String?
-        if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(selectedTabItem) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
-        }else{
-            
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
-        }
         
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: message ?? "",
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,

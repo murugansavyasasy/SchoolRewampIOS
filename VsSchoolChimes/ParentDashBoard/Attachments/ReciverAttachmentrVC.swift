@@ -55,6 +55,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         // Add the download button
     }
 
+    @IBOutlet weak var searchAndFilterStack: UIStackView!
     @IBOutlet weak var filterImgIcon: UIImageView!
     @IBOutlet weak var standerd: UILabel!
     @IBOutlet weak var studentName: UILabel!
@@ -152,12 +153,22 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                 
                 switch result {
                 case .success(let response):
-                    attachmentData?.append(contentsOf: response.data ?? [])
-                   // filteredAttachments?.append(contentsOf: response.data ?? [])
-                    applyFilter(type: Filters[selectedIndex.item])
-                    attachmentTable.reloadData()
+                    if response.status == true{
+                        self.hideView(ishide: true)
+                        attachmentData?.append(contentsOf: response.data ?? [])
+                        // filteredAttachments?.append(contentsOf: response.data ?? [])
+                        applyFilter(type: Filters[selectedIndex.item])
+                        attachmentTable.reloadData()
+                        
+                    }else{
+                        
+                        self.hideView(ishide: false)
+                        self.NodataLbl.text = response.message
+                    }
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)
+                    self.hideView(ishide: false)
+                    self.NodataLbl.text = error.localizedDescription
                 }
             }
         }
@@ -183,20 +194,37 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                 
                 switch result {
                 case .success(let response):
+                    if response.status == true{
+                        self.hideView(ishide: true)
+                        self.attachmentData = response.data
+                        self.filteredAttachments = response.data
+                        self.SearchAttachments = response.data
+                        self.attachmentTable.reloadData()
+                    }
                     
-                    self.attachmentData = response.data
-                    self.filteredAttachments = response.data
-                    self.SearchAttachments = response.data
-                    self.attachmentTable.reloadData()
-                    
+                    else{
+                       
+                        self.hideView(ishide: false)
+                        self.NodataLbl.text = response.message
+                    }
                     
                 case .failure(let error):
                     print("Error fetching attachments:", error.localizedDescription)
+                    self.hideView(ishide: false)
+                    self.NodataLbl.text = error.localizedDescription
                 }
             }
         }
     }
     
+    func hideView(ishide: Bool) {
+       NodataImage.isHidden =  ishide
+        NodataLbl.isHidden = ishide
+        EmptyView.isHidden = ishide
+        searchAndFilterStack.isHidden = !ishide
+        FilterCV.isHidden = !ishide
+        
+    }
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
     }
@@ -239,10 +267,7 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
-        NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
-        EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
-        
+        print("SearchAttachments?.count ?? 0",SearchAttachments?.count ?? 0)
         return SearchAttachments?.count ?? 0
     }
     
@@ -254,7 +279,17 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
         switch data.file_path?.first?.type?.uppercased() {
         case "VIDEO":
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-            cell.descriptContent.text = data.description
+            
+            cell.descriptContent
+                .setupExpandable(
+                    text: data.description ?? ""
+                )
+            cell.descriptContent.onExpandableTap = {
+                cell.descriptContent.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+            
             cell.datelbl.text = data.date
             cell.videoName.text = data.title
             cell.playvideo(url: "https://player.vimeo.com/video/1084600934?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=177030\" width=\"400\" height=\"300\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media\" title=\"The only way I could do that")
@@ -263,15 +298,31 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
 
         case "DOCUMENT":
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.TAttacmentTVC, for: indexPath) as! TAttacmentTVC
+            cell.descriptionLbl
+                .setupExpandable(
+                    text: data.description ?? ""
+                )
+            cell.descriptionLbl.onExpandableTap = {
+                cell.descriptionLbl.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
             cell.titleLbl.text = data.title
-            cell.descriptionLbl.text = data.description
             cell.dateLbl.text = data.date
             return cell
 
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.TAttacmentTVC, for: indexPath) as! TAttacmentTVC
             cell.titleLbl.text = data.title
-            cell.descriptionLbl.text = data.description
+            cell.descriptionLbl
+                .setupExpandable(
+                    text: data.description ?? ""
+                )
+            cell.descriptionLbl.onExpandableTap = {
+                cell.descriptionLbl.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
             cell.dateLbl.text = data.date
             cell.homeworkDocs = data.file_path
             return cell
@@ -327,7 +378,6 @@ extension ReciverAttachmentrVC: UICollectionViewDelegate,UICollectionViewDataSou
             let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
             
             cell.FilterLbl.text = Filters[indexPath.item]
-            
             cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
             
             return cell
