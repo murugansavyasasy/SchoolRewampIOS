@@ -10,8 +10,8 @@ import UIKit
 
 class LocationTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var presentStatus: UIStackView!
-    @IBOutlet weak var opsentStus: UIStackView!
+    @IBOutlet weak var presentStatus: UIView!
+    @IBOutlet weak var opsentStus: UIView!
     @IBOutlet weak var prestType: UILabel!
     @IBOutlet weak var opsentType: UILabel!
     @IBOutlet weak var opsentLbl: UILabel!
@@ -32,8 +32,10 @@ class LocationTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        StatusLbl.layer.cornerRadius = 10
-        StatusLbl.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
+        opsentStus.layer.cornerRadius = 8
+        presentStatus.layer.cornerRadius = 8
+        opsentStus.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
+        presentStatus.layer.maskedCorners = [.layerMaxXMinYCorner,.layerMinXMaxYCorner]
         
     }
 

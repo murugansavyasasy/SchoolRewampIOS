@@ -5,7 +5,7 @@ import UIKit
 import DropDown
 
 class LocationReportVC: UIViewController{
-
+    
     @IBOutlet weak var noRecdStackView: UIStackView!
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var SelectYearDropdownView: UIViewX!
@@ -50,7 +50,7 @@ class LocationReportVC: UIViewController{
         let MonthTap = UITapGestureRecognizer(target: self, action: #selector(MonthSelection))
         SelectMonthDropdownView.addGestureRecognizer(MonthTap)
         SelectMonthDropdownView.isUserInteractionEnabled = true
-
+        
         let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
         Tv.register(rowNib, forCellReuseIdentifier: CellConfingName.LocationTableViewCell)
         Tv.delegate = self
@@ -146,13 +146,13 @@ class LocationReportVC: UIViewController{
         let monthFormatter = DateFormatter()
         monthFormatter.locale = Locale.current
         monthFormatter.dateFormat = "MMMM" // Use "LLL" for short month names
-
+        
         let currentYear = Calendar.current.component(.year, from: Date())
         let currentMonth = Calendar.current.component(.month, from: Date())
-
+        
         let selectedYearInt = Int(selectedYear) ?? 0
         let maxMonth = (selectedYearInt == currentYear) ? currentMonth : 12
-
+        
         return (1...maxMonth).compactMap { month in
             var components = DateComponents()
             components.year = 2000 // dummy year
@@ -163,7 +163,7 @@ class LocationReportVC: UIViewController{
             return nil
         }
     }
-
+    
     
 }
 
@@ -197,14 +197,44 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         cell.StatusLbl.layer.masksToBounds = true
         
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
-//        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type?
-          
-        let formatted = AttendanceDetails?[indexPath.row].attendance_type?.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
-        cell.attendanceTypeLbl.text = formatted
+        //        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type?
+        if let attendanceDict = AttendanceDetails?[indexPath.row].attendance_type{
+            
+            if attendanceDict.count != 1 {
+                let keys = Array(attendanceDict.keys)
+                let values = Array(attendanceDict.values)
+                if keys.indices.contains(0), values.indices.contains(0) {
+                    cell.prestType.text = keys[0]
+                    let status = values[0] == "P" ? "Present":"Apsent"
+                    cell.StatusLbl.text = status
+                    let statusclr = values[0] == "P" ? UIColor.systemGreen : UIColor.systemRed
+                    cell.presentStatus.backgroundColor = statusclr
+                }
+                if keys.indices.contains(1), values.indices.contains(1) {
+                    cell.opsentType.text = keys[1]
+                    let status = values[1] == "P" ? "Present":"Apsent"
+                    cell.opsentLbl.text = values[1]
+                    let statusclr = values[1] == "P" ? UIColor.systemGreen : UIColor.systemRed
+                    cell.opsentStus.backgroundColor = statusclr
+                }
+                cell.presentStatus.isHidden = false
+                cell.opsentStus.isHidden = false
+                
+            }else if let firstItem = attendanceDict.first {
+                let key = firstItem.key
+                let value = firstItem.value == "P" ? "Present":"Apsent"
+                cell.prestType.text = key
+                cell.StatusLbl.text = value
+                cell.presentStatus.isHidden = false
+                let statusclr = value == "Present" ? UIColor.systemGreen : UIColor.systemRed
+                cell.presentStatus.backgroundColor = statusclr
+                cell.opsentStus.isHidden = true
+            }
+        }
         
         if  AttendanceDetails?[indexPath.row].in_time  != ""{
             cell.firstInLbl.isHidden = false
-            cell.firstInLbl.text = "First in - " + (
+            cell.firstInLbl.text = "Checkin - " + (
                 AttendanceDetails?[indexPath.row].in_time ?? ""
             )
         }else{
@@ -214,7 +244,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         
         if AttendanceDetails?[indexPath.row].out_time   != ""{
             cell.toDateLbl.isHidden = false
-            cell.toDateLbl.text = "Last out - " + (
+            cell.toDateLbl.text = "Checkout - " + (
                 AttendanceDetails?[indexPath.row].out_time ?? ""
             )
         }else{
@@ -228,24 +258,16 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
                 AttendanceDetails?[indexPath.row].working_hours ?? ""
             )
         }else{
-            
             cell.workingHrsLbl.isHidden = true
-        }
-             
-        cell.StatusLbl.text = AttendanceDetails?[indexPath.row].leave_type
-        if cell.StatusLbl.text == "Absent" {
-            cell.StatusLbl.backgroundColor = .systemRed
-        }else{
-            cell.StatusLbl.backgroundColor = .systemGreen
         }
         
         if let components = convertDateComponents(from: AttendanceDetails?[indexPath.row].date ?? "") {
-           
+            
             cell.datelbl.text = components.day
             cell.mnthLbl.text = components.month
             cell.dayLbl.text = components.weekday
         }
-
+        
         return cell
     }
     
@@ -288,5 +310,5 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         
         return (day, month, weekday)
     }
-
+    
 }
