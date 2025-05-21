@@ -121,7 +121,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         TV.register(nib, forCellReuseIdentifier: CellConfingName.AttendenceReportTVCell)
         
         get_Academic_year()
-        
+        let date = ConvertDateStringSmart(dateBtntitle)
+        user_inputs.attendance_date = date
         TV.delegate = self
         TV.dataSource = self
         SearchBar.delegate = self
@@ -390,6 +391,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     
     @IBAction func AllPresentAct(_ sender: Any) {
         
+        user_inputs.class_id  = StandardId
+        user_inputs.section_id  = sectionId
         let alert = CustomAlert()
         alert.showAlertCancel(title: "", message: AlertstringFile.Mark_All_as_Present, actionLbl1: "Ok", actionLbl2: "Cancel", on: self, onOk: {self.markAttendaceApi()} , onNo: {print("Canceled")})
     }
@@ -399,14 +402,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     func markAttendaceApi(){
         
         
-       
-        
-    
-        
         APIService.shared
             .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
                 
-              
                 MarkAttendenceStringFile.student_id: [],
                 MarkAttendenceStringFile.class_id: user_inputs.class_id,
                 MarkAttendenceStringFile.section_id: user_inputs.section_id,
@@ -441,7 +439,14 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                     }else {
                         
                         DispatchQueue.main.async {
-                            
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ){
+                                    self.dismiss(animated: true)
+                                }
                             
                         }
                     }
@@ -497,6 +502,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                             }
                         }
                         sectionId = StandardData?.first?.sections?.first?.id ?? ""
+                       
                         standardLbl.text = StandardData?.first?.name
                         sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
                         student_attendance_report()
