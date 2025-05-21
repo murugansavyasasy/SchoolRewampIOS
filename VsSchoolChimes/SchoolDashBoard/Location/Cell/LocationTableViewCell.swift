@@ -10,6 +10,11 @@ import UIKit
 
 class LocationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var presentStatus: UIStackView!
+    @IBOutlet weak var opsentStus: UIStackView!
+    @IBOutlet weak var prestType: UILabel!
+    @IBOutlet weak var opsentType: UILabel!
+    @IBOutlet weak var opsentLbl: UILabel!
     @IBOutlet weak var calanderView: UIView!
     @IBOutlet weak var fullView: UIView!
     @IBOutlet weak var historyTimImage: UIImageView!

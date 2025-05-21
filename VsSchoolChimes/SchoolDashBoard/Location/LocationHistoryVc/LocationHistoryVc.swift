@@ -248,7 +248,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         //                  noRecordLbl.isHidden = true
         cell.namelbl.text = attendanceData?.name
         cell.attendanceTypeLbl.text = attendanceData?.attendance_type?.FD
-        
+        cell.prestType.text = attendanceData?.attendance_type?.FD
         if attendanceData?.in_time  != ""{
             cell.firstInLbl.isHidden = false
             cell.firstInLbl.text = "First in - " + (
@@ -285,6 +285,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         if cell.StatusLbl.text == "Absent" {
             cell.StatusLbl.backgroundColor = .systemRed
+            
         }else{
             cell.StatusLbl.backgroundColor = .systemGreen
         }

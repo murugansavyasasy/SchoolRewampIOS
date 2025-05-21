@@ -142,7 +142,6 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="jnc-te-KDv" firstAttribute="leading" secondItem="4Xj-Jx-ghL" secondAttribute="leading" constant="2" id="4bu-Yl-YfB"/>
                                     <constraint firstAttribute="trailing" secondItem="jnc-te-KDv" secondAttribute="trailing" constant="2" id="6Vy-X0-CzQ"/>
@@ -247,6 +246,11 @@
                 <outlet property="historyTimImage" destination="uVG-zh-AmQ" id="hoS-L3-CqT"/>
                 <outlet property="mnthLbl" destination="nDi-R0-6rr" id="xO5-Ng-UF7"/>
                 <outlet property="namelbl" destination="odG-KK-7KW" id="m1R-5G-pku"/>
+                <outlet property="opsentLbl" destination="xCd-dg-XLf" id="QmS-FG-CoO"/>
+                <outlet property="opsentStus" destination="euH-T4-mMv" id="6X7-fr-1vH"/>
+                <outlet property="opsentType" destination="31i-kd-GXw" id="y1j-sF-GhN"/>
+                <outlet property="presentStatus" destination="8HD-dz-qVX" id="NuS-Ro-3yp"/>
+                <outlet property="prestType" destination="6g6-FU-QBs" id="9bb-Ue-sua"/>
                 <outlet property="toDateLbl" destination="nwJ-ob-yd5" id="Ia0-Bb-Eaq"/>
                 <outlet property="workingHrsLbl" destination="JPh-Xu-o72" id="oGS-JA-jrp"/>
             </connections>

@@ -477,8 +477,7 @@ struct StaffAttendance: Codable {
 struct attendanceType: Codable{
     let FD : String?
     let FH : String?
-    let SH : String?
-    
+    let SH : String?   
 }
 
 
