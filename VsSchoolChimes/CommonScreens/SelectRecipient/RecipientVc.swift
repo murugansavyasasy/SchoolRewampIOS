@@ -1065,6 +1065,7 @@ class RecipientVc: UIViewController{
         StdDropdown.anchorView = selectStandardDropDown
         StdDropdown.dataSource = dropDownArray
         StdDropdown.bottomOffset = CGPoint(x: 0, y: selectStandardDropDown.bounds.height)
+        StdDropdown.direction = .bottom
         StdDropdown.show()
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }
