@@ -628,6 +628,77 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     
+    
+    func markAttendaceApi(){
+        
+        
+        let MakeAbsentId: [[String: String]] = selected_student.compactMap { id in
+            
+            
+            return [
+                "ID": id
+            ]
+            
+           
+        }
+        
+    
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
+                
+              
+                MarkAttendenceStringFile.student_id: MakeAbsentId,
+                MarkAttendenceStringFile.class_id: user_inputs.class_id,
+                MarkAttendenceStringFile.section_id: user_inputs.section_id,
+                MarkAttendenceStringFile.all_present: user_inputs.all_present,
+                MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type,
+                MarkAttendenceStringFile.session_type: user_inputs.session_type,
+                MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date
+                
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.gotoDashboard()
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+        
+        
+    }
+    
 }
 
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{

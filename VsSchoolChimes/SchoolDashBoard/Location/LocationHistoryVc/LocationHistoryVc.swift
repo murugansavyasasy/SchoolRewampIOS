@@ -247,7 +247,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.StatusLbl.layer.masksToBounds = true
         //                  noRecordLbl.isHidden = true
         cell.namelbl.text = attendanceData?.name
-        cell.attendanceTypeLbl.text = attendanceData?.attendance_type
+        cell.attendanceTypeLbl.text = attendanceData?.attendance_type?.FD
         
         if attendanceData?.in_time  != ""{
             cell.firstInLbl.isHidden = false
@@ -443,7 +443,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 (attendance.name?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.date?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.leave_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
-                (attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false) ||
+//                /*(attendance.attendance_type?.localizedCaseInsensitiveContains(keyword) ?? false)*/ ||
                 (attendance.in_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.out_time?.localizedCaseInsensitiveContains(keyword) ?? false) ||
                 (attendance.working_hours?.localizedCaseInsensitiveContains(keyword) ?? false)

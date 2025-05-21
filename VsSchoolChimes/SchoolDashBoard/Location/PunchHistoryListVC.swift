@@ -8,7 +8,10 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
     
-    var selected_staff_id : String? ,staffdetails = UserDefaultFileManager.get_staff_Details(),PunchDetails:[puchHistoryList]? =  [],selectedDate = ""
+    var selected_staff_id : String?
+        var staffdetails = UserDefaultFileManager.get_staff_Details()
+        var PunchDetails:[puchHistoryList]? =  []
+        var selectedDate = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,14 +35,14 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func Geometric_Punch_History(){
         
-        let param = [
-            punchHistoryStringFile.from_date : selectedDate,
-            punchHistoryStringFile.to_date : selectedDate,
-            punchHistoryStringFile.staff_id : selected_staff_id
-        ]
         
-        APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: param, type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (result: Result<PunchHistoryResponse,Error>) in
-            
+        
+        APIService.shared.makeApi(url: ServiceUrl.staff_attd_geometric_geometric_punch_history, parameters: [ punchHistoryStringFile.from_date : selectedDate,
+                                                                                                              punchHistoryStringFile.to_date : selectedDate,
+                                                                                                              punchHistoryStringFile.staff_id : selected_staff_id ?? ""], type: ApitTypeSringFile.GET, token: staffdetails?.access_token ?? "") { [self] (
+                                                                                                                result: Result<PunchHistoryResponse,
+                                                                                                                Error>
+                                                                                                              ) in
             switch result{
                 
             case .success(let successMessage):

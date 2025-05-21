@@ -18,7 +18,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             // Change to output format
             dateFormatter.dateFormat = "EEE dd"
             let outputDateString = dateFormatter.string(from: DayDate)
-            
+        selectedDate = date
            DateBtn.setTitle(date, for: .normal)
            setFormattedDate(outputDateString, label: CustomDateLbl)
 
@@ -75,10 +75,12 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     var AcademicYearId: Int?
     var sectionId = ""
     var StandardId = ""
-    
+    var selectedDate : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        applyShadowAndCornerRadius(to: AcademicYearView)
+        applyShadowAndCornerRadius(to: SectionView)
+        applyShadowAndCornerRadius(to: standardView)
         UIupdate()
         SearchBar.searchTextField.addDoneButton()
         BackBtn.applyBackButton()
@@ -91,6 +93,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         SessionStack.isHidden = true
         SearchBar.isHidden = true
+        
         
         let AcademicTap = UITapGestureRecognizer(target: self, action: #selector(Select_Academic_Year))
         AcademicYearView.addGestureRecognizer(AcademicTap)
@@ -139,8 +142,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         TV.isHidden = true
         
-        applyDesign(element: standardView)
-        applyDesign(element: SectionView)
+//        applyDesign(element: standardView)
+//        applyDesign(element: SectionView)
         applyDesign(element: FulldayView)
         applyDesign(element: HalfdayView)
         applyDesign(element: FirstHalfView)
@@ -213,6 +216,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     }
     
     @objc func fulldayAction(){
+        user_inputs.attendance_type = "F"
+        user_inputs.session_type = ""
+        user_inputs.all_present = "T"
         //FulldayImgview.image = UIImage(named: "checked_Tick")
         FulldayImgview.image = UIImage(named: "RadioCheck")
         HalfdayImgview.image = UIImage(named: "CheckCircle")
@@ -221,6 +227,11 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         MarkAbsentiesBtn.backgroundColor = .systemRed
     }
     @objc func HalfdayAction(){
+    
+        user_inputs.attendance_type = "H"
+        user_inputs.session_type = ""
+        user_inputs.all_present = "T"
+        
         //HalfdayImgview.image = UIImage(named: "checked_Tick")
         HalfdayImgview.image = UIImage(named: "RadioCheck")
         FulldayImgview.image = UIImage(named: "CheckCircle")
@@ -231,12 +242,18 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         secondHalfCheckImg.image = UIImage(named: "CheckCircle")
     }
     @objc func FirsthalfAct(){
+        user_inputs.attendance_type = "H"
+        user_inputs.session_type = "FH"
+        user_inputs.all_present = "T"
         FirsthalfCheckImg.image = UIImage(named: "RadioCheck")
         secondHalfCheckImg.image = UIImage(named: "CheckCircle")
         markAllPresentBtn.backgroundColor = .systemGreen
         MarkAbsentiesBtn.backgroundColor = .systemRed
     }
     @objc func SecondhalfAct(){
+        user_inputs.attendance_type = "H"
+        user_inputs.session_type = "SH"
+        user_inputs.all_present = "T"
         secondHalfCheckImg.image = UIImage(named: "RadioCheck")
         FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
         markAllPresentBtn.backgroundColor = .systemGreen
@@ -374,10 +391,80 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     @IBAction func AllPresentAct(_ sender: Any) {
         
         let alert = CustomAlert()
-        alert.showAlertCancel(title: "", message: AlertstringFile.Mark_All_as_Present, actionLbl1: "Ok", actionLbl2: "Cancel", on: self, onOk: {print("Attendance marked")} , onNo: {print("Canceled")})
+        alert.showAlertCancel(title: "", message: AlertstringFile.Mark_All_as_Present, actionLbl1: "Ok", actionLbl2: "Cancel", on: self, onOk: {self.markAttendaceApi()} , onNo: {print("Canceled")})
+    }
+    
+    
+    
+    func markAttendaceApi(){
+        
+        
+       
+        
+    
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
+                
+              
+                MarkAttendenceStringFile.student_id: [],
+                MarkAttendenceStringFile.class_id: user_inputs.class_id,
+                MarkAttendenceStringFile.section_id: user_inputs.section_id,
+                MarkAttendenceStringFile.all_present: user_inputs.all_present,
+                MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type,
+                MarkAttendenceStringFile.session_type: user_inputs.session_type,
+                MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date
+                
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.dismiss(animated: true)
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+        
+        
     }
     
     @IBAction func MarkAbsentAct(_ sender: Any) {
+        
+        
+        let date = ConvertDateStringSmart(selectedDate)
+        user_inputs.section_id = sectionId
+        user_inputs.class_id = StandardId
+        user_inputs.attendance_date = date
         
         let vc = StudentHistryVC(nibName: nil, bundle: nil)
         vc.isAttandanceMarkingScreen = true
@@ -412,7 +499,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                         sectionId = StandardData?.first?.sections?.first?.id ?? ""
                         standardLbl.text = StandardData?.first?.name
                         sectionLbl.text = StandardData?.first?.sections?.first?.name ?? ""
-                        
                         student_attendance_report()
                         
                     }else{
@@ -449,6 +535,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
                             if let year = academicYearData?[i].year{
                                 AcademicList.append(year)
                             }
+                            
                             if academicYearData?[i].current_academic_year == true {
                                 AcademicYearLbl.text = academicYearData?[i].year
                                 AcademicYearId = academicYearData?[i].id ?? 0

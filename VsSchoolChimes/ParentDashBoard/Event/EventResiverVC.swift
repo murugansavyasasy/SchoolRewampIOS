@@ -180,6 +180,7 @@ class EventResiverVC: UIViewController, SelectNotice{
                     switch result {
                     case .success(let successMessage):
                         self.eventHolidayData = successMessage.data
+                        print("eventHolidayData",eventHolidayData)
                         self.tableview.reloadData()
                         if self.event?.count == 0{
                             self.noDataLbl.text = successMessage.message

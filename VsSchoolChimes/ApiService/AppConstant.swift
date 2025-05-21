@@ -69,6 +69,7 @@ struct ServiceUrl{
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     static let  admin_api_get_school_strength = "admin/api/get-school-strength"
+    static let  attendance_send_absentees_sms_with_session_type = "/attendance/send-absentees-sms-with-session-type"
     
     
 }
@@ -161,7 +162,12 @@ struct user_inputs{
     static var FromDate = ""
     static var ToDate = ""
     static var venue = ""
-    
+    static var class_id = ""
+    static var section_id = ""
+    static var all_present = ""
+    static var attendance_type = ""
+    static var session_type = ""
+    static var attendance_date = ""
 }
 struct circular_type{
     static var school =  "A"
