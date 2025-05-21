@@ -58,6 +58,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var isAttandanceMarkingScreen = false
     var dataVisibility: [Bool] = []
     var selectedRows: [Bool] = []
+    let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
+    var vimeoUploader: VimeoUploader?
     
 
     
@@ -315,33 +317,202 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
-       
-        if Menu_id.staffSelectedMenuId == Menu_id.attendance{
-            markAttendaceApi()
-        }else{
-            guard !selected_student.isEmpty else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_target,
-                    on: self
-                )
-                return
-            }
+        
+        guard !selected_student.isEmpty else {
+            alert.showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Choose_any_target,
+                on: self
+            )
+            return
+        }
+        
+        switch Menu_id.staffSelectedMenuId{
+        case Menu_id.communicationMenuId:
+            SendingCommunicationFlow()
             
-            switch Menu_id.staffSelectedMenuId{
-            case Menu_id.communicationMenuId:
-                SendingCommunicationFlow()
-                
-            case Menu_id.homeWorkMenuId:
-                handleHomeworkFlow()
-                
-            default:
-                print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
-            }
+        case Menu_id.homeWorkMenuId:
+            handleHomeworkFlow()
+            
+        case Menu_id.AttachmentMenuId:
+            SendingAttachmentFlow()
+            
+        default:
+            print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
     }
     
+    //MARK: Sender Attachment
+    private func SendingAttachmentFlow() {
+        let selectedType = user_inputs.selectedFileType
+        var uploadedFiles: [[String: String]] = []
+        var iframeValue = ""
+        var fileSizeValue = ""
+        
+        let title = AlertstringFile.Confirm_title
+        alert.showAlertCancel(
+            title: title,
+            message: AlertstringFile.are_yousure_youWant_to_sendAttachment,
+            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            onOk: { [self] in
+                
+                if selectedType == AttachmentTypeString.VIDEO {
+                    guard let videoURL = user_inputs.VideoPath else {
+                        print("❌ Video path is missing")
+                        return
+                    }
+                    
+                    let videoTitle = user_inputs.title
+                    let videoDescription = user_inputs.description
+                    
+                    startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
+                        if let videoURLString = videoURLString {
+                            uploadedFiles = [["url": videoURLString,"type": selectedType]]
+                            
+                            if let iframeHTML = iframeHTML {
+                                iframeValue = iframeHTML
+                            }
+                            
+                            if let size = fileSize {
+                                fileSizeValue = self.convertSize(size)//String(size)
+                            }
+                            
+                            sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
+                        } else {
+                            print("❌ Video upload failed")
+                            // Optionally show alert or retry UI
+                        }
+                    }
+                }else {
+                    
+                    let file: Any = selectedType == AttachmentTypeString.IMAGE ? user_inputs.selectedImg : user_inputs.docUrl
+                    CircularProgressLoader.shared.show()
+                    uploadAndSendVoiceMessage(file: file) { [self] in
+                        CircularProgressLoader.shared.hide()
+                        uploadedFiles = uploadedURLs
+                            .compactMap {
+                                url in ["url": url , "type": selectedType]
+                            }
+                        iframeValue = "" // for IMAGE or DOCUMENT
+                        fileSizeValue = ""
+                        sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
+                    }
+                }
+                
+                func sendAttachment(with uploadedFiles: [[String: String]], iframe: String,filesize: String) {
+                    
+                    let parameters: [String: Any] = [
+                        SendAttachmentStringFile.title: user_inputs.title,
+//                        SendAttachmentStringFile.file_type: selectedType,
+                        SendAttachmentStringFile.file_path: uploadedFiles,
+                        SendAttachmentStringFile.target_type: target_type ?? "",
+                        SendAttachmentStringFile.target_code: selected_student,
+                        SendAttachmentStringFile.description: user_inputs.description,
+                        SendAttachmentStringFile.iframe: iframe,
+                        SendAttachmentStringFile.file_size: filesize,
+                        SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""
+                    ]
+                    
+                    print("📤 Sending parameters: \(parameters)")
+                    
+                    APIService.shared.makeApi(
+                        url: ServiceUrl.comm_attachment_send_attachment,
+                        parameters: parameters,
+                        type: ApitTypeSringFile.POST,
+                        token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+                    ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
+                        switch result {
+                        case .success(let successMessage):
+                            
+                            if successMessage.status == true {
+                                DispatchQueue.main.async {
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                                        message: successMessage.message,
+                                        on: self
+                                    ) {
+                                        self.gotoDashboard()
+                                    }
+                                }
+                            }else {
+                                
+                                DispatchQueue.main.async {
+                                    CustomAlert
+                                        .showAlertWithOkAction(
+                                            title: AlertstringFile.Alert_title,
+                                            message: successMessage.message,
+                                            on: self
+                                        ) {
+                                            self.gotoDashboard()
+                                        }
+                                }
+                            }
+                            
+                            
+                        case .failure(let error):
+                            print("❌ API error: \(error.localizedDescription)")
+                            // Optional: Add alert for failure
+                        }
+                    }
+                    
+                }
+            },
+            
+            onNo: {
+                print("User canceled.")
+            }
+        )
+    }
     
+    //Function for video upload
+    func startUpload(videoURL: URL, title: String, description: String, completion: @escaping (_ videoURLString: String?, _ iframeHTML: String?, _ fileSize: Int?) -> Void) {
+        print("📂 Selected video URL: \(videoURL)")
+        
+        CircularProgressLoader.shared.show()
+        
+        vimeoUploader = VimeoUploader(accessToken: YOUR_VIMEO_TOKEN, presentingViewController: self)
+        
+        vimeoUploader?.upload(videoFileURL: videoURL, title: title, description: description, progress: { progress in
+            print("📊 Upload progress: \(progress * 100)%")
+            CircularProgressLoader.shared.updateProgress(to: progress)
+        }, completion: { videoURL, iframeHTML, fileSize in
+            CircularProgressLoader.shared.hide()
+            
+            if let videoURL = videoURL {
+                print("✅ Video uploaded! Watch it at: \(videoURL)")
+                if let iframeHTML = iframeHTML {
+                    print("💻 Embed HTML: \(iframeHTML)")
+                }
+                if let size = fileSize {
+                    print("📦 File size: \(size) bytes")
+                }
+                completion(videoURL, iframeHTML, fileSize)
+            } else {
+                print("❌ Upload failed!")
+                completion(nil, nil, nil)
+            }
+        })
+    }
+    
+    func convertSize(_ sizeInBytes: Int) -> String {
+        let kb = 1024.0
+        let mb = kb * 1024
+        let gb = mb * 1024
+        let size = Double(sizeInBytes)
+        
+        switch size {
+        case 0..<kb:
+            return String(format: "%.0f B", size)
+        case kb..<mb:
+            return String(format: "%.2f KB", size / kb)
+        case mb..<gb:
+            return String(format: "%.2f MB", size / mb)
+        default:
+            return String(format: "%.2f GB", size / gb)
+        }
+    }
     
     private func handleHomeworkFlow() {
         
@@ -362,7 +533,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             
             message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
-            
+
         }
         alert.showAlertCancel(
             title: title,

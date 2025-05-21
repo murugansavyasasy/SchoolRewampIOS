@@ -179,6 +179,7 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="width" constant="263" id="o85-UR-VXR"/>
                                         <constraint firstAttribute="height" constant="35" id="wek-uB-HDO"/>
                                     </constraints>
                                 </stackView>
@@ -387,7 +388,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="underPageBackgroundColor">
             <color red="0.70980392156862748" green="0.71764705882352942" blue="0.74117647058823533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
