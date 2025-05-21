@@ -111,16 +111,35 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         DetailsLbl.setFont(style: .title, size: FontSize.TitleSize)
         wordsCountLbl.setFont(style: .body, size: FontSize.BodySize)
         uploadattachmentLbl.setFont(style: .title, size: FontSize.TitleSize)
-        
+        setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
     
-
+    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
+        print(text)
+        print(firstString)
+        print(secondString)
+        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
+        
+        // Find ranges of the substrings
+        let firstRange = (text as NSString).range(of: firstString)
+        let secondRange = (text as NSString).range(of: secondString)
+        
+        // Create a mutable attributed string
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        // Apply colors to the respective ranges
+        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
+        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
+        
+        // Set the attributed string to the label
+        label.attributedText = attributedString
+    }
 
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
 
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             uploadAttachmentView.imageCollectionview.reloadData()
@@ -134,7 +153,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             }
             attachments.append(contentsOf: imageItems)
             if imageItems.count != 0{
-                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             }
             
             uploadAttachmentView.imageCollectionview.reloadData()
@@ -332,7 +351,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             alertController.addAction(galleryAction)
             
             //             PDF option
-            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
                 selectPDF()
             }
             alertController.addAction(pdfAction)

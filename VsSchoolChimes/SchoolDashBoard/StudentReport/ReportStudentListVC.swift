@@ -222,7 +222,6 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 getStudentAPI(class_id:standardDetails?[index].id ?? "")
             }
         }
-        
     }
     func getStandardsAPI(academic_year_id:Int){
         standerdArray.removeAll()
@@ -343,10 +342,38 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         cell.emailBtn.tag = indexPath.row
         
         if let studentDetail = filterStudent?[indexPath.row]{
-            cell.smsNumber = studentDetail.primary_mobile
+           
             cell.confic(student: studentDetail)
-            cell.emailBtn.setTitle(studentDetail.email, for: .normal)
-            cell.mobleNo.setTitle(studentDetail.primary_mobile, for: .normal)
+            if let mobile = studentDetail.primary_mobile, !mobile.isEmpty,
+               let email = studentDetail.email, !email.isEmpty {
+                
+                let attributedString = NSAttributedString(
+                    string: mobile,
+                    attributes: [
+                        .underlineStyle: NSUnderlineStyle.single.rawValue,
+                        .foregroundColor: cell.mobleNo.titleColor(for: .normal) ?? UIColor.systemBlue
+                    ]
+                )
+                let attributedString1 = NSAttributedString(
+                    string: email,
+                    attributes: [
+                        .underlineStyle: NSUnderlineStyle.single.rawValue,
+                        .foregroundColor: cell.emailBtn.titleColor(for: .normal) ?? UIColor.systemBlue
+                    ]
+                )
+                cell.smsNumber = mobile
+                cell.mobleNo.setAttributedTitle(attributedString, for: .normal)
+                cell.emailBtn.setAttributedTitle(attributedString1, for: .normal)
+                cell.mobleNo.isHidden = false
+                cell.smsBtn.isHidden = false
+            } else {
+                cell.mobleNo.isHidden = true
+                cell.smsBtn.isHidden = true
+                cell.emailBtn.isHidden = true
+            }
+
+
+
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.admissionLbl.text = studentDetail.admission_no
             cell.dobLbl.text = studentDetail.dob
@@ -429,7 +456,7 @@ extension ReportStudentListVC: UISearchBarDelegate{
             filterStudent = studentList.filter { student in
                 return student.id.lowercased().contains(lowercasedSearch) ||
                        student.name.lowercased().contains(lowercasedSearch) ||
-                       student.primary_mobile.lowercased().contains(lowercasedSearch) ||
+                ((student.primary_mobile?.lowercased().contains(lowercasedSearch)) != nil) ||
                        student.admission_no.lowercased().contains(lowercasedSearch) ||
                        student.roll_no.lowercased().contains(lowercasedSearch) ||
                        student.dob.lowercased().contains(lowercasedSearch) ||

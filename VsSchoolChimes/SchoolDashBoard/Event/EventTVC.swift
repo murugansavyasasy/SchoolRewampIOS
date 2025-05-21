@@ -23,10 +23,9 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
     var countShimmer = 0
     private var docController: UIDocumentInteractionController?
     var event:EventList?
+    var file_path:[FilePath]?
     override func awakeFromNib() {
         super.awakeFromNib()
-        ImageCollectionView.isHidden = true
-        pageViewController.isHidden = true
         dateLble.setFont(style: .body, size: FontSize.BodySize)
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         topics.setFont(style: .title, size: FontSize.TitleSize)
@@ -68,9 +67,9 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func loadImage(urls: [FilePath]) {
-        ImageCollectionView.isHidden = false
         pageViewController.isHidden = false
         pageViewController.numberOfPages = urls.count
+        file_path = urls
         pageViewController.currentPage = 0
         ImageCollectionView.reloadData()
     }
@@ -80,12 +79,12 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return event?.file_path.count ?? 0
+        return file_path?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImagePdfCvCell, for: indexPath) as! ImagePdfCvCell
-        let docs = event?.file_path
+        let docs = file_path
         if let img = docs?[indexPath.row] {
             let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
@@ -121,26 +120,22 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        guard let event = event,
-//              indexPath.row < event.file_path.count,
-//              let file = event.file_path[indexPath.row],
-//              let urlString = file.url,
-//              let url = URL(string: urlString) else {
-//            return
-//        }
-//
-//        let fileExtension = url.pathExtension.lowercased()
-//        let isImage = file.type?.uppercased() == CommonStringFile.IMAGE
-//
-//        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
-//        imageVC.imageURL = event.file_path.filter { $0.type?.uppercased() == CommonStringFile.IMAGE }
-//        imageVC.subjectName = subjectName.text
-//        imageVC.pdfUrl = file.url
-//        imageVC.scrollIndex = indexPath
-//        imageVC.type = isImage ? 2 : 0
-//        imageVC.modalPresentationStyle = .fullScreen
-//
-//        getCurrentViewController()?.present(imageVC, animated: true)
+        guard let file = file_path?[indexPath.row],
+              let urlString = file.url,
+              let url = URL(string: urlString) else { return }
+
+        let fileExtension = url.pathExtension.lowercased()
+        let isImage = file.type?.uppercased() == CommonStringFile.IMAGE
+
+        let imageVC = ImageShowVc(nibName: nil, bundle: nil)
+        imageVC.imageURL = file_path?.filter { $0.type?.uppercased() == CommonStringFile.IMAGE } ?? []
+        imageVC.subjectName = subjectName.text
+        imageVC.pdfUrl = file.url
+        imageVC.scrollIndex = indexPath
+        imageVC.type = isImage ? 2 : 0
+        imageVC.modalPresentationStyle = .fullScreen
+
+        getCurrentViewController()?.present(imageVC, animated: true)
     }
 
 

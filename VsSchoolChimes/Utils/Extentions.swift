@@ -717,7 +717,6 @@ func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> Strin
             return dateFormatter.string(from: date)
         }
     }
-
-    return nil // No matching format found
+    return nil
 }
 
