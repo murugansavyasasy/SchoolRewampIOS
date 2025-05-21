@@ -197,7 +197,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         cell.StatusLbl.layer.masksToBounds = true
         
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
-        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type
+        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type?.FD
           
         if  AttendanceDetails?[indexPath.row].in_time  != ""{
             cell.firstInLbl.isHidden = false

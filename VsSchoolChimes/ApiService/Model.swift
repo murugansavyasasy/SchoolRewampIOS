@@ -468,12 +468,18 @@ struct StaffAttendance: Codable {
     let staff_id: String?
     let date: String?
     let leave_type: String?
-    let attendance_type: String?
+    let attendance_type: attendanceType?
     let in_time: String?
     let out_time: String?
     let working_hours: String?
 }
 
+struct attendanceType: Codable{
+    let FD : String?
+    let FH : String?
+    let SH : String?
+    
+}
 
 
 
@@ -669,4 +675,5 @@ struct SectionList: Codable {
     let other_count: Int?
     let total_students: String?
 }
+
 
