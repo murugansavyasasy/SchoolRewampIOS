@@ -18,7 +18,8 @@ class ReciverAttendanceReportVC: UIViewController {
     let date = 11
     let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
     let present = [true,true,false,true,false]
-    
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    var attendanceReportData : [StudentAttendance]?
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -28,7 +29,8 @@ class ReciverAttendanceReportVC: UIViewController {
         CellRigister()
         TV.delegate = self
         TV.dataSource = self
-        TV.reloadData()
+       
+        Get_attendaceReport()
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,7 +61,7 @@ class ReciverAttendanceReportVC: UIViewController {
 extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 5
+        return attendanceReportData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,7 +69,6 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
         
         cell.DateLbl.text = String (date + indexPath.row)
         cell.dayLbl.text = day[indexPath.row]
-        
         cell.statusLbl.textColor = .white
         if present[indexPath.row] == true {
             cell.statusLbl.text = CommonStringFile.Present.translated()
@@ -88,4 +89,34 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
         return UITableView.automaticDimension
     }
     
+    
+    func Get_attendaceReport() {
+        
+        APIService.shared.makeApi(url: ServiceUrl.stud_attd_attendance_get_absent_dates_for_child, parameters: [:], type: ApitTypeSringFile.GET, token: childDetails?.access_token ?? "") {[self] (result: Result<StudentAttendanceResponse,Error>) in
+            
+            switch result {
+                
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                        attendanceReportData = SuccessMessage.data ?? []
+                        TV.reloadData()
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async { [self] in
+                        
+                       
+                        TV.reloadData()
+                    }
+                }
+                
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+    }
 }

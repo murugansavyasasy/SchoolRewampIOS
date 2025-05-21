@@ -677,3 +677,17 @@ struct SectionList: Codable {
 }
 
 
+//MARK: Student attandance
+
+
+struct StudentAttendanceResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StudentAttendance]?
+}
+
+struct StudentAttendance: Codable {
+    let Date : String?
+    let Day : String?
+    let is_Archive : Bool?
+}
