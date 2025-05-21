@@ -51,6 +51,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.StudentReport, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         searchBar.applyRightTxt()
         getacadmicYr()
         uiConfic()

@@ -59,13 +59,14 @@ class MenuStringFile{
     static let SchoolNeeds = "School Needs"
     static let VeryImportantInfo = "Very Important Info"
     static let AbsenteesReport = "Absentees Report"
-    static let SchoolStrength = "School strength"
+    static let SchoolStrength = "School Strength"
     static let DailyCollection = "Daily Collection"
     static let StudentReport = "Student Report"
     static let FeePendingReport = "Fee Pending Report"
     static let MarkYourAttendance = "Mark Your Attendance"
     static let StaffWiseAttendanceReport = "Staff Wise Attendance Report"
     static let LSRW = "LSRW"
+    static let MarkAttendance = "Mark Attendance"
 }
 
 

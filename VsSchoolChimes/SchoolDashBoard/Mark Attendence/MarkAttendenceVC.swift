@@ -139,6 +139,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         
         TV.isHidden = true
         
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.MarkAttendance, secondLine: StaffDetails?.school_name ?? "")
+        
         applyDesign(element: standardView)
         applyDesign(element: SectionView)
         applyDesign(element: FulldayView)
