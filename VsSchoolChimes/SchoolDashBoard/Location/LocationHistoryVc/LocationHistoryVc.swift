@@ -247,7 +247,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.StatusLbl.layer.masksToBounds = true
         //                  noRecordLbl.isHidden = true
         cell.namelbl.text = attendanceData?.name
-        cell.attendanceTypeLbl.text = attendanceData?.attendance_type?.FD
+//        cell.attendanceTypeLbl.text = attendanceData?.attendance_type?.FD
+        let formatted =  attendanceData?.attendance_type?.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
+        cell.attendanceTypeLbl.text = formatted
         
         if attendanceData?.in_time  != ""{
             cell.firstInLbl.isHidden = false

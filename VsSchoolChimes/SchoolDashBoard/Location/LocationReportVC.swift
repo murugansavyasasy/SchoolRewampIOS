@@ -197,8 +197,11 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         cell.StatusLbl.layer.masksToBounds = true
         
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
-        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type?.FD
+//        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type?
           
+        let formatted = AttendanceDetails?[indexPath.row].attendance_type?.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
+        cell.attendanceTypeLbl.text = formatted
+        
         if  AttendanceDetails?[indexPath.row].in_time  != ""{
             cell.firstInLbl.isHidden = false
             cell.firstInLbl.text = "First in - " + (

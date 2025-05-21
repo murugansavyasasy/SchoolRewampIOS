@@ -302,25 +302,29 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
-        
-        guard !selected_student.isEmpty else {
-            alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
-                on: self
-            )
-            return
-        }
-        
-        switch Menu_id.staffSelectedMenuId{
-        case Menu_id.communicationMenuId:
-            SendingCommunicationFlow()
+       
+        if Menu_id.staffSelectedMenuId == Menu_id.attendance{
+            markAttendaceApi()
+        }else{
+            guard !selected_student.isEmpty else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_target,
+                    on: self
+                )
+                return
+            }
             
-        case Menu_id.homeWorkMenuId:
-            handleHomeworkFlow()
-            
-        default:
-            print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
+            switch Menu_id.staffSelectedMenuId{
+            case Menu_id.communicationMenuId:
+                SendingCommunicationFlow()
+                
+            case Menu_id.homeWorkMenuId:
+                handleHomeworkFlow()
+                
+            default:
+                print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
+            }
         }
     }
     
@@ -632,6 +636,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func markAttendaceApi(){
         
         
+        print("attendance",selected_student)
         let MakeAbsentId: [[String: String]] = selected_student.compactMap { id in
             
             
@@ -776,31 +781,42 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         if isAttandanceMarkingScreen == true{
             let cell = tableView.cellForRow(at: indexPath) as? StudentHistryTVC
             guard let cell = cell else { return }
-            if studentsDetails?[indexPath.row].isAbsent == true{
-                // Create the flip animation
+            if studentsDetails?[indexPath.row].isAbsent == true {
+                // Mark Present
                 UIView.transition(with: cell.outerView,
                                   duration: 0.3,
-                                  options: [.transitionFlipFromTop],  // Change direction as needed
+                                  options: [.transitionFlipFromTop],
                                   animations: {
-                    // Change background color to red
                     cell.outerView.layer.borderColor = Colornames.AprovedClr?.cgColor
                     cell.outerView.layer.borderWidth = 1
                     self.studentsDetails?[indexPath.row].isAbsent = false
                     cell.statusBtn.setImage(ImageName.present, for: .normal)
                 },
                                   completion: nil)
+                
+                // 🟢 Remove ID from selected_student when marking present
+                if let id = studentsDetails?[indexPath.row].id {
+                    selected_student.removeAll(where: { $0 == id })
+                }
+                
                 totalcount += 1
-            }else{
+            } else {
+                // Mark Absent
                 UIView.transition(with: cell.outerView,
                                   duration: 0.3,
-                                  options: [.transitionFlipFromBottom],  // Change direction as needed
+                                  options: [.transitionFlipFromBottom],
                                   animations: {
-                    // Change background color to red
                     cell.outerView.layer.borderColor = UIColor.red.cgColor
                     cell.statusBtn.setImage(ImageName.apsent, for: .normal)
                     self.studentsDetails?[indexPath.row].isAbsent = true
                 },
                                   completion: nil)
+
+                // 🔴 Add ID to selected_student when marking absent
+                if let id = studentsDetails?[indexPath.row].id, !selected_student.contains(id) {
+                    selected_student.append(id)
+                }
+
                 totalcount -= 1
             }
             

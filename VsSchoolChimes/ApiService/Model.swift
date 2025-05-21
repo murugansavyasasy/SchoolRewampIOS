@@ -468,7 +468,7 @@ struct StaffAttendance: Codable {
     let staff_id: String?
     let date: String?
     let leave_type: String?
-    let attendance_type: attendanceType?
+    let attendance_type : [String: String]?
     let in_time: String?
     let out_time: String?
     let working_hours: String?
