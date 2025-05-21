@@ -126,7 +126,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             costomView.imageCollectionview.reloadData()
@@ -140,7 +140,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             }
             attachments.append(contentsOf: imageItems)
             if imageItems.count != 0{
-                attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+                attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             }
             
             costomView.imageCollectionview.reloadData()
@@ -308,6 +308,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         }
         timePicker.backgroundColor = .white
         timePicker.isHidden = true // Initially hidden
+        timePicker.minimumDate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())
         self.view.addSubview(timePicker)
         
         // Initialize and configure Done button
@@ -401,7 +402,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             user_inputs.start_time = Totime.titleLabel?.text ?? ""
             user_inputs.FromDate = todate.titleLabel?.text ?? ""
             let vc = RecipientVc(nibName: nil, bundle: nil)
-            vc.ScreenType = Menu_id.Event
+            vc.ScreenType = Menu_id.event
             vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
         }else{
@@ -495,15 +496,15 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
             alertController.addAction(galleryAction)
             
             //             PDF option
-            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
                 selectPDF()
             }
-            alertController.addAction(pdfAction)
-            //             PDF option
-            let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
-                pickVideoFromGallery()
-            }
-            alertController.addAction(Video)
+//            alertController.addAction(pdfAction)
+//            //             PDF option
+//            let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
+//                pickVideoFromGallery()
+//            }
+//            alertController.addAction(Video)
             
             // Cancel action
             let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)

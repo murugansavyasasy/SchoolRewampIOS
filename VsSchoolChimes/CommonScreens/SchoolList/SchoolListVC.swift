@@ -11,6 +11,11 @@ import DropDown
 @available(iOS 14.0, *)
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var radioBtnStack: UIStackView!
+    @IBOutlet weak var sendOnlyLbl: UILabel!
+    @IBOutlet weak var studentBtnName: UIButton!
+    @IBOutlet weak var staffBtnName: UIButton!
+    @IBOutlet weak var allbtnName: UIButton!
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var chooseDefaultLbl: UILabel!
     @IBOutlet weak var acidmicYrLbl: UILabel!
@@ -43,6 +48,10 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         
         listTable.register(UINib(nibName:CellConfingName.SchoolListTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.SchoolListTVC)
         
+        setupRadioButton(button: allbtnName)
+        setupRadioButton(button: studentBtnName)
+        setupRadioButton(button: staffBtnName)
+    
         if come_fromLogin{
             ViewAnimator.hideFade(segmentName)
             ViewAnimator.hideFade(chooseDefaultLbl)
@@ -66,12 +75,28 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 }
             }
             
-           
-            
             let acidmaciyrClick = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
             acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
         }
         
+        if Menu_id.staffSelectedMenuId == Menu_id.noticeboardMenuId{
+            radioButtonTapped(allbtnName)
+            ViewAnimator.hideFade(segmentName)
+                ViewAnimator.showFade(radioBtnStack)
+                ViewAnimator.showFade(sendOnlyLbl)
+            sendBtnName.isHidden = false
+            segmentName.selectedSegmentIndex = 1
+        }
+        
+    }
+    func setupRadioButton(button: UIButton) {
+       
+        button.setImage(UIImage(systemName: "circle"), for: .normal)
+        button.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
+
+        // Optional: Set content alignment
+        button.contentHorizontalAlignment = .left
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(
@@ -81,6 +106,23 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         )
     }
     
+    @IBAction func radioButtonTapped(_ sender: UIButton) {
+        // Deselect all
+        [allbtnName, staffBtnName,
+         studentBtnName].forEach { $0?.isSelected = false }
+
+           // Select the tapped button
+           sender.isSelected = true
+
+           // Optional: print or handle selection
+           if sender == allbtnName {
+               print("All selected")
+           } else if sender == staffBtnName {
+               print("Staff selected")
+           } else if sender == studentBtnName {
+               print("Student selected")
+           }
+    }
     
     @IBAction func academicYearDrop_action() {
         accadimYr.removeAll()
@@ -170,20 +212,22 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             
             switch Menu_id.staffSelectedMenuId{
     
-            case Menu_id.StaffGeoAttendaceReport:
+            case Menu_id.staffGeoAttendaceReport:
                 MenuRedirect.StaffWiseAttendance(from: self)
-            case Menu_id.GeoMatricAttendace:
+            case Menu_id.geoMatricAttendace:
                 MenuRedirect.senderMarkAttendanceNavigate(from: self)
             case Menu_id.homeWorkMenuId:
                 MenuRedirect.senderHomeWorkNavigate(from: self)
-            case Menu_id.StudentReport:
+            case Menu_id.studentReport:
                 MenuRedirect.senderStudentreportNavigate(from: self)
-            case Menu_id.Event:
+            case Menu_id.event:
                 MenuRedirect.senderEventNavigate(from: self)
             case Menu_id.attendance:
                  MenuRedirect.senderMarkAttendence(from: self)
             case Menu_id.feependingreport:
                 MenuRedirect.senderFeePendingNavigate(from: self)
+            case Menu_id.dailyCollection:
+                MenuRedirect.senderDailyCollectionNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
@@ -654,6 +698,103 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 
             }
         
+    }
+    
+    
+    //MARK: Sender Noticeboard
+    private func SendingNoticeboardFlow() {
+        
+        let title = AlertstringFile.Confirm_title
+        
+        alert.showAlertCancel(
+            title: title,
+            message: AlertstringFile.are_yousure_youWant_to_send_Notice,
+            actionLbl1: AlertstringFile.Yes_Send,
+            actionLbl2: AlertstringFile.Cancel,
+            on: self,
+            
+            onOk: {[self] in
+                
+                let file: Any = user_inputs.SelectedUrls
+                uploadAndSendVoiceMessage(file: file) { [self] in
+                    
+                    CircularProgressLoader.shared.hide()
+                    let uploadedFiles: [[String:String]] = uploadedURLs.compactMap{ url in
+                        
+                        if let url = URL(string: url) {
+                            let type = url.pathExtension.lowercased()
+                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
+                        }
+                        return [
+                            CommonStringFile.url: url,
+                            CommonStringFile.type: user_inputs.selectedFileType
+                        ]
+                    }
+                    
+                    let parameters : [String: Any] = [
+                        
+                        SendNoticeStringFile.title : user_inputs.title,
+                        SendNoticeStringFile.content : user_inputs.description,
+                        SendNoticeStringFile.target_code : array_selectedSchoolId,
+                        SendNoticeStringFile.intended_for : "student",
+                        SendNoticeStringFile.visible_from : user_inputs.FromDate,
+                        SendNoticeStringFile.visible_to : user_inputs.ToDate,
+                        SendNoticeStringFile.file_path : uploadedFiles,
+                    ]
+                    
+                    APIService.shared.makeApi(url: ServiceUrl.api_notice_board_send_notice, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<NoticeResponse,Error>) in
+                        
+                        switch result {
+                            
+                        case .success(let SuccessMessage):
+                            
+                            if SuccessMessage.status == true {
+                                
+                                DispatchQueue.main.async { [self] in
+                                    
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: AlertstringFile.Success,
+                                        message: SuccessMessage.message ?? "",
+                                        on: self) {
+                                            
+                                            self.gotoDashboard()
+                                        }
+                                }
+                            }else {
+                                
+                                DispatchQueue.main.async { [self] in
+                                    
+                                    CustomAlert.showAlertWithOkAction(
+                                        title: AlertstringFile.Alert_title,
+                                        message: SuccessMessage.message ?? "",
+                                        on: self) {
+                                            
+                                            self.gotoDashboard()
+                                        }
+                                }
+                            }
+                            
+                            
+                        case .failure(let error):
+                            
+                            print("Error : \(error.localizedDescription)")
+                        }
+                        
+                    }
+                }
+            },
+            
+            onNo: {
+                print("User Canceled")
+            }
+            
+        )
+    }
+    
+    
+    
+    func gotoDashboard() {
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
 }
 struct School {

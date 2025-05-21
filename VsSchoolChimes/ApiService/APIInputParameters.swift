@@ -203,3 +203,13 @@ enum GetStudentReport {
     static var class_id = "class_id"
     static var section_id = "section_id"
 }
+class MarkAttendenceStringFile {
+    
+    static var class_id = "class_id"
+    static var section_id = "section_id"
+    static var all_present = "all_present"
+    static var attendance_type = "attendance_type"
+    static var session_type = "session_type"
+    static var attendance_date = "attendance_date"
+    static var student_id = "student_id"
+}

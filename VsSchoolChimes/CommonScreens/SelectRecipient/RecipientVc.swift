@@ -137,7 +137,7 @@ class RecipientVc: UIViewController{
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
             }
         case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
-            if Menu_id.Event == Menu_id.staffSelectedMenuId {
+            if Menu_id.event == Menu_id.staffSelectedMenuId {
                 cv_itemsarry = [
                     recipeint_tabBarName.Entier_School,
                     recipeint_tabBarName.Standard,
@@ -175,41 +175,6 @@ class RecipientVc: UIViewController{
         
         
     }
-//    func homeWorkShowProps(){
-//        if accedmicYrEligible{
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
-//                if ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId{
-//                    segmentName.isHidden = true
-//                    target_type = TargetTypes.section
-//                    
-//                    circular_types =  circular_type.section
-//                    getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-//                    speficBtnName.isHidden = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-//                    speficBtnName.isEnabled = !(ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId)
-//                    tv.isHidden = false
-//                    selectStandardDropDown.isHidden = false
-//                    heightSegment.constant = 0
-//                    cv_itemsarry = [
-//                        recipeint_tabBarName.Section_Student
-//                    ]
-//                }else{
-//                    speficBtnName.isEnabled = true
-//                    selectStandardDropDown.isHidden = true
-//                }
-//            }
-//            if Menu_id.Event == Menu_id.staffSelectedMenuId{
-//                cv_itemsarry.removeAll()
-//                cv_itemsarry = [
-//                    recipeint_tabBarName.Entier_School,
-//                    recipeint_tabBarName.Standard,
-//                    recipeint_tabBarName.Section_Student,
-//                    recipeint_tabBarName.Group,
-//                    recipeint_tabBarName.Staff
-//                ]
-//            }
-//        }
-//    }
-//    
     func homeWorkShowProps() {
         guard accedmicYrEligible else { return }
 
@@ -272,105 +237,122 @@ class RecipientVc: UIViewController{
             }
         case Menu_id.AttachmentMenuId:
             SendingAttachmentFlow()
-        case Menu_id.Event:
+        case Menu_id.event:
             handleEvent()
-        case Menu_id.NoticeboardMenuId:
-            SendingNoticeboardFlow()
         default:
             print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
     }
     
     
-    //MARK: Sender Noticeboard
-    private func SendingNoticeboardFlow() {
+    func acidmicYearOrNotAlertMessage() -> String{
+        var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
         
-        let title = AlertstringFile.Confirm_title
+        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Section_Student{
+            
+            selectedTabItem = "Section"
+        }
+        var message : String?
+        if accadmicDefaultYrName == acidmicYrLbl.text{
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(selectedTabItem) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
+        }else{
+            
+            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
+                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
+        }
         
-        alert.showAlertCancel(
-            title: title,
-            message: AlertstringFile.are_yousure_youWant_to_send_Notice,
-            actionLbl1: AlertstringFile.Yes_Send,
-            actionLbl2: AlertstringFile.Cancel,
-            on: self,
-            
-            onOk: {[self] in
-                
-                let file: Any = user_inputs.SelectedUrls
-                uploadAWSMedia(file: file) { [self] in
-                    
-                    CircularProgressLoader.shared.hide()
-                    let uploadedFiles: [[String:String]] = uploadedURLs.compactMap{ url in
-                        
-                        if let url = URL(string: url) {
-                            let type = url.pathExtension.lowercased()
-                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
-                        }
-                        return [
-                            CommonStringFile.url: url,
-                            CommonStringFile.type: user_inputs.selectedFileType
-                        ]
-                    }
-                    
-                    let parameters : [String: Any] = [
-                        
-                        SendNoticeStringFile.title : user_inputs.title,
-                        SendNoticeStringFile.content : user_inputs.description,
-                        SendNoticeStringFile.target_code : array_selectedId,
-                        SendNoticeStringFile.intended_for : "student",
-                        SendNoticeStringFile.visible_from : user_inputs.FromDate,
-                        SendNoticeStringFile.visible_to : user_inputs.ToDate,
-                        SendNoticeStringFile.file_path : uploadedFiles,
-                    ]
-                    
-                    APIService.shared.makeApi(url: ServiceUrl.api_notice_board_send_notice, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<NoticeResponse,Error>) in
-                        
-                        switch result {
-                            
-                        case .success(let SuccessMessage):
-                            
-                            if SuccessMessage.status == true {
-                                
-                                DispatchQueue.main.async { [self] in
-                                    
-                                    CustomAlert.showAlertWithOkAction(
-                                        title: AlertstringFile.Success,
-                                        message: SuccessMessage.message ?? "",
-                                        on: self) {
-                                            
-                                            self.gotoDashboard()
-                                        }
-                                }
-                            }else {
-                                
-                                DispatchQueue.main.async { [self] in
-                                    
-                                    CustomAlert.showAlertWithOkAction(
-                                        title: AlertstringFile.Alert_title,
-                                        message: SuccessMessage.message ?? "",
-                                        on: self) {
-                                            
-                                            self.gotoDashboard()
-                                        }
-                                }
-                            }
-                            
-                            
-                        case .failure(let error):
-                            
-                            print("Error : \(error.localizedDescription)")
-                        }
-                        
-                    }
-                }
-            },
-            
-            onNo: {
-                print("User Canceled")
-            }
-            
-        )
+        return message ?? ""
     }
+    
+//    //MARK: Sender Noticeboard
+//    private func SendingNoticeboardFlow() {
+//        
+//        let title = AlertstringFile.Confirm_title
+//        
+//        alert.showAlertCancel(
+//            title: title,
+//            message: AlertstringFile.are_yousure_youWant_to_send_Notice,
+//            actionLbl1: AlertstringFile.Yes_Send,
+//            actionLbl2: AlertstringFile.Cancel,
+//            on: self,
+//            
+//            onOk: {[self] in
+//                
+//                let file: Any = user_inputs.SelectedUrls
+//                uploadAWSMedia(file: file) { [self] in
+//                    
+//                    CircularProgressLoader.shared.hide()
+//                    let uploadedFiles: [[String:String]] = uploadedURLs.compactMap{ url in
+//                        
+//                        if let url = URL(string: url) {
+//                            let type = url.pathExtension.lowercased()
+//                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
+//                        }
+//                        return [
+//                            CommonStringFile.url: url,
+//                            CommonStringFile.type: user_inputs.selectedFileType
+//                        ]
+//                    }
+//                    
+//                    let parameters : [String: Any] = [
+//                        
+//                        SendNoticeStringFile.title : user_inputs.title,
+//                        SendNoticeStringFile.content : user_inputs.description,
+//                        SendNoticeStringFile.target_code : array_selectedId,
+//                        SendNoticeStringFile.intended_for : "student",
+//                        SendNoticeStringFile.visible_from : user_inputs.FromDate,
+//                        SendNoticeStringFile.visible_to : user_inputs.ToDate,
+//                        SendNoticeStringFile.file_path : uploadedFiles,
+//                    ]
+//                    
+//                    APIService.shared.makeApi(url: ServiceUrl.api_notice_board_send_notice, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<NoticeResponse,Error>) in
+//                        
+//                        switch result {
+//                            
+//                        case .success(let SuccessMessage):
+//                            
+//                            if SuccessMessage.status == true {
+//                                
+//                                DispatchQueue.main.async { [self] in
+//                                    
+//                                    CustomAlert.showAlertWithOkAction(
+//                                        title: AlertstringFile.Success,
+//                                        message: SuccessMessage.message ?? "",
+//                                        on: self) {
+//                                            
+//                                            self.gotoDashboard()
+//                                        }
+//                                }
+//                            }else {
+//                                
+//                                DispatchQueue.main.async { [self] in
+//                                    
+//                                    CustomAlert.showAlertWithOkAction(
+//                                        title: AlertstringFile.Alert_title,
+//                                        message: SuccessMessage.message ?? "",
+//                                        on: self) {
+//                                            
+//                                            self.gotoDashboard()
+//                                        }
+//                                }
+//                            }
+//                            
+//                            
+//                        case .failure(let error):
+//                            
+//                            print("Error : \(error.localizedDescription)")
+//                        }
+//                        
+//                    }
+//                }
+//            },
+//            
+//            onNo: {
+//                print("User Canceled")
+//            }
+//            
+//        )
+//    }
     
     //MARK: Sender Attachment
     private func SendingAttachmentFlow() {
@@ -382,7 +364,7 @@ class RecipientVc: UIViewController{
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: AlertstringFile.are_yousure_youWant_to_sendAttachment,
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -594,7 +576,7 @@ class RecipientVc: UIViewController{
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: AlertstringFile.are_yousure_youWant_to_sendHomeWork,
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -674,7 +656,7 @@ class RecipientVc: UIViewController{
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: AlertstringFile.are_yousure_youWant_to_sendHomeWork,
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -768,26 +750,11 @@ class RecipientVc: UIViewController{
     }
     
     private func SendingCommunicationFlow() {
-        var selectedTabItem = cv_itemsarry[segmentName.selectedSegmentIndex]
-        
-        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Section_Student{
-            
-            selectedTabItem = "Section"
-        }
-        
-        var message : String?
-        if accadmicDefaultYrName == acidmicYrLbl.text{
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(selectedTabItem) (s)" + "\n" + AlertstringFile.AreYouSureYouWantToProceed
-        }else{
-            
-            message = AlertstringFile.Selected_target + "\(array_selectedId.count) " + "\(cv_itemsarry[segmentName.selectedSegmentIndex]) (s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
-                acidmicYrLbl.text ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
-        }
         
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
-            message: message ?? "",
+            message: acidmicYearOrNotAlertMessage(),
             actionLbl1: AlertstringFile.Yes_Send,
             actionLbl2: AlertstringFile.Cancel,
             on: self,
@@ -1098,6 +1065,7 @@ class RecipientVc: UIViewController{
         StdDropdown.anchorView = selectStandardDropDown
         StdDropdown.dataSource = dropDownArray
         StdDropdown.bottomOffset = CGPoint(x: 0, y: selectStandardDropDown.bounds.height)
+        StdDropdown.direction = .bottom
         StdDropdown.show()
         StdDropdown.selectionAction = { [weak self] (index: Int, item: String) in
             guard let self = self else { return }

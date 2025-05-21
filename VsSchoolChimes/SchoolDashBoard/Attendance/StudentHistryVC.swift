@@ -803,6 +803,78 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     
+    
+    func markAttendaceApi(){
+        
+        
+        print("attendance",selected_student)
+        let MakeAbsentId: [[String: String]] = selected_student.compactMap { id in
+            
+            
+            return [
+                "ID": id
+            ]
+            
+           
+        }
+        
+    
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
+                
+              
+                MarkAttendenceStringFile.student_id: MakeAbsentId,
+                MarkAttendenceStringFile.class_id: user_inputs.class_id,
+                MarkAttendenceStringFile.section_id: user_inputs.section_id,
+                MarkAttendenceStringFile.all_present: user_inputs.all_present,
+                MarkAttendenceStringFile.attendance_type: user_inputs.attendance_type,
+                MarkAttendenceStringFile.session_type: user_inputs.session_type,
+                MarkAttendenceStringFile.attendance_date: user_inputs.attendance_date
+                
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
+                result : Result<CommonApiSuc,
+                Error>
+            ) in
+                
+                switch result {
+                    
+                case.success(let succesmessage) :
+                    
+                    if succesmessage.status == true {
+                        
+                        DispatchQueue.main.async { [self] in
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.gotoDashboard()
+                                    
+                                }
+                            
+                        }
+                    }else {
+                        
+                        DispatchQueue.main.async {
+                            
+                            
+                        }
+                    }
+                    
+                case.failure(let error) :
+                    
+                    DispatchQueue.main.async {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+            }
+        
+        
+    }
+    
 }
 
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
@@ -880,31 +952,42 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         if isAttandanceMarkingScreen == true{
             let cell = tableView.cellForRow(at: indexPath) as? StudentHistryTVC
             guard let cell = cell else { return }
-            if studentsDetails?[indexPath.row].isAbsent == true{
-                // Create the flip animation
+            if studentsDetails?[indexPath.row].isAbsent == true {
+                // Mark Present
                 UIView.transition(with: cell.outerView,
                                   duration: 0.3,
-                                  options: [.transitionFlipFromTop],  // Change direction as needed
+                                  options: [.transitionFlipFromTop],
                                   animations: {
-                    // Change background color to red
                     cell.outerView.layer.borderColor = Colornames.AprovedClr?.cgColor
                     cell.outerView.layer.borderWidth = 1
                     self.studentsDetails?[indexPath.row].isAbsent = false
                     cell.statusBtn.setImage(ImageName.present, for: .normal)
                 },
                                   completion: nil)
+                
+                // 🟢 Remove ID from selected_student when marking present
+                if let id = studentsDetails?[indexPath.row].id {
+                    selected_student.removeAll(where: { $0 == id })
+                }
+                
                 totalcount += 1
-            }else{
+            } else {
+                // Mark Absent
                 UIView.transition(with: cell.outerView,
                                   duration: 0.3,
-                                  options: [.transitionFlipFromBottom],  // Change direction as needed
+                                  options: [.transitionFlipFromBottom],
                                   animations: {
-                    // Change background color to red
                     cell.outerView.layer.borderColor = UIColor.red.cgColor
                     cell.statusBtn.setImage(ImageName.apsent, for: .normal)
                     self.studentsDetails?[indexPath.row].isAbsent = true
                 },
                                   completion: nil)
+
+                // 🔴 Add ID to selected_student when marking absent
+                if let id = studentsDetails?[indexPath.row].id, !selected_student.contains(id) {
+                    selected_student.append(id)
+                }
+
                 totalcount -= 1
             }
             

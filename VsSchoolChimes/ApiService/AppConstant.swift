@@ -62,13 +62,14 @@ struct ServiceUrl{
     static let attendance_student_attendance_report = "stud-attd/api/attendance/student-attendance-report"
     static let api_school_event_send_event = "admin/api/school-event/send-event"
     
-    static let api_fee_report_daily_collection = "api/fee-report/daily-collection"
+    static let api_fee_report_daily_collection = "admin/api/fee-report/daily-collection"
     static let api_fee_report_detailed_pending_report = "admin/api/fee-report/detailed-pending-report"
     static let api_fee_report_detailed_class_wise_pending_report = "admin/api/fee-report/detailed-class-wise-pending-report"
     static let  api_get_student_report = "admin/api/get-student-report"
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     static let  admin_api_get_school_strength = "admin/api/get-school-strength"
+    static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type"
     
     
 }
@@ -104,13 +105,14 @@ struct Menu_id{
     static var homeWorkMenuId = 15
     static let isAssaignment = 2
     static let AttachmentMenuId = 39
-    static let StaffGeoAttendaceReport = 33
-    static let GeoMatricAttendace = 21
-    static let NoticeboardMenuId = 23
-    static let Event = 29
-    static let StudentReport = 35
+    static let staffGeoAttendaceReport = 33
+    static let geoMatricAttendace = 21
+    static let noticeboardMenuId = 23
+    static let event = 29
+    static let studentReport = 35
     static let attendance = 3
     static let feependingreport = 14
+    static let dailyCollection = 8
 }
 struct TargetTypes{
     
@@ -160,7 +162,12 @@ struct user_inputs{
     static var FromDate = ""
     static var ToDate = ""
     static var venue = ""
-    
+    static var class_id = ""
+    static var section_id = ""
+    static var all_present = ""
+    static var attendance_type = ""
+    static var session_type = ""
+    static var attendance_date = ""
 }
 struct circular_type{
     static var school =  "A"
@@ -204,7 +211,9 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
         "dd/MM/yyyy",
         "MMM d, yyyy",
         "d MMM yyyy",
-        "yyyy/MM/dd"
+        "yyyy/MM/dd",
+        "dd MMM yy",
+        "MMM dd,yyyy"
     ]
     
     let outputFormatter = DateFormatter()
@@ -225,6 +234,23 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
     return ""
 }
 
+class DateFormatterHelpers {
+    
+    static func convertToStandardFormat(dateString: String, inputFormat: String) -> String? {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = inputFormat
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        guard let date = inputFormatter.date(from: dateString) else {
+            return nil
+        }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd-MM-yyyy"
+        
+        return outputFormatter.string(from: date)
+    }
+}
 
 
 func formatDuration(_ duration: Int) -> String {

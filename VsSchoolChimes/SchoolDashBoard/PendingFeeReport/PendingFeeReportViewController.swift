@@ -38,23 +38,6 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     var accadimYr :[String] = []
     var PendingReports :[PendingReportData]?
     var classWiseReport :[PendingReportData]?
-    // Example data for Feescategory
-    let feesCategories = [
-        Feescategory(category: "Tuition", amount: "5000"),
-        Feescategory(category: "Library", amount: "300"),
-        Feescategory(category: "Laboratory", amount: "700"),
-        Feescategory(category: "Sports", amount: "400"),
-        Feescategory(category: "Transportation", amount: "1000")
-    ]
-
-    // Example data for FeeMode
-    let feeModes = [
-        FeeMode(paymentMode: "Cash", amount: "2000"),
-        FeeMode(paymentMode: "Credit Card", amount: "3000"),
-        FeeMode(paymentMode: "Bank Transfer", amount: "1500"),
-        FeeMode(paymentMode: "Online Payment", amount: "2500"),
-        FeeMode(paymentMode: "Check", amount: "1200")
-    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()

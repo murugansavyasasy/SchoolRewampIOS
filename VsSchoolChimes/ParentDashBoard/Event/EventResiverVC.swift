@@ -38,7 +38,8 @@ class EventResiverVC: UIViewController, SelectNotice{
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NameLbl.text = studentDetails?.name ?? ""
+        StandardLbl.text = "\(studentDetails?.standard_name ?? "") - \(studentDetails?.section_name ?? "")"
         backBtn.setTitle(button1.translated(), for: .normal)
         backBtn.applyBackButton()
         searchbar.placeholder = CommonStringFile.Search.translated()
@@ -179,6 +180,7 @@ class EventResiverVC: UIViewController, SelectNotice{
                     switch result {
                     case .success(let successMessage):
                         self.eventHolidayData = successMessage.data
+                        print("eventHolidayData",eventHolidayData)
                         self.tableview.reloadData()
                         if self.event?.count == 0{
                             self.noDataLbl.text = successMessage.message
@@ -222,7 +224,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
         if section == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
             let event = event?[indexPath.row]
-            cell.CvHeight.constant = 0
+//            cell.CvHeight.constant = 0
             cell.ImageCollectionView.isHidden = true
             // Configure cell data
             cell.subjectName.text = event?.venue
