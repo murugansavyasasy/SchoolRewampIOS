@@ -30,6 +30,7 @@ class SchoolStrengthVC: UIViewController {
         UIupdate()
         setupPieChart()
         BackBtn.applyBackButton()
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.SchoolStrength, secondLine: staffDetails?.school_name ?? "")
         
         Get_School_Strength()
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)

@@ -47,8 +47,13 @@ class EventPageVC: UIViewController, UIPageViewControllerDelegate, UIPageViewCon
         )
     }
     func uiConficration(){
-        BackBtn.setTitle(titleLbl, for: .normal)
-        BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        if titleLbl == CommonStringFile.CreateEvent {
+            BackBtn.configureAsBackButton(firstLine: titleLbl, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        }else {
+            BackBtn.setTitle(titleLbl, for: .normal)
+            BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        }
+        
         let segmentItems = [button1, button2]
         segmentController.removeAllSegments()
         for (index, item) in segmentItems.enumerated() {

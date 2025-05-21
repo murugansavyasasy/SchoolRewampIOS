@@ -118,24 +118,15 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
             switch result {
                 
             case .success(let SuccessMessage):
-                
-                if SuccessMessage.status == true {
+                DispatchQueue.main.async { [self] in
                     
-                    DispatchQueue.main.async { [self] in
-                        
-                        NoticeboardData = SuccessMessage.data
-                        FilteredData = NoticeboardData
-                        SearchData = NoticeboardData
-                        tableview.reloadData()
-                    }
-                }else {
-                    
-                    DispatchQueue.main.async { [self] in
-                        
-                        NoticeboardData = SuccessMessage.data
-                        SearchData = NoticeboardData
-                        tableview.reloadData()
-                    }
+                    NoticeboardData = SuccessMessage.data
+                    FilteredData = NoticeboardData
+                    SearchData = NoticeboardData
+                    NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
+                    NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
+                    EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
+                    tableview.reloadData()
                 }
                 
             case .failure(let error):
@@ -150,10 +141,6 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
 extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-            NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
-            NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
-            EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
         
         return SearchData?.count ?? 0
     }
@@ -283,7 +270,7 @@ extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSour
         case "Document":
             
             FilteredData = NoticeboardData?.filter { NoticeboardData in
-                NoticeboardData.file_path?.first?.type == "DOCUMENT"
+                NoticeboardData.file_path?.first?.type != "IMAGE" && NoticeboardData.file_path?.count != 0
             }
             
         case "Text":
@@ -296,6 +283,10 @@ extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSour
         }
 
         SearchData = FilteredData
+        
+        NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
+        NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
+        EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
         
         FilterCV.reloadData()
         
@@ -337,6 +328,9 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
             }
         }
 
+        NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
+        NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
+        EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
         tableview.reloadData()
     }
 

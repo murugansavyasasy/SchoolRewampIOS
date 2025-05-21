@@ -130,6 +130,9 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         }
         
         SearchAttachments = filteredAttachments
+        NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
+        NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
+        EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
         attachmentTable.reloadData()
     }
     
@@ -252,6 +255,9 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             ($0.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
             ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||  ($0.date?.lowercased().contains(searchText.lowercased()) ?? false)
         }
+        NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
+        NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
+        EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
         attachmentTable.reloadData()
     }
     

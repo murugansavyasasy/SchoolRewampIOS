@@ -217,6 +217,10 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
         }
         
         SearchMessages = FilteredMessages
+        playIndex = nil
+        NodataLbl.isHidden = !(SearchMessages?.count == 0)
+        NodataImage.isHidden = !(SearchMessages?.count == 0)
+        NodataLbl.text = "No Data Found"
         
         tv.reloadData()
     }
@@ -236,9 +240,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             
             FilteredMessages = TotalMessageList?.readMessages(ofType: Filters[selectedIndex.row])
         }
-        
+        playIndex = nil
         SearchMessages = FilteredMessages
-        
+        NodataLbl.isHidden = !(SearchMessages?.count == 0)
+        NodataImage.isHidden = !(SearchMessages?.count == 0)
+        NodataLbl.text = "No Data Found"
         tv.reloadData()
     }
     
@@ -257,9 +263,11 @@ class ParentCommunicationVc: UIViewController, reloadDelegate{
             
             FilteredMessages = TotalMessageList?.unreadMessages(ofType: Filters[selectedIndex.row])
         }
-        
+        playIndex = nil
         SearchMessages = FilteredMessages
-        
+        NodataLbl.isHidden = !(SearchMessages?.count == 0)
+        NodataImage.isHidden = !(SearchMessages?.count == 0)
+        NodataLbl.text = "No Data Found"
         tv.reloadData()
     }
     
@@ -528,10 +536,6 @@ extension ParentCommunicationVc : UITableViewDelegate , UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        NodataLbl.isHidden = !(SearchMessages?.count == 0)
-        NodataImage.isHidden = !(SearchMessages?.count == 0)
-        //NodataLbl.text = "No Data Found"
         
         return SearchMessages?.count ?? 0
     }
@@ -858,6 +862,10 @@ extension ParentCommunicationVc : UICollectionViewDelegate, UICollectionViewData
         
         SearchMessages = FilteredMessages
         
+        NodataLbl.isHidden = !(SearchMessages?.count == 0)
+        NodataImage.isHidden = !(SearchMessages?.count == 0)
+        NodataLbl.text = "No Data Found"
+        playIndex = nil
         tv.reloadData()
         FilterCV.reloadData()
     }
@@ -904,6 +912,9 @@ extension ParentCommunicationVc : UISearchBarDelegate {
             }
         }
 
+        NodataLbl.isHidden = !(SearchMessages?.count == 0)
+        NodataImage.isHidden = !(SearchMessages?.count == 0)
+        NodataLbl.text = "No Data Found"
         tv.reloadData()
     }
 

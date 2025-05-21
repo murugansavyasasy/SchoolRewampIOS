@@ -60,6 +60,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     
     // MARK: - UI Setup
     func setupUI() {
+        
+        BackBtn.configureAsBackButton(firstLine: MenuStringFile.StaffWiseAttendanceReport, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
+        
         applyShadowAndCornerRadius(to: yearsView)
         applyShadowAndCornerRadius(to: staffDropView)
         applyShadowAndCornerRadius(to: monthView)

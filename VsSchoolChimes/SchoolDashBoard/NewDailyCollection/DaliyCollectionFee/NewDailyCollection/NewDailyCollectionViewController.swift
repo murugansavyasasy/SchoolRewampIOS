@@ -229,3 +229,53 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     
 }
 
+
+import UIKit
+
+extension UIButton {
+    func configureAsBackButton(firstLine: String, secondLine: String) {
+        let fullTitle = "\(firstLine)\n\(secondLine)"
+
+        // Set the back arrow image
+        let image = UIImage(systemName: "chevron.left")
+        self.setImage(image, for: .normal)
+
+        // Configure paragraph style
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .left
+        paragraphStyle.lineSpacing = 3
+
+        // Create attributed title
+        let attributedTitle = NSMutableAttributedString(
+            string: fullTitle,
+            attributes: [
+                .font: UIFont(name: "Poppins-Bold", size: 15),
+                .foregroundColor: UIColor.label,
+                .paragraphStyle: paragraphStyle
+            ]
+        )
+
+        // Apply style to second line
+        let secondLineRange = (fullTitle as NSString).range(of: secondLine)
+        if secondLineRange.location != NSNotFound {
+            attributedTitle.addAttributes([
+                .font: UIFont(name: "Poppins-Bold", size: 11),
+                .foregroundColor: UIColor.black.withAlphaComponent(0.6)
+            ], range: secondLineRange)
+        }
+
+        // Configure title label
+        self.titleLabel?.numberOfLines = 3
+        self.titleLabel?.lineBreakMode = .byWordWrapping
+        self.titleLabel?.textAlignment = .left
+
+        // Apply attributed title
+        self.setAttributedTitle(attributedTitle, for: .normal)
+
+        // Adjust content and insets
+        self.contentHorizontalAlignment = .left
+        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+        self.imageEdgeInsets = UIEdgeInsets(top: -12, left: 0, bottom: 6, right: 0)
+        self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+}
