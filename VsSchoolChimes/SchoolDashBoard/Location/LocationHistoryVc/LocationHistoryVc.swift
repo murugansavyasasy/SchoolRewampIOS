@@ -251,12 +251,43 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         //                  noRecordLbl.isHidden = true
         cell.namelbl.text = attendanceData?.name
 //        cell.attendanceTypeLbl.text = attendanceData?.attendance_type?.FD
-        let formatted =  attendanceData?.attendance_type?.map { "\($0.key): \($0.value)" }.joined(separator: ", ")
-        cell.attendanceTypeLbl.text = formatted
+        if let attendanceDict = attendanceData?.attendance_type {
+            
+            if attendanceDict.count != 1 {
+                let keys = Array(attendanceDict.keys)
+                let values = Array(attendanceDict.values)
+                if keys.indices.contains(0), values.indices.contains(0) {
+                    cell.prestType.text = keys[0]
+                    let status = values[0] == "P" ? "Present":"Apsent"
+                    cell.StatusLbl.text = status
+                    let statusclr = values[0] == "P" ? UIColor.systemGreen : UIColor.systemRed
+                    cell.presentStatus.backgroundColor = statusclr
+                }
+                if keys.indices.contains(1), values.indices.contains(1) {
+                    cell.opsentType.text = keys[1]
+                    let status = values[1] == "P" ? "Present":"Apsent"
+                    cell.opsentLbl.text = status
+                    let statusclr = values[1] == "P" ? UIColor.systemGreen : UIColor.systemRed
+                        cell.opsentStus.backgroundColor = statusclr
+                }
+                cell.presentStatus.isHidden = false
+                cell.opsentStus.isHidden = false
+                
+            } else if let firstItem = attendanceDict.first {
+                let key = firstItem.key
+                let value = firstItem.value == "P" ? "Present":"Apsent"
+                    cell.prestType.text = key
+                    cell.StatusLbl.text = value
+                cell.presentStatus.isHidden = false
+                let statusclr = value == "Present" ? UIColor.systemGreen : UIColor.systemRed
+                    cell.presentStatus.backgroundColor = statusclr
+                cell.opsentStus.isHidden = true
+            }
+        }
         
         if attendanceData?.in_time  != ""{
             cell.firstInLbl.isHidden = false
-            cell.firstInLbl.text = "First in - " + (
+            cell.firstInLbl.text = "Checkin - " + (
                 attendanceData?.in_time ?? ""
             )
         }else{
@@ -266,11 +297,10 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         
         if attendanceData?.out_time  != ""{
             cell.toDateLbl.isHidden = false
-            cell.toDateLbl.text = "Last out - " + (
+            cell.toDateLbl.text = "Checkout - " + (
                 attendanceData?.out_time ?? ""
             )
         }else{
-            
             cell.toDateLbl.isHidden = true
         }
         
@@ -280,19 +310,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 attendanceData?.working_hours ?? ""
             )
         }else{
-            
             cell.workingHrsLbl.isHidden = true
         }
-        
-        
-        
-        cell.StatusLbl.text = attendanceData?.leave_type
-        
-        if cell.StatusLbl.text == "Absent" {
-            cell.StatusLbl.backgroundColor = .systemRed
-        }else{
-            cell.StatusLbl.backgroundColor = .systemGreen
-        }
+
         
         if let components = convertDateComponents(from: attendanceData?.date ?? "") {
             
