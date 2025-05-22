@@ -1,14 +1,6 @@
-//
-//  NewDailyCollectionViewController.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 22/04/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
-//
 
 import UIKit
 import DropDown
-//import ObjectMapper
 
 @available(iOS 14.0, *)
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
@@ -16,10 +8,10 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     func date(date: String) {
         if dateSelection == true{
             fromLbl.text = date
-            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
+//            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
         }else{
             todateLbl.text = date
-            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
+//            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
         }
     }
     
