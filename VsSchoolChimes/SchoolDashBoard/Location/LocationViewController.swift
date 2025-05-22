@@ -60,13 +60,22 @@ class LocationViewController: UIViewController {
     }
     
     func StyleAndTranslate(){
-        
+        BackBtn.configureAsBackButton(firstLine:MenuStringFile.GeometricAttendance, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         AllowLocationLbl.setFont(style: .body, size: FontSize.BodySize)
         AllowLocationDescribeLbl.setFont(style: .body, size: FontSize.BodySize)
         PunchDescriptionLbl.setFont(style: .header, size: FontSize.HeaderSize)
         EnableLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TaptoPunchBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         addLocationBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.plain()
+            config.image = UIImage(systemName: "plus.circle.fill")
+            config.title = "Add Location"
+            config.imagePlacement = .top
+            config.imagePadding = 8
+            addlocationbtnName.configuration = config
+        }
+
     }
     
     override func viewDidLayoutSubviews() {

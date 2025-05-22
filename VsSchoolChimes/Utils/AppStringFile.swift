@@ -67,6 +67,7 @@ class MenuStringFile{
     static let StaffWiseAttendanceReport = "Staff Wise Attendance Report"
     static let LSRW = "LSRW"
     static let MarkAttendance = "Mark Attendance"
+    static let GeometricAttendance = "Geometric Attendance"
 }
 
 
