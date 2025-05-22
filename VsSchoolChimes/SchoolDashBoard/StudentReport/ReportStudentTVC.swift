@@ -26,6 +26,10 @@ class ReportStudentTVC: UITableViewCell {
     @IBOutlet weak var genderLbl: UILabel!
     @IBOutlet weak var fatherName: UILabel!
     
+    @IBOutlet weak var standerdNameLbl: UILabel!
+    @IBOutlet weak var sectionnameLbl: UILabel!
+    @IBOutlet weak var rollNoLbl: UILabel!
+    @IBOutlet weak var rollNo: UILabel!
     @IBOutlet weak var shimmerView: AnimatView!
     @IBOutlet weak var genderTitle: UILabel!
     @IBOutlet weak var fatherTitle: UILabel!
@@ -107,6 +111,12 @@ class ReportStudentTVC: UITableViewCell {
         genderLbl.setFont(style: .body, size: FontSize.BodySize)
         fatherName.setFont(style: .body, size: FontSize.BodySize)
         fatherTitle.setFont(style: .body, size: FontSize.BodySize)
+        standerdNameLbl.setFont(style: .body, size: FontSize.BodySize)
+        sectionnameLbl.setFont(style: .body, size: FontSize.BodySize)
+        rollNoLbl.setFont(style: .body, size: FontSize.BodySize)
+        rollNo.setFont(style: .body, size: FontSize.BodySize)
+        sectionLbl.setFont(style: .body, size: FontSize.BodySize)
+        standerdLbl.setFont(style: .body, size: FontSize.BodySize)
         genderTitle.setFont(style: .body, size: FontSize.BodySize)
         emailBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         mobleNo.setTitleFont(style: .body, size: FontSize.BodySize)

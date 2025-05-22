@@ -122,7 +122,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="Vhm-iK-HvB">
-                                <rect key="frame" x="16" y="145" width="382.66666666666669" height="158"/>
+                                <rect key="frame" x="16" y="145" width="382.66666666666669" height="187.33333333333337"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="sUP-Fx-ZDd">
                                         <rect key="frame" x="0.0" y="0.0" width="382.66666666666669" height="40.666666666666664"/>
@@ -269,13 +269,42 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="TZp-0q-N5b">
+                                        <rect key="frame" x="0.0" y="167" width="382.66666666666669" height="20.333333333333343"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roll No" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgH-j3-oCO">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="20.333333333333332"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="120" id="RJ9-2j-rb1"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EEx-7j-6pM">
+                                                <rect key="frame" x="125" y="0.0" width="5" height="20.333333333333332"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="5" id="lHE-mm-VLJ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="janu" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNq-Vc-7S5">
+                                                <rect key="frame" x="135" y="0.0" width="247.66666666666663" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="I75-y2-f4d">
-                                <rect key="frame" x="9" y="313" width="410" height="248"/>
+                                <rect key="frame" x="9" y="342.33333333333331" width="410" height="218.66666666666669"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9au-Ue-WtV">
-                                        <rect key="frame" x="0.0" y="0.0" width="410" height="76"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="410" height="66.333333333333329"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="9967645432" image="phone.circle.fill" catalog="system"/>
@@ -284,7 +313,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4yJ-Tq-JEt">
-                                        <rect key="frame" x="0.0" y="86" width="410" height="76"/>
+                                        <rect key="frame" x="0.0" y="76.333333333333371" width="410" height="66"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="SMS" image="ellipsis.message.fill" catalog="system">
                                             <color key="titleColor" name="AccentColor"/>
@@ -294,7 +323,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJg-4p-dSp">
-                                        <rect key="frame" x="0.0" y="172" width="410" height="76"/>
+                                        <rect key="frame" x="0.0" y="152.33333333333337" width="410" height="66.333333333333314"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="chandhru@gmail.com" image="envelope.badge.fill" catalog="system">
                                             <color key="titleColor" name="AccentColor"/>
@@ -376,10 +405,14 @@
                 <outlet property="nameTitle" destination="PzX-sJ-g7J" id="OHQ-WB-yAh"/>
                 <outlet property="outerView" destination="OKB-qZ-tJl" id="XEv-Bp-tgA"/>
                 <outlet property="profileView" destination="Y7R-wa-dma" id="nDM-56-D72"/>
+                <outlet property="rollNo" destination="sNq-Vc-7S5" id="X7d-Sw-ocf"/>
+                <outlet property="rollNoLbl" destination="wgH-j3-oCO" id="nqI-wD-fxZ"/>
                 <outlet property="sectionLbl" destination="zgW-cX-1Fx" id="63d-GX-ul0"/>
+                <outlet property="sectionnameLbl" destination="i4x-i1-lxH" id="ynB-9e-Y9e"/>
                 <outlet property="shimmerView" destination="thD-IK-ZZj" id="AXZ-1n-k9U"/>
                 <outlet property="smsBtn" destination="4yJ-Tq-JEt" id="3zC-e7-eMm"/>
                 <outlet property="standerdLbl" destination="oCY-gV-yjM" id="FpH-cF-qEq"/>
+                <outlet property="standerdNameLbl" destination="TKa-jB-7PD" id="HFK-nH-3ua"/>
                 <outlet property="studentNmae" destination="PgH-4T-hbX" id="JOs-Yy-0Gr"/>
                 <outlet property="tagView" destination="uMB-is-xK1" id="t4w-3b-pxI"/>
                 <outlet property="tcherLbl" destination="ihF-XH-dB5" id="hSU-jG-mfD"/>

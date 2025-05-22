@@ -17,6 +17,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     @IBOutlet weak var sectionView: UIView!
     @IBOutlet weak var classView: UIView!
     @IBOutlet weak var reportTable: UITableView!
+    @IBOutlet weak var FilterCV: UICollectionView!
     @IBOutlet weak var filterBtn: UIButton!
     @IBOutlet weak var selectedType: UIButton!
     @IBOutlet weak var sectionBtn: UIButton!
@@ -39,9 +40,11 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var standerdArray = [String]()
     var sectionArray = [String]()
     var selectStudentType = ""
+    var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var studentList : [StudentData]?
     var imgs = ["shiyam","StudImg","stuentimg 1"]
+    var Filters = ["Name ASC ","Name DSC","Roll No ASC","Roll No DSC"]
     var filterStudent : [StudentData]?
     var sortedStudent : [StudentData]?
     let menuName = MenuStringFile()
@@ -56,6 +59,13 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         getacadmicYr()
         uiConfic()
         
+        let cvnib = UINib(nibName:CellConfingName.FiltersCvCell , bundle: nil)
+        FilterCV.register(cvnib, forCellWithReuseIdentifier: CellConfingName.FiltersCvCell)
+        
+        if #available(iOS 14.0, *) {
+            FilterCV.dataSource = self
+            FilterCV.delegate = self
+        }
         if #available(iOS 14.0, *) {
             searchBar.searchTextField.addDoneButton()
             searchBar.delegate = self
@@ -261,7 +271,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         }
         
     }
-    func getStudentAPI(class_id:String? = nil,section_id:String? = nil){
+    func getStudentAPI(class_id: String? = nil, section_id: String? = nil) {
         var param: [String: Any] = [:]
         
         if let classID = class_id {
@@ -270,42 +280,53 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         if let sectionID = section_id {
             param[GetStudentReport.section_id] = sectionID
         }
-        APIService.shared.makeApi(url: ServiceUrl.api_get_student_report, parameters:param, type: ApitTypeSringFile.GET, token:UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result<StudentReportResponse,Error>) in
-            switch result {
-            case .success(let successMessage):
-                if successMessage.status == true{
-                    DispatchQueue.main.async { [self] in
-                        studentList = successMessage.data
-                        nodataLbl.isHidden = true
-                        nodataImg.isHidden = true
-                        reportSegment.isHidden = false
-                        filterStudent = studentList
-                        sortedStudent = studentList
-                        reportTable.reloadData()
+        
+        APIService.shared.makeApi(
+            url: ServiceUrl.api_get_student_report,
+            parameters: param,
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<StudentReportResponse, Error>) in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    if response.status == true {
+                        self.studentList = response.data
+                        self.sortedStudent = self.studentList?.sorted {
+                            $0.name.localizedCompare($1.name) == .orderedAscending
+                        }
+                        self.filterStudent = self.sortedStudent
+                        self.selectedIndex = IndexPath(item: 0, section: 0)
+                        self.nodataLbl.isHidden = true
+                        self.nodataImg.isHidden = true
+                        self.FilterCV.isHidden = false
+    //                    self.reportSegment.isHidden = false
+                        self.FilterCV.reloadData()
+                    } else {
+                        self.studentList = response.data
+                        self.sortedStudent = response.data
+                        self.filterStudent = response.data
+                        
+                        self.nodataLbl.text = response.message
+                        self.nodataLbl.isHidden = false
+                        self.nodataImg.isHidden = false
+                        self.FilterCV.isHidden = true
+    //                    self.reportSegment.isHidden = true
                     }
-                }else{
-                    DispatchQueue.main.async { [self] in
-                        studentList = successMessage.data
-                        nodataLbl.text = successMessage.message
-                        nodataImg.isHidden = false
-                        nodataLbl.isHidden = false
-                        reportSegment.isHidden = true
-                        filterStudent = studentList
-                        sortedStudent = studentList
-                        reportTable.reloadData()
-                    }
+                    self.reportTable.reloadData()
+
+                case .failure(let error):
+                    self.nodataLbl.text = error.localizedDescription
+                    self.nodataLbl.isHidden = false
+                    self.nodataImg.isHidden = false
+                    print("API Error: \(error.localizedDescription)")
                 }
-            case .failure(let error):
-                DispatchQueue.main.async { [self] in
-                    print(error.localizedDescription)
-                    nodataLbl.text = error.localizedDescription
-                    nodataImg.isHidden = false
-                }
-                
             }
         }
-        
     }
+
     func getacadmicYr(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
@@ -376,6 +397,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
 
 
             cell.tcherLbl.text = studentDetail.class_teacher
+            cell.rollNo.text = studentDetail.roll_no
             cell.admissionLbl.text = studentDetail.admission_no
             cell.dobLbl.text = studentDetail.dob
             cell.studentNmae.text = studentDetail.name
@@ -399,7 +421,83 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     
     
 }
+@available(iOS 14.0, *)
+extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return Filters.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
+        
+        cell.FilterLbl.text = Filters[indexPath.item]
+        let isSelected = indexPath == selectedIndex
 
+        cell.cellView.backgroundColor = isSelected ? UIColor.topBackgroundCLr : UIColor.systemGray5
+//        cell.cellView.layer.cornerRadius = 12
+//        cell.cellView.layer.borderWidth = isSelected ? 1 : 0
+//        cell.cellView.layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.clear.cgColor
+        cell.cellView.layer.masksToBounds = false
+
+        // Shadow settings
+        cell.cellView.layer.shadowColor = UIColor.black.cgColor
+        cell.cellView.layer.shadowOpacity = isSelected ? 0.2 : 0.0
+        cell.cellView.layer.shadowRadius = isSelected ? 4 : 0
+        cell.cellView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.CheckboxImg.isHidden = true
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.item < Filters.count else { return }
+        
+        selectedIndex = indexPath
+        let selectedFilter = Filters[indexPath.item]
+        
+        guard let sortedStudent = sortedStudent else { return }
+
+        switch selectedFilter {
+        case "Name ASC":
+            filterStudent = sortedStudent.sorted {
+                $0.name.localizedCompare($1.name) == .orderedAscending
+            }
+        case "Name DSC":
+            filterStudent = sortedStudent.sorted {
+                $0.name.localizedCompare($1.name) == .orderedDescending
+            }
+        case "Roll No ASC":
+            filterStudent = sortedStudent.sorted {
+                $0.admission_no < $1.admission_no
+            }
+        case "Roll No DSC":
+            filterStudent = sortedStudent.sorted {
+                $0.admission_no > $1.admission_no
+            }
+        default:
+            filterStudent = sortedStudent
+        }
+
+        FilterCV.reloadData()
+        reportTable.reloadData()
+    }
+
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let text = Filters[indexPath.item] // Assuming your label text is from a data source
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
+        label.text = text
+        label.sizeToFit()
+
+        let width = label.frame.width + 60  // Add padding
+        return CGSize(width: width, height: 40) // Adjust height accordingly
+    }
+    
+}
 
 class GradientView: UIView {
     
@@ -481,6 +579,7 @@ extension ReportStudentListVC: UISearchBarDelegate{
         searchBar.resignFirstResponder()
     }
 }
+
 struct StudentList{
     let name:String
     let AdmissionId:String
