@@ -43,6 +43,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var uploadedURLs: [String] = []
     var come_fromLogin = false
     let MenuRedirect = MenuRedirectHandler.shared
+    var selectedTarget :String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,11 +62,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         }else{
             applyShadowAndCornerRadius(to: acidamicYrDropView)
             target_type = TargetTypes.school
-            
             ViewAnimator.hideFade(chooseDefaultLbl)
             ViewAnimator.hideFade(acidamicYrDropView)
-            ViewAnimator.hideFade(sendBtnName)
-            
             getacadmicYr()
             for i in 0..<(school_details?.count ?? 0) {
                 school_details?[i].isSelected = true
@@ -75,25 +73,26 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 }
             }
             
+            if Menu_id.staffSelectedMenuId == Menu_id.noticeboardMenuId{
+                radioButtonTapped(allbtnName)
+                ViewAnimator.hideFade(segmentName)
+                ViewAnimator.showFade(radioBtnStack)
+                ViewAnimator.showFade(sendOnlyLbl)
+                ViewAnimator.showFade(sendBtnName)
+                segmentName.selectedSegmentIndex = 1
+            }
             let acidmaciyrClick = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
             acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
         }
         
-        if Menu_id.staffSelectedMenuId == Menu_id.noticeboardMenuId{
-            radioButtonTapped(allbtnName)
-            ViewAnimator.hideFade(segmentName)
-                ViewAnimator.showFade(radioBtnStack)
-                ViewAnimator.showFade(sendOnlyLbl)
-            sendBtnName.isHidden = false
-            segmentName.selectedSegmentIndex = 1
-        }
+        
+       
         
     }
     func setupRadioButton(button: UIButton) {
        
         button.setImage(UIImage(systemName: "circle"), for: .normal)
         button.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
-
         // Optional: Set content alignment
         button.contentHorizontalAlignment = .left
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
@@ -117,10 +116,13 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
            // Optional: print or handle selection
            if sender == allbtnName {
                print("All selected")
+               selectedTarget = "all"
            } else if sender == staffBtnName {
                print("Staff selected")
+               selectedTarget = "staff"
            } else if sender == studentBtnName {
                print("Student selected")
+               selectedTarget = "student"
            }
     }
     
@@ -289,6 +291,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
             case Menu_id.homeWorkMenuId:
                 handleHomeworkFlow()
+        case Menu_id.noticeboardMenuId:
+            SendingNoticeboardFlow()
 
             default:
                 print("❗️Unhandled menu ID: \(screenType.staffSelectedMenuId)")
@@ -736,7 +740,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         SendNoticeStringFile.title : user_inputs.title,
                         SendNoticeStringFile.content : user_inputs.description,
                         SendNoticeStringFile.target_code : array_selectedSchoolId,
-                        SendNoticeStringFile.intended_for : "student",
+                        SendNoticeStringFile.intended_for : selectedTarget ?? "",
                         SendNoticeStringFile.visible_from : user_inputs.FromDate,
                         SendNoticeStringFile.visible_to : user_inputs.ToDate,
                         SendNoticeStringFile.file_path : uploadedFiles,
