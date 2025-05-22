@@ -297,6 +297,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.sortedStudent = self.studentList?.sorted {
                             $0.name.localizedCompare($1.name) == .orderedAscending
                         }
+                        
                         self.filterStudent = self.sortedStudent
                         self.selectedIndex = IndexPath(item: 0, section: 0)
                         self.nodataLbl.isHidden = true
@@ -555,7 +556,7 @@ extension ReportStudentListVC: UISearchBarDelegate{
             filterStudent = studentList.filter { student in
                 return student.id.lowercased().contains(lowercasedSearch) ||
                        student.name.lowercased().contains(lowercasedSearch) ||
-                ((student.primary_mobile?.lowercased().contains(lowercasedSearch)) != nil) ||
+                       (student.primary_mobile?.lowercased().contains(lowercasedSearch) ?? false) ||
                        student.admission_no.lowercased().contains(lowercasedSearch) ||
                        student.roll_no.lowercased().contains(lowercasedSearch) ||
                        student.dob.lowercased().contains(lowercasedSearch) ||
@@ -568,12 +569,13 @@ extension ReportStudentListVC: UISearchBarDelegate{
             }
         }
 
+        reportTable.reloadData()
+
         let isEmpty = filterStudent?.isEmpty ?? true
         nodataImg.isHidden = !isEmpty
         nodataLbl.isHidden = !isEmpty
-
-        reportTable.reloadData()
     }
+
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()

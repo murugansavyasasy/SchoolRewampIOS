@@ -198,7 +198,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             getStaffListAPI { [self] result in
                 switch result {
                 case .success(let staffListResponse):
-                    print("staffListResponse",staffListResponse.data)
                     let staffDetails = staffListResponse.data
                     self.staffDetails = staffDetails
                     staffId = Int(staffDetails?.first?.id ?? "0")
