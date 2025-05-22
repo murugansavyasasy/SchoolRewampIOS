@@ -177,23 +177,23 @@ class RecipientVc: UIViewController{
     }
     func homeWorkShowProps() {
         guard accedmicYrEligible else { return }
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [self] in
             let isAssignmentOrHomework = ScreenType == screenType.isAssaignment || ScreenType == Menu_id.homeWorkMenuId
-
+            
             if isAssignmentOrHomework {
                 segmentName.isHidden = true
                 target_type = TargetTypes.section
                 circular_types = circular_type.section
                 getStandardsAPI(academic_year_id: selectedAcadimicYearId ?? 0)
-
+                
                 speficBtnName.isHidden = true
                 speficBtnName.isEnabled = false
-
+                
                 tv.isHidden = false
                 selectStandardDropDown.isHidden = false
                 heightSegment.constant = 0
-
+                
                 cv_itemsarry = [recipeint_tabBarName.Section_Student]
             } else {
                 speficBtnName.isEnabled = true
@@ -201,7 +201,7 @@ class RecipientVc: UIViewController{
             }
         }
     }
-
+    
     
     
     @IBAction func backbtn(_ sender: Any) {
@@ -264,95 +264,6 @@ class RecipientVc: UIViewController{
         return message ?? ""
     }
     
-//    //MARK: Sender Noticeboard
-//    private func SendingNoticeboardFlow() {
-//        
-//        let title = AlertstringFile.Confirm_title
-//        
-//        alert.showAlertCancel(
-//            title: title,
-//            message: AlertstringFile.are_yousure_youWant_to_send_Notice,
-//            actionLbl1: AlertstringFile.Yes_Send,
-//            actionLbl2: AlertstringFile.Cancel,
-//            on: self,
-//            
-//            onOk: {[self] in
-//                
-//                let file: Any = user_inputs.SelectedUrls
-//                uploadAWSMedia(file: file) { [self] in
-//                    
-//                    CircularProgressLoader.shared.hide()
-//                    let uploadedFiles: [[String:String]] = uploadedURLs.compactMap{ url in
-//                        
-//                        if let url = URL(string: url) {
-//                            let type = url.pathExtension.lowercased()
-//                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
-//                        }
-//                        return [
-//                            CommonStringFile.url: url,
-//                            CommonStringFile.type: user_inputs.selectedFileType
-//                        ]
-//                    }
-//                    
-//                    let parameters : [String: Any] = [
-//                        
-//                        SendNoticeStringFile.title : user_inputs.title,
-//                        SendNoticeStringFile.content : user_inputs.description,
-//                        SendNoticeStringFile.target_code : array_selectedId,
-//                        SendNoticeStringFile.intended_for : "student",
-//                        SendNoticeStringFile.visible_from : user_inputs.FromDate,
-//                        SendNoticeStringFile.visible_to : user_inputs.ToDate,
-//                        SendNoticeStringFile.file_path : uploadedFiles,
-//                    ]
-//                    
-//                    APIService.shared.makeApi(url: ServiceUrl.api_notice_board_send_notice, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result: Result<NoticeResponse,Error>) in
-//                        
-//                        switch result {
-//                            
-//                        case .success(let SuccessMessage):
-//                            
-//                            if SuccessMessage.status == true {
-//                                
-//                                DispatchQueue.main.async { [self] in
-//                                    
-//                                    CustomAlert.showAlertWithOkAction(
-//                                        title: AlertstringFile.Success,
-//                                        message: SuccessMessage.message ?? "",
-//                                        on: self) {
-//                                            
-//                                            self.gotoDashboard()
-//                                        }
-//                                }
-//                            }else {
-//                                
-//                                DispatchQueue.main.async { [self] in
-//                                    
-//                                    CustomAlert.showAlertWithOkAction(
-//                                        title: AlertstringFile.Alert_title,
-//                                        message: SuccessMessage.message ?? "",
-//                                        on: self) {
-//                                            
-//                                            self.gotoDashboard()
-//                                        }
-//                                }
-//                            }
-//                            
-//                            
-//                        case .failure(let error):
-//                            
-//                            print("Error : \(error.localizedDescription)")
-//                        }
-//                        
-//                    }
-//                }
-//            },
-//            
-//            onNo: {
-//                print("User Canceled")
-//            }
-//            
-//        )
-//    }
     
     //MARK: Sender Attachment
     private func SendingAttachmentFlow() {
@@ -360,7 +271,6 @@ class RecipientVc: UIViewController{
         var uploadedFiles: [[String: String]] = []
         var iframeValue = ""
         var fileSizeValue = ""
-        
         let title = AlertstringFile.Confirm_title
         alert.showAlertCancel(
             title: title,
@@ -369,28 +279,23 @@ class RecipientVc: UIViewController{
             actionLbl2: AlertstringFile.Cancel,
             on: self,
             onOk: { [self] in
-                
                 if selectedType == AttachmentTypeString.VIDEO {
                     guard let videoURL = user_inputs.VideoPath else {
                         print("❌ Video path is missing")
                         return
                     }
-                    
                     let videoTitle = user_inputs.title
                     let videoDescription = user_inputs.description
                     
                     startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) { videoURLString, iframeHTML, fileSize in
                         if let videoURLString = videoURLString {
                             uploadedFiles = [["url": videoURLString,"type": selectedType]]
-                            
                             if let iframeHTML = iframeHTML {
                                 iframeValue = iframeHTML
                             }
-                            
                             if let size = fileSize {
                                 fileSizeValue = self.convertSize(size)//String(size)
                             }
-                            
                             sendAttachment(with: uploadedFiles, iframe: iframeValue, filesize: fileSizeValue)
                         } else {
                             print("❌ Video upload failed")
@@ -417,7 +322,7 @@ class RecipientVc: UIViewController{
                     
                     let parameters: [String: Any] = [
                         SendAttachmentStringFile.title: user_inputs.title,
-//                        SendAttachmentStringFile.file_type: selectedType,
+                        //                        SendAttachmentStringFile.file_type: selectedType,
                         SendAttachmentStringFile.file_path: uploadedFiles,
                         SendAttachmentStringFile.target_type: target_type ?? "",
                         SendAttachmentStringFile.target_code: array_selectedId,
@@ -509,44 +414,44 @@ class RecipientVc: UIViewController{
     }
     
     func fetchMP4VideoURL(videoURI: String, accessToken: String, completion: @escaping (String?) -> Void) {
-     let url = URL(string: "https://api.vimeo.com\(videoURI)")! // e.g. /videos/12345678
-     var request = URLRequest(url: url)
-     request.httpMethod = "GET"
-     request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-     request.setValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
-     
-     URLSession.shared.dataTask(with: request) { data, response, error in
-     guard let data = data else {
-     print("❌ Error fetching video info: \(error?.localizedDescription ?? "Unknown error")")
-     completion(nil)
-     return
-     }
-     
-     do {
-     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-     let files = (json["download"] as? [[String: Any]]) ?? (json["files"] as? [[String: Any]]) {
-     
-     for file in files {
-     if let quality = file["quality"] as? String,
-     let link = file["link"] as? String,
-     quality == "source" || quality == "hd" || link.hasSuffix(".mp4") {
-     print("✅ Found MP4 URL: \(link)")
-     completion(link)
-     return
-     }
-     }
-     
-     print("❌ No .mp4 file found in files array.")
-     completion(nil)
-     } else {
-     print("❌ Unexpected JSON structure: \(String(data: data, encoding: .utf8) ?? "")")
-     completion(nil)
-     }
-     } catch {
-     print("❌ JSON parsing error: \(error.localizedDescription)")
-     completion(nil)
-     }
-     }.resume()
+        let url = URL(string: "https://api.vimeo.com\(videoURI)")! // e.g. /videos/12345678
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/vnd.vimeo.*+json;version=3.4", forHTTPHeaderField: "Accept")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("❌ Error fetching video info: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let files = (json["download"] as? [[String: Any]]) ?? (json["files"] as? [[String: Any]]) {
+                    
+                    for file in files {
+                        if let quality = file["quality"] as? String,
+                           let link = file["link"] as? String,
+                           quality == "source" || quality == "hd" || link.hasSuffix(".mp4") {
+                            print("✅ Found MP4 URL: \(link)")
+                            completion(link)
+                            return
+                        }
+                    }
+                    
+                    print("❌ No .mp4 file found in files array.")
+                    completion(nil)
+                } else {
+                    print("❌ Unexpected JSON structure: \(String(data: data, encoding: .utf8) ?? "")")
+                    completion(nil)
+                }
+            } catch {
+                print("❌ JSON parsing error: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }.resume()
     }
     func convertSize(_ sizeInBytes: Int) -> String {
         let kb = 1024.0
@@ -903,7 +808,7 @@ class RecipientVc: UIViewController{
                         completed += 1
                         let progress = (Double(completed) / Double(total)) * 100
                         CircularProgressLoader.shared.updateProgress(to: progress)
-    
+                        
                         if completed == total {
                             CircularProgressLoader.shared.hide()
                             // Do something with uploadedURLs if needed
@@ -1291,7 +1196,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                     speficBtnName.isHidden = !(selectedSections.count == 1)
                 }
                 spaceView.isHidden = !selectSubject.isHidden
-               
+                
             }
             
         case recipeint_tabBarName.Staff:
@@ -1819,18 +1724,18 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
                 case.success(let succesmessage) :
                     
                     if succesmessage.status == true {                        DispatchQueue.main.async { [self] in
-                            CircularProgressLoader.shared.hide()
-                            
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) { [self] in
-                                    gotoDashboard()
-                                }
-                            
-                        }
+                        CircularProgressLoader.shared.hide()
+                        
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: AlertstringFile.Success,
+                                message: succesmessage.message ?? "",
+                                on: self
+                            ) { [self] in
+                                gotoDashboard()
+                            }
+                        
+                    }
                     }else {
                         
                         DispatchQueue.main.async {
