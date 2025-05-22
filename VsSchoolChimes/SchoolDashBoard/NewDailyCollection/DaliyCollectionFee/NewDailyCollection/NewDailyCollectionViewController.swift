@@ -44,6 +44,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: calendarView)
+        Backbtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        Backbtn.configureAsBackButton(firstLine: MenuStringFile.DailyCollection, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         applyShadowAndCornerRadius(to: TodateView)
         Backbtn.applyBackButton()
         norecordLbl.isHidden = true
