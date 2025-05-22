@@ -230,7 +230,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmT-ng-G65">
-                    <rect key="frame" x="10" y="69" width="193.66666666666666" height="35"/>
+                    <rect key="frame" x="10" y="69" width="211" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="epb-dE-9ny"/>
                     </constraints>
@@ -239,6 +239,9 @@
                     <state key="normal" title="Geometric Attendance" image="chevron.left" catalog="system">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
+                    <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system" title="Geometric Attendance">
+                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </buttonConfiguration>
                     <connections>
                         <action selector="backBtn:" destination="-1" eventType="touchUpInside" id="1FK-9H-oDT"/>
                     </connections>
