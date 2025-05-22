@@ -210,10 +210,34 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
-            headerView.classLbl.text = PendingReports?[section].category
-            headerView.amountLbl.text = PendingReports?[section].total
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
+            return nil
+        }
+
+        headerView.classLbl.isHidden = false
+        headerView.classLbl.text = PendingReports?[section].category ?? ""
+        headerView.amountLbl.text = PendingReports?[section].total ?? "0"
+
         return headerView
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let isLastSection = section == (PendingReports?.count ?? 0) - 1
+        guard isLastSection else { return nil }
+
+        guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
+            return nil
+        }
+
+        footerView.classLbl.isHidden = true // Hide class label
+        footerView.amountLbl.text = "Total Pending: \(PendingReports?[section].total_pending ?? "0")"
+
+        return footerView
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        let isLastSection = section == (PendingReports?.count ?? 0) - 1
+        return isLastSection ? 50 : 0.01
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
