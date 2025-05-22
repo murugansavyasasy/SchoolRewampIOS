@@ -38,8 +38,8 @@ class StrengthTvCell: UITableViewCell {
         SideBtn.isHidden = true
         setupBarChart()
         
-        let shortLabels = ["Mahatma Gandhi", "Jawaharlal Nehru", "APJ Abdul Kalam", "Bhimrao Ramji Ambedkar", "Kumaraswami Kamaraj","Lal Bahadur Srivastava Shastri"]
-        let shortSectionCounts = [32, 47, 30, 62, 54,39]
+//        let shortLabels = ["Mahatma Gandhi", "Jawaharlal Nehru", "APJ Abdul Kalam", "Bhimrao Ramji Ambedkar", "Kumaraswami Kamaraj","Lal Bahadur Srivastava Shastri"]
+//        let shortSectionCounts = [32, 47, 30, 62, 54,39]
         //setBarChartData(withLabels: shortLabels, sectionCounts: shortSectionCounts)
 //        let longLabels = ["Abdulkalamqwertyudrftg", "Mahatma Gandhi", "Nikola Tesla", "Albert Einstein"]
 //        let longSectionCounts = [25, 35, 45, 55]
@@ -173,6 +173,9 @@ class StrengthTvCell: UITableViewCell {
         
         // Disable legend
         barChartView.legend.enabled = false
+        
+        barChartView.highlightPerTapEnabled = false
+        barChartView.highlightPerDragEnabled = false
     }
 
    func setBarChartData(withLabels labels: [String], sectionCounts: [Int]) {
