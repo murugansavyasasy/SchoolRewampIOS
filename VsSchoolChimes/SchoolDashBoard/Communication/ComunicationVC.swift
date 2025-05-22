@@ -99,9 +99,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     @IBOutlet weak var radio2: UIButton!
     @IBOutlet weak var radio1: UIButton!
     @IBOutlet weak var voiceStackview: UIStackView!
-    
     @IBOutlet weak var addfile: UIButton!
-    
     @IBOutlet weak var messageSendTime: UILabel!
     @IBOutlet weak var voiceTiming: UILabel!
     @IBOutlet weak var Timinglbl: UILabel!

@@ -8,10 +8,10 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     func date(date: String) {
         if dateSelection == true{
             fromLbl.text = date
-//            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
+            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
         }else{
             todateLbl.text = date
-//            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
+            daily_collectionApi(type: String(segmentName.selectedSegmentIndex+1))
         }
     }
     

@@ -17,6 +17,8 @@
                 <outlet property="acidmicYrLbl" destination="fbB-vc-bQn" id="dG0-SO-A5E"/>
                 <outlet property="allbtnName" destination="PV0-F8-PqL" id="f1V-Pb-vEI"/>
                 <outlet property="chooseDefaultLbl" destination="6Mc-t8-Zaf" id="8Po-7x-Xlq"/>
+                <outlet property="chooseUrSchoolLbl" destination="E4c-gw-60G" id="Zsb-gv-j4u"/>
+                <outlet property="headerSchoolLbl" destination="QhU-Fx-QLv" id="JXp-gC-eVm"/>
                 <outlet property="listTable" destination="d71-Gb-zpY" id="rVe-S1-jO7"/>
                 <outlet property="noRecordLbl" destination="MKy-uY-QCB" id="k5D-CY-3tT"/>
                 <outlet property="norecordImg" destination="woy-gr-GnA" id="iO3-Nv-dlX"/>

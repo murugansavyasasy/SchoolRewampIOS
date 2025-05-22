@@ -11,6 +11,8 @@ import DropDown
 @available(iOS 14.0, *)
 class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
+    @IBOutlet weak var chooseUrSchoolLbl: UILabel!
+    @IBOutlet weak var headerSchoolLbl: UILabel!
     @IBOutlet weak var radioBtnStack: UIStackView!
     @IBOutlet weak var sendOnlyLbl: UILabel!
     @IBOutlet weak var studentBtnName: UIButton!
@@ -52,7 +54,10 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         setupRadioButton(button: allbtnName)
         setupRadioButton(button: studentBtnName)
         setupRadioButton(button: staffBtnName)
-    
+      
+        chooseUrSchoolLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        headerSchoolLbl.setFont(style: .header, size: FontSize.HeaderSize)
+        
         if come_fromLogin{
             ViewAnimator.hideFade(segmentName)
             ViewAnimator.hideFade(chooseDefaultLbl)
