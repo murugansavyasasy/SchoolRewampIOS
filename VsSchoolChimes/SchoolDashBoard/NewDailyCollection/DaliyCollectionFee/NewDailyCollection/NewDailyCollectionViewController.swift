@@ -1,14 +1,6 @@
-//
-//  NewDailyCollectionViewController.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 22/04/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
-//
 
 import UIKit
 import DropDown
-//import ObjectMapper
 
 @available(iOS 14.0, *)
 class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, Datepicker {
@@ -52,6 +44,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: calendarView)
+        Backbtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        Backbtn.configureAsBackButton(firstLine: MenuStringFile.DailyCollection, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         applyShadowAndCornerRadius(to: TodateView)
         Backbtn.applyBackButton()
         norecordLbl.isHidden = true
