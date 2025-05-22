@@ -23,7 +23,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     @IBOutlet weak var NodataImage: UIImageView!
     @IBOutlet weak var NoDataLbl: UILabel!
     @IBOutlet weak var EmptyView: UIView!
-    
+    @IBOutlet weak var SearchFilterStack: UIStackView!
     
     var images : [UIImage] = []
     var previousOffset: CGFloat = 0.0
@@ -123,6 +123,8 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
                     NoticeboardData = SuccessMessage.data
                     FilteredData = NoticeboardData
                     SearchData = NoticeboardData
+                    NoDataLbl.text = SuccessMessage.status == false ? SuccessMessage.message : "No Data Found"
+                    SearchFilterStack.isHidden = SearchData?.isEmpty ?? false
                     NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
                     NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
                     EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
@@ -130,7 +132,14 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
                 }
                 
             case .failure(let error):
-                print("Error: \(error.localizedDescription)")
+                
+                DispatchQueue.main.async { [self] in
+                    SearchFilterStack.isHidden = true
+                    NodataImage.isHidden = false
+                    NoDataLbl.isHidden = false
+                    NoDataLbl.text = error.localizedDescription
+                    print("Error: \(error.localizedDescription)")
+                }
             }
         }
     }

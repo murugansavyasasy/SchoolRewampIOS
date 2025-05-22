@@ -130,6 +130,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         }
         
         SearchAttachments = filteredAttachments
+        NodataLbl.text = "No Data Found"
         NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
         NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
         EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
@@ -165,7 +166,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                         
                     }else{
                         
-                        self.hideView(ishide: false)
+                     //   self.hideView(ishide: false)
                         self.NodataLbl.text = response.message
                     }
                 case .failure(let error):
@@ -255,6 +256,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             ($0.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
             ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||  ($0.date?.lowercased().contains(searchText.lowercased()) ?? false)
         }
+        NodataLbl.text = "No Data Found"
         NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
         NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
         EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
