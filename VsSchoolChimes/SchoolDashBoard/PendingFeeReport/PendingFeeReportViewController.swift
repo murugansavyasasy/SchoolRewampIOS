@@ -213,9 +213,10 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
             return nil
         }
-
+        headerView.headerFullview.backgroundColor = UIColor.gradient1
         headerView.classLbl.isHidden = false
         headerView.classLbl.text = PendingReports?[section].category ?? ""
+        headerView.amountLbl.textColor = .black
         headerView.amountLbl.text = PendingReports?[section].total ?? "0"
 
         return headerView
@@ -231,7 +232,8 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
 
         footerView.classLbl.isHidden = true // Hide class label
         footerView.amountLbl.text = "Total Pending: \(PendingReports?[section].total_pending ?? "0")"
-
+        footerView.amountLbl.textColor = .button
+        footerView.headerFullview.backgroundColor = .clear
         return footerView
     }
 

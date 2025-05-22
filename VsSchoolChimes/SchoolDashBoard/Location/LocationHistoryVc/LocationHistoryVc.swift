@@ -294,6 +294,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.toDateLbl.isHidden = false
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
+        cell.attendanceTypeLbl.text = attendanceData?.designation
         //                  noRecordLbl.isHidden = true
         cell.namelbl.text = attendanceData?.name
         if let attendanceDict = attendanceData?.attendance_type {
@@ -374,6 +375,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
         vc.selected_staff_id = SearchResults?[indexPath.row].staff_id ?? ""
+        vc.date = SearchResults?[indexPath.row].date ?? ""
+        vc.roll = SearchResults?[indexPath.row].role ?? ""
+        vc.user = SearchResults?[indexPath.row].name
         present(vc, animated: true)
     }
     
