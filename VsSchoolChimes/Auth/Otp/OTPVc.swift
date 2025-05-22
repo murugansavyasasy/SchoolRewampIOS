@@ -250,13 +250,11 @@ class OTPVc: UIViewController {
     
     
     func Validate_OTP(mobileNumber : String , otp : String) {
-        let secureID = SecureIDManager.getSecureID()
+       
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
                 COMMON_PARAMETER.mobile_number :  mobileNumber,
-                OTP_PARAMETER.otp :  otp,
-                COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
-                DeviceTokenStringFile.secure_id : secureID
+                OTP_PARAMETER.otp :  otp
                 
             ], type: ApitTypeSringFile.POST, token: ServiceUrl.token) { [self] (
                 result: Result<ValidateOTPSuc,
