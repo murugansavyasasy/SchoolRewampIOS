@@ -20,6 +20,7 @@
                 <outlet property="NameLbl" destination="R17-G6-HYv" id="w2B-Lr-2Ko"/>
                 <outlet property="NoDataLbl" destination="Q6R-8e-E9O" id="ZqD-Sw-zfI"/>
                 <outlet property="NodataImage" destination="IIr-vX-J2O" id="1Lw-r4-e4r"/>
+                <outlet property="SearchFilterStack" destination="VAb-Ih-Dkl" id="dCR-c2-POO"/>
                 <outlet property="StandardLbl" destination="ITA-pO-r3W" id="YbU-xJ-qly"/>
                 <outlet property="backBtn" destination="RAF-MZ-6Sl" id="q8F-pi-5dS"/>
                 <outlet property="bgView" destination="NQG-kl-22B" id="P15-GF-jpw"/>
