@@ -166,51 +166,5 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "49A2D638-93B0-40D8-8B9F-38A783EFBE62"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Location/LocationReportVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "Geometric_Staff_Attendance_Report()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "49A2D638-93B0-40D8-8B9F-38A783EFBE62 - c51be978fe20491b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "School_Chimes.LocationReportVC.Geometric_Staff_Attendance_Report() -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Location/LocationReportVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "110"
-                  endingLineNumber = "110">
-               </Location>
-               <Location
-                  uuid = "49A2D638-93B0-40D8-8B9F-38A783EFBE62 - d79f73d93cafddd2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.StaffAttendanceResponse, Swift.Error&gt;) -&gt; () in School_Chimes.LocationReportVC.Geometric_Staff_Attendance_Report() -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/Location/LocationReportVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "114"
-                  endingLineNumber = "114">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

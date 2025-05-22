@@ -197,7 +197,6 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         cell.StatusLbl.layer.masksToBounds = true
         
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
-        //        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type?
         if let attendanceDict = AttendanceDetails?[indexPath.row].attendance_type{
             
             if attendanceDict.count != 1 {
@@ -205,15 +204,15 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
                 let values = Array(attendanceDict.values)
                 if keys.indices.contains(0), values.indices.contains(0) {
                     cell.prestType.text = keys[0]
-                    let status = values[0] == "P" ? "Present":"Apsent"
+                    let status = values[0] == "P" ? "Present":"Absent"
                     cell.StatusLbl.text = status
                     let statusclr = values[0] == "P" ? UIColor.systemGreen : UIColor.systemRed
                     cell.presentStatus.backgroundColor = statusclr
                 }
                 if keys.indices.contains(1), values.indices.contains(1) {
                     cell.opsentType.text = keys[1]
-                    let status = values[1] == "P" ? "Present":"Apsent"
-                    cell.opsentLbl.text = values[1]
+                    let status = values[1] == "P" ? "Present":"Absent"
+                    cell.opsentLbl.text = status
                     let statusclr = values[1] == "P" ? UIColor.systemGreen : UIColor.systemRed
                     cell.opsentStus.backgroundColor = statusclr
                 }
@@ -222,7 +221,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
                 
             }else if let firstItem = attendanceDict.first {
                 let key = firstItem.key
-                let value = firstItem.value == "P" ? "Present":"Apsent"
+                let value = firstItem.value == "P" ? "Present":"Absent"
                 cell.prestType.text = key
                 cell.StatusLbl.text = value
                 cell.presentStatus.isHidden = false
@@ -278,6 +277,8 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
         vc.selected_staff_id = AttendanceDetails?[indexPath.row].staff_id ?? ""
+        vc.user = AttendanceDetails?[indexPath.row].name
+        //        vc.roll = AttendanceDetails?[indexPath.row].
         present(vc, animated: true)
     }
     
