@@ -250,7 +250,7 @@ class OTPVc: UIViewController {
     
     
     func Validate_OTP(mobileNumber : String , otp : String) {
-       
+        
         APIService.shared
             .makeApi(url: ServiceUrl.validate_validate_otp, parameters: [
                 COMMON_PARAMETER.mobile_number :  mobileNumber,
@@ -294,10 +294,10 @@ class OTPVc: UIViewController {
                             }
                             else {
                                 
-                                
+                                let password = UserDefaultFileManager.getLoginCredentials()?.pwd
                                 UserDefaultFileManager
                                     .saveLoginCredentials(
-                                        mobile_number:mobile_number ?? "", pwd: ""
+                                        mobile_number:mobile_number ?? "", pwd: password ?? ""
                                     )
                                 
                                 if(UserDefaultFileManager
