@@ -450,7 +450,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             case .success(let successMessage):
                 DispatchQueue.main.async { [self] in
                     if successMessage.status == true {
-                        print(successMessage)
                         staffAttendanceDetails = successMessage.data
                         SearchResults = staffAttendanceDetails
                         seachHeight.constant = 0
