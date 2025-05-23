@@ -20,6 +20,7 @@
                 <outlet property="norecordLbl" destination="OHj-Q1-eNO" id="RcZ-6K-jFR"/>
                 <outlet property="segmentName" destination="lMa-1r-up3" id="0vH-ZW-hBm"/>
                 <outlet property="todateLbl" destination="ivg-1d-QRx" id="cVs-c2-H6U"/>
+                <outlet property="totalAmountLbl" destination="XFW-wH-5fZ" id="ebA-lc-zG9"/>
                 <outlet property="tv" destination="MtD-R9-d7q" id="pKn-Yy-d1p"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -141,7 +142,7 @@
                                     </constraints>
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="MtD-R9-d7q">
-                                    <rect key="frame" x="0.0" y="129.99999999999997" width="393" height="499.66666666666663"/>
+                                    <rect key="frame" x="0.0" y="167.99999999999997" width="393" height="461.66666666666663"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHj-Q1-eNO">
@@ -151,9 +152,10 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lMa-1r-up3">
-                                    <rect key="frame" x="10" y="85" width="373" height="41"/>
+                                    <rect key="frame" x="10" y="85" width="373" height="36"/>
+                                    <color key="backgroundColor" name="AttendenceColor"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="x3x-4V-mIB"/>
+                                        <constraint firstAttribute="height" constant="35" id="x3x-4V-mIB"/>
                                     </constraints>
                                     <segments>
                                         <segment title="CATEGORY"/>
@@ -164,20 +166,31 @@
                                         <action selector="segmentActBtn:" destination="-1" eventType="valueChanged" id="pan-gR-NZp"/>
                                     </connections>
                                 </segmentedControl>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFW-wH-5fZ">
+                                    <rect key="frame" x="334" y="139.99999999999997" width="39" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="18" id="4ip-Y8-oOb"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                    <color key="textColor" name="ButtonColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="lMa-1r-up3" secondAttribute="trailing" constant="10" id="2xs-js-UHk"/>
+                                <constraint firstItem="MtD-R9-d7q" firstAttribute="top" secondItem="XFW-wH-5fZ" secondAttribute="bottom" constant="10" id="D7j-Ud-ZWg"/>
                                 <constraint firstItem="lMa-1r-up3" firstAttribute="top" secondItem="X0d-zp-SKZ" secondAttribute="bottom" constant="10" id="VVK-Io-Lm0"/>
                                 <constraint firstAttribute="bottom" secondItem="MtD-R9-d7q" secondAttribute="bottom" id="WRj-Sq-Q5F"/>
                                 <constraint firstItem="X0d-zp-SKZ" firstAttribute="leading" secondItem="Z4w-8S-C6F" secondAttribute="leading" id="YFZ-R4-HFb"/>
                                 <constraint firstItem="OHj-Q1-eNO" firstAttribute="centerY" secondItem="Z4w-8S-C6F" secondAttribute="centerY" id="c09-pN-eB9"/>
                                 <constraint firstItem="X0d-zp-SKZ" firstAttribute="top" secondItem="Z4w-8S-C6F" secondAttribute="top" constant="5" id="iK2-Dg-DlS"/>
-                                <constraint firstItem="MtD-R9-d7q" firstAttribute="top" secondItem="lMa-1r-up3" secondAttribute="bottom" constant="5" id="jjV-Zz-UAT"/>
                                 <constraint firstAttribute="trailing" secondItem="MtD-R9-d7q" secondAttribute="trailing" id="mxG-Cw-ajZ"/>
                                 <constraint firstItem="OHj-Q1-eNO" firstAttribute="centerX" secondItem="Z4w-8S-C6F" secondAttribute="centerX" id="nAW-K8-034"/>
                                 <constraint firstAttribute="trailing" secondItem="X0d-zp-SKZ" secondAttribute="trailing" id="oQS-6O-dRi"/>
                                 <constraint firstItem="MtD-R9-d7q" firstAttribute="leading" secondItem="Z4w-8S-C6F" secondAttribute="leading" id="sxE-he-PgQ"/>
+                                <constraint firstItem="XFW-wH-5fZ" firstAttribute="top" secondItem="lMa-1r-up3" secondAttribute="bottom" constant="20" id="vTq-1C-vxg"/>
+                                <constraint firstAttribute="trailing" secondItem="XFW-wH-5fZ" secondAttribute="trailing" constant="20" id="wcO-0g-1SS"/>
                                 <constraint firstItem="lMa-1r-up3" firstAttribute="leading" secondItem="Z4w-8S-C6F" secondAttribute="leading" constant="10" id="xuc-AZ-QI6"/>
                             </constraints>
                         </view>
@@ -233,6 +246,12 @@
     <resources>
         <image name="calender" width="512" height="512"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <namedColor name="AttendenceColor">
+            <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonColor">
+            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
