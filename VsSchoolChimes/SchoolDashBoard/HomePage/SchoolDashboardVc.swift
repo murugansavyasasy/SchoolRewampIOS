@@ -71,6 +71,11 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        NotificationCenter.default.addObserver(self,
+//                                                  selector: #selector(handlePushNotification(_:)),
+//                                                  name: .notificationTapped,
+//                                                  object: nil)
+        
         if(staff_roll == PriorityType.is_staff){
             SchoolNameLabel.text = staffDetails?.school_name
             AddressLabel.text = staffDetails?.school_address
@@ -146,6 +151,16 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         schoolLogoImg.isUserInteractionEnabled = true
     }
     
+    
+//    @objc func handlePushNotification(_ notification: Notification) {
+//        guard let userInfo = notification.userInfo,
+//              let menuId = userInfo["menu_id"] as? String,
+//              let messageId = userInfo["message_id"] as? String else { return }
+//
+//        // Navigate to the correct menu based on menuId
+//        navigateToMenu(with: menuId, messageId: messageId)
+//    }
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -372,6 +387,10 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name}
                     let img = UIImage(named: filteredItems.first?.name ?? "")
                     cell.MenuImgView.image = img
+                }
+                cell.roundview.isHidden = true
+                if filteredMenu_details?[indexPath.row].unread_count ?? 0 > 0 {
+                    cell.roundview.isHidden = false
                 }
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label

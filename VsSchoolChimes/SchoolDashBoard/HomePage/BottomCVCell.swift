@@ -15,6 +15,7 @@ class BottomCVCell: UICollectionViewCell {
     @IBOutlet weak var shimmersViewss: CustomShimmerView!
     
     
+    @IBOutlet weak var roundview: UIView!
     @IBOutlet weak var MenuLbl: UILabel!
     @IBOutlet weak var MenuImgView: UIImageView!
     
@@ -25,6 +26,7 @@ class BottomCVCell: UICollectionViewCell {
             hiddenui(true)
             animationview()
             GradientView.layer.cornerRadius = Colornames.CORadius10
+        roundview.layer.cornerRadius = roundview.frame.width/2
         }
         
         override func prepareForReuse() {

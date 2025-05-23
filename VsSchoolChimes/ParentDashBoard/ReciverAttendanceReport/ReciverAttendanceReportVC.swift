@@ -9,21 +9,26 @@ import UIKit
 
 class ReciverAttendanceReportVC: UIViewController {
     
+    @IBOutlet weak var noRecordLbl: UILabel!
+    @IBOutlet weak var noResordStack: UIStackView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var TV: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
     @IBOutlet weak var StandardLbl: UILabel!
-    let date = 11
-    let day = ["Monday","Tuesday","Wednesday","Thursday","Friday"]
-    let present = [true,true,false,true,false]
+   
     var childDetails = UserDefaultFileManager.get_child_Details()
     var attendanceReportData : [StudentAttendance]?
+    let dateFormatter = DateFormatter()
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
         searchBar.applyRightTxt()
+        NameLbl.text = childDetails?.name
+        StandardLbl.text = (
+            childDetails?.standard_name ?? ""
+        ) + " - " + (childDetails?.section_name ?? "")
         searchBar.placeholder = CommonStringFile.Search.translated()
         StyleAndTranslate()
         CellRigister()
@@ -67,10 +72,31 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = TV.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
         
-        cell.DateLbl.text = String (date + indexPath.row)
-        cell.dayLbl.text = day[indexPath.row]
+        let dateStr = attendanceReportData?[indexPath.row].date ?? ""
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+
+        if let date = inputFormatter.date(from: dateStr) {
+            let outputFormatter = DateFormatter()
+            
+            // Get full month name
+            outputFormatter.dateFormat = "MMMM"
+            let monthName = outputFormatter.string(from: date)
+            cell.monthLbl.text = monthName
+
+            // Get day only
+            let calendar = Calendar.current
+            let day = calendar.component(.day, from: date)
+            cell.DateLbl.text = "\(day)"
+        }
+        
+        let formattedDateString = dateFormatter.convertDate(
+            attendanceReportData?[indexPath.row].date ?? ""
+        ) ?? ""
+        cell.TakenLbl.text = formattedDateString
+        cell.dayLbl.text = attendanceReportData?[indexPath.row].day
         cell.statusLbl.textColor = .white
-        if present[indexPath.row] == true {
+        if attendanceReportData?[indexPath.row].type == "present" {
             cell.statusLbl.text = CommonStringFile.Present.translated()
             cell.StatusView.backgroundColor = .systemGreen
         }else{
@@ -101,7 +127,7 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
                 if SuccessMessage.status == true {
                     
                     DispatchQueue.main.async { [self] in
-                        
+                        noResordStack.isHidden = true
                         attendanceReportData = SuccessMessage.data ?? []
                         TV.reloadData()
                     }
@@ -109,8 +135,8 @@ extension ReciverAttendanceReportVC : UITableViewDelegate,UITableViewDataSource{
                     
                     DispatchQueue.main.async { [self] in
                         
-                       
-                        TV.reloadData()
+                        noResordStack.isHidden = false
+                        noRecordLbl.text = SuccessMessage.message ?? ""
                     }
                 }
                 

@@ -103,13 +103,18 @@ class EventResiverVC: UIViewController, SelectNotice{
         dismiss(animated: true)
     }
     @IBAction func selectionController(_ sender: UISegmentedControl) {
+        section = sender.selectedSegmentIndex
         if sender.selectedSegmentIndex != 0{
+            shouldShowFooter = false
+            setupTableFooter()
             event_holiday()
         }else{
+            shouldShowFooter = true
+            setupTableFooter()
             GetEvent()
         }
-        section = sender.selectedSegmentIndex
-        tableview.reloadData()
+        
+       
     }
   
     func GetEvent() {
@@ -182,7 +187,7 @@ class EventResiverVC: UIViewController, SelectNotice{
                         self.eventHolidayData = successMessage.data
                         print("eventHolidayData",eventHolidayData)
                         self.tableview.reloadData()
-                        if self.event?.count == 0{
+                        if self.eventHolidayData?.count == 0{
                             self.noDataLbl.text = successMessage.message
                             self.noDataLbl.isHidden = false
                             self.noDataImg.isHidden = false
@@ -193,7 +198,8 @@ class EventResiverVC: UIViewController, SelectNotice{
                         }else{
                             self.noDataLbl.isHidden = true
                             self.noDataImg.isHidden = true
-                            self.searchHeight.constant = 56
+                            self.searchHeight.constant = 0
+                            self.searchbar.isHidden = true
                             self.tableview.isHidden = false
                         }
                     case .failure(let error):
@@ -256,11 +262,26 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
             cell.TakenLbl.text = eventHolidayData?[indexPath.row].name
+            let dateStr = eventHolidayData?[indexPath.row].date ?? ""
+            let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = "yyyy-MM-dd"
+
+            if let date = inputFormatter.date(from: dateStr) {
+                let outputFormatter = DateFormatter()
+                
+                // Get full month name
+                outputFormatter.dateFormat = "MMM"
+                let monthName = outputFormatter.string(from: date)
+                cell.monthLbl.text = monthName
+
+                // Get day only
+                let calendar = Calendar.current
+                let day = calendar.component(.day, from: date)
+                cell.DateLbl.text = "\(day)"
+            }
             cell.MonthView.backgroundColor =  UIColor(named: "Red")
             cell.DateView.backgroundColor =  .white
             cell.DateView.layer.borderWidth = 0.5
-            cell.monthLbl.text = "JAN"
-            cell.DateLbl.text = "14"
             cell.StatusView.isHidden = true
             return cell
         }
@@ -331,6 +352,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
     }
+    
     
     // Method to load the footer from nib and set it as tableFooterView
     func setupTableFooter() {

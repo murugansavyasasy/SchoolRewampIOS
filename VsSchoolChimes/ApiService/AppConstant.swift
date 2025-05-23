@@ -70,7 +70,7 @@ struct ServiceUrl{
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     static let  admin_api_get_school_strength = "admin/api/get-school-strength"
     static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type" 
-    static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/attendance/get-absent-dates-for-child"
+    static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/api/attendance/get-absent-dates-for-child"
     
     
 }

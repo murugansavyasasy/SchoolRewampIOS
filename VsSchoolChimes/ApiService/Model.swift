@@ -638,6 +638,7 @@ struct EventHolidayData: Codable{
     var name : String?
     var year : String?
     var date : String?
+    
 }
 
 
@@ -686,7 +687,8 @@ struct StudentAttendanceResponse: Codable {
 }
 
 struct StudentAttendance: Codable {
-    let Date : String?
-    let Day : String?
+    let date : String?
+    let day : String?
+    let type : String?
     let is_Archive : Bool?
 }

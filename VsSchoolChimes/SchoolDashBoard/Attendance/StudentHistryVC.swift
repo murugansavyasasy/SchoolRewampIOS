@@ -12,7 +12,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     func statusUpdate(status: Bool, index: Int) {
         guard let studentId = studentsDetails?[index].id else { return }
-        print("statusstatusstatus",status)
         // Update isAbsent status
         studentsDetails?[index].isAbsent = status
         filterData?[index].isAbsent = status
@@ -317,28 +316,32 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
-        
-        guard !selected_student.isEmpty else {
-            alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
-                on: self
-            )
-            return
-        }
-        
-        switch Menu_id.staffSelectedMenuId{
-        case Menu_id.communicationMenuId:
-            SendingCommunicationFlow()
+        if Menu_id.attendance == Menu_id.staffSelectedMenuId {
             
-        case Menu_id.homeWorkMenuId:
-            handleHomeworkFlow()
+            markAttendaceApi()
+        }else{
+            guard !selected_student.isEmpty else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_target,
+                    on: self
+                )
+                return
+            }
             
-        case Menu_id.AttachmentMenuId:
-            SendingAttachmentFlow()
-            
-        default:
-            print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
+            switch Menu_id.staffSelectedMenuId{
+            case Menu_id.communicationMenuId:
+                SendingCommunicationFlow()
+                
+            case Menu_id.homeWorkMenuId:
+                handleHomeworkFlow()
+                
+            case Menu_id.AttachmentMenuId:
+                SendingAttachmentFlow()
+               
+            default:
+                print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
+            }
         }
     }
     
