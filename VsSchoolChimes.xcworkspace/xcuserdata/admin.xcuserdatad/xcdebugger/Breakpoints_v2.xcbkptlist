@@ -153,22 +153,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9F4AD569-941B-48DC-97D8-74149E0CDF4F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Utils/Extentions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "596"
-            endingLineNumber = "596"
-            landmarkName = "downloadFile(from:folderName:fileName:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A19F7791-C113-45B7-A7B8-1A7C03186C65"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -179,22 +163,6 @@
             startingLineNumber = "119"
             endingLineNumber = "119"
             landmarkName = "GetHomeWorkReport()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F9FC4488-AD69-4E58-9F32-33C59782DA0D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/SchoolDashBoard/Location/LocationHistoryVc/LocationHistoryVc.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
-            landmarkName = "geometric_principal_attendance_report()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

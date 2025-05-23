@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -19,6 +19,7 @@
                 <outlet property="noRecordsView" destination="Gtt-gc-der" id="rr3-3S-LnP"/>
                 <outlet property="nodataLbl" destination="KYc-Ym-UI5" id="Dzy-EZ-lSy"/>
                 <outlet property="switchReport" destination="Yhr-jh-2MZ" id="xAE-A8-SPS"/>
+                <outlet property="totalfeeLbl" destination="0Sj-3D-WNp" id="BsZ-C0-E5a"/>
                 <outlet property="tv" destination="nId-F7-oOb" id="Qgt-dS-W3I"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -29,13 +30,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNb-PB-iv6">
-                    <rect key="frame" x="0.0" y="104" width="393" height="714"/>
+                    <rect key="frame" x="0.0" y="163" width="393" height="621"/>
                     <subviews>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Yhr-jh-2MZ">
-                            <rect key="frame" x="30" y="15" width="333" height="41"/>
+                            <rect key="frame" x="30" y="15" width="333" height="36"/>
                             <color key="backgroundColor" name="AttendenceColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="NNg-g5-4Sm"/>
+                                <constraint firstAttribute="height" constant="35" id="NNg-g5-4Sm"/>
                             </constraints>
                             <segments>
                                 <segment title="CATEGORY WISE"/>
@@ -46,7 +47,7 @@
                             </connections>
                         </segmentedControl>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VPP-Ra-zfM">
-                            <rect key="frame" x="50" y="75" width="293" height="35"/>
+                            <rect key="frame" x="50" y="70" width="293" height="35"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Academic Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F0L-5I-AGT">
                                     <rect key="frame" x="10" y="0.0" width="143" height="35"/>
@@ -109,21 +110,27 @@
                             </constraints>
                         </view>
                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="Gtt-gc-der">
-                            <rect key="frame" x="10" y="130" width="373" height="300"/>
+                            <rect key="frame" x="10" y="125" width="373" height="300"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="300" id="U9I-au-sRc"/>
                             </constraints>
                         </imageView>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYc-Ym-UI5">
-                            <rect key="frame" x="10" y="440" width="373" height="21"/>
+                            <rect key="frame" x="10" y="435" width="373" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nId-F7-oOb">
-                            <rect key="frame" x="0.0" y="120" width="393" height="589"/>
+                            <rect key="frame" x="0.0" y="143" width="393" height="473"/>
                             <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </tableView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Sj-3D-WNp">
+                            <rect key="frame" x="334" y="115" width="39" height="18"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                            <color key="textColor" name="ButtonColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -135,18 +142,20 @@
                         <constraint firstAttribute="trailing" secondItem="nId-F7-oOb" secondAttribute="trailing" id="Hgm-BZ-yhK"/>
                         <constraint firstAttribute="trailing" secondItem="VPP-Ra-zfM" secondAttribute="trailing" constant="50" id="Igt-zJ-Wox"/>
                         <constraint firstItem="KYc-Ym-UI5" firstAttribute="leading" secondItem="Gtt-gc-der" secondAttribute="leading" id="Jyb-4s-XbT"/>
+                        <constraint firstItem="nId-F7-oOb" firstAttribute="top" secondItem="0Sj-3D-WNp" secondAttribute="bottom" constant="10" id="NZQ-yS-OIe"/>
                         <constraint firstItem="Yhr-jh-2MZ" firstAttribute="top" secondItem="yNb-PB-iv6" secondAttribute="top" constant="15" id="SCD-gF-fnj"/>
                         <constraint firstItem="KYc-Ym-UI5" firstAttribute="top" secondItem="Gtt-gc-der" secondAttribute="bottom" constant="10" id="Trq-7d-D0v"/>
                         <constraint firstAttribute="trailing" secondItem="Yhr-jh-2MZ" secondAttribute="trailing" constant="30" id="Ts5-Th-O1K"/>
-                        <constraint firstItem="nId-F7-oOb" firstAttribute="top" secondItem="VPP-Ra-zfM" secondAttribute="bottom" constant="10" id="WAi-BX-5og"/>
+                        <constraint firstItem="0Sj-3D-WNp" firstAttribute="top" secondItem="VPP-Ra-zfM" secondAttribute="bottom" constant="10" id="TsE-Uk-8LM"/>
                         <constraint firstItem="Gtt-gc-der" firstAttribute="leading" secondItem="yNb-PB-iv6" secondAttribute="leading" constant="10" id="WpA-Fk-oLS"/>
+                        <constraint firstAttribute="trailing" secondItem="0Sj-3D-WNp" secondAttribute="trailing" constant="20" id="g0t-av-fQR"/>
                         <constraint firstItem="KYc-Ym-UI5" firstAttribute="trailing" secondItem="Gtt-gc-der" secondAttribute="trailing" id="kT4-jS-0Tj"/>
                         <constraint firstItem="Yhr-jh-2MZ" firstAttribute="leading" secondItem="yNb-PB-iv6" secondAttribute="leading" constant="30" id="mm3-WU-4lr"/>
                         <constraint firstItem="VPP-Ra-zfM" firstAttribute="top" secondItem="Yhr-jh-2MZ" secondAttribute="bottom" constant="20" id="tm2-KZ-l02"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4o5-Ju-5Lk">
-                    <rect key="frame" x="0.0" y="64" width="393" height="35"/>
+                    <rect key="frame" x="0.0" y="123" width="393" height="35"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mXy-kP-c88">
                             <rect key="frame" x="10" y="0.0" width="373" height="35"/>
@@ -195,6 +204,9 @@
         <image name="down-arrow" width="512" height="512"/>
         <namedColor name="AttendenceColor">
             <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ButtonColor">
+            <color red="0.88599997758865356" green="0.41999998688697815" blue="0.14900000393390656" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="topBackgroundCLr">
             <color red="0.65098039215686276" green="0.85490196078431369" blue="0.87450980392156863" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

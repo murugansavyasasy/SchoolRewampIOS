@@ -389,9 +389,9 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     cell.MenuImgView.image = img
                 }
                 cell.roundview.isHidden = true
-                if filteredMenu_details?[indexPath.row].unread_count ?? 0 > 0 {
-                    cell.roundview.isHidden = false
-                }
+//                if filteredMenu_details?[indexPath.row].unread_count ?? 0 > 0 {
+//                    cell.roundview.isHidden = false
+//                }
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
                 cell.GradientView.backgroundColor = .clr

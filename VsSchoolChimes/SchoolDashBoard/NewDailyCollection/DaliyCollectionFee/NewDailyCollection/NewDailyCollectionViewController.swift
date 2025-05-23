@@ -15,6 +15,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
         }
     }
     
+    @IBOutlet weak var totalAmountLbl: UILabel!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var Backbtn: UIButton!
     @IBOutlet weak var dateViewHeight: NSLayoutConstraint!
@@ -135,10 +136,8 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
 
              let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as! PendingFeeReportTableViewCell
              cell.classLbl.isHidden = true
-             cell.amountLbl.textAlignment = .right
-             cell.amountLbl.text = "Total Collection : \(total)"
-             cell.amountLbl.textColor = .button
-             cell.amountLbl.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+             cell.amountLbl.isHidden = true
+            
              return cell
          }
 
@@ -198,10 +197,15 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                             tv.isHidden = false
                             norecordLbl.isHidden = true
                             DailyCollectionData = successMessage.data ?? []
+                            for  i in 0..<(DailyCollectionData?.count ?? 0){
+                                totalAmountLbl.text = "Total Collection : \(DailyCollectionData?[i].total_collection ?? "")"
+                            }
+                           
                             tv.reloadData()
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
+                            totalAmountLbl.text = ""
                             tv.isHidden = true
                             norecordLbl.isHidden = false
                             norecordLbl.text = successMessage.message
@@ -213,6 +217,7 @@ class NewDailyCollectionViewController: UIViewController,UITableViewDataSource,U
                 case .failure(let error):
                     DispatchQueue.main.async { [self] in
                         tv.isHidden = true
+                        totalAmountLbl.text = ""
                         norecordLbl.isHidden = false
                         norecordLbl.text = error.localizedDescription
                         print(error.localizedDescription)
@@ -269,7 +274,7 @@ extension UIButton {
         // Adjust content and insets
         self.contentHorizontalAlignment = .left
         self.titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
-        self.imageEdgeInsets = UIEdgeInsets(top: -12, left: 0, bottom: 6, right: 0)
+        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 6, right: 0)
         self.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
