@@ -320,6 +320,8 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
         vc.selected_staff_id = AttendanceDetails?[indexPath.row].staff_id ?? ""
+        vc.date = AttendanceDetails?[indexPath.row].date ?? ""
+        vc.roll = AttendanceDetails?[indexPath.row].role ?? ""
         vc.user = AttendanceDetails?[indexPath.row].name
         //        vc.roll = AttendanceDetails?[indexPath.row].
         present(vc, animated: true)
