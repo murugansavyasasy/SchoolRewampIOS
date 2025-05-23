@@ -238,7 +238,11 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         cell.toDateLbl.isHidden = false
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
-        
+        if let role = AttendanceDetails?[indexPath.row].designation,!role.isEmpty{
+            cell.attendanceTypeLbl.text = role
+        }else{
+            cell.attendanceTypeLbl.text =  AttendanceDetails?[indexPath.row].role ?? "Not Mention"
+        }
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
         if let attendanceDict = AttendanceDetails?[indexPath.row].attendance_type{
             

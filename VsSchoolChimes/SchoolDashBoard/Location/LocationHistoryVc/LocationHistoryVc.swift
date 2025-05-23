@@ -294,8 +294,11 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.toDateLbl.isHidden = false
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
-        cell.attendanceTypeLbl.text = attendanceData?.designation
-        //                  noRecordLbl.isHidden = true
+        if let role = attendanceData?.designation,!role.isEmpty{
+            cell.attendanceTypeLbl.text = role
+        }else{
+            cell.attendanceTypeLbl.text =  attendanceData?.role ?? "Not Mention"
+        }
         cell.namelbl.text = attendanceData?.name
         if let attendanceDict = attendanceData?.attendance_type {
             
@@ -331,33 +334,33 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
         
-        if attendanceData?.in_time  != ""{
+//        if attendanceData?.in_time  != ""{
             cell.firstInLbl.isHidden = false
             cell.firstInLbl.text = "Checkin - " + (
-                attendanceData?.in_time ?? ""
+                attendanceData?.in_time ?? "0"
             )
-        }else{
-            
-            cell.firstInLbl.isHidden = true
-        }
+//        }else{
+//            
+//            cell.firstInLbl.isHidden = true
+//        }
         
-        if attendanceData?.out_time  != ""{
+//        if attendanceData?.out_time  != ""{
             cell.toDateLbl.isHidden = false
             cell.toDateLbl.text = "Checkout - " + (
-                attendanceData?.out_time ?? ""
+                attendanceData?.out_time ?? "0"
             )
-        }else{
-            cell.toDateLbl.isHidden = true
-        }
+//        }else{
+//            cell.toDateLbl.isHidden = true
+//        }
         
-        if attendanceData?.working_hours  != ""{
+//        if attendanceData?.working_hours  != ""{
             cell.workingHrsLbl.isHidden = false
             cell.workingHrsLbl.text = "Working Hours - " +  (
-                attendanceData?.working_hours ?? ""
+                attendanceData?.working_hours ?? "0"
             )
-        }else{
-            cell.workingHrsLbl.isHidden = true
-        }
+//        }else{
+//            cell.workingHrsLbl.isHidden = true
+//        }
 
         
         if let components = convertDateComponents(from: attendanceData?.date ?? "") {
@@ -447,6 +450,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             case .success(let successMessage):
                 DispatchQueue.main.async { [self] in
                     if successMessage.status == true {
+                        print(successMessage)
                         staffAttendanceDetails = successMessage.data
                         SearchResults = staffAttendanceDetails
                         seachHeight.constant = 0
