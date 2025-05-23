@@ -235,6 +235,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.senderFeePendingNavigate(from: self)
             case Menu_id.dailyCollection:
                 MenuRedirect.senderDailyCollectionNavigate(from: self)
+            case Menu_id.schoolStrength:
+                 MenuRedirect.senderSchoolStrength(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
