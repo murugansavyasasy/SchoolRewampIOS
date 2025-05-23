@@ -398,6 +398,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     cell.GradientView.animateView(enable: false)
                 }
+                
                 return cell
             }
             
