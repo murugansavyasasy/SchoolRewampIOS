@@ -52,12 +52,12 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         if type == 1 {
         }else{
         }
-//        tv.isHidden = true
+        //        tv.isHidden = true
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
         tv.delegate = self
         tv.dataSource = self
-
+        
     }
     func getacadmicYr(){
         APIService.shared
@@ -187,7 +187,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
             classPendingReportAPI(academicId ?? 0)
         }
     }
-
+    
     @IBAction func backAct() {
         dismiss(animated: true)
     }
@@ -197,11 +197,11 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
+        let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
         let data = PendingReports?[indexPath.section].pending_data
         cell.classLbl.text = data?[indexPath.row].type_name
         cell.amountLbl.text = data?[indexPath.row].amount
-            return cell
+        return cell
         
     }
     
@@ -213,30 +213,34 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
             return nil
         }
-        headerView.headerFullview.backgroundColor = UIColor.gradient1
-        headerView.classLbl.isHidden = false
-        headerView.classLbl.text = PendingReports?[section].category ?? ""
-        headerView.amountLbl.textColor = .black
-        headerView.amountLbl.text = PendingReports?[section].total ?? "0"
-
+        if PendingReports?[section].pending_data?.count != 0{
+            headerView.isHidden = false
+            headerView.headerFullview.backgroundColor = UIColor.gradient1
+            headerView.classLbl.isHidden = false
+            headerView.classLbl.text = PendingReports?[section].category ?? ""
+            headerView.amountLbl.textColor = .black
+            headerView.amountLbl.text = PendingReports?[section].total ?? "0"
+        }else{
+            headerView.isHidden = true
+        }
         return headerView
     }
-
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let isLastSection = section == (PendingReports?.count ?? 0) - 1
         guard isLastSection else { return nil }
-
+        
         guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
             return nil
         }
-
+        
         footerView.classLbl.isHidden = true // Hide class label
         footerView.amountLbl.text = "Total Pending: \(PendingReports?[section].total_pending ?? "0")"
         footerView.amountLbl.textColor = .button
         footerView.headerFullview.backgroundColor = .clear
         return footerView
     }
-
+    
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let isLastSection = section == (PendingReports?.count ?? 0) - 1
         return isLastSection ? 50 : 0.01
@@ -250,5 +254,5 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         return UITableView.automaticDimension
     }
     
-
+    
 }
