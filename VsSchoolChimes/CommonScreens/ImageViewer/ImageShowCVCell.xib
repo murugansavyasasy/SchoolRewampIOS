@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ImageShowCVCell" customModule="VsSchoolChimes" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ImageShowCVCell" customModule="School_Chimes" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -24,9 +24,21 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="orE-VO-tWt">
                                 <rect key="frame" x="10" y="10" width="333" height="699"/>
                             </imageView>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C1t-hS-u9B">
+                                <rect key="frame" x="10" y="10" width="333" height="699"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="C1t-hS-u9B" firstAttribute="leading" secondItem="z7N-BB-Cfg" secondAttribute="leading" constant="10" id="5I6-Xy-nzO"/>
+                            <constraint firstAttribute="trailing" secondItem="C1t-hS-u9B" secondAttribute="trailing" constant="10" id="KBh-ks-NzT"/>
+                            <constraint firstAttribute="bottom" secondItem="C1t-hS-u9B" secondAttribute="bottom" constant="10" id="QyR-EX-bZJ"/>
+                            <constraint firstItem="C1t-hS-u9B" firstAttribute="top" secondItem="z7N-BB-Cfg" secondAttribute="top" constant="10" id="dIL-gS-wpX"/>
                             <constraint firstAttribute="trailing" secondItem="orE-VO-tWt" secondAttribute="trailing" constant="10" id="dWX-4E-gtE"/>
                             <constraint firstItem="orE-VO-tWt" firstAttribute="leading" secondItem="z7N-BB-Cfg" secondAttribute="leading" constant="10" id="f6u-b4-kqA"/>
                             <constraint firstItem="orE-VO-tWt" firstAttribute="top" secondItem="z7N-BB-Cfg" secondAttribute="top" constant="10" id="m6A-Tt-FdL"/>
@@ -45,6 +57,7 @@
             <size key="customSize" width="447" height="709"/>
             <connections>
                 <outlet property="FulView" destination="z7N-BB-Cfg" id="Ouy-HF-ZKM"/>
+                <outlet property="WebView" destination="C1t-hS-u9B" id="drg-YK-iNA"/>
                 <outlet property="imageView" destination="orE-VO-tWt" id="rpI-JG-zWr"/>
             </connections>
             <point key="canvasLocation" x="432.82442748091603" y="219.36619718309859"/>

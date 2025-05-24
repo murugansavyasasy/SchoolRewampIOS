@@ -28,9 +28,12 @@ class ParentDashboardVc: UIViewController {
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
     @IBOutlet weak var scrollCollection: UIScrollView!
-    
     @IBOutlet weak var bottomCv: UICollectionView!
     @IBOutlet weak var userNameLbl: UILabel!
+    @IBOutlet weak var AttenanceReportDefLbl: UILabel!
+    @IBOutlet weak var ViewDetailsBtn: UIButton!
+    @IBOutlet weak var DateLbl: UILabel!
+    
     var filteredItems: [MenuDetail]?
     var getValue : Int!
     var searchItem = 0
@@ -50,6 +53,7 @@ class ParentDashboardVc: UIViewController {
     var isShowingAll = false
     private var firstArray: [String] = []
     private var secondArray: [String] = []
+    let dateFormatter = DateFormatter()
    
     let advertisements = [
         "Ad 1: Special Offer",
@@ -84,7 +88,7 @@ class ParentDashboardVc: UIViewController {
             
         }
         
-        userNameLbl.text = "Hello, " + (childDetails?.name ?? "")
+        userNameLbl.text = childDetails?.name ?? ""
             SchoolNameLabel.text = childDetails?.school_name
         AddressLabel.text = childDetails?.address
         Profileimage.kf.setImage(with: URL(string: childDetails?.profile ?? ""))
@@ -181,13 +185,22 @@ class ParentDashboardVc: UIViewController {
         profileFullview.layer.cornerRadius =  30
         loginDetailView.layer.cornerRadius =  30
        
+//        userNameLbl.textColor = .black
+//        SchoolNameLabel.textColor = .black.withAlphaComponent(0.7)
+//        AddressLabel.textColor = .black.withAlphaComponent(0.7)
         
+        let date = Date()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        DateLbl.text = dateFormatter.convertDate(dateFormatter.string(from: date))
         
         //MARK: Set Font Style
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
-        
+        userNameLbl.setFont(style: .header, size: 16)
+        AttenanceReportDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DateLbl.setFont(style: .body, size: FontSize.BodySize)
+        ViewDetailsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         //MARK: Translate
         Searchbar.placeholder = CommonStringFile.Search.translated()
     }

@@ -18,10 +18,7 @@ class SchoolStrengthVC: UIViewController {
     @IBOutlet weak var Tv: UITableView!
     @IBOutlet weak var pieChartView: PieChartView!
     
-    var isBarChartVisible: [Bool] = [false, false, false,false] // Replace with dynamic count if needed
-    var classes = ["9th Standard","10th Standard","12th Standard","11th Standard"]
     var staffDetails = UserDefaultFileManager.get_staff_Details()
-    
     var SchoolStrength : [SchoolStrength]?
     
     override func viewDidLoad() {
@@ -180,20 +177,6 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
         } ?? []
         
         cell.setBarChartData(withLabels: name, sectionCounts: strength)
-        
-//        if isBarChartVisible[indexPath.row] {
-//            cell.barchartHeight.constant = 150
-//            cell.barChartView.isHidden = false
-//            cell.barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
-//            cell.BottomLblHeight.constant = 21
-//            cell.BottomLbl.isHidden = false
-//        } else {
-//            
-//            cell.barchartHeight.constant = 0
-//            cell.barChartView.isHidden = true
-//            cell.BottomLblHeight.constant = 0
-//            cell.BottomLbl.isHidden = true
-//        }
         
         return cell
     }

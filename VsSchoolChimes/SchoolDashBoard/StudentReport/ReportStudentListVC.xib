@@ -26,7 +26,9 @@
                 <outlet property="reportSegment" destination="dtk-qT-JbI" id="COd-Xq-hkE"/>
                 <outlet property="reportTable" destination="m6e-1o-K5O" id="U6e-k4-m6J"/>
                 <outlet property="searchBar" destination="hOr-xV-ijW" id="yO3-eY-nt8"/>
+                <outlet property="searchBtn" destination="5th-Mv-lj2" id="V8U-rZ-qIK"/>
                 <outlet property="searchHeight" destination="ZOY-3F-2k7" id="KPP-Ga-Kxa"/>
+                <outlet property="searchHidBtn" destination="zea-CY-lRR" id="Yuv-x7-xKR"/>
                 <outlet property="sectionBtn" destination="tTn-uH-wQS" id="WDY-eH-f1C"/>
                 <outlet property="sectionSelection" destination="sEK-wJ-aRo" id="uBc-ct-WnK"/>
                 <outlet property="sectionView" destination="mxd-f7-Of5" id="rCn-yV-AaZ"/>
@@ -49,6 +51,18 @@
                             </constraints>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zea-CY-lRR">
+                            <rect key="frame" x="368" y="0.0" width="25" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="RMM-v1-Dgo"/>
+                                <constraint firstAttribute="width" constant="25" id="ca0-Ps-VEX"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="delete (1)"/>
+                            <connections>
+                                <action selector="hideSearch:" destination="-1" eventType="touchUpInside" id="pQ1-9J-NWX"/>
+                            </connections>
+                        </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="n3s-hU-v1u">
                             <rect key="frame" x="16" y="10" width="361.33333333333331" height="173.66666666666666"/>
                             <subviews>
@@ -278,6 +292,8 @@
                         <constraint firstAttribute="bottom" secondItem="ToU-Kp-IN0" secondAttribute="bottom" id="8yt-NZ-p1A"/>
                         <constraint firstItem="n3s-hU-v1u" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" constant="16" id="JOB-8e-Zxr"/>
                         <constraint firstAttribute="trailing" secondItem="ToU-Kp-IN0" secondAttribute="trailing" id="N8l-H7-Mgq"/>
+                        <constraint firstItem="zea-CY-lRR" firstAttribute="trailing" secondItem="hOr-xV-ijW" secondAttribute="trailing" id="NiF-4A-bL4"/>
+                        <constraint firstItem="zea-CY-lRR" firstAttribute="top" secondItem="hOr-xV-ijW" secondAttribute="top" id="NvT-qN-vnZ"/>
                         <constraint firstItem="n3s-hU-v1u" firstAttribute="top" secondItem="hOr-xV-ijW" secondAttribute="bottom" constant="10.000000000000014" id="TEB-1l-eIR"/>
                         <constraint firstItem="ToU-Kp-IN0" firstAttribute="top" secondItem="n3s-hU-v1u" secondAttribute="bottom" constant="4.9999999999999147" id="ZiV-Or-UsC"/>
                         <constraint firstItem="hOr-xV-ijW" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" id="bSz-N4-h4Y"/>
@@ -334,6 +350,7 @@
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.down.square.fill" catalog="system" width="128" height="114"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="delete (1)" width="16" height="16"/>
         <image name="down-arrow" width="512" height="512"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>

@@ -9,6 +9,8 @@ import UIKit
 import DropDown
 
 class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    @IBOutlet weak var searchHidBtn: UIButton!
+    @IBOutlet weak var searchBtn: UIButton!
     
     @IBOutlet weak var searchHeight: NSLayoutConstraint!
     @IBOutlet weak var nodataLbl: UILabel!
@@ -51,6 +53,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var classId:String?
     var sectionId:String?
     var selection:String?
+    var showSearch:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -105,7 +108,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         selectedType.backgroundColor = .white
         classView.layer.shadowOpacity = 0.5
         classView.layer.shadowRadius = 4
-        
+        searchHidBtn.isHidden = true
         //MARK: Label Font
         sectionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -116,14 +119,25 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         dismiss(animated: true)
     }
     @IBAction func Search(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        searchHeight.constant = sender.isSelected ? 60 : 0
-        let img = sender.isSelected ? UIImage(systemName: "magnifyingglass.circle.fill"):UIImage(systemName: "magnifyingglass")
-        sender.setImage(img, for: .normal)
+        showSearch.toggle()
+        searchHeight.constant = showSearch ? 60 : 0
+        
+        let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
+        searchBtn.setImage(img, for: .normal)
+        
+        searchHidBtn.isHidden = !showSearch
     }
+    @IBAction func hideSearch(_ sender: UIButton) {
+        showSearch.toggle()
+        searchHeight.constant = showSearch ? 60 : 0
+        let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
+        searchBtn.setImage(img, for: .normal)
+        searchHidBtn.isHidden = !showSearch
+    }
+    
     @IBAction func sortArray(_ sender: UISegmentedControl) {
         guard let sortedStudent = sortedStudent else { return }
-
+        
         switch sender.selectedSegmentIndex {
         case 0:
             // Sort by name ascending (A-Z)
@@ -132,23 +146,23 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         case 1:
             // Sort by name descending (Z-A)
             filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedDescending }
-
+            
         case 2:
             // Sort by admission_no ascending
             filterStudent = sortedStudent.sorted { $0.admission_no < $1.admission_no }
-
+            
         case 3:
             // Sort by admission_no descending
             filterStudent = sortedStudent.sorted { $0.admission_no > $1.admission_no }
-
+            
         default:
             // Default fallback: sort by name descending
             filterStudent = sortedStudent.sorted { $0.name.localizedCompare($1.name) == .orderedDescending }
         }
-
+        
         reportTable.reloadData()
     }
-
+    
     
     @IBAction func filterStudent(_ sender: UIButton) {
         
@@ -303,7 +317,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.nodataLbl.isHidden = true
                         self.nodataImg.isHidden = true
                         self.FilterCV.isHidden = false
-    //                    self.reportSegment.isHidden = false
+                        //                    self.reportSegment.isHidden = false
                         self.FilterCV.reloadData()
                     } else {
                         self.studentList = response.data
@@ -314,10 +328,10 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                         self.nodataLbl.isHidden = false
                         self.nodataImg.isHidden = false
                         self.FilterCV.isHidden = true
-    //                    self.reportSegment.isHidden = true
+                        //                    self.reportSegment.isHidden = true
                     }
                     self.reportTable.reloadData()
-
+                    
                 case .failure(let error):
                     self.nodataLbl.text = error.localizedDescription
                     self.nodataLbl.isHidden = false
@@ -327,7 +341,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         }
     }
-
+    
     func getacadmicYr(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
@@ -365,7 +379,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         cell.emailBtn.tag = indexPath.row
         
         if let studentDetail = filterStudent?[indexPath.row]{
-           
+            
             cell.confic(student: studentDetail)
             if let mobile = studentDetail.primary_mobile, !mobile.isEmpty,
                let email = studentDetail.email, !email.isEmpty {
@@ -394,9 +408,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                 cell.smsBtn.isHidden = true
                 cell.emailBtn.isHidden = true
             }
-
-
-
+            
+            
+            
             cell.tcherLbl.text = studentDetail.class_teacher
             cell.rollNo.text = studentDetail.roll_no
             cell.admissionLbl.text = studentDetail.admission_no
@@ -435,13 +449,13 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         
         cell.FilterLbl.text = Filters[indexPath.item]
         let isSelected = indexPath == selectedIndex
-
+        
         cell.cellView.backgroundColor = isSelected ? UIColor.topBackgroundCLr : UIColor.systemGray5
-//        cell.cellView.layer.cornerRadius = 12
-//        cell.cellView.layer.borderWidth = isSelected ? 1 : 0
-//        cell.cellView.layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.clear.cgColor
+        //        cell.cellView.layer.cornerRadius = 12
+        //        cell.cellView.layer.borderWidth = isSelected ? 1 : 0
+        //        cell.cellView.layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.clear.cgColor
         cell.cellView.layer.masksToBounds = false
-
+        
         // Shadow settings
         cell.cellView.layer.shadowColor = UIColor.black.cgColor
         cell.cellView.layer.shadowOpacity = isSelected ? 0.2 : 0.0
@@ -459,7 +473,7 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         let selectedFilter = Filters[indexPath.item]
         
         guard let sortedStudent = sortedStudent else { return }
-
+        
         switch selectedFilter {
         case "Name ASC":
             filterStudent = sortedStudent.sorted {
@@ -480,11 +494,11 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         default:
             filterStudent = sortedStudent
         }
-
+        
         FilterCV.reloadData()
         reportTable.reloadData()
     }
-
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -493,7 +507,7 @@ extension ReportStudentListVC: UICollectionViewDelegate,UICollectionViewDataSour
         label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
         label.text = text
         label.sizeToFit()
-
+        
         let width = label.frame.width + 60  // Add padding
         return CGSize(width: width, height: 40) // Adjust height accordingly
     }
@@ -547,36 +561,36 @@ extension ReportStudentListVC: UISearchBarDelegate{
             reportTable.reloadData()
             return
         }
-
+        
         let lowercasedSearch = searchText.lowercased()
-
+        
         if searchText.isEmpty {
             filterStudent = studentList
         } else {
             filterStudent = studentList.filter { student in
                 return student.id.lowercased().contains(lowercasedSearch) ||
-                       student.name.lowercased().contains(lowercasedSearch) ||
-                       (student.primary_mobile?.lowercased().contains(lowercasedSearch) ?? false) ||
-                       student.admission_no.lowercased().contains(lowercasedSearch) ||
-                       student.roll_no.lowercased().contains(lowercasedSearch) ||
-                       student.dob.lowercased().contains(lowercasedSearch) ||
-                       student.class_id.lowercased().contains(lowercasedSearch) ||
-                       student.class_name.lowercased().contains(lowercasedSearch) ||
-                       student.section_id.lowercased().contains(lowercasedSearch) ||
-                       student.section_name.lowercased().contains(lowercasedSearch) ||
-                       student.father_name.lowercased().contains(lowercasedSearch) ||
-                       student.class_teacher.lowercased().contains(lowercasedSearch)
+                student.name.lowercased().contains(lowercasedSearch) ||
+                (student.primary_mobile?.lowercased().contains(lowercasedSearch) ?? false) ||
+                student.admission_no.lowercased().contains(lowercasedSearch) ||
+                student.roll_no.lowercased().contains(lowercasedSearch) ||
+                student.dob.lowercased().contains(lowercasedSearch) ||
+                student.class_id.lowercased().contains(lowercasedSearch) ||
+                student.class_name.lowercased().contains(lowercasedSearch) ||
+                student.section_id.lowercased().contains(lowercasedSearch) ||
+                student.section_name.lowercased().contains(lowercasedSearch) ||
+                student.father_name.lowercased().contains(lowercasedSearch) ||
+                student.class_teacher.lowercased().contains(lowercasedSearch)
             }
         }
-
+        
         reportTable.reloadData()
-
+        
         let isEmpty = filterStudent?.isEmpty ?? true
         nodataImg.isHidden = !isEmpty
         nodataLbl.isHidden = !isEmpty
     }
-
-
+    
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }

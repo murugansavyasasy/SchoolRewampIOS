@@ -104,6 +104,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         RegisterCell()
         searchBar.delegate = self
         searchBar.placeholder = CommonStringFile.Search.translated()
+        searchBar.searchTextField.addDoneButton()
         
         let filterTap = UITapGestureRecognizer(target: self, action: #selector(showFilterOptions))
         filterImgIcon.addGestureRecognizer(filterTap)
