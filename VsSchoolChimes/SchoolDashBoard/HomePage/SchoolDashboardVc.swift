@@ -24,7 +24,6 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var schoolLogoImg: UIImageView!
     @IBOutlet weak var searchImgView: UIImageView!
     @IBOutlet weak var searchHeightCon: NSLayoutConstraint!
-    
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollCollection: UIScrollView!
     @IBOutlet weak var containerView: UIView!
@@ -33,6 +32,8 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     @IBOutlet weak var TopCv: UICollectionView!
     @IBOutlet weak var pageContorler: UIPageControl!
     @IBOutlet weak var bottomCv: UICollectionView!
+    @IBOutlet weak var AttendanceReportDefLbl: UILabel!
+    @IBOutlet weak var DateLbl: UILabel!
     
     var advertisements: [String] = ["Ad 1: Special Offer",
                                     "Ad 2: Final Sale",
@@ -58,6 +59,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     var profileSwith : ProfileSwitchDelegate?
     var displayedCategories: [String] = []
     let newString = "Add"
+    let dateFormatter = DateFormatter()
     
     deinit {
         timer?.invalidate()
@@ -86,6 +88,7 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         else{
             if staffDetailsCount?.count ?? 0 > 1{
                 SchoolNameLabel.text = staffDetails?.role
+                AddressLabel.isHidden = true
             }
             else{
                 SchoolNameLabel.text = staffDetails?.school_name
@@ -178,6 +181,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     
     func StyleAndTranslater(){
         
+        let date = Date()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        DateLbl.text = dateFormatter.convertDate(dateFormatter.string(from: date))
+        
         //MARK: UI Changes
         bottomView.layer.cornerRadius = 10
         bottomView.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMinYCorner]
@@ -195,6 +202,9 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
         SchoolNameLabel.setFont(style: .title, size: FontSize.TitleSize)
         AddressLabel.setFont(style: .body, size: FontSize.BodySize)
         changeRollLbl.setFont(style: .body, size: FontSize.TitleSize)
+        AttendanceReportDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        DateLbl.setFont(style: .body, size: FontSize.BodySize)
+        ViewDetailsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
     }
     
     func configureView(_ view: UIView,
