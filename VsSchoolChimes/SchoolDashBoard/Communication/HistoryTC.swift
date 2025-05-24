@@ -112,45 +112,79 @@ class HistoryTC: UITableViewCell {
     }
     
     func updatePlayState(isPlaying: Bool, url: String?) {
-            if isPlaying {
-                guard let urlString = url, let audioURL = URL(string: urlString) else { return }
+        self.isPlaying = isPlaying
 
-                do {
-                    try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-                    try AVAudioSession.sharedInstance().setActive(true)
-                } catch {
-                    print("Audio session error: \(error.localizedDescription)")
-                }
-
-                playerItem = AVPlayerItem(url: audioURL)
-                player = AVPlayer(playerItem: playerItem)
-                player?.volume = 1.0
-                player?.play()
-
-                playBtn.setImage(ImageName.pausebutton, for: .normal)
-
-                NotificationCenter.default.addObserver(
-                    self,
-                    selector: #selector(playerDidFinishPlaying),
-                    name: .AVPlayerItemDidPlayToEndTime,
-                    object: player?.currentItem
-                )
-
-                updateTimer = Timer.scheduledTimer(timeInterval: 0.1,
-                                                   target: self,
-                                                   selector: #selector(updateSlider),
-                                                   userInfo: nil,
-                                                   repeats: true)
-                updateTimeDisplay()
-            } else {
-                player?.pause()
-                playBtn.setImage(ImageName.playbutton, for: .normal)
-                updateTimer?.invalidate()
-                updateTimeDisplay()
+        if isPlaying {
+            // Safely unwrap and encode the URL
+            guard let urlString = url,
+                  let encodedURLString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                  let audioURL = URL(string: encodedURLString) else {
+                print("Invalid audio URL")
+                return
             }
 
-            self.isPlaying = isPlaying
+            // Configure audio session for playback
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                print("Audio session error: \(error.localizedDescription)")
+            }
+
+            // Create player and play
+            playerItem = AVPlayerItem(url: audioURL)
+            player = AVPlayer(playerItem: playerItem)
+            player?.volume = 1.0
+            player?.play()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                print("Player status:", self.player?.currentItem?.status.rawValue ?? -1)
+                if let err = self.player?.currentItem?.error {
+                    print("AVPlayer error:", err)
+                } else {
+                    print("No AVPlayer error")
+                }
+            }
+
+
+            // Update UI
+            playBtn.setImage(ImageName.pausebutton, for: .normal)
+
+            // Observe when playback finishes
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(playerDidFinishPlaying),
+                name: .AVPlayerItemDidPlayToEndTime,
+                object: player?.currentItem
+            )
+
+            // Start timer for slider updates
+            updateTimer = Timer.scheduledTimer(timeInterval: 0.1,
+                                               target: self,
+                                               selector: #selector(updateSlider),
+                                               userInfo: nil,
+                                               repeats: true)
+
+            updateTimeDisplay()
+
+        } else {
+            // Pause playback and clean up
+            player?.pause()
+            playBtn.setImage(ImageName.playbutton, for: .normal)
+            updateTimer?.invalidate()
+            updateTimeDisplay()
         }
+    }
+
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?,
+                              change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "status" {
+            if player?.currentItem?.status == .failed {
+                print("Playback failed: \(String(describing: player?.currentItem?.error))")
+            }
+        }
+    }
 
         @objc func updateSlider() {
             guard let audioPlayer = player, let currentItem = audioPlayer.currentItem else { return }

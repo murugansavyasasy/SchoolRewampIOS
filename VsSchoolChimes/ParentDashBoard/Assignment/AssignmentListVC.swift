@@ -12,8 +12,6 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
        
     }
     
-    
-    
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
@@ -23,6 +21,11 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     var didSelectDelegate : DidSelectDelegate?
     let data = [Assigment(tittle: "Assigment1", subject: "English", dueDate: "19-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment2", subject: "Tamil nsdvhs dhs hgsdhsgv dchgv cgvdh hdgc sdvhd gcg", dueDate: "21-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment3", subject: "Science", dueDate: "22-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment4", subject: "Maths", dueDate: "24-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment5", subject: "Physics", dueDate: "26-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment6", subject: "Computer Science", dueDate: "28-11-2024", sendeBy: "vs2020sdfsdfghfhftvhdwxcvydywdscv vdy", sumissionCount: "1", date: "Nov 19 2025")]
     var filteredData :[Assigment]?
+    
+    var fileUrl : [FilePath] = [FilePath(url:"https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//sample.pdf" , type: "pdf"),FilePath(url: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//long-doc.txt", type: "txt"),FilePath(url: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//file-sample_500kB.docx", type: "docx")]
+    
+   
+    var tapGesture: UITapGestureRecognizer?
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -37,10 +40,7 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
         searchview.layer.borderWidth = 0
         searchview.backgroundImage = UIImage()
         searchview.addDoneButton()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleCliboard(_:)))
-        
-        view.isUserInteractionEnabled = true
-        view.addGestureRecognizer(tapGesture)
+       
         register()
     }
     override func viewDidLayoutSubviews() {
@@ -70,10 +70,6 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
         searchBar.becomeFirstResponder()
     }
     
-    @objc func handleCliboard(_ sender: UITapGestureRecognizer){
-        self.view.endEditing(true)
-    }
-    
 }
 
 // Table view delegate and data source
@@ -86,23 +82,36 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.AssignmentListCTVC, for: indexPath) as! AssignmentListCTVC
         cell.tittleLbl.text = filteredData?[indexPath.row].tittle
-        cell.subjectLbl.text = filteredData?[indexPath.row].subject
         // Compare dueDate with current date
         if !isDueDatePassed(dueDate: filteredData?[indexPath.row].dueDate ?? "") {
             cell.dueDateLbl.textColor = .black
         } else {
             cell.dueDateLbl.textColor = .red
         }
+        cell.FilesUrl = fileUrl
         cell.dueDateLbl.text = filteredData?[indexPath.row].dueDate
         cell.CreaterdDate.text = filteredData?[indexPath.row].date
-        cell.viewBtn.tag = indexPath.row
-        cell.didSelectDelegate = self
+       
+      //  cell.didSelectDelegate = self
+       // let viewTap = UITapGestureRecognizer(target: self, action: #selector(ViewAct))
+       
         cell.Delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    @IBAction func ViewAct(_ sender: Any){
+        
+        let index = (sender as AnyObject).tag
+        
+        let vc = ImageShowVc(nibName: nil, bundle: nil)
+        vc.FileURL = fileUrl
+        vc.type = 0
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     
     func select(index: Int, value: String?, Img: [String], Pdf: String?, text: String?, type: String) {

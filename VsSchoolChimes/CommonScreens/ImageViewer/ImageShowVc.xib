@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImageShowVc" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="ActivityIndicator" destination="mlM-Cy-xFT" id="85w-UP-BAH"/>
+                <outlet property="PageController" destination="1Yi-ue-CFj" id="RM7-H5-hSp"/>
                 <outlet property="TitleLbl" destination="4LN-Xu-FRb" id="pDQ-Hv-bJP"/>
                 <outlet property="cv" destination="2nI-Xu-ypg" id="bdC-fH-JvR"/>
                 <outlet property="pdfView" destination="Mij-9M-Z3u" id="wct-1Y-xlK"/>
@@ -102,6 +103,14 @@
                                 <action selector="saveToFolder:" destination="-1" eventType="touchUpInside" id="tgO-E7-9mw"/>
                             </connections>
                         </button>
+                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="1Yi-ue-CFj">
+                            <rect key="frame" x="50" y="725" width="293" height="26"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="26" id="qCm-JP-pQe"/>
+                            </constraints>
+                            <color key="pageIndicatorTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="currentPageIndicatorTintColor" systemColor="tableCellBlueTextColor"/>
+                        </pageControl>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
@@ -115,6 +124,7 @@
                         <constraint firstItem="kPN-2u-D3K" firstAttribute="top" secondItem="4LN-Xu-FRb" secondAttribute="bottom" constant="17" id="JuO-5T-Mac"/>
                         <constraint firstItem="mlM-Cy-xFT" firstAttribute="centerX" secondItem="b3Y-cI-Ree" secondAttribute="centerX" id="MI6-8z-stJ"/>
                         <constraint firstItem="Mij-9M-Z3u" firstAttribute="top" secondItem="2nI-Xu-ypg" secondAttribute="top" id="S6l-mc-3Y9"/>
+                        <constraint firstAttribute="trailing" secondItem="1Yi-ue-CFj" secondAttribute="trailing" constant="50" id="TDJ-j1-f8O"/>
                         <constraint firstItem="c9r-k1-fJN" firstAttribute="leading" secondItem="4LN-Xu-FRb" secondAttribute="trailing" constant="10" id="UaL-3d-iRm"/>
                         <constraint firstItem="mlM-Cy-xFT" firstAttribute="centerY" secondItem="b3Y-cI-Ree" secondAttribute="centerY" id="Vba-yY-MDD"/>
                         <constraint firstAttribute="bottom" secondItem="2nI-Xu-ypg" secondAttribute="bottom" id="WzM-Ex-QG6"/>
@@ -124,9 +134,11 @@
                         <constraint firstItem="TE9-Ng-rGr" firstAttribute="top" secondItem="b3Y-cI-Ree" secondAttribute="top" constant="5" id="e3h-za-H20"/>
                         <constraint firstAttribute="trailing" secondItem="c9r-k1-fJN" secondAttribute="trailing" constant="10" id="kOc-dX-jHj"/>
                         <constraint firstItem="Mij-9M-Z3u" firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" id="lnF-R8-J9q"/>
+                        <constraint firstItem="1Yi-ue-CFj" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" constant="50" id="nwm-LT-ct0"/>
                         <constraint firstAttribute="trailing" secondItem="2nI-Xu-ypg" secondAttribute="trailing" id="rZ1-9N-zlh"/>
                         <constraint firstItem="TE9-Ng-rGr" firstAttribute="leading" secondItem="b3Y-cI-Ree" secondAttribute="leading" constant="8" id="s1x-E1-ZZ1"/>
                         <constraint firstItem="kPN-2u-D3K" firstAttribute="leading" secondItem="2nI-Xu-ypg" secondAttribute="leading" constant="16" id="v3O-G0-0Pf"/>
+                        <constraint firstAttribute="bottom" secondItem="1Yi-ue-CFj" secondAttribute="bottom" constant="8" id="zll-7l-QzG"/>
                     </constraints>
                 </view>
             </subviews>
@@ -149,6 +161,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tableCellBlueTextColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
