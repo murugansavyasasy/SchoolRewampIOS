@@ -499,7 +499,7 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
             let pdfAction = UIAlertAction(title: "Document".translated(), style: .default) { [self] _ in
                 selectPDF()
             }
-//            alertController.addAction(pdfAction)
+            alertController.addAction(pdfAction)
 //            //             PDF option
 //            let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
 //                pickVideoFromGallery()

@@ -11,7 +11,9 @@ import AWSCore
 import AWSS3
 
 @available(iOS 14.0, *)
-class SenderAssignmentTextViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, Datepicker {
+
+
+class SenderAssignmentTextViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate {
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
@@ -31,6 +33,9 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none // This forces popover on iPhone
+    }
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
@@ -391,49 +396,125 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
         
         return CGSize(width: width, height: 100)
     }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if indexPath.row == 0{
+////            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
+////            
+////            // Camera option
+////            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+////            }
+////            alertController.addAction(cameraAction)
+////            
+////            // Gallery option
+////            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+////                
+////                selectImages()
+////                
+////            }
+////            alertController.addAction(galleryAction)
+////            
+////            //             PDF option
+////            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+////                
+////                //selectPDF()
+////            }
+////            alertController.addAction(pdfAction)
+////            
+////            // Cancel action
+////            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+////            alertController.addAction(cancelAction)
+////            
+////            // Present the alert
+////            self.present(alertController, animated: true, completion: nil)
+//            
+//            
+//            let bubbleVC = GalleryPickerVcViewController()
+//                bubbleVC.modalPresentationStyle = .popover
+//                bubbleVC.preferredContentSize = CGSize(width: 200, height: 250)
+//                
+//                bubbleVC.onOptionSelected = { option in
+//                    print("Selected option: \(option)")
+//                    // Handle action for Camera, Photo, etc.
+//                }
+//
+//                if let popoverController = bubbleVC.popoverPresentationController {
+//                    popoverController.sourceView = sender
+//                    popoverController.sourceRect = sender.bounds
+//                    popoverController.permittedArrowDirections = .any
+//                    popoverController.delegate = self
+//                }
+//
+//                present(bubbleVC, animated: true, completion: nil)
+//            
+//          
+//        }else{
+//            if selectedImages.count > indexPath.item - 1 {
+//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                
+//                // Safe unwrapping of imgView before assigning
+//                vc.img = selectedImages[indexPath.item - 1]
+//                //
+//                present(vc, animated: true)
+//            }
+//        }
+//    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0{
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-            
-            // Camera option
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+        if indexPath.row == 0 {
+            let bubbleVC = GalleryPickerVcViewController()
+            bubbleVC.modalPresentationStyle = .popover
+            bubbleVC.preferredContentSize = CGSize(width: 200, height: 250)
+
+            bubbleVC.onOptionSelected = { option in
+                print("Selected option: \(option)")
+                // Handle each option
+                switch option {
+                case "Camera":
+                    self.openCamera()
+                case "Photo":
+                    self.selectImages()
+                case "Voice":
+                    ""
+//                    self.recordAudio()
+                case "Video":
+                    ""
+//                    self.pickVideo()
+                case "Document":
+                    ""
+//                    self.pickDocument()
+                default:
+                    break
+                }
             }
-            alertController.addAction(cameraAction)
-            
-            // Gallery option
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-                
-                selectImages()
-                
+
+            if let popoverController = bubbleVC.popoverPresentationController {
+                if let cell = collectionView.cellForItem(at: indexPath) {
+                    popoverController.sourceView = cell.contentView
+                    popoverController.sourceRect = cell.bounds
+                } else {
+                    popoverController.sourceView = self.view
+                    popoverController.sourceRect = CGRect(x: self.view.bounds.midX-100, y: self.view.bounds.midY, width: 0, height: 0)
+                }
+                popoverController.permittedArrowDirections = .any
+                popoverController.delegate = self
             }
-            alertController.addAction(galleryAction)
+
             
-            //             PDF option
-            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-                
-                //selectPDF()
-            }
-            alertController.addAction(pdfAction)
-            
-            // Cancel action
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            
-            // Present the alert
-            self.present(alertController, animated: true, completion: nil)
-        }else{
+                // iPad supports popovers natively
+                self.present(bubbleVC, animated: true)
+             
+        } else {
             if selectedImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                
-                // Safe unwrapping of imgView before assigning
                 vc.img = selectedImages[indexPath.item - 1]
-                //
                 present(vc, animated: true)
             }
         }
     }
-    
+
 }
 
 @available(iOS 14.0, *)

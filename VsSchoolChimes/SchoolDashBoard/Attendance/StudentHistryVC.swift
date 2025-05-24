@@ -10,20 +10,31 @@ import DropDown
 
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
-    func statusUpdate(status: Bool,index:Int) {
+    func statusUpdate(status: Bool, index: Int) {
+        guard let studentId = studentsDetails?[index].id else { return }
+        // Update isAbsent status
         studentsDetails?[index].isAbsent = status
         filterData?[index].isAbsent = status
-        // Calculate the total count of present students
+
+        if status == true {
+            selected_student.removeAll { $0 == studentId }
+        } else {
+            if !selected_student.contains(studentId) {
+                selected_student.append(studentId)
+            }
+        }
         totalcount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-        
+
+        // Update UI for selectAllBtn
         if totalcount == 0 {
-            // All students are absent
+            // No absent students
             selectAllBtn.setImage(UIImage(systemName: "checkmark.square.portrait.fill"), for: .normal)
         } else {
-            // At least one student is present
+            // At least one absent student
             selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
         }
     }
+
     
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
@@ -87,6 +98,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }else{
             
             filterBtn.isHidden = false
+            selectAllBtn.setImage(ImageName.checkmark, for: .normal)
             filterBtn.isUserInteractionEnabled = true
         }
         
@@ -304,28 +316,32 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
-        
-        guard !selected_student.isEmpty else {
-            alert.showAlert(
-                title: AlertstringFile.Alert_title,
-                message: AlertstringFile.Choose_any_target,
-                on: self
-            )
-            return
-        }
-        
-        switch Menu_id.staffSelectedMenuId{
-        case Menu_id.communicationMenuId:
-            SendingCommunicationFlow()
+        if Menu_id.attendance == Menu_id.staffSelectedMenuId {
             
-        case Menu_id.homeWorkMenuId:
-            handleHomeworkFlow()
+            markAttendaceApi()
+        }else{
+            guard !selected_student.isEmpty else {
+                alert.showAlert(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Choose_any_target,
+                    on: self
+                )
+                return
+            }
             
-        case Menu_id.AttachmentMenuId:
-            SendingAttachmentFlow()
-            
-        default:
-            print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
+            switch Menu_id.staffSelectedMenuId{
+            case Menu_id.communicationMenuId:
+                SendingCommunicationFlow()
+                
+            case Menu_id.homeWorkMenuId:
+                handleHomeworkFlow()
+                
+            case Menu_id.AttachmentMenuId:
+                SendingAttachmentFlow()
+               
+            default:
+                print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
+            }
         }
     }
     
@@ -850,7 +866,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     message: succesmessage.message ?? "",
                                     on: self
                                 ) {
-                                    self.gotoDashboard()
+                                    self.attendaceGoBackDashBoard()
                                     
                                 }
                             
@@ -858,7 +874,15 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     }else {
                         
                         DispatchQueue.main.async {
-                            
+                            CustomAlert
+                                .showAlertWithOkAction(
+                                    title: AlertstringFile.Success,
+                                    message: succesmessage.message ?? "",
+                                    on: self
+                                ) {
+                                    self.attendaceGoBackDashBoard()
+                                    
+                                }
                             
                         }
                     }
@@ -1066,6 +1090,30 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 
             } else {
                 self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+            }
+            
+        default:
+            print("Unhandled staff role")
+        }
+        
+        // Add segments from updated array
+        
+    }
+    
+    func attendaceGoBackDashBoard(){
+        
+        switch staff_role {
+        case PriorityType.is_staff:
+            self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+            
+        case PriorityType.is_admin, PriorityType.is_principal, PriorityType.is_grouphead:
+            
+            
+            if (staffDetailsCount?.count ?? 0) > 1 {
+                self.presentingViewController?.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
+                
+            } else {
+                self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
             }
             
         default:

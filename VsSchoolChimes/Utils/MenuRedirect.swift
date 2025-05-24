@@ -38,7 +38,7 @@ class MenuRedirectHandler {
         MenuImage(id: 6, name: "Class Timetable"),
         MenuImage(id: 7, name: "Communication"),
         MenuImage(id: 8, name: "Daily Collection"),
-        MenuImage(id: 9, name: "Events"),
+        MenuImage(id: 9, name: "CalssEvent"),
         MenuImage(id: 10, name: "ExamTest"),
         MenuImage(id: 11, name: "ExamTest"),
         MenuImage(id: 12, name: "Fee Details"),

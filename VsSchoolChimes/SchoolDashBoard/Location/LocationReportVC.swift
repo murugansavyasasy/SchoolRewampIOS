@@ -24,24 +24,14 @@ class LocationReportVC: UIViewController{
     var dropDown = DropDown()
     var SelectedMonthCode = ""
     var SendDate = ""
-    
+    var AcadimicYearDatas : [AcadimicYearData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
         StyleAndTranslate()
         NoDataLbl.isHidden = true
         noRecdStackView.isHidden = true
-        for i in 0..<21 {
-            let year = currentYear - i
-            years.append(String(year))
-        }
-        
-        YearLbl.text = years[0]
-        Months = getMonthNames(for: years[0])
-        MonthLbl.text = Months[currentMonth-1]
-        
-        SelectedMonthCode = String(format: "%02d",currentMonth)
-        Geometric_Staff_Attendance_Report()
+        getAcademicYr()
         
         let YearTap = UITapGestureRecognizer(target: self, action: #selector(YearSelection))
         SelectYearDropdownView.addGestureRecognizer(YearTap)
@@ -56,7 +46,60 @@ class LocationReportVC: UIViewController{
         Tv.delegate = self
         Tv.dataSource = self
     }
-    
+    func getAcademicYr() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_recipient_get_academic_year_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET, // make sure this is not a typo
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true {
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        self.AcadimicYearDatas = successMessage.data ?? []
+                        self.years.removeAll()
+                        
+                        var currentAcademicYear: String?
+                        
+                        for yearData in self.AcadimicYearDatas {
+                            // Append all first years
+                            if let year = yearData.year,
+                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                    self.years.append(firstYear)
+                                }
+                            if yearData.current_academic_year == true {
+                                if let year = yearData.year,
+                                       let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                        currentAcademicYear = firstYear
+                                    }
+                            }
+                        }
+
+                        // Once data is loaded
+                        if let year = currentAcademicYear {
+                            self.YearLbl.text = year
+
+                            if let firstYear = year.components(separatedBy: " - ").first {
+                                if !self.years.isEmpty {
+                                    self.Months = self.getMonthNames(for: firstYear)
+                                    self.MonthLbl.text = self.Months[self.currentMonth - 1]
+                                    self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
+                                }
+                            }
+
+                            self.Geometric_Staff_Attendance_Report()
+                        }
+
+                        print("First Years: \(self.years)")
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
     func StyleAndTranslate(){
         
         applyShadowAndCornerRadius(to:SelectYearDropdownView)
@@ -195,9 +238,12 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         cell.toDateLbl.isHidden = false
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
-        
+        if let role = AttendanceDetails?[indexPath.row].designation,!role.isEmpty{
+            cell.attendanceTypeLbl.text = role
+        }else{
+            cell.attendanceTypeLbl.text =  AttendanceDetails?[indexPath.row].role ?? "Not Mention"
+        }
         cell.namelbl.text = AttendanceDetails?[indexPath.row].name
-        //        cell.attendanceTypeLbl.text = AttendanceDetails?[indexPath.row].attendance_type?
         if let attendanceDict = AttendanceDetails?[indexPath.row].attendance_type{
             
             if attendanceDict.count != 1 {
@@ -205,15 +251,15 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
                 let values = Array(attendanceDict.values)
                 if keys.indices.contains(0), values.indices.contains(0) {
                     cell.prestType.text = keys[0]
-                    let status = values[0] == "P" ? "Present":"Apsent"
+                    let status = values[0] == "P" ? "Present":"Absent"
                     cell.StatusLbl.text = status
                     let statusclr = values[0] == "P" ? UIColor.systemGreen : UIColor.systemRed
                     cell.presentStatus.backgroundColor = statusclr
                 }
                 if keys.indices.contains(1), values.indices.contains(1) {
                     cell.opsentType.text = keys[1]
-                    let status = values[1] == "P" ? "Present":"Apsent"
-                    cell.opsentLbl.text = values[1]
+                    let status = values[1] == "P" ? "Present":"Absent"
+                    cell.opsentLbl.text = status
                     let statusclr = values[1] == "P" ? UIColor.systemGreen : UIColor.systemRed
                     cell.opsentStus.backgroundColor = statusclr
                 }
@@ -222,7 +268,7 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
                 
             }else if let firstItem = attendanceDict.first {
                 let key = firstItem.key
-                let value = firstItem.value == "P" ? "Present":"Apsent"
+                let value = firstItem.value == "P" ? "Present":"Absent"
                 cell.prestType.text = key
                 cell.StatusLbl.text = value
                 cell.presentStatus.isHidden = false
@@ -278,6 +324,10 @@ extension LocationReportVC: UITableViewDelegate,UITableViewDataSource {
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
         vc.selected_staff_id = AttendanceDetails?[indexPath.row].staff_id ?? ""
+        vc.date = AttendanceDetails?[indexPath.row].date ?? ""
+        vc.roll = AttendanceDetails?[indexPath.row].role ?? ""
+        vc.user = AttendanceDetails?[indexPath.row].name
+        //        vc.roll = AttendanceDetails?[indexPath.row].
         present(vc, animated: true)
     }
     

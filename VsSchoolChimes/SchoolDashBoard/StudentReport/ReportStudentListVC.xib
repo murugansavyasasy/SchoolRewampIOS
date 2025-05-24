@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportStudentListVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="Lwn-UU-yjl" id="0bv-Q0-hCV"/>
+                <outlet property="FilterCV" destination="uBl-jt-AnZ" id="zeC-CN-rId"/>
                 <outlet property="classSelection" destination="0gv-qu-Xgy" id="0sn-la-qw8"/>
                 <outlet property="classView" destination="Luu-Ti-08J" id="9xP-7H-Fh1"/>
                 <outlet property="clsBtn" destination="UF0-JX-N3g" id="aH2-c0-Gje"/>
@@ -25,7 +26,9 @@
                 <outlet property="reportSegment" destination="dtk-qT-JbI" id="COd-Xq-hkE"/>
                 <outlet property="reportTable" destination="m6e-1o-K5O" id="U6e-k4-m6J"/>
                 <outlet property="searchBar" destination="hOr-xV-ijW" id="yO3-eY-nt8"/>
+                <outlet property="searchBtn" destination="5th-Mv-lj2" id="V8U-rZ-qIK"/>
                 <outlet property="searchHeight" destination="ZOY-3F-2k7" id="KPP-Ga-Kxa"/>
+                <outlet property="searchHidBtn" destination="zea-CY-lRR" id="Yuv-x7-xKR"/>
                 <outlet property="sectionBtn" destination="tTn-uH-wQS" id="WDY-eH-f1C"/>
                 <outlet property="sectionSelection" destination="sEK-wJ-aRo" id="uBc-ct-WnK"/>
                 <outlet property="sectionView" destination="mxd-f7-Of5" id="rCn-yV-AaZ"/>
@@ -48,8 +51,20 @@
                             </constraints>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zea-CY-lRR">
+                            <rect key="frame" x="368" y="0.0" width="25" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="RMM-v1-Dgo"/>
+                                <constraint firstAttribute="width" constant="25" id="ca0-Ps-VEX"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="delete (1)"/>
+                            <connections>
+                                <action selector="hideSearch:" destination="-1" eventType="touchUpInside" id="pQ1-9J-NWX"/>
+                            </connections>
+                        </button>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="n3s-hU-v1u">
-                            <rect key="frame" x="16" y="10" width="361.33333333333331" height="164.66666666666666"/>
+                            <rect key="frame" x="16" y="10" width="361.33333333333331" height="173.66666666666666"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5dl-sf-vkl">
                                     <rect key="frame" x="0.0" y="0.0" width="361.33333333333331" height="50"/>
@@ -205,8 +220,8 @@
                                         </stackView>
                                     </subviews>
                                 </stackView>
-                                <segmentedControl opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dtk-qT-JbI">
-                                    <rect key="frame" x="0.0" y="133.66666666666669" width="361.33333333333331" height="32"/>
+                                <segmentedControl hidden="YES" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dtk-qT-JbI">
+                                    <rect key="frame" x="0.0" y="128.66666666666669" width="361.33333333333331" height="1"/>
                                     <segments>
                                         <segment title="NameASC "/>
                                         <segment title="NameDSC"/>
@@ -217,10 +232,23 @@
                                         <action selector="sortArray:" destination="-1" eventType="valueChanged" id="y29-df-yQK"/>
                                     </connections>
                                 </segmentedControl>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="uBl-jt-AnZ">
+                                    <rect key="frame" x="0.0" y="133.66666666666669" width="361.33333333333331" height="40"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="FjJ-bY-hVB"/>
+                                    </constraints>
+                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yrI-rv-eYo">
+                                        <size key="itemSize" width="128" height="128"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                </collectionView>
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ToU-Kp-IN0">
-                            <rect key="frame" x="0.0" y="179.66666666666669" width="393" height="541"/>
+                            <rect key="frame" x="0.0" y="188.66666666666669" width="393" height="532"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="6P3-cM-b2l">
                                     <rect key="frame" x="10" y="10" width="373" height="300"/>
@@ -235,7 +263,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="m6e-1o-K5O">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="541"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="532"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <connections>
                                         <outlet property="dataSource" destination="-1" id="gdR-wf-HTS"/>
@@ -264,6 +292,8 @@
                         <constraint firstAttribute="bottom" secondItem="ToU-Kp-IN0" secondAttribute="bottom" id="8yt-NZ-p1A"/>
                         <constraint firstItem="n3s-hU-v1u" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" constant="16" id="JOB-8e-Zxr"/>
                         <constraint firstAttribute="trailing" secondItem="ToU-Kp-IN0" secondAttribute="trailing" id="N8l-H7-Mgq"/>
+                        <constraint firstItem="zea-CY-lRR" firstAttribute="trailing" secondItem="hOr-xV-ijW" secondAttribute="trailing" id="NiF-4A-bL4"/>
+                        <constraint firstItem="zea-CY-lRR" firstAttribute="top" secondItem="hOr-xV-ijW" secondAttribute="top" id="NvT-qN-vnZ"/>
                         <constraint firstItem="n3s-hU-v1u" firstAttribute="top" secondItem="hOr-xV-ijW" secondAttribute="bottom" constant="10.000000000000014" id="TEB-1l-eIR"/>
                         <constraint firstItem="ToU-Kp-IN0" firstAttribute="top" secondItem="n3s-hU-v1u" secondAttribute="bottom" constant="4.9999999999999147" id="ZiV-Or-UsC"/>
                         <constraint firstItem="hOr-xV-ijW" firstAttribute="leading" secondItem="tbE-om-2oh" secondAttribute="leading" id="bSz-N4-h4Y"/>
@@ -320,6 +350,7 @@
         <image name="NoMessage" width="650" height="512"/>
         <image name="chevron.down.square.fill" catalog="system" width="128" height="114"/>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="delete (1)" width="16" height="16"/>
         <image name="down-arrow" width="512" height="512"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>

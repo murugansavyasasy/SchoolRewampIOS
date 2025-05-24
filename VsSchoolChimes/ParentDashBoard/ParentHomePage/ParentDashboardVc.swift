@@ -308,7 +308,10 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             cell.MenuLbl.setFont(style: .body, size: 10)
             cell.MenuLbl.text = label
             cell.GradientView.backgroundColor = .clr
-            
+            cell.roundview.isHidden = true
+            if filteredMenu_details?[indexPath.row].unread_count ?? 0 > 0 {
+                cell.roundview.isHidden = false
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 cell.GradientView.animateView(enable: false)
             }

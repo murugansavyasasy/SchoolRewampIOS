@@ -468,6 +468,8 @@ struct StaffAttendance: Codable {
     let staff_id: String?
     let date: String?
     let leave_type: String?
+    let designation: String?
+    let role: String?
     let attendance_type : [String: String]?
     let in_time: String?
     let out_time: String?
@@ -638,6 +640,7 @@ struct EventHolidayData: Codable{
     var name : String?
     var year : String?
     var date : String?
+    
 }
 
 
@@ -676,3 +679,18 @@ struct SectionList: Codable {
 }
 
 
+//MARK: Student attandance
+
+
+struct StudentAttendanceResponse: Codable {
+    let status: Bool?
+    let message: String?
+    let data: [StudentAttendance]?
+}
+
+struct StudentAttendance: Codable {
+    let date : String?
+    let day : String?
+    let type : String?
+    let is_Archive : Bool?
+}

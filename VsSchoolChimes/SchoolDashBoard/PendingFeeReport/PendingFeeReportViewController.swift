@@ -12,6 +12,7 @@ import DropDown
 
 class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
+    @IBOutlet weak var totalfeeLbl: UILabel!
     @IBOutlet weak var switchReport: UISegmentedControl!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var nodataLbl: UILabel!
@@ -45,19 +46,17 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         getacadmicYr()
         DropDownStr = ["2012 - 2013","2014 - 2015","2016 - 2017","2018 - 2019"]
         applyShadowAndCornerRadius(to: acodemicView)
-        let userDefaults = UserDefaults.standard
-        
         nodataLbl.isHidden = true
         noRecordsView.isHidden = true
         if type == 1 {
         }else{
         }
-//        tv.isHidden = true
+        //        tv.isHidden = true
         tv.register(UINib(nibName: CellConfingName.PendingFeeReportTableViewCell, bundle: nil), forCellReuseIdentifier: CellConfingName.PendingFeeReportTableViewCell)
         tv.register(UINib(nibName: CellConfingName.DataCollectionTvHeaderView, bundle: nil), forHeaderFooterViewReuseIdentifier: CellConfingName.DataCollectionTvHeaderView)
         tv.delegate = self
         tv.dataSource = self
-
+        
     }
     func getacadmicYr(){
         APIService.shared
@@ -103,11 +102,18 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             PendingReports = successMessage.data
+                            for i in 0..<(PendingReports?.count ?? 0) {
+                                totalfeeLbl.text = "Total Pending: " + (
+                                    PendingReports?[i].total_pending ?? ""
+                                )
+                            }
+                            
                             tv.reloadData()
                             nodata(true)
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
+                            totalfeeLbl.text = ""
                             PendingReports = []
                             tv.reloadData()
                             nodata(false)
@@ -132,12 +138,18 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
                     if successMessage.status == true{
                         DispatchQueue.main.async { [self] in
                             PendingReports = successMessage.data
+                            for i in 0..<(PendingReports?.count ?? 0) {
+                                totalfeeLbl.text = "Total Pending: " + (
+                                    PendingReports?[i].total_pending ?? ""
+                                )
+                            }
                             tv.reloadData()
                             nodata(true)
                         }
                     }else{
                         DispatchQueue.main.async { [self] in
                             PendingReports = []
+                            totalfeeLbl.text = ""
                             tv.reloadData()
                             nodata(false)
                         }
@@ -187,7 +199,7 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
             classPendingReportAPI(academicId ?? 0)
         }
     }
-
+    
     @IBAction func backAct() {
         dismiss(animated: true)
     }
@@ -197,10 +209,11 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
+        let cell =  tableView.dequeueReusableCell(withIdentifier: CellConfingName.PendingFeeReportTableViewCell, for: indexPath) as!   PendingFeeReportTableViewCell
         let data = PendingReports?[indexPath.section].pending_data
         cell.classLbl.text = data?[indexPath.row].type_name
         cell.amountLbl.text = data?[indexPath.row].amount
+        
             return cell
         
     }
@@ -210,12 +223,68 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as! DataCollectionTvHeaderView
-            headerView.classLbl.text = PendingReports?[section].category
-            headerView.amountLbl.text = PendingReports?[section].total
+        // Don't show header for last section
+        if PendingReports?[section].pending_data?.count ?? 0 == 0 {
+            return nil
+        }
+
+        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
+            return nil
+        }
+
+        headerView.isHidden = false
+        headerView.headerFullview.backgroundColor = UIColor.gradient1
+        headerView.classLbl.isHidden = false
+        headerView.classLbl.text = PendingReports?[section].category ?? ""
+        headerView.amountLbl.textColor = .black
+        headerView.amountLbl.text = PendingReports?[section].total ?? "0"
+
         return headerView
     }
+
     
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let isLastSection = section == (PendingReports?.count ?? 0) - 1
+//        guard isLastSection else { return nil }
+//        
+//        guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
+//            return nil
+//        }
+//        
+//        footerView.classLbl.isHidden = true // Hide class label
+//        footerView.amountLbl.text = "Total Pending: \(PendingReports?[section].total_pending ?? "0")"
+//        footerView.amountLbl.textColor = .button
+//        footerView.headerFullview.backgroundColor = .clear
+//        return footerView
+//    }
+//    
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        let isLastSection = section == (PendingReports?.count ?? 0) - 1
+//        return isLastSection ? 50 : 0.01
+//    }
+
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let isLastSection = section == (PendingReports?.count ?? 0) - 1
+//        guard isLastSection else { return nil }
+//
+//        guard let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "DataCollectionTvHeaderView") as? DataCollectionTvHeaderView else {
+//            return nil
+//        }
+//
+//        footerView.classLbl.isHidden = true // Hide class label
+////        footerView.amountLbl.text =
+//        
+//
+////        footerView.amountLbl.textColor = .button
+////        footerView.headerFullview.backgroundColor = .clear
+//        return footerView
+//    }
+
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        let isLastSection = section == (PendingReports?.count ?? 0) - 1
+//        return isLastSection ? 50 : 0.01
+//    }
+//    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -224,5 +293,5 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
         return UITableView.automaticDimension
     }
     
-
+    
 }

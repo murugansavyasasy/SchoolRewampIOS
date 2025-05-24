@@ -4,6 +4,10 @@
 import UIKit
 class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    @IBOutlet weak var schoolName: UILabel!
+    @IBOutlet weak var designation: UILabel!
+    @IBOutlet weak var dateLbl: UILabel!
+    @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var noRecordLbl: UILabel!
     @IBOutlet weak var tv: UITableView!
@@ -11,18 +15,23 @@ class PunchHistoryListVC: UIViewController,UITableViewDelegate,UITableViewDataSo
     var selected_staff_id : String?
         var staffdetails = UserDefaultFileManager.get_staff_Details()
         var PunchDetails:[puchHistoryList]? =  []
-        var selectedDate = ""
-    
+    var selectedDate = ""
+    var user:String?
+    var roll:String?
+    var date:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         let rowNiib = UINib(nibName: CellConfingName.PunchHistTableViewCell, bundle: nil)
         tv.register(rowNiib, forCellReuseIdentifier: CellConfingName.PunchHistTableViewCell)
         noRecordLbl.isHidden = true
+        userName.text = user
+        designation.text = roll
+        dateLbl.text = date
+        schoolName.text = staffdetails?.school_name
         let back = UITapGestureRecognizer(target: self, action: #selector(backClick))
         backView.addGestureRecognizer(back)
         
         Geometric_Punch_History()
-        
         tv.delegate = self
         tv.dataSource = self
         tv.reloadData()

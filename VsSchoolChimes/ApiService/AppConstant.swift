@@ -69,7 +69,8 @@ struct ServiceUrl{
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"
     static let  admin_api_get_school_strength = "admin/api/get-school-strength"
-    static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type"
+    static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type" 
+    static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/api/attendance/get-absent-dates-for-child"
     
     
 }
@@ -113,6 +114,7 @@ struct Menu_id{
     static let attendance = 3
     static let feependingreport = 14
     static let dailyCollection = 8
+    static let schoolStrength = 31
 }
 struct TargetTypes{
     

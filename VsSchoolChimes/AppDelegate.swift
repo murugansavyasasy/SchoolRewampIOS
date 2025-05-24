@@ -125,7 +125,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
     func userNotificationCenter(_ center: UNUserNotificationCenter,didReceive response: UNNotificationResponse) async {
         let userInfo = response.notification.request.content.userInfo
         print("didReceivedidReceivedidReceive",userInfo)
+        
     }
+    
+    
+//    func application(_ application: UIApplication,
+//                     didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+//                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+//
+//        if let menuId = userInfo["menu_id"] as? String,
+//           let messageId = userInfo["message_id"] as? String {
+//            NotificationCenter.default.post(name: .notificationTapped,
+//                                            object: nil,
+//                                            userInfo: ["menu_id": menuId, "message_id": messageId])
+//        }
+//
+//        completionHandler(.newData)
+//    }
     
     func application(_ application: UIApplication,didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
         

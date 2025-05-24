@@ -67,6 +67,7 @@ class MenuStringFile{
     static let StaffWiseAttendanceReport = "Staff Wise Attendance Report"
     static let LSRW = "LSRW"
     static let MarkAttendance = "Mark Attendance"
+    static let GeometricAttendance = "Geometric Attendance"
 }
 
 
@@ -246,7 +247,7 @@ class CommonStringFile{
     static let NameDESC = "Name DESC".translated()
     static let Present = "Present".translated()
     static let Absent = "Absent".translated()
-    static let getAllStudent = "get All Student".translated()
+    static let getAllStudent = "Get All Student".translated()
     static let getStanderd_Section = "Standard & Section".translated()
     static let getStanderd = "Standard".translated()
     static let Logout = "Logout".translated()
@@ -258,8 +259,8 @@ class CommonStringFile{
     static let Standard = "Standard".translated()
     static let Filter = "Filter".translated()
     static let UploadAttachment = "Upload Attachment".translated()
-    static let UploadImagepdf = "Upload Image/Pdf".translated()
-    static let UploadImagepdfoptional = "Upload Image/Pdf (Optional)".translated()
+    static let UploadImagepdf = "Upload Image/Document".translated()
+    static let UploadImagepdfoptional = "Upload Image/Document (Optional)".translated()
     static let Description = "Description".translated()
     static let Groups = "Groups".translated()
     static let Sectionorstudent = "Section or student".translated()

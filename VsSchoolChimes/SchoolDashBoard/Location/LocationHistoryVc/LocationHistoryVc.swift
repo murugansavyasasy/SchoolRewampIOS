@@ -44,7 +44,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
     var SearchResults: [StaffAttendance]?
     var SelectedMonthCode = ""
     var currentMonth = Calendar.current.component(.month, from: Date())
-    
+    var AcadimicYearDatas : [AcadimicYearData] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -95,18 +95,65 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         if type == 1 {
             // Handle special case for type 1 if needed
         } else {
-            for i in 0..<21 {
-                let year = currentYear - i
-                years.append(String(year))
-            }
-            yearLbl.text = years[0]
-            Months = getMonthNames(for: years[0])
-            selectMthLbl.text = Months[currentMonth - 1]
-            SelectedMonthCode = String(format: "%02d", currentMonth)
-            geometric_principal_attendance_report()
-            setupTableView()
+            getAcademicYr()
         }
     }
+    func getAcademicYr() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_recipient_get_academic_year_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET, // make sure this is not a typo
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
+            switch result {
+            case .success(let successMessage):
+                if successMessage.status == true {
+                    DispatchQueue.main.async {
+                        guard let self = self else { return }
+                        self.AcadimicYearDatas = successMessage.data ?? []
+                        self.years.removeAll()
+                        
+                        var currentAcademicYear: String?
+                        
+                        for yearData in self.AcadimicYearDatas {
+                            // Append all first years
+                            if let year = yearData.year,
+                                   let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                    self.years.append(firstYear)
+                                }
+                            if yearData.current_academic_year == true {
+                                if let year = yearData.year,
+                                       let firstYear = year.components(separatedBy: "-").first?.trimmingCharacters(in: .whitespaces) {
+                                        currentAcademicYear = firstYear
+                                    }
+                            }
+                        }
+
+                        // Once data is loaded
+                        if let year = currentAcademicYear {
+                            self.yearLbl.text = year
+
+                            if let firstYear = year.components(separatedBy: " - ").first {
+                                if !self.years.isEmpty {
+                                    self.Months = self.getMonthNames(for: firstYear)
+                                    self.selectMthLbl.text = self.Months[self.currentMonth - 1]
+                                    self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
+                                }
+                            }
+
+                            self.geometric_principal_attendance_report()
+                            self.setupTableView()
+                        }
+
+                        print("First Years: \(self.years)")
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
     
     func setupTableView() {
         let rowNib = UINib(nibName: CellConfingName.LocationTableViewCell, bundle: nil)
@@ -151,7 +198,6 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             getStaffListAPI { [self] result in
                 switch result {
                 case .success(let staffListResponse):
-                    print("staffListResponse",staffListResponse.data)
                     let staffDetails = staffListResponse.data
                     self.staffDetails = staffDetails
                     staffId = Int(staffDetails?.first?.id ?? "0")
@@ -248,9 +294,12 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         cell.toDateLbl.isHidden = false
         cell.StatusLbl.layer.cornerRadius = 5
         cell.StatusLbl.layer.masksToBounds = true
-        //                  noRecordLbl.isHidden = true
+        if let role = attendanceData?.designation,!role.isEmpty{
+            cell.attendanceTypeLbl.text = role
+        }else{
+            cell.attendanceTypeLbl.text =  attendanceData?.role ?? "Not Mention"
+        }
         cell.namelbl.text = attendanceData?.name
-//        cell.attendanceTypeLbl.text = attendanceData?.attendance_type?.FD
         if let attendanceDict = attendanceData?.attendance_type {
             
             if attendanceDict.count != 1 {
@@ -258,14 +307,14 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 let values = Array(attendanceDict.values)
                 if keys.indices.contains(0), values.indices.contains(0) {
                     cell.prestType.text = keys[0]
-                    let status = values[0] == "P" ? "Present":"Apsent"
+                    let status = values[0] == "P" ? "Present":"Absent"
                     cell.StatusLbl.text = status
                     let statusclr = values[0] == "P" ? UIColor.systemGreen : UIColor.systemRed
                     cell.presentStatus.backgroundColor = statusclr
                 }
                 if keys.indices.contains(1), values.indices.contains(1) {
                     cell.opsentType.text = keys[1]
-                    let status = values[1] == "P" ? "Present":"Apsent"
+                    let status = values[1] == "P" ? "Present":"Absent"
                     cell.opsentLbl.text = status
                     let statusclr = values[1] == "P" ? UIColor.systemGreen : UIColor.systemRed
                         cell.opsentStus.backgroundColor = statusclr
@@ -275,7 +324,7 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
                 
             } else if let firstItem = attendanceDict.first {
                 let key = firstItem.key
-                let value = firstItem.value == "P" ? "Present":"Apsent"
+                let value = firstItem.value == "P" ? "Present":"Absent"
                     cell.prestType.text = key
                     cell.StatusLbl.text = value
                 cell.presentStatus.isHidden = false
@@ -285,33 +334,33 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             }
         }
         
-        if attendanceData?.in_time  != ""{
+//        if attendanceData?.in_time  != ""{
             cell.firstInLbl.isHidden = false
             cell.firstInLbl.text = "Checkin - " + (
-                attendanceData?.in_time ?? ""
+                attendanceData?.in_time ?? "0"
             )
-        }else{
-            
-            cell.firstInLbl.isHidden = true
-        }
+//        }else{
+//            
+//            cell.firstInLbl.isHidden = true
+//        }
         
-        if attendanceData?.out_time  != ""{
+//        if attendanceData?.out_time  != ""{
             cell.toDateLbl.isHidden = false
             cell.toDateLbl.text = "Checkout - " + (
-                attendanceData?.out_time ?? ""
+                attendanceData?.out_time ?? "0"
             )
-        }else{
-            cell.toDateLbl.isHidden = true
-        }
+//        }else{
+//            cell.toDateLbl.isHidden = true
+//        }
         
-        if attendanceData?.working_hours  != ""{
+//        if attendanceData?.working_hours  != ""{
             cell.workingHrsLbl.isHidden = false
             cell.workingHrsLbl.text = "Working Hours - " +  (
-                attendanceData?.working_hours ?? ""
+                attendanceData?.working_hours ?? "0"
             )
-        }else{
-            cell.workingHrsLbl.isHidden = true
-        }
+//        }else{
+//            cell.workingHrsLbl.isHidden = true
+//        }
 
         
         if let components = convertDateComponents(from: attendanceData?.date ?? "") {
@@ -329,6 +378,9 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         vc.modalPresentationStyle = .fullScreen
         vc.selectedDate = selectedDate ?? ""
         vc.selected_staff_id = SearchResults?[indexPath.row].staff_id ?? ""
+        vc.date = SearchResults?[indexPath.row].date ?? ""
+        vc.roll = SearchResults?[indexPath.row].role ?? ""
+        vc.user = SearchResults?[indexPath.row].name
         present(vc, animated: true)
     }
     
