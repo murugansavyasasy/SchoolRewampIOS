@@ -44,7 +44,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
         searchbar.applyRightTxt()
         StyleAndTranslate()
         searchbar.delegate = self
-        searchbar.addDoneButton()
+        searchbar.searchTextField.addDoneButton()
         CellRegister()
         Get_Notice()
         

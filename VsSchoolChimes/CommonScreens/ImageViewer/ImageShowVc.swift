@@ -15,11 +15,12 @@ class ImageShowVc: UIViewController{
     @IBOutlet weak var pdfView: WKWebView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var cv: UICollectionView!
-    
     @IBOutlet weak var TitleLbl: UILabel!
+    @IBOutlet weak var PageController: UIPageControl!
     
     var imageIterms : [String] = []
     var imageURL : [FilePath] = []
+    var FileURL : [FilePath] = []
     var delegate:DidSelectDelegate?
     var pageName = ""
     var pdfUrl:String?
@@ -34,16 +35,22 @@ class ImageShowVc: UIViewController{
         TitleLbl.text = subjectName
         cv.delegate = self
         cv.dataSource = self
+        
         cv.register(UINib(nibName: CellConfingName.ImageShowCVCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImageShowCVCell)
         TitleLbl.setFont(style: .title, size: FontSize.TitleSize)
-        DispatchQueue.main.async { [self] in
-            for i in 0..<imageURL.count{
-                if imageURL[i].url == pdfUrl{
-                    self.cv.scrollToItem(at: IndexPath(item: i, section: 0), at: .centeredHorizontally, animated: true)
-                    dowloadUrl = pdfUrl
-                }
-            }
-        }
+        
+//        DispatchQueue.main.async { [self] in
+//            for i in 0..<imageURL.count{
+//                if imageURL[i].url == pdfUrl{
+//                    self.cv.scrollToItem(at: IndexPath(item: i, section: 0), at: .centeredHorizontally, animated: true)
+//                    dowloadUrl = pdfUrl
+//                }
+//            }
+//        }
+        
+        dowloadUrl = FileURL[0].url
+        PageController.numberOfPages = FileURL.count
+        PageController.currentPage = 0
     }
     @IBAction func saveToFolder(_ sender: UIButton) {
         sender.isEnabled = false
@@ -89,15 +96,18 @@ class ImageShowVc: UIViewController{
         DispatchQueue.main.async { [self] in
             switch type{
             case 0:
-                if let pdfURL = URL(string: pdfUrl ?? "") {
-                    let request = URLRequest(url: pdfURL)
-                    dowloadUrl = pdfUrl
-                    pdfView.load(request)
-                    
-                } else {
-                    print("Invalid URL")
-                }
-                cv.isHidden = true
+//                if let pdfURL = URL(string: pdfUrl ?? "") {
+//                    let request = URLRequest(url: pdfURL)
+//                    dowloadUrl = pdfUrl
+//                    pdfView.load(request)
+//                    
+//                } else {
+//                    print("Invalid URL")
+//                }
+//                cv.isHidden = true
+//                textView.isHidden = true
+                cv.isHidden = false
+                pdfView.isHidden = true
                 textView.isHidden = true
             case 1:
                 cv.isHidden = true
@@ -109,7 +119,7 @@ class ImageShowVc: UIViewController{
                 pdfView.isHidden = true
                 textView.isHidden = true
             default:
-                if let pdfURL = URL(string: pdfUrl ?? "" ?? "") {
+                if let pdfURL = URL(string: pdfUrl ?? "") {
                     let request = URLRequest(url: pdfURL)
                     pdfView.load(request)
                     dowloadUrl = pdfUrl
@@ -131,37 +141,42 @@ class ImageShowVc: UIViewController{
         }else{
             dismiss(animated: true)
         }
-        
     }
-    
-    
 }
 
 extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageURL.count
+        return FileURL.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.ImageShowCVCell, for: indexPath) as! ImageShowCVCell
         
-        cell.imageView
-            .sd_setImage(
-                with: URL(string: imageURL[indexPath.row].url ?? ""),
-                placeholderImage: ImageName.placeholder
-            )
+        switch type {
+            
+        case 0:
+            if let url = URL(string: FileURL[indexPath.row].url ?? "") {
+                let request = URLRequest(url: url)
+                cell.WebView.load(request)
+            }
+            cell.WebView.isHidden = false
+            
+        case 2:
+            cell.imageView.sd_setImage(with: URL(string: FileURL[indexPath.row].url ?? ""),placeholderImage: ImageName.placeholder)
+            cell.WebView.isHidden = true
+        default:
+            ""
+        }
+        
         return cell
-        
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        
         return CGSize(width:cv.frame.width, height: cv.frame.height - 40)
-        
     }
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let centerPoint = CGPoint(
             x: cv.bounds.midX,
@@ -174,11 +189,11 @@ extension ImageShowVc : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         }
 
         scrollIndex = indexPath
-        let fileItem = imageURL[indexPath.item]
+        let fileItem = FileURL[indexPath.item]
         dowloadUrl = fileItem.url
+        PageController.currentPage = indexPath.item
         print("✅ Final paged index: \(indexPath.item)")
     }
-
 }
 
 extension ImageShowVc : WKNavigationDelegate {
