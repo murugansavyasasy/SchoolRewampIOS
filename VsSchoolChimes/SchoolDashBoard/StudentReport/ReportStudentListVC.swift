@@ -373,7 +373,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = reportTable.dequeueReusableCell(withIdentifier: CellConfingName.ReportStudentTVC, for: indexPath) as! ReportStudentTVC
+        let cell = reportTable.dequeueReusableCell(withIdentifier: CellConfingName.ReportStudentTVC, for: indexPath) as! ReportStudentTVC 
         cell.smsBtn.tag = indexPath.row
         cell.mobleNo.tag = indexPath.row
         cell.emailBtn.tag = indexPath.row

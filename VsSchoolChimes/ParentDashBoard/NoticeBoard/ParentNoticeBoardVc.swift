@@ -35,7 +35,7 @@ class ParentNoticeBoardVc: UIViewController, SelectNotice {
     var FilteredData: [Notice]?
     var Filters = ["All","Text","Image","Document"]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
-    
+    let dateFormatter = DateFormatter()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -160,7 +160,7 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         let notice =  SearchData?[indexPath.row]
         
         cell.SelectBtn.isHidden = true
-    
+        
         cell.TitleLbl.text =  notice?.title
         cell.dicriptContent.setupExpandable(text: notice?.content ?? "")
         cell.dicriptContent.onExpandableTap =
@@ -171,7 +171,15 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
             tableview?.beginUpdates()
             tableview?.endUpdates()
         }
-        cell.datelbl.text =  notice?.created_on
+        if let components = notice?.created_on?.components(separatedBy: " "){
+            
+            if components.count == 3 {
+                let datePart = components[0]
+                let timePart = components[1] + " " + components[2]
+                let formattedDateString = dateFormatter.convertDate(datePart) ?? ""
+                cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: timePart)
+            }
+        }
         
         if let urls =  notice?.file_path, urls.count != 0{
             cell.collectionview.isHidden = false
@@ -190,55 +198,6 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
         
         return UITableView.automaticDimension
     }
-    
-    
-    @objc func handleSeeMoreTap(_ sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel else { return }
-        let indexPath = IndexPath(row: label.tag, section: 0)
-        let fullDescription = label.text ?? ""
-        
-        // Toggle the label between expanded and collapsed states
-        let isExpanded = label.numberOfLines == 0
-        label.numberOfLines = isExpanded ? 3 : 0
-        
-        // Update the label text with the appropriate "See more" or "See less" state
-        label.attributedText = descript(for: fullDescription, expanded: !isExpanded)
-        
-        // Animate the cell height change
-        tableview.beginUpdates()
-        tableview.endUpdates()
-    }
-    
-    //MARK: TEXT ADD SEE MORE
-    func descript(for fullDescription: String, expanded: Bool) -> NSAttributedString {
-        // If expanded, show full text with "See less"
-        if expanded {
-            let fullString = fullDescription + CommonStringFile.seeLess.translated()
-            let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See less" text to blue and underline it
-            let seeLessRange = (fullString as NSString).range(of: "See less")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeLessRange)
-            
-            return attributedText
-        } else {
-            var fullString = ""
-            // Otherwise, truncate and show "See more"
-            if fullDescription.count > 120{
-                let truncatedDescription = String(fullDescription.prefix(100))
-                fullString = truncatedDescription + CommonStringFile.seemore.translated()
-            }else{
-                fullString = fullDescription
-            }
-            let attributedText = NSMutableAttributedString(string: fullString)
-            
-            // Set "See more" text to blue and underline it
-            let seeMoreRange = (fullString as NSString).range(of: "See more")
-            attributedText.addAttribute(.foregroundColor, value: UIColor.link, range: seeMoreRange)
-            return attributedText
-        }
-    }
-    
     func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
@@ -290,7 +249,7 @@ extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSour
         default:
             FilteredData = NoticeboardData
         }
-
+        
         SearchData = FilteredData
         
         NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
@@ -309,7 +268,7 @@ extension ParentNoticeBoardVc: UICollectionViewDelegate,UICollectionViewDataSour
         label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
         label.text = text
         label.sizeToFit()
-
+        
         let width = label.frame.width + 60  // Add padding
         return CGSize(width: width, height: 40) // Adjust height accordingly
     }
@@ -336,11 +295,11 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
                 (notice.created_on?.lowercased().contains(searchText.lowercased()) ?? false)
             }
         }
-
+        
         NodataImage.isHidden = !(SearchData?.isEmpty ?? false)
         NoDataLbl.isHidden = !(SearchData?.isEmpty ?? false)
         EmptyView.isHidden = !(SearchData?.isEmpty ?? false)
         tableview.reloadData()
     }
-
+    
 }

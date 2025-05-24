@@ -34,6 +34,7 @@ class EventResiverVC: UIViewController, SelectNotice{
     var shouldShowFooter = true
     var event:[EventList]?
     var eventHolidayData : [EventHolidayData]?
+    let dateFormatter = DateFormatter()
     var playIndex : Int = 0
     var studentDetails = UserDefaultFileManager.get_child_Details()
     override func viewDidLoad() {
@@ -237,7 +238,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
             cell.topics.text = event?.title ?? ""
             
             
-            cell.dateLble.text = event?.date.convertToTargetDateFormat() ?? "-"
+//            cell.dateLble.text = event?.date.convertToTargetDateFormat() ?? "-"
             cell.forwordBtn.isHidden = true
             cell.SelectBtnHeight.constant = 0
             cell.newView.isHidden = true
@@ -249,6 +250,9 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
             }
             let contentText = event?.content ?? ""
             cell.descriptionLbl.setupExpandable(text: contentText)
+            let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
+            
+            cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
             cell.newView.isHidden = contentText.count <= 100
             cell.descriptionLbl.onExpandableTap = { [weak tableView] in
                 cell.descriptionLbl.isExpanded.toggle()
