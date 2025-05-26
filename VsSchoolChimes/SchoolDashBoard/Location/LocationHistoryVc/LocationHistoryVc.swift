@@ -300,68 +300,33 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
             cell.attendanceTypeLbl.text =  attendanceData?.role ?? "Not Mention"
         }
         cell.namelbl.text = attendanceData?.name
+        
         if let attendanceDict = attendanceData?.attendance_type {
-            
-            if attendanceDict.count != 1 {
-                let keys = Array(attendanceDict.keys)
-                let values = Array(attendanceDict.values)
-                if keys.indices.contains(0), values.indices.contains(0) {
-                    cell.prestType.text = keys[0]
-                    let status = values[0] == "P" ? "Present":"Absent"
-                    cell.StatusLbl.text = status
-                    let statusclr = values[0] == "P" ? UIColor.systemGreen : UIColor.systemRed
-                    cell.presentStatus.backgroundColor = statusclr
-                }
-                if keys.indices.contains(1), values.indices.contains(1) {
-                    cell.opsentType.text = keys[1]
-                    let status = values[1] == "P" ? "Present":"Absent"
-                    cell.opsentLbl.text = status
-                    let statusclr = values[1] == "P" ? UIColor.systemGreen : UIColor.systemRed
-                        cell.opsentStus.backgroundColor = statusclr
-                }
-                cell.presentStatus.isHidden = false
-                cell.opsentStus.isHidden = false
-                
-            } else if let firstItem = attendanceDict.first {
-                let key = firstItem.key
-                let value = firstItem.value == "P" ? "Present":"Absent"
-                    cell.prestType.text = key
-                    cell.StatusLbl.text = value
-                cell.presentStatus.isHidden = false
-                let statusclr = value == "Present" ? UIColor.systemGreen : UIColor.systemRed
-                    cell.presentStatus.backgroundColor = statusclr
+            let keys = Array(attendanceDict.keys)
+            let values = Array(attendanceDict.values)
+            if keys.count > 1 {
+                updateStatus(label: cell.StatusLbl, typeLabel: cell.prestType, statusView: cell.presentStatus, key: keys[0], value: values[0])
+                updateStatus(label: cell.opsentLbl, typeLabel: cell.opsentType, statusView: cell.opsentStus, key: keys[1], value: values[1])
+            } else if let first = attendanceDict.first {
+                updateStatus(label: cell.StatusLbl, typeLabel: cell.prestType, statusView: cell.presentStatus, key: first.key, value: first.value)
                 cell.opsentStus.isHidden = true
             }
         }
         
-//        if attendanceData?.in_time  != ""{
             cell.firstInLbl.isHidden = false
             cell.firstInLbl.text = "Checkin - " + (
                 attendanceData?.in_time ?? "0"
             )
-//        }else{
-//            
-//            cell.firstInLbl.isHidden = true
-//        }
-        
-//        if attendanceData?.out_time  != ""{
+
             cell.toDateLbl.isHidden = false
             cell.toDateLbl.text = "Checkout - " + (
                 attendanceData?.out_time ?? "0"
             )
-//        }else{
-//            cell.toDateLbl.isHidden = true
-//        }
-        
-//        if attendanceData?.working_hours  != ""{
+
             cell.workingHrsLbl.isHidden = false
             cell.workingHrsLbl.text = "Working Hours - " +  (
                 attendanceData?.working_hours ?? "0"
             )
-//        }else{
-//            cell.workingHrsLbl.isHidden = true
-//        }
-
         
         if let components = convertDateComponents(from: attendanceData?.date ?? "") {
             
@@ -372,6 +337,14 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         return cell
     }
     
+    func updateStatus(label: UILabel, typeLabel: UILabel, statusView: UIView, key: String, value: String) {
+        typeLabel.text = key
+        let isPresent = value == "Present"
+        label.text = isPresent ? "Present" : "Absent"
+        statusView.backgroundColor = isPresent ? .systemGreen : .systemRed
+        statusView.isHidden = false
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedDate = SearchResults?[indexPath.row].date
         let vc = PunchHistoryListVC(nibName: nil, bundle: nil)
