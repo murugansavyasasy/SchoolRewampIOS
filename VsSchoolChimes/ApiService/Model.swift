@@ -680,8 +680,6 @@ struct SectionList: Codable {
 
 
 //MARK: Student attandance
-
-
 struct StudentAttendanceResponse: Codable {
     let status: Bool?
     let message: String?
@@ -693,4 +691,52 @@ struct StudentAttendance: Codable {
     let day : String?
     let type : String?
     let is_Archive : Bool?
+}
+
+//MARK: Absentsm Report
+
+struct AbsenteesResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [AbsenteeDate]
+}
+
+struct AbsenteeDate: Codable {
+    let date: String
+    let day: String
+    let absent_date_only: String
+    let total_absentees: String
+    let class_wise: [ClassWise]
+}
+
+struct ClassWise: Codable {
+    let class_id: Int
+    let class_name: String
+    let total_absentees: String
+    let section_wise: [SectionWise]
+}
+
+struct SectionWise: Codable {
+    let section_id: Int
+    let section_name: String
+    let total_absentees: String
+}
+
+
+//MARK: Absentis Report Student Report
+
+
+struct AbsentisReportStudentResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [AbsentisReportStudent]
+}
+
+struct AbsentisReportStudent: Codable {
+    let student_id: String?
+    let student_name: String?
+    let roll_no: String?
+    let admission_no: String?
+    let photo_path: String?
+    let primary_mobile: String?
 }

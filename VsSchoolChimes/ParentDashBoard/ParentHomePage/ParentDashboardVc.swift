@@ -379,12 +379,12 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 10:
                 MenuRedirect.resiverExamMark(from: self)
             case 12:
-                   "" // Fee Details
+                MenuRedirect.receiverFeeDetails(from: self)
             case 13:
-                ""    //fee payment
+                break    //fee payment
             case 15:
                 MenuRedirect.receiverHomework(from: self)
-//            case 16:
+            case 16:
                 MenuRedirect.receiverchat(from: self)
             case 20:
                 MenuRedirect.receiverLsrwNavigate(from: self)
@@ -392,6 +392,8 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 MenuRedirect.receiverNoticeBoardNavigate(from: self)
             case 24:
                 MenuRedirect.receiverOnlineNavigate(from: self)
+            case 25:
+                MenuRedirect.receiverFeeDetails(from: self)
             case 26:
                 MenuRedirect.receiverPtmNavigate(from: self)
             case 27:
@@ -399,7 +401,7 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 28:
                 MenuRedirect.LeaveRquest(from: self)
             case 36:
-                MenuRedirect.senderImportantInfoNavigate(from: self) //need to be changed
+                MenuRedirect.senderImportantInfoNavigate(from: self)
             case 39:
                 MenuRedirect.receiverAttachment(from: self)
                 

@@ -223,7 +223,6 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Don't show header for last section
         if PendingReports?[section].pending_data?.count ?? 0 == 0 {
             return nil
         }

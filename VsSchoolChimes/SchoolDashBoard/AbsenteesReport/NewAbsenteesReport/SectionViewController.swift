@@ -1,10 +1,3 @@
-//
-//  SectionViewController.swift
-//  VoicesnapSchoolApp
-//
-//  Created by admin on 26/04/24.
-//  Copyright © 2024 Gayathri. All rights reserved.
-//
 
 import UIKit
 
@@ -18,22 +11,16 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     @IBOutlet weak var HeaderLbl: UILabel!
     @IBOutlet weak var BackBtn: UIButton!
     var classNAme = ""
-    var SchoolId  = String()
+    
     var SectionName = ""
     var ClickID = 0
-    var DateRef : String!
     
-    var section = ["8th A","8th B","8th C","8th D","8th E"]
-    var absentcount = ["3","8","2","6","3"]
-    // Data for studentData
-    let studentDataList = [
-        studentData2(Name: "John Doe", StandandAndSection: "10th A", AdmissionNo: "AD1234", MobileNo: "9876543210"),
-        studentData2(Name: "Jane Smith", StandandAndSection: "9th B", AdmissionNo: "AD1235", MobileNo: "8765432109"),
-        studentData2(Name: "Emily Johnson", StandandAndSection: "8th C", AdmissionNo: "AD1236", MobileNo: "7654321098"),
-        studentData2(Name: "Michael Brown", StandandAndSection: "7th A", AdmissionNo: "AD1237", MobileNo: "6543210987"),
-        studentData2(Name: "Sarah Davis", StandandAndSection: "6th D", AdmissionNo: "AD1238", MobileNo: "5432109876")
-    ]
-
+    var sectionId : String?
+    var DateRef : String?
+    
+    var section_wiseData: [SectionWise]?
+    var absentStudentData: [AbsentisReportStudent]?
+    var staffDetails = UserDefaultFileManager.get_staff_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -42,13 +29,18 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         cv.delegate = self
         noRecordView.isHidden = true
         noRecordLbl.isHidden = true
-//        let backViews = UITapGestureRecognizer(target: self, action: #selector(BackVc))
-//        backView.addGestureRecognizer(backViews)
+        //        let backViews = UITapGestureRecognizer(target: self, action: #selector(BackVc))
+        //        backView.addGestureRecognizer(backViews)
         let rowNib = UINib(nibName: CellConfingName.SectionTvTableViewCell, bundle: nil)
         tv.register(rowNib, forCellReuseIdentifier: CellConfingName.SectionTvTableViewCell)
         tv.delegate = self
         tv.dataSource = self
-        tv.reloadData()
+        
+        
+        guard let  sectionIds = sectionId, let DateRefs = DateRef else { return }
+        
+        AbsentStudent(sectionId:sectionIds,date:DateRefs)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,17 +56,23 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        studentDataList.count
+        return absentStudentData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.SectionTvTableViewCell, for: indexPath) as!
-        SectionTvTableViewCell
+        
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.SectionTvTableViewCell,
+            for: indexPath) as? SectionTvTableViewCell else{
+            return UITableViewCell()
+        }
+        
         cell.selectionStyle = .none
-        cell.nameLbl.text = studentDataList[indexPath.row].Name
-        cell.mobileNumberLbl.text = studentDataList[indexPath.row].MobileNo
-        cell.SectionLbl.text = studentDataList[indexPath.row].StandandAndSection
-        cell.AddmisionLbl.text = studentDataList[indexPath.row].AdmissionNo
+        cell.nameLbl.text = absentStudentData?[indexPath.row].student_name
+        cell.mobileNumberLbl.text = absentStudentData?[indexPath.row].primary_mobile
+        cell.SectionLbl.isHidden = true
+        //        cell.SectionLbl.text = absentStudentData[indexPath.row].s
+        cell.AddmisionLbl.text = absentStudentData?[indexPath.row].admission_no
         return cell
     }
     
@@ -83,13 +81,19 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return section_wiseData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.SectionCollectionViewCell, for: indexPath) as! SectionCollectionViewCell
-        if ClickID == indexPath.row {
+        
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CellConfingName.SectionCollectionViewCell ,
+            for: indexPath) as? SectionCollectionViewCell else{
             
+            return UICollectionViewCell()
+        }
+        
+        if ClickID == indexPath.row {
             cell.sectionClick.backgroundColor = .gradient1
             cell.sectionNameLbl.textColor = .black
             cell.absentcountLbl.textColor = .black
@@ -99,6 +103,9 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
             cell.sectionNameLbl.textColor = .gray
             cell.absentcountLbl.textColor = .gray
         }
+        
+        
+        
         return cell
     }
     
@@ -120,132 +127,56 @@ class SectionViewController: UIViewController,UICollectionViewDelegate,UICollect
         return CGSize(width: 157, height: 58)
     }
     
+    
+    
+    
+    func AbsentStudent(sectionId:String,date:String) {
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+        APIService.shared.makeApi(
+            url: ServiceUrl.api_school_event_get_event,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token:staffDetails?.access_token ?? "") { [self] (result: Result<AbsentisReportStudentResponse, Error>) in
+                DispatchQueue.main.async {
+                    if #available(iOS 15.0, *) {
+                        self.hideLottieProgressLoader()
+                    }
+                    
+                    switch result {
+                    case .success(let successMessage):
+                        self.absentStudentData = successMessage.data
+                        self.tv.reloadData()
+                        if self.absentStudentData?.count == 0{
+                            self.noRecordLbl.text = successMessage.message
+                            self.noRecordLbl.isHidden = false
+                            
+                            self.tv.isHidden = true
+                            
+                        }else{
+                            self.noRecordLbl.isHidden = true
+                            self.tv.isHidden = false
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                        if self.absentStudentData?.count == 0{
+                            self.noRecordLbl.text = error.localizedDescription
+                            self.noRecordLbl.isHidden = false
+                            self.tv.isHidden = true
+                        }
+                        
+                    }
+                }
+            }
+    }
+    
+    
 }
 class SectionClick : UITapGestureRecognizer{
-    var sectionId = ""
-    var SchoolId = ""
     var SectionName = ""
 }
 
 
-class PhnNumber : UITapGestureRecognizer{
-    var MobileNumber = ""
-}
 
 
-
-
-/*
- //MARK: Variable declared
- //    var SectionWiseDatadetailsss : [SectionWiseDatadetails] = []
- 
- //    var studetDataRef : [StudentDataDetails] = []
- 
- //MARK: viewdidload
- //        sectionApiList(SectionId : SectionWiseDatadetailsss[0].SectionId, SchoolId: SchoolId)
- 
- 
- //MARK: CellForRowAt
- 
- //        let studentList :  StudentDataDetails = studetDataRef[indexPath.row]
- //
- //
- //
- //        cell.nameLbl.text = studentList.studentName
- //        cell.SectionLbl.text = SectionName
- //        cell.AddmisionLbl.text =  "AdmissionNo" +  "  "  + " - " + "  " + studentList.admissionNo
- //
- //        let rectShape = CAShapeLayer()
- //        rectShape.bounds =  cell.profileImageView.frame
- //        rectShape.position =  cell.profileImageView.center
- //        rectShape.path = UIBezierPath(roundedRect:  cell.profileImageView.bounds, byRoundingCorners: [.topLeft,.bottomLeft], cornerRadii: CGSize(width: 6, height: 25)).cgPath
- //
- //
- //        cell.profileImageView.layer.mask = rectShape
- //
- //
- //        if studentList.photoPath == "" || studentList.photoPath == nil {
- //
- //
- //            cell.profileImageView.image = UIImage(named: "profile")
- //
- //
- //        }else{
- //
- //
- //
- //            cell.profileImageView.sd_setImage(with: URL(string:  studentList.photoPath), placeholderImage: UIImage(named: "profile"))
- //
- //        }
- //
- 
- 
- //        let abesents  : SectionWiseDatadetails = SectionWiseDatadetailsss[indexPath.row]
- //
- //
- //        SectionName =  classNAme + " " + "-" + " " + abesents.SectionName
- //        cell.sectionNameLbl.text = classNAme + " " + "-" + " " + abesents.SectionName
- //        cell.absentcountLbl.text = abesents.TotalAbsentees
- 
- 
- //MARK: didSelect
- let abesents  : SectionWiseDatadetails = SectionWiseDatadetailsss[indexPath.row]
- 
- SectionName =  classNAme + " " + "-" + " " + abesents.SectionName
- 
- //        sectionApiList(SectionId : abesents.SectionId, SchoolId: SchoolId)
- 
- //MARK: func
- func sectionApiList(SectionId : String!,SchoolId : String!){
- //
- //
- //        let section = studentListModal()
- //
- //        section.schoolId = SchoolId
- //        section.sectionId = SectionId
- //        section.absentOn = DateRef
- //
- //        let sectionStr = section.toJSONString()
- //
- //        print("sectionStrsectionStr",section.toJSON())
- //
- //        StudentListReqst .call_request(param: sectionStr!){ [self]
- //
- //            (res) in
- //
- //
- //            let overallResp : studentListResponce =
- //            Mapper<studentListResponce>().map(JSONString: res)!
- //
- //            if overallResp.Status == 1{
- //
- //
- //                studetDataRef = overallResp.data
- //
- //                noRecordView.isHidden = true
- //                noRecordLbl.isHidden = true
- //
- //                tv.delegate = self
- //                tv.dataSource = self
- //                tv.reloadData()
- //
- //            }else{
- //
- //
- //                noRecordView.isHidden = false
- //                noRecordLbl.isHidden = false
- //                noRecordLbl.text = overallResp.Message
- //
- //            }
- //
- //
- //
- //
- //
- //        }
- //
- //
- //
- //    }
- 
- */
