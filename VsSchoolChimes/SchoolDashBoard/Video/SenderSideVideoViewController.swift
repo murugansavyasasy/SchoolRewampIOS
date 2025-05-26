@@ -140,6 +140,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         playBtn.isHidden = true
         ThumnailImage.isHidden = true
         
+    
         if let playerurl = playerurl {
             player = AVPlayer(url: playerurl)
             print("playerurl: \(playerurl)")
@@ -439,6 +440,7 @@ class SenderSideVideoViewController: UIViewController, UIImagePickerControllerDe
         
     }
     func uploadVideo(authToken: String, videoFilePath: URL) {
+        
         createVimeoUploadURL(authToken: authToken, videoFilePath: videoFilePath) { [self] result in
             switch result {
             case .success(let uploadLink):

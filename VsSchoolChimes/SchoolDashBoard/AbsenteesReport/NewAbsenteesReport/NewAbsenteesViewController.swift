@@ -17,33 +17,15 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var cvIcon: UICollectionView!
     
-    // Data for classDetails
-    let classDetailsData = [
-        classDetails(Standard: "10th Grade", date: "21 Jan 2024", AbsentCount: "3"),
-        classDetails(Standard: "9th Grade", date: "20 Jan 2024", AbsentCount: "2"),
-        classDetails(Standard: "8th Grade", date: "19 Jan 2024", AbsentCount: "5"),
-        classDetails(Standard: "7th Grade", date: "18 Jan 2024", AbsentCount: "1"),
-        classDetails(Standard: "6th Grade", date: "17 Jan 2024", AbsentCount: "0")
-    ]
-
-    // Data for studentData
-    let studentDataList = [
-        studentData(Name: "John Doe", StandandAndSection: "10th A", AdmissionNo: "AD1234"),
-        studentData(Name: "Jane Smith", StandandAndSection: "9th B", AdmissionNo: "AD1235"),
-        studentData(Name: "Emily Johnson", StandandAndSection: "8th C", AdmissionNo: "AD1236"),
-        studentData(Name: "Michael Brown", StandandAndSection: "7th A", AdmissionNo: "AD1237"),
-        studentData(Name: "Sarah Davis", StandandAndSection: "6th D", AdmissionNo: "AD1238")
-    ]
-    
-    var days = ["Monday","Tuesday","Wednesday","Thrusday","Friday","Saturday"]
-
    
     var DateRef = ""
     var absenton = ""
     var Id = ""
     var ClickID  = 0
     var SchoolId  = String()
-    
+    var absentData : [AbsenteeDate]?
+    var  class_wiseData: [ClassWise]?
+    let StaffDetails = UserDefaultFileManager.get_staff_Details()
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -54,10 +36,11 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
         
         cvIcon.dataSource = self
         cvIcon.delegate = self
-        cvIcon.reloadData()
         
         Tv.dataSource = self
         Tv.delegate = self
+        
+        Absentees_Response()
     }
     
     override func viewDidLayoutSubviews() {
@@ -73,22 +56,18 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if Id == "1"{
-//            return 2
-//        }else{
-//            return 2
-//        }
-        
-        classDetailsData.count
-        
+        return  class_wiseData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ClassTableViewCell, for: indexPath) as!
-        ClassTableViewCell
-        cell.classNameLbl.text = classDetailsData[indexPath.row].Standard
-        cell.absentCountlbl.text = classDetailsData[indexPath.row].AbsentCount
-        cell.dateLbl.text = classDetailsData[indexPath.row].date
+       
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: CellConfingName.ClassTableViewCell,
+            for: indexPath) as? ClassTableViewCell else{
+            return UITableViewCell()}
+//        cell.classNameLbl.text = class_wiseData?[indexPath.row].
+//        cell.absentCountlbl.text = classDetailsData[indexPath.row].AbsentCount
+//        cell.dateLbl.text = classDetailsData[indexPath.row].date
         return cell
     }
     
@@ -97,17 +76,44 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return absentData?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.CVIconCollectionViewCell, for: indexPath) as! CVIconCollectionViewCell
         
-        cell.MnthLbl.text = "January"
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CellConfingName.CVIconCollectionViewCell ,
+            for: indexPath) as? CVIconCollectionViewCell else{
+            return UICollectionViewCell()
+        }
+        
+        
+        
+        let dateStr = absentData?[indexPath.row].date ?? ""
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "dd-MM-yyyy"
+
+        if let date = inputFormatter.date(from: dateStr) {
+            let outputFormatter = DateFormatter()
+            
+            // Get full month name
+            outputFormatter.dateFormat = "MMM"
+            let monthName = outputFormatter.string(from: date)
+            cell.MnthLbl.text = monthName
+
+            // Get day only
+            let calendar = Calendar.current
+            let day = calendar.component(.day, from: date)
+            cell.dateLbl.text = "\(day)"
+            
+            
+        }
+        
+    
         
         if ClickID == indexPath.row {
             cell.dateLbl.text = String (20 + indexPath.row)
-            cell.dayLbl.text = days[indexPath.row]
+//            cell.dayLbl.text = days[indexPath.row]
             cell.dateFulView.backgroundColor = .attendence
             cell.dayLbl.textColor = .black
             cell.dateLbl.textColor = .black
@@ -120,19 +126,18 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = Tv.cellForRow(at: indexPath) as! ClassTableViewCell
-        
-        let vc = SectionViewController(nibName: nil, bundle: nil)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let cell = Tv.cellForRow(at: indexPath) as! ClassTableViewCell
+//        
+//        let vc = SectionViewController(nibName: nil, bundle: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
+//    }
     
     @IBAction func clikVc(ges:DateClik){
         let vc = SectionViewController(nibName: nil, bundle: nil)
         vc.DateRef = ges.date
         vc.classNAme = ges.ClassName
-        vc.SchoolId = SchoolId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true,completion: nil)
     }
@@ -150,6 +155,42 @@ class NewAbsenteesViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 130, height: 130 )
     }
+    
+    
+    func Absentees_Response() {
+        
+        APIService.shared
+            .makeApi(url: ServiceUrl.recipient_get_standards, parameters: [:], type: ApitTypeSringFile.GET, token: StaffDetails?.access_token ?? "") { [self] (
+                result:Result <AbsenteesResponse,
+                Error>
+            ) in
+            
+            switch result {
+            case .success(let successMessage):
+                DispatchQueue.main.async { [self] in
+                    if successMessage.status == true{
+                        
+                        absentData = successMessage.data
+                        class_wiseData = absentData?.first?.class_wise ?? []
+                                   Tv.dataSource = self
+                                   Tv.delegate = self
+                                   Tv.reloadData()
+                       
+                                   cvIcon.dataSource = self
+                                   cvIcon.delegate = self
+                                   cvIcon.reloadData()
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async { [self] in
+                    print(error.localizedDescription)
+                   
+                }
+            }
+        }
+    }
+    
+    
     
 }
 

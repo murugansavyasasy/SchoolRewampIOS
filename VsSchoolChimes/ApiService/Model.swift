@@ -722,3 +722,21 @@ struct SectionWise: Codable {
     let total_absentees: String
 }
 
+
+//MARK: Absentis Report Student Report
+
+
+struct AbsentisReportStudentResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [AbsentisReportStudent]
+}
+
+struct AbsentisReportStudent: Codable {
+    let student_id: String?
+    let student_name: String?
+    let roll_no: String?
+    let admission_no: String?
+    let photo_path: String?
+    let primary_mobile: String?
+}

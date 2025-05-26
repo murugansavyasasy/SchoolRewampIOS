@@ -48,6 +48,9 @@ class LocationViewController: UIViewController {
     var childVC: LocationReportVC?
     let add_location_enabel = UserDefaultFileManager.get_staff_Details()?.biometric_enable
     private var lastIsInsideAllowedArea: Bool?
+    
+    var urlss : String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ViewAnimator.hideFade(LocationErrorStack)
