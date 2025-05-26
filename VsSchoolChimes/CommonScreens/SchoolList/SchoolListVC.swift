@@ -475,6 +475,89 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         }
                     )
                 }
+        case let attachments as [AttachmentItem]:
+            let uploadableItems = attachments.filter { $0.image != nil || $0.imageURL != nil }
+            let total = uploadableItems.count
+            guard total > 0 else {
+                completion()
+                return
+            }
+            
+            CircularProgressLoader.shared.show(style: .circle)
+            CircularProgressLoader.shared.updateProgress(to: 0)
+            
+            for item in uploadableItems {
+                if let image = item.image {
+                    // 🖼️ Upload local image
+                    AWSUploadManager.shared.uploadFileToAWS(
+                        file: image,
+                        bucketPath: "uploads/images/",
+                        bucketName: "schoolchimes-communication",
+                        progressHandler: nil,
+                        completion: { url in
+                            if let uploadedURL = url {
+                                self.uploadedURLs.append(uploadedURL)
+                            }
+                            completed += 1
+                            let progress = (Double(completed) / Double(total)) * 100
+                            CircularProgressLoader.shared.updateProgress(to: progress)
+
+                            if completed == total {
+                                CircularProgressLoader.shared.hide()
+                                // Do something with uploadedURLs if needed
+                                completion()
+                            }
+                        }
+                    )
+                } else if let fileURLStr = item.imageURL {
+                    if fileURLStr.lowercased().starts(with: "http") {
+                        self.uploadedURLs.append(fileURLStr)
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    } else if let fileURL = URL(string: fileURLStr) {
+                        let path = item.fileType.lowercased() != CommonStringFile.IMAGE ? "uploads/Documents/" : "uploads/images/"
+                        
+                        AWSUploadManager.shared.uploadFileToAWS(
+                            file: fileURL,
+                            bucketPath: path,
+                            bucketName: "schoolchimes-communication",
+                            progressHandler: nil,
+                            completion: { url in
+                                if let uploadedURL = url {
+                                    self.uploadedURLs.append(uploadedURL)
+                                }
+                                completed += 1
+                                let progress = (Double(completed) / Double(total)) * 100
+                                CircularProgressLoader.shared.updateProgress(to: progress)
+
+                                if completed == total {
+                                    CircularProgressLoader.shared.hide()
+                                    // Do something with uploadedURLs if needed
+                                    completion()
+                                }
+                            }
+                        )
+                    } else {
+                        print("❌ Invalid fileURL: \(fileURLStr)")
+                        completed += 1
+                        let progress = (Double(completed) / Double(total)) * 100
+                        CircularProgressLoader.shared.updateProgress(to: progress)
+
+                        if completed == total {
+                            CircularProgressLoader.shared.hide()
+                            // Do something with uploadedURLs if needed
+                            completion()
+                        }
+                    }
+                }
+            }
         default:
             print("❌ Unsupported file type")
             return

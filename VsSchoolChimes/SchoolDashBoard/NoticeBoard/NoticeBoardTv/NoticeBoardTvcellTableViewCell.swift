@@ -65,7 +65,7 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         cellview.layer.shadowOffset = CGSize(width: 4, height: 4)
         cellview.layer.shadowRadius = 3
         cellview.layer.masksToBounds = false
-        cellview.layer.borderWidth = 1
+        cellview.layer.borderWidth = 0.5
         cellview.layer.borderColor = UIColor.systemGray.cgColor
         
         Pinview.layer.cornerRadius = Pinview.frame.width/2
@@ -155,6 +155,11 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        pagecontroller.currentPage = indexPath.item
     }
     
     func isWebViewPreviewable(_ ext: String) -> Bool {

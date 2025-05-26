@@ -452,7 +452,7 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
                 selectImages()
             }
             alertController.addAction(galleryAction)
-            let pdfAction = UIAlertAction(title: AlertstringFile.PDF, style: .default) { [self] _ in
+            let pdfAction = UIAlertAction(title: AlertstringFile.Document, style: .default) { [self] _ in
                 
                 selectPDF()
             }
