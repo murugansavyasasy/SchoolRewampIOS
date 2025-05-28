@@ -38,8 +38,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
-    @IBOutlet weak var studentCollection: UICollectionView!
-    @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var search: UISearchBar!
     @IBOutlet weak var statusLbl: UILabel!
@@ -47,7 +45,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var selectAllBtn: UIButton!
     @IBOutlet weak var filterBtn: UIButton!
-    @IBOutlet weak var categoryDropDownView: UIView!
     @IBOutlet weak var sendbtnName: UIButton!
     @IBOutlet weak var historyTable: UITableView!
     var switchCell = 1
@@ -59,6 +56,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var selectedRows: [Bool] = []
     let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     var vimeoUploader: VimeoUploader?
+    var StandardString: String?
+    var SectionString: String?
     
 
     
@@ -100,6 +99,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             filterBtn.isHidden = false
             selectAllBtn.setImage(ImageName.checkmark, for: .normal)
             filterBtn.isUserInteractionEnabled = true
+            let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
+            BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
         }
         
         registerCell()
@@ -110,8 +111,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         search.delegate = self
         headerView.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
-        let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(fliter))
-        categoryDropDownView.addGestureRecognizer(categoryGesture)
+       
     }
     
     override func viewDidLayoutSubviews() {
@@ -125,7 +125,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     func StyleAndTranslater() {
         
         //MARK: Label And Button Font Style
-        HeaderLabel.setFont(style: .header, size: FontSize.HeaderSize)
         nameLbl.setFont(style: .title, size: FontSize.TitleSize)
         rollNoLbl.setFont(style: .title, size: FontSize.TitleSize)
         statusLbl.setFont(style: .title, size: FontSize.TitleSize)
@@ -135,7 +134,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         rollNoLbl.text = CommonStringFile.RollNo.translated()
         nameLbl.text = CommonStringFile.Name.translated()
         statusLbl.text = CommonStringFile.Status.translated()
-        HeaderLabel.text = CommonStringFile.Section.translated()
         search.placeholder = CommonStringFile.Search.translated()
         filterBtn.setTitle(CommonStringFile.Filter, for: .normal)
         
@@ -198,9 +196,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             }
             historyTable.reloadData()
             // Update the label inside the UIView
-            if let label = self.categoryDropDownView.subviews.first(where: { $0 is UILabel }) as? UILabel {
+            
                 self.filterBtn.setTitle(item.translated(), for: .normal)
-            }
         }
         
     }

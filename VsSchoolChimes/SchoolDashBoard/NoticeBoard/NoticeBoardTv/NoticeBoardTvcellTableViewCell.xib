@@ -47,7 +47,7 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoticePin" translatesAutoresizingMaskIntoConstraints="NO" id="0ta-Ym-h3a">
-                                <rect key="frame" x="249" y="-15" width="35" height="35"/>
+                                <rect key="frame" x="250" y="-15" width="35" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="6bW-9v-mcF"/>
                                     <constraint firstAttribute="width" constant="35" id="LQ0-K2-Mv1"/>
@@ -56,7 +56,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MLm-lM-PWT">
                                 <rect key="frame" x="20" y="40" width="469" height="130"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-UY-KqC">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="kwf-UY-KqC">
                                         <rect key="frame" x="0.0" y="0.0" width="469" height="130"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WFE-h0-yrg">
@@ -140,7 +140,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="MLm-lM-PWT" secondAttribute="trailing" constant="20" id="6o1-x1-tGt"/>
-                            <constraint firstItem="0ta-Ym-h3a" firstAttribute="centerX" secondItem="dRZ-ZP-W8D" secondAttribute="centerX" constant="12" id="8bM-xq-iAh"/>
+                            <constraint firstItem="0ta-Ym-h3a" firstAttribute="centerX" secondItem="dRZ-ZP-W8D" secondAttribute="centerX" constant="13" id="8bM-xq-iAh"/>
                             <constraint firstItem="dRZ-ZP-W8D" firstAttribute="centerX" secondItem="iLP-ce-oCO" secondAttribute="centerX" id="8sb-FD-fmm"/>
                             <constraint firstAttribute="bottom" secondItem="5N6-Jb-Vnf" secondAttribute="bottom" constant="10" id="HMu-bX-m7u"/>
                             <constraint firstAttribute="trailing" secondItem="5N6-Jb-Vnf" secondAttribute="trailing" constant="16" id="Iae-Es-QR8"/>
@@ -188,16 +188,16 @@
         <image name="newimg" width="498" height="501"/>
         <image name="paperplane" catalog="system" width="128" height="119"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

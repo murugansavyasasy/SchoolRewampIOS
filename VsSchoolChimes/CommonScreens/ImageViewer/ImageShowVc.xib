@@ -103,7 +103,7 @@
                                 <action selector="saveToFolder:" destination="-1" eventType="touchUpInside" id="tgO-E7-9mw"/>
                             </connections>
                         </button>
-                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="1Yi-ue-CFj">
+                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="1Yi-ue-CFj">
                             <rect key="frame" x="50" y="725" width="293" height="26"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="26" id="qCm-JP-pQe"/>

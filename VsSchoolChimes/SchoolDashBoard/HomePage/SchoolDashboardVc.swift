@@ -437,7 +437,11 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             Menu_id.staffSelectedMenuId = menuItem ?? 0
             switch menuItem {
             case 1: //
-                MenuRedirect.senderAbsenteesReport(from: self)
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.senderAbsenteesReport(from: self)
+                }
             case 2:
                 MenuRedirect.senderAssignmentNavigate(from: self)
             case 3:

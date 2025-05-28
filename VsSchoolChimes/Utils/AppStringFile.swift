@@ -68,6 +68,7 @@ class MenuStringFile{
     static let LSRW = "LSRW"
     static let MarkAttendance = "Mark Attendance"
     static let GeometricAttendance = "Geometric Attendance"
+    static let AbsentStudents = "Absent Students"
 }
 
 

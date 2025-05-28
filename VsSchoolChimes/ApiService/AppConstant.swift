@@ -71,7 +71,8 @@ struct ServiceUrl{
     static let  admin_api_get_school_strength = "admin/api/get-school-strength"
     static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type" 
     static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/api/attendance/get-absent-dates-for-child"
-    
+    static let  stud_attd_api_attendance_get_absentees_count_by_date = "stud-attd/api/attendance/get-absentees-count-by-date"
+    static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date"
     
 }
 
@@ -115,6 +116,7 @@ struct Menu_id{
     static let feependingreport = 14
     static let dailyCollection = 8
     static let schoolStrength = 31
+    static let  AbsenteeismReport = 1
 }
 struct TargetTypes{
     
@@ -215,7 +217,10 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
         "d MMM yyyy",
         "yyyy/MM/dd",
         "dd MMM yy",
-        "MMM dd,yyyy"
+        "MMM dd,yyyy",
+        "dd",
+        "MMMM",
+        "EEEE"
     ]
     
     let outputFormatter = DateFormatter()

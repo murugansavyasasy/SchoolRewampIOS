@@ -163,6 +163,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         CustumDateBtn.layer.borderColor = UIColor.gray.cgColor
         markAllPresentBtn.layer.cornerRadius = 10
         
+        markAllPresentBtn.isUserInteractionEnabled = false
+        MarkAbsentiesBtn.isUserInteractionEnabled = false
+        
         markAllPresentBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         MarkAbsentiesBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         DateBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -228,6 +231,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         SessionStack.isHidden = true
         markAllPresentBtn.backgroundColor = .systemGreen
         MarkAbsentiesBtn.backgroundColor = .systemRed
+        markAllPresentBtn.isUserInteractionEnabled = true
+        MarkAbsentiesBtn.isUserInteractionEnabled = true
     }
     @objc func HalfdayAction(){
     
@@ -243,6 +248,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         MarkAbsentiesBtn.backgroundColor = .lightGray
         FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
         secondHalfCheckImg.image = UIImage(named: "CheckCircle")
+        markAllPresentBtn.isUserInteractionEnabled = false
+        MarkAbsentiesBtn.isUserInteractionEnabled = false
     }
     @objc func FirsthalfAct(){
         user_inputs.attendance_type = "H"
@@ -252,6 +259,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         secondHalfCheckImg.image = UIImage(named: "CheckCircle")
         markAllPresentBtn.backgroundColor = .systemGreen
         MarkAbsentiesBtn.backgroundColor = .systemRed
+        markAllPresentBtn.isUserInteractionEnabled = true
+        MarkAbsentiesBtn.isUserInteractionEnabled = true
     }
     @objc func SecondhalfAct(){
         user_inputs.attendance_type = "H"
@@ -261,6 +270,9 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         FirsthalfCheckImg.image = UIImage(named: "CheckCircle")
         markAllPresentBtn.backgroundColor = .systemGreen
         MarkAbsentiesBtn.backgroundColor = .systemRed
+        markAllPresentBtn.isUserInteractionEnabled = true
+        MarkAbsentiesBtn.isUserInteractionEnabled = true
+        
     }
     
     
@@ -477,6 +489,8 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         vc.isAttandanceMarkingScreen = true
         vc.selected_sectionID = sectionId
         vc.selectedAcadimicYearId = AcademicYearId
+        vc.StandardString = standardLbl.text
+        vc.SectionString = sectionLbl.text
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
