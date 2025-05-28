@@ -188,6 +188,8 @@ class ParentDashboardVc: UIViewController {
 //        userNameLbl.textColor = .black
 //        SchoolNameLabel.textColor = .black.withAlphaComponent(0.7)
 //        AddressLabel.textColor = .black.withAlphaComponent(0.7)
+        BellImage.tintColor = .black
+        searchImgView.tintColor = .black
         
         let date = Date()
         dateFormatter.dateFormat = "dd-MM-yyyy"
