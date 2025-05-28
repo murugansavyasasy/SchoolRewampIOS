@@ -8,21 +8,25 @@
 import UIKit
 import Charts
 
-class StrengthTvCell: UITableViewCell {
+class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+        
     
+    @IBOutlet weak var girlsCountLbl: UILabel!
+    @IBOutlet weak var boysCountLbl: UILabel!
+    @IBOutlet weak var StandardBtn: UIButton!
+    @IBOutlet weak var sectionCollertionView: UICollectionView!
     @IBOutlet weak var SideBtn: UIButton!
     @IBOutlet weak var SideBtnWidth: NSLayoutConstraint!
     @IBOutlet weak var dropdownImgview: UIImageView!
     @IBOutlet weak var countLbl: UILabel!
     @IBOutlet weak var countView: UIView!
-    @IBOutlet weak var standardLbl: UILabel!
     @IBOutlet weak var barchartHeight: NSLayoutConstraint!
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var cellview: UIView!
     @IBOutlet weak var StandardView: UIView!
     @IBOutlet weak var BottomLblHeight: NSLayoutConstraint!
     @IBOutlet weak var BottomLbl: UILabel!
-    
+    var sections: [SectionList]?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -31,13 +35,16 @@ class StrengthTvCell: UITableViewCell {
         BottomLblHeight.constant = 0
         BottomLbl.isHidden = true
         countLbl.setFont(style: .body, size: FontSize.BodySize)
-        standardLbl.setFont(style: .title, size: FontSize.TitleSize)
+        StandardBtn.setTitleFont(style:.body, size: FontSize.TitleSize)
         StandardView.layer.cornerRadius = 10
         cellview.layer.cornerRadius = 10
         countView.layer.cornerRadius = 10
         SideBtn.isHidden = true
-        setupBarChart()
-        
+//        setupBarChart()
+        sectionCollertionView.delegate = self
+        sectionCollertionView.dataSource = self
+        sectionCollertionView.register(UINib(nibName: "SectionStregnthCVC", bundle: nil), forCellWithReuseIdentifier: "SectionStregnthCVC")
+
 //        let shortLabels = ["Mahatma Gandhi", "Jawaharlal Nehru", "APJ Abdul Kalam", "Bhimrao Ramji Ambedkar", "Kumaraswami Kamaraj","Lal Bahadur Srivastava Shastri"]
 //        let shortSectionCounts = [32, 47, 30, 62, 54,39]
         //setBarChartData(withLabels: shortLabels, sectionCounts: shortSectionCounts)
@@ -132,6 +139,10 @@ class StrengthTvCell: UITableViewCell {
 //        barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
 //    }
 //
+    func confic(_ sections: [SectionList]?){
+        self.sections = sections
+        sectionCollertionView.reloadData()
+    }
     private func setupBarChart() {
         barChartView.noDataText = "No data available."
         barChartView.chartDescription.enabled = false
@@ -227,8 +238,81 @@ class StrengthTvCell: UITableViewCell {
         // Animate chart
         barChartView.animate(yAxisDuration: 1.5, easingOption: .easeInOutQuart)
     }
-}
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return sections?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SectionStregnthCVC", for: indexPath) as! SectionStregnthCVC
+        cell.layer.cornerRadius = 10
+        setTwoPartAttributedText(label: cell.boysCountLbl,
+                                 firstText: "👦 Boys : ",
+                                 firstColor: .darkGray,
+                                 secondText: "\(sections?[indexPath.item].boys_count ?? 0)",
+                                 secondColor: .black)
+        setTwoPartAttributedText(label: cell.otersCountLbl,
+                                 firstText: "  Others: ",
+                                 firstColor: .darkGray,
+                                 secondText: "\(sections?[indexPath.item].other_count ?? 0)",
+                                 secondColor: .black)
+        setTwoPartAttributedText(label: cell.girlsCountLbl,
+                                 firstText: "👧 Girls: ",
+                                 firstColor: .darkGray,
+                                 secondText: "\(sections?[indexPath.item].girls_count ?? 0)",
+                                 secondColor: .black)
 
+        let title = "\(sections?[indexPath.item].total_students ?? "") Students"
+        let font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        let textWidth = (title as NSString).size(withAttributes: attributes).width
+        let padding: CGFloat = 20
+        cell.standardName.text = sections?[indexPath.item].name
+        cell.standardName.setFont(style: .body, size: FontSize.TitleSize)
+        cell.btnWidth.constant = textWidth + padding
+        cell.studentCount.setTitle(title, for: .normal)
+        cell.studentCount.layer.cornerRadius = 8
+        cell.studentCount.titleLabel?.font = font
+        cell.outerView.layer.cornerRadius = 10
+        cell.outerView.clipsToBounds = true
+        return cell
+    }
+   
+    func setTwoPartAttributedText(label: UILabel,
+                                  firstText: String, firstColor: UIColor,
+                                  secondText: String, secondColor: UIColor) {
+        
+        let firstAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 14),
+            .foregroundColor: firstColor
+        ]
+        
+        let secondAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.boldSystemFont(ofSize: 14),
+            .foregroundColor: secondColor
+        ]
+        
+        let attributedText = NSMutableAttributedString(string: firstText, attributes: firstAttributes)
+        attributedText.append(NSAttributedString(string: secondText, attributes: secondAttributes))
+        
+        label.attributedText = attributedText
+    }
+
+
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let totalSections = sections?.count ?? 0
+//
+//        let width: CGFloat
+//        if totalSections > 1 {
+//            width = collectionView.frame.width * 0.85
+//        } else {
+//            width = collectionView.frame.width
+//        }
+
+        return CGSize(width: collectionView.frame.width, height: 160)
+    }
+
+}
 // Custom Formatter for X-Axis Labels
 class XAxisLabelFormatter: IndexAxisValueFormatter {
     private let labels: [String]
