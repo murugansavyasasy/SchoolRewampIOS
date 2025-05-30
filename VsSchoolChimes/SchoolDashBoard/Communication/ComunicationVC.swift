@@ -760,21 +760,46 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    
-    //MARK: GET AUDIO URL
+    func deleteFile(at url: URL) {
+        if FileManager.default.fileExists(atPath: url.path) {
+            do {
+                try FileManager.default.removeItem(at: url)
+                print("✅ File deleted successfully")
+            } catch {
+                print("❌ Error deleting file: \(error.localizedDescription)")
+            }
+        } else {
+            print("⚠️ File does not exist at path: \(url.path)")
+        }
+    }
+
+//    //MARK: GET AUDIO URL
+//    func getFileUrl() -> URL {
+//        let filename = getTimestampedFileName()
+//        let filePath = getDocumentsDirectory().appendingPathComponent(filename)
+//        AudioPlayUrl = filePath.absoluteString // Store the file path for later use
+//        return filePath
+//    }
     func getFileUrl() -> URL {
-        let filename = getTimestampedFileName()
+        let filename = "RecordedAudio.m4a"
         let filePath = getDocumentsDirectory().appendingPathComponent(filename)
-        AudioPlayUrl = filePath.absoluteString // Store the file path for later use
+
+        // Delete if it already exists
+        if FileManager.default.fileExists(atPath: filePath.path) {
+            try? FileManager.default.removeItem(at: filePath)
+        }
+
+        AudioPlayUrl = filePath.absoluteString
         return filePath
     }
+
     
-    func getTimestampedFileName(extension ext: String = "m4a") -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd_HHmmss"
-        let timestamp = formatter.string(from: Date())
-        return "Audio_\(timestamp).\(ext)"
-    }
+//    func getTimestampedFileName(extension ext: String = "m4a") -> String {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyyMMdd_HHmmss"
+//        let timestamp = formatter.string(from: Date())
+//        return "Audio_\(timestamp).\(ext)"
+//    }
     
     //MARK: Setup Audio Session
     func setupAudioSession() {
@@ -860,7 +885,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 Timinglbl.isHidden = true
                 addfile.isHidden = true
                 setupRecorder()
-                
+                btnplay.setImage(ImageName.playbutton, for: .normal)
                 let formatter = DateFormatter()
                 formatter.timeStyle = .short
                 messageSendTime.text = "\(formatter.string(from: Date()))"
@@ -1066,6 +1091,9 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     func startRecording() {
+        player?.pause()
+        playVoicce = false
+        btnplay.setImage(ImageName.playbutton, for: .normal)
         addfile.isHidden = true
         sendbtn.isUserInteractionEnabled = false
         recrdimg.image = UIImage.gifImageWithName("Mic")
@@ -1073,8 +1101,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         recordingStartTime = Date()
         setupRecorder()
         audioRecorder?.record()
-        // Start recording timer
         recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateRecordingTime), userInfo: nil, repeats: true)
+        voiceStackview.isHidden = true
+        playerheight.constant = 0
+        dltbtn.isHidden = true
     }
     
     func stopRecording() {
@@ -1097,14 +1127,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                 voiceRecordedDuration = totalSeconds
                
             }
-            
-            
-            
             // Set message send time
             let formatter = DateFormatter()
             formatter.timeStyle = .short
             messageSendTime.text = "\(formatter.string(from: Date()))"
-            
             playerheight.constant = voiceTiming.text == "00:00" ? 0:60
             voiceStackview.isHidden = voiceTiming.text == "00:00" ? true:false
             dltbtn.isHidden = voiceTiming.text == "00:00" ? true:false
@@ -1144,14 +1170,12 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         let buttonFrame = button.convert(button.bounds, to: self.view)
         timePicker.frame = CGRect(x: (self.view.frame.width - 250) / 2, y: buttonFrame.maxY + 10, width: 250, height: 200)
         doneButton.frame = CGRect(x: timePicker.frame.maxX - 80, y: timePicker.frame.maxY - 40, width: 70, height: 30)
-        
         timePicker.backgroundColor = .white
         timePicker.layer.cornerRadius = 20
         timePicker.layer.shadowColor = UIColor.black.cgColor
         timePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
         timePicker.layer.shadowRadius = 5
         timePicker.layer.shadowOpacity = 0.3
-        
         timePicker.fadeAndPopIn()
         doneButton.fadeAndPopIn()
     }
@@ -1171,7 +1195,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     Timinglbl.text = String(format: "%02d:%02d", minutes, seconds)
                 }
             }else{
-                
                 if elapsed >= 180 {
                     stopRecording()
                     Timinglbl.text = "03:00"
@@ -1184,7 +1207,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
         }
     }
-    
     
     @objc func playerDidFinishPlaying(sender: Notification) {
         btnplay.setImage(ImageName.playbutton, for: .normal)
@@ -1248,8 +1270,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                     
                     if totalDuration.isFinite {
                         let elapsedTime = CMTimeGetSeconds(audioPlayer.currentTime())
-                        
-                        // Update WaveView progress
                         let progress = CGFloat(elapsedTime / totalDuration)
                         waveView.progress = progress
                         waveView.setNeedsDisplay()  // Refresh WaveView to update colors
@@ -1265,19 +1285,14 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
                         
                         // Update the timing label
                         voiceTiming.text = "\(currentFormatted) / \(totalDurationFormatted)"
-                        
                         voiceRecordedDuration = Int(totalDurationFormatted)
                         
                     }
                 }
             } else {
                 audioRecorder?.updateMeters()
-                
-                // Get average power for channel 0 when paused or stopped
                 let averagePower = audioRecorder?.averagePower(forChannel: 0) ?? -160
                 let normalizedPower = max(0, (0) / 160)
-                
-                // Update wave view with low intensity when paused
                 waveView.updateWithLevel(CGFloat(normalizedPower))
             }
         }
@@ -1297,10 +1312,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     @IBAction func nextMont(_ sender: UIButton) {
         let currentPage = DateSelection.currentPage
-        
-        // Calculate the next month
         if let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentPage) {
-            // Set the calendar to the next month
             DateSelection.setCurrentPage(nextMonth, animated: true)
         }
     }
@@ -1324,7 +1336,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         showTimePicker(for: sender)
     }
     
-    
     @IBAction func voiceview(_ sender: Any) {
         playbackOff()
         selectedDates.removeAll()
@@ -1334,14 +1345,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         ])
         moveTextmessage.setAttributedTitle(attributedTitle, for: .normal)
         moveVoiceMessage.setAttributedTitle(attributedTitle, for: .normal)
-        
-        enabelVoice_view(
-            isforward: false,
-            voiceUrl: "",
-            title: "",
-            durations: 0, url: ""
-        )
-        
+        enabelVoice_view(isforward: false,voiceUrl: "",title: "",durations: 0, url: "")
     }
     
     func playbackOff(){
@@ -1356,11 +1360,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         }
     }
     
-    
-    
     @IBAction func doneSelection(_ sender: Any) {
-        
-        //        var newHeight: CGFloat = 0
         
         if selectedDates.count == 0{
             
@@ -1383,9 +1383,6 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
             
         }
         ViewAnimator.hideFade(calanderOuter)
-    }
-    @IBAction func sendEmergencycall(_ sender: UISwitch) {
-        //        sender.isOn.toggle()
     }
     
     @IBAction func history(_ sender: UIButton) {
@@ -1686,7 +1683,10 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     
     
     @IBAction func deleteVoicemsg(_ sender: UIButton) {
-        deletRecoding()
+        if let url = URL(string:AudioPlayUrl ?? ""){
+//            deleteFile(at:url)
+            deletRecoding()
+        }
     }
     
     
@@ -2055,114 +2055,4 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         }
         return (minutes * 60) + seconds
     }
-    
 }
-
-
-
-
-
-public class ViewAnimator {
-    
-    // MARK: - Smooth Fade In
-    public static func showFade(_ view: UIView, duration: TimeInterval = 0.3) {
-        view.isHidden = false
-        view.alpha = 0
-        UIView.animate(withDuration: duration) {
-            view.alpha = 1
-        }
-    }
-    
-    // MARK: - Smooth Fade Out
-    public static func hideFade(_ view: UIView, duration: TimeInterval = 0.3) {
-        UIView.animate(withDuration: duration, animations: {
-            view.alpha = 0
-        }) { _ in
-            view.isHidden = true
-        }
-    }
-    
-    // MARK: - Slide and Fade In
-    public static func showSlideFade(_ view: UIView, duration: TimeInterval = 0.4) {
-        view.isHidden = false
-        view.alpha = 0
-        view.transform = CGAffineTransform(translationX: 0, y: -20)
-        UIView.animate(withDuration: duration,
-                       delay: 0,
-                       usingSpringWithDamping: 0.8,
-                       initialSpringVelocity: 0.5,
-                       options: [],
-                       animations: {
-            view.alpha = 1
-            view.transform = .identity
-        })
-    }
-    
-    // MARK: - Slide and Fade Out
-    public static func hideSlideFade(_ view: UIView, duration: TimeInterval = 0.3) {
-        UIView.animate(withDuration: duration, animations: {
-            view.alpha = 0
-            view.transform = CGAffineTransform(translationX: 0, y: -20)
-        }, completion: { _ in
-            view.isHidden = true
-            view.transform = .identity
-        })
-    }
-    
-    public static func animateConstraintChange(duration: TimeInterval = 0.3, animations: @escaping () -> Void) {
-        UIView.animate(withDuration: duration, animations: {
-            animations()
-        })
-    }
-    
-    
-}
-
-extension UIView {
-    func fadeAndPopIn(duration: TimeInterval = 0.25) {
-        self.alpha = 0
-        self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-        self.isHidden = false
-        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseOut]) {
-            self.alpha = 1
-            self.transform = .identity
-        }
-    }
-}
-
-
-class DateFormatterHelper {
-    static let shared = DateFormatterHelper()
-    private init() {}
-    
-    private let inputFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd-MM-yyyy hh:mm a"
-        return formatter
-    }()
-    
-    private let outputDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd MMM yyyy"
-        return formatter
-    }()
-    
-    private let outputTimeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm a"
-        return formatter
-    }()
-    
-    func parseDate(from string: String) -> Date? {
-        return inputFormatter.date(from: string)
-    }
-    
-    func formatDateToDayMonthYear(date: Date) -> String {
-        return outputDateFormatter.string(from: date)
-    }
-    
-    func formatTime(date: Date) -> String {
-        return outputTimeFormatter.string(from: date)
-    }
-}
-
