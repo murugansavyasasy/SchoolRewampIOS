@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComunicationVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ComunicationVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="BackBtn" destination="yw8-eh-l9F" id="n6a-su-Qhn"/>
                 <outlet property="DateSelection" destination="6Vr-4A-iyx" id="Ee6-fw-TPf"/>
@@ -530,7 +530,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kjo-6c-TAd">
                                                     <rect key="frame" x="0.0" y="0.0" width="361" height="60"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ury-c2-oc1" customClass="WaveView" customModule="VsSchoolChimes" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ury-c2-oc1" customClass="WaveView" customModule="School_Chimes" customModuleProvider="target">
                                                             <rect key="frame" x="70" y="1" width="286" height="58"/>
                                                             <subviews>
                                                                 <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="F5q-LX-VKf">
@@ -1013,7 +1013,7 @@
                     </constraints>
                 </scrollView>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cdr-6F-LLo">
-                    <rect key="frame" x="20" y="151" width="353" height="280"/>
+                    <rect key="frame" x="20" y="385" width="353" height="280"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vr-4A-iyx" customClass="FSCalendar">
                             <rect key="frame" x="0.0" y="45" width="353" height="225"/>
@@ -1531,7 +1531,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-Bk-HMk">
                                                                 <rect key="frame" x="0.0" y="0.0" width="373" height="60"/>
                                                                 <subviews>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lYe-ni-AqN" customClass="WaveView" customModule="VsSchoolChimes" customModuleProvider="target">
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lYe-ni-AqN" customClass="WaveView" customModule="School_Chimes" customModuleProvider="target">
                                                                         <rect key="frame" x="70" y="1" width="298" height="58"/>
                                                                         <subviews>
                                                                             <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jhL-Ic-GFa">

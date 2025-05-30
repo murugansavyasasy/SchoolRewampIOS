@@ -720,3 +720,106 @@ func convertDate(_ dateString: String, toFormat: String = "dd-MM-yyyy") -> Strin
     return nil
 }
 
+public class ViewAnimator {
+    
+    // MARK: - Smooth Fade In
+    public static func showFade(_ view: UIView, duration: TimeInterval = 0.3) {
+        view.isHidden = false
+        view.alpha = 0
+        UIView.animate(withDuration: duration) {
+            view.alpha = 1
+        }
+    }
+    
+    // MARK: - Smooth Fade Out
+    public static func hideFade(_ view: UIView, duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration, animations: {
+            view.alpha = 0
+        }) { _ in
+            view.isHidden = true
+        }
+    }
+    
+    // MARK: - Slide and Fade In
+    public static func showSlideFade(_ view: UIView, duration: TimeInterval = 0.4) {
+        view.isHidden = false
+        view.alpha = 0
+        view.transform = CGAffineTransform(translationX: 0, y: -20)
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.5,
+                       options: [],
+                       animations: {
+            view.alpha = 1
+            view.transform = .identity
+        })
+    }
+    
+    // MARK: - Slide and Fade Out
+    public static func hideSlideFade(_ view: UIView, duration: TimeInterval = 0.3) {
+        UIView.animate(withDuration: duration, animations: {
+            view.alpha = 0
+            view.transform = CGAffineTransform(translationX: 0, y: -20)
+        }, completion: { _ in
+            view.isHidden = true
+            view.transform = .identity
+        })
+    }
+    
+    public static func animateConstraintChange(duration: TimeInterval = 0.3, animations: @escaping () -> Void) {
+        UIView.animate(withDuration: duration, animations: {
+            animations()
+        })
+    }
+    
+    
+}
+
+extension UIView {
+    func fadeAndPopIn(duration: TimeInterval = 0.25) {
+        self.alpha = 0
+        self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        self.isHidden = false
+        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseOut]) {
+            self.alpha = 1
+            self.transform = .identity
+        }
+    }
+}
+
+
+class DateFormatterHelper {
+    static let shared = DateFormatterHelper()
+    private init() {}
+    
+    private let inputFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+        return formatter
+    }()
+    
+    private let outputDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        return formatter
+    }()
+    
+    private let outputTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }()
+    
+    func parseDate(from string: String) -> Date? {
+        return inputFormatter.date(from: string)
+    }
+    
+    func formatDateToDayMonthYear(date: Date) -> String {
+        return outputDateFormatter.string(from: date)
+    }
+    
+    func formatTime(date: Date) -> String {
+        return outputTimeFormatter.string(from: date)
+    }
+}

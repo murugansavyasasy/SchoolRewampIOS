@@ -63,7 +63,8 @@ class AWSUploadManager {
                 return
             }
             fileURL = url
-            fileName = url.lastPathComponent
+            let time = Int(Date().timeIntervalSince1970)
+            fileName = "audio_\(time).\(url.lastPathComponent)"
             contentType = getContentType(from: fileName)
             
         default:
@@ -114,6 +115,7 @@ class AWSUploadManager {
                         }
                         
                         if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                            self.deleteFile(at:finalURL)
                             completion(respons.data?.fileUrl ?? presignedURL)
                         } else {
                             print("Upload failed with status code: \((response as? HTTPURLResponse)?.statusCode ?? -1)")
@@ -152,7 +154,18 @@ class AWSUploadManager {
         default: return "application/octet-stream"
         }
     }
-    
+    func deleteFile(at url: URL) {
+        if FileManager.default.fileExists(atPath: url.path) {
+            do {
+                try FileManager.default.removeItem(at: url)
+                print("✅ File deleted successfully")
+            } catch {
+                print("❌ Error deleting file: \(error.localizedDescription)")
+            }
+        } else {
+            print("⚠️ File does not exist at path: \(url.path)")
+        }
+    }
 }
 
 // MARK: - AWS Presigned URL Fetcher
