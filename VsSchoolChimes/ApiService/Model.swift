@@ -448,7 +448,7 @@ struct Attachment: Codable {
     let date: String?
     let time: String?
     let sender_info: String?
-    let is_unread: Bool?
+    var is_unread: Bool?
     let is_archive: Bool?
     let file_path: [FilePath]?
     let iframe: String?

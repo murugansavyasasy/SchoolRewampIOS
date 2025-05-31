@@ -9,22 +9,23 @@ import UIKit
 import DropDown
 import AVKit
 
-class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate {
+protocol ReadUpades{
+    func readStatus(attachment:Attachment)
+}
+class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate, ReadUpades {
+    
     
     func share(url: String) {
         // Convert the string to a URL
         if let videoURL = URL(string: url) {
             // Initialize the activity view controller with the video URL
             let activityVC = UIActivityViewController(activityItems: [videoURL], applicationActivities: nil)
-            print(videoURL)
-            // For iPad: Popover presentation configuration
             if let popoverController = activityVC.popoverPresentationController {
-                popoverController.sourceView = self.view // Set a source view for iPad compatibility
-                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0) // Center the popover
+                popoverController.sourceView = self.view
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
                 popoverController.permittedArrowDirections = []
             }
             UIPasteboard.general.string = url
-            // Present the activity view controller
             self.present(activityVC, animated: true, completion: nil)
         } else {
             print("Invalid video URL.")
@@ -37,24 +38,24 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             print("Invalid URL")
             return
         }
-
+        
         let player = AVPlayer(url: url)
         playerViewController = AVPlayerViewController()
         playerViewController?.player = player
-
+        
         // Observe UI visibility changes
         playerViewController?.addObserver(self, forKeyPath: "showsPlaybackControls", options: [.new, .initial], context: nil)
-
+        
         // Present AVPlayerViewController
         if let playerVC = playerViewController {
             present(playerVC, animated: true) {
                 player.play()
             }
         }
-
+        
         // Add the download button
     }
-
+    
     @IBOutlet weak var searchAndFilterStack: UIStackView!
     @IBOutlet weak var filterImgIcon: UIImageView!
     @IBOutlet weak var standerd: UILabel!
@@ -74,7 +75,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     var studentDetails = UserDefaultFileManager.get_child_Details()
     var shouldShowFooter = true
     var playerViewController: AVPlayerViewController?
-    var Filters = ["All", "Image", "Video", "Pdf"]
+    var Filters = ["All", "Image", "Video", "Document"]
     var selectedIndex: IndexPath = IndexPath(item: 0, section: 0)
     var FilterType = "All"
     
@@ -98,9 +99,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         NodataLbl.isHidden = true
         NodataImage.isHidden = true
         EmptyView.isHidden = true
-        
         FilterCV.isHidden = true
-        
         RegisterCell()
         searchBar.delegate = self
         searchBar.placeholder = CommonStringFile.Search.translated()
@@ -109,13 +108,11 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         let filterTap = UITapGestureRecognizer(target: self, action: #selector(showFilterOptions))
         filterImgIcon.addGestureRecognizer(filterTap)
         filterImgIcon.isUserInteractionEnabled = true
-        
         FilterCV.delegate = self
         FilterCV.dataSource = self
     }
     
     @objc private func showFilterOptions() {
-
         FilterCV.isHidden.toggle()
     }
     
@@ -123,7 +120,6 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         if type == "All"{
             filteredAttachments = attachmentData
         } else {
-           // filteredAttachments = attachmentData?.filter { $0.file_path?.first?.type?.uppercased() == type }
             
             filteredAttachments = attachmentData?.filter { attachmentData in
                 attachmentData.file_path?.first?.type == type.uppercased()
@@ -150,7 +146,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             token: studentDetails?.access_token ?? ""
         ) { [self] (result: Result<AttachmentsResponse, Error>) in
             
-           
+            
             DispatchQueue.main.async { [self] in
                 if #available(iOS 15.0, *) {
                     self.hideLottieProgressLoader()
@@ -161,13 +157,10 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                     if response.status == true{
                         self.hideView(ishide: true)
                         attachmentData?.append(contentsOf: response.data ?? [])
-                        // filteredAttachments?.append(contentsOf: response.data ?? [])
                         applyFilter(type: Filters[selectedIndex.item])
                         attachmentTable.reloadData()
                         
                     }else{
-                        
-                     //   self.hideView(ishide: false)
                         self.NodataLbl.text = response.message
                     }
                 case .failure(let error):
@@ -200,6 +193,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                 switch result {
                 case .success(let response):
                     if response.status == true{
+                        print("attachment==>>", response.data ?? [])
                         self.hideView(ishide: true)
                         self.attachmentData = response.data
                         self.filteredAttachments = response.data
@@ -208,7 +202,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                     }
                     
                     else{
-                       
+                        
                         self.hideView(ishide: false)
                         self.NodataLbl.text = response.message
                     }
@@ -223,12 +217,10 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     }
     
     func hideView(ishide: Bool) {
-       NodataImage.isHidden =  ishide
+        NodataImage.isHidden =  ishide
         NodataLbl.isHidden = ishide
         EmptyView.isHidden = ishide
         searchAndFilterStack.isHidden = !ishide
-        FilterCV.isHidden = !ishide
-        
     }
     @IBAction func backBtn(_ sender: UIButton) {
         dismiss(animated: true)
@@ -270,6 +262,69 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         SearchAttachments = filteredAttachments
         attachmentTable.reloadData()
     }
+    func ReadStatusUpdateArchive(type: String,detail_id: String,filterType:String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                        attachmentData = attachmentData?.map { attachment in
+                            var updated = attachment
+                            if attachment.id == detail_id {
+                                updated.is_unread = false
+                            }
+                            return updated
+                        }
+
+                        applyFilter(type: filterType)
+                    }
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    func ReadStatusUpdate(type: String,detail_id: String,filterType:String){
+        
+        APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
+            
+            switch result {
+            case .success(let SuccessMessage):
+                
+                if SuccessMessage.status == true {
+                    DispatchQueue.main.async { [self] in
+                        attachmentData = attachmentData?.map { attachment in
+                            var updated = attachment
+                            if attachment.id == detail_id {
+                                updated.is_unread = false
+                            }
+                            return updated
+                        }
+                        applyFilter(type: filterType)
+                    }
+                }
+            case .failure(let error):
+                
+                DispatchQueue.main.async {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    func readStatus(attachment: Attachment) {
+        if attachment.is_archive ?? false{
+            ReadStatusUpdateArchive(type:"ATTACHMENT", detail_id: attachment.id ?? "", filterType: FilterType)
+        }else{
+            ReadStatusUpdate(type:"ATTACHMENT", detail_id: attachment.id ?? "", filterType: FilterType)
+        }
+        
+    }
 }
 
 extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
@@ -284,11 +339,11 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
         guard let data = SearchAttachments?[indexPath.row] else {
             return UITableViewCell() // Safely return a default cell if data is nil
         }
-
+        
         switch data.file_path?.first?.type?.uppercased() {
         case "VIDEO":
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-            
+            cell.confic(data.file_path?.first?.url ?? "")
             cell.descriptContent
                 .setupExpandable(
                     text: data.description ?? ""
@@ -299,12 +354,12 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
                 tableView.endUpdates()
             }
             
-            cell.datelbl.text = data.date
+            cell.datelbl.text = data.date?.convertToTargetDateFormat() ?? "-"
             cell.videoName.text = data.title
-            cell.playvideo(url: "https://player.vimeo.com/video/1084600934?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=177030\" width=\"400\" height=\"300\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media\" title=\"The only way I could do that")
+//            cell.playvideo(url: "https://player.vimeo.com/video/1084600934?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=177030\" width=\"400\" height=\"300\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media\" title=\"The only way I could do that")
             
             return cell
-
+            
         case "DOCUMENT":
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.TAttacmentTVC, for: indexPath) as! TAttacmentTVC
             cell.descriptionLbl
@@ -316,10 +371,15 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
+            
+            cell.delegate = self
+            cell.attachment = data
+            cell.confic(data.file_path ?? [])
             cell.titleLbl.text = data.title
-            cell.dateLbl.text = data.date
+            cell.dateLbl.text = data.date?.convertToTargetDateFormat() ?? "-"
+            cell.readImg.isHidden = !(data.is_unread ?? false)
             return cell
-
+            
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.TAttacmentTVC, for: indexPath) as! TAttacmentTVC
             cell.titleLbl.text = data.title
@@ -332,12 +392,16 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
-            cell.dateLbl.text = data.date
-            cell.homeworkDocs = data.file_path
+            cell.confic(data.file_path ?? [])
+            cell.readImg.isHidden = !(data.is_unread ?? false)
+            cell.delegate = self
+            cell.attachment = data
+            cell.dateLbl.text = data.date?.convertToTargetDateFormat() ?? "-"
+            
             return cell
         }
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -346,6 +410,15 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
         if shouldShowFooter {
             if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
                 footer.frame = CGRect(x: 0, y: 0, width: attachmentTable.frame.width, height: 60)
+                let buttonTitle = "See More"
+                let attributedString = NSMutableAttributedString(string: buttonTitle)
+                
+                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
+                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
+                
+                // Apply underline style
+                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
+                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
                 let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
                 footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
                 footer.SeeMoreBtn.isUserInteractionEnabled = true
@@ -357,9 +430,6 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
     }
     
     @objc func seeMoreAction() {
-        print("Footer button tapped. Hiding the footer.")
-        
-        // Animate the footer fade-out if desired.
         if let footer = attachmentTable.tableFooterView {
             UIView.animate(withDuration: 0.3, animations: {
                 footer.alpha = 0
@@ -374,47 +444,44 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
             shouldShowFooter = false
         }
     }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 60
+    }
 }
 
 extension ReciverAttachmentrVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            
-            return Filters.count
-        }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            
-            let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
-            
-            cell.FilterLbl.text = Filters[indexPath.item]
-            cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
-            
-            return cell
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            
-            selectedIndex = indexPath
-            
-            let type = Filters[selectedIndex.item]
-            
-            applyFilter(type: type)
-            
-            FilterCV.reloadData()
-            
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            
-            let text = Filters[indexPath.item] // Assuming your label text is from a data source
-            let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 16) // Use the same font as in Storyboard
-            label.text = text
-            label.sizeToFit()
-
-            let width = label.frame.width + 60  // Add padding
-            return CGSize(width: width, height: 40) // Adjust height accordingly
-        }
+        return Filters.count
+    }
     
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = FilterCV.dequeueReusableCell(withReuseIdentifier: CellConfingName.FiltersCvCell, for: indexPath) as! FiltersCvCell
+        
+        cell.FilterLbl.text = Filters[indexPath.item]
+        cell.CheckboxImg.image = indexPath == selectedIndex ? UIImage(named: "RadioCheck") : UIImage(named: "CheckCircle")
+        
+        return cell
+    }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedIndex = indexPath
+        let type = Filters[selectedIndex.item]
+        FilterType = type
+        applyFilter(type: type)
+        FilterCV.reloadData()
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let text = Filters[indexPath.item]
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.text = text
+        label.sizeToFit()
+        let width = label.frame.width + 60
+        return CGSize(width: width, height: 40)
+    }
 }
