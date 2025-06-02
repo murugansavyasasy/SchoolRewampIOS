@@ -56,6 +56,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         // Add the download button
     }
     
+    @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var searchAndFilterStack: UIStackView!
     @IBOutlet weak var filterImgIcon: UIImageView!
     @IBOutlet weak var standerd: UILabel!
@@ -84,6 +85,8 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         studentName.text = studentDetails?.name
         standerd.text = "\(studentDetails?.standard_name ?? ""),\(studentDetails?.section_name ?? "")"
         studentName.setFont(style: .body, size: FontSize.BodySize)
+        backBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
+        
         standerd.setFont(style: .body, size:10)
         setupView()
         fetchAttachments()
