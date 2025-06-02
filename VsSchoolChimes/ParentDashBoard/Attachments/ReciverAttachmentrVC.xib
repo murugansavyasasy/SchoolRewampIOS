@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,6 +17,7 @@
                 <outlet property="NodataImage" destination="qfY-Tb-ItO" id="I5K-lU-ZUQ"/>
                 <outlet property="NodataLbl" destination="ewO-h2-Qyk" id="sMh-zq-4NV"/>
                 <outlet property="attachmentTable" destination="eQN-JO-oh4" id="cq7-4Q-7kX"/>
+                <outlet property="backBtn" destination="vsF-gR-zJl" id="Xqx-fF-eJa"/>
                 <outlet property="filterImgIcon" destination="Juk-YT-QdO" id="3my-lX-0gf"/>
                 <outlet property="searchAndFilterStack" destination="gav-H2-LKL" id="PKs-ym-XLH"/>
                 <outlet property="searchBar" destination="bpf-Az-5se" id="BTb-vi-cfa"/>
@@ -31,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="US1-JH-aIY">
-                    <rect key="frame" x="0.0" y="118" width="393" height="50"/>
+                    <rect key="frame" x="0.0" y="59" width="393" height="50"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wby-B5-JoJ">
                             <rect key="frame" x="235.33333333333337" y="0.0" width="152.66666666666663" height="45"/>
@@ -43,7 +44,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XI 'A'" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXX-nO-amI">
-                                    <rect key="frame" x="0.0" y="25.333333333333343" width="152.66666666666666" height="19.666666666666671"/>
+                                    <rect key="frame" x="0.0" y="25.333333333333329" width="152.66666666666666" height="19.666666666666671"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="19.666666666666671" id="CCy-om-dK6"/>
                                     </constraints>
@@ -92,10 +93,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eC6-F4-SwK">
-                    <rect key="frame" x="0.0" y="168" width="393" height="616"/>
+                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
                     <subviews>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="eQN-JO-oh4">
-                            <rect key="frame" x="0.0" y="516" width="393" height="100"/>
+                            <rect key="frame" x="0.0" y="516" width="393" height="193"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="dTL-Zz-4Cn"/>

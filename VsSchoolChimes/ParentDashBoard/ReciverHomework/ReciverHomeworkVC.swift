@@ -222,41 +222,60 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as? HomeWorkTVC,
+        
+        guard
               let sectionData = FilterHomeWorkList?[indexPath.section],
               let homework = sectionData.homework?[indexPath.row] else {
             return UITableViewCell()
         }
-        
-        cell.CvHeight.constant = 0
-        cell.ImageCollectionView.isHidden = true
-        // Configure cell data
-        cell.subjectName.text = homework.subject_name
-        cell.topics.text = homework.title ?? ""
-        
-        
-        cell.dateLble.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
-        cell.forwordBtn.isHidden = true
-        cell.SelectBtnHeight.constant = 0
-        cell.newView.isHidden = true
-        // Load image if available
-        if let urls = homework.file_path, urls.count != 0{
-            cell.ImageCollectionView.isHidden = false
-            cell.CvHeight.constant = 150
-            cell.loadImage(urls: urls)
+        if homework.file_path?.first?.type?.uppercased() == "VIDEO"{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
+            cell.confic(homework.file_path?.first?.url ?? "")
+            cell.descriptContent
+                .setupExpandable(
+                    text: homework.description ?? ""
+                )
+            cell.descriptContent.onExpandableTap = {
+                cell.descriptContent.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+            cell.datelbl.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
+            cell.videoName.text = homework.title
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
+            
+            cell.CvHeight.constant = 0
+            cell.ImageCollectionView.isHidden = true
+            // Configure cell data
+            cell.subjectName.text = homework.subject_name
+            cell.topics.text = homework.title ?? ""
+            
+            
+            cell.dateLble.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
+            cell.forwordBtn.isHidden = true
+            cell.SelectBtnHeight.constant = 0
+            cell.newView.isHidden = true
+            // Load image if available
+            if let urls = homework.file_path, urls.count != 0{
+                cell.ImageCollectionView.isHidden = false
+                cell.CvHeight.constant = 150
+                cell.loadImage(urls: urls)
+            }
+            let contentText = homework.description ?? ""
+            cell.descriptionLbl.setupExpandable(text: contentText)
+            //        cell.newView.isHidden = contentText.count <= 100
+            cell.descriptionLbl.onExpandableTap = { [weak tableView] in
+                cell.descriptionLbl.isExpanded.toggle()
+                //            cell.newView.isHidden = true
+                tableView?.beginUpdates()
+                tableView?.endUpdates()
+            }
+            
+            cell.cellview.layoutIfNeeded()
+            return cell
         }
-        let contentText = homework.description ?? ""
-        cell.descriptionLbl.setupExpandable(text: contentText)
-//        cell.newView.isHidden = contentText.count <= 100
-        cell.descriptionLbl.onExpandableTap = { [weak tableView] in
-            cell.descriptionLbl.isExpanded.toggle()
-//            cell.newView.isHidden = true
-            tableView?.beginUpdates()
-            tableView?.endUpdates()
-        }
-        
-        cell.cellview.layoutIfNeeded()
-        return cell
     }
     
     

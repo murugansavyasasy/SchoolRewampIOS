@@ -8,7 +8,7 @@
 import UIKit
 
 class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
-
+    
     @IBOutlet weak var readImg: UIImageView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
@@ -63,34 +63,35 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
             delegate?.readStatus(attachment: data)
         }
         
-            let vc = getCurrentViewController()
-            let vcc = ImageShowVc(nibName: nil, bundle: nil)
-            vcc.FileURL = homeworkDocs ?? []
-            vcc.subjectName = titleLbl.text
-            vcc.type = 2
-            vcc.modalPresentationStyle = .fullScreen
-            vc?.present(vcc, animated: true)
+        let vc = getCurrentViewController()
+        let vcc = ImageShowVc(nibName: nil, bundle: nil)
+        vcc.imageURL = homeworkDocs ?? []
+        vcc.FileURL = homeworkDocs ?? []
+        vcc.subjectName = titleLbl.text
+        vcc.type = 2
+        vcc.modalPresentationStyle = .fullScreen
+        vc?.present(vcc, animated: true)
     }
-
-
-//    func openWithDocumentInteraction(url: URL) {
-//        docController = UIDocumentInteractionController(url: url)
-//        docController?.delegate = getCurrentViewController() as? UIDocumentInteractionControllerDelegate
-//
-//        if !(docController?.presentPreview(animated: true) ?? false) {
-//            let fileExtension = url.pathExtension.lowercased()
-//            let appSuggestion = getAppSuggestion(for: fileExtension)
-//
-//            let alert = UIAlertController(
-//                title: "App Required",
-//                message: "To open this '\(fileExtension)' file, please install a suitable app. For example: \(appSuggestion).",
-//                preferredStyle: .alert
-//            )
-//            alert.addAction(UIAlertAction(title: "OK", style: .default))
-//            getCurrentViewController()?.present(alert, animated: true)
-//        }
-//    }
-
+    
+    
+    //    func openWithDocumentInteraction(url: URL) {
+    //        docController = UIDocumentInteractionController(url: url)
+    //        docController?.delegate = getCurrentViewController() as? UIDocumentInteractionControllerDelegate
+    //
+    //        if !(docController?.presentPreview(animated: true) ?? false) {
+    //            let fileExtension = url.pathExtension.lowercased()
+    //            let appSuggestion = getAppSuggestion(for: fileExtension)
+    //
+    //            let alert = UIAlertController(
+    //                title: "App Required",
+    //                message: "To open this '\(fileExtension)' file, please install a suitable app. For example: \(appSuggestion).",
+    //                preferredStyle: .alert
+    //            )
+    //            alert.addAction(UIAlertAction(title: "OK", style: .default))
+    //            getCurrentViewController()?.present(alert, animated: true)
+    //        }
+    //    }
+    
     func getAppSuggestion(for ext: String) -> String {
         switch ext {
         case "pdf":
@@ -107,8 +108,8 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
             return "a compatible document viewer"
         }
     }
-
-
+    
+    
     func getCurrentViewController() -> UIViewController? {
         return UIApplication.shared.connectedScenes
             .filter { $0.activationState == .foregroundActive }

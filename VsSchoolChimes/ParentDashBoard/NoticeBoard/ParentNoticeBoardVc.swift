@@ -155,43 +155,67 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
-        
         let notice =  SearchData?[indexPath.row]
-        
-        cell.SelectBtn.isHidden = true
-        
-        cell.TitleLbl.text =  notice?.title
-        cell.dicriptContent.setupExpandable(text: notice?.content ?? "")
-        cell.dicriptContent.onExpandableTap =
-        {
-            [weak tableview] in
-            
-            cell.dicriptContent.isExpanded.toggle()
-            tableview?.beginUpdates()
-            tableview?.endUpdates()
-        }
-        if let components = notice?.created_on?.components(separatedBy: " "){
-            
-            if components.count == 3 {
-                let datePart = components[0]
-                let timePart = components[1] + " " + components[2]
-                let formattedDateString = dateFormatter.convertDate(datePart) ?? ""
-                cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: timePart)
+        if notice?.file_path?.first?.type?.uppercased() == "VIDEO"{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
+            cell.confic(notice?.file_path?.first?.url ?? "")
+            cell.descriptContent
+                .setupExpandable(
+                    text: notice?.content ?? ""
+                )
+            cell.descriptContent.onExpandableTap = {
+                cell.descriptContent.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
             }
+            if let components = notice?.created_on?.components(separatedBy: " "){
+                
+                if components.count == 3 {
+                    let datePart = components[0]
+                    let timePart = components[1] + " " + components[2]
+                    let formattedDateString = dateFormatter.convertDate(datePart) ?? ""
+                    cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: timePart)
+                }
+            }
+            cell.videoName.text = notice?.title
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell
+            
+            cell.SelectBtn.isHidden = true
+            
+            cell.TitleLbl.text =  notice?.title
+            cell.dicriptContent.setupExpandable(text: notice?.content ?? "")
+            cell.dicriptContent.onExpandableTap =
+            {
+                [weak tableview] in
+                
+                cell.dicriptContent.isExpanded.toggle()
+                tableview?.beginUpdates()
+                tableview?.endUpdates()
+            }
+            if let components = notice?.created_on?.components(separatedBy: " "){
+                
+                if components.count == 3 {
+                    let datePart = components[0]
+                    let timePart = components[1] + " " + components[2]
+                    let formattedDateString = dateFormatter.convertDate(datePart) ?? ""
+                    cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: timePart)
+                }
+            }
+            
+            if let urls =  notice?.file_path, urls.count != 0{
+                cell.collectionview.isHidden = false
+                cell.CollectionViewHeight.constant = 130
+                cell.loadImage(urls: urls)
+            }else {
+                cell.CollectionViewHeight.constant = 0
+                cell.collectionview.isHidden = true
+                cell.pagecontroller.isHidden = true
+            }
+            
+            return cell
         }
-        
-        if let urls =  notice?.file_path, urls.count != 0{
-            cell.collectionview.isHidden = false
-            cell.CollectionViewHeight.constant = 130
-            cell.loadImage(urls: urls)
-        }else {
-            cell.CollectionViewHeight.constant = 0
-            cell.collectionview.isHidden = true
-            cell.pagecontroller.isHidden = true
-        }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -41,7 +41,7 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         videoName.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         
-        hiddenui(true)
+//        hiddenui(true)
         animationview()
         Unreadview.isHidden = true
         OuterView.layer.shadowColor = UIColor.black.cgColor
@@ -94,10 +94,10 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
 
     }
     func animationview(){
-        OuterView.animateView(enable:true)
+        OuterView.animateView(enable:false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in
             // Code to execute after delay
-            self.OuterView.animateView(enable:false)
+//            self.OuterView.animateView(enable:false)
             OuterView.parentview.isHidden = true
             hiddenui(false)
         }
