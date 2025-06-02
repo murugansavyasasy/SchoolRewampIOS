@@ -50,11 +50,11 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let file = homeworkDocs?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
-        let fileExtension = url.pathExtension.lowercased()
+        
         
             let vc = getCurrentViewController()
             let vcc = ImageShowVc(nibName: nil, bundle: nil)
-            vcc.imageURL = homeworkDocs ?? []
+            vcc.FileURL = homeworkDocs ?? []
             vcc.subjectName = titleLbl.text
             vcc.type = 2
             vcc.modalPresentationStyle = .fullScreen
