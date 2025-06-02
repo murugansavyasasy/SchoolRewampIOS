@@ -48,7 +48,7 @@ class ImageShowVc: UIViewController{
 //            }
 //        }
         
-        dowloadUrl = FileURL[0].url
+        dowloadUrl = FileURL.first?.url
         PageController.numberOfPages = FileURL.count
         PageController.currentPage = 0
     }

@@ -9,9 +9,11 @@ import UIKit
 import WebKit
 import AVFoundation
 import ImageIO
+import AVKit
 
-class VideoTVCell: UITableViewCell {
+class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
+    @IBOutlet weak var playerview: UIView!
     @IBOutlet weak var descriptContent: UILabel!
     @IBOutlet weak var Sentbtn: UIButton!
     @IBOutlet weak var Unreadview: UIView!
@@ -25,13 +27,18 @@ class VideoTVCell: UITableViewCell {
     
     var sharedelegate:shareDelegate?
     var isDescriptionExpanded = false
- 
+    var player: AVPlayer?
+        var playerLayer: AVPlayerLayer?
+        var isPlaying = false
+    var url:String?
+    let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
     override func awakeFromNib() {
         super.awakeFromNib()
         // Set up shadowView for shadow
         
-        datelbl.setFont(style: .title, size: FontSize.TitleSize)
-        videoName.setFont(style: .body, size: FontSize.BodySize)
+        confic(url ?? "")
+        datelbl.setFont(style: .body, size: FontSize.BodySize)
+        videoName.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         
         hiddenui(true)
@@ -48,6 +55,22 @@ class VideoTVCell: UITableViewCell {
     }
 
 
+    func confic(_ url :String){
+        if let videoID = extractVimeoID(from: url) {
+            
+            fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
+                if let urls = urls {
+                    if let firstURLString = urls.first, let videoURL = URL(string: firstURLString) {
+                        DispatchQueue.main.async {
+                            self.setupPlayer(url: videoURL)
+                        }
+                    }
+                } else {
+                    print("No video URLs found or error")
+                }
+            }
+        }
+    }
     func hiddenui(_ hide:Bool){
         OuterView.changeHeightAndAnimate(40, 110, 21, 30, top: 5)
         descriptContent.isHidden = hide
@@ -80,14 +103,57 @@ class VideoTVCell: UITableViewCell {
         }
         
     }
+    func setupPlayer(url: URL) {
+         player = AVPlayer(url: url)
+         
+         if let existingLayer = playerLayer {
+             existingLayer.removeFromSuperlayer()
+         }
+         
+         playerLayer = AVPlayerLayer(player: player)
+         playerLayer?.frame = playerview.bounds
+         playerLayer?.videoGravity = .resizeAspect
+         if let pl = playerLayer {
+             playerview.layer.addSublayer(pl)
+         }
+         
+         isPlaying = false
+        let img = isPlaying ? UIImage(named: "pause-button"):UIImage(named: "play-button")
+        playbtl.setImage(img, for: .normal)
+     }
     @IBAction func play(_ sender: UIButton) {
-        sharedelegate?.playvideo(index: sender.tag)
-        
-    }
+        guard let player = player else { return }
 
+//           if isPlaying {
+//               player.pause()
+//               playbtl.setImage(UIImage(named: "play-button"), for: .normal)
+//           } else {
+               let vc = getCurrentViewController()
+               let playerViewController = AVPlayerViewController()
+               playerViewController.player = player
+               playerViewController.delegate = self
+               vc?.present(playerViewController, animated: true) {
+                   player.play()
+                   playerViewController.presentationController?.delegate = self
+               }
+               playbtl.setImage(UIImage(named: "play-button"), for: .normal)
+//           }
+
+           isPlaying.toggle()
+    }
+    func getCurrentViewController() -> UIViewController? {
+        return UIApplication.shared.connectedScenes
+            .filter { $0.activationState == .foregroundActive }
+            .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
+            .first?.rootViewController?.topMostViewController()
+    }
     
     @IBAction func sharebtn(_ sender: Any) {
         sharedelegate?.share(url: "https://player.vimeo.com/video/1026769373?h=64e854b656&title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=177030")
     }
-    
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        isPlaying = false
+        playbtl.setImage(UIImage(named: "play-button"), for: .normal)
+    }
+
 }

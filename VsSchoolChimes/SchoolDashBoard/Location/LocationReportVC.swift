@@ -122,6 +122,8 @@ class LocationReportVC: UIViewController{
             print("Selected item: \(item) at index: \(index)")
             YearLbl.text = item
             Months = getMonthNames(for: item)
+            self.MonthLbl.text = self.Months[self.currentMonth - 1]
+            self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
             Geometric_Staff_Attendance_Report()
         }
     }

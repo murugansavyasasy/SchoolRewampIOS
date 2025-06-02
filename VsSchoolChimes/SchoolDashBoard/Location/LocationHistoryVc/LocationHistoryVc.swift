@@ -222,6 +222,8 @@ class LocationHistoryVc: UIViewController, UITableViewDataSource, UITableViewDel
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             yearLbl.text = item
             Months = getMonthNames(for: item)
+            self.selectMthLbl.text = self.Months[self.currentMonth - 1]
+            self.SelectedMonthCode = String(format: "%02d", self.currentMonth)
             geometric_principal_attendance_report()
         }
     }

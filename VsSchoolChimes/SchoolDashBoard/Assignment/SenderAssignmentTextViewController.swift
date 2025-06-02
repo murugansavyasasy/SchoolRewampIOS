@@ -9,11 +9,15 @@ import UIKit
 import DropDown
 import AWSCore
 import AWSS3
+import AVFoundation
+import AVKit
 
 @available(iOS 14.0, *)
 
 
-class SenderAssignmentTextViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate {
+class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate, VideoPickerManagerDelegate {
+   
+
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
@@ -29,13 +33,14 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     func deleteImage(index: Int) {
-        selectedImages.remove(at: index)
+        selectedAttchmentImages.remove(at: index)
         selectImgPdfview.imageCollectionview.reloadData()
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none // This forces popover on iPhone
     }
+    @IBOutlet weak var VideoView: UIView!
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var TextviewHeight: NSLayoutConstraint!
@@ -60,9 +65,13 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     @IBOutlet weak var contentTextView: UITextView!
     @IBOutlet weak var selectImgPdfview: ImageSelection!
     @IBOutlet weak var AssignmentTypeview: UIView!
+    @IBOutlet weak var VideoPlayBtn: UIButton!
     
+    @IBOutlet weak var ClickTochooseVideoLbl: UILabel!
+    @IBOutlet weak var VideoDeleteBtn: UIImageView!
+    @IBOutlet weak var VideoThumbnailImg: UIImageView!
     var selectedShow = ""
-    var selectedImages: [UIImage] = []
+   
     var getType = "Principal"
     var imageStr : [String] = []
     var currentImageCount = 0
@@ -82,12 +91,22 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     let formatter = DateFormatter()
     let initialHeight: CGFloat = 60
     let maxHeight: CGFloat = 300
+    var selectedAttchmentImages: [AttachmentItem] = []
+    var player: AVPlayer?
+    var playerViewController: AVPlayerViewController?
+    var playerurl: URL?
+    var isImage = false
+    var selectedImgUrl: [FilePath] = []
     
+    var videoPicker: VideoPickerManager?
+       var selectedVideoURL: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
         BackBtn.applyBackButton()
-        
+      
+        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+            
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
@@ -101,7 +120,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
             name: UIResponder.keyboardWillHideNotification,
             object: nil
         )
-        
+        VideoView.isHidden = true
         assignTitleTxtFld.addDoneButton()
         contentTextView.addDoneButton()
         contentTextView.delegate = self
@@ -124,33 +143,84 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         
         let categoryGesture = UITapGestureRecognizer(target: self, action: #selector(categoryDropdown))
         categoryDropDownView.addGestureRecognizer(categoryGesture)
-        
+        let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(chooseVideoTapped))
+        VideoView.addGestureRecognizer(PlayGesture)
         let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
         AssignmentTypeview.addGestureRecognizer(typeGesture)
         
         selectImgPdfview.imageCollectionview.delegate = self
         selectImgPdfview.imageCollectionview.dataSource = self
-        
+        imageSelection()
     }
+    
+    
+    
+    @IBAction func chooseVideoTapped(_ sender: UIButton) {
+            videoPicker?.pickVideo()
+        }
+
+    func pickVideoFromGallery(){
+        
+        videoPicker?.pickVideo()
+    }
+        @IBAction func playVideoTapped(_ sender: UIButton) {
+            if let url = selectedVideoURL {
+                videoPicker?.playVideo(from: url, in: VideoView)
+            } else {
+                videoPicker?.pickVideo()
+            }
+        }
+
+        // MARK: - VideoPickerManagerDelegate
+        func videoPickerManager(didPickVideo url: URL) {
+            selectedVideoURL = url
+            VideoView.isHidden = false
+        }
+
+        func videoPickerManager(didGenerateThumbnail image: UIImage) {
+            VideoThumbnailImg.isHidden = false
+            VideoThumbnailImg.image = image
+        }
+
+        func videoPickerManagerDidCloseVideo() {
+            selectedVideoURL = nil
+            VideoThumbnailImg.image = nil
+            VideoView.isHidden = true
+        }
+    
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            // handle camera image
-            selectedImages.append(image)
+            
+            selectedAttchmentImages.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
+            selectedAttchmentImages.removeAll { $0.fileType != CommonStringFile.IMAGE }
+
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
         }
-
+        
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            selectedImages.append(contentsOf: images)
+            user_inputs.selectedFileType = CommonStringFile.IMAGE
+        
+            let imageItems = images.map {
+                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
+            }
+            selectedAttchmentImages.append(contentsOf: imageItems)
+            if imageItems.count != 0{
+                selectedAttchmentImages.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            }
+            
             selectImgPdfview.imageCollectionview.reloadData()
         }
-
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+        
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
             // handle picked PDF
-            selectedImages.removeAll()
-            selectedImages.append(ImageName.pdf!)
+            user_inputs.selectedFileType = CommonStringFile.pdf
+            selectedAttchmentImages.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
+            selectedAttchmentImages.removeAll { $0.fileType == CommonStringFile.IMAGE }
+
             selectImgPdfview.imageCollectionview.reloadData()
         }
-
+        
     }
     override func viewDidLayoutSubviews() {
         
@@ -211,6 +281,9 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
         AssignmenttypeLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryDropDownLbl.setFont(style: .title, size: FontSize.TitleSize)
         categoryLbl.setFont(style: .title, size: FontSize.TitleSize)
+        collectionViewHeght.constant = 120
+       addphotosheight.constant = 20
+        AddphotosLbl.text = CommonStringFile.Add_attachment_optional
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {
@@ -225,8 +298,25 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     }
     
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
-        let vc = SchoolListVC(nibName: nil, bundle: nil)
-        vc.screen_type = screenType.isAssaignment
+        
+        guard let title = assignTitleTxtFld.text , !title.isEmpty, let contents = contentTextView.text , !contents.isEmpty
+        
+    
+        else {
+            CustomAlert
+                .showAlertWithOkAction(
+                    title: AlertstringFile.Alert_title,
+                    message: AlertstringFile.Fill_All_Required_Fields,
+                    on: self
+                )
+            return
+        }
+        
+        let vc = RecipientVc(nibName: nil, bundle: nil)
+        user_inputs.title = title
+        user_inputs.description = contents
+        user_inputs.SelectedUrls = selectedAttchmentImages
+        vc.ScreenType = Menu_id.staffSelectedMenuId
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
@@ -281,8 +371,8 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     
     
     func selectImages() {
-        if selectedImages.count != 5{
-            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedImages.count), from: self)
+        if selectedAttchmentImages.count != 5{
+            PhotoPickerManager.shared.presentPicker(ofType: .gallery(selectionLimit: 5 - selectedAttchmentImages.count), from: self)
             
         }else{
             let alert = CustomAlert()
@@ -297,7 +387,7 @@ class SenderAssignmentTextViewController: UIViewController, UIImagePickerControl
     
     // MARK: Handle Select Camera,Pdf,Image
     @IBAction func openCamera() {
-        if selectedImages.count != 5{
+        if selectedAttchmentImages.count != 5{
             PhotoPickerManager.shared.presentPicker(ofType: .camera, from: self)
         }else{
             let alert = CustomAlert()
@@ -363,29 +453,46 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 + selectedImages.count
+        return 1 + selectedAttchmentImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0{
-            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "AttachmentCVCell", for: indexPath) as! AttachmentCVCell
+        // First cell is the "Add Attachment" button cell
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.AttachmentCVCell,
+                for: indexPath
+            ) as! AttachmentCVCell
             cell.layer.cornerRadius = 20
             return cell
-        }else{
-            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: "ImageCvCell", for: indexPath) as! ImageCvCell
-            cell.delegate = self
-            cell.deleteBtn.tag = indexPath.item - 1
-            if selectedImages.count > indexPath.item - 1 {
-                // Assign the image starting from the second image in the selectedImages array
-                cell.imageViews.image = selectedImages[indexPath.item - 1]
-            } else {
-                cell.imageViews.image = nil
-            }
-            if selectedImages.count <= 2{
-                collectionViewHeght.constant = 120
-            }else{
-                collectionViewHeght.constant = 220
-            }
+        } else {
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CellConfingName.ImageCvCell,
+                for: indexPath
+            ) as! ImageCvCell
+            
+            let adjustedIndex = indexPath.item - 1
+            let item = selectedAttchmentImages[adjustedIndex]
+               cell.delegate = self
+               cell.deleteBtn.tag = adjustedIndex
+
+               if let image = item.image {
+                   cell.imageViews.image = image
+               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
+                       let iconName = getFileIconName(for: url)
+                       cell.imageViews.image = UIImage(named: iconName)
+                   } else {
+                       cell.imageViews.kf.setImage(with: url)
+                   }
+               } else {
+                   cell.imageViews.image = nil
+               }
+            
+            // Set collection view height dynamically
+            let totalItems = selectedAttchmentImages.count
+            collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
+
             return cell
         }
     }
@@ -396,124 +503,127 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
         
         return CGSize(width: width, height: 100)
     }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.row == 0{
-////            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
-////            
-////            // Camera option
-////            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
-////            }
-////            alertController.addAction(cameraAction)
-////            
-////            // Gallery option
-////            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
-////                
-////                selectImages()
-////                
-////            }
-////            alertController.addAction(galleryAction)
-////            
-////            //             PDF option
-////            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-////                
-////                //selectPDF()
-////            }
-////            alertController.addAction(pdfAction)
-////            
-////            // Cancel action
-////            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
-////            alertController.addAction(cancelAction)
-////            
-////            // Present the alert
-////            self.present(alertController, animated: true, completion: nil)
-//            
-//            
-//            let bubbleVC = GalleryPickerVcViewController()
-//                bubbleVC.modalPresentationStyle = .popover
-//                bubbleVC.preferredContentSize = CGSize(width: 200, height: 250)
-//                
-//                bubbleVC.onOptionSelected = { option in
-//                    print("Selected option: \(option)")
-//                    // Handle action for Camera, Photo, etc.
-//                }
-//
-//                if let popoverController = bubbleVC.popoverPresentationController {
-//                    popoverController.sourceView = sender
-//                    popoverController.sourceRect = sender.bounds
-//                    popoverController.permittedArrowDirections = .any
-//                    popoverController.delegate = self
-//                }
-//
-//                present(bubbleVC, animated: true, completion: nil)
-//            
-//          
-//        }else{
-//            if selectedImages.count > indexPath.item - 1 {
-//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-//                vc.modalPresentationStyle = .fullScreen
-//                
-//                // Safe unwrapping of imgView before assigning
-//                vc.img = selectedImages[indexPath.item - 1]
-//                //
-//                present(vc, animated: true)
-//            }
-//        }
-//    }
-    
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            let bubbleVC = GalleryPickerVcViewController()
-            bubbleVC.modalPresentationStyle = .popover
-            bubbleVC.preferredContentSize = CGSize(width: 200, height: 250)
-
-            bubbleVC.onOptionSelected = { option in
-                print("Selected option: \(option)")
-                // Handle each option
-                switch option {
-                case "Camera":
-                    self.openCamera()
-                case "Photo":
-                    self.selectImages()
-                case "Voice":
-                    ""
-//                    self.recordAudio()
-                case "Video":
-                    ""
-//                    self.pickVideo()
-                case "Document":
-                    ""
-//                    self.pickDocument()
-                default:
-                    break
-                }
-            }
-
-            if let popoverController = bubbleVC.popoverPresentationController {
-                if let cell = collectionView.cellForItem(at: indexPath) {
-                    popoverController.sourceView = cell.contentView
-                    popoverController.sourceRect = cell.bounds
-                } else {
-                    popoverController.sourceView = self.view
-                    popoverController.sourceRect = CGRect(x: self.view.bounds.midX-100, y: self.view.bounds.midY, width: 0, height: 0)
-                }
-                popoverController.permittedArrowDirections = .any
-                popoverController.delegate = self
-            }
-
+        if indexPath.row == 0{
+            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
             
-                // iPad supports popovers natively
-                self.present(bubbleVC, animated: true)
-             
-        } else {
-            if selectedImages.count > indexPath.item - 1 {
+            // Camera option
+            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+                
+                openCamera()
+            }
+            alertController.addAction(cameraAction)
+            
+            // Gallery option
+            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+                
+                selectImages()
+                
+            }
+            alertController.addAction(galleryAction)
+            
+            //             PDF option
+            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
+                
+                selectPdf()
+            }
+            alertController.addAction(pdfAction)
+            
+            
+            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                
+                pickVideoFromGallery()
+            }
+            alertController.addAction(VideoAction)
+            
+            
+            // Cancel action
+            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            // Present the alert
+            self.present(alertController, animated: true, completion: nil)
+            
+            
+          
+            
+          
+        }else{
+            if selectedAttchmentImages.count > indexPath.item - 1 {
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                vc.img = selectedImages[indexPath.item - 1]
+                if selectedAttchmentImages[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
+                    if let url = selectedAttchmentImages[indexPath.item - 1].imageURL{
+                        vc.selectedFileURL = URL(string: url)
+                    }
+                } else{
+                    if let img = selectedAttchmentImages[indexPath.item - 1].image {
+                        vc.img = selectedAttchmentImages[indexPath.item - 1].image
+                    }else{
+                        vc.selectedFileURL = URL(string: selectedAttchmentImages[indexPath.item - 1].imageURL ?? "")
+                    }
+                   
+                }
+                vc.type = selectedAttchmentImages[indexPath.item - 1].fileType
                 present(vc, animated: true)
             }
         }
     }
+    
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if indexPath.row == 0 {
+//            let bubbleVC = GalleryPickerVcViewController()
+//            bubbleVC.modalPresentationStyle = .popover
+//            bubbleVC.preferredContentSize = CGSize(width: 200, height: 250)
+//
+//            bubbleVC.onOptionSelected = { option in
+//                print("Selected option: \(option)")
+//                // Handle each option
+//                switch option {
+//                case "Camera":
+//                    self.openCamera()
+//                case "Photo":
+//                    self.selectImages()
+//                case "Voice":
+//                    ""
+////                    self.recordAudio()
+//                case "Video":
+//                    ""
+////                    self.pickVideo()
+//                case "Document":
+//                    ""
+////                    self.pickDocument()
+//                default:
+//                    break
+//                }
+//            }
+//
+//            if let popoverController = bubbleVC.popoverPresentationController {
+//                if let cell = collectionView.cellForItem(at: indexPath) {
+//                    popoverController.sourceView = cell.contentView
+//                    popoverController.sourceRect = cell.bounds
+//                } else {
+//                    popoverController.sourceView = self.view
+//                    popoverController.sourceRect = CGRect(x: self.view.bounds.midX-100, y: self.view.bounds.midY, width: 0, height: 0)
+//                }
+//                popoverController.permittedArrowDirections = .any
+//                popoverController.delegate = self
+//            }
+//
+//            
+//                // iPad supports popovers natively
+//                self.present(bubbleVC, animated: true)
+//             
+//        } else {
+//            if selectedImages.count > indexPath.item - 1 {
+//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
+//                vc.modalPresentationStyle = .fullScreen
+//                vc.img = selectedImages[indexPath.item - 1]
+//                present(vc, animated: true)
+//            }
+//        }
+//    }
 
 }
 
