@@ -317,6 +317,7 @@ class CommonStringFile{
     static let CreateEvent = "Create Event".translated()
     static let Title = "Title".translated()
     static let AddPdfoptional = "Add Pdf (Optional?)".translated()
+    static let Add_attachment_optional = "Add attachment (Optional?)".translated()
     static let AddPdf = "Add Pdf".translated()
     static let AddDocuments = "Add Documents".translated()
     static let AddVideo = "Add Video".translated()

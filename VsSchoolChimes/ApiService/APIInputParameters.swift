@@ -51,7 +51,7 @@ class GlobalVariablesStringFile {
     static var new_updates = "new_updates"
 }
 
-class  DeviceTokenStringFile {
+class DeviceTokenStringFile {
     
     static var device_token = "device_token"
     static var secure_id = "secure_id"
@@ -136,6 +136,9 @@ class SendAttachmentStringFile {
     static let iframe = "iframe"
     static let file_size = "file_size"
     static let academic_year_id = "academic_year_id"
+   
+    
+   
 }
 
 
@@ -218,4 +221,21 @@ class AbsenteesReportStringFile {
     
     static var absent_on = "absent_on"
     static var section_id = "section_id"
+}
+
+class assignmentResquestStringKey{
+    
+    static let title = "title"
+    static let content = "content"
+    static let target_code = "target_code"
+    static let submission_date = "submission_date"
+    static let category = "category"
+    static let subject_code = "subject_code"
+    static let target_type = "target_type"
+    static let filePath = "file_path"
+    static let academic_year_id = "academic_year_id"
+    static let iframe = "iframe"
+    static let file_size = "file_size"
+    
+   
 }

@@ -72,7 +72,8 @@ struct ServiceUrl{
     static let  attendance_send_absentees_sms_with_session_type = "stud-attd/api/attendance/send-absentees-sms-with-session-type" 
     static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/api/attendance/get-absent-dates-for-child"
     static let  stud_attd_api_attendance_get_absentees_count_by_date = "stud-attd/api/attendance/get-absentees-count-by-date"
-    static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date"
+    static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date" 
+    static let   comm_assignment_send_assignment = " comm/assignment/send-assignment"
     
 }
 
@@ -93,7 +94,7 @@ struct screenType{
     static let isSplash  = 4
     static let isForgotPassword  = 5
     static let is_noticeboard = 23
-    static let isAssaignment = 22
+    static let isAssaignment = 2
     static var staffSelectedMenuId = 0
     static var communicationMenuId = 0
     static let communication_text = 2
