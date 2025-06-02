@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import Lottie
 import RealityFoundation
+import AVFoundation
+import AVKit
 @available(iOS 15.0, *)
 fileprivate var lottieView: LottieAnimationView?
 fileprivate var lottieOverlay: UIView?
@@ -823,3 +825,112 @@ class DateFormatterHelper {
         return outputTimeFormatter.string(from: date)
     }
 }
+func extractVimeoID(from url: String) -> String? {
+    let pattern = #"(\d+)$"#
+    
+    if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+        let nsString = url as NSString
+        let range = NSRange(location: 0, length: nsString.length)
+        
+        if let match = regex.firstMatch(in: url, options: [], range: range) {
+            let id = nsString.substring(with: match.range(at: 1))
+            return id
+        }
+    }
+    return nil
+}
+func fetchVimeoVideoFiles(videoID: String, accessToken: String, completion: @escaping ([String]?) -> Void) {
+    let urlString = "https://api.vimeo.com/videos/\(videoID)"
+    guard let url = URL(string: urlString) else {
+        completion(nil)
+        return
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+    
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        guard let data = data,
+              let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let files = jsonObject["files"] as? [[String: Any]] else {
+            print("Error fetching or parsing Vimeo video files")
+            completion(nil)
+            return
+        }
+        
+        // Extract URLs (mp4, m3u8)
+        let videoURLs = files.compactMap { $0["link"] as? String }
+        completion(videoURLs)
+    }.resume()
+}
+
+
+//func playVimeoVideoOnDefaultPlayer(from vimeoURLString: String, presentingViewController: UIViewController) {
+//    guard let url = URL(string: vimeoURLString) else {
+//        print("Invalid Vimeo URL")
+//        return
+//    }
+//
+//    func fetchConfigURL(from html: String) -> URL? {
+//        let pattern = #"https://player\.vimeo\.com/video/\d+/config\?[^"]+"#
+//        if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+//            let nsrange = NSRange(html.startIndex..<html.endIndex, in: html)
+//            if let match = regex.firstMatch(in: html, options: [], range: nsrange) {
+//                if let range = Range(match.range, in: html) {
+//                    let configURLString = String(html[range])
+//                    return URL(string: configURLString)
+//                }
+//            }
+//        }
+//        return nil
+//    }
+//
+//    URLSession.shared.dataTask(with: url) { data, _, error in
+//        guard let data = data, error == nil, let html = String(data: data, encoding: .utf8) else {
+//            print("Failed to download Vimeo page: \(error?.localizedDescription ?? "Unknown error")")
+//            return
+//        }
+//
+//        guard let configURL = fetchConfigURL(from: html) else {
+//            print("Failed to find Vimeo config URL")
+//            return
+//        }
+//
+//        URLSession.shared.dataTask(with: configURL) { data, _, error in
+//            guard let data = data, error == nil else {
+//                print("Failed to download Vimeo config JSON")
+//                return
+//            }
+//
+//            do {
+//                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+//                   let request = json["request"] as? [String: Any],
+//                   let files = request["files"] as? [String: Any],
+//                   let progressive = files["progressive"] as? [[String: Any]] {
+//
+//                    let best = progressive.sorted { ($0["height"] as? Int ?? 0) > ($1["height"] as? Int ?? 0) }.first
+//
+//                    if let videoURLString = best?["url"] as? String,
+//                       let videoURL = URL(string: videoURLString) {
+//                        DispatchQueue.main.async {
+//                            // Play using AVPlayerViewController
+//                            let player = AVPlayer(url: videoURL)
+//                            let playerVC = AVPlayerViewController()
+//                            playerVC.player = player
+//                            presentingViewController.present(playerVC, animated: true) {
+//                                player.play()
+//                            }
+//                        }
+//                    } else {
+//                        print("No playable video URL found in config JSON")
+//                    }
+//                } else {
+//                    print("Invalid config JSON structure")
+//                }
+//            } catch {
+//                print("JSON parse error: \(error.localizedDescription)")
+//            }
+//        }.resume()
+//    }.resume()
+//}

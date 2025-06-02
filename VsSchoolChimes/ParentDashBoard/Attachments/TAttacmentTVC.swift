@@ -9,12 +9,15 @@ import UIKit
 
 class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
 
+    @IBOutlet weak var readImg: UIImageView!
     @IBOutlet weak var outerView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     var homeworkDocs: [FilePath]?
+    var attachment:Attachment?
+    var delegate:ReadUpades?
     private var docController: UIDocumentInteractionController?
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,6 +32,11 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(UINib(nibName: CellConfingName.ImagePdfCvCell, bundle: nil), forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
+        
+    }
+    func confic(_ attacment:[FilePath]){
+        homeworkDocs = attacment
+        collectionView.reloadData()
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return homeworkDocs?.count ?? 0
@@ -50,7 +58,10 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let file = homeworkDocs?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
-        
+        let fileExtension = url.pathExtension.lowercased()
+        if let data = attachment{
+            delegate?.readStatus(attachment: data)
+        }
         
             let vc = getCurrentViewController()
             let vcc = ImageShowVc(nibName: nil, bundle: nil)
@@ -59,32 +70,26 @@ class TAttacmentTVC: UITableViewCell, UICollectionViewDelegate, UICollectionView
             vcc.type = 2
             vcc.modalPresentationStyle = .fullScreen
             vc?.present(vcc, animated: true)
+    }
+
+
+//    func openWithDocumentInteraction(url: URL) {
+//        docController = UIDocumentInteractionController(url: url)
+//        docController?.delegate = getCurrentViewController() as? UIDocumentInteractionControllerDelegate
+//
+//        if !(docController?.presentPreview(animated: true) ?? false) {
+//            let fileExtension = url.pathExtension.lowercased()
+//            let appSuggestion = getAppSuggestion(for: fileExtension)
+//
+//            let alert = UIAlertController(
+//                title: "App Required",
+//                message: "To open this '\(fileExtension)' file, please install a suitable app. For example: \(appSuggestion).",
+//                preferredStyle: .alert
+//            )
+//            alert.addAction(UIAlertAction(title: "OK", style: .default))
+//            getCurrentViewController()?.present(alert, animated: true)
 //        }
-//        } else {
-//                openWithDocumentInteraction(url: url)
-//        }
-    }
-    func isWebViewPreviewable(_ ext: String) -> Bool {
-        return ["pdf", "txt"].contains(ext.lowercased())
-    }
-
-    func openWithDocumentInteraction(url: URL) {
-        docController = UIDocumentInteractionController(url: url)
-        docController?.delegate = getCurrentViewController() as? UIDocumentInteractionControllerDelegate
-
-        if !(docController?.presentPreview(animated: true) ?? false) {
-            let fileExtension = url.pathExtension.lowercased()
-            let appSuggestion = getAppSuggestion(for: fileExtension)
-
-            let alert = UIAlertController(
-                title: "App Required",
-                message: "To open this '\(fileExtension)' file, please install a suitable app. For example: \(appSuggestion).",
-                preferredStyle: .alert
-            )
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            getCurrentViewController()?.present(alert, animated: true)
-        }
-    }
+//    }
 
     func getAppSuggestion(for ext: String) -> String {
         switch ext {
