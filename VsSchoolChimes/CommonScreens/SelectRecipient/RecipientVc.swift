@@ -211,52 +211,47 @@ class RecipientVc: UIViewController{
     
     @IBAction func send(_ sender: UIButton) {
         print("selectedId : \(array_selectedId)")
-        
-        if cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School{
-        }else{
-            guard !array_selectedId.isEmpty else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_target,
-                    on: self)
-                return
-            }
+        print("selectedId : \(array_selectedId)")
+
+        // Check if target selection is required
+        let isEntireSchool = (cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School)
+        guard isEntireSchool || !array_selectedId.isEmpty else {
+            alert.showAlert(
+                title: AlertstringFile.Alert_title,
+                message: AlertstringFile.Choose_any_target,
+                on: self
+            )
+            return
         }
+
         switch Menu_id.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
-        case Menu_id.homeWorkMenuId:
-            if subjectId != nil && subjectId != "" && array_selectedId.count != 0 {
-                SendingAttachmentFlow(
-                    baseURL: ServiceUrl.comm_homework_sendhomework)
-            } else {
+
+        case Menu_id.homeWorkMenuId, Menu_id.isAssaignment:
+            guard let subjectId = subjectId, !subjectId.isEmpty, !array_selectedId.isEmpty else {
                 alert.showAlert(
                     title: AlertstringFile.Alert_title,
                     message: AlertstringFile.Choose_any_section,
                     on: self
                 )
+                return
             }
+            let baseURL = (Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId) ?
+                ServiceUrl.comm_homework_sendhomework :
+                ServiceUrl.comm_assignment_send_assignment
+            SendingAttachmentFlow(baseURL: baseURL)
+
         case Menu_id.AttachmentMenuId:
-            SendingAttachmentFlow(
-                baseURL: ServiceUrl.comm_attachment_send_attachment)
+            SendingAttachmentFlow(baseURL: ServiceUrl.comm_attachment_send_attachment)
+
         case Menu_id.event:
-            SendingAttachmentFlow(
-                baseURL: ServiceUrl.api_school_event_send_event)
-            
-        case Menu_id.isAssaignment:
-            if subjectId != nil && subjectId != "" && array_selectedId.count != 0 {
-                SendingAttachmentFlow(
-                    baseURL: ServiceUrl.comm_assignment_send_assignment)
-            } else {
-                alert.showAlert(
-                    title: AlertstringFile.Alert_title,
-                    message: AlertstringFile.Choose_any_section,
-                    on: self
-                )
-            }
+            SendingAttachmentFlow(baseURL: ServiceUrl.api_school_event_send_event)
+
         default:
             print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
+
     }
     
     
