@@ -242,40 +242,57 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = homeWorkTable.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
-//        cell.ishomework = true
-        cell.CvHeight.constant = 0
-        cell.ImageCollectionView.isHidden = true
-        cell.delegate = self
         let data = FilterHomeWorkList?[indexPath.row]
-        cell.subjectName.text = data?.subject_name
-        cell.topics.text = data?.title ?? ""
-        cell.dateLble.text = dateLbl.text ?? ""
-        cell.ImageCollectionView.isHidden = (data?.file_path?.isEmpty ?? true)
-        if let urls = data?.file_path, urls.count != 0{
-            cell.ImageCollectionView.isHidden = false
-            cell.CvHeight.constant = 150
-            cell.loadImage(urls: urls)
-        }
-        
-        cell.FilterHomeWorkList = data
-        cell.newView.isHidden = true
-        cell.descriptionLbl.setupExpandable(text: data?.description ?? "")
-        cell.descriptionLbl.onExpandableTap = {
-            cell.descriptionLbl.isExpanded.toggle()
-            tableView.beginUpdates()
-            tableView.endUpdates()
+        if data?.file_path?.first?.type?.uppercased() == "VIDEO"{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
+            cell.confic(data?.file_path?.first?.url ?? "")
+            cell.descriptContent
+                .setupExpandable(
+                    text: data?.description ?? ""
+                )
+            cell.descriptContent.onExpandableTap = {
+                cell.descriptContent.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+            cell.datelbl.text = dateLbl.text ?? "".convertToTargetDateFormat() ?? "-"
+            cell.videoName.text = data?.title
+            return cell
+        }else{
+            let cell = homeWorkTable.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
+            //        cell.ishomework = true
+            cell.CvHeight.constant = 0
+            cell.ImageCollectionView.isHidden = true
+            cell.delegate = self
+            cell.subjectName.text = data?.subject_name
+            cell.topics.text = data?.title ?? ""
+            cell.dateLble.text = dateLbl.text ?? ""
+            cell.ImageCollectionView.isHidden = (data?.file_path?.isEmpty ?? true)
+            if let urls = data?.file_path, urls.count != 0{
+                cell.ImageCollectionView.isHidden = false
+                cell.CvHeight.constant = 150
+                cell.loadImage(urls: urls)
+            }
+            
+            cell.FilterHomeWorkList = data
+            cell.newView.isHidden = true
+            cell.descriptionLbl.setupExpandable(text: data?.description ?? "")
+            cell.descriptionLbl.onExpandableTap = {
+                cell.descriptionLbl.isExpanded.toggle()
+                tableView.beginUpdates()
+                tableView.endUpdates()
+                DispatchQueue.main.async {
+                    let contentHeight = tableView.contentSize.height
+                    self.tableviewHeight.constant = contentHeight
+                }
+            }
+            cell.cellview.layoutIfNeeded()
             DispatchQueue.main.async {
-                   let contentHeight = tableView.contentSize.height
-                   self.tableviewHeight.constant = contentHeight
-               }
+                let contentHeight = self.homeWorkTable.contentSize.height
+                self.tableviewHeight.constant = contentHeight
+            }
+            return cell
         }
-        cell.cellview.layoutIfNeeded()
-        DispatchQueue.main.async {
-            let contentHeight = self.homeWorkTable.contentSize.height
-            self.tableviewHeight.constant = contentHeight
-        }
-        return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension

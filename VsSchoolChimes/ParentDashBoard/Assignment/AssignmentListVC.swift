@@ -12,6 +12,8 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
        
     }
     
+    @IBOutlet weak var nodataLbl: UILabel!
+    @IBOutlet weak var noRecordImg: UIImageView!
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var HeaderLabel: UILabel!
     @IBOutlet weak var NameLbl: UILabel!
@@ -19,12 +21,9 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
     @IBOutlet weak var listTable: UITableView!
     @IBOutlet weak var searchview: UISearchBar!
     var didSelectDelegate : DidSelectDelegate?
-    let data = [Assigment(tittle: "Assigment1", subject: "English", dueDate: "19-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment2", subject: "Tamil nsdvhs dhs hgsdhsgv dchgv cgvdh hdgc sdvhd gcg", dueDate: "21-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment3", subject: "Science", dueDate: "22-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment4", subject: "Maths", dueDate: "24-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment5", subject: "Physics", dueDate: "26-11-2024", sendeBy: "vs2020", sumissionCount: "1", date: "Nov 19 2025"),Assigment(tittle: "Assigment6", subject: "Computer Science", dueDate: "28-11-2024", sendeBy: "vs2020sdfsdfghfhftvhdwxcvydywdscv vdy", sumissionCount: "1", date: "Nov 19 2025")]
-    var filteredData :[Assigment]?
-    
-    var fileUrl : [FilePath] = [FilePath(url:"https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//sample.pdf" , type: "pdf"),FilePath(url: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//long-doc.txt", type: "txt"),FilePath(url: "https://schoolchimes-communication.s3.ap-south-1.amazonaws.com/uploads/Documents//file-sample_500kB.docx", type: "docx")]
-    
-   
+    var data : [Assignment]?
+    var filteredData :[Assignment]?
+    var shouldShowFooter = true
     var tapGesture: UITapGestureRecognizer?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +39,61 @@ class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate,
         searchview.layer.borderWidth = 0
         searchview.backgroundImage = UIImage()
         searchview.addDoneButton()
-       
+        getAssigment()
+        setupTableFooter()
         register()
+    }
+    func getAssigment() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_api_assignment_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<AssignmentResponse, Error>) in
+            switch result {
+            case .success(let response):
+                if response.status == true {
+                    DispatchQueue.main.async {
+                        self?.data = response.data ?? []
+                        self?.filteredData = self?.data
+                        let isEmpty = self?.data?.isEmpty ?? true
+                        self?.nodataLbl.isHidden = !isEmpty
+                        self?.nodataLbl.text = isEmpty ? response.message : ""
+                        self?.noRecordImg.isHidden = !isEmpty
+
+                        self?.listTable.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print("API Error: \(error.localizedDescription)")
+            }
+        }
+    }
+    func getArchiveAssigment() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_api_assignment_list_archive,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: UserDefaultFileManager.get_child_Details()?.access_token ?? ""
+        ) { [weak self] (result: Result<AssignmentResponse, Error>) in
+            switch result {
+            case .success(let response):
+                if response.status == true {
+                    DispatchQueue.main.async {
+                        self?.data = response.data ?? []
+                        self?.filteredData = self?.data
+                        let isEmpty = self?.data?.isEmpty ?? true
+                        self?.nodataLbl.isHidden = !isEmpty
+                        self?.nodataLbl.text = isEmpty ? response.message : ""
+                        self?.noRecordImg.isHidden = !isEmpty
+
+                        self?.listTable.reloadData()
+                    }
+                }
+            case .failure(let error):
+                print("API Error: \(error.localizedDescription)")
+            }
+        }
     }
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
@@ -81,15 +133,17 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.AssignmentListCTVC, for: indexPath) as! AssignmentListCTVC
-        cell.tittleLbl.text = filteredData?[indexPath.row].tittle
+        cell.tittleLbl.text = filteredData?[indexPath.row].title
         // Compare dueDate with current date
-        if !isDueDatePassed(dueDate: filteredData?[indexPath.row].dueDate ?? "") {
+        if !isDueDatePassed(dueDate: filteredData?[indexPath.row].end_date ?? "") {
             cell.dueDateLbl.textColor = .black
         } else {
             cell.dueDateLbl.textColor = .red
         }
-        cell.FilesUrl = fileUrl
-        cell.dueDateLbl.text = filteredData?[indexPath.row].dueDate
+        cell.FilesUrl = filteredData?[indexPath.row].file_path
+        cell.confic(filteredData?[indexPath.row].file_path ?? [])
+        cell.videoUrl = filteredData?[indexPath.row].file_path?.first?.type?.uppercased() != "" ? filteredData?[indexPath.row].iframe : nil
+        cell.dueDateLbl.text = filteredData?[indexPath.row].end_date
         cell.CreaterdDate.text = filteredData?[indexPath.row].date
        
       //  cell.didSelectDelegate = self
@@ -108,7 +162,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         let index = (sender as AnyObject).tag
         
         let vc = ImageShowVc(nibName: nil, bundle: nil)
-        vc.FileURL = fileUrl
+//        vc.FileURL = fileUrl
         vc.type = 0
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -118,22 +172,20 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         didSelectDelegate?.select(index: index, value: value,Img:Img,Pdf:Pdf,text:text,type:type)
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // Filter the data
         if searchText.isEmpty {
             filteredData = data
         } else {
-            filteredData = data.filter {
-                $0.tittle.lowercased().contains(searchText.lowercased()) ||
-                $0.subject.lowercased().contains(searchText.lowercased()) ||
-                $0.dueDate.lowercased().contains(searchText.lowercased()) ||
-                $0.sendeBy.lowercased().contains(searchText.lowercased()) ||
-                $0.sumissionCount.lowercased().contains(searchText.lowercased())
+            filteredData = data?.filter {
+                ($0.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                ($0.subject?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                ($0.end_date?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                ($0.sent_by?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                ("\($0.submitted_count ?? 0)".contains(searchText))
             }
         }
-        
-        // Reload the table view
         listTable.reloadData()
     }
+
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
@@ -142,12 +194,45 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
         searchBar.endEditing(true)
         searchBar.resignFirstResponder()
     }
-}
-struct Assigment{
-    let tittle:String
-    let subject:String
-    let dueDate:String
-    let sendeBy:String
-    let sumissionCount:String
-    let date:String
+    func setupTableFooter() {
+        if shouldShowFooter {
+            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+                footer.frame = CGRect(x: 0, y: 0, width: listTable.frame.width, height: 60)
+                let buttonTitle = "See More"
+                let attributedString = NSMutableAttributedString(string: buttonTitle)
+                
+                let customFont = UIFont(name: "Poppins-Medium", size: 17) ?? UIFont.systemFont(ofSize: 18)
+                attributedString.addAttribute(.font, value: customFont, range: NSRange(location: 0, length: buttonTitle.count))
+                
+                // Apply underline style
+                attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: buttonTitle.count))
+                footer.SeeMoreBtn.setAttributedTitle(attributedString, for: .normal)
+                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
+                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
+                footer.SeeMoreBtn.isUserInteractionEnabled = true
+                listTable.tableFooterView = footer
+            }
+        } else {
+            listTable.tableFooterView = nil
+        }
+    }
+    
+    @objc func seeMoreAction() {
+        if let footer = listTable.tableFooterView {
+            UIView.animate(withDuration: 0.3, animations: {
+                footer.alpha = 0
+            }, completion: {[self] _ in
+                // Hide the footer after animation completes.
+                listTable.tableFooterView = nil
+                shouldShowFooter = false
+                getArchiveAssigment()
+            })
+        } else {
+            // In case footer is already nil.
+            shouldShowFooter = false
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 60
+    }
 }

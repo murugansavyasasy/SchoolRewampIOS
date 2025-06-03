@@ -37,10 +37,15 @@ class AssignmentListCTVC: UITableViewCell {
     var didSelectDelegate : DidSelectDelegate?
     var Delegate : SumitionDelegate?
     var FilesUrl : [FilePath]?
-    
+    var videoUrl :String?
        override func awakeFromNib() {
            super.awakeFromNib()
+           let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
+           AttachmentCV.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
            
+           AttachmentCV.delegate = self
+           AttachmentCV.dataSource = self
+
            spirelview.layer.cornerRadius = 10
            spirelview.layer.shadowColor = UIColor.black.cgColor
            spirelview.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -84,13 +89,6 @@ class AssignmentListCTVC: UITableViewCell {
            SubmitedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            NotSubmitedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            ForwardBtn.setTitleFont(style: .body, size: FontSize.BodySize)
-           
-           let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
-           AttachmentCV.register(collection, forCellWithReuseIdentifier: CellConfingName.ImagePdfCvCell)
-           
-           AttachmentCV.delegate = self
-           AttachmentCV.dataSource = self
-
        }
 
        override func layoutSubviews() {
@@ -98,6 +96,10 @@ class AssignmentListCTVC: UITableViewCell {
            let contentViewHeight = contentView.frame.height - 30
            imgHeght.constant = contentViewHeight
        }
+    func confic(_ files:[FilePath]){
+        FilesUrl = files
+        AttachmentCV.reloadData()
+    }
     
     @IBAction func viewAssignment(_ sender: UIButton) {
         didSelectDelegate?.select(index: 1, value:"\(sender.tag)",Img:[""],Pdf:"https://icseindia.org/document/sample.pdf",text:"sjedgwvfefjd xuvu dvs dhv sshgdvsg",type:"")
@@ -119,7 +121,8 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image" {
-                if let pdfURL = URL(string: img.url ?? "") {
+                let url = videoUrl != nil ? URL(string: videoUrl ?? ""): URL(string: img.url ?? "")
+                if let pdfURL = url{
                     let request = URLRequest(url: pdfURL)
                     cell.webView.load(request)
                     cell.webView.isHidden = false

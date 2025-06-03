@@ -741,3 +741,51 @@ struct AbsentisReportStudent: Codable {
     let photo_path: String?
     let primary_mobile: String?
 }
+
+//MARK: Leave Request History
+
+struct LeaveInfoResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [LeaveInfo]
+}
+
+struct LeaveInfo: Codable {
+    let id: String
+    let applied_on: String
+    let student_name: String
+    let class_name: String
+    let section_name: String
+    let leave_from: String
+    let leave_to: String
+    let reason: String
+    let status: String
+    let updated_on: String
+}
+
+//MARK: ASSIGINMENT LIST
+struct AssignmentResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [Assignment]?
+}
+
+struct Assignment: Codable {
+    var id: String?
+    var header_id: String?
+    var title: String?
+    var description: String?
+    var category: String?
+    var subject: String?
+    var date: String?
+    var time: String?
+    var submitted_count: Int?
+    var end_date: String?
+    var is_unread: Bool?
+    var sent_by: String?
+    var sort_order: String?
+    var is_archive: Bool?
+    var iframe: String?
+    var file_size: String?
+    var file_path: [FilePath]?
+}

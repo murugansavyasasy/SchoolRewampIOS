@@ -10,10 +10,10 @@ import UIKit
 class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     func date(date: String) {
         
-        dateFormatter.dateFormat = "dd MMM yy"
+        dateFormatter.dateFormat = dateFormat1
         let DayDate = dateFormatter.date(from: date)!
         // Change to output format
-        dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.dateFormat = dateFormat2
         let outputDateString = dateFormatter.string(from: DayDate)
         
         if dateSelection == true{
@@ -26,18 +26,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         }
     }
     
-    let dateFormatter = DateFormatter()
-    var placeholderLabel: UILabel!
-    var activeButton: UIButton?
-    var timePicker: UIDatePicker!
-    var datePicker: UIDatePicker!
-    var doneButton: UIButton!
-    var doneButton2: UIButton!
-    var time = "Jan\n15"
-    var dateSelection = false
-    let photoPickManager = PhotoPickerManager.shared
-    var selectedImages: [UIImage] = []
-    var url : URL?
+    
     @IBOutlet weak var dayCount: UILabel!
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var ReasonLbl: UILabel!
@@ -56,18 +45,35 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var costomView: ImageSelection!
     @IBOutlet weak var outerView: UIView!
+    @IBOutlet weak var SubmitBtn: UIButton!
+    
+    
     var LeaveRequest:LeaveRequest?
-    var currentdate:String?
+    let dateFormatter = DateFormatter()
+    var placeholderLabel: UILabel!
+    var dateSelection = false
+    let photoPickManager = PhotoPickerManager.shared
+    var selectedImages: [UIImage] = []
+    var url : URL?
+    var dateFormat1 = "dd MMM yyyy"
+    var dateFormat2 = "EEE dd"
     var isKeyboardVisible = false
+    var childDetails = UserDefaultFileManager.get_child_Details()
+    let alert = CustomAlert()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        uiConfic()
+        setInitialDate()
         contentTxtView.delegate = self
        
-        costomView.imageCollectionview.delegate = self
-        costomView.imageCollectionview.dataSource = self
         imageSelection()
         setupPlaceholder()
        
+        costomView.imageCollectionview.delegate = self
+        costomView.imageCollectionview.dataSource = self
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(_:)),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -81,41 +87,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        contentTxtView.delegate = self
-        uiConfic()
-        setupdatePicker()
-        setInitialButtonTitles()
-        contentTxtView.addDoneButton()
-        selectedImages.removeAll()
-        costomView.imageCollectionview.reloadData()
-    }
-    func imageSelection(){
-        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            // handle camera image
-            selectedImages.append(image)
-            costomView.imageCollectionview.reloadData()
-        }
-
-        PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            selectedImages.append(contentsOf: images)
-            if url != nil{
-                selectedImages.removeAll()
-                url = nil
-            }
-            costomView.imageCollectionview.reloadData()
-        }
-
-        PhotoPickerManager.shared.onPdfPicked = { [self] data in
-            // handle picked PDF
-            selectedImages.removeAll()
-            url = data.absoluteURL
-            selectedImages.append(ImageName.pdf!)
-            costomView.imageCollectionview.reloadData()
-        }
-
     }
     
     func uiConfic(){
@@ -155,114 +126,113 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         calanderBtn.layer.cornerRadius = 10
 
     }
-    @objc func keyboardWillShow(_ notification: Notification) {
-        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            isKeyboardVisible = true
-            UIView.animate(withDuration: 0.3) {
-                // Move outerView 20 points from the top
-                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
+    
+    func imageSelection(){
+        PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
+            // handle camera image
+            selectedImages.append(image)
+            costomView.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onImagesPicked = { [self] images in
+            selectedImages.append(contentsOf: images)
+            if url != nil{
+                selectedImages.removeAll()
+                url = nil
             }
+            costomView.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onPdfPicked = { [self] data in
+            // handle picked PDF
+            selectedImages.removeAll()
+            url = data.absoluteURL
+            selectedImages.append(ImageName.pdf!)
+            costomView.imageCollectionview.reloadData()
         }
     }
     
-    @objc func keyboardWillHide(_ notification: Notification) {
-        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
-        isKeyboardVisible = false
-        UIView.animate(withDuration: 0.3) {
-            self.outerView.transform = .identity // Reset position
+    @IBAction func SubmitAct(_ sender: Any) {
+        
+        if contentTxtView.text != ""{
+            
+            ApplyLeave()
+        }else{
+            alert.showAlert(title: "", message: AlertstringFile.Enter_reason, on: self)
         }
     }
+    
+    
+    //MARK: Leave Request API call
+    
+    func ApplyLeave(){
+        
+        let LeaveFrom = ConvertDateStringSmart(dateBtn.titleLabel?.text)
+        let LeaveTo = ConvertDateStringSmart(todate.titleLabel?.text)
+        
+        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
+        
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
+                              
+            onOk: {
+                  
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
+                
+                switch result{
+                    
+                case .success(let success):
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        let title = success.status==true ? AlertstringFile.Success : AlertstringFile.Failed
+                        
+                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self) {
+                            
+                            self.dismiss(animated: true)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        CustomAlert.showAlertWithOkAction(title: "Error", message:error.localizedDescription, on: self) {
+                            
+                            self.dismiss(animated: true)
+                        }
+                    }
+                }
+            }
+            
+        }, onNo: {
+            
+            print("user Canceled Action")
+        }
+        )
+    }
+    
+    
+    
     
     //MARK: BUTTON TITLE CURRENT TIME
-    func setInitialButtonTitles() {
-        let dateFormatter = DateFormatter()
-        let dateOnlyFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yy"
-        dateOnlyFormatter.dateFormat = "EEE d"
+    func setInitialDate() {
         
         let currentDate = Date() // Current date and time
-       
-        let formattedDate = dateFormatter.string(from: currentDate)
-        self.currentdate = formattedDate
-        // Check if LeaveRequest is available and set button titles accordingly
-        if let leaveRequest = LeaveRequest {
-            todate.setTitle(leaveRequest.toDate ?? "", for: .normal)
-            dateBtn.setTitle(leaveRequest.fromDate ?? "", for: .normal)
-            dateSet(leaveRequest.fromDate ?? "", leaveRequest.toDate ?? "", formattedDate)
-        } else {
-            
-            datePicker.minimumDate = Date() // Ensure From Date starts from today
-            // Handle case where LeaveRequest is nil (if necessary)
-//            todate.setTitle(formattedDate, for: .normal)
-            dateBtn.setTitle(formattedDate, for: .normal)
-            todate.setTitle(formattedDate, for: .normal)
-            dayCount.isHidden = true
-            dateSet(currentdate ?? "", currentdate ?? "", formattedDate)
-        }
+        
+        dateFormatter.dateFormat = dateFormat1
+        let date = dateFormatter.string(from: currentDate)
+        
+        let formatedDate = ConvertDateStringSmart(date, toFormat: dateFormat1)
+        
+        dateBtn.setTitle(formatedDate, for: .normal)
+        todate.setTitle(formatedDate, for: .normal)
+        
+        let customDate = ConvertDateStringSmart(date, toFormat: dateFormat2)
+        
+        setFormattedDate(customDate, label: fromDateLbl)
+        setFormattedDate(customDate, label: toDateLbl)
     }
     
-    // Function to update the date labels with formatted text
-    func dateSet(_ fromDate: String, _ toDate: String, _ currentDate: String) {
-        // Fonts for different parts
-        let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
-        let dayFont = UIFont.boldSystemFont(ofSize: 22)  // Larger font for day number
-        
-        // Function to create an attributed string for a date
-        func createAttributedText(from date: String) -> NSMutableAttributedString {
-            let components = date.split(separator: " ")
-            guard components.count > 1 else {
-                print("Error: Invalid date format")
-                return NSMutableAttributedString()
-            }
-            let weekday = components[1]
-            let day = components[0]
-            
-            let attributedText = NSMutableAttributedString()
-            attributedText.append(NSAttributedString(string: "\(weekday)\n", attributes: [
-                .font: weekdayFont,
-                .foregroundColor: UIColor.darkGray
-            ]))
-            attributedText.append(NSAttributedString(string: "\(day)", attributes: [
-                .font: dayFont,
-                .foregroundColor: UIColor.black
-            ]))
-            
-            // Set paragraph style for centered alignment
-            let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.alignment = .center
-            attributedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedText.length))
-            
-            return attributedText
-        }
-        
-        // Create attributed text for fromDate and toDate
-        let fromAttributedText = createAttributedText(from: fromDate)
-        let toAttributedText = createAttributedText(from: toDate)
-        
-        // Update `fromDateLbl` and `toDateLbl` accordingly
-        if !currentDate.isEmpty {
-            toDateLbl.attributedText = toAttributedText
-            fromDateLbl.attributedText = fromAttributedText
-        }
-        
-        // If both fromDate and toDate exist, update labels
-        if fromDate != "" && toDate != "" {
-            fromDateLbl.attributedText = fromAttributedText
-            toDateLbl.attributedText = toAttributedText
-        } else {
-            // If dateSelection is false, update toDate and button accordingly
-            if dateSelection == false {
-                toDateLbl.attributedText = toAttributedText
-            } else {
-                fromDateLbl.attributedText = fromAttributedText
-            }
-        }
-        
-        // Ensure labels are multi-line if needed
-        fromDateLbl.numberOfLines = 0
-        toDateLbl.numberOfLines = 0
-    }
     
     func setFormattedDate(_ date: String, label: UILabel) {
         let weekdayFont = UIFont.systemFont(ofSize: 12) // Smaller font for weekday
@@ -303,39 +273,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     }
 
     
-    func textViewDidChange(_ textView: UITextView) {
-        adjustTextViewHeightWithConstraint(textView)
-    }
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        // Calculate the new length of the text
-        let currentText = textView.text ?? ""
-        guard let stringRange = Range(range, in: currentText) else { return false }
-        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-        if updatedText.count <= 500 {
-            placeholderLabel.isHidden = updatedText.count == 0 ? false : true
-            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
-            return true // Allow the change
-        } else {
-            let alert = CustomAlert()
-            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
-            //            contentTxtView.isEditable = false // Optionally disable editing
-            return false // Reject the change
-        }
-    }
-    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
-        // Calculate the size needed for the text
-        if textView.text.isEmpty {
-            // Set default height to 60
-            textViewHeightConstraint.constant = 100
-        } else {
-            // Calculate the size needed for the text
-            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
-            if sizeThatFits.height > 80{
-                textViewHeightConstraint.constant = sizeThatFits.height
-            }
-        }
-        textView.layoutIfNeeded() // Refresh the layout
-    }
+   
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
@@ -351,25 +289,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         contentTxtView.addSubview(placeholderLabel)
     }
 
-    func setupdatePicker() {
-        // Initialize the date picker
-        datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.preferredDatePickerStyle = .inline
-        
-        datePicker.backgroundColor = .white
-        datePicker.isHidden = true // Initially hidden
-        // Initialize and configure Done button
-        doneButton = UIButton(type: .system)
-        doneButton.setTitle(AlertstringFile.Done
-                            , for: .normal)
-        doneButton.isHidden = true
-        doneButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.8)
-        doneButton.setTitleColor(.white, for: .normal)
-        doneButton.layer.cornerRadius = 8
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        self.view.addSubview(doneButton)
-    }
     
     @IBAction func datepicker(_ sender: UIButton) {
          dateSelection = true
@@ -408,74 +327,8 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         }
         return dateCount
     }
-    
-    
-    @objc func doneButtonTapped() {
-        let dateFormatter = DateFormatter()
-        let dateOnlyFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yy"
-        // Set the date-only format (e.g., "Tue 3")
-        dateOnlyFormatter.dateFormat = "EEE d"
-        
-        // Get the selected date and time
-        let selectedDate = datePicker.date
-        let formattedDate = dateFormatter.string(from: selectedDate)
-        dateSet(formattedDate, currentdate ?? "", "")
-        
-        // Hide datePicker, timePicker, and doneButton
-        datePicker.isHidden = true
-        doneButton.isHidden = true
-        
-        // Update the correct button based on dateSelection flag
-        if dateSelection {
-            currentdate = formattedDate
-            activeButton?.setTitle(formattedDate, for: .normal)
-            datePicker.minimumDate = Calendar.current.date(byAdding: .day, value: 0, to: datePicker.date)
-            dateBtn.setTitle(formattedDate, for: .normal)
-            todate.setTitle("Select To Date", for: .normal)
-            dayCount.isHidden = true
-        } else {
-            activeButton?.setTitle(formattedDate, for: .normal)
-            todate.setTitle(formattedDate, for: .normal)
-            dayCount.isHidden = false
-        }
-        
-        dayCount.text = daytCounts(dateBtn.titleLabel?.text ?? "" , todate.titleLabel?.text ?? "")
-        
-        // Reset activeButton
-        activeButton = nil
-        
-        
-    }
-    
-    
-    func showTimePicker(for button: UIButton, date: Bool) {
-        activeButton = button
-        // Show the date picker
-        datePicker.isHidden = false
-        doneButton.isHidden = false
-        // Set the frame for the datePicker and make sure it’s within bounds
-        let pickerYPosition = view.frame.minY + 110
-        datePicker.frame = CGRect(x: (self.view.frame.width - 300) / 2, y: pickerYPosition, width: 300, height: 300)
-        
-        // Set appearance for datePicker
-        datePicker.backgroundColor = .white
-        datePicker.layer.shadowColor = UIColor.black.cgColor
-        datePicker.layer.shadowOffset = CGSize(width: 0, height: 2)
-        datePicker.layer.shadowRadius = 5
-        datePicker.layer.shadowOpacity = 0.3
-        datePicker.layer.cornerRadius = 20
-        
-        // Position the Done button at the bottom-right of the picker
-        doneButton.frame = CGRect(x: datePicker.frame.maxX - 80, y: pickerYPosition + datePicker.frame.height - 40, width: 70, height: 30)
-        
-        // Add datePicker to the view (ensure it’s in the view hierarchy)
-        self.view.addSubview(datePicker)
-        self.view.addSubview(doneButton)
-        
-    }
-    
 }
+
 @available(iOS 14.0, *)
 extension LeveCreateVC: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -606,5 +459,62 @@ extension LeveCreateVC: UICollectionViewDelegate, UICollectionViewDataSource,UIC
     func deleteImage(index: Int) {
         selectedImages.remove(at: index)
         costomView.imageCollectionview.reloadData()
+    }
+}
+
+@available(iOS 14.0, *)
+extension LeveCreateVC: UITextViewDelegate,UITextFieldDelegate {
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        guard !isKeyboardVisible else { return } // Prevent unnecessary animations
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            isKeyboardVisible = true
+            UIView.animate(withDuration: 0.3) {
+                // Move outerView 20 points from the top
+                self.outerView.transform = CGAffineTransform(translationX: 0, y: -keyboardFrame.height + 200)
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard isKeyboardVisible else { return } // Ensure this logic runs only if the keyboard is open
+        isKeyboardVisible = false
+        UIView.animate(withDuration: 0.3) {
+            self.outerView.transform = .identity // Reset position
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        adjustTextViewHeightWithConstraint(textView)
+    }
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        // Calculate the new length of the text
+        let currentText = textView.text ?? ""
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        if updatedText.count <= 500 {
+            placeholderLabel.isHidden = updatedText.count == 0 ? false : true
+            contentCount.text = "\(updatedText.count) of 500" // Update the character count label
+            return true // Allow the change
+        } else {
+            let alert = CustomAlert()
+            alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
+            //            contentTxtView.isEditable = false // Optionally disable editing
+            return false // Reject the change
+        }
+    }
+    func adjustTextViewHeightWithConstraint(_ textView: UITextView) {
+        // Calculate the size needed for the text
+        if textView.text.isEmpty {
+            // Set default height to 60
+            textViewHeightConstraint.constant = 100
+        } else {
+            // Calculate the size needed for the text
+            let sizeThatFits = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.greatestFiniteMagnitude))
+            if sizeThatFits.height > 80{
+                textViewHeightConstraint.constant = sizeThatFits.height
+            }
+        }
+        textView.layoutIfNeeded() // Refresh the layout
     }
 }
