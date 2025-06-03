@@ -278,13 +278,23 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             user_inputs.docUrl = fileUrls
             user_inputs.VideoPath = VideoPath_URL
             
+            
+            let params: [String: Any] = [
+                SendAttachmentStringFile.title: assignTitleTxtFld.text ?? "",
+                SendAttachmentStringFile.description: contentTextView.text ?? ""
+            ]
+            
+           
+           
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
+                vc.Common_request_params = params
                 vc.modalPresentationStyle = .fullScreen
                 vc.screen_type = Menu_id.AttachmentMenuId
                 present(vc, animated: true)
             } else{
                 let vc = RecipientVc(nibName: nil, bundle: nil)
+                vc.Common_request_params = params
                 vc.ScreenType = Menu_id.AttachmentMenuId
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)

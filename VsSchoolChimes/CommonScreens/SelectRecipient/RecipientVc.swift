@@ -227,7 +227,8 @@ class RecipientVc: UIViewController{
             SendingCommunicationFlow()
         case Menu_id.homeWorkMenuId:
             if subjectId != nil && subjectId != "" && array_selectedId.count != 0 {
-                handleHomeworkFlow()
+                SendingAttachmentFlow(
+                    baseURL: ServiceUrl.comm_homework_sendhomework)
             } else {
                 alert.showAlert(
                     title: AlertstringFile.Alert_title,
@@ -239,7 +240,9 @@ class RecipientVc: UIViewController{
             SendingAttachmentFlow(
                 baseURL: ServiceUrl.comm_attachment_send_attachment)
         case Menu_id.event:
-            handleEvent()
+            SendingAttachmentFlow(
+                baseURL: ServiceUrl.api_school_event_send_event)
+            
         case Menu_id.isAssaignment:
             if subjectId != nil && subjectId != "" && array_selectedId.count != 0 {
                 SendingAttachmentFlow(
@@ -443,94 +446,36 @@ class RecipientVc: UIViewController{
         return URL(string: filePath)?.pathExtension.lowercased()
     }
     
-    private func handleHomeworkFlow() {
-        uploadedURLs.removeAll()
-        let title = AlertstringFile.Confirm_title
-        alert.showAlertCancel(
-            title: title,
-            message: acidmicYearOrNotAlertMessage(),
-            actionLbl1: AlertstringFile.Yes_Send,
-            actionLbl2: AlertstringFile.Cancel,
-            on: self,
-            onOk: { [self] in
-                let file: Any = user_inputs.SelectedUrls
-                uploadAWSMedia(file: file) { [self] in
-                    CircularProgressLoader.shared.hide()
-                    let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                        if let url = URL(string: url) {
-                            let type = url.pathExtension.lowercased()
-                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-                        }
-                        return [
-                            CommonStringFile.url: url,
-                            CommonStringFile.type: user_inputs.selectedFileType
-                        ]
-                    }
-                    sendHomework(uploadedFiles)
-                }
-            },
-            onNo: {
-                print("User canceled.")
-            }
-        )
-    }
+
     
     
-    
-//    private func Assignment_flow() {
-//        uploadedURLs.removeAll()
-//        let title = AlertstringFile.Confirm_title
-//        alert.showAlertCancel(
-//            title: title,
-//            message: acidmicYearOrNotAlertMessage(),
-//            actionLbl1: AlertstringFile.Yes_Send,
-//            actionLbl2: AlertstringFile.Cancel,
-//            on: self,
-//            onOk: { [self] in
-//                let file: Any = user_inputs.SelectedUrls
-//                uploadAWSMedia(file: file) { [self] in
-//                    CircularProgressLoader.shared.hide()
-//                    let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-//                        if let url = URL(string: url) {
-//                            let type = url.pathExtension.lowercased()
-//                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
-//                        }
-//                        return [
-//                            CommonStringFile.url: url,
-//                            CommonStringFile.type: user_inputs.selectedFileType
-//                        ]
-//                    }
-//                    sendAssignment(uploadedFiles)
-//                }
-//            },
-//            onNo: {
-//                print("User canceled.")
-//            }
-//        )
-//    }
-    
+
     func sendAttachment(with uploadedFiles: [[String: String]], iframe: String,filesize: String,baseURl: String) {
         
         
-        
-        
-        let parameters: [String: Any] = [
-            SendAttachmentStringFile.title: user_inputs.title,
-            //                        SendAttachmentStringFile.file_type: selectedType,
+        var parameters: [String: Any] = [
             SendAttachmentStringFile.file_path: uploadedFiles,
-            SendAttachmentStringFile.target_type: target_type ?? "",
-            SendAttachmentStringFile.target_code: array_selectedId,
-            SendAttachmentStringFile.description: user_inputs.description,
             SendAttachmentStringFile.iframe: iframe,
             SendAttachmentStringFile.file_size: filesize,
-            SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? ""
+            SendAttachmentStringFile.target_code: array_selectedId,
+            SendAttachmentStringFile.target_type: target_type ?? "",
+            SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? 0
         ]
         
+        
+        
+        // Conditionally add value
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+            parameters[UploadMessageKeys.subjectId] = subjectId ?? ""
+        }
+        
+        
+        Common_request_params.merge(parameters) { (_, new) in new }
         print("📤 Sending parameters: \(parameters)")
         
         APIService.shared.makeApi(
             url: baseURl,
-            parameters: parameters,
+            parameters: Common_request_params,
             type: ApitTypeSringFile.POST,
             token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
         ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
@@ -569,192 +514,8 @@ class RecipientVc: UIViewController{
         }
         
     }
-    func sendHomework(_ uploadedFiles:[[String: String]]){
-        
-        let parameters: [String: Any] = [
-            UploadMessageKeys.academic_year_id:selectedAcadimicYearId ?? 0,
-            UploadMessageKeys.title: user_inputs.title,
-            UploadMessageKeys.description: user_inputs.description,
-            UploadMessageKeys.sectionCode: array_selectedId,
-            UploadMessageKeys.subjectId: subjectId ?? "",
-            UploadMessageKeys.filePath:uploadedFiles
-        ]
-        APIService.shared
-            .makeApi(url: ServiceUrl.comm_homework_sendhomework, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                result : Result<CommonApiSuc,
-                Error>
-            ) in
-                switch result {
-                case.success(let succesmessage) :
-                    if succesmessage.status == true {
-                        DispatchQueue.main.async { [self] in
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
-                        }
-                    }else {
-                        
-                        DispatchQueue.main.async {
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Alert_title,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
-                        }
-                    }
-                    
-                case.failure(let error) :
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
-                    }
-                }
-                
-            }
-    }
-    
-    func sendAssignment(_ uploadedFiles:[[String: String]],iframe: String,filesize: String){
-        
-        let parameters: [String: Any] = [
-            assignmentResquestStringKey.academic_year_id:selectedAcadimicYearId ?? 0,
-            assignmentResquestStringKey.title: user_inputs.title,
-            assignmentResquestStringKey.content: user_inputs.description,
-            assignmentResquestStringKey.target_code: array_selectedId,
-            assignmentResquestStringKey.target_type: target_type ?? "",
-            assignmentResquestStringKey.subject_code: subjectId ?? "",
-            assignmentResquestStringKey.filePath:uploadedFiles
-        ]
-        APIService.shared
-            .makeApi(url: ServiceUrl.comm_assignment_send_assignment, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                result : Result<CommonApiSuc,
-                Error>
-            ) in
-                switch result {
-                case.success(let succesmessage) :
-                    if succesmessage.status == true {
-                        DispatchQueue.main.async { [self] in
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Success,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
-                        }
-                    }else {
-                        
-                        DispatchQueue.main.async {
-                            CustomAlert
-                                .showAlertWithOkAction(
-                                    title: AlertstringFile.Alert_title,
-                                    message: succesmessage.message ?? "",
-                                    on: self
-                                ) {
-                                    self.gotoDashboard()
-                                }
-                        }
-                    }
-                    
-                case.failure(let error) :
-                    DispatchQueue.main.async {
-                        print(error.localizedDescription)
-                    }
-                }
-                
-            }
-    }
-    private func handleEvent() {
-        uploadedURLs.removeAll()
-        let title = AlertstringFile.Confirm_title
-        alert.showAlertCancel(
-            title: title,
-            message: acidmicYearOrNotAlertMessage(),
-            actionLbl1: AlertstringFile.Yes_Send,
-            actionLbl2: AlertstringFile.Cancel,
-            on: self,
-            onOk: { [self] in
-                let file: Any = user_inputs.SelectedUrls
-                uploadAWSMedia(file: file) { [self] in
-                    CircularProgressLoader.shared.hide()
-                    let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
-                        if let url = URL(string: url) {
-                            let type = url.pathExtension.lowercased()
-                            user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : type
-                        }
-                        return [
-                            CommonStringFile.url: url,
-                            CommonStringFile.type: user_inputs.selectedFileType
-                        ]
-                    }
-                    sendEvent(uploadedFiles)
-                }
-            },
-            onNo: {
-                print("User canceled.")
-            }
-        )
-    }
-    func sendEvent(_ uploadedFiles:[[String:String]]){
-        if let date = convertDate(user_inputs.FromDate){
-            let parameters: [String: Any] = [
-                UploadEvent.title: user_inputs.title,
-                UploadEvent.content: user_inputs.description,
-                UploadEvent.venue: user_inputs.venue,
-                UploadEvent.event_date: date,
-                UploadEvent.event_time: user_inputs.start_time,
-                send_voicemeassageStringFile.target_type : target_type ?? 0,
-                send_voicemeassageStringFile.target_code : array_selectedId,
-                UploadMessageKeys.filePath:uploadedFiles
-            ]
-            APIService.shared
-                .makeApi(url: ServiceUrl.api_school_event_send_event, parameters: parameters, type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                    result : Result<CommonApiSuc,
-                    Error>
-                ) in
-                    switch result {
-                    case.success(let succesmessage) :
-                        if succesmessage.status == true {
-                            DispatchQueue.main.async { [self] in
-                                CustomAlert
-                                    .showAlertWithOkAction(
-                                        title: AlertstringFile.Success,
-                                        message: succesmessage.message ?? "",
-                                        on: self
-                                    ) {
-                                        self.gotoDashboard()
-                                    }
-                            }
-                        }else {
-                            
-                            DispatchQueue.main.async {
-                                CustomAlert
-                                    .showAlertWithOkAction(
-                                        title: AlertstringFile.Alert_title,
-                                        message: succesmessage.message ?? "",
-                                        on: self
-                                    ) {
-                                        self.gotoDashboard()
-                                    }
-                            }
-                        }
-                        
-                    case.failure(let error) :
-                        DispatchQueue.main.async {
-                            print(error.localizedDescription)
-                        }
-                    }
-                    
-                }
-        }
-    }
+
+   
     @IBAction func getSubject(_ sender: UIButton) {
         let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {

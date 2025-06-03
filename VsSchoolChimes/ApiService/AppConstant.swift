@@ -73,7 +73,7 @@ struct ServiceUrl{
     static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/api/attendance/get-absent-dates-for-child"
     static let  stud_attd_api_attendance_get_absentees_count_by_date = "stud-attd/api/attendance/get-absentees-count-by-date"
     static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date" 
-    static let   comm_assignment_send_assignment = " comm/assignment/send-assignment"
+    static let   comm_assignment_send_assignment = "comm/api/assignment/send-assignment"
     
 }
 
@@ -173,6 +173,8 @@ struct user_inputs{
     static var attendance_type = ""
     static var session_type = ""
     static var attendance_date = ""
+    static var submissionDate = ""
+    static var assigmentCategory = ""
 }
 struct circular_type{
     static var school =  "A"

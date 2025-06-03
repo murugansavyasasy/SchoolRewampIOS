@@ -175,11 +175,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
         if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
-            user_inputs.title = TitleTxtfield.text ?? ""
-            user_inputs.description = DetailsTxtview.text ?? ""
+        
             user_inputs.SelectedUrls = attachments
+            let params: [String: Any] = [
+                assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
+                assignmentResquestStringKey.description: DetailsTxtview.text ?? "",
+            ]
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.ScreenType = Menu_id.homeWorkMenuId
+                vc.Common_request_params = params
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
         }else{
