@@ -763,3 +763,29 @@ struct LeaveInfo: Codable {
     let updated_on: String
 }
 
+//MARK: ASSIGINMENT LIST
+struct AssignmentResponse: Codable {
+    var status: Bool?
+    var message: String?
+    var data: [Assignment]?
+}
+
+struct Assignment: Codable {
+    var id: String?
+    var header_id: String?
+    var title: String?
+    var description: String?
+    var category: String?
+    var subject: String?
+    var date: String?
+    var time: String?
+    var submitted_count: Int?
+    var end_date: String?
+    var is_unread: Bool?
+    var sent_by: String?
+    var sort_order: String?
+    var is_archive: Bool?
+    var iframe: String?
+    var file_size: String?
+    var file_path: [FilePath]?
+}

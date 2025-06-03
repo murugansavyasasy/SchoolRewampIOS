@@ -76,6 +76,8 @@ struct ServiceUrl{
     static let   comm_assignment_send_assignment = " comm/assignment/send-assignment"
     static let comm_api_leave_req_apply = "comm/api/leave-req/apply"
     static let comm_api_leave_req_list = "comm/api/leave-req/list"
+    static let   comm_api_assignment_list = "comm/api/assignment/list"
+    static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     
 }
 
