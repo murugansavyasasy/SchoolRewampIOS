@@ -239,3 +239,11 @@ class assignmentResquestStringKey{
     
    
 }
+
+class LeaveRequestStringFile{
+    
+    static let leave_from = "leave_from"
+    static let leave_to = "leave_to"
+    static let reason = "reason"
+    static let member_type = "member_type"
+}
