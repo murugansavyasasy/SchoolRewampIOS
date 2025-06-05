@@ -11,11 +11,12 @@ import AWSCore
 import AWSS3
 import AVFoundation
 import AVKit
+import QuickLook
 
 @available(iOS 14.0, *)
 
 
-class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate, VideoPickerManagerDelegate {
+class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, UIPopoverPresentationControllerDelegate, VideoPickerManagerDelegate, QLPreviewControllerDataSource {
    
 
     
@@ -97,9 +98,14 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     var playerurl: URL?
     var isImage = false
     var selectedImgUrl: [FilePath] = []
-    
+    var fileUrls = [String]()
     var videoPicker: VideoPickerManager?
-       var selectedVideoURL: URL?
+    var selectedVideoURL: URL?
+    var DocumentpreviewURL : URL?
+    var selectedImages: [UIImage] = []
+    var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
+    let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
@@ -145,6 +151,9 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         categoryDropDownView.addGestureRecognizer(categoryGesture)
         let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(chooseVideoTapped))
         VideoView.addGestureRecognizer(PlayGesture)
+        
+        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
+        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
         let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
         AssignmentTypeview.addGestureRecognizer(typeGesture)
         
@@ -153,7 +162,10 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         imageSelection()
     }
     
-    
+    @IBAction func deleteVideo(){
+        
+        videoPickerManagerDidCloseVideo()
+    }
     
     @IBAction func chooseVideoTapped(_ sender: UIButton) {
             videoPicker?.pickVideo()
@@ -171,57 +183,69 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
             }
         }
 
-        // MARK: - VideoPickerManagerDelegate
-        func videoPickerManager(didPickVideo url: URL) {
-            selectedVideoURL = url
-            VideoView.isHidden = false
-        }
+    // MARK: - Delegate Methods
+       func videoPickerManager(didPickVideo url: URL) {
+           selectImgPdfview.isHidden = true
+           collectionViewHeght.constant = 0
+           selectedVideoURL = url
+           VideoView.isHidden = false
+           chooseRecipientsBtn.isHidden = false
+       }
 
-        func videoPickerManager(didGenerateThumbnail image: UIImage) {
-            VideoThumbnailImg.isHidden = false
-            VideoThumbnailImg.image = image
-        }
+       func videoPickerManager(didGenerateThumbnail image: UIImage) {
+           VideoThumbnailImg.isHidden = false
+           VideoThumbnailImg.image = image
+       }
 
-        func videoPickerManagerDidCloseVideo() {
-            selectedVideoURL = nil
-            VideoThumbnailImg.image = nil
-            VideoView.isHidden = true
-        }
+       func videoPickerManagerDidCloseVideo() {
+           selectedVideoURL = nil
+           VideoThumbnailImg.image = nil
+           VideoView.isHidden = true
+//          / chooseRecipientsBtn.isHidden = true
+           selectImgPdfview.isHidden = false
+           collectionViewHeght.constant = 120
+           selectImgPdfview.imageCollectionview.reloadData()
+          
+           
+       }
     
     func imageSelection(){
+        
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
-            
-            selectedAttchmentImages.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
-            selectedAttchmentImages.removeAll { $0.fileType != CommonStringFile.IMAGE }
-
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
+            fileUrls.removeAll()
+            selectedVideoURL = nil
+            selectedImages.append(image)
+            user_inputs.selectedFileType = AttachmentTypeString.IMAGE
             selectImgPdfview.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
-            user_inputs.selectedFileType = CommonStringFile.IMAGE
-        
-            let imageItems = images.map {
-                AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
-            }
-            selectedAttchmentImages.append(contentsOf: imageItems)
-            if imageItems.count != 0{
-                selectedAttchmentImages.removeAll { $0.fileType != CommonStringFile.IMAGE }
+            fileUrls.removeAll()
+            selectedVideoURL = nil
+            selectedImages.append(contentsOf: images)
+            user_inputs.selectedFileType = AttachmentTypeString.IMAGE
+            selectImgPdfview.imageCollectionview.reloadData()
+        }
+
+        PhotoPickerManager.shared.onFilePicked = { [self] data in
+            
+            if user_inputs.selectedFileType == AttachmentTypeString.IMAGE {
+                selectedImages.removeAll()
             }
             
+            if let fileUrl = URL(string:data.absoluteString){
+                selectedVideoURL = nil
+                fileUrls.append(data.absoluteString)
+                let iconName = getFileIconName(for: fileUrl)
+                if let img = UIImage(named: iconName){
+                    selectedImages.append(img)
+                }
+                user_inputs.selectedFileType = AttachmentTypeString.DOCUMENT
+            }
             selectImgPdfview.imageCollectionview.reloadData()
         }
-        
-        PhotoPickerManager.shared.onFilePicked = { [self] data in
-            // handle picked PDF
-            user_inputs.selectedFileType = CommonStringFile.pdf
-            selectedAttchmentImages.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
-            selectedAttchmentImages.removeAll { $0.fileType == CommonStringFile.IMAGE }
-
-            selectImgPdfview.imageCollectionview.reloadData()
-        }
-        
     }
+    
     override func viewDidLayoutSubviews() {
         
         view.applyGradient(
@@ -311,15 +335,64 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
                 )
             return
         }
+       
+        let date = ConvertDateStringSmart(DateBtn.titleLabel?.text)
+
+        // Step 1: Prepare all user_inputs data into one dictionary
+        let params: [String: Any] = [
+            assignmentResquestStringKey.title: title,
+            assignmentResquestStringKey.description: contents,
+            assignmentResquestStringKey.category: categoryDropDownLbl.text ?? "",
+            assignmentResquestStringKey.submission_date: date,
+        ]
+
+        // Step 2: Initialize and pass data to next ViewController
+//        let vc = RecipientVc(nibName: nil, bundle: nil)
+//        vc.Common_request_params = params
+//        user_inputs.selectedImg = selectedImages
+//        user_inputs.docUrl =  fileUrls
+//        user_inputs.VideoPath = selectedVideoURL
+//        vc.ScreenType = Menu_id.staffSelectedMenuId
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
         
-        let vc = RecipientVc(nibName: nil, bundle: nil)
-        user_inputs.title = title
-        user_inputs.description = contents
-        user_inputs.SelectedUrls = selectedAttchmentImages
-        vc.ScreenType = Menu_id.staffSelectedMenuId
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        user_inputs.selectedImg = selectedImages
+        user_inputs.docUrl =  fileUrls
+        user_inputs.VideoPath = selectedVideoURL
+         if isStaff(){
+             let vc = SchoolListVC(nibName: nil, bundle: nil)
+             vc.Common_request_params = params
+             vc.modalPresentationStyle = .fullScreen
+             vc.screen_type = Menu_id.AttachmentMenuId
+             present(vc, animated: true)
+         } else{
+             let vc = RecipientVc(nibName: nil, bundle: nil)
+             vc.Common_request_params = params
+             vc.ScreenType = Menu_id.AttachmentMenuId
+             vc.modalPresentationStyle = .fullScreen
+             present(vc, animated: true)
+         }
+         
+
+
     }
+    
+    
+    func isStaff() -> Bool {
+        if (staffDetailsCount?.count ?? 0 > 1) {
+            if staff_role == PriorityType.is_principal ||
+                staff_role == PriorityType.is_grouphead ||
+                staff_role == PriorityType.is_admin {
+                return true
+            } else {
+                
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
     
     @IBAction  func categoryDropdown (){
         dropDown.dataSource = ["GENERAL", "CLASS WORK", "PROJECT", "RESEARCH PAPER"]
@@ -449,48 +522,53 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
 @available(iOS 14.0, *)
 extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     
+   
+    
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1 + selectedAttchmentImages.count
+        return 1 + selectedImages.count + selectedImgUrl.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // First cell is the "Add Attachment" button cell
-        if indexPath.item == 0 {
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CellConfingName.AttachmentCVCell,
-                for: indexPath
-            ) as! AttachmentCVCell
+        
+        if indexPath.item == 0{
+            
+            let cell = selectImgPdfview.imageCollectionview.dequeueReusableCell(withReuseIdentifier: CellConfingName.AttachmentCVCell, for: indexPath) as! AttachmentCVCell
+            
             cell.layer.cornerRadius = 20
             return cell
-        } else {
+        }else{
+            
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellConfingName.ImageCvCell,
                 for: indexPath
             ) as! ImageCvCell
             
+            cell.delegate = self
+            cell.deleteBtn.tag = indexPath.item - 1
+            
             let adjustedIndex = indexPath.item - 1
-            let item = selectedAttchmentImages[adjustedIndex]
-               cell.delegate = self
-               cell.deleteBtn.tag = adjustedIndex
-
-               if let image = item.image {
-                   cell.imageViews.image = image
-               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                       let iconName = getFileIconName(for: url)
-                       cell.imageViews.image = UIImage(named: iconName)
-                   } else {
-                       cell.imageViews.kf.setImage(with: url)
-                   }
-               } else {
-                   cell.imageViews.image = nil
-               }
+            
+            // First show local selectedImages, then fallback to selectedImgUrl if index goes beyond
+            if adjustedIndex < selectedImages.count {
+                cell.imageViews.image = selectedImages[adjustedIndex]
+            } else {
+                let urlIndex = adjustedIndex - selectedImages.count
+                if urlIndex < selectedImgUrl.count {
+                    let urlString = selectedImgUrl[urlIndex].url ?? ""
+                    if let url = URL(string: urlString) {
+                        cell.imageViews.kf.setImage(with: url)
+                    } else {
+                        cell.imageViews.image = nil
+                    }
+                }
+            }
             
             // Set collection view height dynamically
-            let totalItems = selectedAttchmentImages.count
+            let totalItems = selectedImages.count + selectedImgUrl.count
             collectionViewHeght.constant = totalItems <= 2 ? 120 : 220
 
             return cell
@@ -501,129 +579,82 @@ extension SenderAssignmentTextViewController : UICollectionViewDelegate,UICollec
         
         let width = (selectImgPdfview.imageCollectionview.frame.width - 30) / 3 // Subtract spacing from total width, then divide by 3
         
-        return CGSize(width: width, height: 100)
+        return CGSize(width: 100, height: 100)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         if indexPath.row == 0{
-            let alertController = UIAlertController(title: "Select".translated(), message: "Choose an option".translated(), preferredStyle: .actionSheet)
             
-            // Camera option
-            let cameraAction = UIAlertAction(title: "Camera".translated(), style: .default) { [self] _ in
+            let alertController = UIAlertController(title: AlertstringFile.Select, message:AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
+            
+                // Camera option
+                let cameraAction = UIAlertAction(title: AlertstringFile.Camera, style: .default) { [self] _ in
+                    
+                    openCamera()
+                }
+                alertController.addAction(cameraAction)
                 
-                openCamera()
-            }
-            alertController.addAction(cameraAction)
-            
-            // Gallery option
-            let galleryAction = UIAlertAction(title: "Gallery".translated(), style: .default) { [self] _ in
+                // Gallery option
+                let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
+                    
+                    selectImages()
+                }
+                alertController.addAction(galleryAction)
                 
-                selectImages()
+                let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                    
+                    pickVideoFromGallery()
+                }
+                alertController.addAction(VideoAction)
                 
-            }
-            alertController.addAction(galleryAction)
-            
-            //             PDF option
-            let pdfAction = UIAlertAction(title: "PDF".translated(), style: .default) { [self] _ in
-                
-                selectPdf()
-            }
-            alertController.addAction(pdfAction)
-            
-            
-            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
-                
-                pickVideoFromGallery()
-            }
-            alertController.addAction(VideoAction)
-            
+                let DocumentAction = UIAlertAction(title: AlertstringFile.Document, style: .default) { [self] _ in
+                    
+                    selectPdf()
+                }
+                alertController.addAction(DocumentAction)
+           
             
             // Cancel action
-            let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: AlertstringFile.Cancel, style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
             
             // Present the alert
             self.present(alertController, animated: true, completion: nil)
-            
-            
-          
-            
-          
         }else{
-            if selectedAttchmentImages.count > indexPath.item - 1 {
+            
+            if user_inputs.selectedFileType == AttachmentTypeString.DOCUMENT {
+                
+                DocumentpreviewURL = URL(string: fileUrls[indexPath.item-1])
+                
+                let previewController = QLPreviewController()
+                previewController.dataSource = self
+                present(previewController, animated: true, completion: nil)
+            }else {
+                
                 let vc = PreviewImageVC(nibName: nil, bundle: nil)
                 vc.modalPresentationStyle = .fullScreen
-                if selectedAttchmentImages[indexPath.item - 1].fileType != CommonStringFile.IMAGE{
-                    if let url = selectedAttchmentImages[indexPath.item - 1].imageURL{
-                        vc.selectedFileURL = URL(string: url)
-                    }
-                } else{
-                    if let img = selectedAttchmentImages[indexPath.item - 1].image {
-                        vc.img = selectedAttchmentImages[indexPath.item - 1].image
-                    }else{
-                        vc.selectedFileURL = URL(string: selectedAttchmentImages[indexPath.item - 1].imageURL ?? "")
-                    }
-                   
-                }
-                vc.type = selectedAttchmentImages[indexPath.item - 1].fileType
+                vc.img = selectedImages[indexPath.item - 1]
+                vc.type = user_inputs.selectedFileType
                 present(vc, animated: true)
             }
         }
     }
     
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.row == 0 {
-//            let bubbleVC = GalleryPickerVcViewController()
-//            bubbleVC.modalPresentationStyle = .popover
-//            bubbleVC.preferredContentSize = CGSize(width: 200, height: 250)
-//
-//            bubbleVC.onOptionSelected = { option in
-//                print("Selected option: \(option)")
-//                // Handle each option
-//                switch option {
-//                case "Camera":
-//                    self.openCamera()
-//                case "Photo":
-//                    self.selectImages()
-//                case "Voice":
-//                    ""
-////                    self.recordAudio()
-//                case "Video":
-//                    ""
-////                    self.pickVideo()
-//                case "Document":
-//                    ""
-////                    self.pickDocument()
-//                default:
-//                    break
-//                }
-//            }
-//
-//            if let popoverController = bubbleVC.popoverPresentationController {
-//                if let cell = collectionView.cellForItem(at: indexPath) {
-//                    popoverController.sourceView = cell.contentView
-//                    popoverController.sourceRect = cell.bounds
-//                } else {
-//                    popoverController.sourceView = self.view
-//                    popoverController.sourceRect = CGRect(x: self.view.bounds.midX-100, y: self.view.bounds.midY, width: 0, height: 0)
-//                }
-//                popoverController.permittedArrowDirections = .any
-//                popoverController.delegate = self
-//            }
-//
-//            
-//                // iPad supports popovers natively
-//                self.present(bubbleVC, animated: true)
-//             
-//        } else {
-//            if selectedImages.count > indexPath.item - 1 {
-//                let vc = PreviewImageVC(nibName: nil, bundle: nil)
-//                vc.modalPresentationStyle = .fullScreen
-//                vc.img = selectedImages[indexPath.item - 1]
-//                present(vc, animated: true)
-//            }
-//        }
-//    }
+    @objc(numberOfPreviewItemsInPreviewController:) func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+       
+        fileUrls.count == 0 ? 0:1
+    }
+
+    @objc(previewController:previewItemAtIndex:) func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        
+        if let Url = DocumentpreviewURL {
+            
+            return Url as QLPreviewItem
+        }
+        
+        return NSURL(fileURLWithPath: "")
+    }
 
 }
 

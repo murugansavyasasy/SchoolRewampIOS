@@ -394,15 +394,27 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         self.present(vc, animated: false)
     }
     @IBAction func chooseSchool(_ sender: UIButton) {
+        
+        
+      
+        
+        
+      
         if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{
-            user_inputs.title = eventTxt.text ?? ""
-            user_inputs.venue = placeTxt.text ?? ""
-            user_inputs.description = contentTxtView.text ?? ""
+           
             user_inputs.SelectedUrls = attachments
-            user_inputs.start_time = Totime.titleLabel?.text ?? ""
-            user_inputs.FromDate = todate.titleLabel?.text ?? ""
+            
+            let params: [String: Any] = [
+                assignmentResquestStringKey.title: eventTxt.text ?? "",
+                assignmentResquestStringKey.description: contentTxtView.text ?? "",
+                assignmentResquestStringKey.venue: placeTxt.text ?? "",
+                assignmentResquestStringKey.event_time: Totime.titleLabel?.text ?? "",
+                assignmentResquestStringKey.event_date: todate.titleLabel?.text ?? ""
+            ]
+            
             let vc = RecipientVc(nibName: nil, bundle: nil)
             vc.ScreenType = Menu_id.event
+            vc.Common_request_params = params
             vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
         }else{

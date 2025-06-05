@@ -108,7 +108,8 @@ class speficStudentStringFile{
 enum UploadMessageKeys {
     static let title = "title"
     static let description = "description"
-    static let sectionCode = "section_code"
+    static let target_type = "target_type"
+    static let target_code = "target_code"
     static let subjectId = "subject_id"
     static let filePath = "file_path"
     static let academic_year_id = "academic_year_id"
@@ -136,7 +137,9 @@ class SendAttachmentStringFile {
     static let iframe = "iframe"
     static let file_size = "file_size"
     static let academic_year_id = "academic_year_id"
-   
+    static let venue = "venue"
+    static let event_date = "event_date"
+    static let event_time = "event_time"
     
    
 }
@@ -226,7 +229,7 @@ class AbsenteesReportStringFile {
 class assignmentResquestStringKey{
     
     static let title = "title"
-    static let content = "content"
+    static let description = "description"
     static let target_code = "target_code"
     static let submission_date = "submission_date"
     static let category = "category"
@@ -236,7 +239,9 @@ class assignmentResquestStringKey{
     static let academic_year_id = "academic_year_id"
     static let iframe = "iframe"
     static let file_size = "file_size"
-    
+    static let venue = "venue"
+    static let event_date = "event_date"
+    static let event_time = "event_time"
    
 }
 
