@@ -109,8 +109,12 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
             }else{
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
-                cell.imageView.sd_setImage(with: URL(string: img.url
-                                                     ?? ""), placeholderImage: ImageName.placeholder)
+//                cell.imageView.sd_setImage(with: URL(string: img.url
+//                                                     ?? ""), placeholderImage: ImageName.placeholder)
+                
+                let thumbnailURL = URL(string: "https://i.vimeocdn.com/video/2023358077-e0e5c3ba9948275128cf79799a6e2c83b49a778f5cac52cacecb3517cbaa1cc7-d_100x75?region=us")
+
+                cell.imageView.sd_setImage(with: thumbnailURL, placeholderImage: UIImage(named: "placeholder"))
             }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage
