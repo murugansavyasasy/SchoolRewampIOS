@@ -240,6 +240,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                  MenuRedirect.senderSchoolStrength(from: self)
             case Menu_id.AbsenteeismReport:
                 MenuRedirect.senderAbsenteesReport(from: self)
+            case Menu_id.isAssaignment:
+                MenuRedirect.senderAssignmentNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }

@@ -212,7 +212,7 @@ class RecipientVc: UIViewController{
     @IBAction func send(_ sender: UIButton) {
         print("selectedId : \(array_selectedId)")
         print("selectedId : \(array_selectedId)")
-
+        
         // Check if target selection is required
         let isEntireSchool = (cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School)
         guard isEntireSchool || !array_selectedId.isEmpty else {
@@ -223,11 +223,11 @@ class RecipientVc: UIViewController{
             )
             return
         }
-
+        
         switch Menu_id.staffSelectedMenuId {
         case Menu_id.communicationMenuId:
             SendingCommunicationFlow()
-
+            
         case Menu_id.homeWorkMenuId, Menu_id.isAssaignment:
             guard let subjectId = subjectId, !subjectId.isEmpty, !array_selectedId.isEmpty else {
                 alert.showAlert(
@@ -238,20 +238,20 @@ class RecipientVc: UIViewController{
                 return
             }
             let baseURL = (Menu_id.staffSelectedMenuId == Menu_id.homeWorkMenuId) ?
-                ServiceUrl.comm_homework_sendhomework :
-                ServiceUrl.comm_assignment_send_assignment
+            ServiceUrl.comm_homework_sendhomework :
+            ServiceUrl.comm_assignment_send_assignment
             SendingAttachmentFlow(baseURL: baseURL)
-
+            
         case Menu_id.AttachmentMenuId:
             SendingAttachmentFlow(baseURL: ServiceUrl.comm_attachment_send_attachment)
-
+            
         case Menu_id.event:
             SendingAttachmentFlow(baseURL: ServiceUrl.api_school_event_send_event)
-
+            
         default:
             print("Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
         }
-
+        
     }
     
     
@@ -274,7 +274,7 @@ class RecipientVc: UIViewController{
         return message ?? ""
     }
     
-    
+   
     //MARK: Sender Attachment
     private func SendingAttachmentFlow(baseURL: String) {
         let selectedType = user_inputs.selectedFileType
@@ -294,23 +294,28 @@ class RecipientVc: UIViewController{
                         print("❌ Video path is missing")
                         return
                     }
-                    let videoTitle = user_inputs.title
-                    let videoDescription = user_inputs.description
+                    let videoTitle =  Common_request_params[assignmentResquestStringKey.title] as? String ?? ""
+                    let videoDescription = Common_request_params[assignmentResquestStringKey.description] as? String ?? ""
                     
-                    startUpload(videoURL: videoURL, title: videoTitle, description: videoDescription) {
+                  
+                    startUpload(
+                        videoURL: videoURL,
+                        title: videoTitle,
+                        description: videoDescription
+                    ) {
                         videoURLString,
                         iframeHTML,
                         fileSize in
                         if let videoURLString = videoURLString {
                             uploadedFiles = [["url": videoURLString,"type": selectedType]]
                             if let iframeHTML = iframeHTML {
-                            iframeValue = iframeHTML
+                                iframeValue = iframeHTML
                             }
                             if let size = fileSize {
                                 fileSizeValue = self
                                     .convertSize(size)//String(size)
                             }
-                            sendAttachment(
+                                self.sendAttachment(
                                 with: uploadedFiles,
                                 iframe: iframeValue,
                                 filesize: fileSizeValue,
@@ -323,16 +328,20 @@ class RecipientVc: UIViewController{
                     }
                 }else {
                     
-                    let file: Any = selectedType == AttachmentTypeString.IMAGE ? user_inputs.selectedImg : user_inputs.docUrl
-                    CircularProgressLoader.shared.show()
+                    let file: Any = user_inputs.SelectedUrls
                     uploadAWSMedia(file: file) { [self] in
                         CircularProgressLoader.shared.hide()
-                        uploadedFiles = uploadedURLs
-                            .compactMap {
-                                url in ["url": url , "type": selectedType]
+                        let uploadedFiles: [[String: String]] = uploadedURLs.compactMap { url in
+                            if let url = URL(string: url) {
+                                let type = url.pathExtension.lowercased()
+                                user_inputs.selectedFileType = type == CommonStringFile.jpg ? CommonStringFile.IMAGE : url.pathExtension.uppercased()
                             }
-                        iframeValue = "" // for IMAGE or DOCUMENT
-                        fileSizeValue = ""
+                            return [
+                                CommonStringFile.url: url,
+                                CommonStringFile.type: user_inputs.selectedFileType
+                            ]
+                        }
+                        
                         sendAttachment(
                             with: uploadedFiles,
                             iframe: iframeValue,
@@ -441,76 +450,12 @@ class RecipientVc: UIViewController{
         return URL(string: filePath)?.pathExtension.lowercased()
     }
     
-
     
     
-
-    func sendAttachment(with uploadedFiles: [[String: String]], iframe: String,filesize: String,baseURl: String) {
-        
-        
-        var parameters: [String: Any] = [
-            SendAttachmentStringFile.file_path: uploadedFiles,
-            SendAttachmentStringFile.iframe: iframe,
-            SendAttachmentStringFile.file_size: filesize,
-            SendAttachmentStringFile.target_code: array_selectedId,
-            SendAttachmentStringFile.target_type: target_type ?? "",
-            SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? 0
-        ]
-        
-        
-        
-        // Conditionally add value
-        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
-            parameters[UploadMessageKeys.subjectId] = subjectId ?? ""
-        }
-        
-        
-        Common_request_params.merge(parameters) { (_, new) in new }
-        print("📤 Sending parameters: \(parameters)")
-        
-        APIService.shared.makeApi(
-            url: baseURl,
-            parameters: Common_request_params,
-            type: ApitTypeSringFile.POST,
-            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
-        ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
-            switch result {
-            case .success(let successMessage):
-                
-                if successMessage.status == true {
-                    DispatchQueue.main.async {
-                        CustomAlert.showAlertWithOkAction(
-                            title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
-                            message: successMessage.message,
-                            on: self
-                        ) {
-                            self.gotoDashboard()
-                        }
-                    }
-                }else {
-                    
-                    DispatchQueue.main.async {
-                        CustomAlert
-                            .showAlertWithOkAction(
-                                title: AlertstringFile.Alert_title,
-                                message: successMessage.message,
-                                on: self
-                            ) {
-                                self.gotoDashboard()
-                            }
-                    }
-                }
-                
-                
-            case .failure(let error):
-                print("❌ API error: \(error.localizedDescription)")
-                // Optional: Add alert for failure
-            }
-        }
-        
-    }
-
+    
+    
    
+    
     @IBAction func getSubject(_ sender: UIButton) {
         let selectedSections = sectionsDetails?.filter { $0.isSelect == true } ?? []
         if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
@@ -1506,6 +1451,73 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
     //MARK: ALL Sending API START ===========================
     
     
+    func sendAttachment(with uploadedFiles: [[String: String]], iframe: String,filesize: String,baseURl: String) {
+        
+        
+        var parameters: [String: Any] = [
+            SendAttachmentStringFile.file_path: uploadedFiles,
+            SendAttachmentStringFile.iframe: iframe,
+            SendAttachmentStringFile.file_size: filesize,
+            SendAttachmentStringFile.target_code: array_selectedId,
+            SendAttachmentStringFile.target_type: target_type ?? "",
+            SendAttachmentStringFile.academic_year_id: selectedAcadimicYearId ?? 0
+        ]
+        
+        
+        
+        // Conditionally add value
+        if Menu_id.homeWorkMenuId == Menu_id.staffSelectedMenuId || Menu_id.isAssaignment == Menu_id.staffSelectedMenuId {
+            parameters[UploadMessageKeys.subjectId] = subjectId ?? ""
+        }
+        
+        
+        Common_request_params.merge(parameters) { (_, new) in new }
+        print("📤 Sending parameters: \(parameters)")
+        
+        APIService.shared.makeApi(
+            url: baseURl,
+            parameters: Common_request_params,
+            type: ApitTypeSringFile.POST,
+            token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""
+        ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
+            switch result {
+            case .success(let successMessage):
+                
+                if successMessage.status == true {
+                    DispatchQueue.main.async {
+                        CustomAlert.showAlertWithOkAction(
+                            title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+                            message: successMessage.message,
+                            on: self
+                        ) {
+                            self.gotoDashboard()
+                        }
+                    }
+                }else {
+                    
+                    DispatchQueue.main.async {
+                        CustomAlert
+                            .showAlertWithOkAction(
+                                title: AlertstringFile.Alert_title,
+                                message: successMessage.message,
+                                on: self
+                            ) {
+                                self.gotoDashboard()
+                            }
+                    }
+                }
+                
+                
+            case .failure(let error):
+                print("❌ API error: \(error.localizedDescription)")
+                // Optional: Add alert for failure
+            }
+        }
+        
+    }
+    
+    
+    
     func sendtextmessage_communication(){
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
@@ -1654,5 +1666,10 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
         
         // Add segments from updated array
         
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 }

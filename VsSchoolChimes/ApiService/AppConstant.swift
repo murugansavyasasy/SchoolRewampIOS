@@ -161,6 +161,7 @@ struct user_inputs{
     static var selectedImgUrls : [FilePath] = []
     static var SelectedUrls : [AttachmentItem] = []
     static var fileUrl:URL?
+    static var thumbNail:UIImage?
     static var docUrl = [String]()
     static var start_time = ""
     static var end_time = ""

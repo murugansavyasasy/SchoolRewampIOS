@@ -59,21 +59,21 @@ class VideoPickerManager: NSObject {
 
         player?.play()
 
-        // Add Close Button
-//        let closeBtn = UIImageView(image: UIImage(systemName: "xmark.circle.fill"))
-//        closeBtn.tintColor = .systemRed
-//        closeBtn.translatesAutoresizingMaskIntoConstraints = false
-//        closeBtn.isUserInteractionEnabled = true
-//        container.addSubview(closeBtn)
-//
-//        NSLayoutConstraint.activate([
-//            closeBtn.topAnchor.constraint(equalTo: container.topAnchor, constant: -14),
-//            closeBtn.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: 8),
-//            closeBtn.widthAnchor.constraint(equalToConstant: 30),
-//            closeBtn.heightAnchor.constraint(equalToConstant: 30)
-//        ])
-//
-//        closeBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeVideo)))
+//         Add Close Button
+        let closeBtn = UIImageView(image: UIImage(systemName: "xmark.circle.fill"))
+        closeBtn.tintColor = .systemRed
+        closeBtn.translatesAutoresizingMaskIntoConstraints = false
+        closeBtn.isUserInteractionEnabled = true
+        container.addSubview(closeBtn)
+
+        NSLayoutConstraint.activate([
+            closeBtn.topAnchor.constraint(equalTo: container.topAnchor, constant: -14),
+            closeBtn.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: 8),
+            closeBtn.widthAnchor.constraint(equalToConstant: 30),
+            closeBtn.heightAnchor.constraint(equalToConstant: 30)
+        ])
+
+        closeBtn.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(closeVideo)))
     }
 
     func stopVideo() {
