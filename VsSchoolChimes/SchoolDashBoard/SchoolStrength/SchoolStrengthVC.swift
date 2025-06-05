@@ -7,6 +7,7 @@
 
 import UIKit
 import Charts
+import DropDown
 
 class SchoolStrengthVC: UIViewController {
     
@@ -14,13 +15,19 @@ class SchoolStrengthVC: UIViewController {
     @IBOutlet weak var TotalStrengthView: UIView!
     @IBOutlet weak var totalCountLbl: UILabel!
     @IBOutlet weak var staffCountLbl: UILabel!
+    @IBOutlet weak var acodomicYearLbl: UILabel!
     @IBOutlet weak var studentCountLbl: UILabel!
     @IBOutlet weak var Tv: UITableView!
+    @IBOutlet weak var academicyearDrp: UIView!
     @IBOutlet weak var pieChartView: PieChartView!
     
     var staffDetails = UserDefaultFileManager.get_staff_Details()
     var SchoolStrength : [SchoolStrength]?
+    var AcadimicYearDatas : [AcadimicYearData] = []
     var selectedIndexPath: IndexPath?
+    var accadimYr :[String] = []
+    var acodemicId : Int?
+    let acidamicdrops = DropDown()
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -28,13 +35,15 @@ class SchoolStrengthVC: UIViewController {
         setupPieChart()
         BackBtn.applyBackButton()
         BackBtn.configureAsBackButton(firstLine: MenuStringFile.SchoolStrength, secondLine: staffDetails?.school_name ?? "")
-        
-        Get_School_Strength()
+        getacadmicYr()
         let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
         Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
         Tv.register(UINib(nibName: "StandardTVC", bundle: nil), forCellReuseIdentifier: "StandardTVC")
         Tv.register(UINib(nibName: "SectionStregnthTVC", bundle: nil), forCellReuseIdentifier: "SectionStregnthTVC")
-        
+        let acidmaciyrClick = UITapGestureRecognizer(target: self, action:
+                                                        #selector(academicYearDrop_action))
+       
+        academicyearDrp.addGestureRecognizer(acidmaciyrClick)
         Tv.delegate = self
         Tv.dataSource = self
     }
@@ -49,7 +58,7 @@ class SchoolStrengthVC: UIViewController {
    func UIupdate(){
        TotalStrengthView.layer.cornerRadius = 10
        TotalStrengthView.layer.masksToBounds = false
-       
+       applyShadowAndCornerRadius(to: academicyearDrp)
        // Shadow to make it look "popped up"
        TotalStrengthView.layer.shadowColor = UIColor.black.cgColor
        TotalStrengthView.layer.shadowOpacity = 0.2
@@ -67,6 +76,46 @@ class SchoolStrengthVC: UIViewController {
        staffCountLbl.setFont(style: .body, size: FontSize.BodySize)
        totalCountLbl.setFont(style: .body, size: FontSize.BodySize)
     }
+    @IBAction func academicYearDrop_action() {
+        acidamicdrops.anchorView = academicyearDrp
+        acidamicdrops.dataSource = accadimYr
+        acidamicdrops.bottomOffset = CGPoint(x: 0, y: academicyearDrp.bounds.height)
+        acidamicdrops.show()
+        acidamicdrops.selectionAction = { [weak self] (index: Int, item: String) in
+            guard let self = self else { return }
+            acodemicId = AcadimicYearDatas[index].id
+            acodomicYearLbl.text = AcadimicYearDatas[index].year ?? ""
+            Get_School_Strength()
+        }
+        
+        
+    }
+    func getacadmicYr(){
+        APIService.shared
+            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
+                result:Result <get_academic_yearSuc,
+                Error>
+            ) in
+                switch result {
+                case .success(let successMessage):
+                    if successMessage.status == true{
+                        DispatchQueue.main.async { [self] in
+                            AcadimicYearDatas = successMessage.data ?? []
+                            for i in 0..<(AcadimicYearDatas.count){
+                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
+                                    acodomicYearLbl.text = AcadimicYearDatas[i].year
+                                    acodemicId = AcadimicYearDatas[i].id
+                                    Get_School_Strength()
+                                }
+                                accadimYr.append(AcadimicYearDatas[i].year ?? "")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+    }
     
     @IBAction func BackbtnAct(_ sender: Any) {
         
@@ -75,7 +124,7 @@ class SchoolStrengthVC: UIViewController {
     
     func Get_School_Strength() {
         
-        APIService.shared.makeApi(url: ServiceUrl.admin_api_get_school_strength, parameters: [COMMON_PARAMETER.academic_year_id : 6], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<SchoolStrengthResponse,Error>) in
+        APIService.shared.makeApi(url: ServiceUrl.admin_api_get_school_strength, parameters: [COMMON_PARAMETER.academic_year_id : acodemicId ?? 0], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<SchoolStrengthResponse,Error>) in
             
             switch result {
                 
@@ -98,6 +147,8 @@ class SchoolStrengthVC: UIViewController {
                     DispatchQueue.main.async { [self] in
                         
                         SchoolStrength = successMessage.data
+                        setChartData()
+                        Tv.reloadData()
                     }
                 }
                 
@@ -235,25 +286,25 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return SchoolStrength?.first?.standards?.count ?? 0
 //    }
-//    
+//
 //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = Tv.dequeueReusableCell(withIdentifier: CellConfingName.StrengthTvCell, for: indexPath) as! StrengthTvCell
-//        
+//
 //        let standard = SchoolStrength?.first?.standards?[indexPath.row]
 //        cell.confic(standard?.sections)
 //        cell.standardLbl.text = standard?.name
 //        cell.countLbl.text = standard?.total_students
-//        
+//
 //        let name = standard?.sections?.compactMap{$0.name} ?? []
 //        let strength = standard?.sections?.compactMap {
 //            Int($0.total_students ?? "")
 //        } ?? []
-//        
+//
 //        cell.setBarChartData(withLabels: name, sectionCounts: strength)
-//        
+//
 //        return cell
 //    }
-//    
+//
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        // Safely unwrap the cell
 //        if let cell = tableView.cellForRow(at: indexPath) as? StrengthTvCell {
@@ -280,7 +331,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //            tableView.beginUpdates()
 //            tableView.endUpdates()
 //            tableView.reloadRows(at: [indexPath], with: .automatic)
-//            
+//
 //        }
 //    }
 //
@@ -293,7 +344,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //            cell.BottomLblHeight.constant = 0
 //            cell.BottomLbl.isHidden = true
 //            cell.SideBtn.isHidden = true
-//            
+//
 //            // Animate layout changes
 //            tableView.beginUpdates()
 //            tableView.endUpdates()
@@ -307,7 +358,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //import Charts
 //
 //class SchoolStrengthVC: UIViewController {
-//    
+//
 //    @IBOutlet weak var BackBtn: UIButton!
 //    @IBOutlet weak var TotalStrengthView: UIView!
 //    @IBOutlet weak var totalCountLbl: UILabel!
@@ -315,19 +366,19 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //    @IBOutlet weak var studentCountLbl: UILabel!
 //    @IBOutlet weak var Tv: UITableView!
 //    @IBOutlet weak var pieChartView: PieChartView!
-//    
+//
 //    var staffDetails = UserDefaultFileManager.get_staff_Details()
 //    var SchoolStrength : [SchoolStrength]?
 //    var StandardStrength : [Standard]?
 //    var expandedSections: Set<Int> = []
 //    override func viewDidLoad() {
 //        super.viewDidLoad()
-//       
+//
 //        UIupdate()
 //        setupPieChart()
 //        BackBtn.applyBackButton()
 //        BackBtn.configureAsBackButton(firstLine: MenuStringFile.SchoolStrength, secondLine: staffDetails?.school_name ?? "")
-//        
+//
 //        Get_School_Strength()
 //        let nib = UINib(nibName: CellConfingName.StrengthTvCell, bundle: nil)
 //        Tv.register(nib, forCellReuseIdentifier: CellConfingName.StrengthTvCell)
@@ -343,46 +394,46 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //            endPoint: CGPoint(x: 0, y: 0.5)
 //        )
 //    }
-//    
+//
 //   func UIupdate(){
 //       TotalStrengthView.layer.cornerRadius = 10
 //       TotalStrengthView.layer.masksToBounds = false
-//       
+//
 //       // Shadow to make it look "popped up"
 //       TotalStrengthView.layer.shadowColor = UIColor.black.cgColor
 //       TotalStrengthView.layer.shadowOpacity = 0.2
 //       TotalStrengthView.layer.shadowOffset = CGSize(width: 0, height: 4)
 //       TotalStrengthView.layer.shadowRadius = 6
-//       
+//
 //       // Optional: Add a border for a polished look
 //       TotalStrengthView.layer.borderColor = UIColor.lightGray.cgColor
 //       TotalStrengthView.layer.borderWidth = 0.5
-//       
+//
 //       // Background color for the card
 //       TotalStrengthView.backgroundColor = .white
-//       
+//
 //       studentCountLbl.setFont(style: .body, size: FontSize.BodySize)
 //       staffCountLbl.setFont(style: .body, size: FontSize.BodySize)
 //       totalCountLbl.setFont(style: .body, size: FontSize.BodySize)
 //    }
-//    
+//
 //    @IBAction func BackbtnAct(_ sender: Any) {
-//        
+//
 //        dismiss(animated: true)
 //    }
-//    
+//
 //    func Get_School_Strength() {
-//        
+//
 //        APIService.shared.makeApi(url: ServiceUrl.admin_api_get_school_strength, parameters: [COMMON_PARAMETER.academic_year_id : 6], type: ApitTypeSringFile.GET, token: staffDetails?.access_token ?? "") { [self] (result: Result<SchoolStrengthResponse,Error>) in
-//            
+//
 //            switch result {
-//                
-//                
+//
+//
 //            case .success(let successMessage):
-//                
+//
 //                if successMessage.status == true {
 //                    DispatchQueue.main.async { [self] in
-//                        
+//
 //                        SchoolStrength = successMessage.data
 //                        let total = (Int(SchoolStrength?.first?.total_student_strength ?? "0") ?? 0) + (Int(SchoolStrength?.first?.total_staff_strength ?? "0") ?? 0)
 //                        studentCountLbl.text = "Students - \(SchoolStrength?.first?.total_student_strength ?? "")"
@@ -393,21 +444,21 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //                        Tv.reloadData()
 //                    }
 //                }else {
-//                    
+//
 //                    DispatchQueue.main.async { [self] in
-//                        
+//
 //                        SchoolStrength = successMessage.data
 //                    }
 //                }
-//                
+//
 //            case .failure(let error):
-//                
+//
 //                print("Error: \(error.localizedDescription)")
 //            }
-//            
+//
 //        }
 //    }
-//    
+//
 //    private func setupPieChart() {
 //        // Configure the general look of the pie chart
 //        pieChartView.usePercentValuesEnabled = true
@@ -418,18 +469,18 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //        pieChartView.drawEntryLabelsEnabled = false
 //        pieChartView.legend.enabled = false
 //    }
-//    
+//
 //    private func setChartData() {
-//        
+//
 //        let studentcount = Double(SchoolStrength?.first?.total_student_strength ?? "0") ?? 0
 //        let staffcount = Double(SchoolStrength?.first?.total_staff_strength ?? "0") ?? 0
-//        
+//
 //        // Define the data entries
 //        let entries = [
 //            PieChartDataEntry(value: studentcount, label: "Students"),
 //            PieChartDataEntry(value: staffcount, label: "Staff")
 //        ]
-//        
+//
 //        let dataSet = PieChartDataSet(entries: entries, label: "")
 //        if #available(iOS 15.0, *) {
 //            dataSet.colors = [UIColor.systemMint,UIColor.systemRed]
@@ -438,22 +489,22 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //        dataSet.drawValuesEnabled = false
 //        dataSet.valueTextColor = .white // Customize text color
 //        dataSet.valueFont = UIFont.systemFont(ofSize: 14) // Customize text font
-//        
+//
 //        // Configure number formatter for percentage values
 //        let numberFormatter = NumberFormatter()
 //        numberFormatter.numberStyle = .percent
 //        numberFormatter.maximumFractionDigits = 1
 //        numberFormatter.multiplier = 1
-//        
+//
 //        // Set the value formatter
 //        dataSet.valueFormatter = DefaultValueFormatter(formatter: numberFormatter)
-//        
+//
 //        // Apply the data to the chart
 //        let data = PieChartData(dataSet: dataSet)
 //        pieChartView.data = data
-//        
+//
 //        pieChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInExpo)
-//        
+//
 //        // Refresh chart
 //        pieChartView.notifyDataSetChanged()
 //    }
@@ -471,11 +522,11 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toggleSection(_:)))
 //        cell.tag = section
 //        cell.addGestureRecognizer(tapGesture)
-//        
-//        
+//
+//
 //        if expandedSections.contains(section){
 //            cell.arrowBtn.setImage(UIImage(named: "arrow_up"), for: .normal)
-//            
+//
 //        }else{
 //            cell.arrowBtn.setImage(UIImage(named: "arrow_down"), for: .normal)
 //        }
@@ -484,7 +535,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return expandedSections.contains(section) ? (StandardStrength?[section].sections?.count ?? 0) : 0
 //    }
-//    
+//
 //    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = Tv.dequeueReusableCell(withIdentifier: "SectionStregnthTVC", for: indexPath) as! SectionStregnthTVC
 //
@@ -509,7 +560,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //        return cell
 //    }
 //
-//    
+//
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        // Safely unwrap the cell
 //        if let cell = tableView.cellForRow(at: indexPath) as? StrengthTvCell {
@@ -543,7 +594,7 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //            cell.BottomLblHeight.constant = 0
 //            cell.BottomLbl.isHidden = true
 //            cell.SideBtn.isHidden = true
-//            
+//
 //            // Animate layout changes
 //            tableView.beginUpdates()
 //            tableView.endUpdates()
@@ -552,9 +603,9 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //    @objc func toggleSection(_ sender: UITapGestureRecognizer) {
 //        guard let headerView = sender.view else { return }
 //        let section = headerView.tag
-//        
+//
 //        var sectionsToReload = IndexSet()
-//        
+//
 //        if expandedSections.contains(section) {
 //            expandedSections.remove(section)
 //            sectionsToReload.insert(section)
@@ -563,11 +614,11 @@ extension SchoolStrengthVC: UITableViewDelegate, UITableViewDataSource {
 //                expandedSections.remove(previousSection)
 //                sectionsToReload.insert(previousSection)
 //            }
-//            
+//
 //            expandedSections.insert(section)
 //            sectionsToReload.insert(section)
 //        }
-//        
+//
 //        Tv.reloadSections(sectionsToReload, with: .automatic)
 //    }
 //}

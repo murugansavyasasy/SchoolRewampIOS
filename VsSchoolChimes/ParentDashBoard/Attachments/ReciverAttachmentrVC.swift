@@ -69,7 +69,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     @IBOutlet weak var NodataLbl: UILabel!
     
     
-    var attachmentData:[Attachment]?
+    var attachmentData = [Attachment]()
     var filteredAttachments:[Attachment]?
     var SearchAttachments:[Attachment]?
     var filterDropDown = DropDown()
@@ -124,7 +124,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             filteredAttachments = attachmentData
         } else {
             
-            filteredAttachments = attachmentData?.filter { attachmentData in
+            filteredAttachments = attachmentData.filter { attachmentData in
                 attachmentData.file_path?.first?.type == type.uppercased()
             }
         }
@@ -159,11 +159,13 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                 case .success(let response):
                     if response.status == true{
                         self.hideView(ishide: true)
-                        attachmentData?.append(contentsOf: response.data ?? [])
+                        attachmentData.append(contentsOf: response.data ?? [])
+                        filteredAttachments = attachmentData
                         applyFilter(type: Filters[selectedIndex.item])
                         attachmentTable.reloadData()
                         
                     }else{
+                        self.hideView(ishide: false)
                         self.NodataLbl.text = response.message
                     }
                 case .failure(let error):
@@ -198,13 +200,11 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                     if response.status == true{
                         print("attachment==>>", response.data ?? [])
                         self.hideView(ishide: true)
-                        self.attachmentData = response.data
+                        self.attachmentData = response.data ?? []
                         self.filteredAttachments = response.data
                         self.SearchAttachments = response.data
                         self.attachmentTable.reloadData()
-                    }
-                    
-                    else{
+                    }else{
                         
                         self.hideView(ishide: false)
                         self.NodataLbl.text = response.message
@@ -274,7 +274,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                 
                 if SuccessMessage.status == true {
                     DispatchQueue.main.async { [self] in
-                        attachmentData = attachmentData?.map { attachment in
+                        attachmentData = attachmentData.map { attachment in
                             var updated = attachment
                             if attachment.id == detail_id {
                                 updated.is_unread = false
@@ -302,7 +302,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                 
                 if SuccessMessage.status == true {
                     DispatchQueue.main.async { [self] in
-                        attachmentData = attachmentData?.map { attachment in
+                        attachmentData = attachmentData.map { attachment in
                             var updated = attachment
                             if attachment.id == detail_id {
                                 updated.is_unread = false

@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import AVKit
 protocol SumitionDelegate{
     func sumition(index:Int)
 }
-class AssignmentListCTVC: UITableViewCell {
+class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
     
+    @IBOutlet weak var submitBtn: UIButton!
+    @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var SubjectLabel: UILabel!
     @IBOutlet weak var SendBySecLbl: UILabel!
@@ -26,18 +29,19 @@ class AssignmentListCTVC: UITableViewCell {
     @IBOutlet weak var sumissionLbl: UILabel!
     @IBOutlet weak var dueDateLbl: UILabel!
     @IBOutlet weak var CreaterdDate: UILabel!
-    @IBOutlet weak var SubmitedBtn: UIButton!
     @IBOutlet weak var NotSubmitedBtn: UIButton!
     @IBOutlet weak var ForwardBtn: UIButton!
     @IBOutlet weak var AttachmentCV: UICollectionView!
-    @IBOutlet weak var SubmitBtn: UIButton!
     @IBOutlet weak var cvBaseview: UIView!
+    @IBOutlet weak var leftLbl: UILabel!
     @IBOutlet weak var PageController: UIPageControl!
     
     var didSelectDelegate : DidSelectDelegate?
     var Delegate : SumitionDelegate?
     var FilesUrl : [FilePath]?
     var videoUrl :String?
+    var player: AVPlayer?
+    var staff = false
        override func awakeFromNib() {
            super.awakeFromNib()
            let collection = UINib(nibName:CellConfingName.ImagePdfCvCell, bundle: nil)
@@ -53,10 +57,8 @@ class AssignmentListCTVC: UITableViewCell {
            spirelview.layer.shadowOpacity = 0.5
            spirelview.layer.masksToBounds = false
            outImg.translatesAutoresizingMaskIntoConstraints = false
-           SubmitedBtn.layer.cornerRadius = 10
            NotSubmitedBtn.layer.cornerRadius = 10
-           SubmitBtn.layer.cornerRadius = 10
-           
+           submitBtn.layer.cornerRadius = 10
            ForwardBtn.layer.cornerRadius = 4
            
            cvBaseview.layer.cornerRadius = 10
@@ -86,9 +88,18 @@ class AssignmentListCTVC: UITableViewCell {
            CreaterdDate.setFont(style: .body, size: FontSize.BodySize)
 
            //MARK: Button Font
-           SubmitedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+           submitBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            NotSubmitedBtn.setTitleFont(style: .body, size: FontSize.BodySize)
            ForwardBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+           if staff {
+               NotSubmitedBtn.isHidden = false
+               deleteBtn.isHidden = false
+               leftLbl.isHidden = true
+           }else{
+               NotSubmitedBtn.isHidden = true
+               deleteBtn.isHidden = true
+               leftLbl.isHidden = false
+           }
        }
 
        override func layoutSubviews() {
@@ -102,7 +113,13 @@ class AssignmentListCTVC: UITableViewCell {
     }
     
     @IBAction func viewAssignment(_ sender: UIButton) {
-        didSelectDelegate?.select(index: 1, value:"\(sender.tag)",Img:[""],Pdf:"https://icseindia.org/document/sample.pdf",text:"sjedgwvfefjd xuvu dvs dhv sshgdvsg",type:"")
+        if #available(iOS 14.0, *) {
+            if let currentVC = getCurrentViewController() {
+                let vcc = SubmitVC(nibName: nil, bundle: nil) // Use your actual ViewController class name
+                vcc.modalPresentationStyle = .fullScreen
+                currentVC.present(vcc, animated: true, completion: nil)
+            }
+        }
     }
     
 }
@@ -121,25 +138,40 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             let fileURL = URL(fileURLWithPath: img.url ?? "")
             let iconName = getFileIconName(for: fileURL)
             if iconName != "image" {
-                let url = videoUrl != nil ? URL(string: videoUrl ?? ""): URL(string: img.url ?? "")
-                if let pdfURL = url{
-                    let request = URLRequest(url: pdfURL)
-                    cell.webView.load(request)
-                    cell.webView.isHidden = false
-                    cell.webView.isUserInteractionEnabled = false  // ✅ Add this
-                    cell.webView.scrollView.isScrollEnabled = false // ✅ Optional
-                    cell.imageView.isHidden = true
-                } else {
+                if img.type?.uppercased() == "VIDEO"{
                     cell.webView.isHidden = true
                     cell.imageView.isHidden = false
+                    loadVimeoThumbnail(from: img.url ?? "", accessToken: YOUR_VIMEO_TOKEN) { image in
+                        if let thumbnailImage = image {
+                            cell.imageView.image = thumbnailImage
+                        }
+                    }
+                    let iconImage = UIImage(named: "video (1)")
+                    cell.IndicaterImageView.image = iconImage
+                }else{
+                    if let pdfURL = URL(string: img.url ?? ""){
+                        let request = URLRequest(url: pdfURL)
+                        cell.webView.load(request)
+                        cell.webView.isHidden = false
+                        cell.webView.isUserInteractionEnabled = false  // ✅ Add this
+                        cell.webView.scrollView.isScrollEnabled = false // ✅ Optional
+                        cell.imageView.isHidden = true
+                        
+                    } else {
+                        cell.webView.isHidden = true
+                        cell.imageView.isHidden = false
+                    }
+                    let iconImage = UIImage(named: iconName)
+                    cell.IndicaterImageView.image = iconImage
                 }
             } else {
                 cell.webView.isHidden = true
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: img.url ?? ""), placeholderImage: ImageName.placeholder)
+                let iconImage = UIImage(named: iconName)
+                cell.IndicaterImageView.image = iconImage
             }
-            let iconImage = UIImage(named: iconName)
-            cell.IndicaterImageView.image = iconImage
+            
         }
 
         return cell
@@ -154,21 +186,53 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
         guard let file = FilesUrl?[indexPath.row], let urlString = file.url, let url = URL(string: urlString) else { return }
                 let fileExtension = url.pathExtension.lowercased()
         
-                //        if isWebViewPreviewable(fileExtension) || file.type?.lowercased() == "image" {
-        
                 let vc = getCurrentViewController()
-                let vcc = ImageShowVc(nibName: nil, bundle: nil)
-                vcc.imageURL = FilesUrl?.filter({ img in
-                    img.type?.uppercased() == CommonStringFile.IMAGE
-                }) ?? []
-                vcc.FileURL = FilesUrl ?? []
-                vcc.pdfUrl = FilesUrl?[indexPath.row].url
-                vcc.scrollIndex = indexPath
-                vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
-                vcc.modalPresentationStyle = .fullScreen
-                vc?.present(vcc, animated: true)
+        if file.type?.uppercased() == "VIDEO"{
+            playVimeoVideo(from: file.url ?? "")
+        }else{
+            let vcc = ImageShowVc(nibName: nil, bundle: nil)
+            vcc.imageURL = FilesUrl?.filter({ img in
+                img.type?.uppercased() == CommonStringFile.IMAGE
+            }) ?? []
+            vcc.FileURL = FilesUrl ?? []
+            vcc.pdfUrl = FilesUrl?[indexPath.row].url
+            vcc.scrollIndex = indexPath
+            vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+            vcc.modalPresentationStyle = .fullScreen
+            vc?.present(vcc, animated: true)
+        }
+               
     }
-    
+    func playVimeoVideo(from url: String) {
+        if let videoID = extractVimeoID(from: url) {
+            let vc = getCurrentViewController()
+            fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
+                if let firstURLString = urls.first,
+                   let videoURL = URL(string: firstURLString) {
+                    
+                    DispatchQueue.main.async {
+                        let player = AVPlayer(url: videoURL)
+                        self.player = player
+                        
+                        let playerViewController = AVPlayerViewController()
+                        playerViewController.player = player
+                        playerViewController.delegate = self
+                        playerViewController.presentationController?.delegate = self
+                        
+                        vc?.present(playerViewController, animated: true) {
+                            player.play()
+                        }
+                    }
+                } else {
+                    print("No video URLs found or error")
+                }
+            }
+        } else {
+            print("Invalid Vimeo URL")
+        }
+    }
+
+
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         PageController.currentPage = indexPath.item

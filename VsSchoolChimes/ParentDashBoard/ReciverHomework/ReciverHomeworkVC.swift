@@ -71,6 +71,8 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         TV.register(nib, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
         
         let nib1 = UINib(nibName: CellConfingName.HomeworkreportTV, bundle: nil)
+        let VideoTVCell = UINib(nibName: CellConfingName.VideoTVCell, bundle: nil)
+        TV.register(VideoTVCell, forCellReuseIdentifier: CellConfingName.VideoTVCell)
         TV.register(nib1, forCellReuseIdentifier: CellConfingName.HomeworkreportTV)
         
         let head = UINib(nibName: CellConfingName.ReciverHomeworkHeader, bundle: nil)

@@ -31,7 +31,7 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         var playerLayer: AVPlayerLayer?
         var isPlaying = false
     var url:String?
-    let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
+   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Set up shadowView for shadow
@@ -55,22 +55,23 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
     }
 
 
-    func confic(_ url :String){
+    func confic(_ url: String) {
         if let videoID = extractVimeoID(from: url) {
-            
             fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
-                if let urls = urls {
-                    if let firstURLString = urls.first, let videoURL = URL(string: firstURLString) {
-                        DispatchQueue.main.async {
-                            self.setupPlayer(url: videoURL)
-                        }
+                if let firstURLString = urls.first,
+                   let videoURL = URL(string: firstURLString) {
+                    DispatchQueue.main.async {
+                        self.setupPlayer(url: videoURL)
                     }
                 } else {
-                    print("No video URLs found or error")
+                    print("No video URLs found or invalid URL format")
                 }
             }
+        } else {
+            print("Invalid Vimeo URL")
         }
     }
+
     func hiddenui(_ hide:Bool){
         OuterView.changeHeightAndAnimate(40, 110, 21, 30, top: 5)
         descriptContent.isHidden = hide

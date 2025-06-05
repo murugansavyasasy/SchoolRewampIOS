@@ -203,16 +203,5 @@ class VimeoUploader: NSObject, URLSessionTaskDelegate, URLSessionDataDelegate {
         }.resume()
     }
 
-//    private func showSuccessAlert(videoURL: String) {
-//        guard let viewController = presentingViewController else { return }
-//        DispatchQueue.main.async {
-//            let alert = UIAlertController(title: "✅ Success", message: "Video uploaded!\n\n\(videoURL)", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "Copy Link", style: .default) { _ in
-//                UIPasteboard.general.string = videoURL
-//            })
-//            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-//            viewController.present(alert, animated: true)
-//        }
-//    }
 }
 

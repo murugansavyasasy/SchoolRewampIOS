@@ -20,6 +20,7 @@ fileprivate var loaderContainerView: UIView?
 @available(iOS 15.0, *)
 fileprivate var loaderAnimationView: LottieAnimationView?
 private var loaderBackgroundView: UIView?
+let YOUR_VIMEO_TOKEN = "8d74d8bf6b5742d39971cc7d3ffbb51a"
 extension UIImageView {
     func applyRTLFlip(_ isRTL: Bool) {
         if isRTL {
@@ -839,29 +840,86 @@ func extractVimeoID(from url: String) -> String? {
     }
     return nil
 }
-func fetchVimeoVideoFiles(videoID: String, accessToken: String, completion: @escaping ([String]?) -> Void) {
+func fetchVimeoVideoFiles(videoID: String, accessToken: String, completion: @escaping ([String]) -> Void) {
     let urlString = "https://api.vimeo.com/videos/\(videoID)"
     guard let url = URL(string: urlString) else {
-        completion(nil)
+        print("Invalid URL")
+        completion([])
         return
     }
-    
+
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-    
+
     URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            print("Network error: \(error.localizedDescription)")
+            DispatchQueue.main.async { completion([]) }
+            return
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            print("Invalid response from Vimeo")
+            DispatchQueue.main.async { completion([]) }
+            return
+        }
+
         guard let data = data,
               let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let files = jsonObject["files"] as? [[String: Any]] else {
-            print("Error fetching or parsing Vimeo video files")
+            print("Error parsing JSON or missing 'files'")
+            DispatchQueue.main.async { completion([]) }
+            return
+        }
+
+        let videoURLs = files.compactMap { $0["link"] as? String }
+        DispatchQueue.main.async { completion(videoURLs) }
+    }.resume()
+}
+
+func loadVimeoThumbnail(from url: String, accessToken: String, completion: @escaping (UIImage?) -> Void) {
+    guard let videoID = extractVimeoID(from: url) else {
+        completion(nil)
+        return
+    }
+
+    let apiURL = URL(string: "https://api.vimeo.com/videos/\(videoID)")!
+    var request = URLRequest(url: apiURL)
+    request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            print("Vimeo API error: \(error.localizedDescription)")
             completion(nil)
             return
         }
-        
-        // Extract URLs (mp4, m3u8)
-        let videoURLs = files.compactMap { $0["link"] as? String }
-        completion(videoURLs)
+
+        guard let data = data,
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let pictures = json["pictures"] as? [String: Any],
+              let sizes = pictures["sizes"] as? [[String: Any]],
+              let last = sizes.last,
+              let thumbnailURLString = last["link"] as? String,
+              let thumbnailURL = URL(string: thumbnailURLString) else {
+            print("Failed to parse thumbnail")
+            completion(nil)
+            return
+        }
+
+        // Download thumbnail image
+        URLSession.shared.dataTask(with: thumbnailURL) { data, _, _ in
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            } else {
+                print("Failed to load image data")
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            }
+        }.resume()
     }.resume()
 }
 

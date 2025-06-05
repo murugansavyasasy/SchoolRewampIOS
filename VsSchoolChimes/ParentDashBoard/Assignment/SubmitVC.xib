@@ -11,20 +11,21 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="submitVC" customModule="VsSchoolChimes" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubmitVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
-                <outlet property="AddphotosLbl" destination="Fvy-8I-U0T" id="8WM-qw-tSj"/>
-                <outlet property="DescriptionLbl" destination="8qp-Mg-yeP" id="She-d9-Rmy"/>
-                <outlet property="DescriptionTextview" destination="6si-HH-wSh" id="Jmk-zA-ONh"/>
+                <outlet property="AddphotosLbl" destination="Fvy-8I-U0T" id="ei5-4j-9rK"/>
+                <outlet property="DescriptionLbl" destination="8qp-Mg-yeP" id="B7T-fv-iVc"/>
+                <outlet property="DescriptionTextview" destination="6si-HH-wSh" id="WdD-YA-6oT"/>
                 <outlet property="HeaderLbl" destination="D5p-uu-pGk" id="B9E-DQ-7pe"/>
-                <outlet property="NameLbl" destination="Whf-fI-QzA" id="0sC-b4-WtS"/>
-                <outlet property="StandardLbl" destination="qAj-uw-vqT" id="62T-T2-ubG"/>
-                <outlet property="collectionViewHeght" destination="Jhu-Pn-Yac" id="gAZ-iC-h3m"/>
+                <outlet property="NameLbl" destination="Whf-fI-QzA" id="EsV-bP-Zdl"/>
+                <outlet property="StandardLbl" destination="qAj-uw-vqT" id="WKV-Kd-uv1"/>
+                <outlet property="bagrountview" destination="PVs-FQ-7Yr" id="8Yy-DI-7MI"/>
+                <outlet property="collectionViewHeght" destination="Jhu-Pn-Yac" id="hqT-eD-EWM"/>
                 <outlet property="letterscountLbl" destination="8nm-bK-03t" id="jbH-Ft-rhF"/>
-                <outlet property="outerView" destination="UEg-XI-Ylm" id="m3y-in-di2"/>
+                <outlet property="outerView" destination="UEg-XI-Ylm" id="YA7-YV-fG4"/>
                 <outlet property="selectImgPdfview" destination="zLF-vX-MTh" id="Reo-SM-Pdo"/>
                 <outlet property="submitBtn" destination="tYD-zs-TPp" id="0Ty-Xg-8jW"/>
-                <outlet property="titleLbl" destination="YP8-ny-QUl" id="8aB-ea-dWe"/>
+                <outlet property="titleLbl" destination="YP8-ny-QUl" id="HAX-5C-FJt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -40,7 +41,7 @@
                             <rect key="frame" x="15" y="15" width="363" height="674"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tYD-zs-TPp">
-                                    <rect key="frame" x="50" y="374.66666666666669" width="273" height="40"/>
+                                    <rect key="frame" x="50" y="464.66666666666663" width="273" height="40"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="3Ia-al-Kg9"/>
@@ -51,7 +52,7 @@
                                     </state>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="5iH-zv-qC9">
-                                    <rect key="frame" x="10" y="56.000000000000007" width="343" height="110.66666666666669"/>
+                                    <rect key="frame" x="10" y="55.999999999999986" width="343" height="200.66666666666663"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AssignmentDetails" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8qp-Mg-yeP">
                                             <rect key="frame" x="0.0" y="0.0" width="343" height="20.333333333333332"/>
@@ -60,32 +61,32 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6si-HH-wSh">
-                                            <rect key="frame" x="0.0" y="25.333333333333343" width="343" height="60"/>
+                                            <rect key="frame" x="0.0" y="25.333333333333343" width="343" height="150"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="60" id="Lmm-p2-Orh"/>
+                                                <constraint firstAttribute="height" constant="150" id="Lmm-p2-Orh"/>
                                             </constraints>
                                             <color key="textColor" systemColor="labelColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.85000002384185791" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="0 of 30" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8nm-bK-03t">
-                                            <rect key="frame" x="0.0" y="90.333333333333314" width="343" height="20.333333333333329"/>
+                                            <rect key="frame" x="0.0" y="180.33333333333331" width="343" height="20.333333333333343"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </stackView>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zLF-vX-MTh" customClass="ImageSelection" customModule="VsSchoolChimes" customModuleProvider="target">
-                                    <rect key="frame" x="10" y="214.66666666666669" width="343" height="120"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zLF-vX-MTh" customClass="ImageSelection" customModule="School_Chimes" customModuleProvider="target">
+                                    <rect key="frame" x="10" y="304.66666666666669" width="343" height="120"/>
                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="120" id="Jhu-Pn-Yac"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YmW-y3-ghD">
-                                    <rect key="frame" x="10" y="186.66666666666669" width="343" height="20"/>
+                                    <rect key="frame" x="10" y="276.66666666666669" width="343" height="20"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Photos / Pdf" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fvy-8I-U0T">
                                             <rect key="frame" x="0.0" y="0.0" width="323" height="20"/>
@@ -215,10 +216,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
