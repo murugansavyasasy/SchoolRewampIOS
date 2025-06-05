@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NavigationVC" customModule="School_Chimes" customModuleProvider="target">
             <connections>
                 <outlet property="NameLbl" destination="EbC-ev-Y2l" id="kRu-CP-3hO"/>
+                <outlet property="SegmentControl" destination="6hP-hW-cND" id="xfS-yz-2B9"/>
                 <outlet property="StandardLbl" destination="vxi-lr-qNN" id="iX7-nw-Iva"/>
                 <outlet property="backBtn" destination="SRO-fe-ero" id="HQt-Si-ttC"/>
                 <outlet property="presentView" destination="mIu-Nf-ywR" id="lpp-QO-OaG"/>
@@ -24,26 +25,8 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bP2-yz-vtr">
-                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mIu-Nf-ywR">
-                            <rect key="frame" x="0.0" y="58" width="393" height="651"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        </view>
-                    </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="mIu-Nf-ywR" secondAttribute="bottom" id="NDb-Xl-Tcq"/>
-                        <constraint firstItem="mIu-Nf-ywR" firstAttribute="leading" secondItem="bP2-yz-vtr" secondAttribute="leading" id="Nlb-jr-0ZQ"/>
-                        <constraint firstAttribute="trailing" secondItem="mIu-Nf-ywR" secondAttribute="trailing" id="qW4-04-mOd"/>
-                    </constraints>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRO-fe-ero">
-                    <rect key="frame" x="10" y="69" width="138" height="34.333333333333343"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="34.333333333333343" id="cbN-Qq-PUT"/>
-                    </constraints>
+                    <rect key="frame" x="10" y="69" width="200.66666666666666" height="25"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -75,14 +58,49 @@
                         </label>
                     </subviews>
                 </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bP2-yz-vtr">
+                    <rect key="frame" x="0.0" y="109" width="393" height="709"/>
+                    <subviews>
+                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="6hP-hW-cND">
+                            <rect key="frame" x="20" y="15" width="353" height="41"/>
+                            <color key="backgroundColor" name="AttendenceColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="Mv3-Bo-dwa"/>
+                            </constraints>
+                            <segments>
+                                <segment title="Create"/>
+                                <segment title="History"/>
+                            </segments>
+                            <connections>
+                                <action selector="SegmentAct:" destination="-1" eventType="valueChanged" id="bLe-io-Aen"/>
+                            </connections>
+                        </segmentedControl>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mIu-Nf-ywR">
+                            <rect key="frame" x="0.0" y="63" width="393" height="646"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="mIu-Nf-ywR" secondAttribute="bottom" id="NDb-Xl-Tcq"/>
+                        <constraint firstItem="mIu-Nf-ywR" firstAttribute="leading" secondItem="bP2-yz-vtr" secondAttribute="leading" id="Nlb-jr-0ZQ"/>
+                        <constraint firstItem="mIu-Nf-ywR" firstAttribute="top" secondItem="6hP-hW-cND" secondAttribute="bottom" constant="8" id="Pu6-aG-nDu"/>
+                        <constraint firstItem="6hP-hW-cND" firstAttribute="top" secondItem="bP2-yz-vtr" secondAttribute="top" constant="15" id="VXq-9U-6fH"/>
+                        <constraint firstItem="6hP-hW-cND" firstAttribute="leading" secondItem="bP2-yz-vtr" secondAttribute="leading" constant="20" id="jws-xn-Die"/>
+                        <constraint firstAttribute="trailing" secondItem="mIu-Nf-ywR" secondAttribute="trailing" id="qW4-04-mOd"/>
+                        <constraint firstAttribute="trailing" secondItem="6hP-hW-cND" secondAttribute="trailing" constant="20" id="tyl-Kw-s5g"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" name="ParentClr"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="bP2-yz-vtr" secondAttribute="trailing" id="5uz-vX-2Xj"/>
                 <constraint firstItem="bP2-yz-vtr" firstAttribute="top" secondItem="BPx-Oq-htN" secondAttribute="bottom" constant="5" id="8We-5b-5tA"/>
+                <constraint firstItem="BPx-Oq-htN" firstAttribute="leading" secondItem="SRO-fe-ero" secondAttribute="trailing" constant="10" id="AE8-Y7-0r0"/>
                 <constraint firstItem="bP2-yz-vtr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Bv7-s9-EFD"/>
-                <constraint firstItem="bP2-yz-vtr" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="aXg-xT-aWT"/>
+                <constraint firstItem="bP2-yz-vtr" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="CTW-T7-j4m"/>
+                <constraint firstItem="bP2-yz-vtr" firstAttribute="top" secondItem="SRO-fe-ero" secondAttribute="bottom" constant="15" id="eY7-5X-TbJ"/>
                 <constraint firstItem="SRO-fe-ero" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="kpr-uU-yRa"/>
                 <constraint firstItem="SRO-fe-ero" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="xpw-EU-epW"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BPx-Oq-htN" secondAttribute="trailing" constant="5" id="y6M-VX-8oy"/>
@@ -93,6 +111,9 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <namedColor name="AttendenceColor">
+            <color red="0.74099999666213989" green="0.90200001001358032" blue="0.99599999189376831" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ParentClr">
             <color red="0.83137254901960789" green="0.68627450980392157" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -257,6 +257,13 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         dateSelection = true
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.minimumDate = Date()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+//        if let fromDateString = todateBtn.titleLabel?.text,
+//           let fromDate = dateFormatter.date(from: fromDateString) {
+//            vc.maximumDate = fromDate
+//        } else {
+//            print("Invalid 'From' date string")
+//        }
         vc.dateSelection = 2
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
@@ -268,7 +275,14 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
        // showTimePicker(for: sender, date: false)
         dateSelection = false
         let vc = DatePickerVC(nibName: nil, bundle: nil)
-        vc.minimumDate = Date()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        if let fromDateString = fromdateBtn.titleLabel?.text,
+           let fromDate = dateFormatter.date(from: fromDateString) {
+            vc.minimumDate = fromDate
+        } else {
+            print("Invalid 'From' date string")
+        }
+
         vc.dateSelection = 2
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext

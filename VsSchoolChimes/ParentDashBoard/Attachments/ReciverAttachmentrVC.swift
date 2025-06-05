@@ -164,6 +164,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
                         attachmentTable.reloadData()
                         
                     }else{
+                        self.hideView(ishide: false)
                         self.NodataLbl.text = response.message
                     }
                 case .failure(let error):

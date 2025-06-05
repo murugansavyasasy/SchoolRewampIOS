@@ -76,6 +76,7 @@ struct ServiceUrl{
     static let   comm_assignment_send_assignment = " comm/assignment/send-assignment"
     static let comm_api_leave_req_apply = "comm/api/leave-req/apply"
     static let comm_api_leave_req_list = "comm/api/leave-req/list"
+    static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status"
     static let   comm_api_assignment_list = "comm/api/assignment/list"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     
@@ -227,7 +228,8 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
         "MMMM",
         "EEEE",
         "EEE d MMM yyyy",
-        "EEE d"
+        "EEE d",
+        "dd-MM-yyyy hh:mm a"
     ]
     
     let outputFormatter = DateFormatter()
