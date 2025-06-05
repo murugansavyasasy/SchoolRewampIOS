@@ -46,6 +46,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var come_fromLogin = false
     let MenuRedirect = MenuRedirectHandler.shared
     var selectedTarget :String?
+    var Common_request_params: [String:Any] = [:]
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -239,6 +240,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                  MenuRedirect.senderSchoolStrength(from: self)
             case Menu_id.AbsenteeismReport:
                 MenuRedirect.senderAbsenteesReport(from: self)
+            case Menu_id.isAssaignment:
+                MenuRedirect.senderAssignmentNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }
@@ -265,6 +268,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                     UserDefaultFileManager.saveStaffDetails(data: data)}
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.communicatio_textDetails = communicatio_textDetails
+                vc.Common_request_params = Common_request_params
                 vc.ScreenType = screen_type
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)

@@ -174,6 +174,9 @@ class AlertstringFile{
     static let Please_Select_a_Image = "Please Select a Image"
     static let Please_Select_a_Document = "Please Select a Document"
     static let Enter_location_name = "Enter your location name".translated()
+    static let Are_you_sure_you_want_to_submit_leave_request = "Are you sure you want to submit this leave request?".translated()
+    static let Enter_reason = "Please Enter the reason".translated()
+    static let Failed = "Failed".translated()
     
     
 }

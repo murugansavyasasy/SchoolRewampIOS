@@ -443,7 +443,12 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     MenuRedirect.senderAbsenteesReport(from: self)
                 }
             case 2:
-                MenuRedirect.senderAssignmentNavigate(from: self)
+               
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.senderAssignmentNavigate(from: self)
+                }
             case 3:
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)

@@ -8,9 +8,10 @@
 import UIKit
 import DropDown
 import Kingfisher
+import PDFKit
 
 @available(iOS 14.0, *)
-class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice {
+class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNotice, VideoPickerManagerDelegate {
     func didTapButton(title: String, content: String, items: [FilePath]) {
         print("sdhbh")
     }
@@ -33,10 +34,10 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
-//    var selectedImages: [UIImage] = []
-    
-//    var selectedImgUrl: [FilePath] = []
-//    var urls : [String] = []
+
+    @IBOutlet weak var VideoDeleteBtn: UIImageView!
+    @IBOutlet weak var VideoThumbnailImg: UIImageView!
+    @IBOutlet weak var VideoView: UIView!
     var attachments: [AttachmentItem] = []
     let photoPickManager = PhotoPickerManager.shared
     let Img = ImageName()
@@ -50,8 +51,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
     var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     var alert = CustomAlert()
+    var videoPicker: VideoPickerManager?
+    var selectedVideoURL: URL?
     override func viewDidLoad() {
         super.viewDidLoad()
+        videoPicker = VideoPickerManager(presenter: self, delegate: self)
         DetailsTxtview.applyRightTxt()
         TitleTxtfield.applyRightTxt()
         wordsCountLbl.applyRightTxt()
@@ -59,14 +63,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillHide),name: UIResponder.keyboardWillHideNotification, object: nil)
-        
+        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
+        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
         TitleTxtfield.addDoneButton()
         DetailsTxtview.addDoneButton()
         StyleAndTranslater()
         uploadAttachmentView.imageCollectionview.delegate = self
         uploadAttachmentView.imageCollectionview.dataSource = self
         DetailsTxtview.delegate = self
-
+        VideoView.isHidden = true
         ComposeHomeworkView.isHidden = false
         ComposeHomeworkView.alpha = 1
         imageSelection()
@@ -134,6 +139,56 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         // Set the attributed string to the label
         label.attributedText = attributedString
     }
+    
+    
+    @IBAction func deleteVideo(){
+        
+        videoPickerManagerDidCloseVideo()
+    }
+    
+    @IBAction func chooseVideoTapped(_ sender: UIButton) {
+            videoPicker?.pickVideo()
+        }
+
+    func pickVideoFromGallery(){
+        
+        videoPicker?.pickVideo()
+    }
+        @IBAction func playVideoTapped(_ sender: UIButton) {
+            VideoDeleteBtn.isHidden = true
+            if let url = selectedVideoURL {
+                videoPicker?.playVideo(from: url, in: VideoView)
+            } else {
+                videoPicker?.pickVideo()
+            }
+        }
+
+    // MARK: - Delegate Methods
+       func videoPickerManager(didPickVideo url: URL) {
+           uploadAttachmentView.isHidden = true
+           collectionViewHeight.constant = 0
+           selectedVideoURL = url
+           VideoView.isHidden = false
+           RecipientBtn.isHidden = false
+       }
+
+       func videoPickerManager(didGenerateThumbnail image: UIImage) {
+           VideoThumbnailImg.isHidden = false
+           VideoThumbnailImg.image = image
+       }
+
+       func videoPickerManagerDidCloseVideo() {
+           selectedVideoURL = nil
+           VideoThumbnailImg.image = nil
+           VideoView.isHidden = true
+//          / chooseRecipientsBtn.isHidden = true
+           uploadAttachmentView.isHidden = false
+           collectionViewHeight.constant = 120
+           uploadAttachmentView.imageCollectionview.reloadData()
+          
+           
+       }
+    
 
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
@@ -156,6 +211,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             }
             
+//            let selectedImages: [UIImage] = images // Your selected images
+//
+//            if let pdfData = createMultiPagePDF(from: selectedImages) {
+//                previewPDF(data: pdfData, in: uploadAttachmentView)
+//            }
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -175,11 +235,15 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
         if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
-            user_inputs.title = TitleTxtfield.text ?? ""
-            user_inputs.description = DetailsTxtview.text ?? ""
             user_inputs.SelectedUrls = attachments
+            user_inputs.VideoPath = selectedVideoURL
+            let params: [String: Any] = [
+                assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
+                assignmentResquestStringKey.description: DetailsTxtview.text ?? "",
+            ]
                 let vc = RecipientVc(nibName: nil, bundle: nil)
                 vc.ScreenType = Menu_id.homeWorkMenuId
+                vc.Common_request_params = params
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
         }else{
@@ -317,6 +381,9 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                    cell.imageViews.image = nil
                }
             
+            // Assuming you have an array of UIImage from selected files
+            
+
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeight.constant = totalItems <= 2 ? 120 : 220
@@ -356,6 +423,11 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             }
             alertController.addAction(pdfAction)
             
+            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                
+                pickVideoFromGallery()
+            }
+            alertController.addAction(VideoAction)
             // Cancel action
             let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
@@ -382,11 +454,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             }
         }
         
-        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-            
-            controller.dismiss(animated: true, completion: nil)
-            
-        }
+        
         
         
     }
@@ -476,6 +544,40 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         // Calculate the frame of the view relative to the UIScrollView
         let rect = view.convert(view.bounds, to: scrollView)
         scrollView.scrollRectToVisible(rect, animated: true)
+    }
+    
+    func createMultiPagePDF(from images: [UIImage]) -> Data? {
+        guard !images.isEmpty else { return nil }
+
+        let firstImage = images[0]
+        let pageRect = CGRect(x: 0, y: 0, width: firstImage.size.width, height: firstImage.size.height)
+        
+        let renderer = UIGraphicsPDFRenderer(bounds: pageRect)
+
+        let data = renderer.pdfData { context in
+            for image in images {
+                context.beginPage()
+                image.draw(in: CGRect(origin: .zero, size: image.size))
+            }
+        }
+
+        return data
+    }
+
+    
+    func previewPDF(data: Data, in containerView: UIView) {
+        let pdfView = PDFView(frame: containerView.bounds)
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        pdfView.autoScales = true
+        pdfView.document = PDFDocument(data: data)
+        containerView.addSubview(pdfView)
+
+        NSLayoutConstraint.activate([
+            pdfView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            pdfView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            pdfView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            pdfView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+        ])
     }
 
 }

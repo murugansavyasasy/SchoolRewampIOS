@@ -6,9 +6,6 @@
 //
 
 import UIKit
-protocol UpdateDelegate{
-    func delete(index:Int,UpdateDetails:LeaveRequest,Updated:Bool)
-}
 class LeveHistoryTV: UITableViewCell {
 
     @IBOutlet weak var outerView: UIView!
@@ -23,13 +20,9 @@ class LeveHistoryTV: UITableViewCell {
     @IBOutlet weak var botomSts: NSLayoutConstraint!
     @IBOutlet weak var ShowPopup: UIView!
     @IBOutlet weak var editHeight: NSLayoutConstraint!
-    
-    var leaverequest:LeaveRequest? = nil
-    var delegate:UpdateDelegate?
-    var reson = "I hope this message finds you well. I am feeling unwell and will not be able to attend work on [mention date(s)]. I will keep you updated on my condition and inform you of my return to work."
-    
     @IBOutlet weak var deltBtn: UIButton!
     @IBOutlet weak var editBtn: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -80,20 +73,22 @@ class LeveHistoryTV: UITableViewCell {
         ShowPopup.isHidden = !sender.isSelected
     }
     @IBAction func deleteRequest(_ sender: UIButton) {
-        guard let leaveRequest = leaverequest else {
-            print("Leave request is nil")
-            return
-        }
-        delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: false)
-        ShowPopup.isHidden = true
+//        guard let leaveRequest = leaverequest else {
+//            print("Leave request is nil")
+//            return
+//        }
+//       // delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: false)
+//        ShowPopup.isHidden = true
     }
     @IBAction func edit(_ sender: UIButton) {
-        guard let leaveRequest = leaverequest else {
-            print("Leave request is nil")
-            return
-        }
-        delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: true)
-        ShowPopup.isHidden = true
+//        guard let leaveRequest = leaverequest else {
+//            print("Leave request is nil")
+//            return
+//        }
+//        delegate?.delete(index: sender.tag, UpdateDetails: leaveRequest, Updated: true)
+//        ShowPopup.isHidden = true
     }
+    
+    
     
 }

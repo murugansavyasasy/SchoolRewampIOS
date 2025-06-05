@@ -59,7 +59,7 @@ class VideoPickerManager: NSObject {
 
         player?.play()
 
-        // Add Close Button
+//         Add Close Button
         let closeBtn = UIImageView(image: UIImage(systemName: "xmark.circle.fill"))
         closeBtn.tintColor = .systemRed
         closeBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -88,6 +88,11 @@ class VideoPickerManager: NSObject {
         stopVideo()
         delegate?.videoPickerManagerDidCloseVideo()
     }
+    
+    
+    func closeVideoPlayback() {
+        closeVideo()
+    }
 
     private func generateThumbnail(from url: URL) {
         let asset = AVAsset(url: url)
@@ -114,6 +119,7 @@ extension VideoPickerManager: UIImagePickerControllerDelegate, UINavigationContr
         if let videoURL = info[.mediaURL] as? URL {
             delegate?.videoPickerManager(didPickVideo: videoURL)
             generateThumbnail(from: videoURL)
+            user_inputs.selectedFileType = AttachmentTypeString.VIDEO
         }
     }
 }

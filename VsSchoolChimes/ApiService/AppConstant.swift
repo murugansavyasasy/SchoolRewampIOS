@@ -73,7 +73,9 @@ struct ServiceUrl{
     static let  stud_attd_attendance_get_absent_dates_for_child = "stud-attd/api/attendance/get-absent-dates-for-child"
     static let  stud_attd_api_attendance_get_absentees_count_by_date = "stud-attd/api/attendance/get-absentees-count-by-date"
     static let  stud_attd_api_attendance_get_absentees_students_by_date = "stud-attd/api/attendance/get-absentees-students-by-date" 
-    static let   comm_assignment_send_assignment = " comm/assignment/send-assignment"
+    static let   comm_assignment_send_assignment = "comm/api/assignment/send-assignment"
+    static let comm_api_leave_req_apply = "comm/api/leave-req/apply"
+    static let comm_api_leave_req_list = "comm/api/leave-req/list"
     static let   comm_api_assignment_list = "comm/api/assignment/list"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
     
@@ -159,6 +161,7 @@ struct user_inputs{
     static var selectedImgUrls : [FilePath] = []
     static var SelectedUrls : [AttachmentItem] = []
     static var fileUrl:URL?
+    static var thumbNail:UIImage?
     static var docUrl = [String]()
     static var start_time = ""
     static var end_time = ""
@@ -175,6 +178,8 @@ struct user_inputs{
     static var attendance_type = ""
     static var session_type = ""
     static var attendance_date = ""
+    static var submissionDate = ""
+    static var assigmentCategory = ""
 }
 struct circular_type{
     static var school =  "A"
@@ -223,7 +228,9 @@ func ConvertDateStringSmart(_ date: String?, toFormat: String = "dd-MM-yyyy") ->
         "MMM dd,yyyy",
         "dd",
         "MMMM",
-        "EEEE"
+        "EEEE",
+        "EEE d MMM yyyy",
+        "EEE d"
     ]
     
     let outputFormatter = DateFormatter()

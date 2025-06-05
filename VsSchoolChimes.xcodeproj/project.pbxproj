@@ -173,6 +173,8 @@
 		8420317A2D390FF3003C4076 /* TimetableTv.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842031792D390FF3003C4076 /* TimetableTv.xib */; };
 		842214272DAFACAD00D38D16 /* CommonPageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842214262DAFACAD00D38D16 /* CommonPageVC.xib */; };
 		842214282DAFACAD00D38D16 /* CommonPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842214252DAFACAD00D38D16 /* CommonPageVC.swift */; };
+		842523832DEEFE2400D41726 /* AssignmentReportVc.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842523822DEEFE2400D41726 /* AssignmentReportVc.xib */; };
+		842523842DEEFE2400D41726 /* AssignmentReportVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842523812DEEFE2400D41726 /* AssignmentReportVc.swift */; };
 		842F95CC2D85606E007A4A98 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 842F95CB2D85606E007A4A98 /* Kingfisher */; };
 		842FBABB2D0BEDBF007C0B51 /* ReportStudentTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB72D0BEDBF007C0B51 /* ReportStudentTVC.xib */; };
 		842FBABC2D0BEDBF007C0B51 /* ReportStudentListVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */; };
@@ -824,6 +826,8 @@
 		842031792D390FF3003C4076 /* TimetableTv.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TimetableTv.xib; sourceTree = "<group>"; };
 		842214252DAFACAD00D38D16 /* CommonPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPageVC.swift; sourceTree = "<group>"; };
 		842214262DAFACAD00D38D16 /* CommonPageVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommonPageVC.xib; sourceTree = "<group>"; };
+		842523812DEEFE2400D41726 /* AssignmentReportVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentReportVc.swift; sourceTree = "<group>"; };
+		842523822DEEFE2400D41726 /* AssignmentReportVc.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentReportVc.xib; sourceTree = "<group>"; };
 		842FBAB42D0BEDBF007C0B51 /* ReportStudentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentListVC.swift; sourceTree = "<group>"; };
 		842FBAB52D0BEDBF007C0B51 /* ReportStudentListVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportStudentListVC.xib; sourceTree = "<group>"; };
 		842FBAB62D0BEDBF007C0B51 /* ReportStudentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStudentTVC.swift; sourceTree = "<group>"; };
@@ -2343,6 +2347,8 @@
 			children = (
 				849AD0402D1A858D002DEC07 /* SenderAssignmentTextViewController.swift */,
 				849AD0412D1A858D002DEC07 /* SenderAssignmentTextViewController.xib */,
+				842523812DEEFE2400D41726 /* AssignmentReportVc.swift */,
+				842523822DEEFE2400D41726 /* AssignmentReportVc.xib */,
 			);
 			path = Assignment;
 			sourceTree = "<group>";
@@ -3661,6 +3667,7 @@
 				18D718E02D0D479B00E9EDA3 /* CVIconCollectionViewCell.xib in Resources */,
 				FA6B89272D633B2F00CB099D /* LSRWTvCell.xib in Resources */,
 				18D718E12D0D479B00E9EDA3 /* SectionViewController.xib in Resources */,
+				842523832DEEFE2400D41726 /* AssignmentReportVc.xib in Resources */,
 				848CC17A2D8A997200CD0255 /* MobileNumberVc.xib in Resources */,
 				18D718E22D0D479B00E9EDA3 /* NewAbsenteesViewController.xib in Resources */,
 				18D718E32D0D479B00E9EDA3 /* SectionCollectionViewCell.xib in Resources */,
@@ -3922,6 +3929,7 @@
 				84A0D1132DC8E2440037E1BF /* AttachmentVCViewController.swift in Sources */,
 				849AD0522D1A858D002DEC07 /* SenderAssignmentTextViewController.swift in Sources */,
 				84313B4D2DD3688C00651BEA /* AttachmentViewCell.swift in Sources */,
+				842523842DEEFE2400D41726 /* AssignmentReportVc.swift in Sources */,
 				FAA8F1122D659BF200B3A457 /* LessonProgressCell.swift in Sources */,
 				84D85D782D51D7B5006842E9 /* CustomShimmerView.swift in Sources */,
 				84FB97D22D3E31FF00EBF9F4 /* CompletedTVcell.swift in Sources */,
