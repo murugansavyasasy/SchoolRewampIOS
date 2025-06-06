@@ -354,7 +354,7 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
 
             if let filePaths = data.file_path, !filePaths.isEmpty {
                 cell.ImageCollectionView.isHidden = false
-                cell.CvHeight.constant = 150
+                cell.CvHeight.constant = 100
                 cell.loadImage(urls: filePaths)
             } else {
                 cell.ImageCollectionView.isHidden = true
