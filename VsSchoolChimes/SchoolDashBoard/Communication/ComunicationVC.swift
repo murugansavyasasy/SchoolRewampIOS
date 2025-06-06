@@ -2055,4 +2055,9 @@ extension ComunicationVC: UITableViewDelegate, UITableViewDataSource ,UIDocument
         }
         return (minutes * 60) + seconds
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
 }

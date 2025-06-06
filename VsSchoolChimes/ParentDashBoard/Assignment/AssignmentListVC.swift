@@ -3,10 +3,8 @@ import UIKit
 class AssignmentListVC: UIViewController,UISearchBarDelegate, DidSelectDelegate, SumitionDelegate{
     func sumition(index: Int) {
         if #available(iOS 14.0, *) {
-            let vc = submitVC(nibName: nil, bundle: nil)
-           // vc.modalPresentationStyle = .overCurrentContext
+            let vc = SubmitVC(nibName: nil, bundle: nil)
             vc.modalPresentationStyle = .fullScreen
-           // vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
             self.present(vc, animated: false)
         }
        
@@ -141,8 +139,7 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
             cell.dueDateLbl.textColor = .red
         }
         cell.FilesUrl = filteredData?[indexPath.row].file_path
-        cell.confic(filteredData?[indexPath.row].file_path ?? [])
-        cell.videoUrl = filteredData?[indexPath.row].file_path?.first?.type?.uppercased() != "" ? filteredData?[indexPath.row].iframe : nil
+//        cell.confic(filteredData?[indexPath.row].file_path ?? [])
         cell.dueDateLbl.text = filteredData?[indexPath.row].end_date
         cell.CreaterdDate.text = filteredData?[indexPath.row].date
        

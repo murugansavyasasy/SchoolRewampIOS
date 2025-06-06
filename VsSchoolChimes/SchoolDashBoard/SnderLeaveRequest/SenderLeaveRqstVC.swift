@@ -223,3 +223,56 @@ extension SenderLeaveRqstVC: UISearchBarDelegate{
         leaveRequestTable.reloadData()
     }
 }
+
+//extension SenderLeaveRqstVC : UITableViewDelegate,UITableViewDataSource {
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return filterStudent?.count ?? 0
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = leaveRequestTable.dequeueReusableCell(withIdentifier: CellConfingName.SenderLeaveTV, for: indexPath) as! SenderLeaveTV
+//        cell.fromDate.text = filterStudent?[indexPath.row].fromDate
+//        cell.toDate.text = filterStudent?[indexPath.row].toDate
+//        cell.resonLbl.text = filterStudent?[indexPath.row].reson
+//        cell.delegate = self
+//        cell.aproveBtn.tag = indexPath.row
+//        cell.rejectBtn.tag = indexPath.row
+//        cell.statusLbl.isHidden = !filterStudent![indexPath.row].isExpanded
+//        cell.statusLbl.text = filterStudent?[indexPath.row].status
+//        cell.statusLbl.textColor = filterStudent?[indexPath.row].status == "Approved" ? .aproved : .red
+//        if filterStudent![indexPath.row].isExpanded{
+//            cell.aproved.isHidden = true
+//            cell.reject.isHidden = true
+//            cell.height.constant = 0
+//        }else{
+//            cell.aproved.isHidden = false
+//            cell.reject.isHidden = false
+//            cell.height.constant = 40
+//        }
+//        
+//        return cell
+//    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//}
+
+//@available(iOS 14.0, *)
+//extension SenderLeaveRqstVC: UISearchBarDelegate{
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        if searchText.isEmpty {
+//            // Reset to full data when the search text is cleared
+//            filterStudent = leaveResuest
+//        } else {
+//            // Filter data based on the search text
+//            filterStudent = leaveResuest.filter { student in
+//                student.fromDate!.lowercased().contains(searchText.lowercased())
+//            }
+//        }
+//        leaveRequestTable.reloadData()
+//    }
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.resignFirstResponder()
+//    }
+//}

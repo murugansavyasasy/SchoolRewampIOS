@@ -91,7 +91,9 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         //        standerdView.cornerRadius()
         //        sectionView.cornerRadius()
         let imgPdfTV = UINib(nibName:CellConfingName.HomeWorkTVC, bundle: nil)
+        let VideoTVCell = UINib(nibName:CellConfingName.VideoTVCell, bundle: nil)
         homeWorkTable.register(imgPdfTV, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
+        homeWorkTable.register(VideoTVCell, forCellReuseIdentifier: CellConfingName.VideoTVCell)
         dateSelect(nil)
         searchBar.delegate = self
         searchBar.placeholder = CommonStringFile.Search.translated()
