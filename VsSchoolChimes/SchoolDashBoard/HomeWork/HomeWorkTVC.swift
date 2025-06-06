@@ -111,6 +111,8 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
                 cell.imageView.isHidden = false
                 cell.imageView.sd_setImage(with: URL(string: img.url
                                                      ?? ""), placeholderImage: ImageName.placeholder)
+                
+              
             }
             let iconImage = UIImage(named: iconName)
             cell.IndicaterImageView.image = iconImage

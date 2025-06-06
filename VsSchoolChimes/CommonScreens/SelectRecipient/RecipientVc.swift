@@ -213,6 +213,29 @@ class RecipientVc: UIViewController{
         print("selectedId : \(array_selectedId)")
         print("selectedId : \(array_selectedId)")
         
+//        let comm = common_apiCall()
+        
+//        comm
+//            .sendAttachment(
+//                with: [[String : String]],
+//                iframe: String,
+//                filesize: <#T##String#>,
+//                baseURl: <#T##String#>,
+//                array_selectedId: <#T##[String]#>,
+//                target_type: <#T##Int#>,
+//                selectedAcadimicYearId: <#T##Int#>,
+//                subjectId: <#T##String#>
+//            ){ ok in
+//                
+//                if ok.status{
+//                    
+//                    
+//                }else{
+//                    
+//
+//                }
+//                
+//            }
         // Check if target selection is required
         let isEntireSchool = (cv_itemsarry[segmentName.selectedSegmentIndex] == recipeint_tabBarName.Entier_School)
         guard isEntireSchool || !array_selectedId.isEmpty else {
