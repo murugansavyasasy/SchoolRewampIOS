@@ -347,6 +347,8 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
         case "VIDEO":
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
             cell.confic(data.file_path?.first?.url ?? "")
+            cell.attachment = data
+            cell.delegate = self
             cell.descriptContent
                 .setupExpandable(
                     text: data.description ?? ""

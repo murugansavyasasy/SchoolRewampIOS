@@ -1,3 +1,5 @@
+
+
 //
 //  SenderHomeWorkVC.swift
 //  VsSchoolChimes
@@ -9,17 +11,9 @@ import UIKit
 import DropDown
 
 @available(iOS 14.0, *)
-class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSource, SelectNotice, Datepicker, UISearchBarDelegate {
-    func date(date: String) {
-        dateSelect(date)
-        GetHomeWorkReport(sectionId, dateLbl.text ?? "")
-    }
-    
-    func didTapButton(title: String, content: String, items: [FilePath]) {
-        
-        selectNotice?.didTapButton(title: title, content: content, items: items)
-    }
-    
+class SenderHomeWorkVC: UIViewController {
+
+    // MARK: - Outlets
     @IBOutlet weak var noDataFound: UIImageView!
     @IBOutlet weak var nodataFoundLbl: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -31,43 +25,53 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
     @IBOutlet weak var standerdView: UIView!
     @IBOutlet weak var dateLbl: UILabel!
     @IBOutlet weak var acodomicYearLbl: UILabel!
-    
     @IBOutlet weak var dropDownStack: UIStackView!
     @IBOutlet weak var todayLbl: UILabel!
     @IBOutlet weak var dateView: UIView!
     @IBOutlet weak var acodemicView: UIView!
     @IBOutlet weak var acodemicdropView: UIView!
-    
-    var selectedImages: [UIImage] = []
-    var selectedImgUrl: [FilePath] = []
-    var url : URL?
-    let photoPickManager = PhotoPickerManager.shared
-    let Img = ImageName()
-    let formatter = DateFormatter()
+
+    // MARK: - Properties
     let standardDropdown = DropDown()
     let SectionDropdown = DropDown()
     let acidamicdrops = DropDown()
-    var image = "image/pdf"
-    var delegate : HistorySelectDelegate?
+    let formatter = DateFormatter()
     let customdate = DateFormatter()
-    let initialHeight: CGFloat = 60
-    let maxHeight: CGFloat = 300
-    var homeWorkList:[Homework]?
-    var FilterHomeWorkList:[Homework]?
-    var staffDetails = UserDefaultFileManager.get_staff_Details()
-    let  staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
-    var staffDetailsCount = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
-    var sectionsDetails: [sectionsDetail]?
+    
+    var homeWorkList: [Homework]?
+    var FilterHomeWorkList: [Homework]?
+    var AcadimicYearDatas: [AcadimicYearData] = []
+    var accadimYr: [String] = []
     var standardDetails: [StandardDetail]?
+    var sectionsDetails: [sectionsDetail]?
     var sectionList = [String]()
     var standerdList = [String]()
-    var AcadimicYearDatas : [AcadimicYearData] = []
-    var accadimYr :[String] = []
-    var acodemicId:Int?
-    var sectionId:String?
-    var selectNotice : SelectNotice?
+    var selectedImgUrl: [FilePath] = []
+    
+    var acodemicId: Int?
+    var sectionId: String?
+    var selectNotice: SelectNotice?
+
+    let staffDetails = UserDefaultFileManager.get_staff_Details()
+    let staff_role = UserDefaultFileManager.getUserDetails()?.user_details?.staff_role ?? ""
+
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupViews()
+        registerTableCells()
+        getAcademicYearList()
+        searchBar.delegate = self
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        homeWorkTable.reloadData()
+    }
+
+    // MARK: - Setup
+    private func setupViews() {
         applyShadowAndCornerRadius(to: dateView)
         applyShadowAndCornerRadius(to: acodemicView)
         applyShadowAndCornerRadius(to: standerdView)
@@ -84,344 +88,308 @@ class SenderHomeWorkVC: UIViewController,UITableViewDelegate,UITableViewDataSour
         
         sectionView.layer.borderColor = UIColor.lightGray.cgColor
         sectionView.layer.borderWidth = 0.5
-        
-        getacadmicYr()
-        getStandardsAPI()
-        //        acodemicView.cornerRadius()
-        //        standerdView.cornerRadius()
-        //        sectionView.cornerRadius()
-        let imgPdfTV = UINib(nibName:CellConfingName.HomeWorkTVC, bundle: nil)
-        let VideoTVCell = UINib(nibName:CellConfingName.VideoTVCell, bundle: nil)
-        homeWorkTable.register(imgPdfTV, forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
-        homeWorkTable.register(VideoTVCell, forCellReuseIdentifier: CellConfingName.VideoTVCell)
-        dateSelect(nil)
-        searchBar.delegate = self
+
+        searchBar.addDoneButton()
         searchBar.placeholder = CommonStringFile.Search.translated()
         dateLbl.setFont(style: .title, size: FontSize.TitleSize)
         StandardLbl.setFont(style: .body, size: FontSize.BodySize)
         SectionLbl.setFont(style: .body, size: FontSize.BodySize)
-        
+        dateSelect(nil)
     }
-    func dateSelect(_ date: String?) {
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "EEE d MMM yyyy"
-        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
-        
-        var selectedDate = Date()
-        if let dateStr = date, !dateStr.isEmpty {
-            let inputFormatter = DateFormatter()
-            inputFormatter.dateFormat = "dd MMM yy"
-            inputFormatter.locale = Locale(identifier: "en_US_POSIX")
-            if let parsedDate = inputFormatter.date(from: dateStr) {
-                selectedDate = parsedDate
-            }
-        }
-        
-        // ✅ Compare selected date with today
-        let today = Date()
-        let comparison = Calendar.current.compare(selectedDate, to: today, toGranularity: .day)
-        
-        switch comparison {
-        case .orderedSame:
-            todayLbl.text = "Today"
-        case .orderedAscending:
-            todayLbl.text = "Past Date"
-        case .orderedDescending:
-            todayLbl.text = "Future Date"
-        default:
-            todayLbl.text = "Selected Date"
-        }
-        let formattedDate = outputFormatter.string(from: selectedDate)
-        dateLbl.text = formattedDate
+
+    private func registerTableCells() {
+        homeWorkTable.register(UINib(nibName: CellConfingName.HomeWorkTVC, bundle: nil), forCellReuseIdentifier: CellConfingName.HomeWorkTVC)
+        homeWorkTable.register(UINib(nibName: CellConfingName.VideoTVCell, bundle: nil), forCellReuseIdentifier: CellConfingName.VideoTVCell)
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        homeWorkTable.reloadData()
-    }
-    
-    
-    func getacadmicYr(){
-        APIService.shared
-            .makeApi(url: ServiceUrl.comm_recipient_get_academic_year_list , parameters: [:], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? ""){ [self] (
-                result:Result <get_academic_yearSuc,
-                Error>
-            ) in
-                switch result {
-                case .success(let successMessage):
-                    if successMessage.status == true{
-                        DispatchQueue.main.async { [self] in
-                            AcadimicYearDatas = successMessage.data ?? []
-                            for i in 0..<(AcadimicYearDatas.count){
-                                if AcadimicYearDatas[i].current_academic_year ?? false == true{
-                                    acodomicYearLbl.text = AcadimicYearDatas[i].year
-                                    acodemicId = AcadimicYearDatas[i].id
-                                }
-                            }
-                        }
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-    }
-    
-    
-    @IBAction func selectAcodemic(_ sender: UIButton) {
-        accadimYr.removeAll()
-        for i in 0..<(AcadimicYearDatas.count) {
-            accadimYr.append(AcadimicYearDatas[i].year ?? "")
-        }
+
+    // MARK: - Dropdown Selections
+    @IBAction func selectAcademicYear(_ sender: UIButton) {
         acidamicdrops.anchorView = acodemicdropView
         acidamicdrops.dataSource = accadimYr
         acidamicdrops.bottomOffset = CGPoint(x: 0, y: acodemicdropView.bounds.height)
         acidamicdrops.show()
-        
-        acidamicdrops.selectionAction = { [self] (index: Int, item: String) in
-            acodomicYearLbl.text = item
-            acodemicId = AcadimicYearDatas[index].id
-            getStandardsAPI()
+        acidamicdrops.selectionAction = { [weak self] index, item in
+            self?.acodomicYearLbl.text = item
+            self?.acodemicId = self?.AcadimicYearDatas[index].id
+            self?.getStandardsAPI()
         }
     }
-    
+
+    @IBAction func selectStandard(_ sender: UIButton) {
+        guard !dropDownStack.isHidden else { return }
+        standardDropdown.anchorView = standerdView
+        standardDropdown.dataSource = standerdList
+        standardDropdown.bottomOffset = CGPoint(x: 0, y: standerdView.bounds.height)
+        standardDropdown.direction = .bottom
+        standardDropdown.show()
+
+        standardDropdown.selectionAction = { [weak self] index, item in
+            guard let self = self else { return }
+            guard let selectedSections = self.standardDetails?[index].sections else { return }
+
+            self.sectionsDetails = selectedSections
+            self.sectionList = selectedSections.compactMap { $0.name }
+            self.sectionId = selectedSections.first?.id
+            self.StandardLbl.text = item
+            self.SectionLbl.text = selectedSections.first?.name ?? ""
+
+            self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
+        }
+    }
+
     @IBAction func selectSection(_ sender: UIButton) {
-        if !dropDownStack.isHidden{
-            SectionDropdown.anchorView = sectionView
-            SectionDropdown.dataSource = sectionList
-            SectionDropdown.show()
-            SectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
-            standardDropdown.direction = .bottom
-            SectionDropdown.selectionAction = { [self] (index: Int, item: String) in
-                
-                if index < sectionsDetails?.count ?? 0{
-                    sectionId = sectionsDetails?[index].id
-                    GetHomeWorkReport(sectionsDetails?[index].id, dateLbl.text ?? "")
-                }
-                if let label = sectionView.subviews.first(where: { $0 is UILabel }) as? UILabel {
-                    label.text = item
-                }
-                homeWorkTable.isHidden = false
-                homeWorkTable.reloadData()
-            }
+        guard !dropDownStack.isHidden else { return }
+        SectionDropdown.anchorView = sectionView
+        SectionDropdown.dataSource = sectionList
+        SectionDropdown.bottomOffset = CGPoint(x: 0, y: sectionView.bounds.height)
+        SectionDropdown.show()
+        
+        SectionDropdown.selectionAction = { [weak self] index, item in
+            guard let self = self else { return }
+            guard index < (self.sectionsDetails?.count ?? 0) else { return }
+
+            self.sectionId = self.sectionsDetails?[index].id
+            self.SectionLbl.text = item
+            self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
         }
     }
+
     @IBAction func selectDate(_ sender: UIButton) {
-        
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.date = dateLbl.text
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.present(vc, animated: false)
+        present(vc, animated: false)
     }
-    
-    @IBAction func selectStanderd(_ sender: UIButton) {
-        // Setup dropdown anchor and data source
-        if !dropDownStack.isHidden{
-            standardDropdown.anchorView = standerdView
-            standardDropdown.dataSource = standerdList
-            standardDropdown.bottomOffset = CGPoint(x: 0, y: standerdView.bounds.height)
-            standardDropdown.direction = .bottom
-            standardDropdown.show()
-            
-            standardDropdown.selectionAction = { [weak self] (index: Int, item: String) in
-                guard let self = self else { return }
-                guard let selectedSections = standardDetails?[index].sections else { return }
-                sectionsDetails = selectedSections
-                sectionList.removeAll()
-                sectionId = selectedSections.first?.id
-                apiCall()
-                sectionList.append(contentsOf: selectedSections.compactMap { $0.name })
-                SectionLbl.text = selectedSections.first?.name ?? ""
-                if let label = self.standerdView.subviews.compactMap({ $0 as? UILabel }).first {
-                    label.text = item
+
+    // MARK: - Date Selection
+    func dateSelect(_ date: String?) {
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "EEE d MMM yyyy"
+        outputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        var selectedDate = Date()
+        if let dateStr = date, !dateStr.isEmpty {
+            let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = "dd MMM yy"
+            inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+            selectedDate = inputFormatter.date(from: dateStr) ?? Date()
+        }
+
+        let comparison = Calendar.current.compare(selectedDate, to: Date(), toGranularity: .day)
+        todayLbl.text = (comparison == .orderedSame) ? "Today" :
+                        (comparison == .orderedAscending) ? "Past Date" : "Future Date"
+        
+        dateLbl.text = outputFormatter.string(from: selectedDate)
+    }
+
+    // MARK: - API Calls
+    func getAcademicYearList() {
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_recipient_get_academic_year_list,
+            parameters: [:],
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<get_academic_yearSuc, Error>) in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let res):
+                    guard res.status == true else { return }
+                    self.AcadimicYearDatas = res.data ?? []
+                    self.accadimYr = self.AcadimicYearDatas.compactMap { $0.year }
+
+                    if let current = self.AcadimicYearDatas.first(where: { $0.current_academic_year == true }) {
+                        self.acodemicId = current.id
+                        self.acodomicYearLbl.text = current.year
+                        self.getStandardsAPI()
+                    }
+                case .failure(let error):
+                    print("Academic year fetch failed:", error.localizedDescription)
                 }
             }
         }
     }
+
+    func getStandardsAPI() {
+        guard let academicId = acodemicId else { return }
+        APIService.shared.makeApi(
+            url: ServiceUrl.recipient_get_standards,
+            parameters: ["academic_year_id": academicId],
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<GetStandardsSuc, Error>) in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let res):
+                    guard res.status == true else {
+                        self.handleNoData(message: res.message ?? "No data")
+                        return
+                    }
+
+                    self.standardDetails = res.data
+                    self.standerdList = res.data?.compactMap { $0.name } ?? []
+
+                    if let first = res.data?.first {
+                        self.sectionsDetails = first.sections
+                        self.sectionList = first.sections?.compactMap { $0.name } ?? []
+                        self.sectionId = first.sections?.first?.id
+                        self.StandardLbl.text = first.name
+                        self.SectionLbl.text = first.sections?.first?.name
+                        self.GetHomeWorkReport(self.sectionId, self.dateLbl.text ?? "")
+                    }
+
+                    self.dropDownStack.isHidden = false
+                    self.searchBar.isHidden = true
+                    self.nodataFoundLbl.isHidden = true
+                    self.noDataFound.isHidden = true
+                case .failure(let err):
+                    self.handleNoData(message: err.localizedDescription)
+                }
+            }
+        }
+    }
+
+    func GetHomeWorkReport(_ sectionId: String?, _ date: String?) {
+       let dateFormatted = ConvertDateStringSmart(date)
+
+        if #available(iOS 15.0, *) {
+            showLottieProgressLoader(animationName: "loader (2)")
+        }
+
+        APIService.shared.makeApi(
+            url: ServiceUrl.comm_homework_get_homework_report,
+            parameters: ["section_id": sectionId ?? "", "date": dateFormatted, "academic_year_id": acodemicId ?? 0],
+            type: ApitTypeSringFile.GET,
+            token: staffDetails?.access_token ?? ""
+        ) { [weak self] (result: Result<HomeworkResponse, Error>) in
+            guard let self = self else { return }
+
+            DispatchQueue.main.async {
+                if #available(iOS 15.0, *) {
+                    self.hideLottieProgressLoader()
+                }
+
+                switch result {
+                case .success(let response):
+                    self.FilterHomeWorkList = response.data
+                    self.homeWorkList = response.data
+                    self.nodataFoundLbl.isHidden = response.status ?? false
+                    self.noDataFound.isHidden = response.status ?? false
+                    self.nodataFoundLbl.text = response.message
+                    self.homeWorkTable.reloadData()
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        self.tableviewHeight.constant = self.homeWorkTable.contentSize.height
+                    }
+
+                case .failure(let error):
+                    print("Homework API failed:", error.localizedDescription)
+                    self.noDataFound.isHidden = false
+                    self.tableviewHeight.constant = 0
+                }
+            }
+        }
+    }
+
+    private func handleNoData(message: String) {
+        dropDownStack.isHidden = true
+        searchBar.isHidden = true
+        sectionId = ""
+        nodataFoundLbl.text = message
+        nodataFoundLbl.isHidden = false
+        noDataFound.isHidden = false
+        tableviewHeight.constant = 0
+    }
+}
+
+// MARK: - TableView
+@available(iOS 14.0, *)
+extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return FilterHomeWorkList?.count ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let data = FilterHomeWorkList?[indexPath.row]
-        if data?.file_path?.first?.type?.uppercased() == "VIDEO"{
+        guard let data = FilterHomeWorkList?[indexPath.row] else {
+            return UITableViewCell()
+        }
+
+        if data.file_path?.first?.type?.uppercased() == "VIDEO" {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
-            cell.confic(data?.file_path?.first?.url ?? "")
-            cell.descriptContent
-                .setupExpandable(
-                    text: data?.description ?? ""
-                )
+            cell.confic(data.file_path?.first?.url ?? "")
+            cell.descriptContent.setupExpandable(text: data.description ?? "")
             cell.descriptContent.onExpandableTap = {
                 cell.descriptContent.isExpanded.toggle()
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
-            cell.datelbl.text = dateLbl.text ?? "".convertToTargetDateFormat() ?? "-"
-            cell.videoName.text = data?.title
+            cell.datelbl.text = dateLbl.text?.convertToTargetDateFormat() ?? "-"
+            cell.videoName.text = data.title
             return cell
-        }else{
-            let cell = homeWorkTable.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
-            //        cell.ishomework = true
-            cell.CvHeight.constant = 0
-            cell.ImageCollectionView.isHidden = true
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
             cell.delegate = self
-            cell.subjectName.text = data?.subject_name
-            cell.topics.text = data?.title ?? ""
+            cell.subjectName.text = data.subject_name
+            cell.topics.text = data.title ?? ""
             cell.dateLble.text = dateLbl.text ?? ""
-            cell.ImageCollectionView.isHidden = (data?.file_path?.isEmpty ?? true)
-            if let urls = data?.file_path, urls.count != 0{
-                cell.ImageCollectionView.isHidden = false
-                cell.CvHeight.constant = 150
-                cell.loadImage(urls: urls)
-            }
-            
             cell.FilterHomeWorkList = data
             cell.newView.isHidden = true
-            cell.descriptionLbl.setupExpandable(text: data?.description ?? "")
+
+            cell.descriptionLbl.setupExpandable(text: data.description ?? "")
             cell.descriptionLbl.onExpandableTap = {
                 cell.descriptionLbl.isExpanded.toggle()
                 tableView.beginUpdates()
                 tableView.endUpdates()
-                DispatchQueue.main.async {
-                    let contentHeight = tableView.contentSize.height
-                    self.tableviewHeight.constant = contentHeight
-                }
             }
+
+            if let filePaths = data.file_path, !filePaths.isEmpty {
+                cell.ImageCollectionView.isHidden = false
+                cell.CvHeight.constant = 150
+                cell.loadImage(urls: filePaths)
+            } else {
+                cell.ImageCollectionView.isHidden = true
+                cell.CvHeight.constant = 0
+            }
+
             cell.cellview.layoutIfNeeded()
-            DispatchQueue.main.async {
-                let contentHeight = self.homeWorkTable.contentSize.height
-                self.tableviewHeight.constant = contentHeight
-            }
             return cell
         }
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    func apiCall() {
-        guard let labelText = dateLbl?.text, !labelText.isEmpty,
-              let sectionId = sectionId, !sectionId.isEmpty else {
-            print("Missing sectionId or dateLbl")
-            return
-        }
-        GetHomeWorkReport(sectionId, labelText)
+}
+
+// MARK: - Delegates
+@available(iOS 14.0, *)
+extension SenderHomeWorkVC: SelectNotice, Datepicker, UISearchBarDelegate {
+    func date(date: String) {
+        dateSelect(date)
+        GetHomeWorkReport(sectionId, date)
     }
 
+    func didTapButton(title: String, content: String, items: [FilePath]) {
+        selectNotice?.didTapButton(title: title, content: content, items: items)
+    }
 
-    func GetHomeWorkReport(_ sectionId: String?, _ dates: String?) {
-        if #available(iOS 15.0, *) {
-            showLottieProgressLoader(animationName: "loader (2)")
-        }
-        
-        let date = ConvertDateStringSmart(dates)
-        APIService.shared.makeApi(
-            url: ServiceUrl.comm_homework_get_homework_report,
-            parameters: ["section_id": sectionId ?? "", "date": date,"academic_year_id":acodemicId ?? 0],
-            type: ApitTypeSringFile.GET,
-            token: staffDetails?.access_token ?? ""
-        ) { [weak self] (result: Result<HomeworkResponse, Error>) in
-            guard let self = self else { return }
-            
-            DispatchQueue.main.async {
-                if #available(iOS 15.0, *) {
-                    self.hideLottieProgressLoader()
-                }
-                
-                switch result {
-                case .success(let successMessage):
-                    
-                    if successMessage.status == true{
-                        self.tableviewHeight.constant = 100
-                        self.nodataFoundLbl.isHidden = true
-                        self.homeWorkList = successMessage.data
-                        self.FilterHomeWorkList = successMessage.data
-                        self.homeWorkTable.reloadData()
-                        self.noDataFound.isHidden = true
-                    }else{
-                        self.nodataFoundLbl.isHidden = false
-                        self.noDataFound.isHidden = false
-                        self.nodataFoundLbl.text = successMessage.message
-                        self.FilterHomeWorkList = successMessage.data
-                        self.homeWorkTable.reloadData()
-                        self.tableviewHeight.constant = 0
-                    }
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    self.tableviewHeight.constant = 0
-                    self.noDataFound.isHidden = false
-                }
-            }
-        }
-    }
-    
-    
-    
-    func getStandardsAPI(){
-        APIService.shared.makeApi(url: ServiceUrl.recipient_get_standards, parameters: ["academic_year_id":"\(acodemicId ?? 6)"], type: ApitTypeSringFile.GET, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "") { [self] (result:Result <GetStandardsSuc,Error>) in
-            switch result {
-            case .success(let successMessage):
-                print("successsuccess",successMessage.data)
-                DispatchQueue.main.async { [self] in
-                    if successMessage.status == true{
-                        
-                        standardDetails = successMessage.data
-                        standardDetails?.enumerated().forEach { index, student in
-                            standerdList.append(student.name ?? "")
-                        }
-                        
-                        if let sections = standardDetails?.first?.sections{
-                            sectionsDetails = sections
-                            for j in 0..<sections.count {
-                                sectionList.append(sectionsDetails?[j].name ?? "")
-                            }
-                        }
-                    sectionId = standardDetails?.first?.sections?.first?.id
-                        GetHomeWorkReport(standardDetails?.first?.sections?.first?.id, dateLbl.text ?? "")
-                        StandardLbl.text = standardDetails?.first?.name
-                        SectionLbl.text = standardDetails?.first?.sections?.first?.name ?? ""
-                        dropDownStack.isHidden = false
-                        searchBar.isHidden = true
-                    }else{
-                        dropDownStack.isHidden = true
-                        sectionId = ""
-                        searchBar.isHidden = true
-                        self.nodataFoundLbl.isHidden = false
-                        self.noDataFound.isHidden = false
-                        self.nodataFoundLbl.text = successMessage.message
-                        self.tableviewHeight.constant = 0
-                    }
-                }
-            case .failure(let error):
-                DispatchQueue.main.async { [self] in
-                    print(error.localizedDescription)
-                    dropDownStack.isHidden = true
-                    searchBar.isHidden = true
-                    self.nodataFoundLbl.isHidden = false
-                    self.noDataFound.isHidden = false
-                    self.nodataFoundLbl.text = error.localizedDescription
-                    self.tableviewHeight.constant = 0
-                    sectionId = ""
-                }
-            }
-        }
-        
-    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             FilterHomeWorkList = homeWorkList
         } else {
-            FilterHomeWorkList = homeWorkList?.filter { item in
-                let lowercasedSearchText = searchText.lowercased()
-                return item.subject_name?.lowercased().contains(lowercasedSearchText) == true ||
-                item.title?.lowercased().contains(lowercasedSearchText) == true ||
-                item.description?.lowercased().contains(lowercasedSearchText) == true
+            let lower = searchText.lowercased()
+            FilterHomeWorkList = homeWorkList?.filter {
+                $0.subject_name?.lowercased().contains(lower) == true ||
+                $0.title?.lowercased().contains(lower) == true ||
+                $0.description?.lowercased().contains(lower) == true
             }
         }
         homeWorkTable.reloadData()
     }
-    
 }
 extension UIView{
     func cornerRadius(_ radius: CGFloat = 8) {
