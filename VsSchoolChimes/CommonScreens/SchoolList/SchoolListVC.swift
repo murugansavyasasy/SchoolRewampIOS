@@ -45,8 +45,9 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     var uploadedURLs: [String] = []
     var come_fromLogin = false
     let MenuRedirect = MenuRedirectHandler.shared
-    var selectedTarget :String?
+    var selectedTarget = "all"
     var Common_request_params: [String:Any] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -90,11 +91,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
             let acidmaciyrClick = UITapGestureRecognizer(target: self, action: #selector(academicYearDrop_action))
             acidamicYrDropView.addGestureRecognizer(acidmaciyrClick)
         }
-        
-        
-       
-        
     }
+    
     func setupRadioButton(button: UIButton) {
        
         button.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -103,6 +101,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         button.contentHorizontalAlignment = .left
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
     }
+    
     override func viewDidLayoutSubviews() {
         view.applyGradient(
             colors: [ Colornames.stafGradient, Colornames.stafGradient1],

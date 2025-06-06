@@ -161,7 +161,7 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
             cell.confic(notice?.file_path?.first?.url ?? "")
             cell.descriptContent
                 .setupExpandable(
-                    text: notice?.content ?? ""
+                    text: notice?.description ?? ""
                 )
             cell.descriptContent.onExpandableTap = {
                 cell.descriptContent.isExpanded.toggle()
@@ -185,7 +185,7 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
             cell.SelectBtn.isHidden = true
             
             cell.TitleLbl.text =  notice?.title
-            cell.dicriptContent.setupExpandable(text: notice?.content ?? "")
+            cell.dicriptContent.setupExpandable(text: notice?.description ?? "")
             cell.dicriptContent.onExpandableTap =
             {
                 [weak tableview] in
@@ -315,7 +315,7 @@ extension ParentNoticeBoardVc: UISearchBarDelegate{
         } else {
             SearchData = FilteredData?.filter { notice in
                 (notice.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
-                (notice.content?.lowercased().contains(searchText.lowercased()) ?? false) ||
+                (notice.description?.lowercased().contains(searchText.lowercased()) ?? false) ||
                 (notice.created_on?.lowercased().contains(searchText.lowercased()) ?? false)
             }
         }

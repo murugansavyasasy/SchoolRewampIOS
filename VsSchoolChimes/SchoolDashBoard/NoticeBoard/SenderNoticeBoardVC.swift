@@ -339,6 +339,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             user_inputs.FromDate = ConvertDateStringSmart(fromdateBtn.titleLabel?.text ?? "")
             user_inputs.ToDate = ConvertDateStringSmart(todateBtn.titleLabel?.text ?? "")
             user_inputs.SelectedUrls = attachments
+            user_inputs.VideoPath = selectedVideoURL
             
             if school_count?.count ?? 0 > 1{
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
@@ -402,8 +403,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
            Attachmentview.isHidden = false
            collectionViewHeght.constant = 120
            Attachmentview.imageCollectionview.reloadData()
-          
-           
        }
     
     // MARK: File Attachments Actions

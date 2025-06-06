@@ -545,7 +545,7 @@ struct NoticeResponse: Codable {
 
 struct Notice: Codable {
     let title: String?
-    let content: String?
+    let description: String?
     let created_on: String?
     let day: String?
     let visible_from: String?
