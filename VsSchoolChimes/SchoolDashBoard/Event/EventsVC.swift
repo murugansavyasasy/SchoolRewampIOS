@@ -14,7 +14,7 @@ protocol DeleteImge{
     func deleteImage(index:Int)
 }
 @available(iOS 14.0, *)
-class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker, UIImagePickerControllerDelegate & UINavigationControllerDelegate{
+class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepicker, UIImagePickerControllerDelegate & UINavigationControllerDelegate, VideoPickerManagerDelegate{
     
     func date(date: String) {
         
@@ -59,6 +59,10 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     @IBOutlet weak var collectionViewHeght: NSLayoutConstraint!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var Totime: UIButton!
+    @IBOutlet weak var VideoView: UIView!
+    @IBOutlet weak var VideoThumbnailImg: UIImageView!
+    @IBOutlet weak var VideoDeleteBtn: UIImageView!
+    
     var placeholderLabel: UILabel!
     var activeButton: UIButton?
     var timePicker: UIDatePicker!
@@ -76,6 +80,8 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
     var attachments: [AttachmentItem] = []
+    var videoPicker: VideoPickerManager?
+    var selectedVideoURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +108,13 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         contentTxtView.addDoneButton()
         imageSelection()
         
+        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+        
+        VideoView.isHidden = true
+        
+        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
+        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
+        
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
@@ -122,6 +135,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         NotificationCenter.default.removeObserver(self)
     }
     
+    
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
@@ -129,6 +143,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             
             user_inputs.selectedFileType = CommonStringFile.IMAGE
+            selectedVideoURL = nil
             costomView.imageCollectionview.reloadData()
         }
         
@@ -142,7 +157,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             if imageItems.count != 0{
                 attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             }
-            
+            selectedVideoURL = nil
             costomView.imageCollectionview.reloadData()
         }
         
@@ -151,11 +166,52 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
             attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-            
+            selectedVideoURL = nil
             costomView.imageCollectionview.reloadData()
         }
         
     }
+    
+    @IBAction func deleteVideo(){
+        
+        videoPickerManagerDidCloseVideo()
+    }
+
+    func pickVideoFromGallery(){
+        
+        videoPicker?.pickVideo()
+    }
+        @IBAction func playVideoTapped(_ sender: UIButton) {
+            if let url = selectedVideoURL {
+                videoPicker?.playVideo(from: url, in: VideoView)
+            } else {
+                videoPicker?.pickVideo()
+            }
+        }
+
+    // MARK: - Delegate Methods
+       func videoPickerManager(didPickVideo url: URL) {
+           attachments.removeAll()
+           costomView.isHidden = true
+           collectionViewHeght.constant = 0
+           selectedVideoURL = url
+           VideoView.isHidden = false
+       }
+
+       func videoPickerManager(didGenerateThumbnail image: UIImage) {
+           VideoThumbnailImg.isHidden = false
+           VideoThumbnailImg.image = image
+       }
+
+       func videoPickerManagerDidCloseVideo() {
+           selectedVideoURL = nil
+           VideoThumbnailImg.image = nil
+           VideoView.isHidden = true
+//          / chooseRecipientsBtn.isHidden = true
+           costomView.isHidden = false
+           collectionViewHeght.constant = 120
+           costomView.imageCollectionview.reloadData()
+       }
     
     //MARK: BUTTON TITLE CURRANT TIME
     func setInitialButtonTitles() {
@@ -403,6 +459,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{
            
             user_inputs.SelectedUrls = attachments
+            user_inputs.VideoPath = selectedVideoURL
             
             let params: [String: Any] = [
                 assignmentResquestStringKey.title: eventTxt.text ?? "",
@@ -512,11 +569,11 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
                 selectPDF()
             }
             alertController.addAction(pdfAction)
-//            //             PDF option
-//            let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
-//                pickVideoFromGallery()
-//            }
-//            alertController.addAction(Video)
+//            //             Video option
+            let Video = UIAlertAction(title: "Video".translated(), style: .default) { [self] _ in
+                pickVideoFromGallery()
+            }
+            alertController.addAction(Video)
             
             // Cancel action
             let cancelAction = UIAlertAction(title: "Cancel".translated(), style: .cancel, handler: nil)
@@ -585,19 +642,19 @@ extension EventsVC : UICollectionViewDelegate, UICollectionViewDataSource,UIColl
         
     }
     
-    func pickVideoFromGallery() {
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self
-            imagePickerController.sourceType = .photoLibrary
-            imagePickerController.mediaTypes = ["public.movie"] // Only show videos
-            imagePickerController.allowsEditing = true // Optional: allows users to edit video
-            
-            present(imagePickerController, animated: true, completion: nil)
-        } else {
-            print("Photo library not available.")
-        }
-    }
+//    func pickVideoFromGallery() {
+//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+//            let imagePickerController = UIImagePickerController()
+//            imagePickerController.delegate = self
+//            imagePickerController.sourceType = .photoLibrary
+//            imagePickerController.mediaTypes = ["public.movie"] // Only show videos
+//            imagePickerController.allowsEditing = true // Optional: allows users to edit video
+//            
+//            present(imagePickerController, animated: true, completion: nil)
+//        } else {
+//            print("Photo library not available.")
+//        }
+//    }
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
         
         controller.dismiss(animated: true, completion: nil)

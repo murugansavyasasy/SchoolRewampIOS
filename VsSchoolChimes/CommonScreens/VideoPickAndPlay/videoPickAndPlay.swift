@@ -59,7 +59,7 @@ class VideoPickerManager: NSObject {
 
         player?.play()
 
-//         Add Close Button
+        // Add Close Button
         let closeBtn = UIImageView(image: UIImage(systemName: "xmark.circle.fill"))
         closeBtn.tintColor = .systemRed
         closeBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +88,6 @@ class VideoPickerManager: NSObject {
         stopVideo()
         delegate?.videoPickerManagerDidCloseVideo()
     }
-    
     
     func closeVideoPlayback() {
         closeVideo()
