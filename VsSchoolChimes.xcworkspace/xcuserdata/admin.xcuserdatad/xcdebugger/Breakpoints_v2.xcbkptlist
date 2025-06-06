@@ -153,22 +153,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9F4AD569-941B-48DC-97D8-74149E0CDF4F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/Utils/Extentions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "598"
-            endingLineNumber = "598"
-            landmarkName = "downloadFile(from:folderName:fileName:completion:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "A19F7791-C113-45B7-A7B8-1A7C03186C65"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -176,8 +160,8 @@
             filePath = "VsSchoolChimes/ParentDashBoard/ReciverHomework/ReciverHomeworkVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "GetHomeWorkReport()"
             landmarkType = "7">
          </BreakpointContent>
@@ -208,25 +192,25 @@
             filePath = "VsSchoolChimes/ParentDashBoard/Video/VideoTVCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
-            landmarkName = "presentationControllerDidDismiss(_:)"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "sharebtn(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1AEECCF8-3E0C-4F4C-9158-937636DAF062"
+            uuid = "86619482-6AC8-4165-AF97-AB122C96D25B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/TAttacmentTVC.swift"
+            filePath = "VsSchoolChimes/SchoolDashBoard/PendingFeeReport/PendingFeeReportViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
-            landmarkName = "collectionView(_:didSelectItemAt:)"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "classPendingReportAPI(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -834,7 +834,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                     let parameters : [String: Any] = [
                         
                         SendNoticeStringFile.title : user_inputs.title,
-                        SendNoticeStringFile.content : user_inputs.description,
+                        SendNoticeStringFile.description : user_inputs.description,
                         SendNoticeStringFile.target_code : array_selectedSchoolId,
                         SendNoticeStringFile.intended_for : selectedTarget ?? "",
                         SendNoticeStringFile.visible_from : user_inputs.FromDate,

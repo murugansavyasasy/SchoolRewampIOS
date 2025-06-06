@@ -62,9 +62,9 @@ struct ServiceUrl{
     static let attendance_student_attendance_report = "stud-attd/api/attendance/student-attendance-report"
     static let api_school_event_send_event = "admin/api/school-event/send-event"
     
-    static let api_fee_report_daily_collection = "admin/api/fee-report/daily-collection"
-    static let api_fee_report_detailed_pending_report = "admin/api/fee-report/detailed-pending-report"
-    static let api_fee_report_detailed_class_wise_pending_report = "admin/api/fee-report/detailed-class-wise-pending-report"
+    static let api_fee_report_daily_collection = "fee/api/fee-report/daily-collection"
+    static let api_fee_report_detailed_pending_report = "fee/api/fee-report/detailed-pending-report"
+    static let api_fee_report_detailed_class_wise_pending_report = "fee/api/fee-report/detailed-class-wise-pending-report"
     static let  api_get_student_report = "admin/api/get-student-report"
     static let  api_school_event_get_event = "admin/api/school-event/get-event"
     static let  school_event_view_holidays = "admin/api/school-event/view-holidays"

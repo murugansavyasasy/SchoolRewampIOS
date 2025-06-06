@@ -164,6 +164,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
 //        navigateToMenu(with: menuId, messageId: messageId)
 //    }
 
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // clear caches or large objects
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

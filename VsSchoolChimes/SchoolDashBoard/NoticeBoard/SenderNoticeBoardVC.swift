@@ -318,7 +318,12 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     @IBAction func next(_ sender: UIButton) {
         let school_count = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
         
-        if TitleTextfield.text != "" && textview.text != "" && textview.text != CommonStringFile.Description {
+        
+        guard let titile = TitleTextfield.text ,titile.isEmpty ,titile == "" , let discreptionss = textview.text , discreptionss.isEmpty , discreptionss == "" ,discreptionss == CommonStringFile.Description   else {
+            alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+            return
+        }
+    
             
             user_inputs.title = TitleTextfield.text ?? ""
             user_inputs.description = textview.text
@@ -338,10 +343,10 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
-        }else {
+        
             
-            alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
-        }
+           
+        
     }
     
     // MARK: File Attachments Actions
