@@ -20,14 +20,16 @@ class DatePickerVC: UIViewController {
     var delegate : Datepicker?
     var date : String?
     var dateSelection = 1
-    
     var minimumDate: Date?
+    var maximumDta:Date?
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let date = minimumDate {
-            
             datepicker.minimumDate = date
+        }
+        if let date = maximumDta{
+            datepicker.maximumDate = date
         }
         
         bgView.layer.cornerRadius = 10
