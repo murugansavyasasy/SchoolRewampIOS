@@ -106,7 +106,7 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     var thumbnailURL: String?
     let thumbnailImageView = UIImageView()
     var attachments: [AttachmentItem] = []
-   // var childVC :  AssignmentReportVc?
+//    var childVC :  AssignmentReportVc?
     var thumbnailImage: UIImage?
     override func viewDidLoad() {
         super.viewDidLoad()
