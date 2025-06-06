@@ -78,7 +78,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="yJy-5h-EFG">
-                                                <rect key="frame" x="0.0" y="49.666666666666686" width="437" height="20.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="51" width="437" height="20.333333333333329"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Submission Due" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbj-aw-0Se">
                                                         <rect key="frame" x="0.0" y="0.0" width="120" height="20.333333333333332"/>
@@ -107,7 +107,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SWL-NV-WN3">
-                                                <rect key="frame" x="0.0" y="74" width="437" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="75.333333333333343" width="437" height="0.0"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sumission Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PPj-Az-KuN">
                                                         <rect key="frame" x="0.0" y="0.0" width="120" height="0.0"/>
@@ -136,7 +136,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="U8o-OD-Sln">
-                                                <rect key="frame" x="0.0" y="99.333333333333343" width="437" height="20.333333333333329"/>
+                                                <rect key="frame" x="0.0" y="102" width="437" height="20.333333333333329"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send By" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EWK-PP-vmj">
                                                         <rect key="frame" x="0.0" y="0.0" width="120" height="20.333333333333332"/>
@@ -165,13 +165,13 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sRC-z4-CF3">
-                                                <rect key="frame" x="0.0" y="149.00000000000003" width="437" height="129.99999999999997"/>
+                                                <rect key="frame" x="0.0" y="152.66666666666666" width="437" height="124.99999999999997"/>
                                                 <subviews>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="vA6-uV-ffU">
-                                                        <rect key="frame" x="0.0" y="0.0" width="437" height="105"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="437" height="100"/>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="105" id="zDg-Gg-dU8"/>
+                                                            <constraint firstAttribute="height" constant="100" id="zDg-Gg-dU8"/>
                                                         </constraints>
                                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="DFk-M4-x2B">
                                                             <size key="itemSize" width="128" height="128"/>
@@ -181,7 +181,7 @@
                                                         </collectionViewFlowLayout>
                                                     </collectionView>
                                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" hidesForSinglePage="YES" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Dn5-4Y-48f">
-                                                        <rect key="frame" x="50" y="105" width="337" height="20"/>
+                                                        <rect key="frame" x="50" y="100" width="337" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="DBi-a6-4UQ"/>
                                                         </constraints>
