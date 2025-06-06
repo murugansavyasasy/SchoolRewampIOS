@@ -412,7 +412,7 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         dropDown.dataSource = ["GENERAL", "CLASS WORK", "PROJECT", "RESEARCH PAPER"]
         self.view.layoutIfNeeded()
         dropDown.width = categoryDropDownView.bounds.width
-        dropDown.bottomOffset = CGPoint(x: 0, y: categoryDropDownView.bounds.height - 110)
+        dropDown.bottomOffset = CGPoint(x: 0, y: categoryDropDownView.bounds.height)
         dropDown.direction = .bottom
         dropDown.show()
         dropDown.selectionAction = { [weak self] (index: Int, item: String) in

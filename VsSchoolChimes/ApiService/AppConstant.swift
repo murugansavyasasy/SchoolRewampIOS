@@ -25,7 +25,7 @@ struct ServiceUrl{
     static let  cred_create_new_password = "app/api/cred/create-new-password"
     static let global_global_variables   = "app/global/global-variables"
     static let  auth_device_token        = "app/api/auth/device-token"
-    static let  get_dashboard_details    = "dashboard/dashboard/get-dashboard-details"
+    static let  get_dashboard_details    = "dashboard/api/dashboard/get-dashboard-details"
     static let recipient_get_group_list  = "comm/api/recipient/get-group-list"
     static let recipient_get_standards   = "comm/api/recipient/get-standards"
     static let recipient_get_student_list  = "comm/api/recipient/get-student-list"
