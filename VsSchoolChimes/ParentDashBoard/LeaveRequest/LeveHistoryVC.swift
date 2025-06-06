@@ -69,9 +69,6 @@ class LeveHistoryVC: UIViewController{
         let dateFormatter = DateFormatter()
            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Change locale if needed
         let monthNames = dateFormatter.monthSymbols ?? [] // This returns ["January", "February", ..., "December"]
-
-           // Add "All" as the first option
-//           monthNames.insert("All", at: 0)
            
            EditDropdown.dataSource = monthNames // Use updated list with "All"
            
@@ -84,60 +81,11 @@ class LeveHistoryVC: UIViewController{
            EditDropdown.selectionAction = { [self] (index: Int, item: String) in
                self.monthBtn.setTitle(item, for: .normal)
                
-//               if item == "All" {
-//                   // Show all data if "All" is selected
-//                   filterData = leaveResuest
-//               } else {
-                   // Filter leaveResuest by the selected month
                    let selectedMonth = index // Adjust index because "All" is now the first item
-//               }
                
                historyTable.reloadData()
            }
     }
-//    func filterByMonth(selectedMonth: Int) -> [LeaveRequest] {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "dd MMM yy" // Match date format to your data
-//        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0) // Adjust timezone if needed
-//
-//        return leaveResuest.filter { request in
-//            guard let fromDateText = request.fromDate,
-//                  let toDateText = request.toDate else {
-//                return false
-//            }
-//
-//            guard let fromDate = dateFormatter.date(from: fromDateText),
-//                  let toDate = dateFormatter.date(from: toDateText) else {
-//                print("Date parsing failed for: \(fromDateText), \(toDateText)")
-//                return false
-//            }
-//            
-//            let calendar = Calendar.current
-//            var currentDate = fromDate
-//            
-//            while currentDate <= toDate {
-//                let currentMonth = calendar.component(.month, from: currentDate)
-//                if currentMonth == selectedMonth {
-//                    return true // Match found
-//                }
-//                currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate
-//            }
-//            
-//            return false // No match found
-//        }
-//    }
-
-    
-   
-//    func delete(index: Int, UpdateDetails: LeaveRequest,Updated:Bool) {
-//        if !Updated{
-//            leaveResuest.remove(at: index)
-//            historyTable.reloadData()
-//        }else{
-//            navigatedelegate?.navigate(index: 0, leaveRequest: UpdateDetails)
-//        }
-//    }
 
 }
 
@@ -153,9 +101,11 @@ extension LeveHistoryVC: UITableViewDelegate,UITableViewDataSource {
         guard let leaveData = LeaveHistoryData?[indexPath.row] else { return cell }
 
         // Configure cell labels and views
-        cell.fromDateLbl.text = leaveData.leave_from
-        cell.toDateLbl.text = leaveData.leave_to
+       
+        cell.fromDateLbl.text = convertDate(leaveData.leave_from, toFormat: "dd MMM yyyy")
+        cell.toDateLbl.text = convertDate(leaveData.leave_to, toFormat: "dd MMM yyyy")
         cell.aproveLbl.text = leaveData.status
+        cell.approvedBy.text = leaveData.reason
         
         // Status-based customization
         if leaveData.status == "Approved" {
@@ -170,6 +120,7 @@ extension LeveHistoryVC: UITableViewDelegate,UITableViewDataSource {
             cell.aproveLbl.textColor = .white
             cell.satusImg.tintColor = .white
         } else {
+            cell.aproveLbl.text = "In review"
             cell.aproveLbl.textColor = .white
             cell.satusImg.tintColor = .white
             cell.statusBtn.backgroundColor = Colornames.pendingClr

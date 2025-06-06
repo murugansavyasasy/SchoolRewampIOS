@@ -24,6 +24,10 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
             todate.setTitle(date, for: .normal)
             setFormattedDate(outputDateString, label: toDateLbl)
         }
+        
+        if let from = dateBtn.titleLabel?.text, let to = todate.titleLabel?.text{
+            updateDayCountLabel(startDateStr: from, endDateStr: to, dayCount: dayCount)
+        }
     }
     
     
@@ -39,7 +43,6 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     @IBOutlet weak var ToLbl: UILabel!
     @IBOutlet weak var fromLbl: UILabel!
     @IBOutlet weak var toDateLbl: UILabel!
-    @IBOutlet weak var TxtOuterview: UIView!
     @IBOutlet weak var contentCount: UILabel!
     @IBOutlet weak var contentTxtView: UITextView!
     @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
@@ -67,6 +70,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         uiConfic()
         setInitialDate()
         contentTxtView.delegate = self
+        contentTxtView.addDoneButton()
        
         imageSelection()
         setupPlaceholder()
@@ -90,9 +94,9 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     }
     
     func uiConfic(){
-        TxtOuterview.layer.cornerRadius = 10
-        TxtOuterview.layer.borderWidth = 0.5
-        TxtOuterview.layer.borderColor = UIColor.black.cgColor
+        contentTxtView.layer.cornerRadius = 10
+        contentTxtView.layer.borderWidth = 0.5
+        contentTxtView.layer.borderColor = UIColor.black.cgColor
         
         outerView.layer.cornerRadius = 10
         outerView.layer.shadowColor = UIColor.black.cgColor
@@ -118,7 +122,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         dayCount.setFont(style:.header, size: FontSize.BodySize)
         dateBtn.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
-        
+       
         calanderBtn.layer.cornerRadius = 10
 
     }
@@ -305,24 +309,27 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         self.present(vc, animated: false)
     }
-    func daytCounts(_ fromdate:String,_ todate:String)->String{
+
+    func updateDayCountLabel(startDateStr: String, endDateStr: String, dayCount: UILabel) {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMM yy"
-        var dateCount = ""
-        if let startDate = dateFormatter.date(from: fromdate),
-           let endDate = dateFormatter.date(from: todate) {
-            
-            // Calculate the difference in days
-            let calendar = Calendar.current
-            let dateDifference = calendar.dateComponents([.day], from: startDate, to: endDate)
-            
-            if let daysBetween = dateDifference.day {
-                dateCount = daysBetween < 1 ? "\(daysBetween + 1) \(CommonStringFile.Day.translated())" : "\(daysBetween + 1) \(CommonStringFile.Days.translated())"
-               return dateCount
-            }
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        guard let startDate = dateFormatter.date(from: startDateStr),
+              let endDate = dateFormatter.date(from: endDateStr) else {
+            dayCount.text = "Invalid date"
+            return
         }
-        return dateCount
+
+        let calendar = Calendar.current
+        if let days = calendar.dateComponents([.day], from: startDate, to: endDate).day {
+            let totalDays = days + 1  // Include the end date
+            dayCount.text = "\(totalDays) Day" + (totalDays > 1 ? "s" : "")
+        } else {
+            dayCount.text = "Error calculating"
+        }
     }
+
 }
 
 @available(iOS 14.0, *)

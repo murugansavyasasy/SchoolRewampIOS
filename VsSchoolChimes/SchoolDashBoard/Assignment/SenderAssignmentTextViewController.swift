@@ -106,7 +106,7 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
     var thumbnailURL: String?
     let thumbnailImageView = UIImageView()
     var attachments: [AttachmentItem] = []
-    var childVC :  AssignmentReportVc?
+   // var childVC :  AssignmentReportVc?
     var thumbnailImage: UIImage?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,19 +175,19 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
    
    
     func removeChildVC() {
-        guard let vc = childVC else { return }
-        vc.willMove(toParent: nil)
-        vc.view.removeFromSuperview()
-        vc.removeFromParent()
-        childVC = nil
+//        guard let vc = childVC else { return }
+//        vc.willMove(toParent: nil)
+//        vc.view.removeFromSuperview()
+//        vc.removeFromParent()
+//        childVC = nil
     }
     func addChildViewControllerToContainer() {
-        let vc = AssignmentReportVc(nibName: nil, bundle: nil)
-        addChild(vc)
-        vc.view.frame = CreateView.bounds
-        CreateView.addSubview(vc.view)
-        vc.didMove(toParent: self)
-        self.childVC = vc // Save reference
+//        let vc = AssignmentReportVc(nibName: nil, bundle: nil)
+//        addChild(vc)
+//        vc.view.frame = CreateView.bounds
+//        CreateView.addSubview(vc.view)
+//        vc.didMove(toParent: self)
+//        self.childVC = vc // Save reference
     }
     @IBAction func deleteVideo(){
         

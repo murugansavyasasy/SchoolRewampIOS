@@ -39,11 +39,11 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        CollectionBaseview.layer.cornerRadius = 10
-        CollectionBaseview.layer.shadowColor = UIColor.black.cgColor
-        CollectionBaseview.layer.shadowOffset = CGSize(width: 0, height: 2)
-        CollectionBaseview.layer.shadowRadius = 5
-        CollectionBaseview.layer.shadowOpacity = 0.3
+//        CollectionBaseview.layer.cornerRadius = 10
+//        CollectionBaseview.layer.shadowColor = UIColor.black.cgColor
+//        CollectionBaseview.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        CollectionBaseview.layer.shadowRadius = 5
+//        CollectionBaseview.layer.shadowOpacity = 0.3
         
         // Inner content view with corner radius
         collectionview.layer.cornerRadius = 10

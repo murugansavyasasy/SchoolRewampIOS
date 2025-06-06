@@ -251,4 +251,6 @@ class LeaveRequestStringFile{
     static let leave_to = "leave_to"
     static let reason = "reason"
     static let member_type = "member_type"
+    static let id = "id"
+    static let is_approve = "is_approve"
 }

@@ -56,7 +56,7 @@ extension UIButton {
                 self.titleLabel?.font = UIFont.systemFont(ofSize: defaultSize, weight: .bold)
             }
         case .secondary:
-            let font = UIFont(name: "Poppins-Regular", size: defaultSize)
+            let font = UIFont(name: "Poppins-Medium", size: defaultSize)
             if font != nil {
                 self.titleLabel?.font = font
             } else {

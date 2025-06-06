@@ -21,7 +21,9 @@ class DatePickerVC: UIViewController {
     var date : String?
     var dateSelection = 1
     var minimumDate: Date?
-    var maximumDta:Date?
+    var maximumDate: Date?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,6 +31,11 @@ class DatePickerVC: UIViewController {
             datepicker.minimumDate = date
         }
         if let date = maximumDta{
+            datepicker.maximumDate = date
+        }
+        
+        if let date = maximumDate {
+            
             datepicker.maximumDate = date
         }
         

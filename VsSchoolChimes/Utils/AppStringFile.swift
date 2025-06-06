@@ -43,7 +43,7 @@ class MenuStringFile{
     static let Video = "Video"
     static let Circulars = "Circulars"
     static let NoticeBoard = "Notice Board"
-    static let LeaveRequests = "Leave Requests"
+    static let LeaveRequest = "Leave Request"
     static let Assignment = "Assignment"
     static let OnlineMeeting = "Online Meeting"
     static let Homework = "Homework"
