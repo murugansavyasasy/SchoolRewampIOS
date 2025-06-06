@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -36,7 +36,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdl-3h-OZ8">
-                    <rect key="frame" x="0.0" y="124" width="440" height="764"/>
+                    <rect key="frame" x="0.0" y="62" width="440" height="860"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oAn-ev-L6a">
                             <rect key="frame" x="0.0" y="0.0" width="440" height="931.33333333333337"/>
@@ -60,7 +60,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ImN-8L-cEs">
-                                                    <rect key="frame" x="95" y="12.666666666666657" width="15" height="15"/>
+                                                    <rect key="frame" x="95" y="12.666666666666671" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="DDp-ll-7yo"/>
                                                         <constraint firstAttribute="height" constant="15" id="WQ6-Qc-gwg"/>
@@ -84,7 +84,7 @@
                                             <rect key="frame" x="270" y="5" width="120" height="40"/>
                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                             <connections>
-                                                <action selector="selectAcodemic:" destination="-1" eventType="touchUpInside" id="GKV-fH-8SE"/>
+                                                <action selector="selectAcademicYear:" destination="-1" eventType="touchUpInside" id="KOl-4b-zPO"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -179,7 +179,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1sJ-d0-3bX">
-                                                    <rect key="frame" x="163" y="12.666666666666686" width="15" height="15"/>
+                                                    <rect key="frame" x="163" y="12.666666666666657" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="Feh-9I-oMA"/>
                                                         <constraint firstAttribute="height" constant="15" id="dvj-fC-oVI"/>
@@ -209,7 +209,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZJQ-2D-jaZ">
-                                                    <rect key="frame" x="174" y="12.666666666666686" width="15" height="15"/>
+                                                    <rect key="frame" x="174" y="12.666666666666657" width="15" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="15" id="LMA-6N-tLx"/>
                                                         <constraint firstAttribute="height" constant="15" id="TrJ-YB-sul"/>
@@ -234,14 +234,14 @@
                                     <rect key="frame" x="16" y="156" width="199" height="40"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <connections>
-                                        <action selector="selectStanderd:" destination="-1" eventType="touchUpInside" id="PWq-eH-Nlg"/>
+                                        <action selector="selectStandard:" destination="-1" eventType="touchUpInside" id="b43-gD-08Y"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="su0-KY-rKo">
                                     <rect key="frame" x="225" y="156" width="199" height="40"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                     <connections>
-                                        <action selector="selectSection:" destination="-1" eventType="touchUpInside" id="XCR-jr-srj"/>
+                                        <action selector="selectSection:" destination="-1" eventType="touchUpInside" id="TYE-XQ-ve1"/>
                                     </connections>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FOD-x4-1v7">
@@ -266,7 +266,7 @@
                                             </connections>
                                         </tableView>
                                         <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NoMessage" translatesAutoresizingMaskIntoConstraints="NO" id="msi-ow-kCq">
-                                            <rect key="frame" x="0.0" y="702.66666666666674" width="420" height="300"/>
+                                            <rect key="frame" x="0.0" y="702.66666666666663" width="420" height="300"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="300" id="Cdw-fh-abp"/>
                                             </constraints>

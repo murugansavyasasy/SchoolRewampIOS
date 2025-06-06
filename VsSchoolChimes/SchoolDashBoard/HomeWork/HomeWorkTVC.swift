@@ -141,6 +141,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         vcc.imageURL = homeworkDocs?.filter({ img in
             img.type?.uppercased() == CommonStringFile.IMAGE
         }) ?? []
+        vcc.FileURL = homeworkDocs ?? []
         vcc.subjectName = subjectName.text
         vcc.pdfUrl = homeworkDocs?[indexPath.row].url
         vcc.scrollIndex = indexPath

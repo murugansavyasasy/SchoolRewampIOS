@@ -31,7 +31,8 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         var playerLayer: AVPlayerLayer?
         var isPlaying = false
     var url:String?
-   
+    var attachment:Attachment?
+    var delegate:ReadUpades?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Set up shadowView for shadow
@@ -124,7 +125,9 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
      }
     @IBAction func play(_ sender: UIButton) {
         guard let player = player else { return }
-
+        if let data = attachment{
+            delegate?.readStatus(attachment: data)
+        }
 //           if isPlaying {
 //               player.pause()
 //               playbtl.setImage(UIImage(named: "play-button"), for: .normal)
