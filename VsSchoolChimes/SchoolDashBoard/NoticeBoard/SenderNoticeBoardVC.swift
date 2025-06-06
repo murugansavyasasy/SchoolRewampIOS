@@ -13,7 +13,7 @@ import SwiftUI
 import QuickLook
 
 @available(iOS 14.0, *)
-class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker {
+class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge, Datepicker, VideoPickerManagerDelegate, UIPopoverPresentationControllerDelegate {
     
     func date(date: String) {
         let dateFormatter = DateFormatter()
@@ -55,7 +55,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     @IBOutlet weak var TextfieldCharCountLbl: UILabel!
     @IBOutlet weak var NextBtn: UIButton!
     @IBOutlet weak var PopupView: UIView!
-    
+    @IBOutlet weak var VideoView: UIView!
+    @IBOutlet weak var VideoThumbnailImg: UIImageView!
+    @IBOutlet weak var VideoDeleteBtn: UIImageView!
     
     let photoPickManager = PhotoPickerManager.shared
     var dateSelection = false
@@ -69,6 +71,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     var attachments: [AttachmentItem] = []
     var alert = CustomAlert()
     var DocumentpreviewURL: URL?
+    var videoPicker: VideoPickerManager?
+    var selectedVideoURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +88,13 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         
         textview.delegate = self
         TitleTextfield.delegate = self
+        
+        videoPicker = VideoPickerManager(presenter: self, delegate: self)
+        
+        VideoView.isHidden = true
+        
+        let VideoDelete = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
+        VideoDeleteBtn.addGestureRecognizer(VideoDelete)
         
         let collection = UINib(nibName: CellConfingName.ImageCvCell, bundle: nil)
         Attachmentview.imageCollectionview.register(collection, forCellWithReuseIdentifier: CellConfingName.ImageCvCell)
@@ -115,23 +126,13 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             endPoint: CGPoint(x: 0, y: 0.5)
         )
     }
-    override func viewWillAppear(_ animated: Bool) {
-//        if desript != ""{
-//            textview.text = desript
-//            placeholderLabel.isHidden = !Title.isEmpty
-//            contentCount.text = "\(textview.text.count) of 500"
-//        }
-//        if Title != ""{
-//            eventTxt.text =  Title
-//            
-//        }
-    }
     
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             attachments.removeAll { $0.fileType == CommonStringFile.pdf }
+            selectedVideoURL = nil
 
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             Attachmentview.imageCollectionview.reloadData()
@@ -147,7 +148,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             if imageItems.count != 0{
                 attachments.removeAll { $0.fileType == CommonStringFile.pdf }
             }
-            
+            selectedVideoURL = nil
             Attachmentview.imageCollectionview.reloadData()
         }
         
@@ -156,10 +157,9 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
             attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-
+            selectedVideoURL = nil
             Attachmentview.imageCollectionview.reloadData()
         }
-        
     }
     
     //MARK: Setting Current Date as initial Date
@@ -358,6 +358,53 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         }
     }
     
+    @IBAction func deleteVideo(){
+        
+        videoPickerManagerDidCloseVideo()
+    }
+    
+//    @IBAction func chooseVideoTapped(_ sender: UIButton) {
+//            videoPicker?.pickVideo()
+        //}
+
+    func pickVideoFromGallery(){
+        
+        videoPicker?.pickVideo()
+    }
+        @IBAction func playVideoTapped(_ sender: UIButton) {
+            if let url = selectedVideoURL {
+                videoPicker?.playVideo(from: url, in: VideoView)
+            } else {
+                videoPicker?.pickVideo()
+            }
+        }
+
+    // MARK: - Delegate Methods
+       func videoPickerManager(didPickVideo url: URL) {
+           Attachmentview.isHidden = true
+           collectionViewHeght.constant = 0
+           selectedVideoURL = url
+           VideoView.isHidden = false
+           //chooseRecipientsBtn.isHidden = false
+       }
+
+       func videoPickerManager(didGenerateThumbnail image: UIImage) {
+           VideoThumbnailImg.isHidden = false
+           VideoThumbnailImg.image = image
+       }
+
+       func videoPickerManagerDidCloseVideo() {
+           selectedVideoURL = nil
+           VideoThumbnailImg.image = nil
+           VideoView.isHidden = true
+//          / chooseRecipientsBtn.isHidden = true
+           Attachmentview.isHidden = false
+           collectionViewHeght.constant = 120
+           Attachmentview.imageCollectionview.reloadData()
+          
+           
+       }
+    
     // MARK: File Attachments Actions
     func selectImages() {
         let img = attachments.filter { $0.fileType == CommonStringFile.IMAGE }
@@ -458,21 +505,32 @@ extension SenderNoticeBoardVC : UICollectionViewDelegate,UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
             let alertController = UIAlertController(title: AlertstringFile.Select, message: AlertstringFile.Chooseanoption, preferredStyle: .actionSheet)
+            
             let cameraAction = UIAlertAction(title:AlertstringFile.Camera, style: .default) { [self] _ in
                 openCamera()
             }
             alertController.addAction(cameraAction)
+            
             let galleryAction = UIAlertAction(title: AlertstringFile.Gallery, style: .default) { [self] _ in
                 selectImages()
             }
             alertController.addAction(galleryAction)
+            
             let pdfAction = UIAlertAction(title: AlertstringFile.Document, style: .default) { [self] _ in
                 
                 selectPDF()
             }
             alertController.addAction(pdfAction)
+            
+            let VideoAction = UIAlertAction(title: "Video", style: .default) { [self] _ in
+                
+                pickVideoFromGallery()
+            }
+            alertController.addAction(VideoAction)
+            
             let cancelAction = UIAlertAction(title:AlertstringFile.Cancel, style: .cancel, handler: nil)
             alertController.addAction(cancelAction)
+            
             self.present(alertController, animated: true, completion: nil)
         }else{
         
