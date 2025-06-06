@@ -36,7 +36,7 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
         StandardLbl.text = "\(studentDetails?.standard_name ?? "") :\(studentDetails?.section_name ?? "")"
         GetHomeWorkReport()
         StyleAndTranslate()
-        searchBar.addDoneButton()
+        searchBar.searchTextField.addDoneButton()
         backBtn.applyBackButton()
         searchBar.applyRightTxt()
         RegisterCell()
@@ -50,6 +50,10 @@ class ReciverHomeworkVC: UIViewController, SelectNotice {
     
     override func viewDidLayoutSubviews() {
         view.applyGradient(colors: [Colornames.gradientBlue,Colornames.gradientgreen], startPoint: CGPoint(x: 1, y: 0.5),endPoint: CGPoint(x: 0, y: 0.5))
+    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // clear caches or large objects
     }
     
     func StyleAndTranslate(){
@@ -262,7 +266,7 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
             // Load image if available
             if let urls = homework.file_path, urls.count != 0{
                 cell.ImageCollectionView.isHidden = false
-                cell.CvHeight.constant = 150
+                cell.CvHeight.constant = 100
                 cell.loadImage(urls: urls)
             }
             let contentText = homework.description ?? ""

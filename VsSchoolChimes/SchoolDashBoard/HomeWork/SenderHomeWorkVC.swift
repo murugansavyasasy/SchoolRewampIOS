@@ -69,6 +69,11 @@ class SenderHomeWorkVC: UIViewController {
         super.viewWillAppear(animated)
         homeWorkTable.reloadData()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // clear caches or large objects
+    }
 
     // MARK: - Setup
     private func setupViews() {
@@ -349,7 +354,7 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
 
             if let filePaths = data.file_path, !filePaths.isEmpty {
                 cell.ImageCollectionView.isHidden = false
-                cell.CvHeight.constant = 150
+                cell.CvHeight.constant = 100
                 cell.loadImage(urls: filePaths)
             } else {
                 cell.ImageCollectionView.isHidden = true

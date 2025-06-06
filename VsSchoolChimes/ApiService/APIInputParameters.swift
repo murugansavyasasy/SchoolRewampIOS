@@ -190,7 +190,7 @@ class Daily_collectionStringFile {
 }
 class SendNoticeStringFile {
     static var title = "title"
-    static var content = "content"
+    static let description = "description"
     static var target_code = "target_code"
     static var intended_for = "intended_for"
     static var visible_from = "visible_from"

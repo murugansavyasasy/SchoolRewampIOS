@@ -31,6 +31,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         dateLble.setFont(style: .body, size: FontSize.BodySize)
         descriptionLbl.setFont(style: .body, size: FontSize.BodySize)
         topics.setFont(style: .title, size: FontSize.TitleSize)
+        subjectName.setFont(style:.title, size: FontSize.TitleSize)
         forwordBtn.layer.cornerRadius = 4
         forwordBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         cellview.layer.cornerRadius = 10
@@ -121,7 +122,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: ImageCollectionView.frame.height)
+        return CGSize(width: 100, height: 100)
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let maxVisibleIndex = collectionView.indexPathsForVisibleItems.map({ $0.item }).max() {
