@@ -30,9 +30,6 @@ class DatePickerVC: UIViewController {
         if let date = minimumDate {
             datepicker.minimumDate = date
         }
-        if let date = maximumDta{
-            datepicker.maximumDate = date
-        }
         
         if let date = maximumDate {
             

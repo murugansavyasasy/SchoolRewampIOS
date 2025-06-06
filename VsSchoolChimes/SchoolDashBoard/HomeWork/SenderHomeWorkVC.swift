@@ -158,7 +158,7 @@ class SenderHomeWorkVC: UIViewController {
         let vc = DatePickerVC(nibName: nil, bundle: nil)
         vc.dateSelection = 2
         vc.date = dateLbl.text
-        vc.maximumDta = Date()
+        vc.maximumDate = Date()
         vc.delegate = self
         vc.modalPresentationStyle = .overCurrentContext
         vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)

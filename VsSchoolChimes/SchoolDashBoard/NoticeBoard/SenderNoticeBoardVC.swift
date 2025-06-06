@@ -62,9 +62,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     let photoPickManager = PhotoPickerManager.shared
     var dateSelection = false
     var placeholderLabel: UILabel!
-//    var Title = ""
-//    var desript = ""
-   // var url : URL?
     let dateFormatter = DateFormatter()
     var initialHeight : CGFloat = 60
     var maxHeight : CGFloat = 300
@@ -162,6 +159,48 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         }
     }
     
+    @IBAction func deleteVideo(){
+        
+        videoPickerManagerDidCloseVideo()
+    }
+    
+    func pickVideoFromGallery(){
+        
+        videoPicker?.pickVideo()
+    }
+    
+    @IBAction func playVideoTapped(_ sender: UIButton) {
+        if let url = selectedVideoURL {
+            videoPicker?.playVideo(from: url, in: VideoView)
+        } else {
+            videoPicker?.pickVideo()
+        }
+    }
+    
+    // MARK: - Delegate Methods
+    func videoPickerManager(didPickVideo url: URL) {
+        attachments.removeAll()
+        Attachmentview.isHidden = true
+        collectionViewHeght.constant = 0
+        selectedVideoURL = url
+        VideoView.isHidden = false
+    }
+    
+    func videoPickerManager(didGenerateThumbnail image: UIImage) {
+        VideoThumbnailImg.isHidden = false
+        VideoThumbnailImg.image = image
+    }
+    
+    func videoPickerManagerDidCloseVideo() {
+        selectedVideoURL = nil
+        VideoThumbnailImg.image = nil
+        VideoView.isHidden = true
+        //          / chooseRecipientsBtn.isHidden = true
+        Attachmentview.isHidden = false
+        collectionViewHeght.constant = 120
+        Attachmentview.imageCollectionview.reloadData()
+    }
+    
     //MARK: Setting Current Date as initial Date
     func setInitialDate() {
     
@@ -254,40 +293,74 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
     
     @IBAction func fromDate(_ sender: UIButton) {
         //showTimePicker(for: sender, date: true)
+//        dateSelection = true
+//        let vc = DatePickerVC(nibName: nil, bundle: nil)
+//        vc.minimumDate = Date()
+//        dateFormatter.dateFormat = "dd MMM yyyy"
+////        if let fromDateString = todateBtn.titleLabel?.text,
+////           let fromDate = dateFormatter.date(from: fromDateString) {
+////            vc.maximumDate = fromDate
+////        } else {
+////            print("Invalid 'From' date string")
+////        }
+//        vc.dateSelection = 2
+//        vc.delegate = self
+//        vc.modalPresentationStyle = .overCurrentContext
+//        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+//        self.present(vc, animated: false)
+        
         dateSelection = true
-        let vc = DatePickerVC(nibName: nil, bundle: nil)
-        vc.minimumDate = Date()
-        dateFormatter.dateFormat = "dd MMM yyyy"
-//        if let fromDateString = todateBtn.titleLabel?.text,
-//           let fromDate = dateFormatter.date(from: fromDateString) {
-//            vc.maximumDate = fromDate
-//        } else {
-//            print("Invalid 'From' date string")
-//        }
-        vc.dateSelection = 2
-        vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.present(vc, animated: false)
+           let vc = DatePickerVC(nibName: nil, bundle: nil)
+           vc.minimumDate = Date() // today
+           dateFormatter.dateFormat = "dd MMM yyyy"
+
+           // Optional: limit 'from date' to not exceed 'to date'
+           if let toDateString = todateBtn.titleLabel?.text,
+              let toDate = dateFormatter.date(from: toDateString) {
+               vc.maximumDate = toDate
+           }
+
+           vc.dateSelection = 2
+           vc.delegate = self
+           vc.modalPresentationStyle = .overCurrentContext
+           vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+           self.present(vc, animated: false)
     }
     
     @IBAction func toDate(_ sender: UIButton) {
        // showTimePicker(for: sender, date: false)
+//        dateSelection = false
+//        let vc = DatePickerVC(nibName: nil, bundle: nil)
+//        dateFormatter.dateFormat = "dd MMM yyyy"
+//        if let fromDateString = fromdateBtn.titleLabel?.text,
+//           let fromDate = dateFormatter.date(from: fromDateString) {
+//            vc.minimumDate = fromDate
+//        } else {
+//            print("Invalid 'From' date string")
+//        }
+//
+//        vc.dateSelection = 2
+//        vc.delegate = self
+//        vc.modalPresentationStyle = .overCurrentContext
+//        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+//        self.present(vc, animated: false)
         dateSelection = false
-        let vc = DatePickerVC(nibName: nil, bundle: nil)
-        dateFormatter.dateFormat = "dd MMM yyyy"
-        if let fromDateString = fromdateBtn.titleLabel?.text,
-           let fromDate = dateFormatter.date(from: fromDateString) {
-            vc.minimumDate = fromDate
-        } else {
-            print("Invalid 'From' date string")
-        }
+            let vc = DatePickerVC(nibName: nil, bundle: nil)
+            dateFormatter.dateFormat = "dd MMM yyyy"
 
-        vc.dateSelection = 2
-        vc.delegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        self.present(vc, animated: false)
+            // Set minimum to fromDate
+            if let fromDateString = fromdateBtn.titleLabel?.text,
+               let fromDate = dateFormatter.date(from: fromDateString) {
+                vc.minimumDate = fromDate
+            } else {
+                vc.minimumDate = Date() // fallback
+            }
+
+            vc.dateSelection = 2
+            vc.delegate = self
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+            self.present(vc, animated: false)
     }
     
     func setFormattedDate(_ date: String, label: UILabel) {
@@ -358,52 +431,6 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
             alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
         }
     }
-    
-    @IBAction func deleteVideo(){
-        
-        videoPickerManagerDidCloseVideo()
-    }
-    
-//    @IBAction func chooseVideoTapped(_ sender: UIButton) {
-//            videoPicker?.pickVideo()
-        //}
-
-    func pickVideoFromGallery(){
-        
-        videoPicker?.pickVideo()
-    }
-        @IBAction func playVideoTapped(_ sender: UIButton) {
-            if let url = selectedVideoURL {
-                videoPicker?.playVideo(from: url, in: VideoView)
-            } else {
-                videoPicker?.pickVideo()
-            }
-        }
-
-    // MARK: - Delegate Methods
-       func videoPickerManager(didPickVideo url: URL) {
-           attachments.removeAll()
-           Attachmentview.isHidden = true
-           collectionViewHeght.constant = 0
-           selectedVideoURL = url
-           VideoView.isHidden = false
-           //chooseRecipientsBtn.isHidden = false
-       }
-
-       func videoPickerManager(didGenerateThumbnail image: UIImage) {
-           VideoThumbnailImg.isHidden = false
-           VideoThumbnailImg.image = image
-       }
-
-       func videoPickerManagerDidCloseVideo() {
-           selectedVideoURL = nil
-           VideoThumbnailImg.image = nil
-           VideoView.isHidden = true
-//          / chooseRecipientsBtn.isHidden = true
-           Attachmentview.isHidden = false
-           collectionViewHeght.constant = 120
-           Attachmentview.imageCollectionview.reloadData()
-       }
     
     // MARK: File Attachments Actions
     func selectImages() {
