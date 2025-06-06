@@ -381,6 +381,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
+           attachments.removeAll()
            Attachmentview.isHidden = true
            collectionViewHeght.constant = 0
            selectedVideoURL = url
