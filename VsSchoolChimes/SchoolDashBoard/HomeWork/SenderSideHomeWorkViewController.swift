@@ -165,6 +165,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
+           attachments.removeAll()
            uploadAttachmentView.isHidden = true
            collectionViewHeight.constant = 0
            selectedVideoURL = url
