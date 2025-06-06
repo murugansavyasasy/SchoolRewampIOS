@@ -1,15 +1,15 @@
+//////
+//////  common_apiCall.swift
+//////  School Chimes
+//////
+//////  Created by SARANRAJ SHANMUGAM on 05/06/25.
+//////
 ////
-////  common_apiCall.swift
-////  School Chimes
+////import Foundation
 ////
-////  Created by SARANRAJ SHANMUGAM on 05/06/25.
-////
-//
-//import Foundation
-//
 //class  common_apiCall {
-//    
-//    
+////    
+////    
 //    func sendAttachment(
 //        with uploadedFiles: [[String: String]],
 //        iframe: String,
@@ -18,7 +18,7 @@
 //        array_selectedId : [String],
 //        target_type : Int,
 //        selectedAcadimicYearId : Int,
-//        subjectId: String,
+//        subjectId: String, onComplete : (Send_AttachmentResponse) -> Void
 //    ) {
 //        
 //        
@@ -50,31 +50,31 @@
 //        ) { [self] (result: Result<Send_AttachmentResponse, Error>) in
 //            switch result {
 //            case .success(let successMessage):
-//                
-//                if successMessage.status == true {
-//                    DispatchQueue.main.async {
-//                        CustomAlert.showAlertWithOkAction(
-//                            title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
-//                            message: successMessage.message,
-//                            on: self
-//                        ) {
-//                            self.gotoDashboard()
-//                        }
-//                    }
-//                }else {
-//                    
-//                    DispatchQueue.main.async {
-//                        CustomAlert
-//                            .showAlertWithOkAction(
-//                                title: AlertstringFile.Alert_title,
-//                                message: successMessage.message,
-//                                on: self
-//                            ) {
-//                                self.gotoDashboard()
-//                            }
-//                    }
-//                }
-//                
+//                onComplete(successMessage)
+////                if successMessage.status == true {
+////                    DispatchQueue.main.async {
+////                        CustomAlert.showAlertWithOkAction(
+////                            title: successMessage.status ? AlertstringFile.Success : AlertstringFile.Alert_title,
+////                            message: successMessage.message,
+////                            on: self
+////                        ) {
+////                            self.gotoDashboard()
+////                        }
+////                    }
+////                }else {
+////                    
+////                    DispatchQueue.main.async {
+////                        CustomAlert
+////                            .showAlertWithOkAction(
+////                                title: AlertstringFile.Alert_title,
+////                                message: successMessage.message,
+////                                on: self
+////                            ) {
+////                                self.gotoDashboard()
+////                            }
+////                    }
+////                }
+////                
 //                
 //            case .failure(let error):
 //                print("❌ API error: \(error.localizedDescription)")
@@ -83,6 +83,11 @@
 //        }
 //        
 //    }
+//    
+//
+//    
+//    
+//    
 //    
 //    
 //}
