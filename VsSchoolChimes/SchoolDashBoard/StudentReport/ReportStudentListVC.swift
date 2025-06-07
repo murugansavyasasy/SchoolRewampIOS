@@ -54,6 +54,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     var sectionId:String?
     var selection:String?
     var showSearch:Bool = false
+    var academicId = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         BackBtn.applyBackButton()
@@ -205,6 +206,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         AcodemicDropdown.show()
         AcodemicDropdown.selectionAction = { [self] (index: Int, item: String) in
             getStandardsAPI(academic_year_id: AcadimicYearDatas[index].id ?? 0)
+            academicId = AcadimicYearDatas[index].id ?? 0
             selectedType.setTitle("\(selectStudentType) \(item)", for: .normal)
         }
     }
@@ -273,6 +275,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
+                        getStudentAPI()
                     }
                 }
             case .failure(let error):
@@ -287,7 +290,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     func getStudentAPI(class_id: String? = nil, section_id: String? = nil) {
         var param: [String: Any] = [:]
-        
+        param[COMMON_PARAMETER.academic_year_id] = academicId
         if let classID = class_id {
             param[GetStudentReport.class_id] = classID
         }
@@ -337,6 +340,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     self.nodataLbl.isHidden = false
                     self.nodataImg.isHidden = false
                     print("API Error: \(error.localizedDescription)")
+                    self.filterStudent = []
+                    self.studentList = []
+                    self.reportTable.reloadData()
                 }
             }
         }
@@ -356,6 +362,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                             for i in 0..<(AcadimicYearDatas.count){
                                 if AcadimicYearDatas[i].current_academic_year ?? false == true{
                                     selectedType.setTitle("\(AcadimicYearDatas[i].year ?? "")", for: .normal)
+                                    academicId = AcadimicYearDatas[i].id ?? 0
                                     getStandardsAPI(academic_year_id: AcadimicYearDatas[i].id ?? 0)
                                 }
                                 accadimYr.append(AcadimicYearDatas[i].year ?? "")

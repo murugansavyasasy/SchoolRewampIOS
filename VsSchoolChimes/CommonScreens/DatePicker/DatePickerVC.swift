@@ -22,8 +22,6 @@ class DatePickerVC: UIViewController {
     var dateSelection = 1
     var minimumDate: Date?
     var maximumDate: Date?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
