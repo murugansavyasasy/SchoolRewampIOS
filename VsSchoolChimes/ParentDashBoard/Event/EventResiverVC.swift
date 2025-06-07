@@ -248,7 +248,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 cell.CvHeight.constant = 150
                 cell.loadImage(urls: urls)
             }
-            let contentText = event?.content ?? ""
+            let contentText = event?.description ?? ""
             cell.descriptionLbl.setupExpandable(text: contentText)
             let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
             
