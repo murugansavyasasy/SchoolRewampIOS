@@ -466,7 +466,9 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
                 assignmentResquestStringKey.description: contentTxtView.text ?? "",
                 assignmentResquestStringKey.venue: placeTxt.text ?? "",
                 assignmentResquestStringKey.event_time: Totime.titleLabel?.text ?? "",
-                assignmentResquestStringKey.event_date: todate.titleLabel?.text ?? ""
+                assignmentResquestStringKey.event_date: ConvertDateStringSmart(
+                    todate.titleLabel?.text ?? ""
+                )
             ]
             
             let vc = RecipientVc(nibName: nil, bundle: nil)
