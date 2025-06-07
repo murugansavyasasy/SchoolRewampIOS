@@ -76,7 +76,9 @@ class EventResiverVC: UIViewController, SelectNotice{
         let nib = UINib(nibName:CellConfingName.EventTVC, bundle: nil)
         tableview.register(nib, forCellReuseIdentifier: CellConfingName.EventTVC)
         let nib2 = UINib(nibName: CellConfingName.ReciverAttendReportTV, bundle: nil)
+        let nib3 = UINib(nibName: CellConfingName.VideoTVCell, bundle: nil)
         tableview.register(nib2, forCellReuseIdentifier: CellConfingName.ReciverAttendReportTV)
+        tableview.register(nib3, forCellReuseIdentifier: CellConfingName.VideoTVCell)
     }
     
     func uiConficration(){
@@ -229,40 +231,57 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if section == 0{
-            let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
+            
             let event = event?[indexPath.row]
-//            cell.CvHeight.constant = 0
-            cell.ImageCollectionView.isHidden = true
-            // Configure cell data
-            cell.subjectName.text = event?.venue
-            cell.topics.text = event?.title ?? ""
-            
-            
-//            cell.dateLble.text = event?.date.convertToTargetDateFormat() ?? "-"
-            cell.forwordBtn.isHidden = true
-            cell.SelectBtnHeight.constant = 0
-            cell.newView.isHidden = true
-            // Load image if available
-            if let urls = event?.file_path, urls.count != 0{
-                cell.ImageCollectionView.isHidden = false
-                cell.CvHeight.constant = 150
-                cell.loadImage(urls: urls)
-            }
-            let contentText = event?.content ?? ""
-            cell.descriptionLbl.setupExpandable(text: contentText)
-            let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
-            
-            cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
-            cell.newView.isHidden = contentText.count <= 100
-            cell.descriptionLbl.onExpandableTap = { [weak tableView] in
-                cell.descriptionLbl.isExpanded.toggle()
+            if event?.file_path.first?.type?.uppercased() == "VIDEO"{
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
+                cell.confic(event?.file_path.first?.url ?? "")
+                cell.descriptContent.setupExpandable(text: event?.description ?? "")
+                cell.descriptContent.onExpandableTap = {
+                    cell.descriptContent.isExpanded.toggle()
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+                cell.newImg.isHidden = true
+                cell.datelbl.text = event?.date.convertToTargetDateFormat() ?? "-"
+                cell.videoName.text = event?.title
+                return cell
+            }else{
+                let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.EventTVC, for: indexPath) as! EventTVC
+                cell.ImageCollectionView.isHidden = true
+                // Configure cell data
+                cell.subjectName.text = event?.venue
+                cell.topics.text = event?.title ?? ""
+                
+                
+    //            cell.dateLble.text = event?.date.convertToTargetDateFormat() ?? "-"
+                cell.forwordBtn.isHidden = true
+                cell.SelectBtnHeight.constant = 0
                 cell.newView.isHidden = true
-                tableView?.beginUpdates()
-                tableView?.endUpdates()
+                // Load image if available
+                if let urls = event?.file_path, urls.count != 0{
+                    cell.ImageCollectionView.isHidden = false
+                    cell.CvHeight.constant = 150
+                    cell.loadImage(urls: urls)
+                }
+                let contentText = event?.description ?? ""
+                cell.descriptionLbl.setupExpandable(text: contentText)
+                let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
+                
+                cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
+                cell.newView.isHidden = contentText.count <= 100
+                cell.descriptionLbl.onExpandableTap = { [weak tableView] in
+                    cell.descriptionLbl.isExpanded.toggle()
+                    cell.newView.isHidden = true
+                    tableView?.beginUpdates()
+                    tableView?.endUpdates()
+                }
+                
+                cell.cellview.layoutIfNeeded()
+                return cell
             }
-            
-            cell.cellview.layoutIfNeeded()
-            return cell
+//            cell.CvHeight.constant = 0
+           
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.ReciverAttendReportTV, for: indexPath) as! ReciverAttendReportTV
             cell.TakenLbl.text = eventHolidayData?[indexPath.row].name

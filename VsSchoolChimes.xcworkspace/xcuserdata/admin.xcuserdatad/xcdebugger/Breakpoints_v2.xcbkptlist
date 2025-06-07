@@ -292,36 +292,6 @@
             endingLineNumber = "342"
             landmarkName = "getStudentAPI(class_id:section_id:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6D119DE2-BCFE-4A1D-9A4A-015E68380BC7 - 2081e7c56c2fe4c8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.StudentReportResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ReportStudentListVC.getStudentAPI(class_id: Swift.Optional&lt;Swift.String&gt;, section_id: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/StudentReport/ReportStudentListVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "343"
-                  endingLineNumber = "343">
-               </Location>
-               <Location
-                  uuid = "6D119DE2-BCFE-4A1D-9A4A-015E68380BC7 - 2081e7c56c2fe4e9"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.StudentReportResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ReportStudentListVC.getStudentAPI(class_id: Swift.Optional&lt;Swift.String&gt;, section_id: Swift.Optional&lt;Swift.String&gt;) -&gt; ()"
-                  moduleName = "School Chimes.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/SchoolDashBoard/StudentReport/ReportStudentListVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "342"
-                  endingLineNumber = "342">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

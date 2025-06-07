@@ -333,6 +333,7 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
+            cell.newImg.isHidden = true
             cell.datelbl.text = dateLbl.text?.convertToTargetDateFormat() ?? "-"
             cell.videoName.text = data.title
             return cell

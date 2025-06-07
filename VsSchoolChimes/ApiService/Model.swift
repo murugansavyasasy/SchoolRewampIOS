@@ -582,7 +582,7 @@ struct EventResponse: Codable {
 // MARK: - Event
 struct EventList: Codable {
     let title: String
-    let content: String
+    let description: String
     let date: String
     let time: String
     let venue: String

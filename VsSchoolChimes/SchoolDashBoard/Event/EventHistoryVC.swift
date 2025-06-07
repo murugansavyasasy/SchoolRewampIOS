@@ -90,7 +90,7 @@ class EventHistoryVC: UIViewController,UITableViewDelegate,UITableViewDataSource
             cell.loadImage(urls: urls)
         }
         cell.newView.isHidden = true
-        cell.descriptionLbl.setupExpandable(text: data?.content ?? "")
+        cell.descriptionLbl.setupExpandable(text: data?.description ?? "")
         cell.descriptionLbl.onExpandableTap = {
             cell.descriptionLbl.isExpanded.toggle()
             tableView.beginUpdates()
