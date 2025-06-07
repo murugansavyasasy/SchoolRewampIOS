@@ -275,6 +275,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     }
                 }else{
                     DispatchQueue.main.async { [self] in
+                        getStudentAPI()
                     }
                 }
             case .failure(let error):
@@ -339,6 +340,9 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
                     self.nodataLbl.isHidden = false
                     self.nodataImg.isHidden = false
                     print("API Error: \(error.localizedDescription)")
+                    self.filterStudent = []
+                    self.studentList = []
+                    self.reportTable.reloadData()
                 }
             }
         }
