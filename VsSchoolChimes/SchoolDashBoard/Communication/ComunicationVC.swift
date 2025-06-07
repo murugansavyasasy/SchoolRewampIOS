@@ -1100,6 +1100,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         isRecording = true
         recordingStartTime = Date()
         setupRecorder()
+        UIApplication.shared.isIdleTimerDisabled = true
         audioRecorder?.record()
         recordingTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateRecordingTime), userInfo: nil, repeats: true)
         voiceStackview.isHidden = true
@@ -1108,6 +1109,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
     }
     
     func stopRecording() {
+        UIApplication.shared.isIdleTimerDisabled = false
         recrdimg.image = ImageName.mic1
         sendbtn.isUserInteractionEnabled = true
         audioRecorder?.stop()
