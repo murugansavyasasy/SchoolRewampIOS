@@ -65,6 +65,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     var attachments: [AttachmentItem] = []
     var videoPicker: VideoPickerManager?
     var selectedVideoURL: URL?
+    var placeholderLabel: UILabel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         StyleAndTranslater()
@@ -84,6 +86,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             object: nil
         )
         
+        setupPlaceholder()
         assignTitleTxtFld.addDoneButton()
         contentTextView.addDoneButton()
         contentTextView.applyRightTxt()
@@ -153,8 +156,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         AssignmentTypeview.layer.borderWidth = 1
         AssignmentTypeview.layer.borderColor = UIColor.lightGray.cgColor
         AssignmentTypeview.backgroundColor = .white
-        contentTextView.text = CommonStringFile.Description.translated()
-        contentTextView.textColor = .lightGray
         
         //MARK: Button Font Style
         chooseRecipientsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -298,21 +299,14 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
         
-        if user_inputs.selectedFileType == "" {
+        
+        guard let title = assignTitleTxtFld.text , !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty , let `contents` = contentTextView.text , !`contents`.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else{
             
-            alert.showAlert(title: "", message: AlertstringFile.Please_Select_Attachment_Type, on: self)
-        }else if user_inputs.selectedFileType == AttachmentTypeString.VIDEO && VideoPath_URL == nil {
-            
-            alert.showAlert(title: "", message: AlertstringFile.Please_Select_a_Video, on: self)
-        }else if user_inputs.selectedFileType == AttachmentTypeString.IMAGE && attachments.isEmpty {
-            
-            alert.showAlert(title: "", message: AlertstringFile.Please_Select_a_Image, on: self)
-        }else if user_inputs.selectedFileType == AttachmentTypeString.DOCUMENT && attachments.isEmpty {
-            
-            alert.showAlert(title: "", message: AlertstringFile.Please_Select_a_Document, on: self)
+            alert.showAlert(title: "",message: AlertstringFile.enter_title_description,on: self)
+            return
         }
         
-        if assignTitleTxtFld.text != ""  && contentTextView.text != "" && contentTextView.text != CommonStringFile.Description {
+     
             user_inputs.title = assignTitleTxtFld.text ?? ""
             user_inputs.description = contentTextView.text ?? ""
             user_inputs.SelectedUrls = attachments
@@ -338,15 +332,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
-            
-        } else{
-            
-            alert
-                .showAlert(
-                    title: "",
-                    message: AlertstringFile.enter_title_description,
-                    on: self)
-        }
     }
     
     func isStaff() -> Bool {
@@ -586,6 +571,21 @@ extension SenderAttachmentVC : UICollectionViewDelegate,UICollectionViewDataSour
 @available(iOS 14.0, *)
 extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
     
+    func setupPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel?.text = CommonStringFile.Description.translated()
+        placeholderLabel?.font = contentTextView.font
+        placeholderLabel?.textColor = .lightGray
+        placeholderLabel?.sizeToFit()
+        placeholderLabel?.frame.origin = CGPoint(x: 5, y: 8) // Adjust padding
+        contentTextView.applyRightTxt()
+        contentTextView.applyRightTxt(with: placeholderLabel!)
+        letterscountLbl.applyRightTxt()
+        assignTitleTxtFld.applyRightTxt()
+        contentTextView.addSubview(placeholderLabel!)
+        placeholderLabel?.isHidden = !contentTextView.text.isEmpty // Hide if text. exists
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let currentText = textField.text ?? ""
@@ -607,19 +607,13 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
 
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if contentTextView.text == CommonStringFile.Description.translated() {
-            
-            contentTextView.text = ""
-            contentTextView.textColor = .black
-        }
+        
+        placeholderLabel?.isHidden = !contentTextView.text.isEmpty
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if contentTextView.text == "" {
-            
-            contentTextView.text = CommonStringFile.Description
-            contentTextView.textColor = .lightGray
-        }
+       
+        placeholderLabel?.isHidden = !contentTextView.text.isEmpty
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
