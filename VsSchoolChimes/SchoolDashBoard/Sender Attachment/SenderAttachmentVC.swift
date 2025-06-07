@@ -12,7 +12,7 @@ import AVKit
 import QuickLook
 
 @available(iOS 14.0, *)
-class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge {
+class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate,UIDocumentPickerDelegate, DeleteImge ,VideoPickerManagerDelegate {
     
     func deleteImage(index: Int) {
         attachments.remove(at: index)
@@ -69,7 +69,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         super.viewDidLoad()
         StyleAndTranslater()
         BackBtn.applyBackButton()
-        
+        videoPicker = VideoPickerManager(presenter: self, delegate: self)
         // Add observers for keyboard notifications
         NotificationCenter.default.addObserver(
             self,
@@ -99,8 +99,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         let typeGesture = UITapGestureRecognizer(target: self, action: #selector(typeDropdown))
         AssignmentTypeview.addGestureRecognizer(typeGesture)
         
-        let PlayGesture = UITapGestureRecognizer(target: self, action: #selector(ChooseVideoBtnAct))
-        VideoView.addGestureRecognizer(PlayGesture)
+       
         
         let DeleteGesture = UITapGestureRecognizer(target: self, action: #selector(deleteVideo))
         VideoDeleteBtn.addGestureRecognizer(DeleteGesture)
@@ -142,7 +141,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         //AddAtachmentStack.isHidden = true
         VideoView.isHidden = true
         //selectImgPdfview.isHidden = true
-        VideoDeleteBtn.isHidden = true
 
         VideoView.layer.cornerRadius = 10
         AssignmentTypeview.layer.cornerRadius = 10
@@ -177,15 +175,12 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         videoPickerManagerDidCloseVideo()
     }
     
-    @IBAction func chooseVideoTapped(_ sender: UIButton) {
-            videoPicker?.pickVideo()
-        }
-
     func pickVideoFromGallery(){
         
         videoPicker?.pickVideo()
     }
         @IBAction func playVideoTapped(_ sender: UIButton) {
+            VideoDeleteBtn.isHidden = true
             if let url = selectedVideoURL {
                 videoPicker?.playVideo(from: url, in: VideoView)
             } else {
@@ -195,6 +190,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
 
     // MARK: - Delegate Methods
        func videoPickerManager(didPickVideo url: URL) {
+          
+           attachments.removeAll()
            selectImgPdfview.isHidden = true
            collectionViewHeght.constant = 0
            selectedVideoURL = url

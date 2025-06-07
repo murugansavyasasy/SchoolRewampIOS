@@ -201,16 +201,16 @@
                                                             <state key="normal" image="play-button"/>
                                                             <state key="selected" image="play-button"/>
                                                             <connections>
-                                                                <action selector="PlayBtnAct:" destination="-1" eventType="touchUpInside" id="xbs-ow-yYo"/>
+                                                                <action selector="playVideoTapped:" destination="-1" eventType="touchUpInside" id="WSU-Bl-ii4"/>
                                                             </connections>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click To Choose Video From File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7r-jX-hNu">
+                                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click To Choose Video From File" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r7r-jX-hNu">
                                                             <rect key="frame" x="49.333333333333329" y="169" width="244.66666666666669" height="20.333333333333343"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fDn-jd-shQ">
+                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="fDn-jd-shQ">
                                                             <rect key="frame" x="321" y="-13.333333333333334" width="30" height="28.666666666666671"/>
                                                             <color key="tintColor" systemColor="systemRedColor"/>
                                                             <constraints>

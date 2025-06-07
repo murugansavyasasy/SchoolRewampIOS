@@ -69,6 +69,11 @@ class SenderHomeWorkVC: UIViewController {
         super.viewWillAppear(animated)
         homeWorkTable.reloadData()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // clear caches or large objects
+    }
 
     // MARK: - Setup
     private func setupViews() {
