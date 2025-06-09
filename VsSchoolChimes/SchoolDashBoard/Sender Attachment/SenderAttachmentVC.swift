@@ -307,8 +307,8 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
         }
         
      
-            user_inputs.title = assignTitleTxtFld.text ?? ""
-            user_inputs.description = contentTextView.text ?? ""
+            user_inputs.title = title
+            user_inputs.description = `contents`
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = VideoPath_URL
             
