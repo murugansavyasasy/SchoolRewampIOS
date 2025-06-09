@@ -53,7 +53,6 @@ class EventResiverVC: UIViewController, SelectNotice{
         uiConficration()
         GetEvent()
         tabelViewRegister()
-        setupTableFooter()
     }
     
     @IBAction func backbtn(_ sender: Any) {
@@ -109,11 +108,9 @@ class EventResiverVC: UIViewController, SelectNotice{
         section = sender.selectedSegmentIndex
         if sender.selectedSegmentIndex != 0{
             shouldShowFooter = false
-            setupTableFooter()
             event_holiday()
         }else{
             shouldShowFooter = true
-            setupTableFooter()
             GetEvent()
         }
         
@@ -261,7 +258,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 // Load image if available
                 if let urls = event?.file_path, urls.count != 0{
                     cell.ImageCollectionView.isHidden = false
-                    cell.CvHeight.constant = 150
+                    cell.CvHeight.constant = 100
                     cell.loadImage(urls: urls)
                 }
                 let contentText = event?.description ?? ""
@@ -269,7 +266,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
                 
                 cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
-                cell.newView.isHidden = contentText.count <= 100
+//                cell.newView.isHidden = contentText.count <= 100
                 cell.descriptionLbl.onExpandableTap = { [weak tableView] in
                     cell.descriptionLbl.isExpanded.toggle()
                     cell.newView.isHidden = true
@@ -329,51 +326,53 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
     //MARK: TEXT ADD SEE MORE
     
     
+   
+    
     func didTapButton(title: String, content: String, items: [FilePath]) {
         delegate?.select(Title: title, Description: content, Images: [], pdf: "")
         
     }
     
     
-    // Method to load the footer from nib and set it as tableFooterView
-    func setupTableFooter() {
-        if shouldShowFooter {
-            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
-                // Adjust the frame based on your needs.
-                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
-                
-                // Add a tap gesture recognizer to the button to trigger the hide action.
-                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
-                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
-                footer.SeeMoreBtn.isUserInteractionEnabled = true
-                
-                // Set the footer view.
-                tableview.tableFooterView = footer
-            }
-        } else {
-            tableview.tableFooterView = nil
-        }
-    }
-    
-    @objc func seeMoreAction() {
-        print("Footer button tapped. Hiding the footer.")
-        
-        // Animate the footer fade-out if desired.
-        if let footer = tableview.tableFooterView {
-            UIView.animate(withDuration: 0.3, animations: {
-                footer.alpha = 0
-            }, completion: {[self] _ in
-                // Hide the footer after animation completes.
-                tableview.tableFooterView = nil
-                shouldShowFooter = false
-                
-                tableview.reloadData()
-            })
-        } else {
-            // In case footer is already nil.
-            shouldShowFooter = false
-        }
-    }
+//    // Method to load the footer from nib and set it as tableFooterView
+//    func setupTableFooter() {
+//        if shouldShowFooter {
+//            if let footer = Bundle.main.loadNibNamed("SeeMoreFooterView", owner: self, options: nil)?.first as? SeeMoreFooterView {
+//                // Adjust the frame based on your needs.
+//                footer.frame = CGRect(x: 0, y: 0, width: tableview.frame.width, height: 60)
+//                
+//                // Add a tap gesture recognizer to the button to trigger the hide action.
+//                let seeMoreTap = UITapGestureRecognizer(target: self, action: #selector(seeMoreAction))
+//                footer.SeeMoreBtn.addGestureRecognizer(seeMoreTap)
+//                footer.SeeMoreBtn.isUserInteractionEnabled = true
+//                
+//                // Set the footer view.
+//                tableview.tableFooterView = footer
+//            }
+//        } else {
+//            tableview.tableFooterView = nil
+//        }
+//    }
+//    
+//    @objc func seeMoreAction() {
+//        print("Footer button tapped. Hiding the footer.")
+//        
+//        // Animate the footer fade-out if desired.
+//        if let footer = tableview.tableFooterView {
+//            UIView.animate(withDuration: 0.3, animations: {
+//                footer.alpha = 0
+//            }, completion: {[self] _ in
+//                // Hide the footer after animation completes.
+//                tableview.tableFooterView = nil
+//                shouldShowFooter = false
+//                
+//                tableview.reloadData()
+//            })
+//        } else {
+//            // In case footer is already nil.
+//            shouldShowFooter = false
+//        }
+//    }
     
 }
 

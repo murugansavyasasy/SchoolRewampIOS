@@ -153,6 +153,22 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "9F4AD569-941B-48DC-97D8-74149E0CDF4F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/Utils/Extentions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "599"
+            endingLineNumber = "599"
+            landmarkName = "downloadFile(from:folderName:fileName:completion:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             uuid = "90095C70-CA9F-44AA-BD74-1E8D34CEE75A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -176,6 +192,70 @@
             filePath = "VsSchoolChimes/ParentDashBoard/Video/VideoTVCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "presentationControllerDidDismiss(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B27DEC48-901E-4C08-BF28-0F5A45B0274B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
+            landmarkName = "SendingAttachmentFlow(baseURL:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6786614C-E6C5-4DEF-A33B-24CEC6A2D0FF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
+            landmarkName = "SendingAttachmentFlow(baseURL:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DAC49E6B-F89C-4C98-AC70-C97C7B4BAB71"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
+            landmarkName = "SendingAttachmentFlow(baseURL:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "461CA40C-3A32-4259-A3DE-818B2A832228"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/CommonScreens/SelectRecipient/RecipientVc.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "156"
             endingLineNumber = "156"
             landmarkName = "sharebtn(_:)"
@@ -195,6 +275,162 @@
             startingLineNumber = "142"
             endingLineNumber = "142"
             landmarkName = "classPendingReportAPI(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8A1A1E55-4C8C-40FC-A602-644CFEACA74E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
+            landmarkName = "readStatus(attachment:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "24799270-7032-49E9-9E67-A245C1CEE063"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
+            landmarkName = "ReadStatusUpdateArchive(type:detail_id:filterType:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "24799270-7032-49E9-9E67-A245C1CEE063 - dc4e64881c069133"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.ReadStatusResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ReciverAttachmentrVC.ReadStatusUpdateArchive(type: Swift.String, detail_id: Swift.String, filterType: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "277"
+                  endingLineNumber = "277">
+               </Location>
+               <Location
+                  uuid = "24799270-7032-49E9-9E67-A245C1CEE063 - 9d18e5d0b7e8ad39"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ReadStatusResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ReciverAttachmentrVC.ReadStatusUpdateArchive(type: Swift.String, detail_id: Swift.String, filterType: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "278"
+                  endingLineNumber = "278">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EB0AE6E3-46C5-47B6-9545-E6D7A296D0AC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "ReadStatusUpdateArchive(type:detail_id:filterType:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B84DE9D7-7C41-4C31-B82A-277BBF343459"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "ReadStatusUpdateArchive(type:detail_id:filterType:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DCBDD848-3E4C-402F-8354-882EF9A58C7D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
+            landmarkName = "ReadStatusUpdateArchive(type:detail_id:filterType:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "DCBDD848-3E4C-402F-8354-882EF9A58C7D - dc4e64881c069743"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;School_Chimes.ReadStatusResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ReciverAttachmentrVC.ReadStatusUpdateArchive(type: Swift.String, detail_id: Swift.String, filterType: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "293"
+                  endingLineNumber = "293">
+               </Location>
+               <Location
+                  uuid = "DCBDD848-3E4C-402F-8354-882EF9A58C7D - d40a2feb4eb2ad0a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #1 (Swift.Result&lt;School_Chimes.ReadStatusResponse, Swift.Error&gt;) -&gt; () in School_Chimes.ReciverAttachmentrVC.ReadStatusUpdateArchive(type: Swift.String, detail_id: Swift.String, filterType: Swift.String) -&gt; ()"
+                  moduleName = "School Chimes.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/admin/Desktop/School/SchoolRewampIOS/VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "294"
+                  endingLineNumber = "294">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B2F1A817-C7AD-4C0B-9713-3097B59353D9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VsSchoolChimes/ParentDashBoard/Attachments/ReciverAttachmentrVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "330"
+            endingLineNumber = "330"
+            landmarkName = "readStatus(attachment:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

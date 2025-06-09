@@ -35,9 +35,6 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
     var delegate:ReadUpades?
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Set up shadowView for shadow
-        
-        confic(url ?? "")
         datelbl.setFont(style: .body, size: FontSize.BodySize)
         videoName.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
@@ -52,11 +49,11 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         OuterView.layer.cornerRadius = 20  // Optional for rounded shadow
         Sentbtn.transform = CGAffineTransform(rotationAngle: .pi / 2)
         playbtl.layer.cornerRadius = playbtl.frame.height/2
-
     }
 
 
     func confic(_ url: String) {
+        
         if let videoID = extractVimeoID(from: url) {
             fetchVimeoVideoFiles(videoID: videoID, accessToken: YOUR_VIMEO_TOKEN) { urls in
                 if let firstURLString = urls.first,
