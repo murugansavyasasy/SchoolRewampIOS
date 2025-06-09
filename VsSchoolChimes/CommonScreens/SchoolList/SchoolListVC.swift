@@ -14,7 +14,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var chooseUrSchoolLbl: UILabel!
     @IBOutlet weak var headerSchoolLbl: UILabel!
     @IBOutlet weak var radioBtnStack: UIStackView!
-    @IBOutlet weak var sendOnlyLbl: UILabel!
     @IBOutlet weak var studentBtnName: UIButton!
     @IBOutlet weak var staffBtnName: UIButton!
     @IBOutlet weak var allbtnName: UIButton!
@@ -84,7 +83,6 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 radioButtonTapped(allbtnName)
                 ViewAnimator.hideFade(segmentName)
                 ViewAnimator.showFade(radioBtnStack)
-                ViewAnimator.showFade(sendOnlyLbl)
                 ViewAnimator.showFade(sendBtnName)
                 segmentName.selectedSegmentIndex = 1
             }
