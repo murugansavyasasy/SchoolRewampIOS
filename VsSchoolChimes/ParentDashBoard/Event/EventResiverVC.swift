@@ -258,7 +258,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 // Load image if available
                 if let urls = event?.file_path, urls.count != 0{
                     cell.ImageCollectionView.isHidden = false
-                    cell.CvHeight.constant = 150
+                    cell.CvHeight.constant = 100
                     cell.loadImage(urls: urls)
                 }
                 let contentText = event?.description ?? ""
@@ -266,7 +266,7 @@ extension EventResiverVC : UITableViewDelegate,UITableViewDataSource {
                 let formattedDateString = dateFormatter.convertDate(event?.date ?? "") ?? ""
                 
                 cell.dateLble.setStyledDateTime(dateString: formattedDateString, timeString: event?.time)
-                cell.newView.isHidden = contentText.count <= 100
+//                cell.newView.isHidden = contentText.count <= 100
                 cell.descriptionLbl.onExpandableTap = { [weak tableView] in
                     cell.descriptionLbl.isExpanded.toggle()
                     cell.newView.isHidden = true
