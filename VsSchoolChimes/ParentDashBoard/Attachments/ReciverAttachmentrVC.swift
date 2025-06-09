@@ -273,6 +273,7 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
             case .success(let SuccessMessage):
                 
                 if SuccessMessage.status == true {
+                    
                     DispatchQueue.main.async { [self] in
                         attachmentData = attachmentData.map { attachment in
                             var updated = attachment
@@ -284,6 +285,8 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
 
                         applyFilter(type: filterType)
                     }
+                }else{
+                    
                 }
             case .failure(let error):
                 
@@ -358,11 +361,8 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
-            
             cell.datelbl.text = data.date?.convertToTargetDateFormat() ?? "-"
             cell.videoName.text = data.title
-//            cell.playvideo(url: "https://player.vimeo.com/video/1084600934?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=177030\" width=\"400\" height=\"300\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media\" title=\"The only way I could do that")
-            
             return cell
             
         case "DOCUMENT":
