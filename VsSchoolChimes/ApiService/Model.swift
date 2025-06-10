@@ -790,3 +790,17 @@ struct Assignment: Codable {
     var file_size: String?
     var file_path: [FilePath]?
 }
+//MARK: ASSIGNMENT MY SUBMISION
+struct SubmissionResponse: Codable {
+    let status: Bool
+    let message: String
+    let data: [Submission]
+}
+
+struct Submission: Codable {
+    let id: String
+    let content: [FilePath]
+    let description: String
+    let submitted_on: String
+}
+

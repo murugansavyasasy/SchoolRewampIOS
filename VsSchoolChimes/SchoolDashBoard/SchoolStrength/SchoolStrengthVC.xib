@@ -137,16 +137,16 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qg8-JN-blC">
-                            <rect key="frame" x="10" y="10" width="373" height="44"/>
+                            <rect key="frame" x="10" y="10" width="368" height="44"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Academic year : " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atQ-1Q-e2d">
-                                    <rect key="frame" x="10" y="11.999999999999998" width="203" height="20.333333333333329"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose academic year :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atQ-1Q-e2d">
+                                    <rect key="frame" x="10" y="11.999999999999998" width="198" height="20.333333333333329"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBB-B5-78S">
-                                    <rect key="frame" x="223" y="2" width="150" height="40"/>
+                                    <rect key="frame" x="218" y="2" width="150" height="40"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2020 - 2021" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eu6-Vz-JYr">
                                             <rect key="frame" x="10" y="0.0" width="105" height="40"/>
@@ -203,7 +203,7 @@
                         <constraint firstItem="53x-iP-Lpy" firstAttribute="top" secondItem="TO6-fT-UCg" secondAttribute="bottom" constant="8" id="rVf-YM-H4x"/>
                         <constraint firstAttribute="bottom" secondItem="53x-iP-Lpy" secondAttribute="bottom" id="vvn-as-ivt"/>
                         <constraint firstAttribute="trailing" secondItem="TO6-fT-UCg" secondAttribute="trailing" constant="15" id="wLZ-mp-0cW"/>
-                        <constraint firstAttribute="trailing" secondItem="qg8-JN-blC" secondAttribute="trailing" constant="10" id="yfM-ob-ZYV"/>
+                        <constraint firstAttribute="trailing" secondItem="qg8-JN-blC" secondAttribute="trailing" constant="15" id="yfM-ob-ZYV"/>
                     </constraints>
                 </view>
             </subviews>
@@ -237,10 +237,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.78039215689999997" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -79,6 +79,7 @@ struct ServiceUrl{
     static let comm_api_leave_req_update_status = "comm/api/leave-req/update-status"
     static let   comm_api_assignment_list = "comm/api/assignment/list"
     static let   comm_api_assignment_list_archive = "comm/api/assignment/list-archive"
+    static let comm_api_my_submissions = "comm/api/my-submissions"
     
 }
 

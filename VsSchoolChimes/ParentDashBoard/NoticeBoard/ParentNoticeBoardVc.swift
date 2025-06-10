@@ -177,7 +177,8 @@ extension ParentNoticeBoardVc : UITableViewDelegate,UITableViewDataSource {
                     cell.datelbl.setStyledDateTime(dateString: formattedDateString, timeString: timePart)
                 }
             }
-            cell.videoName.text = notice?.title
+            cell.titleLbl.text = notice?.title
+            cell.subjectName.isHidden = true
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.NoticeBoardTvcellTableViewCell, for: indexPath) as! NoticeBoardTvcellTableViewCell

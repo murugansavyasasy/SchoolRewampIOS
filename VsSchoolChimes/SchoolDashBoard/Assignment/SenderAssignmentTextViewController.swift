@@ -356,7 +356,7 @@ class SenderAssignmentTextViewController: UIViewController,UIDocumentPickerDeleg
         categoryLbl.setFont(style: .title, size: FontSize.TitleSize)
         collectionViewHeght.constant = 120
        addphotosheight.constant = 20
-        AddphotosLbl.text = CommonStringFile.Add_attachment_optional
+        setAttributedText(for: AddphotosLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
     
     @objc func datePickerValueChanged(_ sender: UIDatePicker) {

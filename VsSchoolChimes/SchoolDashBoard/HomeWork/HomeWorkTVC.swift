@@ -73,7 +73,9 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     
     func loadImage(urls: [FilePath]) {
         ImageCollectionView.isHidden = false
-        pageViewController.isHidden = false
+        if homeworkDocs?.count ?? 0 > 1{
+            pageViewController.isHidden = false
+        }
         homeworkDocs = urls
         pageViewController.numberOfPages = homeworkDocs?.count ?? 0
         pageViewController.currentPage = 0
@@ -142,11 +144,14 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
         vcc.imageURL = homeworkDocs?.filter({ img in
             img.type?.uppercased() == CommonStringFile.IMAGE
         }) ?? []
-        vcc.FileURL = homeworkDocs ?? []
+        var homeworkDocs = homeworkDocs ?? []
+        let filePath = homeworkDocs[indexPath.row]
+        homeworkDocs.remove(at: indexPath.row)
+        homeworkDocs.insert(filePath, at: 0)
+        vcc.FileURL = homeworkDocs
         vcc.subjectName = subjectName.text
-        vcc.pdfUrl = homeworkDocs?[indexPath.row].url
         vcc.scrollIndex = indexPath
-        vcc.type = homeworkDocs?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
+        vcc.type = homeworkDocs[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
         vcc.modalPresentationStyle = .fullScreen
         vc?.present(vcc, animated: true)
         //        } else {

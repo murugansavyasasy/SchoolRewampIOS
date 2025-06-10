@@ -263,6 +263,10 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
         searchBar.text = ""
         searchBar.resignFirstResponder()
         SearchAttachments = filteredAttachments
+        NodataLbl.text = "No Data Found"
+        NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
+        NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
+        EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
         attachmentTable.reloadData()
     }
     func ReadStatusUpdateArchive(type: String,detail_id: String,filterType:String){
@@ -351,6 +355,7 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
             cell.confic(data.file_path?.first?.url ?? "")
             cell.attachment = data
+            cell.file_path = data.file_path
             cell.delegate = self
             cell.descriptContent
                 .setupExpandable(
@@ -362,7 +367,7 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
                 tableView.endUpdates()
             }
             cell.datelbl.text = data.date?.convertToTargetDateFormat() ?? "-"
-            cell.videoName.text = data.title
+            cell.titleLbl.text = data.title
             return cell
             
         case "DOCUMENT":

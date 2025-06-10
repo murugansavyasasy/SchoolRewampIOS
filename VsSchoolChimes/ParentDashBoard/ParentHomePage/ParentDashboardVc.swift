@@ -294,29 +294,30 @@ class ParentDashboardVc: UIViewController {
 extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return filteredMenu_details?.count ?? 0 // Ensure ItemnCount matches your data source
+        return filteredMenu_details?.count ?? 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("Row: \(indexPath.row)")
-        
+        guard let filteredMenu_details = filteredMenu_details, !filteredMenu_details.isEmpty else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell, for: indexPath) as! BottomCVCell
+            cell.MenuLbl.text = nil
+            cell.MenuImgView.image = nil
+            return cell
+        }
         if indexPath.row == 6 {
             // Handle the "seeMore" cell
-            let adCell = collectionView.dequeueReusableCell(withReuseIdentifier:CellConfingName.seeMore, for: indexPath) as! seeMore
-            
+            let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.seeMore, for: indexPath) as! seeMore
             adCell.advertisements = advertisements
             adCell.adCollectionView.reloadData()
             return adCell
         } else {
-            // Handle regular cells
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell, for: indexPath) as! BottomCVCell
             cell.MenuLbl.text = nil
             cell.MenuImgView.image = nil
             
-            
-            let label = filteredMenu_details?[indexPath.row].name?.translated()
-            if let name = filteredMenu_details?[indexPath.row].id {
-                let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name}
+            let label = filteredMenu_details[indexPath.row].name?.translated()
+            if let name = filteredMenu_details[indexPath.row].id {
+                let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name }
                 let img = UIImage(named: filteredItems.first?.name ?? "")
                 cell.MenuImgView.image = img
             }
@@ -324,7 +325,7 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             cell.MenuLbl.text = label
             cell.GradientView.backgroundColor = .clr
             cell.roundview.isHidden = true
-            if filteredMenu_details?[indexPath.row].unread_count ?? 0 > 0 {
+            if filteredMenu_details[indexPath.row].unread_count ?? 0 > 0 {
                 cell.roundview.isHidden = false
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -427,10 +428,19 @@ extension ParentDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
 
 @available(iOS 14.0, *)
 extension ParentDashboardVc: UICollectionViewDelegateFlowLayout {
-    
-    // Set item size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.row == 6{
+        guard let filteredMenu_details = filteredMenu_details, !filteredMenu_details.isEmpty else {
+            let width = (collectionView.frame.width) / 3.2
+            return CGSize(width: width, height: width)
+        }
+        
+        // Check if index is valid
+        guard indexPath.row < filteredMenu_details.count else {
+            let width = (collectionView.frame.width) / 3.2
+            return CGSize(width: width, height: width)
+        }
+        
+        if indexPath.row == 6 {
             return CGSize(width: collectionView.frame.width, height: 160)
         }
         
@@ -438,9 +448,9 @@ extension ParentDashboardVc: UICollectionViewDelegateFlowLayout {
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
         
-        let label = filteredMenu_details?[indexPath.row].name?.translated()
-        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
-        let textHeight = label?.height(withConstrainedWidth: maxTextWidth, font: font) ?? 0
+        let label = filteredMenu_details[indexPath.row].name?.translated() ?? ""
+        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10)
+        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
         
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height + 10)

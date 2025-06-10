@@ -73,7 +73,8 @@ class RecipientVc: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        nodataFound.isHidden = true
+        noRecordLbl.isHidden = true
         speficBtnName.isHidden = true
         tv.isHidden = true
         backbtnMName
@@ -1554,6 +1555,7 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             case .failure(let error):
                 print("❌ API error: \(error.localizedDescription)")
                 // Optional: Add alert for failure
+                
             }
         }
         

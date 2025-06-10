@@ -132,20 +132,14 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = listTable.dequeueReusableCell(withIdentifier: CellConfingName.AssignmentListCTVC, for: indexPath) as! AssignmentListCTVC
         cell.tittleLbl.text = filteredData?[indexPath.row].title
-        // Compare dueDate with current date
         if !isDueDatePassed(dueDate: filteredData?[indexPath.row].end_date ?? "") {
             cell.dueDateLbl.textColor = .black
         } else {
             cell.dueDateLbl.textColor = .red
         }
         cell.FilesUrl = filteredData?[indexPath.row].file_path
-//        cell.confic(filteredData?[indexPath.row].file_path ?? [])
         cell.dueDateLbl.text = filteredData?[indexPath.row].end_date
         cell.CreaterdDate.text = filteredData?[indexPath.row].date
-       
-      //  cell.didSelectDelegate = self
-       // let viewTap = UITapGestureRecognizer(target: self, action: #selector(ViewAct))
-       
         cell.Delegate = self
         return cell
     }
@@ -155,9 +149,6 @@ extension AssignmentListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     @IBAction func ViewAct(_ sender: Any){
-        
-        let index = (sender as AnyObject).tag
-        
         let vc = ImageShowVc(nibName: nil, bundle: nil)
 //        vc.FileURL = fileUrl
         vc.type = 0

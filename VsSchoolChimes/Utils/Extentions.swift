@@ -166,79 +166,26 @@ extension String {
         return components.joined(separator: "")
     }
 }
-//extension UIViewController {
-//
-//    func showLoader(message: String = "Please wait...") {
-//        DispatchQueue.main.async {
-//            // Prevent multiple loaders
-//            guard loaderAlert == nil else { return }
-//
-//            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-//
-//            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-//            loadingIndicator.hidesWhenStopped = true
-//            loadingIndicator.style = .large
-//            loadingIndicator.startAnimating()
-//
-//            alert.view.addSubview(loadingIndicator)
-//            loaderAlert = alert
-//
-//            self.present(alert, animated: true, completion: nil)
-//        }
-//    }
-//
-//    func hideLoader() {
-//        DispatchQueue.main.async {
-//            loaderAlert?.dismiss(animated: true, completion: {
-//                loaderAlert = nil
-//            })
-//        }
-//    }
-//}
-
-
-//@available(iOS 15.0, *)
-//extension UIViewController {
-//    
-//    func showLottieLoader() {
-//        DispatchQueue.main.async {
-//            guard lottieOverlay == nil else { return }
-//            
-//            // Overlay background
-//            let overlay = UIView(frame: UIScreen.main.bounds)
-//            overlay.backgroundColor = UIColor.black.withAlphaComponent(0.3)
-//            
-//            // Load animation
-//            guard let animation = try? LottieAnimation.named("percentage-circle") else {
-//                print("Lottie animation not found!")
-//                return
-//            }
-//            
-//            let animationView = LottieAnimationView(animation: animation)
-//            animationView.frame = CGRect(x: 0, y: 0, width: 200, height: 200)
-//            animationView.center = overlay.center
-//            animationView.loopMode = .loop
-//            animationView.contentMode = .scaleAspectFit
-//            animationView.play()
-//            
-//            overlay.addSubview(animationView)
-//            
-//            UIApplication.shared.keyWindow?.addSubview(overlay)
-//            
-//            lottieView = animationView
-//            lottieOverlay = overlay
-//        }
-//    }
-//    
-//    func hideLottieLoader() {
-//        DispatchQueue.main.async {
-//            lottieView?.stop()
-//            lottieOverlay?.removeFromSuperview()
-//            lottieView = nil
-//            lottieOverlay = nil
-//        }
-//    }
-//}
+func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
+    print(text)
+    print(firstString)
+    print(secondString)
+    guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
+    
+    // Find ranges of the substrings
+    let firstRange = (text as NSString).range(of: firstString)
+    let secondRange = (text as NSString).range(of: secondString)
+    
+    // Create a mutable attributed string
+    let attributedString = NSMutableAttributedString(string: text)
+    
+    // Apply colors to the respective ranges
+    attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
+    attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
+    
+    // Set the attributed string to the label
+    label.attributedText = attributedString
+}
 @available(iOS 15.0, *)
 extension UIViewController {
     
@@ -679,7 +626,8 @@ extension String {
         if let inputFormat = inputFormat {
             dateFormatter.dateFormat = inputFormat
             if let date = dateFormatter.date(from: self) {
-                dateFormatter.dateFormat = "E d MMM yyyy"
+                dateFormatter.dateFormat = "dd MMM yyyy"
+//                dateFormatter.dateFormat = "E d MMM yyyy"
                 return dateFormatter.string(from: date)
             } else {
                 return nil
@@ -688,7 +636,8 @@ extension String {
             for format in possibleFormats {
                 dateFormatter.dateFormat = format
                 if let date = dateFormatter.date(from: self) {
-                    dateFormatter.dateFormat = "E d MMM yyyy"
+//                    dateFormatter.dateFormat = "E d MMM yyyy"
+                    dateFormatter.dateFormat = "dd MMM yyyy"
                     return dateFormatter.string(from: date)
                 }
             }

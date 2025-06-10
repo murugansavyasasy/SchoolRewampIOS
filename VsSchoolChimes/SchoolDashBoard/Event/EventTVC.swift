@@ -128,6 +128,11 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
 
         let imageVC = ImageShowVc(nibName: nil, bundle: nil)
         imageVC.imageURL = file_path?.filter { $0.type?.uppercased() == CommonStringFile.IMAGE } ?? []
+        var homeworkDocs = file_path ?? []
+        let filePath = homeworkDocs[indexPath.row]
+        homeworkDocs.remove(at: indexPath.row)
+        homeworkDocs.insert(filePath, at: 0)
+        imageVC.FileURL = homeworkDocs
         imageVC.subjectName = subjectName.text
         imageVC.pdfUrl = file.url
         imageVC.scrollIndex = indexPath

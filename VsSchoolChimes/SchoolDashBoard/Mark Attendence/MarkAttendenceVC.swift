@@ -87,7 +87,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
         setFormattedDate(customdatestring, label: CustomDateLbl)
-        formatter.dateFormat = "EEE d MMM yyyy"
+        formatter.dateFormat = "dd MMM yyyy"
         let dateBtntitle = formatter.string(from: Date())
         DateBtn.setTitle(dateBtntitle, for: .normal)
         
