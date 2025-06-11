@@ -44,6 +44,8 @@ class LeveHistoryTV: UITableViewCell {
         statusBtn.layer.shadowRadius = 5
         statusBtn.layer.shadowOpacity = 0.3
         
+        edit.isHidden = true
+        
         styleLabel(toDateLbl)
         styleLabel(fromDateLbl)
      

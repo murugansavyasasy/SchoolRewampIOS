@@ -112,12 +112,12 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         calanderBtn.layer.cornerRadius = 10 // Add corner radius if needed
         
         
-        ToLbl.setFont(style:.body, size: FontSize.BodySize)
+        ToLbl.setFont(style:.title, size: FontSize.TitleSize)
         ToLbl.text = CommonStringFile.To.translated()
-        headerTitle.setFont(style:.body, size: FontSize.BodySize)
+        headerTitle.setFont(style:.title, size: FontSize.TitleSize)
         headerTitle.text = CommonStringFile.CreateLeaveRequest.translated()
-        ReasonLbl.setFont(style:.body, size: FontSize.BodySize)
-        fromLbl.setFont(style:.body, size: FontSize.BodySize)
+        ReasonLbl.setFont(style:.title, size: FontSize.TitleSize)
+        fromLbl.setFont(style:.title, size: FontSize.TitleSize)
         fromLbl.text = CommonStringFile.From.translated()
         dayCount.setFont(style:.header, size: FontSize.BodySize)
         dateBtn.setTitleFont(style: .body, size: 12)
