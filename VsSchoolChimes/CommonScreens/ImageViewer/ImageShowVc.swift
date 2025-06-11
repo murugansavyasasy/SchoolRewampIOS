@@ -25,13 +25,13 @@ class ImageShowVc: UIViewController{
     var pageName = ""
     var pdfUrl:String?
     var type:Int?
+    var index:Int?
     var subjectName:String?
     var scrollIndex:IndexPath?
     var dowloadUrl:String?
     override func viewDidLoad() {
         super.viewDidLoad()
         pdfView.navigationDelegate = self
-        // Do any additional setup after loading the view.
         TitleLbl.text = subjectName
         cv.delegate = self
         cv.dataSource = self
@@ -47,7 +47,7 @@ class ImageShowVc: UIViewController{
 //                }
 //            }
 //        }
-        
+
         dowloadUrl = FileURL.first?.url
         PageController.numberOfPages = FileURL.count
         PageController.currentPage = 0

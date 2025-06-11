@@ -13,16 +13,16 @@ import AVKit
 
 class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
 
+    @IBOutlet weak var forwardBtn: UIButton!
+    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var subjectName: UILabel!
     @IBOutlet weak var playerview: UIView!
     @IBOutlet weak var descriptContent: UILabel!
-    @IBOutlet weak var Sentbtn: UIButton!
     @IBOutlet weak var Unreadview: UIView!
     @IBOutlet weak var OuterView: AnimatView!
     @IBOutlet weak var datelbl: UILabel!
-    @IBOutlet weak var videoName: UILabel!
     @IBOutlet weak var newImg: UIImageView!
     @IBOutlet weak var thumimg: UIImageView!
-    @IBOutlet weak var videoloadview: WKWebView!
     @IBOutlet weak var playbtl: UIButton!
     
     var sharedelegate:shareDelegate?
@@ -33,10 +33,11 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
     var url:String?
     var attachment:Attachment?
     var delegate:ReadUpades?
+    var file_path: [FilePath]?
     override func awakeFromNib() {
         super.awakeFromNib()
         datelbl.setFont(style: .body, size: FontSize.BodySize)
-        videoName.setFont(style: .title, size: FontSize.TitleSize)
+        titleLbl.setFont(style: .title, size: FontSize.TitleSize)
         descriptContent.setFont(style: .body, size: FontSize.BodySize)
         
 //        hiddenui(true)
@@ -44,11 +45,12 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
         Unreadview.isHidden = true
         OuterView.layer.shadowColor = UIColor.black.cgColor
         OuterView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        subjectName.isHidden = subjectName.text == ""
         OuterView.layer.shadowRadius = 5
         OuterView.layer.shadowOpacity = 0.3
-        OuterView.layer.cornerRadius = 20  // Optional for rounded shadow
-        Sentbtn.transform = CGAffineTransform(rotationAngle: .pi / 2)
+        OuterView.layer.cornerRadius = 20
         playbtl.layer.cornerRadius = playbtl.frame.height/2
+        print(file_path?.count ?? 0)
     }
 
 
@@ -73,25 +75,17 @@ class VideoTVCell: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePr
     func hiddenui(_ hide:Bool){
         OuterView.changeHeightAndAnimate(40, 110, 21, 30, top: 5)
         descriptContent.isHidden = hide
-//        Sentbtn.isHidden = hide
+//        forwardBtn.isHidden = hide
         Unreadview.isHidden = hide
         datelbl.isHidden = hide
-        videoName.isHidden = hide
+        titleLbl.isHidden = hide
         thumimg.isHidden = !hide
-        videoloadview.isHidden = hide
+        
 //        playbtl.isHidden = hide
         let color = hide == true ? UIColor.dashBoardClr : UIColor.white
         OuterView.backgroundColor = color
     }
-    
-    func playvideo(url:String){
-        
-        if let mediaURL:URL = URL(string: url) {
-            let request:URLRequest = URLRequest(url: mediaURL)
-            videoloadview.load(request)
-        }
 
-    }
     func animationview(){
         OuterView.animateView(enable:false)
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.3) { [self] in

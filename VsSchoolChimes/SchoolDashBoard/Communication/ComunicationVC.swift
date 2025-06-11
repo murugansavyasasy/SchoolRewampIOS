@@ -494,6 +494,8 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         EnableCallLbl.setFont(style: .title, size: FontSize.TitleSize)
         TextMsgTitleLbl.setFont(style: .title, size: FontSize.TitleSize)
         TextMsgContent.setFont(style: .title, size: FontSize.TitleSize)
+        textCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        textMsgVoiceCountLbl.setFont(style: .body, size: FontSize.BodySize)
         
         //MARK: Button Title font style
         fromTime.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -515,6 +517,7 @@ class ComunicationVC: UIViewController, AVAudioRecorderDelegate, reloadDelegate,
         voiceBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         scheduleBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         TxtMsgSendBtn.setTitleFont(style: .body, size: FontSize.BodySize)
+       
         BackBtn.setTitleFont(style: .primary, size: FontSize.HeaderSize)
         
     }

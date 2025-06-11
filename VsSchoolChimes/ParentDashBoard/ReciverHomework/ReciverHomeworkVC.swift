@@ -241,13 +241,15 @@ extension ReciverHomeworkVC: UITableViewDelegate, UITableViewDataSource {
                 .setupExpandable(
                     text: homework.description ?? ""
                 )
+            cell.newImg.isHidden = true
             cell.descriptContent.onExpandableTap = {
                 cell.descriptContent.isExpanded.toggle()
                 tableView.beginUpdates()
                 tableView.endUpdates()
             }
             cell.datelbl.text = sectionData.date?.convertToTargetDateFormat() ?? "-"
-            cell.videoName.text = homework.title
+            cell.titleLbl.text = homework.title
+            cell.subjectName.text = homework.subject_name
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC

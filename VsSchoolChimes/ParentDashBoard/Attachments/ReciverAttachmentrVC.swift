@@ -242,29 +242,36 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     
     // MARK: - Search Bar Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.isEmpty else {
+        if searchText.isEmpty {
+            // Clear button tapped or user deleted all text manually
             SearchAttachments = filteredAttachments
+
+            // 🔄 Reset UI
+            NodataLbl.text = "No Data Found"
+            NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
+            NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
+            EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
+
             attachmentTable.reloadData()
             return
         }
-        
+
+        // Filter the data
         SearchAttachments = filteredAttachments?.filter {
             ($0.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
-            ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||  ($0.date?.lowercased().contains(searchText.lowercased()) ?? false)
+            ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||
+            ($0.date?.lowercased().contains(searchText.lowercased()) ?? false)
         }
+
+        // Update "No Data" UI
         NodataLbl.text = "No Data Found"
         NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
         NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
         EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
+
         attachmentTable.reloadData()
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        SearchAttachments = filteredAttachments
-        attachmentTable.reloadData()
-    }
+
     func ReadStatusUpdateArchive(type: String,detail_id: String,filterType:String){
         
         APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in
@@ -351,6 +358,7 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.VideoTVCell, for: indexPath) as! VideoTVCell
             cell.confic(data.file_path?.first?.url ?? "")
             cell.attachment = data
+            cell.file_path = data.file_path
             cell.delegate = self
             cell.descriptContent
                 .setupExpandable(
@@ -362,8 +370,7 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
                 tableView.endUpdates()
             }
             cell.datelbl.text = data.date?.convertToTargetDateFormat() ?? "-"
-            cell.videoName.text = data.title
-            cell.newImg.isHidden = !(data.is_unread ?? false)
+            cell.titleLbl.text = data.title
             return cell
             
         case "DOCUMENT":

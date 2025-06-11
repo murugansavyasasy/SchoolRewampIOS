@@ -35,6 +35,8 @@ class StrengthTvCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         BottomLblHeight.constant = 0
         BottomLbl.isHidden = true
         countLbl.setFont(style: .body, size: FontSize.BodySize)
+        boysCountLbl.setFont(style: .body, size: FontSize.BodySize)
+        girlsCountLbl.setFont(style: .body, size: FontSize.BodySize)
         StandardBtn.setTitleFont(style:.body, size: FontSize.TitleSize)
         StandardView.layer.cornerRadius = 10
         cellview.layer.cornerRadius = 10

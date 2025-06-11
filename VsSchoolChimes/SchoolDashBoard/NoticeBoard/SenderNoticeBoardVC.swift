@@ -259,6 +259,8 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         ToTittleDefLbl.setFont(style: .body, size: FontSize.BodySize)
         fromTitleDefLbl.setFont(style: .body, size: FontSize.BodySize)
         addPhotoLbl.setFont(style: .body, size: FontSize.BodySize)
+        ToTittleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
+        fromTitleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         DescriptionDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         TittleDefLbl.setFont(style: .title, size: FontSize.TitleSize)
         todateBtn.setTitleFont(style: .body, size: 12)
@@ -274,27 +276,7 @@ class SenderNoticeBoardVC: UIViewController,UIDocumentPickerDelegate, DeleteImge
         DescriptionDefLbl.text = CommonStringFile.Description.translated()
         setAttributedText(for: addPhotoLbl, with: CommonStringFile.Add_attachment_optional.translated(), firstString: CommonStringFile.Add_attachment.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
-    
-    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
-        print(text)
-        print(firstString)
-        print(secondString)
-        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
-        
-        // Find ranges of the substrings
-        let firstRange = (text as NSString).range(of: firstString)
-        let secondRange = (text as NSString).range(of: secondString)
-        
-        // Create a mutable attributed string
-        let attributedString = NSMutableAttributedString(string: text)
-        
-        // Apply colors to the respective ranges
-        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
-        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
-        
-        // Set the attributed string to the label
-        label.attributedText = attributedString
-    }
+
     
     @IBAction func fromDate(_ sender: UIButton) {
         //showTimePicker(for: sender, date: true)

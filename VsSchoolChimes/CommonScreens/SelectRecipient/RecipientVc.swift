@@ -73,7 +73,8 @@ class RecipientVc: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        nodataFound.isHidden = true
+        noRecordLbl.isHidden = true
         speficBtnName.isHidden = true
         tv.isHidden = true
         backbtnMName

@@ -217,7 +217,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     func setInitialButtonTitles() {
         
         // Set the date format (e.g., "Tue 3 Dec 2024")
-        dateFormatter.dateFormat = "EEE d MMM yyyy"
+        dateFormatter.dateFormat = "dd MMM yyyy"
         
         // Set the time format (e.g., "4:30 PM")
         timeFormatter.timeStyle = .short
@@ -257,14 +257,13 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         calander2Btn.layer.borderWidth = 1 // Border width
         calander2Btn.layer.borderColor = UIColor.gray.cgColor // Border color
         calander2Btn.layer.cornerRadius = 10
-       
-        EventTtleLbl.setFont(style:.body, size: FontSize.BodySize)
-        fromLbl.setFont(style:.body, size: FontSize.BodySize)
-        eventDeatail.setFont(style:.body, size: FontSize.BodySize)
-        addPhotoLbl.setFont(style:.body, size: FontSize.BodySize)
+        fromLbl.setFont(style: .title, size: FontSize.TitleSize)
+        eventDeatail.setFont(style: .title, size: FontSize.TitleSize)
+        addPhotoLbl.setFont(style: .title, size: FontSize.TitleSize)
         Totime.setTitleFont(style: .body, size: 12)
         todate.setTitleFont(style: .body, size: 12)
-        placeLbl.setFont(style:.body, size: FontSize.BodySize)
+        placeLbl.setFont(style: .title, size: FontSize.TitleSize)
+        EventTtleLbl.setFont(style: .title, size: FontSize.TitleSize)
         placeLbl.text = CommonStringFile.Venue.translated()
         addPhotoLbl.text = CommonStringFile.UploadImagepdfoptional.translated()
         eventDeatail.text = CommonStringFile.Description.translated()
@@ -318,29 +317,7 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
         label.attributedText = createAttributedText(from: date)
         label.numberOfLines = 0
     }
-    
-    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
-        print(text)
-        print(firstString)
-        print(secondString)
-        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
-        
-        // Find ranges of the substrings
-        let firstRange = (text as NSString).range(of: firstString)
-        let secondRange = (text as NSString).range(of: secondString)
-        
-        // Create a mutable attributed string
-        let attributedString = NSMutableAttributedString(string: text)
-        
-        // Apply colors to the respective ranges
-        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
-        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
-        
-        // Set the attributed string to the label
-        label.attributedText = attributedString
-    }
-    
-    
+
     func setupPlaceholder() {
         placeholderLabel = UILabel()
         placeholderLabel.text = CommonStringFile.Description.translated()
@@ -455,15 +432,13 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
            
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = selectedVideoURL
-            
+            let date = convertDate(todate.titleLabel?.text ?? "")
             let params: [String: Any] = [
                 assignmentResquestStringKey.title: eventTxt.text ?? "",
                 assignmentResquestStringKey.description: contentTxtView.text ?? "",
                 assignmentResquestStringKey.venue: placeTxt.text ?? "",
                 assignmentResquestStringKey.event_time: Totime.titleLabel?.text ?? "",
-                assignmentResquestStringKey.event_date: ConvertDateStringSmart(
-                    todate.titleLabel?.text ?? ""
-                )
+                assignmentResquestStringKey.event_date:date ?? ""
             ]
             
             let vc = RecipientVc(nibName: nil, bundle: nil)

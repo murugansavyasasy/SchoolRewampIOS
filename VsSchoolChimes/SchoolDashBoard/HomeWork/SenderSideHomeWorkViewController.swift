@@ -34,7 +34,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
     @IBOutlet weak var uploadAttachmentView: ImageSelection!
     @IBOutlet weak var RecipientBtn: UIButton!
     @IBOutlet weak var TextViewheight: NSLayoutConstraint!
-
+    
     @IBOutlet weak var VideoDeleteBtn: UIImageView!
     @IBOutlet weak var VideoThumbnailImg: UIImageView!
     @IBOutlet weak var VideoView: UIView!
@@ -76,7 +76,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         ComposeHomeworkView.alpha = 1
         imageSelection()
     }
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         
@@ -119,91 +119,69 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
         setAttributedText(for: uploadattachmentLbl, with: CommonStringFile.UploadImagepdfoptional.translated(), firstString: CommonStringFile.UploadImagepdf.translated(), secondString:CommonStringFile.Optional.translated(), color1: .black, color2: .lightGray)
     }
     
-    func setAttributedText(for label: UILabel, with text: String, firstString: String, secondString: String, color1: UIColor, color2: UIColor) {
-        print(text)
-        print(firstString)
-        print(secondString)
-        guard text.contains(firstString), text.contains(secondString) else { return } // Ensure both substrings exist in the text
-        
-        // Find ranges of the substrings
-        let firstRange = (text as NSString).range(of: firstString)
-        let secondRange = (text as NSString).range(of: secondString)
-        
-        // Create a mutable attributed string
-        let attributedString = NSMutableAttributedString(string: text)
-        
-        // Apply colors to the respective ranges
-        attributedString.addAttribute(.foregroundColor, value: color1, range: firstRange)
-        attributedString.addAttribute(.foregroundColor, value: color2, range: secondRange)
-        
-        // Set the attributed string to the label
-        label.attributedText = attributedString
-    }
-    
-    
     @IBAction func deleteVideo(){
         
         videoPickerManagerDidCloseVideo()
     }
     
     @IBAction func chooseVideoTapped(_ sender: UIButton) {
-            videoPicker?.pickVideo()
-        }
-
+        videoPicker?.pickVideo()
+    }
+    
     func pickVideoFromGallery(){
         
         videoPicker?.pickVideo()
     }
-        @IBAction func playVideoTapped(_ sender: UIButton) {
-            VideoDeleteBtn.isHidden = true
-            if let url = selectedVideoURL {
-                videoPicker?.playVideo(from: url, in: VideoView)
-            } else {
-                videoPicker?.pickVideo()
-            }
+    @IBAction func playVideoTapped(_ sender: UIButton) {
+        VideoDeleteBtn.isHidden = true
+        if let url = selectedVideoURL {
+            videoPicker?.playVideo(from: url, in: VideoView)
+        } else {
+            videoPicker?.pickVideo()
         }
-
-    // MARK: - Delegate Methods
-       func videoPickerManager(didPickVideo url: URL) {
-           attachments.removeAll()
-           uploadAttachmentView.isHidden = true
-           collectionViewHeight.constant = 0
-           selectedVideoURL = url
-           VideoView.isHidden = false
-           RecipientBtn.isHidden = false
-       }
-
-       func videoPickerManager(didGenerateThumbnail image: UIImage) {
-           VideoThumbnailImg.isHidden = false
-           VideoThumbnailImg.image = image
-       }
-
-       func videoPickerManagerDidCloseVideo() {
-           selectedVideoURL = nil
-           VideoThumbnailImg.image = nil
-           VideoView.isHidden = true
-//          / chooseRecipientsBtn.isHidden = true
-           uploadAttachmentView.isHidden = false
-           collectionViewHeight.constant = 120
-           uploadAttachmentView.imageCollectionview.reloadData()
-          
-           
-       }
+    }
     
-
+    // MARK: - Delegate Methods
+    func videoPickerManager(didPickVideo url: URL) {
+        attachments.removeAll()
+        uploadAttachmentView.isHidden = true
+        collectionViewHeight.constant = 0
+        selectedVideoURL = url
+        VideoView.isHidden = false
+        RecipientBtn.isHidden = false
+    }
+    
+    func videoPickerManager(didGenerateThumbnail image: UIImage) {
+        VideoThumbnailImg.isHidden = false
+        VideoThumbnailImg.image = image
+    }
+    
+    func videoPickerManagerDidCloseVideo() {
+        selectedVideoURL = nil
+        VideoThumbnailImg.image = nil
+        VideoView.isHidden = true
+        //          / chooseRecipientsBtn.isHidden = true
+        uploadAttachmentView.isHidden = false
+        collectionViewHeight.constant = 120
+        uploadAttachmentView.imageCollectionview.reloadData()
+        
+        
+    }
+    
+    
     func imageSelection(){
         PhotoPickerManager.shared.onCameraImagePicked = { [self] image in
             
             attachments.append(AttachmentItem(image: image, imageURL: nil, fileType: CommonStringFile.IMAGE))
             attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
-
+            
             user_inputs.selectedFileType = CommonStringFile.IMAGE
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
         PhotoPickerManager.shared.onImagesPicked = { [self] images in
             user_inputs.selectedFileType = CommonStringFile.IMAGE
-        
+            
             let imageItems = images.map {
                 AttachmentItem(image: $0, imageURL: nil, fileType: CommonStringFile.IMAGE)
             }
@@ -212,11 +190,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 attachments.removeAll { $0.fileType != CommonStringFile.IMAGE }
             }
             
-//            let selectedImages: [UIImage] = images // Your selected images
-//
-//            if let pdfData = createMultiPagePDF(from: selectedImages) {
-//                previewPDF(data: pdfData, in: uploadAttachmentView)
-//            }
+            //            let selectedImages: [UIImage] = images // Your selected images
+            //
+            //            if let pdfData = createMultiPagePDF(from: selectedImages) {
+            //                previewPDF(data: pdfData, in: uploadAttachmentView)
+            //            }
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
@@ -225,14 +203,14 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             user_inputs.selectedFileType = CommonStringFile.pdf
             attachments.append(AttachmentItem(image:nil, imageURL: data.absoluteString, fileType: CommonStringFile.pdf))
             attachments.removeAll { $0.fileType == CommonStringFile.IMAGE }
-
+            
             uploadAttachmentView.imageCollectionview.reloadData()
         }
         
     }
     
     
-
+    
     @available(iOS 15.0, *)
     @IBAction func RecipentBtnAct(_ sender: Any) {
         if TitleTxtfield.text != ""  && DetailsTxtview.text != "" && DetailsTxtview.text != CommonStringFile.Description{
@@ -242,11 +220,11 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                 assignmentResquestStringKey.title: TitleTxtfield.text ?? "",
                 assignmentResquestStringKey.description: DetailsTxtview.text ?? "",
             ]
-                let vc = RecipientVc(nibName: nil, bundle: nil)
-                vc.ScreenType = Menu_id.homeWorkMenuId
-                vc.Common_request_params = params
-                vc.modalPresentationStyle = .fullScreen
-                present(vc, animated: true)
+            let vc = RecipientVc(nibName: nil, bundle: nil)
+            vc.ScreenType = Menu_id.homeWorkMenuId
+            vc.Common_request_params = params
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true)
         }else{
             alert
                 .showAlert(
@@ -254,7 +232,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
                     message: AlertstringFile.enter_title_description,
                     on: self)
         }
-
+        
     }
     
     func isStaff() -> Bool {
@@ -271,8 +249,8 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             return false
         }
     }
-
-  
+    
+    
     
     
     // MARK: Set gradient colours for Button
@@ -326,7 +304,7 @@ class SenderSideHomeWorkViewController: UIViewController, DeleteImge, SelectNoti
             let alert = CustomAlert()
             alert.showAlert(title: "", message: AlertstringFile.Already_Reach_Your_Limit, on: self)
         }
-       
+        
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
@@ -366,29 +344,29 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
             
             let adjustedIndex = indexPath.item - 1
             let item = attachments[adjustedIndex]
-               cell.delegate = self
-               cell.deleteBtn.tag = adjustedIndex
-
-               if let image = item.image {
-                   cell.imageViews.image = image
-               } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
-                   if item.fileType.uppercased() != CommonStringFile.IMAGE {
-                       let iconName = getFileIconName(for: url)
-                       cell.imageViews.image = UIImage(named: iconName)
-                   } else {
-                       cell.imageViews.kf.setImage(with: url)
-                   }
-               } else {
-                   cell.imageViews.image = nil
-               }
+            cell.delegate = self
+            cell.deleteBtn.tag = adjustedIndex
+            
+            if let image = item.image {
+                cell.imageViews.image = image
+            } else if let urlStr = item.imageURL, let url = URL(string: urlStr) {
+                if item.fileType.uppercased() != CommonStringFile.IMAGE {
+                    let iconName = getFileIconName(for: url)
+                    cell.imageViews.image = UIImage(named: iconName)
+                } else {
+                    cell.imageViews.kf.setImage(with: url)
+                }
+            } else {
+                cell.imageViews.image = nil
+            }
             
             // Assuming you have an array of UIImage from selected files
             
-
+            
             // Set collection view height dynamically
             let totalItems = attachments.count
             collectionViewHeight.constant = totalItems <= 2 ? 120 : 220
-
+            
             return cell
         }
     }
@@ -448,7 +426,7 @@ extension  SenderSideHomeWorkViewController: UICollectionViewDelegate,UICollecti
                     }else{
                         vc.selectedFileURL = URL(string: attachments[indexPath.item - 1].imageURL ?? "")
                     }
-                   
+                    
                 }
                 vc.type = attachments[indexPath.item - 1].fileType
                 present(vc, animated: true)
@@ -549,22 +527,22 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
     
     func createMultiPagePDF(from images: [UIImage]) -> Data? {
         guard !images.isEmpty else { return nil }
-
+        
         let firstImage = images[0]
         let pageRect = CGRect(x: 0, y: 0, width: firstImage.size.width, height: firstImage.size.height)
         
         let renderer = UIGraphicsPDFRenderer(bounds: pageRect)
-
+        
         let data = renderer.pdfData { context in
             for image in images {
                 context.beginPage()
                 image.draw(in: CGRect(origin: .zero, size: image.size))
             }
         }
-
+        
         return data
     }
-
+    
     
     func previewPDF(data: Data, in containerView: UIView) {
         let pdfView = PDFView(frame: containerView.bounds)
@@ -572,7 +550,7 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
         pdfView.autoScales = true
         pdfView.document = PDFDocument(data: data)
         containerView.addSubview(pdfView)
-
+        
         NSLayoutConstraint.activate([
             pdfView.topAnchor.constraint(equalTo: containerView.topAnchor),
             pdfView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
@@ -580,7 +558,7 @@ extension SenderSideHomeWorkViewController: UITextViewDelegate {
             pdfView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
         ])
     }
-
+    
 }
 extension String {
     func boundingHeight(width: CGFloat, font: UIFont) -> CGFloat {

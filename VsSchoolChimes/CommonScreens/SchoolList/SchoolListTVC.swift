@@ -21,18 +21,23 @@ class SchoolListTVC: UITableViewCell {
         // Initialization code
         showPopUpEffect()
     }
-    
-    
+ 
     func showPopUpEffect() {
-        contentView.transform = CGAffineTransform(
-            scaleX: 0.8,
-            y: 0.8
-        ) // Start smaller
-        contentView.alpha = 0 // Start invisible
-
-        UIView.animate(withDuration: 2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+        // Ensure the cell remains interactive
+        contentView.isUserInteractionEnabled = true
+        self.isUserInteractionEnabled = true
+        
+        // Start with a smaller scale and invisible
+        contentView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        contentView.alpha = 0
+        UIView.animate(withDuration: 2.0,
+                       delay: 0,
+                       usingSpringWithDamping: 0.6,
+                       initialSpringVelocity: 0.5,
+                       options: [.curveEaseInOut, .allowUserInteraction],
+                       animations: {
             self.contentView.transform = CGAffineTransform.identity // Restore to original size
             self.contentView.alpha = 1 // Make it visible
-        })
+        }, completion: nil)
     }
 }

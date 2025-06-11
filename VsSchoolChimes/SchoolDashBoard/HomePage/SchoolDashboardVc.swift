@@ -73,10 +73,10 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        NotificationCenter.default.addObserver(self,
-//                                                  selector: #selector(handlePushNotification(_:)),
-//                                                  name: .notificationTapped,
-//                                                  object: nil)
+        //        NotificationCenter.default.addObserver(self,
+        //                                                  selector: #selector(handlePushNotification(_:)),
+        //                                                  name: .notificationTapped,
+        //                                                  object: nil)
         
         if(staff_roll == PriorityType.is_staff){
             SchoolNameLabel.text = staffDetails?.school_name
@@ -155,15 +155,15 @@ class SchoolDashboardVc: UIViewController,UITabBarDelegate, UISearchBarDelegate{
     }
     
     
-//    @objc func handlePushNotification(_ notification: Notification) {
-//        guard let userInfo = notification.userInfo,
-//              let menuId = userInfo["menu_id"] as? String,
-//              let messageId = userInfo["message_id"] as? String else { return }
-//
-//        // Navigate to the correct menu based on menuId
-//        navigateToMenu(with: menuId, messageId: messageId)
-//    }
-
+    //    @objc func handlePushNotification(_ notification: Notification) {
+    //        guard let userInfo = notification.userInfo,
+    //              let menuId = userInfo["menu_id"] as? String,
+    //              let messageId = userInfo["message_id"] as? String else { return }
+    //
+    //        // Navigate to the correct menu based on menuId
+    //        navigateToMenu(with: menuId, messageId: messageId)
+    //    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // clear caches or large objects
@@ -376,7 +376,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == bottomCv{
             
-            return filteredMenu_details?.count ?? 0
+            return filteredMenu_details?.count ?? 10
             
         }else{
             return 5
@@ -385,25 +385,45 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        if collectionView == bottomCv{
-            if indexPath.row == 6 {
-                let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.seeMore, for: indexPath) as! seeMore
-                adCell.advertisements = advertisements
-                return adCell
-            }else{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell , for: indexPath) as! BottomCVCell
+        if collectionView == bottomCv {
+            // Ensure filteredMenu_details is non-nil and non-empty
+            guard let filteredMenu_details = filteredMenu_details, !filteredMenu_details.isEmpty else {
+                // Return a fallback cell if array is nil or empty
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell, for: indexPath) as? BottomCVCell ?? BottomCVCell()
                 cell.MenuLbl.text = nil
-                cell.MenuImgView.image  = nil
+                cell.MenuImgView.image = nil
+                cell.roundview.isHidden = true
+                cell.GradientView.backgroundColor = .clr
+                return cell
+            }
+            
+            // Safe to access filteredMenu_details[indexPath.row] now
+            let data = filteredMenu_details[indexPath.row]
+            
+            if indexPath.row == 6 {
+                // Handle the "seeMore" cell
+                guard let adCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.seeMore, for: indexPath) as? seeMore else {
+                    return UICollectionViewCell() // Fallback for invalid cell type
+                }
+                adCell.advertisements = advertisements
+                adCell.adCollectionView.reloadData() // Ensure this is safe; check if advertisements is valid
+                return adCell
+            } else {
+                // Handle regular BottomCVCell
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageBottomCell, for: indexPath) as? BottomCVCell else {
+                    return UICollectionViewCell() // Fallback for invalid cell type
+                }
+                cell.MenuLbl.text = nil
+                cell.MenuImgView.image = nil
                 
-                let label = filteredMenu_details?[indexPath.row].name?.translated()
-                if let name = filteredMenu_details?[indexPath.row].id {
-                    let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name}
+                let label = data.name?.translated()
+                if let name = data.id {
+                    let filteredItems = MenuRedirectHandler.shared.Imgitems.filter { $0.id == name }
                     let img = UIImage(named: filteredItems.first?.name ?? "")
                     cell.MenuImgView.image = img
                 }
                 cell.roundview.isHidden = true
-//                if filteredMenu_details?[indexPath.row].unread_count ?? 0 > 0 {
+//                if data.unread_count ?? 0 > 0 {
 //                    cell.roundview.isHidden = false
 //                }
                 cell.MenuLbl.setFont(style: .body, size: 10)
@@ -415,19 +435,20 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 
                 return cell
             }
-            
-        }else{
+        } else {
+            // Handle the other collection view
             if indexPath.row == 0 {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.PiechartCVCell , for: indexPath) as! PiechartCVCell
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.PiechartCVCell, for: indexPath) as? PiechartCVCell else {
+                    return UICollectionViewCell() // Fallback for invalid cell type
+                }
                 return cell
-            }else{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell , for: indexPath) as! TopCVCell
-                
+            } else {
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell, for: indexPath) as? TopCVCell else {
+                    return UICollectionViewCell()
+                }
                 return cell
             }
-            
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -447,7 +468,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     MenuRedirect.senderAbsenteesReport(from: self)
                 }
             case 2:
-               
+                
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)
                 }else{
@@ -471,7 +492,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 }else{
                     MenuRedirect.senderDailyCollectionNavigate(from: self)
                 }
-               
+                
             case 9:
                 MenuRedirect.senderEventNavigate(from: self)
                 
@@ -569,17 +590,25 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
 extension SchoolDashboardVc: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.row == 6{
+        guard let filteredMenu_details = filteredMenu_details, !filteredMenu_details.isEmpty else {
+            let width = collectionView.frame.width / 3
+            return CGSize(width: width, height: width)}
+        guard indexPath.row < filteredMenu_details.count else {
+            let width = collectionView.frame.width / 3
+            return CGSize(width: width, height: width)
+        }
+        
+        if indexPath.row == 6 {
             return CGSize(width: collectionView.frame.width, height: 170)
         }
         
-        let width = (collectionView.frame.width) / 3
+        let width = collectionView.frame.width / 3
         let padding: CGFloat = 10
         let maxTextWidth = width - padding * 2
         
-        let label = filteredMenu_details?[indexPath.row].name?.translated()
-        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10) // Use the same font style and size as set in the cell
-        let textHeight = label?.height(withConstrainedWidth: maxTextWidth, font: font) ?? 0
+        let label = filteredMenu_details[indexPath.row].name?.translated() ?? ""
+        let font = UIFont.preferredFont(forTextStyle: .body).withSize(10)
+        let textHeight = label.height(withConstrainedWidth: maxTextWidth, font: font)
         
         let height = max(textHeight + padding * 2, width - 10)
         return CGSize(width: width, height: height + 10)
@@ -635,31 +664,31 @@ extension SchoolDashboardVc: UISearchBarDelegate{
         
         APIService.shared
             .makeApi(
-url: ServiceUrl.auth_device_token,
- parameters:[
-                
-                COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
-                DeviceTokenStringFile.device_token : deviceToken ?? "",
-                COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
-                DeviceTokenStringFile.secure_id : secureID,
-                DeviceTokenStringFile.device_info : [
+                url: ServiceUrl.auth_device_token,
+                parameters:[
                     
-                    DeviceTokenStringFile.manufacturer : "iphone" ,
-                    DeviceTokenStringFile.model : "iphone12",
-                    DeviceTokenStringFile.device : "iphone",
-                    DeviceTokenStringFile.brand : "iphone",
-                    DeviceTokenStringFile.hardware : "",
-                    DeviceTokenStringFile.product : "",
-                    DeviceTokenStringFile.os_version : 8.1,
-                    DeviceTokenStringFile.sdk_int : 33,
-                    DeviceTokenStringFile.app_version : 1
-                ]
-                
-                
-            ] ,
- type: ApitTypeSringFile.POST,
- token: ServiceUrl.token
-){ [self] (
+                    COMMON_PARAMETER.mobile_number : mobile_num ?? "" ,
+                    DeviceTokenStringFile.device_token : deviceToken ?? "",
+                    COMMON_PARAMETER.device_type : API_PARAMS_HOTCODE.device_type,
+                    DeviceTokenStringFile.secure_id : secureID,
+                    DeviceTokenStringFile.device_info : [
+                        
+                        DeviceTokenStringFile.manufacturer : "iphone" ,
+                        DeviceTokenStringFile.model : "iphone12",
+                        DeviceTokenStringFile.device : "iphone",
+                        DeviceTokenStringFile.brand : "iphone",
+                        DeviceTokenStringFile.hardware : "",
+                        DeviceTokenStringFile.product : "",
+                        DeviceTokenStringFile.os_version : 8.1,
+                        DeviceTokenStringFile.sdk_int : 33,
+                        DeviceTokenStringFile.app_version : 1
+                    ]
+                    
+                    
+                ] ,
+                type: ApitTypeSringFile.POST,
+                token: ServiceUrl.token
+            ){ [self] (
                 result : Result<DeviceTokenResponseSuc,
                 Error>
             ) in
@@ -708,9 +737,9 @@ url: ServiceUrl.auth_device_token,
                         self.menu_details = details
                         
                         // Extract names from menu_details
-//                        self.displayedCategories = details.prefix(9).map { $0.name ?? "" }
+                        //                        self.displayedCategories = details.prefix(9).map { $0.name ?? "" }
                         self.displayedCategories = details.map { $0.name ?? "" }
-//                        self.filteredMenu_details = Array(details.prefix(9))
+                        //                        self.filteredMenu_details = Array(details.prefix(9))
                         self.filteredMenu_details = details
                         
                         // Insert "Add" item if count > 5
@@ -748,5 +777,5 @@ url: ServiceUrl.auth_device_token,
                 }
             }
         }
-    } 
+    }
 }

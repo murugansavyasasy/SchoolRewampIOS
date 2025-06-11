@@ -65,10 +65,10 @@ class SenderHomeWorkVC: UIViewController {
         searchBar.delegate = self
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        homeWorkTable.reloadData()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        homeWorkTable.reloadData()
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -173,7 +173,7 @@ class SenderHomeWorkVC: UIViewController {
     // MARK: - Date Selection
     func dateSelect(_ date: String?) {
         let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "EEE d MMM yyyy"
+        outputFormatter.dateFormat = "dd MMM yyyy"
         outputFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         var selectedDate = Date()
@@ -288,7 +288,7 @@ class SenderHomeWorkVC: UIViewController {
                     self.nodataFoundLbl.text = response.message
                     self.homeWorkTable.reloadData()
 
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.tableviewHeight.constant = self.homeWorkTable.contentSize.height
                     }
 
@@ -335,7 +335,9 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
             }
             cell.newImg.isHidden = true
             cell.datelbl.text = dateLbl.text?.convertToTargetDateFormat() ?? "-"
-            cell.videoName.text = data.title
+            cell.titleLbl.text = data.title
+            cell.subjectName.text = data.subject_name
+            cell.forwardBtn.isHidden = false
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.HomeWorkTVC, for: indexPath) as! HomeWorkTVC
@@ -345,7 +347,6 @@ extension SenderHomeWorkVC: UITableViewDelegate, UITableViewDataSource {
             cell.dateLble.text = dateLbl.text ?? ""
             cell.FilterHomeWorkList = data
             cell.newView.isHidden = true
-
             cell.descriptionLbl.setupExpandable(text: data.description ?? "")
             cell.descriptionLbl.onExpandableTap = {
                 cell.descriptionLbl.isExpanded.toggle()

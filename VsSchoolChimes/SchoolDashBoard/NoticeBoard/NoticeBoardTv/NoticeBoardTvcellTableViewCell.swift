@@ -148,7 +148,11 @@ class NoticeBoardTvcellTableViewCell: UITableViewCell, UICollectionViewDelegate,
         vcc.imageURL = homeworkDocs?.filter({ img in
             img.type?.uppercased() == CommonStringFile.IMAGE
         }) ?? []
-        vcc.FileURL = homeworkDocs ?? []
+        var filurls = homeworkDocs ?? []
+        let filePath = filurls[indexPath.row]
+        filurls.remove(at: indexPath.row)
+        filurls.insert(filePath, at: 0)
+        vcc.FileURL =  filurls
         vcc.pdfUrl = homeworkDocs?[indexPath.row].url
         vcc.subjectName = TitleLbl.text ?? ""
         vcc.scrollIndex = indexPath
