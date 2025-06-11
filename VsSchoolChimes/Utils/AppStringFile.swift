@@ -169,7 +169,7 @@ class AlertstringFile{
     static let Open_Settings = "Open Settings".translated()
     static let Distance_Should = "Distance Should be  above 10 Meter(s)".translated()
     static let Please_Select_Your_Country = "Please Select Your Country".translated()
-    static let Please_Select_Attachment_Type = "Please Select Attachment Type"
+    static let Please_Add_Attachment = "Please Add Any Attachment"
     static let Please_Select_a_Video = "Please Select a Video"
     static let Please_Select_a_Image = "Please Select a Image"
     static let Please_Select_a_Document = "Please Select a Document"

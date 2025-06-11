@@ -24,12 +24,11 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     @IBOutlet weak var sendBtnName: UIButton!
     @IBOutlet weak var segmentName: UISegmentedControl!
     @IBOutlet weak var listTable: UITableView!
-   
     @IBOutlet weak var norecordImg: UIImageView!
+    
     var screen_type : Int?
     var isEmergency : Int = 1
     var isNoticeBoard : Int = 1
-    
     var school_details = UserDefaultFileManager.getUserDetails()?.user_details?.staff_details
     let alert = CustomAlert()
     var communicatio_textDetails :[String] = []
@@ -239,6 +238,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                 MenuRedirect.senderAbsenteesReport(from: self)
             case Menu_id.isAssaignment:
                 MenuRedirect.senderAssignmentNavigate(from: self)
+            case Menu_id.LessonPlan:
+                MenuRedirect.senderLessonplanNavigate(from: self)
             default:
                 print("staffSelectedMenuId",Menu_id.staffSelectedMenuId)
             }

@@ -26,7 +26,7 @@ class SenderLeaveTV: UITableViewCell {
     @IBOutlet weak var NoOfDaysLbl: UILabel!
     @IBOutlet weak var UpdatedOnBtn: UIButton!
     @IBOutlet weak var ApproveRejectStack: UIStackView!
-    
+    @IBOutlet weak var reasonDefLbl: UILabel!
     var delegate:ConfirmDelegate?
     
     override func awakeFromNib() {
@@ -48,11 +48,12 @@ class SenderLeaveTV: UITableViewCell {
         applyedTimeLbl.setFont(style:.body, size: FontSize.BodySize)
         resonLbl.setFont(style:.body, size: FontSize.BodySize)
         studentClass.setFont(style:.body, size: FontSize.BodySize)
-        classLbl.setFont(style:.body, size: FontSize.BodySize)
-        nameLbl.setFont(style:.body, size: FontSize.BodySize)
+        classLbl.setFont(style:.title, size: FontSize.TitleSize)
+        nameLbl.setFont(style:.title, size: FontSize.TitleSize)
         studentName.setFont(style:.body, size: FontSize.BodySize)
-        AppliedOnDefLbl.setFont(style:.body, size: FontSize.BodySize)
-        NoOfDaysDefLbl.setFont(style:.body, size: FontSize.BodySize)
+        AppliedOnDefLbl.setFont(style:.title, size: FontSize.TitleSize)
+        NoOfDaysDefLbl.setFont(style:.title, size: FontSize.TitleSize)
+        reasonDefLbl.setFont(style:.title, size: FontSize.TitleSize)
         NoOfDaysLbl.setFont(style:.body, size: FontSize.BodySize)
         fromDate.setFont(style:.header, size: FontSize.TitleSize)
        
@@ -68,7 +69,6 @@ class SenderLeaveTV: UITableViewCell {
     
     @IBAction func aprovedBtn(_ sender: UIButton) {
         delegate?.confirm(index: sender.tag, status: true)
-        
     }
     @IBAction func rejectBtn(_ sender: UIButton) {
         delegate?.confirm(index: sender.tag, status: false)
