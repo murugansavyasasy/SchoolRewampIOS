@@ -13,6 +13,7 @@ protocol SumitionDelegate{
 class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAdaptivePresentationControllerDelegate {
     
     @IBOutlet weak var submitBtn: UIButton!
+    @IBOutlet weak var viewSumitionBtn: UIButton!
     @IBOutlet weak var deleteBtn: UIButton!
     @IBOutlet weak var DescriptionLbl: UILabel!
     @IBOutlet weak var SubjectLabel: UILabel!
@@ -59,6 +60,7 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
            outImg.translatesAutoresizingMaskIntoConstraints = false
            NotSubmitedBtn.layer.cornerRadius = 10
            submitBtn.layer.cornerRadius = 10
+           viewSumitionBtn.layer.cornerRadius = 10
            ForwardBtn.layer.cornerRadius = 4
            
            cvBaseview.layer.cornerRadius = 10
@@ -67,7 +69,6 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
            cvBaseview.layer.shadowRadius = 5
            cvBaseview.layer.shadowOpacity = 0.3
            cvBaseview.layer.masksToBounds = false
-           
            AttachmentCV.layer.masksToBounds = true
            AttachmentCV.layer.cornerRadius = 10
            
@@ -100,6 +101,8 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
                deleteBtn.isHidden = true
                leftLbl.isHidden = false
            }
+           PageController.numberOfPages = FilesUrl?.count ?? 0
+           PageController.currentPage = 0
        }
 
        override func layoutSubviews() {
@@ -107,15 +110,29 @@ class AssignmentListCTVC: UITableViewCell, AVPlayerViewControllerDelegate, UIAda
            let contentViewHeight = contentView.frame.height - 30
            imgHeght.constant = contentViewHeight
        }
-    func confic(_ files:[FilePath]){
-        FilesUrl = files
-        AttachmentCV.reloadData()
-    }
+//    func confic(_ files:[FilePath]){
+//        FilesUrl = files
+//        PageController.numberOfPages = FilesUrl?.count ?? 0
+//        PageController.currentPage = 0
+//        AttachmentCV.reloadData()
+//    }
     
+    @IBAction func submit(_ sender: UIButton) {
+        if let currentVC = getCurrentViewController() {
+            if #available(iOS 14.0, *) {
+                let vcc = SubmitVC(nibName: nil, bundle: nil)
+                vcc.titleName = tittleLbl.text
+                vcc.modalPresentationStyle = .fullScreen
+                currentVC.present(vcc, animated: true, completion: nil)
+            }
+        }
+    }
     @IBAction func viewAssignment(_ sender: UIButton) {
         if #available(iOS 14.0, *) {
             if let currentVC = getCurrentViewController() {
-                let vcc = SubmitVC(nibName: nil, bundle: nil) // Use your actual ViewController class name
+                let vcc = AssignmentSummitionVC(nibName: nil, bundle: nil)
+                vcc.titleName = tittleLbl.text
+                vcc.subject = SubjectLabel.text
                 vcc.modalPresentationStyle = .fullScreen
                 currentVC.present(vcc, animated: true, completion: nil)
             }
@@ -194,7 +211,11 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             vcc.imageURL = FilesUrl?.filter({ img in
                 img.type?.uppercased() == CommonStringFile.IMAGE
             }) ?? []
-            vcc.FileURL = FilesUrl ?? []
+            var homeworkDocs = FilesUrl ?? []
+            let filePath = homeworkDocs[indexPath.row]
+            homeworkDocs.remove(at: indexPath.row)
+            homeworkDocs.insert(filePath, at: 0)
+            vcc.FileURL =  homeworkDocs
             vcc.pdfUrl = FilesUrl?[indexPath.row].url
             vcc.scrollIndex = indexPath
             vcc.type = FilesUrl?[indexPath.row].type?.uppercased() != CommonStringFile.IMAGE ? 0 : 2
@@ -231,17 +252,16 @@ extension AssignmentListCTVC : UICollectionViewDelegate,UICollectionViewDataSour
             print("Invalid Vimeo URL")
         }
     }
-
-
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        
-        PageController.currentPage = indexPath.item
-    }
     
     func getCurrentViewController() -> UIViewController? {
         return UIApplication.shared.connectedScenes
             .filter { $0.activationState == .foregroundActive }
             .compactMap { ($0 as? UIWindowScene)?.windows.first(where: { $0.isKeyWindow }) }
             .first?.rootViewController?.topMostViewController()
+    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let maxVisibleIndex = collectionView.indexPathsForVisibleItems.map({ $0.item }).max() {
+            PageController.currentPage = maxVisibleIndex
+        }
     }
 }

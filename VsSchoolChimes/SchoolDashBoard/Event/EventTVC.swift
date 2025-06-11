@@ -111,7 +111,7 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: ImageCollectionView.frame.height)
+        return CGSize(width: 100, height: ImageCollectionView.frame.height)
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let maxVisibleIndex = collectionView.indexPathsForVisibleItems.map({ $0.item }).max() {
@@ -124,11 +124,15 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
               let urlString = file.url,
               let url = URL(string: urlString) else { return }
 
-        let fileExtension = url.pathExtension.lowercased()
         let isImage = file.type?.uppercased() == CommonStringFile.IMAGE
 
         let imageVC = ImageShowVc(nibName: nil, bundle: nil)
         imageVC.imageURL = file_path?.filter { $0.type?.uppercased() == CommonStringFile.IMAGE } ?? []
+        var homeworkDocs = file_path ?? []
+        let filePath = homeworkDocs[indexPath.row]
+        homeworkDocs.remove(at: indexPath.row)
+        homeworkDocs.insert(filePath, at: 0)
+        imageVC.FileURL = homeworkDocs
         imageVC.subjectName = subjectName.text
         imageVC.pdfUrl = file.url
         imageVC.scrollIndex = indexPath

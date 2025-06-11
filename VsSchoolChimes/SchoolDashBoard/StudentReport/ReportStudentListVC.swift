@@ -109,7 +109,7 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         selectedType.backgroundColor = .white
         classView.layer.shadowOpacity = 0.5
         classView.layer.shadowRadius = 4
-        searchHidBtn.isHidden = true
+//        searchHidBtn.isHidden = true
         //MARK: Label Font
         sectionBtn.setTitleFont(style: .body, size: FontSize.BodySize)
         clsBtn.setTitleFont(style: .body, size: FontSize.BodySize)
@@ -126,14 +126,14 @@ class ReportStudentListVC: UIViewController,UITableViewDelegate,UITableViewDataS
         let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
         searchBtn.setImage(img, for: .normal)
         
-        searchHidBtn.isHidden = !showSearch
+//        searchHidBtn.isHidden = !showSearch
     }
     @IBAction func hideSearch(_ sender: UIButton) {
         showSearch.toggle()
         searchHeight.constant = showSearch ? 60 : 0
         let img = showSearch ? UIImage(systemName: "magnifyingglass.circle.fill") : UIImage(systemName: "magnifyingglass")
         searchBtn.setImage(img, for: .normal)
-        searchHidBtn.isHidden = !showSearch
+//        searchHidBtn.isHidden = !showSearch
     }
     
     @IBAction func sortArray(_ sender: UISegmentedControl) {

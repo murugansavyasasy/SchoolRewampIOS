@@ -276,7 +276,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
    
     func setupPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = CommonStringFile.EnterTextHere.translated()
+        placeholderLabel.text = CommonStringFile.Reason.translated()
         contentTxtView.applyRightTxt()
         contentCount.applyRightTxt()
 

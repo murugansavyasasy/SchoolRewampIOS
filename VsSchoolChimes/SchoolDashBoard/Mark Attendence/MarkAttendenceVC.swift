@@ -18,7 +18,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
             // Change to output format
             dateFormatter.dateFormat = "EEE dd"
             let outputDateString = dateFormatter.string(from: DayDate)
-        selectedDate = date
            DateBtn.setTitle(date, for: .normal)
            setFormattedDate(outputDateString, label: CustomDateLbl)
 
@@ -75,7 +74,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     var AcademicYearId: Int?
     var sectionId = ""
     var StandardId = ""
-    var selectedDate : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         applyShadowAndCornerRadius(to: AcademicYearView)
@@ -87,7 +85,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         customdate.dateFormat = "EEE d"
         let customdatestring = customdate.string(from: Date())
         setFormattedDate(customdatestring, label: CustomDateLbl)
-        formatter.dateFormat = "EEE d MMM yyyy"
+        formatter.dateFormat = "dd MMM yyyy"
         let dateBtntitle = formatter.string(from: Date())
         DateBtn.setTitle(dateBtntitle, for: .normal)
         
@@ -121,8 +119,6 @@ class MarkAttendenceVC: UIViewController, Datepicker {
         TV.register(nib, forCellReuseIdentifier: CellConfingName.AttendenceReportTVCell)
         
         get_Academic_year()
-        let date = ConvertDateStringSmart(dateBtntitle)
-        user_inputs.attendance_date = date
         TV.delegate = self
         TV.dataSource = self
         SearchBar.delegate = self
@@ -478,9 +474,7 @@ class MarkAttendenceVC: UIViewController, Datepicker {
     }
     
     @IBAction func MarkAbsentAct(_ sender: Any) {
-        
-        
-        let date = ConvertDateStringSmart(selectedDate)
+        let date = ConvertDateStringSmart(DateBtn.titleLabel?.text ?? "")
         user_inputs.section_id = sectionId
         user_inputs.class_id = StandardId
         user_inputs.attendance_date = date
