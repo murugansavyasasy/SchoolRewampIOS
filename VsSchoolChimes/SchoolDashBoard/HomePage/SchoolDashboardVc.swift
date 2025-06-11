@@ -492,7 +492,11 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
             case 18:
                 MenuRedirect.senderLeaveRequestNavigate(from: self)
             case 19:
-                MenuRedirect.senderLessonplanNavigate(from: self)
+                if checkMutipleSchool(){
+                    MenuRedirect.SchoolListVc(from: self)
+                }else{
+                    MenuRedirect.senderLessonplanNavigate(from: self)
+                }
             case 21:
                 if checkMutipleSchool(){
                     MenuRedirect.SchoolListVc(from: self)

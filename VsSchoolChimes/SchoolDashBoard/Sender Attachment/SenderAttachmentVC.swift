@@ -299,16 +299,19 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
     
     @IBAction func chooseRecipientsAction(_ sender: UIButton) {
         
+        guard let textFieldText = assignTitleTxtFld.text, !textFieldText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              let textViewText = contentTextView.text, !textViewText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            alert.showAlert(title: "", message: AlertstringFile.enter_title_description, on: self)
+                return
+            }
         
-        guard let title = assignTitleTxtFld.text , !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty , let `contents` = contentTextView.text , !`contents`.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else{
+        if attachments.isEmpty && selectedVideoURL == nil {
+            alert.showAlert(title: "", message: AlertstringFile.Please_Add_Attachment, on: self)
+        }else {
             
-            alert.showAlert(title: "",message: AlertstringFile.enter_title_description,on: self)
-            return
-        }
-        
-     
-            user_inputs.title = title
-            user_inputs.description = `contents`
+            
+            user_inputs.title = textFieldText
+            user_inputs.description = textViewText
             user_inputs.SelectedUrls = attachments
             user_inputs.VideoPath = VideoPath_URL
             
@@ -318,7 +321,6 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 SendAttachmentStringFile.description: contentTextView.text ?? ""
             ]
             
-           
             if isStaff(){
                 let vc = SchoolListVC(nibName: nil, bundle: nil)
                 vc.Common_request_params = params
@@ -332,6 +334,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
                 vc.modalPresentationStyle = .fullScreen
                 present(vc, animated: true)
             }
+        }
     }
     
     func isStaff() -> Bool {
@@ -655,6 +658,7 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
     
     // UITextViewDelegate Method: Adjust the height of the UITextView dynamically
     func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel?.isHidden = !contentTextView.text.isEmpty
         let size = textView.contentSize
         
         // Check if the content exceeds the initial height

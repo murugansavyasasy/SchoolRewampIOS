@@ -33,7 +33,7 @@
                             <rect key="frame" x="0.0" y="8" width="393" height="450"/>
                             <subviews>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="gCb-kQ-6B9">
-                                    <rect key="frame" x="10" y="0.0" width="373" height="40"/>
+                                    <rect key="frame" x="5" y="0.0" width="383" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="7qV-On-Atx"/>
                                     </constraints>
@@ -64,17 +64,17 @@
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="1xQ-Bq-U4w" secondAttribute="trailing" constant="50" id="0DJ-AH-N39"/>
-                                <constraint firstItem="gCb-kQ-6B9" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" constant="10" id="OZE-SI-VPy"/>
+                                <constraint firstItem="gCb-kQ-6B9" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" constant="5" id="OZE-SI-VPy"/>
                                 <constraint firstItem="YPr-cC-Wss" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" id="ZaZ-AZ-4g4"/>
                                 <constraint firstItem="qhc-SZ-Mme" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" id="dZB-qA-Ld1"/>
                                 <constraint firstAttribute="trailing" secondItem="qhc-SZ-Mme" secondAttribute="trailing" id="gjr-s5-fKq"/>
                                 <constraint firstAttribute="trailing" secondItem="YPr-cC-Wss" secondAttribute="trailing" id="iE4-fF-v9G"/>
                                 <constraint firstItem="1xQ-Bq-U4w" firstAttribute="leading" secondItem="d8j-EA-Wgx" secondAttribute="leading" constant="50" id="pNw-GH-ad2"/>
-                                <constraint firstAttribute="trailing" secondItem="gCb-kQ-6B9" secondAttribute="trailing" constant="10" id="wxl-fe-Ofy"/>
+                                <constraint firstAttribute="trailing" secondItem="gCb-kQ-6B9" secondAttribute="trailing" constant="5" id="wxl-fe-Ofy"/>
                             </constraints>
                         </stackView>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-sv-jIe">
-                            <rect key="frame" x="0.0" y="466" width="393" height="253"/>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-sv-jIe">
+                            <rect key="frame" x="5" y="466" width="383" height="253"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="uLW-kX-T7C"/>
@@ -85,11 +85,11 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="d8j-EA-Wgx" firstAttribute="top" secondItem="21u-Ph-GdD" secondAttribute="top" constant="8" id="20a-JP-s3y"/>
-                        <constraint firstAttribute="trailing" secondItem="nxa-sv-jIe" secondAttribute="trailing" id="4wx-YF-1jT"/>
+                        <constraint firstAttribute="trailing" secondItem="nxa-sv-jIe" secondAttribute="trailing" constant="5" id="4wx-YF-1jT"/>
                         <constraint firstAttribute="bottom" secondItem="nxa-sv-jIe" secondAttribute="bottom" id="54v-C3-cXq"/>
                         <constraint firstItem="nxa-sv-jIe" firstAttribute="top" secondItem="d8j-EA-Wgx" secondAttribute="bottom" constant="8" id="6hi-bo-kZp"/>
                         <constraint firstAttribute="trailing" secondItem="d8j-EA-Wgx" secondAttribute="trailing" id="87a-qO-oNh"/>
-                        <constraint firstItem="nxa-sv-jIe" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" id="EwH-Zg-RFx"/>
+                        <constraint firstItem="nxa-sv-jIe" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" constant="5" id="EwH-Zg-RFx"/>
                         <constraint firstItem="d8j-EA-Wgx" firstAttribute="leading" secondItem="21u-Ph-GdD" secondAttribute="leading" id="Mjc-bj-6qe"/>
                     </constraints>
                 </view>
