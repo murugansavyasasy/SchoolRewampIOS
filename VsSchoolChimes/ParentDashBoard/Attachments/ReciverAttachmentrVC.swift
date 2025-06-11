@@ -363,6 +363,7 @@ extension ReciverAttachmentrVC: UITableViewDelegate,UITableViewDataSource {
             }
             cell.datelbl.text = data.date?.convertToTargetDateFormat() ?? "-"
             cell.videoName.text = data.title
+            cell.newImg.isHidden = !(data.is_unread ?? false)
             return cell
             
         case "DOCUMENT":

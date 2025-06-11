@@ -313,6 +313,8 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
+        
+       
         if Menu_id.attendance == Menu_id.staffSelectedMenuId {
             
             markAttendaceApi()

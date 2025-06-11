@@ -156,7 +156,7 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
         
         if contentTxtView.text != ""{
             
-//            ApplyLeave()
+            ApplyLeave()
         }else{
             alert.showAlert(title: "", message: AlertstringFile.Enter_reason, on: self)
         }
@@ -165,51 +165,51 @@ class LeveCreateVC: UIViewController,UITextViewDelegate, DeleteImge, Datepicker{
     
     //MARK: Leave Request API call
     
-//    func ApplyLeave(){
-//        
-//        let LeaveFrom = ConvertDateStringSmart(dateBtn.titleLabel?.text)
-//        let LeaveTo = ConvertDateStringSmart(todate.titleLabel?.text)
-//        
-//        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
-//        
-//        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
-//                              
-//            onOk: {
-//                  
-//            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
-//                
-//                switch result{
-//                    
-//                case .success(let success):
-//                    
-//                    DispatchQueue.main.async {[self] in
-//                        
-//                        let title = success.status==true ? AlertstringFile.Success : AlertstringFile.Failed
-//                        
-//                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self) {
-//                            
-//                            self.dismiss(animated: true)
-//                        }
-//                    }
-//                    
-//                case .failure(let error):
-//                    
-//                    DispatchQueue.main.async {[self] in
-//                        
-//                        CustomAlert.showAlertWithOkAction(title: "Error", message:error.localizedDescription, on: self) {
-//                            
-//                            self.dismiss(animated: true)
-//                        }
-//                    }
-//                }
-//            }
-//            
-//        }, onNo: {
-//            
-//            print("user Canceled Action")
-//        }
-//        )
-//    }
+    func ApplyLeave(){
+        
+        let LeaveFrom = ConvertDateStringSmart(dateBtn.titleLabel?.text)
+        let LeaveTo = ConvertDateStringSmart(todate.titleLabel?.text)
+        
+        let param: [String:Any] = [LeaveRequestStringFile.leave_from: LeaveFrom, LeaveRequestStringFile.leave_to:LeaveTo,LeaveRequestStringFile.reason:contentTxtView.text ?? ""]
+        
+        alert.showAlertCancel(title: AlertstringFile.Confirm, message: AlertstringFile.Are_you_sure_you_want_to_submit_leave_request, actionLbl1: AlertstringFile.Yes_Send, actionLbl2: AlertstringFile.Cancel, on: self,
+                              
+            onOk: {
+                  
+            APIService.shared.makeApi(url: ServiceUrl.comm_api_leave_req_apply, parameters: param, type: ApitTypeSringFile.POST, token: self.childDetails?.access_token ?? "") {[self] (result: Result<CommonApiSuc,Error>) in
+                
+                switch result{
+                    
+                case .success(let success):
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        let title = success.status==true ? AlertstringFile.Success : AlertstringFile.Failed
+                        
+                        CustomAlert.showAlertWithOkAction(title: title, message: success.message ?? "", on: self) {
+                            
+                            self.dismiss(animated: true)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    
+                    DispatchQueue.main.async {[self] in
+                        
+                        CustomAlert.showAlertWithOkAction(title: "Error", message:error.localizedDescription, on: self) {
+                            
+                            self.dismiss(animated: true)
+                        }
+                    }
+                }
+            }
+            
+        }, onNo: {
+            
+            print("user Canceled Action")
+        }
+        )
+    }
     
     
     

@@ -451,11 +451,6 @@ class EventsVC: UIViewController, UIDocumentPickerDelegate, DeleteImge, Datepick
     }
     @IBAction func chooseSchool(_ sender: UIButton) {
         
-        
-      
-        
-        
-      
         if placeTxt.text?.count != 0 && eventTxt.text?.count != 0 && contentTxtView.text?.count != 0{
            
             user_inputs.SelectedUrls = attachments

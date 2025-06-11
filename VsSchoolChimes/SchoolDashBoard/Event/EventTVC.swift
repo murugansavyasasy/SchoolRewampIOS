@@ -133,6 +133,8 @@ class EventTVC: UITableViewCell, UICollectionViewDataSource, UICollectionViewDel
         imageVC.scrollIndex = indexPath
         imageVC.type = isImage ? 2 : 0
         imageVC.modalPresentationStyle = .fullScreen
+        imageVC.FileURL = file_path ?? []
+        imageVC.subjectName = subjectName.text ?? ""
 
         getCurrentViewController()?.present(imageVC, animated: true)
     }

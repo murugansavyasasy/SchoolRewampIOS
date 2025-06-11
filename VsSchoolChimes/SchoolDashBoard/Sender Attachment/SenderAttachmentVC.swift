@@ -196,6 +196,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
            selectImgPdfview.isHidden = true
            collectionViewHeght.constant = 0
            selectedVideoURL = url
+          
            VideoView.isHidden = false
            chooseRecipientsBtn.isHidden = false
        }
@@ -310,7 +311,7 @@ class SenderAttachmentVC: UIViewController, UIImagePickerControllerDelegate & UI
             user_inputs.title = title
             user_inputs.description = `contents`
             user_inputs.SelectedUrls = attachments
-            user_inputs.VideoPath = VideoPath_URL
+            user_inputs.VideoPath = selectedVideoURL
             
             
             let params: [String: Any] = [
@@ -610,6 +611,7 @@ extension SenderAttachmentVC : UITextViewDelegate,UITextFieldDelegate{
         
         placeholderLabel?.isHidden = !contentTextView.text.isEmpty
     }
+    
     
     func textViewDidEndEditing(_ textView: UITextView) {
        
