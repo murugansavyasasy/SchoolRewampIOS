@@ -194,8 +194,10 @@ class PendingFeeReportViewController: UIViewController,UITableViewDataSource,UIT
     
     @IBAction func switchTab(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0{
+            totalfeeLbl.isHidden = false
             getPendingReportAPI(academicId ?? 0)
         }else{
+            totalfeeLbl.isHidden = true
             classPendingReportAPI(academicId ?? 0)
         }
     }

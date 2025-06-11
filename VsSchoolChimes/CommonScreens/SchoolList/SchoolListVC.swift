@@ -97,7 +97,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
         button.setImage(UIImage(systemName: "circle.inset.filled"), for: .selected)
         // Optional: Set content alignment
         button.contentHorizontalAlignment = .left
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0 , bottom: 0, right: 15)
     }
     
     override func viewDidLayoutSubviews() {
@@ -798,6 +798,8 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
     }
     
     
+    
+    
     //MARK: Sender Noticeboard
     private func SendingNoticeboardFlow() {
         
@@ -833,7 +835,7 @@ class SchoolListVC: UIViewController,UITableViewDelegate,UITableViewDataSource{
                         SendNoticeStringFile.title : user_inputs.title,
                         SendNoticeStringFile.description : user_inputs.description,
                         SendNoticeStringFile.target_code : array_selectedSchoolId,
-                        SendNoticeStringFile.intended_for : selectedTarget ?? "",
+                        SendNoticeStringFile.intended_for : selectedTarget,
                         SendNoticeStringFile.visible_from : user_inputs.FromDate,
                         SendNoticeStringFile.visible_to : user_inputs.ToDate,
                         SendNoticeStringFile.file_path : uploadedFiles,
