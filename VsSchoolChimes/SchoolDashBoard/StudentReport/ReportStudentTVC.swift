@@ -75,8 +75,8 @@ class ReportStudentTVC: UITableViewCell {
         profileView.layer.shadowOpacity = 0.5
         profileView.layer.shadowRadius = 4
         
-        hiddenui(true)
-        animationview()
+//        hiddenui(true)
+//        animationview()
 
     }
     func hiddenui(_ hide:Bool){

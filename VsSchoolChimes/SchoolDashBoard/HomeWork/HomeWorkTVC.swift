@@ -73,7 +73,7 @@ class HomeWorkTVC: UITableViewCell, UICollectionViewDataSource, UICollectionView
     
     func loadImage(urls: [FilePath]) {
         ImageCollectionView.isHidden = false
-        if homeworkDocs?.count ?? 0 > 1{
+        if urls.count > 1{
             pageViewController.isHidden = false
         }
         homeworkDocs = urls

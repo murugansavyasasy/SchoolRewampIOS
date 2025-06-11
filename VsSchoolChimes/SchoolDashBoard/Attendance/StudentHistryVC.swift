@@ -11,30 +11,16 @@ import DropDown
 class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     func statusUpdate(status: Bool, index: Int) {
-        guard let studentId = studentsDetails?[index].id else { return }
-        // Update isAbsent status
-        studentsDetails?[index].isAbsent = status
-        filterData?[index].isAbsent = status
-
-        if status == true {
-            selected_student.removeAll { $0 == studentId }
-        } else {
-            if !selected_student.contains(studentId) {
-                selected_student.append(studentId)
-            }
-        }
-        totalcount = studentsDetails?.filter { $0.isAbsent == true }.count ?? 0
-
-        // Update UI for selectAllBtn
-        if totalcount == 0 {
-            // No absent students
-            selectAllBtn.setImage(UIImage(systemName: "checkmark.square.portrait.fill"), for: .normal)
-        } else {
-            // At least one absent student
-            selectAllBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        guard let studentId = filterData?[index].id else { return }
+        if let originalIndex = studentsDetails?.firstIndex(where: { $0.id == studentId }) {
+            studentsDetails?[originalIndex].isAbsent = status
+            filterData?[index].isAbsent = status
+            // Count of students marked as absent
+            totalcount = studentsDetails?.filter { $0.isAbsent == false }.count ?? 0
+            let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
+            selectAllBtn.setImage(image, for: .normal)
         }
     }
-
     
     @IBOutlet weak var BackBtn: UIButton!
     @IBOutlet weak var HeaderviewHeight: NSLayoutConstraint!
@@ -58,9 +44,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     var vimeoUploader: VimeoUploader?
     var StandardString: String?
     var SectionString: String?
-    
-
-    
     var img = ["shiyam","stuentimg 1"]
     var totalcount = 0
     var filterData : [StudentDetails]?
@@ -88,7 +71,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         circular_types =  circular_type.student
         StyleAndTranslater()
         BackBtn.applyBackButton()
-        
+        search.searchTextField.addDoneButton()
         
         
         if isAttandanceMarkingScreen == false{
@@ -97,7 +80,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         }else{
             
             filterBtn.isHidden = false
-            selectAllBtn.setImage(ImageName.checkmark, for: .normal)
+            selectAllBtn.setImage(ImageName.square, for: .normal)
             filterBtn.isUserInteractionEnabled = true
             let firstline = (StandardString ?? "") + "-" + (SectionString ?? "")
             BackBtn.configureAsBackButton(firstLine: firstline, secondLine: UserDefaultFileManager.get_staff_Details()?.school_name ?? "")
@@ -111,7 +94,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         search.delegate = self
         headerView.layer.cornerRadius = 10
         // Do any additional setup after loading the view.
-       
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -195,9 +178,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 
             }
             historyTable.reloadData()
-            // Update the label inside the UIView
-            
-                self.filterBtn.setTitle(item.translated(), for: .normal)
+            self.filterBtn.setTitle(item.translated(), for: .normal)
         }
         
     }
@@ -209,45 +190,55 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
         let isSelectingAll = sender.isSelected
         if isAttandanceMarkingScreen == true{
             for i in 0..<(studentsDetails?.count ?? 0) {
-                studentsDetails?[i].isAbsent = !isSelectingAll // If selecting all, students are not absent
+                studentsDetails?[i].isAbsent = !isSelectingAll
                 filterData?[i].isAbsent = !isSelectingAll
-                
-                // Properly access the cell using indexPath, not historyTable.cell
                 let indexPath = IndexPath(row: i, section: 0)
                 if let customCell = historyTable.cellForRow(at: indexPath) as? AttendenceTVC {
-                    customCell.custSwitch.isOn = isSelectingAll
-                    customCell.hideLbl(isAbsent: isSelectingAll)
+                    customCell.custSwitch.isOn = !isSelectingAll
+                    customCell.hideLbl(isAbsent: !isSelectingAll)
                 }
                 
+            }
+            // Update select all button image and total count
+            if isSelectingAll {
+                selectAllBtn.setImage(ImageName.checkmark, for: .normal)
+                totalcount = studentsDetails?.count ?? 0
+            } else {
+                selectAllBtn.setImage(ImageName.square, for: .normal)
+                totalcount = 0
             }
         }
         else{
             isSelectAllEnabled.toggle()
             for i in 0..<(studentsDetails?.count ?? 0) {
-                let indexPath = IndexPath(row: i, section: 0)
-                if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
-                    if isSelectAllEnabled {
-                        
-                        customCell.CheckBoxImgview.image = ImageName.checkedSquares
-                        selected_student.append(studentsDetails?[i].id ?? "" )
-                    } else {
-                        customCell.CheckBoxImgview.image = ImageName.uncheckedSquares
-                        selected_student.removeAll()
-                    }
-                }
+//                let indexPath = IndexPath(row: i, section: 0)
+//                if let customCell = historyTable.cellForRow(at: indexPath) as? SpecificStudentTvcell {
+//                    if isSelectAllEnabled {
+//
+//                        customCell.CheckBoxImgview.image = ImageName.checkedSquares
+////                        selected_student.append(studentsDetails?[i].id ?? "" )
+//                    } else {
+//                        customCell.CheckBoxImgview.image = ImageName.uncheckedSquares
+////                        selected_student.removeAll()
+//                    }
+//                }
+                studentsDetails?[i].isSelect = isSelectAllEnabled
+                filterData?[i].isSelect = isSelectAllEnabled
                 
                 // Update `selectedRows` to match the state
                 selectedRows[i] = isSelectAllEnabled
             }
+            historyTable.reloadData()
+            // Update select all button image and total count
+            if isSelectAllEnabled {
+                selectAllBtn.setImage(ImageName.checkmark, for: .normal)
+                totalcount = studentsDetails?.count ?? 0
+            } else {
+                selectAllBtn.setImage(ImageName.square, for: .normal)
+                totalcount = 0
+            }
         }
-        // Update select all button image and total count
-        if isSelectingAll {
-            selectAllBtn.setImage(ImageName.checkmark, for: .normal)
-            totalcount = studentsDetails?.count ?? 0
-        } else {
-            selectAllBtn.setImage(ImageName.square, for: .normal)
-            totalcount = 0
-        }
+
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -278,10 +269,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         DispatchQueue.main.async { [self] in
                             historyTable.isHidden = false
                             studentsDetails = successMessage.data
-                           
+                            
                             if var students = studentsDetails {
                                 for i in students.indices {
                                     students[i].isSelect = false
+                                    students[i].isAbsent = true
                                 }
                                 studentsDetails = students
                             }
@@ -314,9 +306,15 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     
     @IBAction func sendBtnAction(_ sender: UIButton) {
         if Menu_id.attendance == Menu_id.staffSelectedMenuId {
-            
+            selected_student = studentsDetails?
+                .filter { $0.isAbsent == false}
+                .compactMap { $0.id } ?? []
             markAttendaceApi()
         }else{
+            selected_student = studentsDetails?
+                .filter { $0.isSelect == true }
+                .compactMap { $0.id } ?? []
+
             guard !selected_student.isEmpty else {
                 alert.showAlert(
                     title: AlertstringFile.Alert_title,
@@ -335,7 +333,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 
             case Menu_id.AttachmentMenuId:
                 SendingAttachmentFlow()
-               
+                
             default:
                 print("❗️Unhandled menu ID: \(Menu_id.staffSelectedMenuId)")
             }
@@ -405,7 +403,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                     
                     let parameters: [String: Any] = [
                         SendAttachmentStringFile.title: user_inputs.title,
-//                        SendAttachmentStringFile.file_type: selectedType,
+                        //                        SendAttachmentStringFile.file_type: selectedType,
                         SendAttachmentStringFile.file_path: uploadedFiles,
                         SendAttachmentStringFile.target_type: target_type ?? "",
                         SendAttachmentStringFile.target_code: selected_student,
@@ -533,7 +531,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
             
             message = AlertstringFile.Selected_target + "\(selected_student.count) " + "Student(s)" + "\n" + AlertstringFile.Change_academic_year + " " + (
                 accidmaticNAme ?? "") + AlertstringFile.Change_academic_year1 +   "\n" + AlertstringFile.Change_academic_year2
-
+            
         }
         alert.showAlertCancel(
             title: title,
@@ -700,7 +698,7 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
     }
     
     func sendtextmessage_communication(){
-        
+
         APIService.shared
             .makeApi(url: ServiceUrl.comm_text_message_send_text, parameters:[
                 
@@ -710,17 +708,11 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                 send_textmessageStringFile.target_type: target_type ?? 0,
                 send_textmessageStringFile.academic_year_id: selectedAcadimicYearId ?? 0
                 
-            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (
-                result : Result<CommonApiSuc,
-                Error>
-            ) in
+            ] , type: ApitTypeSringFile.POST, token: UserDefaultFileManager.get_staff_Details()?.access_token ?? "" ){ [self] (result : Result<CommonApiSuc,Error>) in
                 
                 switch result {
-                    
                 case.success(let succesmessage) :
-                    
                     if succesmessage.status == true {
-                        
                         DispatchQueue.main.async { [self] in
                             CustomAlert
                                 .showAlertWithOkAction(
@@ -731,26 +723,20 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     gotoDashboard()
                                     
                                 }
-                            
                         }
                     }else {
-                        
                         DispatchQueue.main.async {
                             
                             
                         }
                     }
-                    
                 case.failure(let error) :
                     
                     DispatchQueue.main.async {
                         print(error.localizedDescription)
                     }
                 }
-                
             }
-        
-        
     }
     
     
@@ -794,7 +780,6 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                                     self.gotoDashboard()
                                     
                                 }
-                            
                         }
                     }else {
                         
@@ -810,33 +795,23 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
                         print(error.localizedDescription)
                     }
                 }
-                
             }
-        
     }
     
     
     
     func markAttendaceApi(){
-        
-        
+
         print("attendance",selected_student)
         let MakeAbsentId: [[String: String]] = selected_student.compactMap { id in
-            
-            
             return [
                 "ID": id
             ]
-            
-           
         }
-        
-    
-        
         APIService.shared
             .makeApi(url: ServiceUrl.attendance_send_absentees_sms_with_session_type, parameters:[
                 
-              
+                
                 MarkAttendenceStringFile.student_id: MakeAbsentId,
                 MarkAttendenceStringFile.class_id: user_inputs.class_id,
                 MarkAttendenceStringFile.section_id: user_inputs.section_id,
@@ -901,21 +876,21 @@ class StudentHistryVC: UIViewController, UISearchBarDelegate, Attendence {
 extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
-            return studentsDetails?.count ?? 0
+        
+        return filterData?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if  isAttandanceMarkingScreen == false{
             let cell = historyTable.dequeueReusableCell(withIdentifier: CellConfingName.SpecificStudentTvcell, for: indexPath) as! SpecificStudentTvcell
             let backgroundColor = colorForName(
-                studentsDetails?[indexPath.row].name ?? ""
+                filterData?[indexPath.row].name ?? ""
             )
             
-            cell.NameLbl.text =  studentsDetails?[indexPath.row].name ?? ""
-            cell.AdmisionNoLbl.text = studentsDetails?[indexPath.row].admission_no ?? ""
-            cell.RollNoLbl.text = studentsDetails?[indexPath.row].roll_no ?? ""
-            if let firstChar =  studentsDetails?[indexPath.row].name?.first {
+            cell.NameLbl.text =  filterData?[indexPath.row].name ?? ""
+            cell.AdmisionNoLbl.text = filterData?[indexPath.row].admission_no ?? ""
+            cell.RollNoLbl.text = filterData?[indexPath.row].roll_no ?? ""
+            if let firstChar =  filterData?[indexPath.row].name?.first {
                 cell.alphabetLbl.text = String(firstChar)
             } else {
                 cell.alphabetLbl.text = "" // Fallback for empty string
@@ -923,7 +898,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             cell.AlphabetView.backgroundColor = backgroundColor
             cell.DropdownImg.image = dataVisibility[indexPath.row] ? UIImage(named: "arrow_up") : UIImage(named: "arrow_down")
             
-            if let select = studentsDetails?[indexPath.row].isSelect {
+            if let select = filterData?[indexPath.row].isSelect {
                 cell.CheckBoxImgview.image = select ? ImageName.checkedSquares: ImageName.uncheckedSquares
             }
             // Set visibility state
@@ -938,7 +913,7 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
             return cell
         }
         else{
-    
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: CellConfingName.AttendenceTVC, for: indexPath) as! AttendenceTVC
             cell.nameLbl.text = filterData?[indexPath.row].name
             cell.rollNo.isHidden = true
@@ -950,119 +925,50 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
                 cell.rollNo
                     .setTitle(filterData?[indexPath.row].roll_no, for: .normal)
             }
-           
+            
             cell.hideLbl(isAbsent: filterData?[indexPath.row].isAbsent ?? true)
             cell.custSwitch.isOn = filterData?[indexPath.row].isAbsent ?? true
             cell.phnBtn.tag = indexPath.row
             cell.phnBtn.isHidden = true
-//            cell.phnBtn
-//                .setTitle(
-//                    filterData?[indexPath.row].admission_no,
-//                    for: .normal
-//                )
             cell.custSwitch.index = indexPath.row
             cell.delegate = self
             return cell
-            }
+        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isAttandanceMarkingScreen == true{
-            let cell = tableView.cellForRow(at: indexPath) as? StudentHistryTVC
-            guard let cell = cell else { return }
-            if studentsDetails?[indexPath.row].isAbsent == true {
-                // Mark Present
-                UIView.transition(with: cell.outerView,
-                                  duration: 0.3,
-                                  options: [.transitionFlipFromTop],
-                                  animations: {
-                    cell.outerView.layer.borderColor = Colornames.AprovedClr?.cgColor
-                    cell.outerView.layer.borderWidth = 1
-                    self.studentsDetails?[indexPath.row].isAbsent = false
-                    cell.statusBtn.setImage(ImageName.present, for: .normal)
-                },
-                                  completion: nil)
-                
-                // 🟢 Remove ID from selected_student when marking present
-                if let id = studentsDetails?[indexPath.row].id {
-                    selected_student.removeAll(where: { $0 == id })
-                }
-                
-                totalcount += 1
-            } else {
-                // Mark Absent
-                UIView.transition(with: cell.outerView,
-                                  duration: 0.3,
-                                  options: [.transitionFlipFromBottom],
-                                  animations: {
-                    cell.outerView.layer.borderColor = UIColor.red.cgColor
-                    cell.statusBtn.setImage(ImageName.apsent, for: .normal)
-                    self.studentsDetails?[indexPath.row].isAbsent = true
-                },
-                                  completion: nil)
-
-                // 🔴 Add ID to selected_student when marking absent
-                if let id = studentsDetails?[indexPath.row].id, !selected_student.contains(id) {
-                    selected_student.append(id)
-                }
-
-                totalcount -= 1
+        if !isAttandanceMarkingScreen{
+            if let originalIndex = studentsDetails?.firstIndex(where: { $0.id == filterData?[indexPath.row].id }) {
+                studentsDetails?[originalIndex].isSelect?.toggle()
+                filterData?[indexPath.row].isSelect?.toggle()
+                tableView.reloadRows(at: [indexPath], with: .none)
             }
-            
-        }
-        
-        else{
-            // Toggle the state
-            selectedRows[indexPath.row] = !selectedRows[indexPath.row]
-            
-            if let id = studentsDetails?[indexPath.row].id {
-                if studentsDetails?[indexPath.row].isSelect == true {
-                    if !selected_student.contains(id) {
-                        selected_student.append(id)
-                    }
-                } else {
-                    selected_student.removeAll(where: { $0 == id })
-                }
-            }
-            if indexPath.row < (studentsDetails?.count ?? 0) {
-                studentsDetails?[indexPath.row].isSelect?.toggle()
-                
-                if let id = studentsDetails?[indexPath.row].id {
-                    if studentsDetails?[indexPath.row].isSelect == true {
-                        if !selected_student.contains(id) {
-                            selected_student.append(id)
-                        }
-                    } else {
-                        selected_student.removeAll(where: { $0 == id })
-                    }
-                }
-            }
-            
-            // Reload the specific row to update the checkbox image
-            tableView.reloadRows(at: [indexPath], with: .none)
+            totalcount = studentsDetails?.filter { $0.isSelect == true }.count ?? 0
+            let image = totalcount == studentsDetails?.count ?? 0  ? ImageName.checkmark:ImageName.square
+            isSelectAllEnabled = totalcount == studentsDetails?.count ?? 0
+            selectAllBtn.setImage(image, for: .normal)
         }
     }
     
     func handleImageTap(at indexPath: IndexPath) {
-        dataVisibility[indexPath.row].toggle() // Toggle the visibility state
-        
-        // Reload the specific row
+        dataVisibility[indexPath.row].toggle()
         historyTable.reloadRows(at: [indexPath], with: .automatic)
     }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.isEmpty {
-            // Reset to full data when the search text is cleared
+        let query = searchText.lowercased()
+        if query.isEmpty {
             filterData = studentsDetails
         } else {
-            // Filter data based on the search text
-//            filterData = studentsDetails?.filter { student in
-//                student.name?.lowercased().contains(searchText.lowercased()) ?? ""
-//            }
+            filterData = studentsDetails?.filter { student in
+                return student.name?.lowercased().contains(query) ?? false ||
+                student.roll_no?.lowercased().contains(query) ?? false ||
+                student.admission_no?.lowercased().contains(query) ?? false
+            }
         }
         historyTable.reloadData()
     }
@@ -1092,9 +998,6 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         default:
             print("Unhandled staff role")
         }
-        
-        // Add segments from updated array
-        
     }
     
     func attendaceGoBackDashBoard(){
@@ -1116,21 +1019,6 @@ extension StudentHistryVC:UITableViewDelegate,UITableViewDataSource{
         default:
             print("Unhandled staff role")
         }
-        
-        // Add segments from updated array
-        
     }
 }
 
-struct Student {
-    var name: String
-    var isAbsent: Bool
-    var rollnumber:String
-    var phoneNo:String
-}
-struct SpecificStudent{
-    
-    var name : String
-    var rollnumber : String
-    var admissionNo : String
-}

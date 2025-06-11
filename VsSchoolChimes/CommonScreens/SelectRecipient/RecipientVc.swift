@@ -1555,7 +1555,6 @@ extension RecipientVc: UITableViewDelegate, UITableViewDataSource {
             case .failure(let error):
                 print("❌ API error: \(error.localizedDescription)")
                 // Optional: Add alert for failure
-                
             }
         }
         

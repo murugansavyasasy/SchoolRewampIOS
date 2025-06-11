@@ -423,9 +423,9 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                     cell.MenuImgView.image = img
                 }
                 cell.roundview.isHidden = true
-                if data.unread_count ?? 0 > 0 {
-                    cell.roundview.isHidden = false
-                }
+//                if data.unread_count ?? 0 > 0 {
+//                    cell.roundview.isHidden = false
+//                }
                 cell.MenuLbl.setFont(style: .body, size: 10)
                 cell.MenuLbl.text = label
                 cell.GradientView.backgroundColor = .clr
@@ -444,7 +444,7 @@ extension SchoolDashboardVc: UICollectionViewDelegate, UICollectionViewDataSourc
                 return cell
             } else {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellConfingName.HomePageTopCell, for: indexPath) as? TopCVCell else {
-                    return UICollectionViewCell() // Fallback for invalid cell type
+                    return UICollectionViewCell()
                 }
                 return cell
             }

@@ -33,7 +33,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uty-p2-UrK">
-                    <rect key="frame" x="10" y="69" width="202" height="35"/>
+                    <rect key="frame" x="10" y="69" width="249" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="oEq-AP-wXJ"/>
                     </constraints>
@@ -49,24 +49,19 @@
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="I3n-Ki-RyZ"/>
                     </connections>
                 </button>
-                <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Eh-TK-gsW">
-                    <rect key="frame" x="220" y="70" width="157" height="35"/>
+                <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" semanticContentAttribute="forceRightToLeft" contentHorizontalAlignment="right" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Eh-TK-gsW">
+                    <rect key="frame" x="267" y="70" width="110" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="Q4N-F7-yAt"/>
-                        <constraint firstAttribute="width" constant="157" id="Uxz-Jx-ocU"/>
+                        <constraint firstAttribute="width" constant="110" id="Uxz-Jx-ocU"/>
                     </constraints>
                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <inset key="imageEdgeInsets" minX="4" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="5" maxY="0.0"/>
                     <state key="normal" title="Select all">
                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="semibold"/>
                     </state>
-                    <buttonConfiguration key="configuration" style="plain" imagePlacement="leading" title="Select all" imagePadding="7">
-                        <imageReference key="image" image="square" catalog="system" symbolScale="medium"/>
-                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium" weight="semibold"/>
-                        <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </buttonConfiguration>
                     <connections>
                         <action selector="selectAllStd:" destination="-1" eventType="touchUpInside" id="zIU-AT-7al"/>
                     </connections>
@@ -77,8 +72,8 @@
                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="iK7-tU-TNy">
                             <rect key="frame" x="8" y="5" width="377" height="40"/>
                             <subviews>
-                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="trk-rO-gYS">
-                                    <rect key="frame" x="0.0" y="2.6666666666666714" width="30" height="35"/>
+                                <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="trk-rO-gYS">
+                                    <rect key="frame" x="0.0" y="2.6666666666666714" width="0.0" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="35" id="ew6-h2-mwM"/>
                                     </constraints>
@@ -91,7 +86,7 @@
                                     </connections>
                                 </button>
                                 <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-ok-S6u">
-                                    <rect key="frame" x="30" y="0.0" width="347" height="40"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="377" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="Mzi-BN-nN6"/>
                                     </constraints>
@@ -155,7 +150,7 @@
                             <color key="backgroundColor" name="ButtonColor"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
-                            <buttonConfiguration key="configuration" style="plain" image="paperplane" catalog="system" imagePlacement="trailing" title="Send"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Submit"/>
                             <connections>
                                 <action selector="sendBtnAction:" destination="-1" eventType="touchUpInside" id="P8o-lT-Pt9"/>
                             </connections>
@@ -197,7 +192,6 @@
     </objects>
     <resources>
         <image name="chevron.left" catalog="system" width="97" height="128"/>
-        <image name="paperplane" catalog="system" width="128" height="119"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>
         <image name="square" catalog="system" width="128" height="114"/>
         <namedColor name="AttendenceColor">

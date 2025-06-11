@@ -242,33 +242,36 @@ class ReciverAttachmentrVC: UIViewController, UISearchBarDelegate, shareDelegate
     
     // MARK: - Search Bar Delegate
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        guard !searchText.isEmpty else {
+        if searchText.isEmpty {
+            // Clear button tapped or user deleted all text manually
             SearchAttachments = filteredAttachments
+
+            // 🔄 Reset UI
+            NodataLbl.text = "No Data Found"
+            NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
+            NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
+            EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
+
             attachmentTable.reloadData()
             return
         }
-        
+
+        // Filter the data
         SearchAttachments = filteredAttachments?.filter {
             ($0.title?.lowercased().contains(searchText.lowercased()) ?? false) ||
-            ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||  ($0.date?.lowercased().contains(searchText.lowercased()) ?? false)
+            ($0.description?.lowercased().contains(searchText.lowercased()) ?? false) ||
+            ($0.date?.lowercased().contains(searchText.lowercased()) ?? false)
         }
+
+        // Update "No Data" UI
         NodataLbl.text = "No Data Found"
         NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
         NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
         EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
+
         attachmentTable.reloadData()
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        SearchAttachments = filteredAttachments
-        NodataLbl.text = "No Data Found"
-        NodataImage.isHidden = !(SearchAttachments?.isEmpty ?? false)
-        NodataLbl.isHidden = !(SearchAttachments?.isEmpty ?? false)
-        EmptyView.isHidden = !(SearchAttachments?.isEmpty ?? false)
-        attachmentTable.reloadData()
-    }
+
     func ReadStatusUpdateArchive(type: String,detail_id: String,filterType:String){
         
         APIService.shared.makeApi(url: ServiceUrl.comm_communication_read_status_update_archive, parameters: [ReadStatusUpdateStringFile.type : type,ReadStatusUpdateStringFile.detail_id: detail_id], type: ApitTypeSringFile.POST, token: studentDetails?.access_token ?? "") { [self] (result : Result<ReadStatusResponse,Error>) in

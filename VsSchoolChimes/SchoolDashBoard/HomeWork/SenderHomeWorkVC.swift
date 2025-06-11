@@ -65,10 +65,10 @@ class SenderHomeWorkVC: UIViewController {
         searchBar.delegate = self
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        homeWorkTable.reloadData()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        homeWorkTable.reloadData()
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -288,7 +288,7 @@ class SenderHomeWorkVC: UIViewController {
                     self.nodataFoundLbl.text = response.message
                     self.homeWorkTable.reloadData()
 
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                         self.tableviewHeight.constant = self.homeWorkTable.contentSize.height
                     }
 
